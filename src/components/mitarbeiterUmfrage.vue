@@ -25,8 +25,8 @@
             <h4 v-show="verkehrsmittel1 === 'PKW (Diesel)' || verkehrsmittel1 === 'PKW (Benzin)'" class="my-3">Fahren Sie in einer Fahrgemeinschaft?</h4>
             <v-row>
                 <v-checkbox v-show="verkehrsmittel1 === 'PKW (Diesel)' || verkehrsmittel1 === 'PKW (Benzin)'" v-model="activeFahrgemeinschaft" label="Ja" class="pr-4"></v-checkbox>
-                <v-text-field v-model="fahrgemeinschaft" v-show="activeFahrgemeinschaft && (verkehrsmittel1 === 'PKW (Diesel)' || verkehrsmittel1 === 'PKW (Benzin)')" 
-                    label="Fahrgemeinschaftmitglieder" type="number" class="pr-5"></v-text-field>
+                <v-text-field v-model="fahrgemeinschaftMitfahrer" v-show="activeFahrgemeinschaft && (verkehrsmittel1 === 'PKW (Diesel)' || verkehrsmittel1 === 'PKW (Benzin)')" 
+                    label="Anzahl Mitfahrer" type="number" class="pr-5"></v-text-field>
             </v-row>
           </v-container>
 
@@ -49,9 +49,9 @@
           <v-container>
             <v-row>
                 <v-select v-model="dienstreiseMedium" label="Verkehrsmittel" :items="dienstreiseMediumListe" class="pr-5"></v-select>
-                <!--<v-select v-model="flugKlasse" label="Klasse" v-show="dienstreiseMedium === 'Flugzeug'" :items="flugtypListe"></v-select>-->
+                <!--<v-select v-model="flugklasse" label="Klasse" v-show="dienstreiseMedium === 'Flugzeug'" :items="flugklasseListe"></v-select>-->
                 <v-select v-model="flugstreckenTyp" label="Flugstrecke" v-show="dienstreiseMedium === 'Flugzeug'" :items="flugstreckeListe" class="pr-5"></v-select>
-                <v-text-field v-model="distanz" :disabled="(dienstreiseMedium===null)" label="einfache Distanz" suffix="km" class="pr-5"></v-text-field>
+                <v-text-field v-model="dienstreiseDistanz" :disabled="(dienstreiseMedium===null)" label="einfache Distanz" suffix="km" class="pr-5"></v-text-field>
             </v-row>
           </v-container>
 
@@ -97,28 +97,41 @@
 <script>
 export default {
   data: () => ({
-    activeNotebook: false,
-    notebook: null,
-    activeDesktopPC: false,
-    desktopPC: null,
-    activeBildschirm: false,
-    bildschirme: null,
-    activeMobiltelefon: false,
-    mobiltelefon: null,
+    //Arbeitstage
+    arbeitstageBuero: null,
 
+    //Pendelweg
     fahrtmediumListe: ['PKW (Diesel)', 'PKW (Benzin)', 'Fahrrad', 'E-Fahrrad', 'Motorisiertes Zweirad', 'Öffentliche'],
     fahrtmediumÖPNVListe: ['Bahn', 'Linienbus', 'U-Bahn', 'Straßenbahn', 'MIX inkl. U-Bahn', 'MIX exkl. U-Bahn'],
     verkehrsmittel1: null,
     verkehrsmittel2: null,
     activeFahrgemeinschaft: false,
-    fahrgemeinschaft: null,
+    fahrgemeinschaftMitfahrer: null,
+    einfacherPendelweg: null,
 
+    //Dienstreisen
     dienstreiseMediumListe: ['PKW (Diesel)', 'PKW (Benzin)', 'Bahn', 'Fernbus', 'Flugzeug'],
     dienstreiseMedium: null,
-    flugtypListe: ['Economy', 'Business'],
+    flugklasseListe: ['Economy', 'Business'],
+    flugklasse: null,
     flugstreckeListe: ['Langstrecke', 'Kurzstrecke'],
-    flugKlasse: null,
+    flugstreckenTyp: null,
+    dienstreiseDistanz: null,
+
+    //IT Geräte
+    activeNotebook: false,
+    notebook: null,
+
+    activeDesktopPC: false,
+    desktopPC: null,
+
+    activeBildschirm: false,
+    bildschirme: null,
+
+    activeMobiltelefon: false,
+    mobiltelefon: null,
     
+    //Papierverbrauch
     papierverbrauch: null,
     papierverbrauchListe: ['0', '1-20', '21 - 50', '51 - 70', '70+']
     })
