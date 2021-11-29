@@ -64,20 +64,14 @@
                 <v-checkbox  v-model="activeNotebook" hide-details></v-checkbox>
                 <v-text-field v-model="notebook" :disabled="!activeNotebook" label="Notebooks" type="number" class="pr-5" suffix="Gerät/e"></v-text-field>
             </v-row>
-          </v-container>
-          <v-container>
             <v-row>
                 <v-checkbox v-model="activeDesktopPC" hide-details></v-checkbox>
                 <v-text-field v-model="desktopPC" :disabled="!activeDesktopPC" label="Desktop PCs" type="number" class="pr-5" suffix="Gerät/e"></v-text-field>
             </v-row>
-          </v-container>
-          <v-container>
             <v-row>
                 <v-checkbox v-model="activeBildschirm" hide-details></v-checkbox>
                 <v-text-field v-model="bildschirme" :disabled="!activeBildschirm" label="Bildschirme" type="number" class="pr-5" suffix="Gerät/e"></v-text-field>
             </v-row>
-          </v-container>
-          <v-container>
             <v-row>
                 <v-checkbox v-model="activeMobiltelefon" hide-details></v-checkbox>
                 <v-text-field v-model="mobiltelefon" :disabled="!activeMobiltelefon" label="Mobiltelefone" type="number" class="pr-5" suffix="Gerät/e"></v-text-field>
