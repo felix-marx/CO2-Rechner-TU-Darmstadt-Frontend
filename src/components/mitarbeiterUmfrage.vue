@@ -22,10 +22,11 @@
                 <v-select v-model="verkehrsmittel2" v-show="verkehrsmittel1 === 'Öffentliche'" :items="fahrtmediumÖPNVListe" label="ÖPNV" class="pr-5"></v-select>
                 <v-text-field v-model="einfacherPendelweg" label="Einfacher Pendelweg" type=number suffix="km"></v-text-field>
             </v-row>
-            <h4 v-show="verkehrsmittel1 === 'PKW'" class="my-3">Fahren Sie in einer Fahrgemeinschaft?</h4>
+            <h4 v-show="verkehrsmittel1 === 'PKW (Diesel)' || verkehrsmittel1 === 'PKW (Benzin)'" class="my-3">Fahren Sie in einer Fahrgemeinschaft?</h4>
             <v-row>
-                <v-checkbox v-show="verkehrsmittel1 === 'PKW'" v-model="activeFahrgemeinschaft" label="Ja" class="pr-4"></v-checkbox>
-                <v-text-field v-model="fahrgemeinschaft" v-show="activeFahrgemeinschaft && verkehrsmittel1 === 'PKW'" label="Fahrgemeinschaftmitglieder" type="number" class="pr-5"></v-text-field>
+                <v-checkbox v-show="verkehrsmittel1 === 'PKW (Diesel)' || verkehrsmittel1 === 'PKW (Benzin)'" v-model="activeFahrgemeinschaft" label="Ja" class="pr-4"></v-checkbox>
+                <v-text-field v-model="fahrgemeinschaft" v-show="activeFahrgemeinschaft && (verkehrsmittel1 === 'PKW (Diesel)' || verkehrsmittel1 === 'PKW (Benzin)')" 
+                    label="Fahrgemeinschaftmitglieder" type="number" class="pr-5"></v-text-field>
             </v-row>
           </v-container>
 
@@ -47,10 +48,10 @@
 
           <v-container>
             <v-row>
-                <v-select v-model="dienstreiseMedium" label="Verkehrsmittel" :items="dienstreiseMediumListe"></v-select>
+                <v-select v-model="dienstreiseMedium" label="Verkehrsmittel" :items="dienstreiseMediumListe" class="pr-5"></v-select>
                 <!--<v-select v-model="flugKlasse" label="Klasse" v-show="dienstreiseMedium === 'Flugzeug'" :items="flugtypListe"></v-select>-->
-                <v-select v-model="flugstreckenTyp" label="Flugstrecke" v-show="dienstreiseMedium === 'Flugzeug'" :items="flugstreckeListe"></v-select>
-                <v-text-field v-model="distanz" :disabled="(dienstreiseMedium===null)" label="einfache Distanz" suffix="km"></v-text-field>
+                <v-select v-model="flugstreckenTyp" label="Flugstrecke" v-show="dienstreiseMedium === 'Flugzeug'" :items="flugstreckeListe" class="pr-5"></v-select>
+                <v-text-field v-model="distanz" :disabled="(dienstreiseMedium===null)" label="einfache Distanz" suffix="km" class="pr-5"></v-text-field>
             </v-row>
           </v-container>
 
@@ -105,14 +106,14 @@ export default {
     activeMobiltelefon: false,
     mobiltelefon: null,
 
-    fahrtmediumListe: ['PKW', 'Fahrrad', 'E-Fahrrad', 'Motorisiertes Zweirad', 'Öffentliche'],
+    fahrtmediumListe: ['PKW (Diesel)', 'PKW (Benzin)', 'Fahrrad', 'E-Fahrrad', 'Motorisiertes Zweirad', 'Öffentliche'],
     fahrtmediumÖPNVListe: ['Bahn', 'Linienbus', 'U-Bahn', 'Straßenbahn', 'MIX inkl. U-Bahn', 'MIX exkl. U-Bahn'],
     verkehrsmittel1: null,
     verkehrsmittel2: null,
     activeFahrgemeinschaft: false,
     fahrgemeinschaft: null,
 
-    dienstreiseMediumListe: ['PKW', 'Bahn', 'Fernbus', 'Flugzeug'],
+    dienstreiseMediumListe: ['PKW (Diesel)', 'PKW (Benzin)', 'Bahn', 'Fernbus', 'Flugzeug'],
     dienstreiseMedium: null,
     flugtypListe: ['Economy', 'Business'],
     flugstreckeListe: ['Langstrecke', 'Kurzstrecke'],
