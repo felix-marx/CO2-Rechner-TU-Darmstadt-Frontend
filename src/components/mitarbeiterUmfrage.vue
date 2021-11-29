@@ -25,7 +25,7 @@
             <h4 v-show="verkehrsmittel1 === 'PKW'" class="my-3">Fahren Sie in einer Fahrgemeinschaft?</h4>
             <v-row>
                 <v-checkbox v-show="verkehrsmittel1 === 'PKW'" v-model="activeFahrgemeinschaft" label="Ja" class="pr-4"></v-checkbox>
-                <v-text-field v-model="fahrgemeinschaft" v-show="activeFahrgemeinschaft" label="Fahrgemeinschaftmitglieder" type="number" class="pr-5"></v-text-field>
+                <v-text-field v-model="fahrgemeinschaft" v-show="activeFahrgemeinschaft && verkehrsmittel1 === 'PKW'" label="Fahrgemeinschaftmitglieder" type="number" class="pr-5"></v-text-field>
             </v-row>
           </v-container>
 
