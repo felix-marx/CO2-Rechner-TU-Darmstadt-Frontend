@@ -18,13 +18,13 @@
           
           <v-container>
             <v-row>
-                <v-select v-model="verkehrsmittel1" :items="fahrtmediumListe" label="Verkehrsmedium"></v-select>
-                <v-select v-model="verkehrsmittel2" v-show="verkehrsmittel1 === 'Öffentliche'" :items="fahrtmediumÖPNVListe" label="ÖPNV"></v-select>
+                <v-select v-model="verkehrsmittel1" :items="fahrtmediumListe" label="Verkehrsmedium" class="pr-5"></v-select>
+                <v-select v-model="verkehrsmittel2" v-show="verkehrsmittel1 === 'Öffentliche'" :items="fahrtmediumÖPNVListe" label="ÖPNV" class="pr-5"></v-select>
                 <v-text-field v-model="einfacherPendelweg" label="Einfacher Pendelweg" type=number suffix="km"></v-text-field>
             </v-row>
-            <p v-show="verkehrsmittel1 === 'PKW'">Fahren Sie in einer Fahrgemeinschaft?</p>
+            <h4 v-show="verkehrsmittel1 === 'PKW'" class="my-3">Fahren Sie in einer Fahrgemeinschaft?</h4>
             <v-row>
-                <v-checkbox v-show="verkehrsmittel1 === 'PKW'" v-model="activeFahrgemeinschaft" label="Ja"></v-checkbox>
+                <v-checkbox v-show="verkehrsmittel1 === 'PKW'" v-model="activeFahrgemeinschaft" label="Ja" class="pr-4"></v-checkbox>
                 <v-text-field v-model="fahrgemeinschaft" v-show="activeFahrgemeinschaft" label="Fahrgemeinschaftmitglieder" type="number" class="pr-5"></v-text-field>
             </v-row>
           </v-container>
