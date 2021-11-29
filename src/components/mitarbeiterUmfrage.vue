@@ -10,6 +10,8 @@
                 <span>Die Distanz können Sie zum Beispiel mit Google Maps bestimmen</span>
             </v-tooltip>
             <v-divider></v-divider>
+            <br>
+
           <v-row>
               <v-select v-model="verkehrsmittel1" :items="fahrtmediumListe" label="Verkehrsmedium"></v-select>
               <v-select v-model="verkehrsmittel2" v-show="verkehrsmittel1 === 'Öffentliche'" :items="fahrtmediumÖPNVListe" label="ÖPNV"></v-select>
@@ -22,37 +24,52 @@
           </v-row>
 
           <br>
-          Wie viele Tage in der Woche sind Sie im Büro?
+          <h3>Wie viele Tage in der Woche sind Sie im Büro?</h3>
           <v-divider></v-divider>
           <br>
           <v-row>
               <v-text-field v-model="arbeitstageBuero" label="Tage im Büro" type=number></v-text-field>
           </v-row>
-          Sollten Sie in den letzten 12 Monaten eine Dienstreise unternommen haben, dann tragen Sie bitte die Reiseinformationen hier ein.
+
+          <br>
+          <h3>Welche Dienstreisen haben Sie in den letzten 12 Monaten unternommen?</h3>
+          <v-divider></v-divider>
+          <br>
+
           <v-row>
               <v-select v-model="dienstreiseMedium" label="Verkehrsmittel" :items="dienstreiseMediumListe"></v-select>
               <!--<v-select v-model="flugKlasse" label="Klasse" v-show="dienstreiseMedium === 'Flugzeug'" :items="flugtypListe"></v-select>-->
               <v-select v-model="flugstreckenTyp" label="Flugstrecke" v-show="dienstreiseMedium === 'Flugzeug'" :items="flugstreckeListe"></v-select>
               <v-text-field v-model="distanz" :disabled="(dienstreiseMedium===null)" label="einfache Distanz" suffix="km"></v-text-field>
           </v-row>
-          Wenn Sie in ihrer Arbeit IT-Geräte benutzen, wählen Sie bitte die entsprechenden Geräte an und geben Sie an wie viele Geräte dieser Art Sie benutzen.
+
+          <br>
+          <h3>Welche IT-Geräte benutzen Sie in ihrer Arbeit?</h3>
+          <v-divider></v-divider>
+          <br>
+
           <v-row>
             <v-checkbox v-model="activeNotebook" hide-details></v-checkbox>
-            <v-text-field v-model="notebook" :disabled="!activeNotebook" label="Notebooks" type="number" class="pr-5" suffix="Stück"></v-text-field>
+            <v-text-field v-model="notebook" :disabled="!activeNotebook" label="Notebooks" type="number" class="px-5" suffix="Gerät/e"></v-text-field>
           </v-row>
           <v-row>
             <v-checkbox v-model="activeDesktopPC" hide-details></v-checkbox>
-            <v-text-field v-model="desktopPC" :disabled="!activeDesktopPC" label="Desktop PCs" type="number" class="pr-5" suffix="Stück"></v-text-field>
+            <v-text-field v-model="desktopPC" :disabled="!activeDesktopPC" label="Desktop PCs" type="number" class="pr-5" suffix="Gerät/e"></v-text-field>
           </v-row>
           <v-row>
             <v-checkbox v-model="activeBildschirm" hide-details></v-checkbox>
-            <v-text-field v-model="bildschirme" :disabled="!activeBildschirm" label="Bildschirme" type="number" class="pr-5" suffix="Stück"></v-text-field>
+            <v-text-field v-model="bildschirme" :disabled="!activeBildschirm" label="Bildschirme" type="number" class="pr-5" suffix="Gerät/e"></v-text-field>
           </v-row>
          <v-row>
             <v-checkbox v-model="activeMobiltelefon" hide-details></v-checkbox>
-            <v-text-field v-model="mobiltelefon" :disabled="!activeMobiltelefon" label="Mobiltelefone" type="number" class="pr-5" suffix="Stück"></v-text-field>
+            <v-text-field v-model="mobiltelefon" :disabled="!activeMobiltelefon" label="Mobiltelefone" type="number" class="pr-5" suffix="Gerät/e"></v-text-field>
           </v-row>
-          Schätzen Sie bitte wie viele Blätter Papier Sie in einer typischen Woche verbrauchen.
+
+          <br>
+          <h3>Schätzen Sie bitte wie viele Blätter Papier Sie in einer typischen Woche verbrauchen.</h3>
+          <v-divider></v-divider>
+          <br>
+
           <v-row>
             <v-select v-model="papierverbrauch" :items="papierverbrauchListe" label="Papierverbrauch"></v-select>
           </v-row>
