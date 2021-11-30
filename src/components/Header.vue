@@ -2,10 +2,10 @@
   <v-app-bar app color="primary" dark>
     <div class="d-flex align-center"></div>
 
-    
     <v-tabs center-active>
-      <v-tab v-for="tabTitle in tabs" :key=tabTitle>
-      {{tabTitle}}</v-tab>
+      <v-tab v-for="tab in tabs" :key="tab.id" @click="changeTab(tab.id)">
+        {{ tab.title }}
+      </v-tab>
     </v-tabs>
 
     <v-spacer></v-spacer>
@@ -18,11 +18,19 @@
 </template>
 
 <script>
+
 export default {
   name: "Header",
 
   data: () => ({
-    tabs: ["Umfragen", "Ergebnisse"],
+    // TODO how to place tab_titles here and tab_types in App.vue together?
+    tabs: [{"id": 0, title: "Umfragen"},
+    {"id": 1, title: "Ergebnisse"}],
   }),
+  methods: {
+    changeTab(selectedTabComponent) {
+      this.$emit("changeTab", selectedTabComponent);
+    },
+  },
 };
 </script>
