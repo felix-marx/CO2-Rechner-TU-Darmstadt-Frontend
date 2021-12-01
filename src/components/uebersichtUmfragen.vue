@@ -17,13 +17,15 @@
 
             <v-card-actions>
                 <v-btn
+                    class="blue white--text"
                     outlined
                     rounded
                     text
                 >
-                    bearbeiten
+                    <v-icon left> mdi-square-edit-outline </v-icon>
+                    <span>bearbeiten</span>
                 </v-btn>
-
+             
 
 
             </v-card-actions>
