@@ -108,9 +108,7 @@ export default {
     logging: function() {
       console.log("Mitarbeiter:", this.anzahlMitarbeiter, "\n Gebäude:", this.gebaeudeNr, this.flaechenanteil, "\n geraeteAnzahl:", this.geraeteAnzahl);
     },
-    send: function() {
-      this.logging();
-    },
+    
     sendData: async function () {
       //Build IT Geräte Array of non-null gerate
       var usedITGeraete = []

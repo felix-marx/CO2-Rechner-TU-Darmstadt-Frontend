@@ -148,13 +148,11 @@ export default {
     //papierverbrauch: null,
     //papierverbrauchListe: ['0', '1-20', '21 - 50', '51 - 70', '70+']
     }),
+
     methods: {
       logging: function() {
         console.log("Arbeitstage:", this.arbeitstageBuero, "\n Verkehrsmittel:", this.verkehrsmittel,
         "\n Dienstreise:", this.dienstreise, "\n Geräte: ", this.geraeteAnzahl)
-      },
-      send: function() {
-        this.logging();
       },
 
       mapPendelverkehrsmittel: function(verkehrmittel1, verkehrsmittel2) {
@@ -213,7 +211,14 @@ export default {
             strecke: parseInt(reise[2]),
             tankart: dienstreisetyp[1]
           })
-        }        
+        }       
+        
+        console.log(JSON.stringify({
+            pendelweg: buildPendelweg,
+            tageImBuero: parseInt(this.arbeitstageBuero),
+            dienstreise: buildDienstreisen,
+            itGeraete: usedITGeraete
+          }))
 
         await fetch("http://localhost:9000/db/", {
           method: "POST",
