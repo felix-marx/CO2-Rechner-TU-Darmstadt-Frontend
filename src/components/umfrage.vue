@@ -121,7 +121,7 @@ export default {
         }
       }
 
-      await fetch("http://localhost:9000/db/", {
+      await fetch("http://localhost:9000/umfrage/hauptverantwortlicher", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -220,7 +220,7 @@ export default {
             itGeraete: usedITGeraete
           }))
 
-        await fetch("http://localhost:9000/db/", {
+        await fetch("http://localhost:9000/umfrage/mitarbeiter", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
