@@ -20,7 +20,7 @@
             <v-row>
                 <v-select v-model="verkehrsmittel[0][0]" :items="fahrtmediumListe" label="Verkehrsmedium" class="pr-5"></v-select>
                 <v-select v-model="verkehrsmittel[0][1]" v-show="verkehrsmittel[0][0] === 'Öffentliche'" :items="fahrtmediumÖPNVListe" label="ÖPNV" class="pr-5"></v-select>
-                <v-text-field v-model="verkehrsmittel[0][4]" label="Einfacher Pendelweg" type=number suffix="km"></v-text-field>
+                <v-text-field v-model="verkehrsmittel[0][4]" :rules="streckeRules" label="Einfacher Pendelweg" type=number suffix="km"></v-text-field>
             </v-row>
             <h4 v-show="verkehrsmittel[0][0] === 'PKW (Diesel)' || verkehrsmittel[0][0] === 'PKW (Benzin)'" class="my-3">Fahren Sie in einer Fahrgemeinschaft?</h4>
             <v-row>
@@ -37,7 +37,7 @@
 
           <v-container>
             <v-row>
-                <v-text-field v-model="arbeitstageBuero" label="Tage im Büro" type=number></v-text-field>
+                <v-text-field :rules="tageImBueroRules" v-model="arbeitstageBuero" label="Tage im Büro" type=number></v-text-field>
             </v-row>
           </v-container>
 
@@ -51,7 +51,7 @@
                 <v-select v-model="dienstreise[0][0]" label="Verkehrsmittel" :items="dienstreiseMediumListe" class="pr-5"></v-select>
                 <!--<v-select v-model="flugklasse" label="Klasse" v-show="dienstreise[0][0] === 'Flugzeug'" :items="flugklasseListe"></v-select>-->
                 <v-select v-model="dienstreise[0][1]" label="Flugstrecke" v-show="dienstreise[0][0] === 'Flugzeug'" :items="flugstreckeListe" class="pr-5"></v-select>
-                <v-text-field v-model="dienstreise[0][2]" :disabled="(dienstreise[0][0] === null)" label="Einfache Distanz" suffix="km" class="pr-5"></v-text-field>
+                <v-text-field v-model="dienstreise[0][2]" :rules="streckeRules" :disabled="(dienstreise[0][0] === null)" label="Einfache Distanz" suffix="km" class="pr-5"></v-text-field>
             </v-row>
           </v-container>
 
@@ -62,20 +62,20 @@
 
           <v-container>
             <v-row>
-                <v-checkbox  v-model="activeNotebook" hide-details></v-checkbox>
-                <v-text-field v-model="geraeteAnzahl[0][1]" :disabled="!activeNotebook" label="Notebooks" type="number" class="pr-5" suffix="Gerät/e"></v-text-field>
+                <v-checkbox  v-model="geraeteAnzahl[0][2]" hide-details></v-checkbox>
+                <v-text-field v-model="geraeteAnzahl[0][1]" :rules="geraeteRules" :disabled="!geraeteAnzahl[0][2]" label="Notebooks" type="number" class="pr-5" suffix="Gerät/e"></v-text-field>
             </v-row>
             <v-row>
-                <v-checkbox v-model="activeDesktopPC" hide-details></v-checkbox>
-                <v-text-field v-model="geraeteAnzahl[1][1]" :disabled="!activeDesktopPC" label="Desktop PCs" type="number" class="pr-5" suffix="Gerät/e"></v-text-field>
+                <v-checkbox v-model="geraeteAnzahl[1][2]" hide-details></v-checkbox>
+                <v-text-field v-model="geraeteAnzahl[1][1]" :rules="geraeteRules" :disabled="!geraeteAnzahl[1][2]" label="Desktop PCs" type="number" class="pr-5" suffix="Gerät/e"></v-text-field>
             </v-row>
             <v-row>
-                <v-checkbox v-model="activeBildschirm" hide-details></v-checkbox>
-                <v-text-field v-model="geraeteAnzahl[2][1]" :disabled="!activeBildschirm" label="Bildschirme" type="number" class="pr-5" suffix="Gerät/e"></v-text-field>
+                <v-checkbox v-model="geraeteAnzahl[2][2]" hide-details></v-checkbox>
+                <v-text-field v-model="geraeteAnzahl[2][1]" :rules="geraeteRules" :disabled="!geraeteAnzahl[2][2]" label="Bildschirme" type="number" class="pr-5" suffix="Gerät/e"></v-text-field>
             </v-row>
             <v-row>
-                <v-checkbox v-model="activeMobiltelefon" hide-details></v-checkbox>
-                <v-text-field v-model="geraeteAnzahl[3][1]" :disabled="!activeMobiltelefon" label="Mobiltelefone" type="number" class="pr-5" suffix="Gerät/e"></v-text-field>
+                <v-checkbox v-model="geraeteAnzahl[3][2]" hide-details></v-checkbox>
+                <v-text-field v-model="geraeteAnzahl[3][1]" :rules="geraeteRules" :disabled="!geraeteAnzahl[3][2]" label="Mobiltelefone" type="number" class="pr-5" suffix="Gerät/e"></v-text-field>
             </v-row>
           </v-container>
 
@@ -131,13 +131,13 @@ export default {
     dienstreise: [[null, null, null]],
 
     //IT Geräte
-    /* Geraet mit Array Position format [intern Geraete ID, Anzahl]
+    /* Geraet mit Array Position format [intern Geraete ID, Anzahl, enabled]
      * Notebook 0
      * DesktopPC 1
      * Bildschirm 2
      * Mobiltelefon 3
      */
-    geraeteAnzahl: [[1, null], [2, null], [3, null], [5, null]],
+    geraeteAnzahl: [[1, null, false], [2, null, false], [3, null, false], [5, null, false]],
     
     activeNotebook: false,
     activeDesktopPC: false,
@@ -147,6 +147,21 @@ export default {
     //Papierverbrauch currently not used
     //papierverbrauch: null,
     //papierverbrauchListe: ['0', '1-20', '21 - 50', '51 - 70', '70+']
+
+    //Rules for input validation
+    tageImBueroRules: [
+      v => !!v || "Muss angegeben werden",
+      v => (parseInt(v) < 8 && parseInt(v) >= 0 ) || "Bitte geben Sie die Tage pro Woche an"
+    ],
+    streckeRules: [
+      v => !!v || "Muss angegeben werden",
+      v => (parseInt(v) > 0) || "Bitte geben Sie eine valide Distanz an"
+    ],
+    geraeteRules: [
+      v => !!v || "Wenn Sie das Gerät nicht benutzten, wählen Sie es bitte ab",
+      v => (parseInt(v)> 0) || "Bitte geben Sie eine valide Menge an"
+    ]
+
     }),
 
     methods: {
@@ -216,7 +231,7 @@ export default {
         //Build IT Geräte Array of non-null gerate
         var usedITGeraete = []
         for (var geraet of this.geraeteAnzahl) {
-          if(geraet[1] > 0) {
+          if(geraet[1] > 0 && geraet[2] == true) {
             usedITGeraete.push({
               idITGeraete: parseInt(geraet[0]),
               anzahl: parseInt(geraet[1])
@@ -242,7 +257,8 @@ export default {
           var dienstreisetyp = this.mapDienstreisemittel(reise[0])
           buildDienstreisen.push({
             idDienstreise: parseInt(dienstreisetyp[0]),
-            streckentyp: reise[1],
+            //Catches spezial case were user selects Flugtyp but then changes to other Verkehrsmedium
+            streckentyp: (parseInt(dienstreisetyp[0]) == 3 ? reise[1] : ""),
             strecke: parseInt(reise[2]),
             tankart: dienstreisetyp[1]
           })
@@ -253,6 +269,13 @@ export default {
        * Sends an JSON POST request to the backend to insert the data into the database and start the calculation 
        */
       sendData: async function () {              
+
+        /*console.log(JSON.stringify({
+            pendelweg: this.pendelwegJSON(),
+            tageImBuero: parseInt(this.arbeitstageBuero),
+            dienstreise: this.dienstreisenJSON(),
+            itGeraete: this.itGeraeteJSON()
+          }))*/
 
         await fetch("http://localhost:9000/umfrage/mitarbeiter", {
           method: "POST",
