@@ -139,11 +139,6 @@ export default {
      */
     geraeteAnzahl: [[1, null, false], [2, null, false], [3, null, false], [5, null, false]],
     
-    activeNotebook: false,
-    activeDesktopPC: false,
-    activeBildschirm: false,
-    activeMobiltelefon: false,
-    
     //Papierverbrauch currently not used
     //papierverbrauch: null,
     //papierverbrauchListe: ['0', '1-20', '21 - 50', '51 - 70', '70+']
