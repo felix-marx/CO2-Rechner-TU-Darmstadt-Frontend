@@ -51,7 +51,7 @@
                 <v-select v-model="dienstreiseMedium" label="Verkehrsmittel" :items="dienstreiseMediumListe" class="pr-5"></v-select>
                 <!--<v-select v-model="flugklasse" label="Klasse" v-show="dienstreiseMedium === 'Flugzeug'" :items="flugklasseListe"></v-select>-->
                 <v-select v-model="flugstreckenTyp" label="Flugstrecke" v-show="dienstreiseMedium === 'Flugzeug'" :items="flugstreckeListe" class="pr-5"></v-select>
-                <v-text-field v-model="dienstreiseDistanz" :disabled="(dienstreiseMedium===null)" label="einfache Distanz" suffix="km" class="pr-5"></v-text-field>
+                <v-text-field v-model="dienstreiseDistanz" :disabled="(dienstreiseMedium===null)" label="Einfache Distanz" suffix="km" class="pr-5"></v-text-field>
             </v-row>
           </v-container>
 
@@ -79,6 +79,7 @@
             </v-row>
           </v-container>
 
+          <!--- Papierverbrauch currently not used
           <br>
           <h3>Schätzen Sie bitte wie viele Blätter Papier Sie in einer typischen Woche verbrauchen.</h3>
           <v-divider></v-divider>
@@ -87,7 +88,9 @@
             <v-row>
                 <v-select v-model="papierverbrauch" :items="papierverbrauchListe" label="Papierverbrauch"></v-select>
             </v-row>
-          </v-container>
+          </v-container> -->
+
+          <v-btn @click="send()">Absenden</v-btn>
         </v-card>
       </v-form>
     </v-card>
@@ -110,10 +113,11 @@ export default {
     einfacherPendelweg: null,
 
     //Dienstreisen
-    dienstreiseMediumListe: ['PKW (Diesel)', 'PKW (Benzin)', 'Bahn', 'Fernbus', 'Flugzeug'],
+    dienstreiseMediumListe: ['PKW (Diesel)', 'PKW (Benzin)', 'Bahn', 'Flugzeug'],
     dienstreiseMedium: null,
-    flugklasseListe: ['Economy', 'Business'],
-    flugklasse: null,
+      //Flugklasse is not needed for calculation
+      //flugklasseListe: ['Economy', 'Business'],
+      //flugklasse: null,
     flugstreckeListe: ['Langstrecke', 'Kurzstrecke'],
     flugstreckenTyp: null,
     dienstreiseDistanz: null,
@@ -134,7 +138,17 @@ export default {
     //Papierverbrauch
     papierverbrauch: null,
     papierverbrauchListe: ['0', '1-20', '21 - 50', '51 - 70', '70+']
-    })
+    }),
+    methods: {
+      logging: function() {
+        console.log("Arbeitstage:", this.arbeitstageBuero, "\n Verkehrsmittel:", this.verkehrsmittel1, this.verkehrsmittel2, this.einfacherPendelweg, "\n Fahrgemeinschaft:", this.activeFahrgemeinschaft, this.fahrgemeinschaftMitfahrer,
+        "\n Dienstreise:", this.dienstreiseMedium, this.flugstreckenTyp, this.dienstreiseDistanz, "\n Notebooks:", this.notebook, "\n Deskop PC:", this.desktopPC,
+        "\n Bildschirm:", this.bildschirme, "\n Mobiltelefon:", this.mobiltelefon)
+      },
+      send: function() {
+        this.logging();
+      }
+    }
 }
 </script>
 
