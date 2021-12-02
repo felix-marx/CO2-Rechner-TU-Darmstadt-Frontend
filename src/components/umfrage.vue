@@ -108,8 +108,16 @@ export default {
     logging: function() {
       console.log("Mitarbeiter:", this.anzahlMitarbeiter, "\n Gebäude:", this.gebaeudeNr, this.flaechenanteil, "\n geraeteAnzahl:", this.geraeteAnzahl);
     },
-    
-    sendData: async function () {
+
+    /**
+     * Returns an array of the Geräte data as specified in the API Documentation
+     * If negative amounts of a certain Gerät is supplied it is ignored
+     *  [{
+     *    idITGeraete: Integer
+     *    anzahl: Integer
+     *  }]
+     */
+    itGeraeteJSON: function() {
       //Build IT Geräte Array of non-null gerate
       var usedITGeraete = []
       for (var geraet of this.geraeteAnzahl) {
@@ -120,6 +128,9 @@ export default {
           })
         }
       }
+    },
+    
+    sendData: async function () {
 
       await fetch("http://localhost:9000/umfrage/hauptverantwortlicher", {
         method: "POST",
@@ -134,7 +145,7 @@ export default {
             }
           ],
           anzahlMitarbeiter: parseInt(this.anzahlMitarbeiter),
-          itGeraete: usedITGeraete
+          itGeraete: this.itGeraeteJSON()
         }),
       })
         .then((response) => response.json())

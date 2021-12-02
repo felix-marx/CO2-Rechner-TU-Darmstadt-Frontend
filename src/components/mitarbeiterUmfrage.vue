@@ -155,6 +155,9 @@ export default {
         "\n Dienstreise:", this.dienstreise, "\n Geräte: ", this.geraeteAnzahl)
       },
 
+      /**
+       * Returns an Integer ID that resolves the Pendelmedium Name to its specified internal ID
+       */
       mapPendelverkehrsmittel: function(verkehrmittel1, verkehrsmittel2) {
         const verkehrsmittelMap = new Map([
           ["Fahrrad", 1], ["E-Fahrrad", 2], ["Motorisiertes Zweirad", 3], ["PKW (Diesel)", 4], ["PKW (Benzin)", 5], 
@@ -178,7 +181,16 @@ export default {
         return [verkehrsmittelMap.get(verkehrsmittel), (parseInt(verkehrsmittelMap.get(verkehrsmittel)) == 2 ? (verkehrsmittel == "PKW (Benzin)" ? "Benzin" : "Diesel") : "")]
       },
 
-      sendData: async function () {
+      /**
+       * Return an array of the Pendelweg data as specified in the API Documentation
+       *  [{
+       *    strecke: Integer
+       *    idPendelweg: Integer
+       *    personenanzahl: Integer
+       *  }]]
+       * 
+       */
+      pendelwegJSON: function() {
         //Build Pendelweg Array
         var buildPendelweg = []
         for (var pendel of this.verkehrsmittel) {
@@ -189,7 +201,18 @@ export default {
               personenanzahl: parseInt(pendel[3] == null ? 1 : pendel[3]+1)
             })
         }
+        return buildPendelweg
+      },
 
+      /**
+       * Returns an array of the Geräte data as specified in the API Documentation
+       *  [{
+       *    idITGeraete: Integer
+       *    anzahl: Integer
+       *  }]
+       * 
+       */
+      itGeraeteJSON: function() {
         //Build IT Geräte Array of non-null gerate
         var usedITGeraete = []
         for (var geraet of this.geraeteAnzahl) {
@@ -200,8 +223,20 @@ export default {
             })
           }
         }
+      },
 
-        //Build Dienstreisen Array
+      /**
+       * Returns an array of the Dienstreise data as specified in API Documentation
+       *  [{
+       *    idDienstreise: Integer
+       *    streckentyp: String
+       *    strecke: Integer
+       *    tankart: String
+       *  }]
+       * 
+       */
+      dienstreisenJSON: function() {
+         //Build Dienstreisen Array
         var buildDienstreisen = []
         for (var reise of this.dienstreise) {
           var dienstreisetyp = this.mapDienstreisemittel(reise[0])
@@ -211,14 +246,13 @@ export default {
             strecke: parseInt(reise[2]),
             tankart: dienstreisetyp[1]
           })
-        }       
-        
-        console.log(JSON.stringify({
-            pendelweg: buildPendelweg,
-            tageImBuero: parseInt(this.arbeitstageBuero),
-            dienstreise: buildDienstreisen,
-            itGeraete: usedITGeraete
-          }))
+        }
+      },
+
+      /**
+       * Sends an JSON POST request to the backend to insert the data into the database and start the calculation 
+       */
+      sendData: async function () {              
 
         await fetch("http://localhost:9000/umfrage/mitarbeiter", {
           method: "POST",
@@ -226,10 +260,10 @@ export default {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            pendelweg: buildPendelweg,
+            pendelweg: this.pendelwegJSON(),
             tageImBuero: parseInt(this.arbeitstageBuero),
-            dienstreise: buildDienstreisen,
-            itGeraete: usedITGeraete
+            dienstreise: this.dienstreisenJSON(),
+            itGeraete: this.itGeraeteJSON()
           })
         })
         .then((response) => response.json())
