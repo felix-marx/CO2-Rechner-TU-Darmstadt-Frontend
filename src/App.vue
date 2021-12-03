@@ -14,10 +14,9 @@
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 
-// TODO replace with actual components that should be shown then
-import HelloWorld from "./components/HelloWorld";
-import HelloWorld2 from "./components/HelloWorld2";
-const TAB_TYPES = [HelloWorld, HelloWorld2];
+const TAB_TYPES = [Umfrage, Mitarbeiterumfrage];
+import Umfrage from './components/umfrage.vue';
+import Mitarbeiterumfrage from './components/mitarbeiterUmfrage.vue';
 
 export default {
   name: "App",
@@ -26,7 +25,8 @@ export default {
     Footer,
     Header,
     TAB_TYPES
-  },
+},
+
 
   data: () => ({
     selectedTab: 0,
