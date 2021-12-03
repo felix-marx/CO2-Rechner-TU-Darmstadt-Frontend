@@ -1,55 +1,122 @@
 <template>
   <v-container>
-    <v-card elevation="2" outlined>
+    <v-card
+      elevation="2"
+      outlined
+    >
       <v-form lazy-validation>
-        <v-card class="pa-7" >
-
+        <v-card class="pa-7">
           <br>
           <h3>Wie viele Mitarbeiter arbeiten in ihrer Abteilung?</h3>
-          <v-divider></v-divider>
+          <v-divider />
           <br>
 
           <v-container>
             <v-row>
-              <v-text-field :rules="mitarbeiterRules" v-model="anzahlMitarbeiter" label="Mitarbeiteranzahl" prepend-icon="mdi-account"></v-text-field>
+              <v-text-field
+                v-model="anzahlMitarbeiter"
+                :rules="mitarbeiterRules" 
+                label="Mitarbeiteranzahl" 
+                prepend-icon="mdi-account"
+              />
             </v-row>
           </v-container>
 
           <br>
           <h3>Welche Gebäude nutzt ihre Abteilung?</h3>
-          <v-divider></v-divider>
+          <v-divider />
           <br>
 
           <v-container>
             <v-row>
-              <v-text-field v-model="gebaeudeNr" label="Gebäudenr" prepend-icon="mdi-domain" class="pr-5"></v-text-field>
-              <v-text-field v-model="flaechenanteil" label="Nutzfläche" prepend-icon="mdi-domain" suffix="qm"></v-text-field>
+              <v-text-field 
+                v-model="gebaeudeNr" 
+                label="Gebäudenr" 
+                prepend-icon="mdi-domain" 
+                class="pr-5"
+              />
+              <v-text-field 
+                v-model="flaechenanteil" 
+                label="Nutzfläche" 
+                prepend-icon="mdi-domain" 
+                suffix="qm"
+              />
             </v-row>
           </v-container>
 
           <br>
           <h3>Welche IT-Geräte benutzen Sie in ihrer Abteilung gemeinschaftlich?</h3>
-          <v-divider></v-divider>
+          <v-divider />
           <br>
           
           <v-container>
             <v-row>
-              <v-checkbox v-model="geraeteAnzahl[0][2]" hide-details></v-checkbox>
-              <v-text-field v-model="geraeteAnzahl[0][1]" :rules="geraeteRules" :disabled="!geraeteAnzahl[0][2]" label="Multifunktionsgeräte z.B. Netzwerkdrucker" type="number" class="pr-5" suffix="Gerät/e"></v-text-field>
-              <v-text-field v-model="geraeteAnzahl[1][1]" :rules="geraeteRules" :disabled="!geraeteAnzahl[0][2]" label="verbrauchte Toner" type="number" suffix="Toner"></v-text-field>
+              <v-checkbox 
+                v-model="geraeteAnzahl[0][2]"
+                hide-details
+              />
+              <v-text-field
+                v-model="geraeteAnzahl[0][1]"
+                :rules="geraeteRules"
+                :disabled="!geraeteAnzahl[0][2]"
+                label="Multifunktionsgeräte z.B. Netzwerkdrucker"
+                type="number"
+                class="pr-5"
+                suffix="Gerät/e"
+              />
+              <v-text-field
+                v-model="geraeteAnzahl[1][1]"
+                :rules="geraeteRules"
+                :disabled="!geraeteAnzahl[0][2]"
+                label="verbrauchte Toner"
+                type="number"
+                suffix="Toner"
+              />
             </v-row>
             <v-row>
-              <v-checkbox v-model="geraeteAnzahl[2][2]" hide-details></v-checkbox>
-              <v-text-field v-model="geraeteAnzahl[2][1]" :rules="geraeteRules" :disabled="!geraeteAnzahl[2][2]" label="Laser- & Tintenstrahldrucker" type="number" suffix="Drucker" class="pr-5"></v-text-field>
-              <v-text-field v-model="geraeteAnzahl[3][1]" :rules="geraeteRules" :disabled="!geraeteAnzahl[2][2]" label="verbrauchte Toner" suffix="Toner" type="number"></v-text-field>
+              <v-checkbox
+                v-model="geraeteAnzahl[2][2]"
+                hide-details
+              />
+              <v-text-field
+                v-model="geraeteAnzahl[2][1]"
+                :rules="geraeteRules"
+                :disabled="!geraeteAnzahl[2][2]"
+                label="Laser- & Tintenstrahldrucker"
+                type="number"
+                suffix="Drucker"
+                class="pr-5"
+              />
+              <v-text-field
+                v-model="geraeteAnzahl[3][1]"
+                :rules="geraeteRules"
+                :disabled="!geraeteAnzahl[2][2]"
+                label="verbrauchte Toner"
+                suffix="Toner"
+                type="number"
+              />
             </v-row>
             <v-row>
-              <v-checkbox v-model="geraeteAnzahl[4][2]"></v-checkbox>
-              <v-text-field v-model="geraeteAnzahl[4][1]" :rules="geraeteRules" :disabled="!geraeteAnzahl[4][2]" label="Beamer" type="number" suffix="Beamer"></v-text-field>
+              <v-checkbox v-model="geraeteAnzahl[4][2]" />
+              <v-text-field
+                v-model="geraeteAnzahl[4][1]"
+                :rules="geraeteRules"
+                :disabled="!geraeteAnzahl[4][2]"
+                label="Beamer"
+                type="number"
+                suffix="Beamer"
+              />
             </v-row>
             <v-row>
-              <v-checkbox v-model="geraeteAnzahl[5][2]"></v-checkbox>
-              <v-text-field v-model="geraeteAnzahl[5][1]" :rules="geraeteRules" :disabled="!geraeteAnzahl[5][2]" label="interne Server" type="number" suffix="Server"></v-text-field>
+              <v-checkbox v-model="geraeteAnzahl[5][2]" />
+              <v-text-field
+                v-model="geraeteAnzahl[5][1]"
+                :rules="geraeteRules"
+                :disabled="!geraeteAnzahl[5][2]"
+                label="interne Server"
+                type="number"
+                suffix="Server"
+              />
             </v-row>
           </v-container>
 
@@ -66,7 +133,9 @@
             </v-row>
           </v-container> -->
 
-          <v-btn @click="sendData()">Absenden</v-btn>
+          <v-btn @click="sendData()">
+            Absenden
+          </v-btn>
         </v-card>
       </v-form>
     </v-card>

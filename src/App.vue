@@ -3,7 +3,7 @@
     <Header @changeTab="changeTab($event)" />
 
     <v-main>
-      <component v-bind:is="currentType"></component>
+      <component :is="currentType" />
     </v-main>
 
     <Footer />
@@ -32,14 +32,14 @@ export default {
   data: () => ({
     selectedTab: 0,
   }),
-  methods: {
-    changeTab(selectedTab) {
-      this.selectedTab = selectedTab;
-    },
-  },
   computed: {
     currentType: function () {
       return TAB_TYPES[this.selectedTab]
+    },
+  },
+  methods: {
+    changeTab(selectedTab) {
+      this.selectedTab = selectedTab;
     },
   },
 };
