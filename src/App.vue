@@ -15,7 +15,7 @@ import Uebersicht from './components/uebersichtUmfragen';
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 
-const TAB_TYPES = [Umfrage, Mitarbeiterumfrage];
+const TAB_TYPES = [Umfrage, Mitarbeiterumfrage, Uebersicht];
 import Umfrage from './components/umfrage.vue';
 import Mitarbeiterumfrage from './components/mitarbeiterUmfrage.vue';
 

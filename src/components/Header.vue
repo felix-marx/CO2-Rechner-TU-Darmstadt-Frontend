@@ -24,8 +24,9 @@ export default {
 
   data: () => ({
     // TODO how to place tab_titles here and tab_types in App.vue together?
-    tabs: [{"id": 0, title: "Umfragen"},
-    {"id": 1, title: "Ergebnisse"}],
+    tabs: [{"id": 0, title: "Umfrage"},
+    {"id": 1, title: "Mitarbeiterumfrage"},
+    {"id": 2, title: "Ergebnisse"}],
   }),
   methods: {
     changeTab(selectedTabComponent) {
