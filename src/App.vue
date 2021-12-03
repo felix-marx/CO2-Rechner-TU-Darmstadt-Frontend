@@ -11,6 +11,7 @@
 </template>
 
 <script>
+import Uebersicht from './components/uebersichtUmfragen';
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 
