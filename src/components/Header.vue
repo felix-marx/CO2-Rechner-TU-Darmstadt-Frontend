@@ -29,8 +29,8 @@
 
 
 <script>
-import Umfrage from "./umfrage.vue";
-import Mitarbeiterumfrage from "./mitarbeiterUmfrage.vue";
+import Umfrage from "./umfrage";
+import Mitarbeiterumfrage from "./mitarbeiterUmfrage";
 import Uebersicht from "./uebersichtUmfragen";
 
 export default {

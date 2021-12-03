@@ -17,7 +17,7 @@
 
 import Footer from "./components/Footer";
 import Header from "./components/Header";
-import Umfrage from './components/umfrage.vue';
+import Umfrage from './components/umfrage';
 
 export default {
   name: "App",

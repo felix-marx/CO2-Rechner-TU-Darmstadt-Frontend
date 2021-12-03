@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import Kontakt from "./Kontakt.vue";
+import Kontakt from "./Kontakt";
 
 export default {
   name: "Footer",
