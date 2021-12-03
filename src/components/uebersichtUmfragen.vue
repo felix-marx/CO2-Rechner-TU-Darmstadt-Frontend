@@ -17,7 +17,7 @@
 
             <v-card-actions>
                 <v-btn
-                    class="blue white--text"
+                    class="white black--text"
                     outlined
                     rounded
                     text
