@@ -1,81 +1,184 @@
 <template>
   <v-container>
-    <v-card elevation="2" outlined>
+    <v-card
+      elevation="2"
+      outlined
+    >
       <v-form>
         <v-card class="pa-7">
-           <h3>Wie kommen Sie ins Büro?
+          <h3>
+            Wie kommen Sie ins Büro?
             <v-tooltip bottom>
-                <template v-slot:activator="{ on }">
-                  <v-icon v-on="on">
-                    mdi-help-circle-outline
-                  </v-icon>
-                </template>
-                Die Distanz können Sie zum Beispiel mit Google Maps bestimmen.
-              </v-tooltip>
-            </h3>
-            <v-divider></v-divider>
-            <br>
+              <template v-slot:activator="{ on }">
+                <v-icon v-on="on">
+                  mdi-help-circle-outline
+                </v-icon>
+              </template>
+              Die Distanz können Sie zum Beispiel mit Google Maps bestimmen.
+            </v-tooltip>
+          </h3>
+          <v-divider />
+          <br>
           
           <v-container>
             <v-row>
-                <v-select v-model="verkehrsmittel[0][0]" :items="fahrtmediumListe" label="Verkehrsmedium" class="pr-5"></v-select>
-                <v-select v-model="verkehrsmittel[0][1]" v-show="verkehrsmittel[0][0] === 'Öffentliche'" :items="fahrtmediumÖPNVListe" label="ÖPNV" class="pr-5"></v-select>
-                <v-text-field v-model="verkehrsmittel[0][4]" :rules="streckeRules" label="Einfacher Pendelweg" type=number suffix="km"></v-text-field>
+              <v-select
+                v-model="verkehrsmittel[0][0]"
+                :items="fahrtmediumListe"
+                label="Verkehrsmedium"
+                class="pr-5"
+              />
+              <v-select
+                v-show="verkehrsmittel[0][0] === 'Öffentliche'"
+                v-model="verkehrsmittel[0][1]"
+                :items="fahrtmediumÖPNVListe"
+                label="ÖPNV"
+                class="pr-5"
+              />
+              <v-text-field
+                v-model="verkehrsmittel[0][4]"
+                :rules="streckeRules"
+                label="Einfacher Pendelweg"
+                type="number"
+                suffix="km"
+              />
             </v-row>
-            <h4 v-show="verkehrsmittel[0][0] === 'PKW (Diesel)' || verkehrsmittel[0][0] === 'PKW (Benzin)'" class="my-3">Fahren Sie in einer Fahrgemeinschaft?</h4>
+            <h4
+              v-show="verkehrsmittel[0][0] === 'PKW (Diesel)' || verkehrsmittel[0][0] === 'PKW (Benzin)'"
+              class="my-3"
+            >
+              Fahren Sie in einer Fahrgemeinschaft?
+            </h4>
             <v-row>
-                <v-checkbox v-show="verkehrsmittel[0][0] === 'PKW (Diesel)' || verkehrsmittel[0][0] === 'PKW (Benzin)'" v-model="verkehrsmittel[0][2]" label="Ja" class="pr-4"></v-checkbox>
-                <v-text-field v-model="verkehrsmittel[0][3]" v-show="verkehrsmittel[0][2] && (verkehrsmittel[0][0] === 'PKW (Diesel)' || verkehrsmittel[0][0] === 'PKW (Benzin)')" 
-                    label="Anzahl Mitfahrer" type="number" class="pr-5"></v-text-field>
+              <v-checkbox
+                v-show="verkehrsmittel[0][0] === 'PKW (Diesel)' || verkehrsmittel[0][0] === 'PKW (Benzin)'"
+                v-model="verkehrsmittel[0][2]"
+                label="Ja"
+                class="pr-4"
+              />
+              <v-text-field
+                v-show="verkehrsmittel[0][2] && (verkehrsmittel[0][0] === 'PKW (Diesel)' || verkehrsmittel[0][0] === 'PKW (Benzin)')"
+                v-model="verkehrsmittel[0][3]" 
+                label="Anzahl Mitfahrer"
+                type="number"
+                class="pr-5"
+              />
             </v-row>
           </v-container>
 
           <br>
           <h3>Wie viele Tage in der Woche sind Sie im Büro?</h3>
-          <v-divider></v-divider>
+          <v-divider />
           <br>
 
           <v-container>
             <v-row>
-                <v-text-field :rules="tageImBueroRules" v-model="arbeitstageBuero" label="Tage im Büro" type=number></v-text-field>
+              <v-text-field
+                v-model="arbeitstageBuero"
+                :rules="tageImBueroRules"
+                label="Tage im Büro"
+                type="number"
+              />
             </v-row>
           </v-container>
 
           <br>
           <h3>Welche Dienstreisen haben Sie in den letzten 12 Monaten unternommen?</h3>
-          <v-divider></v-divider>
+          <v-divider />
           <br>
 
           <v-container>
             <v-row>
-                <v-select v-model="dienstreise[0][0]" label="Verkehrsmittel" :items="dienstreiseMediumListe" class="pr-5"></v-select>
-                <!--<v-select v-model="flugklasse" label="Klasse" v-show="dienstreise[0][0] === 'Flugzeug'" :items="flugklasseListe"></v-select>-->
-                <v-select v-model="dienstreise[0][1]" label="Flugstrecke" v-show="dienstreise[0][0] === 'Flugzeug'" :items="flugstreckeListe" class="pr-5"></v-select>
-                <v-text-field v-model="dienstreise[0][2]" :rules="streckeRules" :disabled="(dienstreise[0][0] === null)" label="Einfache Distanz" suffix="km" class="pr-5"></v-text-field>
+              <v-select
+                v-model="dienstreise[0][0]"
+                label="Verkehrsmittel"
+                :items="dienstreiseMediumListe"
+                class="pr-5"
+              />
+              <!--<v-select v-model="flugklasse" label="Klasse" v-show="dienstreise[0][0] === 'Flugzeug'" :items="flugklasseListe"></v-select>-->
+              <v-select
+                v-show="dienstreise[0][0] === 'Flugzeug'"
+                v-model="dienstreise[0][1]"
+                label="Flugstrecke"
+                :items="flugstreckeListe"
+                class="pr-5"
+              />
+              <v-text-field
+                v-model="dienstreise[0][2]"
+                :rules="streckeRules"
+                :disabled="(dienstreise[0][0] === null)"
+                label="Einfache Distanz"
+                suffix="km"
+                class="pr-5"
+              />
             </v-row>
           </v-container>
 
           <br>
           <h3>Welche IT-Geräte benutzen Sie in ihrer Arbeit?</h3>
-          <v-divider></v-divider>
+          <v-divider />
           <br>
 
           <v-container>
             <v-row>
-                <v-checkbox  v-model="geraeteAnzahl[0][2]" hide-details></v-checkbox>
-                <v-text-field v-model="geraeteAnzahl[0][1]" :rules="geraeteRules" :disabled="!geraeteAnzahl[0][2]" label="Notebooks" type="number" class="pr-5" suffix="Gerät/e"></v-text-field>
+              <v-checkbox
+                v-model="geraeteAnzahl[0][2]"
+                hide-details
+              />
+              <v-text-field
+                v-model="geraeteAnzahl[0][1]"
+                :rules="geraeteRules"
+                :disabled="!geraeteAnzahl[0][2]"
+                label="Notebooks"
+                type="number"
+                class="pr-5"
+                suffix="Gerät/e"
+              />
             </v-row>
             <v-row>
-                <v-checkbox v-model="geraeteAnzahl[1][2]" hide-details></v-checkbox>
-                <v-text-field v-model="geraeteAnzahl[1][1]" :rules="geraeteRules" :disabled="!geraeteAnzahl[1][2]" label="Desktop PCs" type="number" class="pr-5" suffix="Gerät/e"></v-text-field>
+              <v-checkbox
+                v-model="geraeteAnzahl[1][2]"
+                hide-details
+              />
+              <v-text-field
+                v-model="geraeteAnzahl[1][1]"
+                :rules="geraeteRules"
+                :disabled="!geraeteAnzahl[1][2]"
+                label="Desktop PCs"
+                type="number"
+                class="pr-5"
+                suffix="Gerät/e"
+              />
             </v-row>
             <v-row>
-                <v-checkbox v-model="geraeteAnzahl[2][2]" hide-details></v-checkbox>
-                <v-text-field v-model="geraeteAnzahl[2][1]" :rules="geraeteRules" :disabled="!geraeteAnzahl[2][2]" label="Bildschirme" type="number" class="pr-5" suffix="Gerät/e"></v-text-field>
+              <v-checkbox
+                v-model="geraeteAnzahl[2][2]"
+                hide-details
+              />
+              <v-text-field
+                v-model="geraeteAnzahl[2][1]"
+                :rules="geraeteRules"
+                :disabled="!geraeteAnzahl[2][2]"
+                label="Bildschirme"
+                type="number"
+                class="pr-5"
+                suffix="Gerät/e"
+              />
             </v-row>
             <v-row>
-                <v-checkbox v-model="geraeteAnzahl[3][2]" hide-details></v-checkbox>
-                <v-text-field v-model="geraeteAnzahl[3][1]" :rules="geraeteRules" :disabled="!geraeteAnzahl[3][2]" label="Mobiltelefone" type="number" class="pr-5" suffix="Gerät/e"></v-text-field>
+              <v-checkbox
+                v-model="geraeteAnzahl[3][2]"
+                hide-details
+              />
+              <v-text-field
+                v-model="geraeteAnzahl[3][1]"
+                :rules="geraeteRules"
+                :disabled="!geraeteAnzahl[3][2]"
+                label="Mobiltelefone"
+                type="number"
+                class="pr-5"
+                suffix="Gerät/e"
+              />
             </v-row>
           </v-container>
 
@@ -90,7 +193,9 @@
             </v-row>
           </v-container> -->
 
-          <v-btn @click="sendData()">Absenden</v-btn>
+          <v-btn @click="sendData()">
+            Absenden
+          </v-btn>
         </v-card>
       </v-form>
     </v-card>

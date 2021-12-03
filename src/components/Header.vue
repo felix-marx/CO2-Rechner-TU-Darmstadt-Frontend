@@ -1,15 +1,25 @@
 <template>
-  <v-app-bar app color="primary" dark>
-    <div class="d-flex align-center"></div>
+  <v-app-bar
+    app
+    color="primary"
+    dark
+  >
+    <div class="d-flex align-center" />
 
+    <!--- Tab Menu --->
     <v-tabs center-active>
-      <v-tab v-for="tab in tabs" :key="tab.id" @click="changeTab(tab.id)">
+      <v-tab
+        v-for="tab in tabs"
+        :key="tab.id"
+        @click="changeTab(tab.id)"
+      >
         {{ tab.title }}
       </v-tab>
     </v-tabs>
 
-    <v-spacer></v-spacer>
+    <v-spacer />
 
+    <!--- Anmelden Button --->
     <v-btn text>
       <span class="mr-2">Anmelden</span>
       <v-icon>mdi-account</v-icon>

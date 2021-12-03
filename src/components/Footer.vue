@@ -1,7 +1,16 @@
 <template>
   <v-card height="400px">
-    <v-footer :padless="padless" fixed bottom>
-      <v-card flat tile width="100%" class="primary text-center">
+    <v-footer
+      :padless="padless"
+      fixed
+      bottom
+    >
+      <v-card
+        flat
+        tile
+        width="100%"
+        class="primary text-center"
+      >
         <v-row justify="center">
           <v-card-text>
             <!--- Footer Links --->
@@ -17,7 +26,7 @@
             </v-btn>
 
             <!--- Kontakt Dialog --->
-           <Kontakt/>
+            <Kontakt />
           </v-card-text>
         </v-row>
       </v-card>
@@ -30,6 +39,9 @@ import Kontakt from "./Kontakt.vue";
 
 export default {
   name: "Footer",
+  components: {
+      Kontakt
+  },
 
   data: () => ({
     padless: true,
@@ -44,9 +56,6 @@ export default {
         href: "https://www.tu-darmstadt.de/datenschutzerklaerung.de.jsp", // TODO
       },
     ],
-  }),
-  components: {
-      Kontakt
-  }
+  })
 };
 </script>
