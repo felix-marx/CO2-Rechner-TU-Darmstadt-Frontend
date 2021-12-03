@@ -45,10 +45,12 @@
           </v-container>
 
           <br>
-          <h3>Welche IT-Geräte benutzen Sie in ihrer Abteilung gemeinschaftlich?</h3>
+          <h3>
+            Welche IT-Geräte benutzen Sie in ihrer Abteilung gemeinschaftlich?
+          </h3>
           <v-divider />
           <br>
-          
+
           <v-container>
             <v-row>
               <v-checkbox
@@ -132,18 +134,44 @@
               <v-text-field v-model="papierverbrauch" label="Papierverbrauch" suffix="kg" type="number"></v-text-field>
             </v-row>
           </v-container> -->
-
-          <v-btn @click="sendData()">
-            Absenden
-          </v-btn>
+          <v-row class="mt-1">
+            <v-btn
+              class="mr-4"
+              @click="sendData()"
+            >
+              Absenden
+            </v-btn>
+            <LoadingAnimation v-if="dataRequestSent" />
+          </v-row>
         </v-card>
       </v-form>
+    </v-card>
+
+    <!-- Component for showing Link for employees after sending formular data. -->
+    <v-card
+      v-if="dataReceived"
+      class="mt-2"
+      elevation="2"
+      outlined
+    >
+      <!-- TODO replace example link -->
+      <MitarbeiterLinkComponent
+        :mitarbeiter-link="'www.tu-darmstadt.co2-rechner.de/dies_ist_ein_beispiellink'"
+      />
     </v-card>
   </v-container>
 </template>
 
 <script>
+import MitarbeiterLinkComponent from "./mitarbeiterLinkComponent";
+import LoadingAnimation from "./componentParts/loadingAnimation";
+
 export default {
+  components: {
+    MitarbeiterLinkComponent,
+    LoadingAnimation,
+  },
+
   data: () => ({
     //Mitarbeiter
     anzahlMitarbeiter: null,
@@ -160,25 +188,45 @@ export default {
      * beamer 4
      * server 5
      */
-    geraeteAnzahl: [[7, null, false], [8, null, false], [9, null, false], [10, null, false], [4, null, false], [6, null, false]],
+    geraeteAnzahl: [
+      [7, null, false],
+      [8, null, false],
+      [9, null, false],
+      [10, null, false],
+      [4, null, false],
+      [6, null, false],
+    ],
 
     //Papiernutzung currently not used
     //papierverbrauch: null
 
     //Rules for input validation
     mitarbeiterRules: [
-      v => !!v || "Muss angegeben werden",
-      v => (parseInt(v) > 0) || "Bitte geben Sie eine valide Mitarbeiteranzahl an"
+      (v) => !!v || "Muss angegeben werden",
+      (v) =>
+        parseInt(v) > 0 || "Bitte geben Sie eine valide Mitarbeiteranzahl an",
     ],
     geraeteRules: [
-      v => !!v || "Wenn Sie das Gerät nicht benutzten, wählen Sie es bitte ab",
-      v => (parseInt(v)> 0) || "Bitte geben Sie eine valide Menge an"
-    ]
-    
+      (v) =>
+        !!v || "Wenn Sie das Gerät nicht benutzten, wählen Sie es bitte ab",
+      (v) => parseInt(v) > 0 || "Bitte geben Sie eine valide Menge an",
+    ],
+
+    // has Absenden Button been clicked
+    dataRequestSent: false,
+    dataReceived: false,
   }),
   methods: {
-    logging: function() {
-      console.log("Mitarbeiter:", this.anzahlMitarbeiter, "\n Gebäude:", this.gebaeudeNr, this.flaechenanteil, "\n geraeteAnzahl:", this.geraeteAnzahl);
+    logging: function () {
+      console.log(
+        "Mitarbeiter:",
+        this.anzahlMitarbeiter,
+        "\n Gebäude:",
+        this.gebaeudeNr,
+        this.flaechenanteil,
+        "\n geraeteAnzahl:",
+        this.geraeteAnzahl
+      );
     },
 
     /**
@@ -189,27 +237,26 @@ export default {
      *    anzahl: Integer
      *  }]
      */
-    itGeraeteJSON: function() {
+    itGeraeteJSON: function () {
       //Build IT Geräte Array of non-null gerate
-      var usedITGeraete = []
-      //Special case were we set the Toner enabled value to the matchig geraete value 
-      this.geraeteAnzahl[1][2] = this.geraeteAnzahl[0][2]
-      this.geraeteAnzahl[3][2] = this.geraeteAnzahl[2][2]
+      var usedITGeraete = [];
+      //Special case were we set the Toner enabled value to the matchig geraete value
+      this.geraeteAnzahl[1][2] = this.geraeteAnzahl[0][2];
+      this.geraeteAnzahl[3][2] = this.geraeteAnzahl[2][2];
 
       for (var geraet of this.geraeteAnzahl) {
-        console.log(geraet[1], " ", geraet[2])
-        if(geraet[1] > 0 && geraet[2]) {
+        console.log(geraet[1], " ", geraet[2]);
+        if (geraet[1] > 0 && geraet[2]) {
           usedITGeraete.push({
             idITGeraete: parseInt(geraet[0]),
-            anzahl: parseInt(geraet[1])
-          })
+            anzahl: parseInt(geraet[1]),
+          });
         }
       }
-      return usedITGeraete
+      return usedITGeraete;
     },
-    
-    sendData: async function () {
 
+    sendData: async function () {
       /*console.log(JSON.stringify({
           gebaeude: [
             {
@@ -221,6 +268,9 @@ export default {
           itGeraete: this.itGeraeteJSON()
         }))*/
 
+      this.dataReceived = false;
+      this.dataRequestSent = true;
+
       await fetch("http://localhost:9000/umfrage/hauptverantwortlicher", {
         method: "POST",
         headers: {
@@ -230,11 +280,11 @@ export default {
           gebaeude: [
             {
               gebaeudeNr: parseInt(this.gebaeudeNr),
-              flaechenanteil: parseInt(this.flaechenanteil)
-            }
+              flaechenanteil: parseInt(this.flaechenanteil),
+            },
           ],
           anzahlMitarbeiter: parseInt(this.anzahlMitarbeiter),
-          itGeraete: this.itGeraeteJSON()
+          itGeraete: this.itGeraeteJSON(),
         }),
       })
         .then((response) => response.json())
@@ -244,10 +294,12 @@ export default {
         .catch((error) => {
           console.error("Error:", error);
         });
+
+      this.dataRequestSent = false;
+      this.dataReceived = true;
     },
-  }
-  
-}
+  },
+};
 </script>
 
 <style lang="scss">
@@ -259,7 +311,7 @@ input::-webkit-inner-spin-button {
 }
 
 /* Firefox */
-input[type=number] {
+input[type="number"] {
   -moz-appearance: textfield;
 }
 </style>
