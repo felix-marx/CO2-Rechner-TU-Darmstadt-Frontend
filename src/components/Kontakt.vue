@@ -8,7 +8,6 @@
         class="mx-4"
         text
         v-bind="attrs"
-        flat
         v-on="on"
       >
         <span class="mx-2">Kontakt</span>
@@ -34,6 +33,7 @@
 
         <!--- Kontakt Adresse --->
         <v-list-item-content>
+          <!-- Mail -->
           <v-card elevation="0">
             <v-icon class="mr-2">
               mdi-email-outline
@@ -42,6 +42,7 @@
               href="mailto:nachhaltigkeit@tu-darmstadt.de"
             >nachhaltigkeit@tu-darmstadt.de</a>
           </v-card>
+          <!-- Phone -->
           <v-card elevation="0">
             <v-icon class="mr-2">
               mdi-phone
@@ -49,15 +50,17 @@
             <a href="tel:+4961511657230">+49 6151 16-57230</a>
           </v-card>
 
+          <!-- following div was issued as vulnerable to XSS attacks by the linter. 
+          The issue was reviewed and showed that there are no possible XSS attacks here, therefore the linter is turned off
+          for this component -->
+          <!-- eslint-disable vue/no-v-html -->
           <div
-            class="my-2 mx-2"
+            class="my-3 mx-4"
             v-html="addresse"
           />
+          <!--eslint-enable-->
         </v-list-item-content>
       </v-list-item>
-      <v-card-actions>
-        <v-spacer />
-      </v-card-actions>
     </v-card>
   </v-dialog>
 </template>
@@ -65,6 +68,7 @@
 <script>
 export default {
   name: "Kontakt",
+  
   data() {
     return {
       addresse: "L3|02 Solarhaus</br>El-Lissitzky-Straße 3</br>64287 Darmstadt",

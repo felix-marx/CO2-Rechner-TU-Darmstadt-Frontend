@@ -1,21 +1,22 @@
 <template>
   <v-card height="400px">
+    <!--- Footer --->
     <v-footer
       :padless="padless"
       fixed
       bottom
     >
       <v-card
-        flat
+        text
         tile
         width="100%"
         class="primary text-center"
       >
         <v-row justify="center">
           <v-card-text>
-            <!--- Footer Links --->
+            <!--- Footer Buttons (links are currently opened in new tab by 'target="_blank"')--->
             <v-btn
-              v-for="(fElem, i) in footerElements"
+              v-for="(fElem, i) in footerButtons"
               :key="i"
               :href="fElem.href"
               class="mx-4"
@@ -46,14 +47,16 @@ export default {
   data: () => ({
     padless: true,
     dialog: false,
-    footerElements: [
+    
+    // Kontakt component not in footerButtons for it is as Dialog and not a Button
+    footerButtons: [
       {
         text: "Impressum",
-        href: "https://www.tu-darmstadt.de/impressum/index.de.jsp", // TODO
+        href: "https://www.tu-darmstadt.de/impressum/index.de.jsp",
       },
       {
         text: "Datenschutzerklärung",
-        href: "https://www.tu-darmstadt.de/datenschutzerklaerung.de.jsp", // TODO
+        href: "https://www.tu-darmstadt.de/datenschutzerklaerung.de.jsp",
       },
     ],
   })
