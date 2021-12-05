@@ -20,51 +20,77 @@
           <v-divider />
           <br>
           
-          <v-container>
-            <v-row>
-              <v-select
-                v-model="verkehrsmittel[0][0]"
-                :items="fahrtmediumListe"
-                label="Verkehrsmedium"
-                class="pr-5"
-              />
-              <v-select
-                v-show="verkehrsmittel[0][0] === 'Öffentliche'"
-                v-model="verkehrsmittel[0][1]"
-                :items="fahrtmediumÖPNVListe"
-                label="ÖPNV"
-                class="pr-5"
-              />
-              <v-text-field
-                v-model="verkehrsmittel[0][4]"
-                :rules="streckeRules"
-                label="Einfacher Pendelweg"
-                type="number"
-                suffix="km"
-              />
-            </v-row>
-            <h4
-              v-show="verkehrsmittel[0][0] === 'PKW (Diesel)' || verkehrsmittel[0][0] === 'PKW (Benzin)'"
-              class="my-3"
-            >
-              Fahren Sie in einer Fahrgemeinschaft?
-            </h4>
-            <v-row>
-              <v-checkbox
-                v-show="verkehrsmittel[0][0] === 'PKW (Diesel)' || verkehrsmittel[0][0] === 'PKW (Benzin)'"
-                v-model="verkehrsmittel[0][2]"
-                label="Ja"
-                class="pr-4"
-              />
-              <v-text-field
-                v-show="verkehrsmittel[0][2] && (verkehrsmittel[0][0] === 'PKW (Diesel)' || verkehrsmittel[0][0] === 'PKW (Benzin)')"
-                v-model="verkehrsmittel[0][3]" 
-                label="Anzahl Mitfahrer"
-                type="number"
-                class="pr-5"
-              />
-            </v-row>
-          </v-container>
+          <div
+            v-for="(medium, index) in verkehrsmittel" 
+            :key="`medium-${index}`"
+          >
+            <template>
+              <v-row>
+                <!-- The length of the column is calculated based on the selection, so that the button to add new elements in this line -->
+                <v-col
+                  :cols="(medium[0] === 'Öffentliche' ? 4 : 6)"
+                >
+                  <v-select
+                    v-model="medium[0]"
+                    :items="fahrtmediumListe"
+                    label="Verkehrsmedium"
+                  />
+                </v-col>
+                <v-col
+                  v-if="medium[0] === 'Öffentliche'"
+                  :cols="(medium[0] === 'Öffentliche' ? 3 : 0)"
+                >
+                  <v-select
+                    v-model="medium[1]"
+                    :items="fahrtmediumÖPNVListe"
+                    label="ÖPNV"
+                  />
+                </v-col>
+                <v-col
+                  :cols="(medium[0] === 'Öffentliche' ? 3 : 4)"
+                >
+                  <v-text-field
+                    v-model="medium[4]"
+                    :rules="streckeRules"
+                    label="Einfacher Pendelweg"
+                    type="number"
+                    suffix="km"
+                  />
+                </v-col>
+                <v-col>
+                  <v-btn @click="newVerkehrsmittel()">
+                    +
+                  </v-btn>
+                </v-col>
+                <v-col>
+                  <v-btn @click="removeVerkehrsmittel(index)">
+                    -
+                  </v-btn>
+                </v-col>
+              </v-row>
+              <h4
+                v-show="medium[0] === 'PKW (Diesel)' || medium[0] === 'PKW (Benzin)'"
+                class="my-3"
+              >
+                Fahren Sie in einer Fahrgemeinschaft?
+              </h4>
+              <v-row>
+                <v-checkbox
+                  v-show="medium[0] === 'PKW (Diesel)' || medium[0] === 'PKW (Benzin)'"
+                  v-model="medium[2]"
+                  label="Ja"
+                  class="pr-4"
+                />
+                <v-text-field
+                  v-show="medium[2] && (medium[0] === 'PKW (Diesel)' || medium[0] === 'PKW (Benzin)')"
+                  v-model="medium[3]" 
+                  label="Anzahl Mitfahrer"
+                  type="number"
+                  class="pr-5"
+                />
+              </v-row>
+            </template>
+          </div>
 
           <br>
           <h3>Wie viele Tage in der Woche sind Sie im Büro?</h3>
@@ -269,6 +295,26 @@ export default {
         console.log("Arbeitstage:", this.arbeitstageBuero, "\n Verkehrsmittel:", this.verkehrsmittel,
         "\n Dienstreise:", this.dienstreise, "\n Geräte: ", this.geraeteAnzahl)
       },
+      
+      /**
+       * Adds a new Verkehrsmittel to select as the  Pendelmedium 
+       */
+      newVerkehrsmittel: function() {
+        this.verkehrsmittel.push([
+          null, null, false, null, null
+        ])
+      },
+
+      /**
+       * Removes the element at the position index from the verkehrmittel index therfore removing this field from displaying
+       */
+      removeVerkehrsmittel: function(index) {
+        if(index > 0) {
+          this.verkehrsmittel.splice(index, 1)
+        } else {
+          console.log("Can't remove the first element!")
+        }
+      },
 
       /**
        * Returns an Integer ID that resolves the Pendelmedium Name to its specified internal ID
@@ -313,7 +359,7 @@ export default {
               strecke: parseInt(pendel[4]),
               idPendelweg: parseInt(this.mapPendelverkehrsmittel(pendel[0], pendel[1])),
               //return 1 for no fahrgemeinschaft. In Question we ask Anzahl Mitfahrer so pendel[3]+1 are all persons in the vehicle
-              personenanzahl: parseInt(pendel[3] == null ? 1 : pendel[3]+1)
+              personenanzahl: parseInt(pendel[3] == null ? 1 : parseInt(pendel[3])+1)
             })
         }
         return buildPendelweg
@@ -338,6 +384,7 @@ export default {
             })
           }
         }
+        return usedITGeraete
       },
 
       /**
@@ -363,6 +410,7 @@ export default {
             tankart: dienstreisetyp[1]
           })
         }
+        return buildDienstreisen
       },
 
       /**
@@ -370,12 +418,12 @@ export default {
        */
       sendData: async function () {              
 
-        /*console.log(JSON.stringify({
+        console.log(JSON.stringify({
             pendelweg: this.pendelwegJSON(),
             tageImBuero: parseInt(this.arbeitstageBuero),
             dienstreise: this.dienstreisenJSON(),
             itGeraete: this.itGeraeteJSON()
-          }))*/
+          }))
 
         await fetch("http://localhost:9000/umfrage/mitarbeiter", {
           method: "POST",
