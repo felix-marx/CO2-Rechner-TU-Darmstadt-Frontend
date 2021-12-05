@@ -53,12 +53,18 @@
                 />
               </v-col>
               <v-col>
-                <v-btn @click="newGebaeude()">
+                <v-btn
+                  color="add"
+                  @click="newGebaeude()"
+                >
                   Hinzufügen
                 </v-btn>
               </v-col>
               <v-col>
-                <v-btn @click="removeGebaeude(index)">
+                <v-btn
+                  color="delete"
+                  @click="removeGebaeude(index)"
+                >
                   Löschen
                 </v-btn>
               </v-col>

@@ -58,12 +58,18 @@
                 />
               </v-col>
               <v-col>
-                <v-btn @click="newVerkehrsmittel()">
+                <v-btn
+                  color="add"
+                  @click="newVerkehrsmittel()"
+                >
                   Hinzufügen
                 </v-btn>
               </v-col>
               <v-col>
-                <v-btn @click="removeVerkehrsmittel(index)">
+                <v-btn
+                  color="delete"
+                  @click="removeVerkehrsmittel(index)"
+                >
                   Löschen
                 </v-btn>
               </v-col>
@@ -153,12 +159,18 @@
                 />
               </v-col>
               <v-col>
-                <v-btn @click="newDienstreise()">
+                <v-btn
+                  color="add"
+                  @click="newDienstreise()"
+                >
                   Hinzufügen
                 </v-btn>
               </v-col>
               <v-col>
-                <v-btn @click="removeDienstreise(index)">
+                <v-btn
+                  color="delete"
+                  @click="removeDienstreise(index)"
+                >
                   Löschen
                 </v-btn>
               </v-col>
