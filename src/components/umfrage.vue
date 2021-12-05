@@ -54,12 +54,12 @@
               </v-col>
               <v-col>
                 <v-btn @click="newGebaeude()">
-                  +
+                  Hinzufügen
                 </v-btn>
               </v-col>
               <v-col>
                 <v-btn @click="removeGebaeude(index)">
-                  -
+                  Löschen
                 </v-btn>
               </v-col>
             </v-row>
@@ -154,7 +154,7 @@
             </v-row>
           </v-container> -->
 
-          <v-btn @click="sendData()">
+          <v-btn @click="logging()">
             Absenden
           </v-btn>
         </v-card>
@@ -168,20 +168,19 @@ export default {
   data: () => ({
     //Mitarbeiter
     anzahlMitarbeiter: null,
+
     //genutzte Gebäude
-    /* Format: [gebaeudeID, flaechenanteil]
-     *
-     */
+    // Format: [gebaeudeID, flaechenanteil]
     gebaeude: [[null, null]],
 
     //IT Geräte
     /* Geraet an Array Position format [intern Geraete ID, Anzahl, enabled]
-     * Multigeraete 0
-     * MultigeraetToner 1
-     * Laserdrucker 2
-     * LaserdruckerToner 3
-     * beamer 4
-     * server 5
+     * [0] Multigeraete
+     * [1] MultigeraetToner
+     * [2] Laserdrucker
+     * [3] LaserdruckerToner
+     * [4] beamer
+     * [5] server
      */
     geraeteAnzahl: [[7, null, false], [8, null, false], [9, null, false], [10, null, false], [4, null, false], [6, null, false]],
 
@@ -200,6 +199,9 @@ export default {
     
   }),
   methods: {
+    /**
+     * Prints all variables to the console
+     */
     logging: function() {
       console.log("Mitarbeiter:", this.anzahlMitarbeiter, "\n Gebäude:", this.gebaeude, "\n geraeteAnzahl:", this.geraeteAnzahl);
     },
@@ -217,12 +219,16 @@ export default {
      * Removes the Gebäude at position index so that it won't show
      */
     removeGebaeude: function(index) {
-       if(index > 0 || this.gebaeude.length > 1) {
-          this.gebaeude.splice(index, 1)
+      if(index >= 0 && this.gebaeude.length > index) {
+        this.gebaeude.splice(index, 1)
+        //When the only element is removed add a new, thereby clearing the values of the fields on the webpage
+        if(this.gebaeude.length === 0) {
+            this.newGebaeude()
         }
-        else {
-          console.error("Can't remove the last Gebäude!")
-        }
+      }
+      else {
+        console.error("Negative or out of bounds array index supplied")
+      }
     },
 
     /**

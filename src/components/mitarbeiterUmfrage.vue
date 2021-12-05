@@ -59,12 +59,12 @@
               </v-col>
               <v-col>
                 <v-btn @click="newVerkehrsmittel()">
-                  +
+                  Hinzufügen
                 </v-btn>
               </v-col>
               <v-col>
                 <v-btn @click="removeVerkehrsmittel(index)">
-                  -
+                  Löschen
                 </v-btn>
               </v-col>
             </v-row>
@@ -154,12 +154,12 @@
               </v-col>
               <v-col>
                 <v-btn @click="newDienstreise()">
-                  +
+                  Hinzufügen
                 </v-btn>
               </v-col>
               <v-col>
                 <v-btn @click="removeDienstreise(index)">
-                  -
+                  Löschen
                 </v-btn>
               </v-col>
             </v-row>
@@ -244,7 +244,7 @@
             </v-row>
           </v-container> -->
 
-          <v-btn @click="sendData()">
+          <v-btn @click="logging()">
             Absenden
           </v-btn>
         </v-card>
@@ -288,10 +288,10 @@ export default {
 
     //IT Geräte
     /* Geraet mit Array Position format [intern Geraete ID, Anzahl, enabled]
-     * Notebook 0
-     * DesktopPC 1
-     * Bildschirm 2
-     * Mobiltelefon 3
+     * [0] Notebook
+     * [1] DesktopPC
+     * [2] Bildschirm
+     * [3] Mobiltelefon
      */
     geraeteAnzahl: [[1, null, false], [2, null, false], [3, null, false], [5, null, false]],
     
@@ -316,6 +316,10 @@ export default {
     }),
 
     methods: {
+
+      /**
+       * Prints all variables to the console 
+       */
       logging: function() {
         console.log("Arbeitstage:", this.arbeitstageBuero, "\n Verkehrsmittel:", this.verkehrsmittel,
         "\n Dienstreise:", this.dienstreise, "\n Geräte: ", this.geraeteAnzahl)
@@ -334,10 +338,15 @@ export default {
        * Removes the element at the position index from the verkehrmittel index therfore removing this field from displaying
        */
       removeVerkehrsmittel: function(index) {
-        if(index > 0 || this.verkehrsmittel.length > 1) {
+        if(index >= 0 && this.verkehrsmittel.length > index) {
           this.verkehrsmittel.splice(index, 1)
-        } else {
-          console.error("Can't remove the last Verkehrsmittel!")
+          //When the only element is removed add a new, thereby clearing the values of the fields on the webpage
+          if(this.verkehrsmittel.length === 0) {
+            this.newVerkehrsmittel()
+          }
+        }
+        else {
+          console.error("Negative or out of bounds array index supplied")
         }
       },
 
@@ -380,11 +389,15 @@ export default {
        * Removes a Dienstreise at the given index, therby deleting it from the webpage
        */
       removeDienstreise: function(index) {
-        if(index > 0 || this.dienstreise.length > 1) {
+        if(index >= 0 && this.dienstreise.length > index) {
           this.dienstreise.splice(index, 1)
+          //When the only element is removed add a new, thereby clearing the values of the fields on the webpage
+          if(this.dienstreise.length === 0) {
+              this.newDienstreise()
+          }
         }
         else {
-          console.error("Can't remove the last Dienstreise!")
+          console.error("Negative or out of bounds array index supplied")
         }
       },
 
