@@ -24,72 +24,71 @@
             v-for="(medium, index) in verkehrsmittel" 
             :key="`medium-${index}`"
           >
-            <template>
-              <v-row>
-                <!-- The length of the column is calculated based on the selection, so that the button to add new elements in this line -->
-                <v-col
-                  :cols="(medium[0] === 'Öffentliche' ? 4 : 6)"
-                >
-                  <v-select
-                    v-model="medium[0]"
-                    :items="fahrtmediumListe"
-                    label="Verkehrsmedium"
-                  />
-                </v-col>
-                <v-col
-                  v-if="medium[0] === 'Öffentliche'"
-                  :cols="(medium[0] === 'Öffentliche' ? 3 : 0)"
-                >
-                  <v-select
-                    v-model="medium[1]"
-                    :items="fahrtmediumÖPNVListe"
-                    label="ÖPNV"
-                  />
-                </v-col>
-                <v-col
-                  :cols="(medium[0] === 'Öffentliche' ? 3 : 4)"
-                >
-                  <v-text-field
-                    v-model="medium[4]"
-                    :rules="streckeRules"
-                    label="Einfacher Pendelweg"
-                    type="number"
-                    suffix="km"
-                  />
-                </v-col>
-                <v-col>
-                  <v-btn @click="newVerkehrsmittel()">
-                    +
-                  </v-btn>
-                </v-col>
-                <v-col>
-                  <v-btn @click="removeVerkehrsmittel(index)">
-                    -
-                  </v-btn>
-                </v-col>
-              </v-row>
-              <h4
-                v-show="medium[0] === 'PKW (Diesel)' || medium[0] === 'PKW (Benzin)'"
-                class="my-3"
+            <v-row>
+              <!-- The length of the column is calculated based on the selection, so that the button to add new elements in this line -->
+              <v-col
+                :cols="(medium[0] === 'Öffentliche' ? 4 : 6)"
               >
-                Fahren Sie in einer Fahrgemeinschaft?
-              </h4>
-              <v-row>
-                <v-checkbox
-                  v-show="medium[0] === 'PKW (Diesel)' || medium[0] === 'PKW (Benzin)'"
-                  v-model="medium[2]"
-                  label="Ja"
-                  class="pr-4"
+                <v-select
+                  v-model="medium[0]"
+                  :items="fahrtmediumListe"
+                  label="Verkehrsmedium"
                 />
+              </v-col>
+              <v-col
+                v-if="medium[0] === 'Öffentliche'"
+                :cols="(medium[0] === 'Öffentliche' ? 3 : 0)"
+              >
+                <v-select
+                  v-model="medium[1]"
+                  :items="fahrtmediumÖPNVListe"
+                  label="ÖPNV"
+                />
+              </v-col>
+              <v-col
+                :cols="(medium[0] === 'Öffentliche' ? 3 : 4)"
+              >
                 <v-text-field
-                  v-show="medium[2] && (medium[0] === 'PKW (Diesel)' || medium[0] === 'PKW (Benzin)')"
-                  v-model="medium[3]" 
-                  label="Anzahl Mitfahrer"
+                  v-model="medium[4]"
+                  :rules="streckeRules"
+                  :disabled="(medium[0] === null)"
+                  label="Einfacher Pendelweg"
                   type="number"
-                  class="pr-5"
+                  suffix="km"
                 />
-              </v-row>
-            </template>
+              </v-col>
+              <v-col>
+                <v-btn @click="newVerkehrsmittel()">
+                  +
+                </v-btn>
+              </v-col>
+              <v-col>
+                <v-btn @click="removeVerkehrsmittel(index)">
+                  -
+                </v-btn>
+              </v-col>
+            </v-row>
+            <h4
+              v-show="medium[0] === 'PKW (Diesel)' || medium[0] === 'PKW (Benzin)'"
+              class="my-3"
+            >
+              Fahren Sie in einer Fahrgemeinschaft?
+            </h4>
+            <v-row>
+              <v-checkbox
+                v-show="medium[0] === 'PKW (Diesel)' || medium[0] === 'PKW (Benzin)'"
+                v-model="medium[2]"
+                label="Ja"
+                class="pr-4"
+              />
+              <v-text-field
+                v-show="medium[2] && (medium[0] === 'PKW (Diesel)' || medium[0] === 'PKW (Benzin)')"
+                v-model="medium[3]" 
+                label="Anzahl Mitfahrer"
+                type="number"
+                class="pr-5"
+              />
+            </v-row>
           </div>
 
           <br>
@@ -113,32 +112,58 @@
           <v-divider />
           <br>
 
-          <v-container>
+          <div
+            v-for="(reise, index) in dienstreise" 
+            :key="`reise-${index}`"
+          >
             <v-row>
-              <v-select
-                v-model="dienstreise[0][0]"
-                label="Verkehrsmittel"
-                :items="dienstreiseMediumListe"
-                class="pr-5"
-              />
-              <!--<v-select v-model="flugklasse" label="Klasse" v-show="dienstreise[0][0] === 'Flugzeug'" :items="flugklasseListe"></v-select>-->
-              <v-select
-                v-show="dienstreise[0][0] === 'Flugzeug'"
-                v-model="dienstreise[0][1]"
-                label="Flugstrecke"
-                :items="flugstreckeListe"
-                class="pr-5"
-              />
-              <v-text-field
-                v-model="dienstreise[0][2]"
-                :rules="streckeRules"
-                :disabled="(dienstreise[0][0] === null)"
-                label="Einfache Distanz"
-                suffix="km"
-                class="pr-5"
-              />
+              <v-col 
+                :cols="(reise[0] === 'Flugzeug' ? 4 : 5)"
+              >
+                <v-select
+                  v-model="reise[0]"
+                  label="Verkehrsmittel"
+                  :items="dienstreiseMediumListe"
+                  class="pr-5"
+                />
+              </v-col>
+              <!--<v-select v-model="flugklasse" label="Klasse" v-show="reise[0] === 'Flugzeug'" :items="flugklasseListe"></v-select>-->
+              <v-col
+                v-if="reise[0] === 'Flugzeug'"
+                :cols="(reise[0] === 'Flugzeug' ? 3 : 0)"
+              >
+                <v-select
+                  v-show="reise[0] === 'Flugzeug'"
+                  v-model="reise[1]"
+                  label="Flugstrecke"
+                  :items="flugstreckeListe"
+                  class="pr-5"
+                />
+              </v-col>
+              <v-col
+                :cols="(reise[0] === 'Flugzeug' ? 3 : 5)"
+              >
+                <v-text-field
+                  v-model="reise[2]"
+                  :rules="streckeRules"
+                  :disabled="(reise[0] === null)"
+                  label="Einfache Distanz"
+                  suffix="km"
+                  class="pr-5"
+                />
+              </v-col>
+              <v-col>
+                <v-btn @click="newDienstreise()">
+                  +
+                </v-btn>
+              </v-col>
+              <v-col>
+                <v-btn @click="removeDienstreise(index)">
+                  -
+                </v-btn>
+              </v-col>
             </v-row>
-          </v-container>
+          </div>
 
           <br>
           <h3>Welche IT-Geräte benutzen Sie in ihrer Arbeit?</h3>
@@ -309,10 +334,10 @@ export default {
        * Removes the element at the position index from the verkehrmittel index therfore removing this field from displaying
        */
       removeVerkehrsmittel: function(index) {
-        if(index > 0) {
+        if(index > 0 || this.verkehrsmittel.length > 1) {
           this.verkehrsmittel.splice(index, 1)
         } else {
-          console.log("Can't remove the first element!")
+          console.log("Can't remove the last Verkehrsmittel!")
         }
       },
 
@@ -340,6 +365,27 @@ export default {
           ["Bahn", 1], ["PKW (Diesel)", 2], ["PKW (Benzin)", 2], ["Flugzeug", 3]
         ])
         return [verkehrsmittelMap.get(verkehrsmittel), (parseInt(verkehrsmittelMap.get(verkehrsmittel)) == 2 ? (verkehrsmittel == "PKW (Benzin)" ? "Benzin" : "Diesel") : "")]
+      },
+
+      /**
+       * Adds a new Dienstreise to select as another Dienstreisemedium
+       */
+      newDienstreise: function() {
+        this.dienstreise.push([
+          null, null, null
+        ])
+      },
+
+      /**
+       * Removes a Dienstreise at the given index, therby deleting it from the webpage
+       */
+      removeDienstreise: function(index) {
+        if(index > 0 || this.dienstreise.length > 1) {
+          this.dienstreise.splice(index, 1)
+        }
+        else {
+          console.log("Can't remove the last Dienstreise!")
+        }
       },
 
       /**
