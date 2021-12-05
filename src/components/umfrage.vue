@@ -27,22 +27,43 @@
           <v-divider />
           <br>
 
-          <v-container>
+          <div
+            v-for="(objekt, index) in gebaeude"
+            :key="`gebaeude-${index}`"
+          >
             <v-row>
-              <v-text-field 
-                v-model="gebaeudeNr" 
-                label="Gebäudenr" 
-                prepend-icon="mdi-domain" 
-                class="pr-5"
-              />
-              <v-text-field 
-                v-model="flaechenanteil" 
-                label="Nutzfläche" 
-                prepend-icon="mdi-domain" 
-                suffix="qm"
-              />
+              <v-col
+                cols="5"
+              >
+                <v-text-field 
+                  v-model="objekt[0]" 
+                  label="Gebäudenr" 
+                  prepend-icon="mdi-domain" 
+                  class="pr-5"
+                />
+              </v-col>
+              <v-col
+                cols="5"
+              >
+                <v-text-field 
+                  v-model="objekt[1]" 
+                  label="Nutzfläche" 
+                  prepend-icon="mdi-domain" 
+                  suffix="qm"
+                />
+              </v-col>
+              <v-col>
+                <v-btn @click="newGebaeude()">
+                  +
+                </v-btn>
+              </v-col>
+              <v-col>
+                <v-btn @click="removeGebaeude(index)">
+                  -
+                </v-btn>
+              </v-col>
             </v-row>
-          </v-container>
+          </div>
 
           <br>
           <h3>Welche IT-Geräte benutzen Sie in ihrer Abteilung gemeinschaftlich?</h3>
@@ -148,8 +169,10 @@ export default {
     //Mitarbeiter
     anzahlMitarbeiter: null,
     //genutzte Gebäude
-    gebaeudeNr: null,
-    flaechenanteil: null,
+    /* Format: [gebaeudeID, flaechenanteil]
+     *
+     */
+    gebaeude: [[null, null]],
 
     //IT Geräte
     /* Geraet an Array Position format [intern Geraete ID, Anzahl, enabled]
@@ -178,7 +201,28 @@ export default {
   }),
   methods: {
     logging: function() {
-      console.log("Mitarbeiter:", this.anzahlMitarbeiter, "\n Gebäude:", this.gebaeudeNr, this.flaechenanteil, "\n geraeteAnzahl:", this.geraeteAnzahl);
+      console.log("Mitarbeiter:", this.anzahlMitarbeiter, "\n Gebäude:", this.gebaeude, "\n geraeteAnzahl:", this.geraeteAnzahl);
+    },
+
+    /**
+     * Adds a new Gebäude to the array, so that it can be selected
+     */
+    newGebaeude: function() {
+      this.gebaeude.push([
+        null, null
+      ])
+    },
+
+    /**
+     * Removes the Gebäude at position index so that it won't show
+     */
+    removeGebaeude: function(index) {
+       if(index > 0 || this.gebaeude.length > 1) {
+          this.gebaeude.splice(index, 1)
+        }
+        else {
+          console.error("Can't remove the last Gebäude!")
+        }
     },
 
     /**
@@ -197,7 +241,6 @@ export default {
       this.geraeteAnzahl[3][2] = this.geraeteAnzahl[2][2]
 
       for (var geraet of this.geraeteAnzahl) {
-        console.log(geraet[1], " ", geraet[2])
         if(geraet[1] > 0 && geraet[2]) {
           usedITGeraete.push({
             idITGeraete: parseInt(geraet[0]),
@@ -207,19 +250,27 @@ export default {
       }
       return usedITGeraete
     },
+
+    /**
+     * Returns an array of the Gebäude data as specified in the API Documentation
+     * [{
+     *   gebaeudeNr: Integer
+     *   flaechenanteil: Integer
+     * }]
+     */
+    gebaeudeJSON: function() {
+      var gebaeudeJSON = []
+
+      for (var objekt of this.gebaeude) {
+        gebaeudeJSON.push({
+          gebaeudeNr: parseInt(objekt[0]),
+          flaechenanteil: parseInt(objekt[1])
+        })
+      }
+      return gebaeudeJSON
+    },
     
     sendData: async function () {
-
-      /*console.log(JSON.stringify({
-          gebaeude: [
-            {
-              gebaeudeNr: parseInt(this.gebaeudeNr),
-              flaechenanteil: parseInt(this.flaechenanteil)
-            }
-          ],
-          anzahlMitarbeiter: parseInt(this.anzahlMitarbeiter),
-          itGeraete: this.itGeraeteJSON()
-        }))*/
 
       await fetch("http://localhost:9000/umfrage/hauptverantwortlicher", {
         method: "POST",
@@ -227,12 +278,7 @@ export default {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          gebaeude: [
-            {
-              gebaeudeNr: parseInt(this.gebaeudeNr),
-              flaechenanteil: parseInt(this.flaechenanteil)
-            }
-          ],
+          gebaeude: this.gebaeudeJSON(),
           anzahlMitarbeiter: parseInt(this.anzahlMitarbeiter),
           itGeraete: this.itGeraeteJSON()
         }),

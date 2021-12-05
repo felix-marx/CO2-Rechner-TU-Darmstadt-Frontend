@@ -337,7 +337,7 @@ export default {
         if(index > 0 || this.verkehrsmittel.length > 1) {
           this.verkehrsmittel.splice(index, 1)
         } else {
-          console.log("Can't remove the last Verkehrsmittel!")
+          console.error("Can't remove the last Verkehrsmittel!")
         }
       },
 
@@ -384,7 +384,7 @@ export default {
           this.dienstreise.splice(index, 1)
         }
         else {
-          console.log("Can't remove the last Dienstreise!")
+          console.error("Can't remove the last Dienstreise!")
         }
       },
 
@@ -462,14 +462,7 @@ export default {
       /**
        * Sends an JSON POST request to the backend to insert the data into the database and start the calculation 
        */
-      sendData: async function () {              
-
-        console.log(JSON.stringify({
-            pendelweg: this.pendelwegJSON(),
-            tageImBuero: parseInt(this.arbeitstageBuero),
-            dienstreise: this.dienstreisenJSON(),
-            itGeraete: this.itGeraeteJSON()
-          }))
+      sendData: async function () {
 
         await fetch("http://localhost:9000/umfrage/mitarbeiter", {
           method: "POST",
