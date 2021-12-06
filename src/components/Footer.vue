@@ -52,11 +52,11 @@ export default {
     footerButtons: [
       {
         text: "Impressum",
-        href: "https://www.tu-darmstadt.de/impressum/index.de.jsp",
+        href: "https://www.tu-darmstadt.de/impressum/index.de.jsp", // TODO keep link to TU Darmstadt website or make own impressum? --> AG Meeting
       },
       {
         text: "Datenschutzerklärung",
-        href: "https://www.tu-darmstadt.de/datenschutzerklaerung.de.jsp",
+        href: "https://www.tu-darmstadt.de/datenschutzerklaerung.de.jsp", // TODO keep link to TU Darmstadt website or make own Datenschutzerklärung? --> AG Meeting
       },
     ],
   })

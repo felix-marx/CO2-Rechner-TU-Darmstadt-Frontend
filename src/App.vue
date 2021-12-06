@@ -31,11 +31,16 @@ export default {
 
   data: () => ({
     // standard tab selected is the first tab / Umfrage tab
-    // TODO could extend this to be persistent on site refresh, but this would require additional plugins, like e.g. Vuex.
+    // could extend this to be persistent on site refresh, but this would require additional plugins, like e.g. Vuex.
     selectedTab: 0,
     currentTabType: Umfrage
   }),
   methods: {
+    /**
+    Listens for events in the header tab menu.
+    @param tab the new tab that is now selected. Has two attributes id and componentType.
+    The componentType determines the component that is then shown in the App Body.
+    */
     changeTab(tab) {
       this.selectedTab = tab.id;
       this.currentTabType = tab.componentType;
