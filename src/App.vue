@@ -5,9 +5,7 @@
 
     <!-- main body -->
     <v-main>
-
       <component :is="currentTabType" />
-
     </v-main>
 
     <!-- Footer -->
@@ -47,6 +45,11 @@ export default {
     changeTab(tab) {
       this.selectedTab = tab.id;
       this.currentTabType = tab.componentType;
+    },
+  },
+  methods: {
+    changeTab(selectedTab) {
+      this.selectedTab = selectedTab;
     },
   },
 };
