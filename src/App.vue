@@ -47,10 +47,5 @@ export default {
       this.currentTabType = tab.componentType;
     },
   },
-  methods: {
-    changeTab(selectedTab) {
-      this.selectedTab = selectedTab;
-    },
-  },
 };
 </script>

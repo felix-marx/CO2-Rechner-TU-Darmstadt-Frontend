@@ -6,7 +6,6 @@
     >
       <v-form lazy-validation>
         <v-card class="pa-7">
-        
           <!-- Mitarbeiter in Abteilung -->
           
           <br>
@@ -198,6 +197,46 @@
         :mitarbeiter-link="'www.tu-darmstadt.co2-rechner.de/dies_ist_ein_beispiellink'"
       />
     </v-card>
+
+    <!-- Anzeigen der Berechnungsergebnisse -->
+    <v-card
+      elevation="2"
+      class="mt-2"
+      outlined
+    >
+      <v-simple-table>
+        <template v-slot:default>
+          <thead>
+            <tr>
+              <th class="text-left">
+                Kategorie
+              </th>
+              <th class="text-left">
+                Wert
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{{ "Stromemissionen" }}</td>
+              <td>{{ responseData.stromEmissionen }}</td>
+            </tr>
+            <tr>
+              <td>{{ "Wärmeemission" }}</td>
+              <td>{{ responseData.waermeEmissionen }}</td>
+            </tr>
+            <tr>
+              <td>{{ "Kälteemissionen" }}</td>
+              <td>{{ responseData.kaelteEmissionen }}</td>
+            </tr>
+            <tr>
+              <td>{{ "IT-Geräteemissionen" }}</td>
+              <td>{{ responseData.itGeraeteEmissionen }}</td>
+            </tr>
+          </tbody>
+        </template>
+      </v-simple-table>
+    </v-card>
   </v-container>
 </template>
 
@@ -254,11 +293,12 @@ export default {
     absolutpositivRules: [
       v => !!v || "Muss angegeben werden",
       v => (parseInt(v) > 0) || "Bitte geben Sie einen Wert größer Null an"
-    ]
+    ],
     
     // has Absenden Button been clicked
     dataRequestSent: false,
     dataReceived: false,
+    responseData: {},
   }),
   methods: {
     /**
@@ -354,6 +394,7 @@ export default {
         .then((response) => response.json())
         .then((data) => {
           console.log("Success:", data);
+          this.responseData = data
         })
         .catch((error) => {
           console.error("Error:", error);
