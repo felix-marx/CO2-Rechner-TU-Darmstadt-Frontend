@@ -6,7 +6,9 @@
     >
       <v-form lazy-validation>
         <v-card class="pa-7">
+        
           <!-- Mitarbeiter in Abteilung -->
+          
           <br>
           <h3>Wie viele Mitarbeiter arbeiten in ihrer Abteilung?</h3>
           <v-divider />
@@ -83,7 +85,7 @@
           <h3>Welche IT-Geräte benutzen Sie in ihrer Abteilung gemeinschaftlich?</h3>
           <v-divider />
           <br>
-          
+
           <v-container>
             <!-- Multifunktionsgeräte -->
             <v-row>
@@ -171,18 +173,44 @@
               <v-text-field v-model="papierverbrauch" label="Papierverbrauch" suffix="kg" type="number"></v-text-field>
             </v-row>
           </v-container> -->
-
-          <v-btn @click="sendData()">
-            Absenden
-          </v-btn>
+          <v-row class="mt-1">
+            <v-btn
+              class="mr-4"
+              @click="sendData()"
+            >
+              Absenden
+            </v-btn>
+            <LoadingAnimation v-if="dataRequestSent" />
+          </v-row>
         </v-card>
       </v-form>
+    </v-card>
+
+    <!-- Component for showing Link for employees after sending formular data. -->
+    <v-card
+      v-if="dataReceived"
+      class="mt-2"
+      elevation="2"
+      outlined
+    >
+      <!-- TODO replace example link -->
+      <MitarbeiterLinkComponent
+        :mitarbeiter-link="'www.tu-darmstadt.co2-rechner.de/dies_ist_ein_beispiellink'"
+      />
     </v-card>
   </v-container>
 </template>
 
 <script>
+import MitarbeiterLinkComponent from "./mitarbeiterLinkComponent";
+import LoadingAnimation from "./componentParts/loadingAnimation";
+
 export default {
+  components: {
+    MitarbeiterLinkComponent,
+    LoadingAnimation,
+  },
+
   data: () => ({
     //Mitarbeiter
     anzahlMitarbeiter: null,
@@ -200,12 +228,20 @@ export default {
      * [4] beamer
      * [5] server
      */
-    geraeteAnzahl: [[7, null, false], [8, null, false], [9, null, false], [10, null, false], [4, null, false], [6, null, false]],
+    geraeteAnzahl: [
+      [7, null, false],
+      [8, null, false],
+      [9, null, false],
+      [10, null, false],
+      [4, null, false],
+      [6, null, false],
+    ],
 
     //Papiernutzung currently not used
     //papierverbrauch: null
 
     //Rules for input validation
+
     geraeteRules: [
       v => !!v || "Wenn Sie das Gerät nicht benutzten, wählen Sie es bitte ab",
       v => (parseInt(v) != 0) || "Wenn Sie das Gerät nicht benutzten, wählen Sie es bitte ab",
@@ -220,6 +256,9 @@ export default {
       v => (parseInt(v) > 0) || "Bitte geben Sie einen Wert größer Null an"
     ]
     
+    // has Absenden Button been clicked
+    dataRequestSent: false,
+    dataReceived: false,
   }),
   methods: {
     /**
@@ -262,22 +301,22 @@ export default {
      *    anzahl: Integer
      *  }]
      */
-    itGeraeteJSON: function() {
+    itGeraeteJSON: function () {
       //Build IT Geräte Array of non-null gerate
-      var usedITGeraete = []
-      //Special case were we set the Toner enabled value to the matchig geraete value 
-      this.geraeteAnzahl[1][2] = this.geraeteAnzahl[0][2]
-      this.geraeteAnzahl[3][2] = this.geraeteAnzahl[2][2]
+      var usedITGeraete = [];
+      //Special case were we set the Toner enabled value to the matchig geraete value
+      this.geraeteAnzahl[1][2] = this.geraeteAnzahl[0][2];
+      this.geraeteAnzahl[3][2] = this.geraeteAnzahl[2][2];
 
       for (var geraet of this.geraeteAnzahl) {
         if(geraet[1] > 0 && geraet[2]) {
           usedITGeraete.push({
             idITGeraete: parseInt(geraet[0]),
-            anzahl: parseInt(geraet[1])
-          })
+            anzahl: parseInt(geraet[1]),
+          });
         }
       }
-      return usedITGeraete
+      return usedITGeraete;
     },
 
     /**
@@ -309,7 +348,7 @@ export default {
         body: JSON.stringify({
           gebaeude: this.gebaeudeJSON(),
           anzahlMitarbeiter: parseInt(this.anzahlMitarbeiter),
-          itGeraete: this.itGeraeteJSON()
+          itGeraete: this.itGeraeteJSON(),
         }),
       })
         .then((response) => response.json())
@@ -319,10 +358,12 @@ export default {
         .catch((error) => {
           console.error("Error:", error);
         });
+
+      this.dataRequestSent = false;
+      this.dataReceived = true;
     },
-  }
-  
-}
+  },
+};
 </script>
 
 <!-- Removes the buttons in textfields to increase decrease number -->
@@ -335,7 +376,7 @@ input::-webkit-inner-spin-button {
 }
 
 /* Firefox */
-input[type=number] {
+input[type="number"] {
   -moz-appearance: textfield;
 }
 </style>

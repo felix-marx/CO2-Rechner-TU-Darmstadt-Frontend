@@ -19,9 +19,9 @@ function createLink(surveyID) {
 }
 
 
-function decodeLink(link) {
-  // TODO
-}
+// function decodeLink(link) {
+//   // TODO
+// }
 
 // We need to remember which codes are currently in use on server side
 function makeid() {

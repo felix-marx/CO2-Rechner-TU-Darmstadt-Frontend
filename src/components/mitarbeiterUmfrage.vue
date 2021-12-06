@@ -82,6 +82,7 @@
               Fahren Sie in einer Fahrgemeinschaft?
             </h4>
             <v-row>
+
               <v-col :cols="1">
                 <v-checkbox
                   v-show="medium[0] === 'PKW (Diesel)' || medium[0] === 'PKW (Benzin)'"
