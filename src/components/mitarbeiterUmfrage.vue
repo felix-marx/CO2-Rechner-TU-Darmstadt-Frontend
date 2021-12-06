@@ -74,6 +74,7 @@
                 </v-btn>
               </v-col>
             </v-row>
+            <!-- Weitere Reihe für PKWs mit Fahrgemeinschaft -->
             <h4
               v-show="medium[0] === 'PKW (Diesel)' || medium[0] === 'PKW (Benzin)'"
               class="my-3"
@@ -81,21 +82,27 @@
               Fahren Sie in einer Fahrgemeinschaft?
             </h4>
             <v-row>
-              <v-checkbox
-                v-show="medium[0] === 'PKW (Diesel)' || medium[0] === 'PKW (Benzin)'"
-                v-model="medium[2]"
-                label="Ja"
-                class="pr-4"
-              />
-              <v-text-field
-                v-show="medium[2] && (medium[0] === 'PKW (Diesel)' || medium[0] === 'PKW (Benzin)')"
-                v-model="medium[3]" 
-                label="Anzahl Mitfahrer"
-                type="number"
-                class="pr-5"
-              />
+              <v-col :cols="1">
+                <v-checkbox
+                  v-show="medium[0] === 'PKW (Diesel)' || medium[0] === 'PKW (Benzin)'"
+                  v-model="medium[2]"
+                  label="Ja"
+                  class="pr-4"
+                />
+              </v-col>
+              <v-col :cols="9">
+                <v-text-field
+                  v-show="medium[2] && (medium[0] === 'PKW (Diesel)' || medium[0] === 'PKW (Benzin)')"
+                  v-model="medium[3]" 
+                  label="Anzahl Mitfahrer"
+                  type="number"
+                  class="pr-5"
+                />
+              </v-col>
             </v-row>
           </div>
+
+          <!-- Arbeitstage im Büro -->
 
           <br>
           <h3>Wie viele Tage in der Woche sind Sie im Büro?</h3>
@@ -112,6 +119,8 @@
               />
             </v-row>
           </v-container>
+
+          <!-- Dienstreisen Abfrage Option mehrere anzugeben -->
 
           <br>
           <h3>Welche Dienstreisen haben Sie in den letzten 12 Monaten unternommen?</h3>
@@ -177,12 +186,15 @@
             </v-row>
           </div>
 
+          <!-- Umfrage für die IT Geräte Notebook, Desktop PC, Bildschirm, Mobiltelfon -->
+
           <br>
           <h3>Welche IT-Geräte benutzen Sie in ihrer Arbeit?</h3>
           <v-divider />
           <br>
 
           <v-container>
+            <!-- Notebook -->
             <v-row>
               <v-checkbox
                 v-model="geraeteAnzahl[0][2]"
@@ -198,6 +210,7 @@
                 suffix="Gerät/e"
               />
             </v-row>
+            <!-- Desktop PC -->
             <v-row>
               <v-checkbox
                 v-model="geraeteAnzahl[1][2]"
@@ -213,6 +226,7 @@
                 suffix="Gerät/e"
               />
             </v-row>
+            <!-- Bildschirm -->
             <v-row>
               <v-checkbox
                 v-model="geraeteAnzahl[2][2]"
@@ -228,6 +242,7 @@
                 suffix="Gerät/e"
               />
             </v-row>
+            <!-- Mobiltelefon -->
             <v-row>
               <v-checkbox
                 v-model="geraeteAnzahl[3][2]"
@@ -256,7 +271,7 @@
             </v-row>
           </v-container> -->
 
-          <v-btn @click="logging()">
+          <v-btn @click="sendData()">
             Absenden
           </v-btn>
         </v-card>

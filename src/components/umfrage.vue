@@ -6,6 +6,7 @@
     >
       <v-form lazy-validation>
         <v-card class="pa-7">
+          <!-- Mitarbeiter in Abteilung -->
           <br>
           <h3>Wie viele Mitarbeiter arbeiten in ihrer Abteilung?</h3>
           <v-divider />
@@ -21,6 +22,8 @@
               />
             </v-row>
           </v-container>
+
+          <!-- Genutzte Gebäude -->
 
           <br>
           <h3>Welche Gebäude nutzt ihre Abteilung?</h3>
@@ -71,12 +74,15 @@
             </v-row>
           </div>
 
+          <!-- Umfrage für IT Geräte: Multifunktionsgeräte + Toner, Drucker + Toner, Beamer, Server -->  
+
           <br>
           <h3>Welche IT-Geräte benutzen Sie in ihrer Abteilung gemeinschaftlich?</h3>
           <v-divider />
           <br>
           
           <v-container>
+            <!-- Multifunktionsgeräte -->
             <v-row>
               <v-checkbox 
                 v-model="geraeteAnzahl[0][2]"
@@ -100,6 +106,7 @@
                 suffix="Toner"
               />
             </v-row>
+            <!-- Drucker -->
             <v-row>
               <v-checkbox
                 v-model="geraeteAnzahl[2][2]"
@@ -123,6 +130,7 @@
                 type="number"
               />
             </v-row>
+            <!-- Beamer -->
             <v-row>
               <v-checkbox v-model="geraeteAnzahl[4][2]" />
               <v-text-field
@@ -134,6 +142,7 @@
                 suffix="Beamer"
               />
             </v-row>
+            <!-- Server -->
             <v-row>
               <v-checkbox v-model="geraeteAnzahl[5][2]" />
               <v-text-field
@@ -160,7 +169,7 @@
             </v-row>
           </v-container> -->
 
-          <v-btn @click="logging()">
+          <v-btn @click="sendData()">
             Absenden
           </v-btn>
         </v-card>
@@ -229,7 +238,7 @@ export default {
         this.gebaeude.splice(index, 1)
         //When the only element is removed add a new, thereby clearing the values of the fields on the webpage
         if(this.gebaeude.length === 0) {
-            this.newGebaeude()
+          this.newGebaeude()
         }
       }
       else {

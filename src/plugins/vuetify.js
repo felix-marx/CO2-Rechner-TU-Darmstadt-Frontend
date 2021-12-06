@@ -13,7 +13,7 @@ export default new Vuetify({
             accent: '#8c9eff',
             error: '#b71c1c',
             add: '#00c853',
-            delete: '#dd2c00'
+            delete: '#f44336'
           },
         },
       },
