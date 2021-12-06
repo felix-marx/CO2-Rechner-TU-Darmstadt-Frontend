@@ -2,7 +2,7 @@
   <v-container>
     <!-- Die erstellte Umfrage soll eine Karte erhalten. -->
     <v-card
-      elevation="10"
+      elevation="2"
       outlined
     >
       <v-list-item three-line>
@@ -51,3 +51,13 @@
     </v-col>
   </v-container>
 </template>
+
+<script>
+  export default {
+    data () {
+      return {
+        selected: ['Umfrage1'],
+      }
+    },
+  }
+</script>
