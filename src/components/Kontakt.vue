@@ -53,12 +53,12 @@
           <!-- following div was issued as vulnerable to XSS attacks by the linter. 
           The issue was reviewed and showed that there are no possible XSS attacks here, therefore the linter is turned off
           for this component -->
-          <!-- eslint-disable vue/no-v-html -->
+          
           <div
             class="my-3 mx-4"
-            v-html="addresse"
-          />
-          <!--eslint-enable-->
+          >
+            L3|02 Solarhaus<br>El-Lissitzky-Straße 3<br>64287 Darmstadt
+          </div>
         </v-list-item-content>
       </v-list-item>
     </v-card>
@@ -71,7 +71,6 @@ export default {
   
   data() {
     return {
-      addresse: "L3|02 Solarhaus</br>El-Lissitzky-Straße 3</br>64287 Darmstadt",
       dialog: false,
     };
   },
