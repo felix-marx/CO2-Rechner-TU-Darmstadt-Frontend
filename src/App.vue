@@ -5,7 +5,9 @@
 
     <!-- main body -->
     <v-main>
+
       <component :is="currentTabType" />
+
     </v-main>
 
     <!-- Footer -->
@@ -35,6 +37,7 @@ export default {
     selectedTab: 0,
     currentTabType: Umfrage
   }),
+
   methods: {
     /**
     Listens for events in the header tab menu.

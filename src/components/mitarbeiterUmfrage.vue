@@ -20,51 +20,91 @@
           <v-divider />
           <br>
           
-          <v-container>
+          <div
+            v-for="(medium, index) in verkehrsmittel" 
+            :key="index"
+          >
             <v-row>
-              <v-select
-                v-model="verkehrsmittel[0][0]"
-                :items="fahrtmediumListe"
-                label="Verkehrsmedium"
-                class="pr-5"
-              />
-              <v-select
-                v-show="verkehrsmittel[0][0] === 'Öffentliche'"
-                v-model="verkehrsmittel[0][1]"
-                :items="fahrtmediumÖPNVListe"
-                label="ÖPNV"
-                class="pr-5"
-              />
-              <v-text-field
-                v-model="verkehrsmittel[0][4]"
-                :rules="streckeRules"
-                label="Einfacher Pendelweg"
-                type="number"
-                suffix="km"
-              />
+              <!-- The length of the column is calculated based on the selection, so that the button to add new elements in this line -->
+              <v-col
+                :cols="(medium[0] === 'Öffentliche' ? 4 : 6)"
+              >
+                <v-select
+                  v-model="medium[0]"
+                  :items="fahrtmediumListe"
+                  label="Verkehrsmedium"
+                />
+              </v-col>
+              <v-col
+                v-if="medium[0] === 'Öffentliche'"
+                :cols="(medium[0] === 'Öffentliche' ? 3 : 0)"
+              >
+                <v-select
+                  v-model="medium[1]"
+                  :items="fahrtmediumÖPNVListe"
+                  label="ÖPNV"
+                />
+              </v-col>
+              <v-col
+                :cols="(medium[0] === 'Öffentliche' ? 3 : 4)"
+              >
+                <v-text-field
+                  v-model="medium[4]"
+                  :rules="streckeRules"
+                  :disabled="(medium[0] === null)"
+                  label="Einfacher Pendelweg"
+                  type="number"
+                  suffix="km"
+                />
+              </v-col>
+              <v-col>
+                <v-btn
+                  color="add"
+                  @click="newVerkehrsmittel()"
+                >
+                  Hinzufügen
+                </v-btn>
+              </v-col>
+              <v-col>
+                <v-btn
+                  color="delete"
+                  @click="removeVerkehrsmittel(index)"
+                >
+                  Löschen
+                </v-btn>
+              </v-col>
             </v-row>
+            <!-- Weitere Reihe für PKWs mit Fahrgemeinschaft -->
             <h4
-              v-show="verkehrsmittel[0][0] === 'PKW (Diesel)' || verkehrsmittel[0][0] === 'PKW (Benzin)'"
+              v-show="medium[0] === 'PKW (Diesel)' || medium[0] === 'PKW (Benzin)'"
               class="my-3"
             >
               Fahren Sie in einer Fahrgemeinschaft?
             </h4>
             <v-row>
-              <v-checkbox
-                v-show="verkehrsmittel[0][0] === 'PKW (Diesel)' || verkehrsmittel[0][0] === 'PKW (Benzin)'"
-                v-model="verkehrsmittel[0][2]"
-                label="Ja"
-                class="pr-4"
-              />
-              <v-text-field
-                v-show="verkehrsmittel[0][2] && (verkehrsmittel[0][0] === 'PKW (Diesel)' || verkehrsmittel[0][0] === 'PKW (Benzin)')"
-                v-model="verkehrsmittel[0][3]" 
-                label="Anzahl Mitfahrer"
-                type="number"
-                class="pr-5"
-              />
+
+              <v-col :cols="1">
+                <v-checkbox
+                  v-show="medium[0] === 'PKW (Diesel)' || medium[0] === 'PKW (Benzin)'"
+                  v-model="medium[2]"
+                  label="Ja"
+                  class="pr-4"
+                />
+              </v-col>
+              <v-col :cols="9">
+                <v-text-field
+                  v-show="medium[2] && (medium[0] === 'PKW (Diesel)' || medium[0] === 'PKW (Benzin)')"
+                  v-model="medium[3]" 
+                  :rules="mitfahrerRules"
+                  label="Anzahl Mitfahrer"
+                  type="number"
+                  class="pr-5"
+                />
+              </v-col>
             </v-row>
-          </v-container>
+          </div>
+
+          <!-- Arbeitstage im Büro -->
 
           <br>
           <h3>Wie viele Tage in der Woche sind Sie im Büro?</h3>
@@ -82,37 +122,74 @@
             </v-row>
           </v-container>
 
+          <!-- Dienstreisen Abfrage Option mehrere anzugeben -->
+
           <br>
           <h3>Welche Dienstreisen haben Sie in den letzten 12 Monaten unternommen?</h3>
           <v-divider />
           <br>
 
-          <v-container>
+          <div
+            v-for="(reise, index) in dienstreise" 
+            :key="index"
+          >
             <v-row>
-              <v-select
-                v-model="dienstreise[0][0]"
-                label="Verkehrsmittel"
-                :items="dienstreiseMediumListe"
-                class="pr-5"
-              />
-              <!--<v-select v-model="flugklasse" label="Klasse" v-show="dienstreise[0][0] === 'Flugzeug'" :items="flugklasseListe"></v-select>-->
-              <v-select
-                v-show="dienstreise[0][0] === 'Flugzeug'"
-                v-model="dienstreise[0][1]"
-                label="Flugstrecke"
-                :items="flugstreckeListe"
-                class="pr-5"
-              />
-              <v-text-field
-                v-model="dienstreise[0][2]"
-                :rules="streckeRules"
-                :disabled="(dienstreise[0][0] === null)"
-                label="Einfache Distanz"
-                suffix="km"
-                class="pr-5"
-              />
+              <v-col 
+                :cols="(reise[0] === 'Flugzeug' ? 4 : 5)"
+              >
+                <v-select
+                  v-model="reise[0]"
+                  label="Verkehrsmittel"
+                  :items="dienstreiseMediumListe"
+                  class="pr-5"
+                />
+              </v-col>
+              <!--<v-select v-model="flugklasse" label="Klasse" v-show="reise[0] === 'Flugzeug'" :items="flugklasseListe"></v-select>-->
+              <v-col
+                v-if="reise[0] === 'Flugzeug'"
+                :cols="(reise[0] === 'Flugzeug' ? 3 : 0)"
+              >
+                <v-select
+                  v-show="reise[0] === 'Flugzeug'"
+                  v-model="reise[1]"
+                  label="Flugstrecke"
+                  :items="flugstreckeListe"
+                  class="pr-5"
+                />
+              </v-col>
+              <v-col
+                :cols="(reise[0] === 'Flugzeug' ? 3 : 5)"
+              >
+                <v-text-field
+                  v-model="reise[2]"
+                  :rules="streckeRules"
+                  :disabled="(reise[0] === null)"
+                  label="Einfache Distanz"
+                  suffix="km"
+                  class="pr-5"
+                  type="number"
+                />
+              </v-col>
+              <v-col>
+                <v-btn
+                  color="add"
+                  @click="newDienstreise()"
+                >
+                  Hinzufügen
+                </v-btn>
+              </v-col>
+              <v-col>
+                <v-btn
+                  color="delete"
+                  @click="removeDienstreise(index)"
+                >
+                  Löschen
+                </v-btn>
+              </v-col>
             </v-row>
-          </v-container>
+          </div>
+
+          <!-- Umfrage für die IT Geräte Notebook, Desktop PC, Bildschirm, Mobiltelfon -->
 
           <br>
           <h3>Welche IT-Geräte benutzen Sie in ihrer Arbeit?</h3>
@@ -120,6 +197,7 @@
           <br>
 
           <v-container>
+            <!-- Notebook -->
             <v-row>
               <v-checkbox
                 v-model="geraeteAnzahl[0][2]"
@@ -135,6 +213,7 @@
                 suffix="Gerät/e"
               />
             </v-row>
+            <!-- Desktop PC -->
             <v-row>
               <v-checkbox
                 v-model="geraeteAnzahl[1][2]"
@@ -150,6 +229,7 @@
                 suffix="Gerät/e"
               />
             </v-row>
+            <!-- Bildschirm -->
             <v-row>
               <v-checkbox
                 v-model="geraeteAnzahl[2][2]"
@@ -165,6 +245,7 @@
                 suffix="Gerät/e"
               />
             </v-row>
+            <!-- Mobiltelefon -->
             <v-row>
               <v-checkbox
                 v-model="geraeteAnzahl[3][2]"
@@ -237,10 +318,10 @@ export default {
 
     //IT Geräte
     /* Geraet mit Array Position format [intern Geraete ID, Anzahl, enabled]
-     * Notebook 0
-     * DesktopPC 1
-     * Bildschirm 2
-     * Mobiltelefon 3
+     * [0] Notebook
+     * [1] DesktopPC
+     * [2] Bildschirm
+     * [3] Mobiltelefon
      */
     geraeteAnzahl: [[1, null, false], [2, null, false], [3, null, false], [5, null, false]],
     
@@ -259,15 +340,48 @@ export default {
     ],
     geraeteRules: [
       v => !!v || "Wenn Sie das Gerät nicht benutzten, wählen Sie es bitte ab",
-      v => (parseInt(v)> 0) || "Bitte geben Sie eine valide Menge an"
+      v => (parseInt(v) > 0) || "Bitte geben Sie eine valide Menge an"
+    ],
+    mitfahrerRules: [
+      v => !!v || "Wenn Sie alleine fahren, wählen Sie bitte diese Option ab",
+      v => (parseInt(v) > 0) || "Bitte geben Sie eine positive Anzahl an Mitfahrern an"
     ]
 
     }),
 
     methods: {
+
+      /**
+       * Prints all variables to the console 
+       */
       logging: function() {
         console.log("Arbeitstage:", this.arbeitstageBuero, "\n Verkehrsmittel:", this.verkehrsmittel,
         "\n Dienstreise:", this.dienstreise, "\n Geräte: ", this.geraeteAnzahl)
+      },
+      
+      /**
+       * Adds a new Verkehrsmittel to select as the  Pendelmedium 
+       */
+      newVerkehrsmittel: function() {
+        this.verkehrsmittel.push([
+          null, null, false, null, null
+        ])
+      },
+
+      /**
+       * Removes the element at the position index from the verkehrmittel index therfore removing this field from displaying
+       */
+      removeVerkehrsmittel: function(index) {
+        if(index >= 0 && this.verkehrsmittel.length > index) {
+          this.verkehrsmittel.splice(index, 1)
+          //When the only element is removed add a new, thereby clearing the values of the fields on the webpage
+          if(this.verkehrsmittel.length === 0) {
+            this.newVerkehrsmittel()
+          }
+        }
+        else {
+          console.error("Negative or out of bounds array index supplied")
+        }
       },
 
       /**
@@ -297,6 +411,31 @@ export default {
       },
 
       /**
+       * Adds a new Dienstreise to select as another Dienstreisemedium
+       */
+      newDienstreise: function() {
+        this.dienstreise.push([
+          null, null, null
+        ])
+      },
+
+      /**
+       * Removes a Dienstreise at the given index, therby deleting it from the webpage
+       */
+      removeDienstreise: function(index) {
+        if(index >= 0 && this.dienstreise.length > index) {
+          this.dienstreise.splice(index, 1)
+          //When the only element is removed add a new, thereby clearing the values of the fields on the webpage
+          if(this.dienstreise.length === 0) {
+              this.newDienstreise()
+          }
+        }
+        else {
+          console.error("Negative or out of bounds array index supplied")
+        }
+      },
+
+      /**
        * Return an array of the Pendelweg data as specified in the API Documentation
        *  [{
        *    strecke: Integer
@@ -313,7 +452,7 @@ export default {
               strecke: parseInt(pendel[4]),
               idPendelweg: parseInt(this.mapPendelverkehrsmittel(pendel[0], pendel[1])),
               //return 1 for no fahrgemeinschaft. In Question we ask Anzahl Mitfahrer so pendel[3]+1 are all persons in the vehicle
-              personenanzahl: parseInt(pendel[3] == null ? 1 : pendel[3]+1)
+              personenanzahl: parseInt(pendel[3] == null ? 1 : parseInt(pendel[3])+1)
             })
         }
         return buildPendelweg
@@ -338,6 +477,7 @@ export default {
             })
           }
         }
+        return usedITGeraete
       },
 
       /**
@@ -363,19 +503,13 @@ export default {
             tankart: dienstreisetyp[1]
           })
         }
+        return buildDienstreisen
       },
 
       /**
        * Sends an JSON POST request to the backend to insert the data into the database and start the calculation 
        */
-      sendData: async function () {              
-
-        /*console.log(JSON.stringify({
-            pendelweg: this.pendelwegJSON(),
-            tageImBuero: parseInt(this.arbeitstageBuero),
-            dienstreise: this.dienstreisenJSON(),
-            itGeraete: this.itGeraeteJSON()
-          }))*/
+      sendData: async function () {
 
         await fetch("http://localhost:9000/umfrage/mitarbeiter", {
           method: "POST",
@@ -402,6 +536,7 @@ export default {
 }
 </script>
 
+<!-- Removes the buttons in textfields to increase decrease number -->
 <style lang="scss">
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,

@@ -6,6 +6,9 @@
     >
       <v-form lazy-validation>
         <v-card class="pa-7">
+        
+          <!-- Mitarbeiter in Abteilung -->
+          
           <br>
           <h3>Wie viele Mitarbeiter arbeiten in ihrer Abteilung?</h3>
           <v-divider />
@@ -15,45 +18,78 @@
             <v-row>
               <v-text-field
                 v-model="anzahlMitarbeiter"
-                :rules="mitarbeiterRules"
-                label="Mitarbeiteranzahl"
+                :rules="absolutpositivRules" 
+                label="Mitarbeiteranzahl" 
+                type="number"
                 prepend-icon="mdi-account"
               />
             </v-row>
           </v-container>
+
+          <!-- Genutzte Gebäude -->
 
           <br>
           <h3>Welche Gebäude nutzt ihre Abteilung?</h3>
           <v-divider />
           <br>
 
-          <v-container>
+          <div
+            v-for="(objekt, index) in gebaeude"
+            :key="index"
+          >
             <v-row>
-              <v-text-field
-                v-model="gebaeudeNr"
-                label="Gebäudenr"
-                prepend-icon="mdi-domain"
-                class="pr-5"
-              />
-              <v-text-field
-                v-model="flaechenanteil"
-                label="Nutzfläche"
-                prepend-icon="mdi-domain"
-                suffix="qm"
-              />
+              <v-col
+                cols="5"
+              >
+                <v-text-field 
+                  v-model="objekt[0]" 
+                  label="Gebäudenr" 
+                  prepend-icon="mdi-domain" 
+                  class="pr-5"
+                />
+              </v-col>
+              <v-col
+                cols="5"
+              >
+                <v-text-field 
+                  v-model="objekt[1]" 
+                  :rules="absolutpositivRules"
+                  label="Nutzfläche" 
+                  prepend-icon="mdi-domain" 
+                  type="number"
+                  suffix="qm"
+                />
+              </v-col>
+              <v-col>
+                <v-btn
+                  color="add"
+                  @click="newGebaeude()"
+                >
+                  Hinzufügen
+                </v-btn>
+              </v-col>
+              <v-col>
+                <v-btn
+                  color="delete"
+                  @click="removeGebaeude(index)"
+                >
+                  Löschen
+                </v-btn>
+              </v-col>
             </v-row>
-          </v-container>
+          </div>
+
+          <!-- Umfrage für IT Geräte: Multifunktionsgeräte + Toner, Drucker + Toner, Beamer, Server -->  
 
           <br>
-          <h3>
-            Welche IT-Geräte benutzen Sie in ihrer Abteilung gemeinschaftlich?
-          </h3>
+          <h3>Welche IT-Geräte benutzen Sie in ihrer Abteilung gemeinschaftlich?</h3>
           <v-divider />
           <br>
 
           <v-container>
+            <!-- Multifunktionsgeräte -->
             <v-row>
-              <v-checkbox
+              <v-checkbox 
                 v-model="geraeteAnzahl[0][2]"
                 hide-details
               />
@@ -68,13 +104,14 @@
               />
               <v-text-field
                 v-model="geraeteAnzahl[1][1]"
-                :rules="geraeteRules"
+                :rules="nichtnegativRules"
                 :disabled="!geraeteAnzahl[0][2]"
                 label="verbrauchte Toner"
                 type="number"
                 suffix="Toner"
               />
             </v-row>
+            <!-- Drucker -->
             <v-row>
               <v-checkbox
                 v-model="geraeteAnzahl[2][2]"
@@ -91,13 +128,14 @@
               />
               <v-text-field
                 v-model="geraeteAnzahl[3][1]"
-                :rules="geraeteRules"
+                :rules="nichtnegativRules"
                 :disabled="!geraeteAnzahl[2][2]"
                 label="verbrauchte Toner"
                 suffix="Toner"
                 type="number"
               />
             </v-row>
+            <!-- Beamer -->
             <v-row>
               <v-checkbox v-model="geraeteAnzahl[4][2]" />
               <v-text-field
@@ -109,6 +147,7 @@
                 suffix="Beamer"
               />
             </v-row>
+            <!-- Server -->
             <v-row>
               <v-checkbox v-model="geraeteAnzahl[5][2]" />
               <v-text-field
@@ -175,18 +214,19 @@ export default {
   data: () => ({
     //Mitarbeiter
     anzahlMitarbeiter: null,
+
     //genutzte Gebäude
-    gebaeudeNr: null,
-    flaechenanteil: null,
+    // Format: [gebaeudeID, flaechenanteil]
+    gebaeude: [[null, null]],
 
     //IT Geräte
     /* Geraet an Array Position format [intern Geraete ID, Anzahl, enabled]
-     * Multigeraete 0
-     * MultigeraetToner 1
-     * Laserdrucker 2
-     * LaserdruckerToner 3
-     * beamer 4
-     * server 5
+     * [0] Multigeraete
+     * [1] MultigeraetToner
+     * [2] Laserdrucker
+     * [3] LaserdruckerToner
+     * [4] beamer
+     * [5] server
      */
     geraeteAnzahl: [
       [7, null, false],
@@ -201,32 +241,56 @@ export default {
     //papierverbrauch: null
 
     //Rules for input validation
-    mitarbeiterRules: [
-      (v) => !!v || "Muss angegeben werden",
-      (v) =>
-        parseInt(v) > 0 || "Bitte geben Sie eine valide Mitarbeiteranzahl an",
-    ],
-    geraeteRules: [
-      (v) =>
-        !!v || "Wenn Sie das Gerät nicht benutzten, wählen Sie es bitte ab",
-      (v) => parseInt(v) > 0 || "Bitte geben Sie eine valide Menge an",
-    ],
 
+    geraeteRules: [
+      v => !!v || "Wenn Sie das Gerät nicht benutzten, wählen Sie es bitte ab",
+      v => (parseInt(v) != 0) || "Wenn Sie das Gerät nicht benutzten, wählen Sie es bitte ab",
+      v => (parseInt(v) > 0) || "Bitte geben Sie eine valide Menge an"
+    ],
+    nichtnegativRules: [
+      v => !!v || "Muss angegeben werden",
+      v => (parseInt(v) >= 0) || "Bitte geben Sie einen positiven Wert an"
+    ],
+    absolutpositivRules: [
+      v => !!v || "Muss angegeben werden",
+      v => (parseInt(v) > 0) || "Bitte geben Sie einen Wert größer Null an"
+    ]
+    
     // has Absenden Button been clicked
     dataRequestSent: false,
     dataReceived: false,
   }),
   methods: {
-    logging: function () {
-      console.log(
-        "Mitarbeiter:",
-        this.anzahlMitarbeiter,
-        "\n Gebäude:",
-        this.gebaeudeNr,
-        this.flaechenanteil,
-        "\n geraeteAnzahl:",
-        this.geraeteAnzahl
-      );
+    /**
+     * Prints all variables to the console
+     */
+    logging: function() {
+      console.log("Mitarbeiter:", this.anzahlMitarbeiter, "\n Gebäude:", this.gebaeude, "\n geraeteAnzahl:", this.geraeteAnzahl);
+    },
+
+    /**
+     * Adds a new Gebäude to the array, so that it can be selected
+     */
+    newGebaeude: function() {
+      this.gebaeude.push([
+        null, null
+      ])
+    },
+
+    /**
+     * Removes the Gebäude at position index so that it won't show
+     */
+    removeGebaeude: function(index) {
+      if(index >= 0 && this.gebaeude.length > index) {
+        this.gebaeude.splice(index, 1)
+        //When the only element is removed add a new, thereby clearing the values of the fields on the webpage
+        if(this.gebaeude.length === 0) {
+          this.newGebaeude()
+        }
+      }
+      else {
+        console.error("Negative or out of bounds array index supplied")
+      }
     },
 
     /**
@@ -245,8 +309,7 @@ export default {
       this.geraeteAnzahl[3][2] = this.geraeteAnzahl[2][2];
 
       for (var geraet of this.geraeteAnzahl) {
-        console.log(geraet[1], " ", geraet[2]);
-        if (geraet[1] > 0 && geraet[2]) {
+        if(geraet[1] > 0 && geraet[2]) {
           usedITGeraete.push({
             idITGeraete: parseInt(geraet[0]),
             anzahl: parseInt(geraet[1]),
@@ -256,20 +319,26 @@ export default {
       return usedITGeraete;
     },
 
-    sendData: async function () {
-      /*console.log(JSON.stringify({
-          gebaeude: [
-            {
-              gebaeudeNr: parseInt(this.gebaeudeNr),
-              flaechenanteil: parseInt(this.flaechenanteil)
-            }
-          ],
-          anzahlMitarbeiter: parseInt(this.anzahlMitarbeiter),
-          itGeraete: this.itGeraeteJSON()
-        }))*/
+    /**
+     * Returns an array of the Gebäude data as specified in the API Documentation
+     * [{
+     *   gebaeudeNr: Integer
+     *   flaechenanteil: Integer
+     * }]
+     */
+    gebaeudeJSON: function() {
+      var gebaeudeJSON = []
 
-      this.dataReceived = false;
-      this.dataRequestSent = true;
+      for (var objekt of this.gebaeude) {
+        gebaeudeJSON.push({
+          gebaeudeNr: parseInt(objekt[0]),
+          flaechenanteil: parseInt(objekt[1])
+        })
+      }
+      return gebaeudeJSON
+    },
+    
+    sendData: async function () {
 
       await fetch("http://localhost:9000/umfrage/hauptverantwortlicher", {
         method: "POST",
@@ -277,12 +346,7 @@ export default {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          gebaeude: [
-            {
-              gebaeudeNr: parseInt(this.gebaeudeNr),
-              flaechenanteil: parseInt(this.flaechenanteil),
-            },
-          ],
+          gebaeude: this.gebaeudeJSON(),
           anzahlMitarbeiter: parseInt(this.anzahlMitarbeiter),
           itGeraete: this.itGeraeteJSON(),
         }),
@@ -302,6 +366,7 @@ export default {
 };
 </script>
 
+<!-- Removes the buttons in textfields to increase decrease number -->
 <style lang="scss">
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
