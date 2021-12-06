@@ -16,8 +16,9 @@
             <v-row>
               <v-text-field
                 v-model="anzahlMitarbeiter"
-                :rules="mitarbeiterRules" 
+                :rules="absolutpositivRules" 
                 label="Mitarbeiteranzahl" 
+                type="number"
                 prepend-icon="mdi-account"
               />
             </v-row>
@@ -32,7 +33,7 @@
 
           <div
             v-for="(objekt, index) in gebaeude"
-            :key="`gebaeude-${index}`"
+            :key="index"
           >
             <v-row>
               <v-col
@@ -50,8 +51,10 @@
               >
                 <v-text-field 
                   v-model="objekt[1]" 
+                  :rules="absolutpositivRules"
                   label="Nutzfläche" 
                   prepend-icon="mdi-domain" 
+                  type="number"
                   suffix="qm"
                 />
               </v-col>
@@ -99,7 +102,7 @@
               />
               <v-text-field
                 v-model="geraeteAnzahl[1][1]"
-                :rules="geraeteRules"
+                :rules="nichtnegativRules"
                 :disabled="!geraeteAnzahl[0][2]"
                 label="verbrauchte Toner"
                 type="number"
@@ -123,7 +126,7 @@
               />
               <v-text-field
                 v-model="geraeteAnzahl[3][1]"
-                :rules="geraeteRules"
+                :rules="nichtnegativRules"
                 :disabled="!geraeteAnzahl[2][2]"
                 label="verbrauchte Toner"
                 suffix="Toner"
@@ -203,13 +206,18 @@ export default {
     //papierverbrauch: null
 
     //Rules for input validation
-    mitarbeiterRules: [
-      v => !!v || "Muss angegeben werden",
-      v => (parseInt(v) > 0) || "Bitte geben Sie eine valide Mitarbeiteranzahl an"
-    ],
     geraeteRules: [
       v => !!v || "Wenn Sie das Gerät nicht benutzten, wählen Sie es bitte ab",
-      v => (parseInt(v)> 0) || "Bitte geben Sie eine valide Menge an"
+      v => (parseInt(v) != 0) || "Wenn Sie das Gerät nicht benutzten, wählen Sie es bitte ab",
+      v => (parseInt(v) > 0) || "Bitte geben Sie eine valide Menge an"
+    ],
+    nichtnegativRules: [
+      v => !!v || "Muss angegeben werden",
+      v => (parseInt(v) >= 0) || "Bitte geben Sie einen positiven Wert an"
+    ],
+    absolutpositivRules: [
+      v => !!v || "Muss angegeben werden",
+      v => (parseInt(v) > 0) || "Bitte geben Sie einen Wert größer Null an"
     ]
     
   }),
@@ -317,6 +325,7 @@ export default {
 }
 </script>
 
+<!-- Removes the buttons in textfields to increase decrease number -->
 <style lang="scss">
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,

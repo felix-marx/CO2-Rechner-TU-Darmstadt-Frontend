@@ -22,7 +22,7 @@
           
           <div
             v-for="(medium, index) in verkehrsmittel" 
-            :key="`medium-${index}`"
+            :key="index"
           >
             <v-row>
               <!-- The length of the column is calculated based on the selection, so that the button to add new elements in this line -->
@@ -94,6 +94,7 @@
                 <v-text-field
                   v-show="medium[2] && (medium[0] === 'PKW (Diesel)' || medium[0] === 'PKW (Benzin)')"
                   v-model="medium[3]" 
+                  :rules="mitfahrerRules"
                   label="Anzahl Mitfahrer"
                   type="number"
                   class="pr-5"
@@ -129,7 +130,7 @@
 
           <div
             v-for="(reise, index) in dienstreise" 
-            :key="`reise-${index}`"
+            :key="index"
           >
             <v-row>
               <v-col 
@@ -165,6 +166,7 @@
                   label="Einfache Distanz"
                   suffix="km"
                   class="pr-5"
+                  type="number"
                 />
               </v-col>
               <v-col>
@@ -337,7 +339,11 @@ export default {
     ],
     geraeteRules: [
       v => !!v || "Wenn Sie das Gerät nicht benutzten, wählen Sie es bitte ab",
-      v => (parseInt(v)> 0) || "Bitte geben Sie eine valide Menge an"
+      v => (parseInt(v) > 0) || "Bitte geben Sie eine valide Menge an"
+    ],
+    mitfahrerRules: [
+      v => !!v || "Wenn Sie alleine fahren, wählen Sie bitte diese Option ab",
+      v => (parseInt(v) > 0) || "Bitte geben Sie eine positive Anzahl an Mitfahrern an"
     ]
 
     }),
@@ -529,6 +535,7 @@ export default {
 }
 </script>
 
+<!-- Removes the buttons in textfields to increase decrease number -->
 <style lang="scss">
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
