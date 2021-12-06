@@ -1,5 +1,6 @@
 <template>
   <v-container>
+    <!-- Die erstellte Umfrage soll eine Karte erhalten. -->
     <v-card
       elevation="10"
       outlined
@@ -16,6 +17,7 @@
         </v-list-item-content>
       </v-list-item>
 
+      <!-- Die erstellte Umfrage soll bearbeitet und ausgewählt werden können. -->
       <v-card-actions>
         <v-btn
           class="ma2"
@@ -39,6 +41,7 @@
       </v-card-actions>
     </v-card>
 
+    <!-- Mit diesem Button sollen ausgewählte Umfragen gelöscht werden können. -->
     <v-col class="text-right">
       <v-btn
         class="ma2"
