@@ -1,15 +1,25 @@
 <template>
-  <v-app-bar app color="primary" dark>
-    <div class="d-flex align-center"></div>
+  <v-app-bar
+    app
+    color="primary"
+    dark
+  >
+    <div class="d-flex align-center" />
 
+    <!--- Tab Menu --->
     <v-tabs center-active>
-      <v-tab v-for="tab in tabs" :key="tab.id" @click="changeTab(tab.id)">
+      <v-tab
+        v-for="tab in tabs"
+        :key="tab.id"
+        @click="changeTab(tab.id, tab.componentType)"
+      >
         {{ tab.title }}
       </v-tab>
     </v-tabs>
 
-    <v-spacer></v-spacer>
+    <v-spacer />
 
+    <!--- Anmelden Button --->
     <v-btn text>
       <span class="mr-2">Anmelden</span>
       <v-icon>mdi-account</v-icon>
@@ -17,20 +27,32 @@
   </v-app-bar>
 </template>
 
+
 <script>
+import Umfrage from "./umfrage";
+import Mitarbeiterumfrage from "./mitarbeiterUmfrage";
+import Uebersicht from "./uebersichtUmfragen";
 
 export default {
   name: "Header",
 
   data: () => ({
-    // TODO how to place tab_titles here and tab_types in App.vue together?
-    tabs: [{"id": 0, title: "Umfrage"},
-    {"id": 1, title: "Mitarbeiterumfrage"},
-    {"id": 2, title: "Ergebnisse"}],
+    // data on tabs and shown component when selecting the tab
+    tabs: [
+      { id: 0, title: "Umfrage", componentType: Umfrage },
+      { id: 1, title: "Mitarbeiterumfrage", componentType: Mitarbeiterumfrage },
+      { id: 2, title: "Ergebnisse", componentType: Uebersicht },
+    ],
   }),
   methods: {
-    changeTab(selectedTabComponent) {
-      this.$emit("changeTab", selectedTabComponent);
+    /**
+     * Emits the selected tab and new component type to the parent.
+     * @param selectedTab - the id of the selected tab. starting at 0, increasing left to right.
+     * @param componentType - the component to be shown when the corresponding tab is selected.
+     */
+    changeTab(selectedTab, componentType) {
+      let data = { id: selectedTab, componentType: componentType };
+      this.$emit("changeTab", data);
     },
   },
 };

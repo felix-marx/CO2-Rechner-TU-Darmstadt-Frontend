@@ -1,12 +1,22 @@
 <template>
   <v-card height="400px">
-    <v-footer :padless="padless" fixed bottom>
-      <v-card flat tile width="100%" class="primary text-center">
+    <!--- Footer --->
+    <v-footer
+      :padless="padless"
+      fixed
+      bottom
+    >
+      <v-card
+        text
+        tile
+        width="100%"
+        class="primary text-center"
+      >
         <v-row justify="center">
           <v-card-text>
-            <!--- Footer Links --->
+            <!--- Footer Buttons (links are currently opened in new tab by 'target="_blank"')--->
             <v-btn
-              v-for="(fElem, i) in footerElements"
+              v-for="(fElem, i) in footerButtons"
               :key="i"
               :href="fElem.href"
               class="mx-4"
@@ -17,7 +27,7 @@
             </v-btn>
 
             <!--- Kontakt Dialog --->
-           <Kontakt/>
+            <Kontakt />
           </v-card-text>
         </v-row>
       </v-card>
@@ -26,27 +36,29 @@
 </template>
 
 <script>
-import Kontakt from "./Kontakt.vue";
+import Kontakt from "./Kontakt";
 
 export default {
   name: "Footer",
+  components: {
+      Kontakt
+  },
 
   data: () => ({
     padless: true,
     dialog: false,
-    footerElements: [
+    
+    // Kontakt component not in footerButtons for it is as Dialog and not a Button
+    footerButtons: [
       {
         text: "Impressum",
-        href: "https://www.tu-darmstadt.de/impressum/index.de.jsp", // TODO
+        href: "https://www.tu-darmstadt.de/impressum/index.de.jsp", // TODO keep link to TU Darmstadt website or make own impressum? --> AG Meeting
       },
       {
         text: "Datenschutzerklärung",
-        href: "https://www.tu-darmstadt.de/datenschutzerklaerung.de.jsp", // TODO
+        href: "https://www.tu-darmstadt.de/datenschutzerklaerung.de.jsp", // TODO keep link to TU Darmstadt website or make own Datenschutzerklärung? --> AG Meeting
       },
     ],
-  }),
-  components: {
-      Kontakt
-  }
+  })
 };
 </script>

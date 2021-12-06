@@ -3,6 +3,7 @@
     <!-- Die erstellte Umfrage soll eine Karte erhalten. -->
     <v-card
       elevation="2"
+
       outlined
     >
       <v-list-item three-line>
