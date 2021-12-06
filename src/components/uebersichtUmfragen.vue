@@ -35,8 +35,6 @@
 
         <v-checkbox
           v-model="selected"
-          label=""
-          value=""
         />
       </v-card-actions>
     </v-card>
