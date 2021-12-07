@@ -279,6 +279,41 @@
         </v-card>
       </v-form>
     </v-card>
+    <!-- Anzeigen der Berechnungsergebnisse -->
+    <v-card
+      elevation="2"
+      class="mt-2"
+      outlined
+    >
+      <v-simple-table>
+        <template v-slot:default>
+          <thead>
+            <tr>
+              <th class="text-left">
+                Kategorie
+              </th>
+              <th class="text-left">
+                Wert
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{{ "Dienstreisenemissionen" }}</td>
+              <td>{{ responseData.dienstreisenEmissionen }}</td>
+            </tr>
+            <tr>
+              <td>{{ "Pendelwegemission" }}</td>
+              <td>{{ responseData.pendelwegeEmissionen }}</td>
+            </tr>
+            <tr>
+              <td>{{ "IT-Gräte-Emissionen" }}</td>
+              <td>{{ responseData.itGeraeteEmissionen }}</td>
+            </tr>
+          </tbody>
+        </template>
+      </v-simple-table>
+    </v-card>
   </v-container>
 </template>
 
@@ -344,8 +379,10 @@ export default {
     mitfahrerRules: [
       v => !!v || "Wenn Sie alleine fahren, wählen Sie bitte diese Option ab",
       v => (parseInt(v) > 0) || "Bitte geben Sie eine positive Anzahl an Mitfahrern an"
-    ]
+    ],
 
+    //stores response JSON 
+    responseData: {},
     }),
 
     methods: {
@@ -525,6 +562,7 @@ export default {
         .then((response) => response.json())
         .then((data) => {
           console.log("Success:", data);
+          this.responseData = data;
         })
         .catch((error) => {
           console.error("Error:", error);
