@@ -10,7 +10,7 @@
     <v-tabs center-active>
       <v-tab
         v-for="tab in tabs"
-        :key="tab.id"
+        :key="'tab-' + tab.id"
         @click="changeTab(tab.id, tab.componentType)"
       >
         {{ tab.title }}
