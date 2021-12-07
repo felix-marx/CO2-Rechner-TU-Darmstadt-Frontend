@@ -22,7 +22,7 @@
           
           <div
             v-for="(medium, index) in verkehrsmittel" 
-            :key="index"
+            :key="'dienstreise-' + index"
           >
             <v-row>
               <!-- The length of the column is calculated based on the selection, so that the button to add new elements in this line -->
@@ -130,7 +130,7 @@
 
           <div
             v-for="(reise, index) in dienstreise" 
-            :key="index"
+            :key="'verkehrsmittel-' + index"
           >
             <v-row>
               <v-col 

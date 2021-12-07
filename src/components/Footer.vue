@@ -16,8 +16,8 @@
           <v-card-text>
             <!--- Footer Buttons (links are currently opened in new tab by 'target="_blank"')--->
             <v-btn
-              v-for="(fElem, i) in footerButtons"
-              :key="i"
+              v-for="(fElem, index) in footerButtons"
+              :key="'footerButton-' + index"
               :href="fElem.href"
               class="mx-4"
               target="_blank"
