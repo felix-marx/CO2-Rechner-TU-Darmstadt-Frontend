@@ -1,24 +1,21 @@
 <template>
   <v-container>
-    <v-card
-      elevation="2"
-      outlined
-    >
+    <v-card elevation="2" outlined>
       <v-form lazy-validation>
         <v-card class="pa-7">
           <!-- Mitarbeiter in Abteilung -->
-          
-          <br>
+
+          <br />
           <h3>Wie viele Mitarbeiter arbeiten in ihrer Abteilung?</h3>
           <v-divider />
-          <br>
+          <br />
 
           <v-container>
             <v-row>
               <v-text-field
                 v-model="anzahlMitarbeiter"
-                :rules="absolutpositivRules" 
-                label="Mitarbeiteranzahl" 
+                :rules="absolutpositivRules"
+                label="Mitarbeiteranzahl"
                 type="number"
                 prepend-icon="mdi-account"
               />
@@ -27,71 +24,65 @@
 
           <!-- Genutzte Gebäude -->
 
-          <br>
-          <h3>Welche Gebäude nutzt ihre Abteilung?</h3>
-          <v-divider />
-          <br>
+          <br />
+          <h3>
+            Welche Gebäude nutzt ihre Abteilung?
+            <v-tooltip bottom>
+              <template v-slot:activator="{ on }">
+                <v-icon v-on="on"> mdi-help-circle-outline </v-icon>
+              </template>
+              Alle Gebäude beginnen je nach Standort mit den Buchstaben S, B, L, H oder W. Die Autovervollständigung sollte Ihnen dabei helfen.
+            </v-tooltip>
+          </h3>
 
-          <div
-            v-for="(objekt, index) in gebaeude"
-            :key="index"
-          >
+          <v-divider />
+          <br />
+
+          <div v-for="(objekt, index) in gebaeude" :key="index">
             <v-row>
-              <v-col
-                cols="5"
-              >
-                <v-text-field 
-                  v-model="objekt[0]" 
-                  label="Gebäudenr" 
-                  prepend-icon="mdi-domain" 
+              <v-col cols="5">
+                <v-autocomplete
+                  v-model="objekt[0]"
+                  :items="gebaeudeIDs"
+                  label="Gebäudenummer"
+                  prepend-icon="mdi-domain"
                   class="pr-5"
                 />
               </v-col>
-              <v-col
-                cols="5"
-              >
-                <v-text-field 
-                  v-model="objekt[1]" 
+              <v-col cols="5">
+                <v-text-field
+                  v-model="objekt[1]"
                   :rules="absolutpositivRules"
-                  label="Nutzfläche" 
-                  prepend-icon="mdi-domain" 
+                  label="Nutzfläche"
+                  prepend-icon="mdi-domain"
                   type="number"
                   suffix="qm"
                 />
               </v-col>
               <v-col>
-                <v-btn
-                  color="add"
-                  @click="newGebaeude()"
-                >
-                  Hinzufügen
-                </v-btn>
+                <v-btn color="add" @click="newGebaeude()"> Hinzufügen </v-btn>
               </v-col>
               <v-col>
-                <v-btn
-                  color="delete"
-                  @click="removeGebaeude(index)"
-                >
+                <v-btn color="delete" @click="removeGebaeude(index)">
                   Löschen
                 </v-btn>
               </v-col>
             </v-row>
           </div>
 
-          <!-- Umfrage für IT Geräte: Multifunktionsgeräte + Toner, Drucker + Toner, Beamer, Server -->  
+          <!-- Umfrage für IT Geräte: Multifunktionsgeräte + Toner, Drucker + Toner, Beamer, Server -->
 
-          <br>
-          <h3>Welche IT-Geräte benutzen Sie in ihrer Abteilung gemeinschaftlich?</h3>
+          <br />
+          <h3>
+            Welche IT-Geräte benutzen Sie in ihrer Abteilung gemeinschaftlich?
+          </h3>
           <v-divider />
-          <br>
+          <br />
 
           <v-container>
             <!-- Multifunktionsgeräte -->
             <v-row>
-              <v-checkbox 
-                v-model="geraeteAnzahl[0][2]"
-                hide-details
-              />
+              <v-checkbox v-model="geraeteAnzahl[0][2]" hide-details />
               <v-text-field
                 v-model="geraeteAnzahl[0][1]"
                 :rules="geraeteRules"
@@ -112,10 +103,7 @@
             </v-row>
             <!-- Drucker -->
             <v-row>
-              <v-checkbox
-                v-model="geraeteAnzahl[2][2]"
-                hide-details
-              />
+              <v-checkbox v-model="geraeteAnzahl[2][2]" hide-details />
               <v-text-field
                 v-model="geraeteAnzahl[2][1]"
                 :rules="geraeteRules"
@@ -173,12 +161,7 @@
             </v-row>
           </v-container> -->
           <v-row class="mt-1">
-            <v-btn
-              class="mr-4"
-              @click="sendData()"
-            >
-              Absenden
-            </v-btn>
+            <v-btn class="mr-4" @click="sendData()"> Absenden </v-btn>
             <LoadingAnimation v-if="dataRequestSent" />
           </v-row>
         </v-card>
@@ -186,12 +169,7 @@
     </v-card>
 
     <!-- Component for showing Link for employees after sending formular data. -->
-    <v-card
-      v-if="dataReceived"
-      class="mt-2"
-      elevation="2"
-      outlined
-    >
+    <v-card v-if="dataReceived" class="mt-2" elevation="2" outlined>
       <!-- TODO replace example link -->
       <MitarbeiterLinkComponent
         :mitarbeiter-link="'www.tu-darmstadt.co2-rechner.de/dies_ist_ein_beispiellink'"
@@ -199,21 +177,13 @@
     </v-card>
 
     <!-- Anzeigen der Berechnungsergebnisse -->
-    <v-card
-      elevation="2"
-      class="mt-2"
-      outlined
-    >
+    <v-card elevation="2" class="mt-2" outlined>
       <v-simple-table>
         <template v-slot:default>
           <thead>
             <tr>
-              <th class="text-left">
-                Kategorie
-              </th>
-              <th class="text-left">
-                Wert
-              </th>
+              <th class="text-left">Kategorie</th>
+              <th class="text-left">Wert</th>
             </tr>
           </thead>
           <tbody>
@@ -254,9 +224,212 @@ export default {
     //Mitarbeiter
     anzahlMitarbeiter: null,
 
-    //genutzte Gebäude
+    // genutzte Gebäude
     // Format: [gebaeudeID, flaechenanteil]
     gebaeude: [[null, null]],
+
+    // mögliche gebäudeIDs
+    gebaeudeIDs: [
+      "S101",
+      "S102",
+      "S103",
+      "S105",
+      "S108",
+      "S109",
+      "S110",
+      "S111",
+      "S113",
+      "S114",
+      "S115",
+      "S117",
+      "S118",
+      "S119",
+      "S120",
+      "S121",
+      "S122",
+      "S160",
+      "S163",
+      "S201",
+      "S202",
+      "S203",
+      "S204",
+      "S205",
+      "S206",
+      "S207",
+      "S208",
+      "S209",
+      "S210",
+      "S211",
+      "S212",
+      "S214",
+      "S215",
+      "S217",
+      "S220",
+      "S240",
+      "S250",
+      "S260",
+      "S263",
+      "S266",
+      "S306",
+      "S307",
+      "S308",
+      "S309",
+      "S310",
+      "S311",
+      "S312",
+      "S313",
+      "S314",
+      "S315",
+      "S316",
+      "S317",
+      "S318",
+      "S319",
+      "S320",
+      "S321",
+      "S340",
+      "S401",
+      "S402",
+      "S407",
+      "S410",
+      "S413",
+      "S414",
+      "S415",
+      "S417",
+      "S418",
+      "S422",
+      "S423",
+      "S424",
+      "S425",
+      "S426",
+      "S484",
+      "S485",
+      "B101",
+      "B102",
+      "B103",
+      "B104",
+      "B106",
+      "B107",
+      "B108",
+      "B160",
+      "B161",
+      "B162",
+      "B163",
+      "B170",
+      "B201",
+      "B202",
+      "B203",
+      "B204",
+      "B205",
+      "B206",
+      "B207",
+      "B260",
+      "B261",
+      "B262",
+      "B263",
+      "B264",
+      "L101",
+      "L102",
+      "L103",
+      "L104",
+      "L105",
+      "L106",
+      "L107",
+      "L108",
+      "L109",
+      "L110",
+      "L111",
+      "L112",
+      "L113",
+      "L115",
+      "L160",
+      "L161",
+      "L162",
+      "L167",
+      "L168",
+      "L169",
+      "L170",
+      "L171",
+      "L201",
+      "L202",
+      "L203",
+      "L204",
+      "L205",
+      "L206",
+      "L207",
+      "L250",
+      "L260",
+      "L261",
+      "L262",
+      "L263",
+      "L264",
+      "L265",
+      "L266",
+      "L267",
+      "L268",
+      "L269",
+      "L270",
+      "L271",
+      "L272",
+      "L301",
+      "L302",
+      "L303",
+      "L360",
+      "L362",
+      "L401",
+      "L402",
+      "L501",
+      "L502",
+      "L503",
+      "L504",
+      "L505",
+      "L506",
+      "L507",
+      "L508",
+      "L540",
+      "L560",
+      "L562",
+      "L563",
+      "L564",
+      "L565",
+      "H101",
+      "H103",
+      "H105",
+      "H106",
+      "H108",
+      "H160",
+      "H161",
+      "H162",
+      "H163",
+      "H164",
+      "H165",
+      "H166",
+      "H170",
+      "H171",
+      "H172",
+      "H173",
+      "H174",
+      "H176",
+      "H177",
+      "H178",
+      "H179",
+      "H180",
+      "H182",
+      "H184",
+      "W101",
+      "W103",
+      "W104",
+      "W105",
+      "W106",
+      "W107",
+      "W108",
+      "W160",
+      "W161",
+      "W201",
+      "W202",
+      "W203",
+      "W204",
+      "W205",
+    ],
 
     //IT Geräte
     /* Geraet an Array Position format [intern Geraete ID, Anzahl, enabled]
@@ -282,19 +455,22 @@ export default {
     //Rules for input validation
 
     geraeteRules: [
-      v => !!v || "Wenn Sie das Gerät nicht benutzten, wählen Sie es bitte ab",
-      v => (parseInt(v) != 0) || "Wenn Sie das Gerät nicht benutzten, wählen Sie es bitte ab",
-      v => (parseInt(v) > 0) || "Bitte geben Sie eine valide Menge an"
+      (v) =>
+        !!v || "Wenn Sie das Gerät nicht benutzten, wählen Sie es bitte ab",
+      (v) =>
+        parseInt(v) != 0 ||
+        "Wenn Sie das Gerät nicht benutzten, wählen Sie es bitte ab",
+      (v) => parseInt(v) > 0 || "Bitte geben Sie eine valide Menge an",
     ],
     nichtnegativRules: [
-      v => !!v || "Muss angegeben werden",
-      v => (parseInt(v) >= 0) || "Bitte geben Sie einen positiven Wert an"
+      (v) => !!v || "Muss angegeben werden",
+      (v) => parseInt(v) >= 0 || "Bitte geben Sie einen positiven Wert an",
     ],
     absolutpositivRules: [
-      v => !!v || "Muss angegeben werden",
-      v => (parseInt(v) > 0) || "Bitte geben Sie einen Wert größer Null an"
+      (v) => !!v || "Muss angegeben werden",
+      (v) => parseInt(v) > 0 || "Bitte geben Sie einen Wert größer Null an",
     ],
-    
+
     // has Absenden Button been clicked
     dataRequestSent: false,
     dataReceived: false,
@@ -304,32 +480,36 @@ export default {
     /**
      * Prints all variables to the console
      */
-    logging: function() {
-      console.log("Mitarbeiter:", this.anzahlMitarbeiter, "\n Gebäude:", this.gebaeude, "\n geraeteAnzahl:", this.geraeteAnzahl);
+    logging: function () {
+      console.log(
+        "Mitarbeiter:",
+        this.anzahlMitarbeiter,
+        "\n Gebäude:",
+        this.gebaeude,
+        "\n geraeteAnzahl:",
+        this.geraeteAnzahl
+      );
     },
 
     /**
      * Adds a new Gebäude to the array, so that it can be selected
      */
-    newGebaeude: function() {
-      this.gebaeude.push([
-        null, null
-      ])
+    newGebaeude: function () {
+      this.gebaeude.push([null, null]);
     },
 
     /**
      * Removes the Gebäude at position index so that it won't show
      */
-    removeGebaeude: function(index) {
-      if(index >= 0 && this.gebaeude.length > index) {
-        this.gebaeude.splice(index, 1)
+    removeGebaeude: function (index) {
+      if (index >= 0 && this.gebaeude.length > index) {
+        this.gebaeude.splice(index, 1);
         //When the only element is removed add a new, thereby clearing the values of the fields on the webpage
-        if(this.gebaeude.length === 0) {
-          this.newGebaeude()
+        if (this.gebaeude.length === 0) {
+          this.newGebaeude();
         }
-      }
-      else {
-        console.error("Negative or out of bounds array index supplied")
+      } else {
+        console.error("Negative or out of bounds array index supplied");
       }
     },
 
@@ -349,7 +529,7 @@ export default {
       this.geraeteAnzahl[3][2] = this.geraeteAnzahl[2][2];
 
       for (var geraet of this.geraeteAnzahl) {
-        if(geraet[1] > 0 && geraet[2]) {
+        if (geraet[1] > 0 && geraet[2]) {
           usedITGeraete.push({
             idITGeraete: parseInt(geraet[0]),
             anzahl: parseInt(geraet[1]),
@@ -366,20 +546,19 @@ export default {
      *   flaechenanteil: Integer
      * }]
      */
-    gebaeudeJSON: function() {
-      var gebaeudeJSON = []
+    gebaeudeJSON: function () {
+      var gebaeudeJSON = [];
 
       for (var objekt of this.gebaeude) {
         gebaeudeJSON.push({
-          gebaeudeNr: parseInt(objekt[0]),
-          flaechenanteil: parseInt(objekt[1])
-        })
+          gebaeudeNr: parseInt(translateGebaeudeID(objekt[0])),
+          flaechenanteil: parseInt(objekt[1]),
+        });
       }
-      return gebaeudeJSON
+      return gebaeudeJSON;
     },
-    
-    sendData: async function () {
 
+    sendData: async function () {
       await fetch("http://localhost:9000/umfrage/hauptverantwortlicher", {
         method: "POST",
         headers: {
@@ -394,7 +573,7 @@ export default {
         .then((response) => response.json())
         .then((data) => {
           console.log("Success:", data);
-          this.responseData = data
+          this.responseData = data;
         })
         .catch((error) => {
           console.error("Error:", error);
@@ -405,6 +584,19 @@ export default {
     },
   },
 };
+
+function translateGebaeudeID(gebaeudeID) {
+  let gebaeudeDict = {
+    S: 1,
+    B: 2,
+    L: 3,
+    H: 4,
+    W: 5,
+  };
+  let translatedID =
+    gebaeudeDict[gebaeudeID.substring(0, 1)] + gebaeudeID.substring(1);
+  return translatedID;
+}
 </script>
 
 <!-- Removes the buttons in textfields to increase decrease number -->
