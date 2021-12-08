@@ -499,6 +499,9 @@ export default {
     responseData: {},
   }),
   computed: {
+    /**
+     * Returns a list beginning with the current year until 2015.
+     */
     possibleYears: function() {
       const beginningYear = 2015;  // TODO what are the oldest data we have or that could be inserted?
       let currentYear = new Date().getFullYear();
@@ -617,6 +620,10 @@ export default {
   },
 };
 
+/**
+ * Translates a given gebaeudeID to its numerical equivalent.
+ * E.g. S101 is translated to 1101, L312 to 3312 and so on.
+ */
 function translateGebaeudeID(gebaeudeID) {
   let gebaeudeDict = {
     S: 1,
