@@ -20,10 +20,7 @@
     <v-spacer />
 
     <!--- Anmelden Button --->
-    <v-btn text>
-      <span class="mr-2">Anmelden</span>
-      <v-icon>mdi-account</v-icon>
-    </v-btn>
+    <Anmeldung/>
   </v-app-bar>
 </template>
 
@@ -32,28 +29,29 @@
 import Umfrage from "./umfrage";
 import Mitarbeiterumfrage from "./mitarbeiterUmfrage";
 import Uebersicht from "./uebersichtUmfragen";
+import Anmeldung from "./Anmeldung.vue"
 
 export default {
-  name: "Header",
-
-  data: () => ({
-    // data on tabs and shown component when selecting the tab
-    tabs: [
-      { id: 0, title: "Umfrage", componentType: Umfrage },
-      { id: 1, title: "Mitarbeiterumfrage", componentType: Mitarbeiterumfrage },
-      { id: 2, title: "Ergebnisse", componentType: Uebersicht },
-    ],
-  }),
-  methods: {
-    /**
-     * Emits the selected tab and new component type to the parent.
-     * @param selectedTab - the id of the selected tab. starting at 0, increasing left to right.
-     * @param componentType - the component to be shown when the corresponding tab is selected.
-     */
-    changeTab(selectedTab, componentType) {
-      let data = { id: selectedTab, componentType: componentType };
-      this.$emit("changeTab", data);
+    name: "Header",
+    data: () => ({
+        // data on tabs and shown component when selecting the tab
+        tabs: [
+            { id: 0, title: "Umfrage", componentType: Umfrage },
+            { id: 1, title: "Mitarbeiterumfrage", componentType: Mitarbeiterumfrage },
+            { id: 2, title: "Ergebnisse", componentType: Uebersicht },
+        ],
+    }),
+    methods: {
+        /**
+         * Emits the selected tab and new component type to the parent.
+         * @param selectedTab - the id of the selected tab. starting at 0, increasing left to right.
+         * @param componentType - the component to be shown when the corresponding tab is selected.
+         */
+        changeTab(selectedTab, componentType) {
+            let data = { id: selectedTab, componentType: componentType };
+            this.$emit("changeTab", data);
+        },
     },
-  },
+    components: { Anmeldung }
 };
 </script>
