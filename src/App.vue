@@ -1,60 +1,51 @@
 <template>
   <v-app>
-    <v-app-bar
-      app
-      color="primary"
-      dark
-    >
-      <div class="d-flex align-center">
-        <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-2"
-          contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-          transition="scale-transition"
-          width="40"
-        />
+    <!-- Header -->
+    <Header @changeTab="changeTab($event)" />
 
-        <v-img
-          alt="Vuetify Name"
-          class="shrink mt-1 hidden-sm-and-down"
-          contain
-          min-width="100"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-          width="100"
-        />
-      </div>
-
-      <v-spacer></v-spacer>
-
-      <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        text
-      >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
-      </v-btn>
-    </v-app-bar>
-
+    <!-- main body -->
     <v-main>
-      <HelloWorld/>
+      <component :is="currentTabType" />
     </v-main>
+
+    <!-- Footer -->
+    <Footer />
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
+
+import Footer from "./components/Footer";
+import Header from "./components/Header";
+import Umfrage from './components/umfrage';
 
 export default {
-  name: 'App',
+  name: "App",
 
   components: {
-    HelloWorld,
+    Footer,
+    Header,
+    Umfrage
   },
 
+
   data: () => ({
-    //
+    // standard tab selected is the first tab / Umfrage tab
+    // could extend this to be persistent on site refresh, but this would require additional plugins, like e.g. Vuex.
+    selectedTab: 0,
+    currentTabType: Umfrage
   }),
+
+  methods: {
+    /**
+    Listens for events in the header tab menu.
+    @param tab the new tab that is now selected. Has two attributes id and componentType.
+    The componentType determines the component that is then shown in the App Body.
+    */
+    changeTab(tab) {
+      this.selectedTab = tab.id;
+      this.currentTabType = tab.componentType;
+    },
+  },
 };
 </script>
