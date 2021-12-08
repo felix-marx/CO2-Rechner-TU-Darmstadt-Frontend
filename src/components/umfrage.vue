@@ -1,16 +1,19 @@
 <template>
   <v-container>
-    <v-card elevation="2" outlined>
+    <v-card
+      elevation="2"
+      outlined
+    >
       <v-form lazy-validation>
         <v-card class="pa-7">
           <!-- Bilanzierungsjahr -->
 
-          <br />
+          <br>
           <h3>
             Auf welches Bilanzierungsjahr beziehen Sie sich in dieser Umfrage?
           </h3>
           <v-divider />
-          <br />
+          <br>
 
           <v-row>
             <v-col cols="5">
@@ -26,10 +29,10 @@
 
           <!-- Mitarbeiter in Abteilung -->
 
-          <br />
+          <br>
           <h3>Wie viele Mitarbeiter arbeiten in ihrer Abteilung?</h3>
           <v-divider />
-          <br />
+          <br>
 
           <v-container>
             <v-row>
@@ -45,12 +48,14 @@
 
           <!-- Genutzte Gebäude -->
 
-          <br />
+          <br>
           <h3>
             Welche Gebäude nutzt ihre Abteilung?
             <v-tooltip bottom>
               <template v-slot:activator="{ on }">
-                <v-icon v-on="on"> mdi-help-circle-outline </v-icon>
+                <v-icon v-on="on">
+                  mdi-help-circle-outline
+                </v-icon>
               </template>
               Alle Gebäude beginnen je nach Standort mit den Buchstaben S, B, L,
               H oder W. Die Autovervollständigung sollte Ihnen dabei helfen.
@@ -58,9 +63,12 @@
           </h3>
 
           <v-divider />
-          <br />
+          <br>
 
-          <div v-for="(objekt, index) in gebaeude" :key="index">
+          <div
+            v-for="(objekt, index) in gebaeude"
+            :key="index"
+          >
             <v-row>
               <v-col cols="5">
                 <v-autocomplete
@@ -82,10 +90,20 @@
                 />
               </v-col>
               <v-col>
-                <v-btn color="add" @click="newGebaeude()"> Hinzufügen </v-btn>
+                <v-btn
+                  class="add_text--text"
+                  color="add"
+                  @click="newGebaeude()"
+                >
+                  Hinzufügen
+                </v-btn>
               </v-col>
               <v-col>
-                <v-btn color="delete" @click="removeGebaeude(index)">
+                <v-btn
+                  class="delete_text--text"
+                  color="delete"
+                  @click="removeGebaeude(index)"
+                >
                   Löschen
                 </v-btn>
               </v-col>
@@ -94,17 +112,20 @@
 
           <!-- Umfrage für IT Geräte: Multifunktionsgeräte + Toner, Drucker + Toner, Beamer, Server -->
 
-          <br />
+          <br>
           <h3>
             Welche IT-Geräte benutzen Sie in ihrer Abteilung gemeinschaftlich?
           </h3>
           <v-divider />
-          <br />
+          <br>
 
           <v-container>
             <!-- Multifunktionsgeräte -->
             <v-row>
-              <v-checkbox v-model="geraeteAnzahl[0][2]" hide-details />
+              <v-checkbox
+                v-model="geraeteAnzahl[0][2]"
+                hide-details
+              />
               <v-text-field
                 v-model="geraeteAnzahl[0][1]"
                 :rules="geraeteRules"
@@ -125,7 +146,10 @@
             </v-row>
             <!-- Drucker -->
             <v-row>
-              <v-checkbox v-model="geraeteAnzahl[2][2]" hide-details />
+              <v-checkbox
+                v-model="geraeteAnzahl[2][2]"
+                hide-details
+              />
               <v-text-field
                 v-model="geraeteAnzahl[2][1]"
                 :rules="geraeteRules"
@@ -183,7 +207,12 @@
             </v-row>
           </v-container> -->
           <v-row class="mt-1">
-            <v-btn class="mr-4" @click="sendData()"> Absenden </v-btn>
+            <v-btn
+              class="mr-4"
+              @click="sendData()"
+            >
+              Absenden
+            </v-btn>
             <LoadingAnimation v-if="dataRequestSent" />
           </v-row>
         </v-card>
@@ -191,7 +220,12 @@
     </v-card>
 
     <!-- Component for showing Link for employees after sending formular data. -->
-    <v-card v-if="dataReceived" class="mt-2" elevation="2" outlined>
+    <v-card
+      v-if="dataReceived"
+      class="mt-2"
+      elevation="2"
+      outlined
+    >
       <!-- TODO replace example link -->
       <MitarbeiterLinkComponent
         :mitarbeiter-link="'www.tu-darmstadt.co2-rechner.de/dies_ist_ein_beispiellink'"
@@ -199,13 +233,21 @@
     </v-card>
 
     <!-- Anzeigen der Berechnungsergebnisse -->
-    <v-card elevation="2" class="mt-2" outlined>
+    <v-card
+      elevation="2"
+      class="mt-2"
+      outlined
+    >
       <v-simple-table>
         <template v-slot:default>
           <thead>
             <tr>
-              <th class="text-left">Kategorie</th>
-              <th class="text-left">Wert</th>
+              <th class="text-left">
+                Kategorie
+              </th>
+              <th class="text-left">
+                Wert
+              </th>
             </tr>
           </thead>
           <tbody>

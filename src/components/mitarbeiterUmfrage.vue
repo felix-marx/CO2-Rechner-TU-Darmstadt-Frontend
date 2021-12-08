@@ -59,6 +59,7 @@
               </v-col>
               <v-col>
                 <v-btn
+                  class="add_text--text"
                   color="add"
                   @click="newVerkehrsmittel()"
                 >
@@ -67,6 +68,7 @@
               </v-col>
               <v-col>
                 <v-btn
+                  class="delete_text--text"
                   color="delete"
                   @click="removeVerkehrsmittel(index)"
                 >
@@ -171,6 +173,7 @@
               </v-col>
               <v-col>
                 <v-btn
+                  class="add_text--text"
                   color="add"
                   @click="newDienstreise()"
                 >
@@ -179,6 +182,7 @@
               </v-col>
               <v-col>
                 <v-btn
+                  class="delete_text--text"
                   color="delete"
                   @click="removeDienstreise(index)"
                 >
