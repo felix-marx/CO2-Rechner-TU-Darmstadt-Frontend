@@ -3,6 +3,27 @@
     <v-card elevation="2" outlined>
       <v-form lazy-validation>
         <v-card class="pa-7">
+          <!-- Bilanzierungsjahr -->
+
+          <br />
+          <h3>
+            Auf welches Bilanzierungsjahr beziehen Sie sich in dieser Umfrage?
+          </h3>
+          <v-divider />
+          <br />
+
+          <v-row>
+            <v-col cols="5">
+              <v-autocomplete
+                v-model="bilanzierungsjahr"
+                :items="possibleYears"
+                label="Bilanzierungsjahr"
+                prepend-icon="mdi-calendar-question"
+                class="pr-5"
+              />
+            </v-col>
+          </v-row>
+
           <!-- Mitarbeiter in Abteilung -->
 
           <br />
@@ -31,7 +52,8 @@
               <template v-slot:activator="{ on }">
                 <v-icon v-on="on"> mdi-help-circle-outline </v-icon>
               </template>
-              Alle Gebäude beginnen je nach Standort mit den Buchstaben S, B, L, H oder W. Die Autovervollständigung sollte Ihnen dabei helfen.
+              Alle Gebäude beginnen je nach Standort mit den Buchstaben S, B, L,
+              H oder W. Die Autovervollständigung sollte Ihnen dabei helfen.
             </v-tooltip>
           </h3>
 
@@ -476,6 +498,14 @@ export default {
     dataReceived: false,
     responseData: {},
   }),
+  computed: {
+    possibleYears: function() {
+      const beginningYear = 2015;  // TODO what are the oldest data we have or that could be inserted?
+      let currentYear = new Date().getFullYear();
+      return Array.from(new Array(currentYear - beginningYear + 1), (x, i) => i + beginningYear).reverse();
+    }
+  },
+
   methods: {
     /**
      * Prints all variables to the console
@@ -558,6 +588,7 @@ export default {
       return gebaeudeJSON;
     },
 
+
     sendData: async function () {
       await fetch("http://localhost:9000/umfrage/hauptverantwortlicher", {
         method: "POST",
@@ -565,6 +596,7 @@ export default {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
+          bilanzierungsjahr: this.bilanzierungsjahr, // TODO how to include bilanzierungsjahr in POST request
           gebaeude: this.gebaeudeJSON(),
           anzahlMitarbeiter: parseInt(this.anzahlMitarbeiter),
           itGeraete: this.itGeraeteJSON(),
