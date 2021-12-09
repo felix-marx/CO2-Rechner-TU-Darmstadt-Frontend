@@ -1,7 +1,14 @@
 <template>
-  <v-dialog v-model="dialog" width="500">
+  <v-dialog
+    v-model="dialog"
+    width="500"
+  >
     <template v-slot:activator="{ on, attrs }">
-      <v-btn text v-bind="attrs" v-on="on">
+      <v-btn
+        text
+        v-bind="attrs"
+        v-on="on"
+      >
         <span class="mr-2">Anmelden</span>
         <v-icon>mdi-account</v-icon>
       </v-btn>
@@ -9,33 +16,64 @@
 
     <v-card class="d-flex justify-center">
       <v-container>
-          <v-card-title>Login</v-card-title>   
+        <v-card-title class="justify-center">
+          {{ istRegistrierung ? "Registrierung" : "Anmeldung" }}
+        </v-card-title>
         <v-row>
-          <v-text-field class="px-5"
+          <v-text-field
             v-model="username"
-            :rules="absolutpositivRules"
+            class="px-5"
+            :rules="requiredRule"
             label="E-Mail Adresse"
             prepend-icon="mdi-account"
+            required
           />
         </v-row>
         <v-row>
-          <v-text-field class="px-5"
+          <v-text-field
             v-model="password"
-            :rules="absolutpositivRules"
+            class="px-5"
+            :rules="passwordRule.concat(requiredRule)"
             label="Passwort"
-            type="number"
+            type="password"
             prepend-icon="mdi-key"
+          />
+        </v-row>
+        <v-row v-if="istRegistrierung">
+          <v-text-field
+            v-model="rePassword"
+            class="px-5"
+            :rules="passwordRule.concat(requiredRule)"
+            label="Passwort"
+            type="password"
+            prepend-icon="mdi-key"
+            hint="Mindestens 8 Zeichen"
+          />
+        </v-row>
+        <v-row
+          v-if="istRegistrierung"
+          class="px-5"
+        >
+          <v-checkbox
+            v-model="agbBestaetigt"
+            label="Ich erkläre mich mit den AGB von TU-Darmstadt einverstanden."
           />
         </v-row>
         <v-row>
           <v-col class="px-10">
-            <v-btn>
+            <v-btn
+              color="primary"
+              @click="postAnmeldung()"
+            >
               <span>Anmelden</span>
               <v-icon>mdi-account</v-icon>
             </v-btn>
           </v-col>
           <v-col class="px-10">
-            <v-btn>
+            <v-btn
+              color="error"
+              @click="postRegistrierung()"
+            >
               <span>Registrieren</span>
               <v-icon>mdi-account</v-icon>
             </v-btn>
@@ -48,12 +86,76 @@
 
 <script>
 export default {
-  name: "Kontakt",
+  name: "Anmeldung",
 
-  data() {
-    return {
-      dialog: false,
-    };
-  },
+  data: () => ({
+    username: null,
+    password: null,
+    rePassword: null,
+    istRegistrierung: false,
+    agbBestaetigt: false,
+    dialog: false,
+    requiredRule: [
+      v => !!v || "Muss angegeben werden",
+    ],
+    passwordRule: [
+      v => (v && v.length >= 8) || 'Min 8 characters'
+    ]
+  }),
+
+  methods: {
+    passwordConfirmationRule() {
+      return () => (this.password === this.rePassword) || 'Passwörter sind nicht gleich'
+    },
+
+    postAnmeldung: async function () {
+      this.istRegistrierung = false
+      if (!this.username || this.username.length < 5 || !this.password || this.password.length < 7) return
+      await fetch("http://localhost:9000/anmeldung", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: this.username,
+          password: this.password
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Success:", data)
+        })
+        .catch((error) => {
+          console.error("Error:", error)
+        });
+    },
+    postRegistrierung: async function () {
+      this.istRegistrierung = true
+      console.log(JSON.stringify({
+        username: this.username,
+        password: this.password,
+        rePassword: this.rePassword
+      }))
+      if (!this.username || !this.password || this.username.length < 5 || this.password.length < 7 || !this.istRegistrierung) return
+      await fetch("http://localhost:9000/registrierung", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: this.username,
+          password: this.password,
+          rePassword: this.rePassword
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Success:", data)
+        })
+        .catch((error) => {
+          console.error("Error:", error)
+        });
+    }
+  }
 };
 </script>
