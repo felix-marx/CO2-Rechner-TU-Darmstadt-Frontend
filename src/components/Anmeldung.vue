@@ -134,9 +134,8 @@ export default {
       console.log(JSON.stringify({
         username: this.username,
         password: this.password,
-        rePassword: this.rePassword
       }))
-      if (!this.username || !this.password || this.username.length < 5 || this.password.length < 7 || !this.istRegistrierung) return
+      if (!this.username || !this.password || this.password != this.rePassword || this.username.length < 5 || this.password.length < 7 || !this.istRegistrierung) return
       await fetch("http://localhost:9000/registrierung", {
         method: "POST",
         headers: {
@@ -145,7 +144,6 @@ export default {
         body: JSON.stringify({
           username: this.username,
           password: this.password,
-          rePassword: this.rePassword
         }),
       })
         .then((response) => response.json())
