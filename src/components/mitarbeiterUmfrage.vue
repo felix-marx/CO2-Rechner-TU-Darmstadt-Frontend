@@ -1,21 +1,21 @@
 <template>
   <v-container>
-    <v-card elevation="2" outlined>
+    <v-card
+      elevation="2"
+      outlined
+    >
       <h3>Survey with ID: {{ $route.params.umfrageID }}</h3>
 
       <v-form>
         <v-card class="pa-7">
           <h3>
             Wie kommen Sie ins Büro?
-            <v-tooltip bottom>
-              <template v-slot:activator="{ on }">
-                <v-icon v-on="on"> mdi-help-circle-outline </v-icon>
-              </template>
-              Die Distanz können Sie zum Beispiel mit Google Maps bestimmen.
-            </v-tooltip>
+            <Tooltip
+              tooltip-text="Zur Berechnung können Sie z.B. Google Maps verwenden. Falls Sie eine Fahrgemeinschaft haben, berechnen Sie die mittlere Fahrstrecke (mit z.B. Google Maps)."
+            />
           </h3>
           <v-divider />
-          <br />
+          <br>
 
           <div
             v-for="(medium, index) in verkehrsmittel"
@@ -93,8 +93,8 @@
                 <v-text-field
                   v-show="
                     medium[2] &&
-                    (medium[0] === 'PKW (Diesel)' ||
-                      medium[0] === 'PKW (Benzin)')
+                      (medium[0] === 'PKW (Diesel)' ||
+                        medium[0] === 'PKW (Benzin)')
                   "
                   v-model="medium[3]"
                   :rules="mitfahrerRules"
@@ -108,10 +108,10 @@
 
           <!-- Arbeitstage im Büro -->
 
-          <br />
+          <br>
           <h3>Wie viele Tage in der Woche sind Sie im Büro?</h3>
           <v-divider />
-          <br />
+          <br>
 
           <v-container>
             <v-row>
@@ -126,12 +126,15 @@
 
           <!-- Dienstreisen Abfrage Option mehrere anzugeben -->
 
-          <br />
+          <br>
           <h3>
             Welche Dienstreisen haben Sie in den letzten 12 Monaten unternommen?
+            <Tooltip
+              tooltip-text="Zur Berechnung können Sie z.B. Google Maps verwenden."
+            />
           </h3>
           <v-divider />
-          <br />
+          <br>
 
           <div
             v-for="(reise, index) in dienstreise"
@@ -193,15 +196,24 @@
 
           <!-- Umfrage für die IT Geräte Notebook, Desktop PC, Bildschirm, Mobiltelfon -->
 
-          <br />
-          <h3>Welche IT-Geräte benutzen Sie in ihrer Arbeit?</h3>
+          <br>
+          <h3>
+            Welche IT-Geräte benutzen Sie bei ihrer Arbeit?
+            <Tooltip
+              tooltip-text="Gemeinschaftlich genutzte IT-Geräte wie z.B. Multifunktionsdrucker werden hier nicht betrachtet."
+            />
+          </h3>
+
           <v-divider />
-          <br />
+          <br>
 
           <v-container>
             <!-- Notebook -->
             <v-row>
-              <v-checkbox v-model="geraeteAnzahl[0][2]" hide-details />
+              <v-checkbox
+                v-model="geraeteAnzahl[0][2]"
+                hide-details
+              />
               <v-text-field
                 v-model="geraeteAnzahl[0][1]"
                 :rules="geraeteRules"
@@ -214,7 +226,10 @@
             </v-row>
             <!-- Desktop PC -->
             <v-row>
-              <v-checkbox v-model="geraeteAnzahl[1][2]" hide-details />
+              <v-checkbox
+                v-model="geraeteAnzahl[1][2]"
+                hide-details
+              />
               <v-text-field
                 v-model="geraeteAnzahl[1][1]"
                 :rules="geraeteRules"
@@ -227,7 +242,10 @@
             </v-row>
             <!-- Bildschirm -->
             <v-row>
-              <v-checkbox v-model="geraeteAnzahl[2][2]" hide-details />
+              <v-checkbox
+                v-model="geraeteAnzahl[2][2]"
+                hide-details
+              />
               <v-text-field
                 v-model="geraeteAnzahl[2][1]"
                 :rules="geraeteRules"
@@ -240,7 +258,10 @@
             </v-row>
             <!-- Mobiltelefon -->
             <v-row>
-              <v-checkbox v-model="geraeteAnzahl[3][2]" hide-details />
+              <v-checkbox
+                v-model="geraeteAnzahl[3][2]"
+                hide-details
+              />
               <v-text-field
                 v-model="geraeteAnzahl[3][1]"
                 :rules="geraeteRules"
@@ -264,18 +285,28 @@
             </v-row>
           </v-container> -->
 
-          <v-btn @click="sendData()"> Absenden </v-btn>
+          <v-btn @click="sendData()">
+            Absenden
+          </v-btn>
         </v-card>
       </v-form>
     </v-card>
     <!-- Anzeigen der Berechnungsergebnisse -->
-    <v-card elevation="2" class="mt-2" outlined>
+    <v-card
+      elevation="2"
+      class="mt-2"
+      outlined
+    >
       <v-simple-table>
         <template v-slot:default>
           <thead>
             <tr>
-              <th class="text-left">Kategorie</th>
-              <th class="text-left">Wert</th>
+              <th class="text-left">
+                Kategorie
+              </th>
+              <th class="text-left">
+                Wert
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -299,7 +330,13 @@
 </template>
 
 <script>
+import Tooltip from "@/components/componentParts/tooltip.vue";
+
 export default {
+  components: {
+    Tooltip,
+  },
+
   data: () => ({
     //Arbeitstage
     arbeitstageBuero: null,
