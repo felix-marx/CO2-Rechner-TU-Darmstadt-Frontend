@@ -32,6 +32,7 @@
 import Umfrage from "./umfrage";
 import Mitarbeiterumfrage from "./mitarbeiterUmfrage";
 import Uebersicht from "./uebersichtUmfragen";
+import AdminEintraege from "./AdminEintraege";
 
 export default {
   name: "Header",
@@ -42,6 +43,7 @@ export default {
       { id: 0, title: "Umfrage", componentType: Umfrage },
       { id: 1, title: "Mitarbeiterumfrage", componentType: Mitarbeiterumfrage },
       { id: 2, title: "Ergebnisse", componentType: Uebersicht },
+      { id: 3, title: "Datenbankeinträge", componentType: AdminEintraege }
     ],
   }),
   methods: {
