@@ -1,5 +1,9 @@
 <template>
-  <v-app-bar app color="primary" dark>
+  <v-app-bar
+    app
+    color="primary"
+    dark
+  >
     <div class="d-flex align-center" />
 
     <!--- Tab Menu --->
@@ -12,7 +16,10 @@
     <v-spacer />
 
     <!--- Anmelden Button --->
-    <v-btn v-if="anmeldenButton" text>
+    <v-btn
+      v-if="anmeldenButton"
+      text
+    >
       <span class="mr-2">Anmelden</span>
       <v-icon>mdi-account</v-icon>
     </v-btn>

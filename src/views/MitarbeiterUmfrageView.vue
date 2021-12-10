@@ -1,7 +1,10 @@
 <template>
   <v-app>
     <!-- Header -->
-    <SimpleHeader tabTitle="Umfrage" :anmeldenButton="false"/>
+    <SimpleHeader
+      tab-title="Umfrage"
+      :anmelden-button="false"
+    />
 
     <!-- main body -->
     <v-main>
@@ -21,13 +24,6 @@ import SurveyNotFoundComponent from "@/components/SurveyNotFoundComponent";
 
 export default {
   name: "MitarbeiterUmfrageView",
-
-  props: {
-    surveyNotFound: {
-      default: false,
-      type: Boolean
-    }
-  },
   components: {
     SimpleHeader,
     Footer,
@@ -35,13 +31,15 @@ export default {
     SurveyNotFoundComponent
   },
 
-  created: function () {
-    this.surveyNotFound = function () {
-      return this.$route.params.umfrageID === "42";
+  props: {
+    surveyNotFound: {
+      default: false,
+      type: Boolean
     }
   },
 
   computed: {
+
     bodyComponent: function () {
       if(this.surveyNotFound()) {
         return SurveyNotFoundComponent;
@@ -49,6 +47,13 @@ export default {
         return MitarbeiterUmfrage;
       }
 
+    }
+  },
+
+  created: function () {
+    // TODO fetch from server if survey exists
+    this.surveyNotFound = function () {
+      return this.$route.params.umfrageID === "42";
     }
   }
 };
