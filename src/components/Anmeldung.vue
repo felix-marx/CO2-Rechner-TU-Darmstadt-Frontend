@@ -108,10 +108,14 @@ export default {
       return () => (this.password === this.rePassword) || 'Passwörter sind nicht gleich'
     },
 
+    setCookie: function (identifier, value) {
+      document.cookie = identifier + "=" + value + "; SameSite=Lax"
+    },
+
     postAnmeldung: async function () {
       this.istRegistrierung = false
       if (!this.username || this.username.length < 5 || !this.password || this.password.length < 7) return
-      await fetch("http://localhost:9000/anmeldung", {
+      await fetch("http://localhost:9000/auth/anmeldung", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -123,12 +127,15 @@ export default {
       })
         .then((response) => response.json())
         .then((data) => {
+          this.setCookie("sessiontoken", data.cookietoken)
+          this.setCookie("email", this.username)
           console.log("Success:", data)
         })
         .catch((error) => {
           console.error("Error:", error)
         });
     },
+
     postRegistrierung: async function () {
       this.istRegistrierung = true
       console.log(JSON.stringify({
@@ -136,7 +143,7 @@ export default {
         password: this.password,
       }))
       if (!this.username || !this.password || this.password != this.rePassword || this.username.length < 5 || this.password.length < 7 || !this.istRegistrierung) return
-      await fetch("http://localhost:9000/registrierung", {
+      await fetch("http://localhost:9000/auth/registrierung", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -148,6 +155,8 @@ export default {
       })
         .then((response) => response.json())
         .then((data) => {
+          this.setCookie("sessiontoken", data.cookietoken)
+          this.setCookie("email", this.username)
           console.log("Success:", data)
         })
         .catch((error) => {
