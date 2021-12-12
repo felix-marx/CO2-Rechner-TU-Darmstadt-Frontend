@@ -59,6 +59,14 @@
             label="Ich erkläre mich mit den AGB von TU-Darmstadt einverstanden."
           />
         </v-row>
+        <!-- Error Message on wrong user input and error in backend -->
+        <v-row v-if="errorMessage != null">
+          <p
+            class="mx-12"
+          >
+            {{ errorMessage }}
+          </p>
+        </v-row>
         <v-row>
           <v-col class="px-10">
             <v-btn
@@ -95,6 +103,9 @@ export default {
     istRegistrierung: false,
     agbBestaetigt: false,
     dialog: false,
+    //Für Fehlermeldung bei Response
+    errorMessage: null,
+
     requiredRule: [
       v => !!v || "Muss angegeben werden",
     ],
@@ -108,13 +119,44 @@ export default {
       return () => (this.password === this.rePassword) || 'Passwörter sind nicht gleich'
     },
 
+    /**
+     * Sets the cookie at the given identifier to the given value overwritting the existing value
+     */
     setCookie: function (identifier, value) {
       document.cookie = identifier + "=" + value + "; SameSite=Lax"
     },
 
+    /**
+     * Checks if the user input is valid and returns true if valid
+     * Otherwise false and sets errorMessage to user fault
+     */
+    checkValidInput: function(registrierung) {
+      if (!this.username || !this.password) {
+        this.errorMessage = "Unvollständige Angabe"
+        return false
+      }
+      if(registrierung && this.password != this.rePassword) {
+        this.errorMessage = "Passwort stimmt nicht überein"
+        return false
+      }
+      if(this.username.length < 5) {
+        this.errorMessage = "Email Mindestlänge ist 5 Zeichen"
+        return false
+      }
+      if(this.password.length < 7) {
+        this.errorMessage = "Passwort Mindestlänge ist 7 Zeichen"
+        return false
+      }
+      return true
+    },
+
     postAnmeldung: async function () {
-      this.istRegistrierung = false
-      if (!this.username || this.username.length < 5 || !this.password || this.password.length < 7) return
+      //User input validation and set error message
+      this.istRegistrierung = false 
+      if(!this.checkValidInput(this.istRegistrierung)) {
+        return
+      }
+
       await fetch("http://localhost:9000/auth/anmeldung", {
         method: "POST",
         headers: {
@@ -132,17 +174,18 @@ export default {
           console.log("Success:", data)
         })
         .catch((error) => {
+          this.errorMessage = error.message
           console.error("Error:", error)
         });
     },
 
     postRegistrierung: async function () {
+      //User input validation and set error message
       this.istRegistrierung = true
-      console.log(JSON.stringify({
-        username: this.username,
-        password: this.password,
-      }))
-      if (!this.username || !this.password || this.password != this.rePassword || this.username.length < 5 || this.password.length < 7 || !this.istRegistrierung) return
+      if(!this.checkValidInput(this.istRegistrierung)) {
+        return
+      }
+      
       await fetch("http://localhost:9000/auth/registrierung", {
         method: "POST",
         headers: {
@@ -160,6 +203,7 @@ export default {
           console.log("Success:", data)
         })
         .catch((error) => {
+          this.errorMessage = error.message
           console.error("Error:", error)
         });
     }
