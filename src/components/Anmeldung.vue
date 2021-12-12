@@ -177,7 +177,6 @@ export default {
           } else {
             this.errorMessage = data.message
           }
-          console.log(data)
           console.log("Success:", data)
         })
         .catch((error) => {
