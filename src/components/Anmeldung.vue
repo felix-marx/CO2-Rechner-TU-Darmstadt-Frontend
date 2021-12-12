@@ -174,9 +174,9 @@ export default {
           if(data.success) {
             this.setCookie("sessiontoken", data.cookietoken)
             this.setCookie("email", this.username)
-          } else {
-            this.errorMessage = data.message
           }
+          //Message on success or error send from Backend 
+          this.errorMessage = data.message
           console.log("Success:", data)
         })
         .catch((error) => {
@@ -208,10 +208,9 @@ export default {
           if(data.success) {
             this.setCookie("sessiontoken", data.cookietoken)
             this.setCookie("email", this.username)
-          } else {
-            //Error case from backend
-            this.message = data.message
-          }
+          } 
+          //Message on success or error send from Backend 
+          this.message = data.message
           console.log("Success:", data)
         })
         .catch((error) => {
