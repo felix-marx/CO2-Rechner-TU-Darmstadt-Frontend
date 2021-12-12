@@ -147,6 +147,7 @@ export default {
         this.errorMessage = "Passwort Mindestlänge ist 7 Zeichen"
         return false
       }
+      this.errorMessage = null
       return true
     },
 
@@ -169,12 +170,18 @@ export default {
       })
         .then((response) => response.json())
         .then((data) => {
-          this.setCookie("sessiontoken", data.cookietoken)
-          this.setCookie("email", this.username)
+          //This is always the case when the backend returns a package
+          if(data.success) {
+            this.setCookie("sessiontoken", data.cookietoken)
+            this.setCookie("email", this.username)
+          } else {
+            this.errorMessage = data.message
+          }
+          console.log(data)
           console.log("Success:", data)
         })
         .catch((error) => {
-          this.errorMessage = error.message
+          //This is always the case when the backend returns nothing -> Timeout
           console.error("Error:", error)
         });
     },
@@ -198,12 +205,18 @@ export default {
       })
         .then((response) => response.json())
         .then((data) => {
-          this.setCookie("sessiontoken", data.cookietoken)
-          this.setCookie("email", this.username)
+          //This is always the case when the backend returns a package
+          if(data.success) {
+            this.setCookie("sessiontoken", data.cookietoken)
+            this.setCookie("email", this.username)
+          } else {
+            //Error case from backend
+            this.message = data.message
+          }
           console.log("Success:", data)
         })
         .catch((error) => {
-          this.errorMessage = error.message
+          //This is always the case when the backend returns nothing -> Timeout
           console.error("Error:", error)
         });
     }
