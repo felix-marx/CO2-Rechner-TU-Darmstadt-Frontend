@@ -31,6 +31,7 @@
                 color="primary"
               >
                 Absenden
+                @click="sendFactor"
               </v-btn>
             </v-col>
           </v-card-actions>
@@ -106,6 +107,7 @@
                 color="primary"
               >
                 Absenden
+                @click="sendNewBuilding"
               </v-btn>
             </v-col>
           </v-card-actions>
@@ -124,8 +126,15 @@
           />
 
           <v-select
-            v-model="counter.type"
-            :items="counter_types"
+            v-model="counter.unit"
+            :items="units"
+            flat
+            placeholder="Zählereinheit"
+          />
+
+          <v-select
+            v-model="counter.energy_type"
+            :items="energy_types"
             flat
             placeholder="Zählertyp"
           />
@@ -175,6 +184,7 @@
                 color="primary"
               >
                 Absenden
+                @click="sendNewCounter"
               </v-btn>
             </v-col>
           </v-card-actions>
@@ -198,8 +208,8 @@
           />
 
           <v-select
-            v-model="counter_data.type"
-            :items="counter_types"
+            v-model="counter_data.energy_type"
+            :items="energy_types"
             flat
             placeholder="Zählertyp"
           />
@@ -215,6 +225,7 @@
                 color="primary"
               >
                 Absenden
+                @click="sendCounterData"
               </v-btn>
             </v-col>
           </v-card-actions>
@@ -246,18 +257,20 @@
       },
       counter: {
         primary_key: null,
-        type: null,
+        unit: null,
+        energy_type: null,
         name: null,
         building_references: [[null]]
       },
       counter_data: {
         year: '',
         primary_key: null,
-        type: null,
+        energy_type: null,
         value: null
       },
       energy_types: ['Wärme', 'Strom', 'Kälte'],
-      counter_types: ['kWh', 'MWh']
+      energy_map: new Map([['Wärme', 1], ['Strom', 2], ['Kälte', 3]]),
+      units: ['kWh', 'MWh']
     }),
     methods: {
       
@@ -282,6 +295,106 @@
           }
         }
       },
+
+      sendFactor: async function () {
+
+        await fetch("http://localhost:9000/umfrage/addFaktor", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            idEnergieversorgung: this.energy_map.get(this.co2_factor.energy_type),
+            jahr: parseInt(this.co2_factor.year),
+            wert: parseInt(this.co2_factor.value),
+         }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log("Success:", data);
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+      },
+
+      sendNewBuilding: async function () {
+
+        await fetch("http://localhost:9000/umfrage/insertGebaeude", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            nr: parseInt(this.building.number),
+            bezeichnung: this.building.name,
+            flaeche: JSON.stringify({
+              hnf: parseFloat(this.building.hnf),
+              nnf: parseFloat(this.building.nnf),
+              ngf: parseFloat(this.building.ngf),
+              ff: parseFloat(this.building.ff),
+              vf: parseFloat(this.building.vf),
+              freif: parseFloat(this.building.freif),
+              gesamtf: parseFloat(this.building.gesamtf),
+            }),
+         }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log("Success:", data);
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+      },
+      
+      sendNewCounter: async function () {
+
+        await fetch("http://localhost:9000/umfrage/insertZaehler", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            pkEnergie: parseInt(this.counter.primary_key),
+            idEnergieversorgung: this.energy_map.get(this.counter.energy_type),
+            bezeichnung: this.counter.name,
+            einheit: this.counter.unit,
+            gebauedeRef: this.counter.building_references,
+         }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log("Success:", data);
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+      },
+
+      sendCounterData: async function () {
+
+        await fetch("http://localhost:9000/umfrage/addZaehlerdaten", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            pkEnergie: this.counter_data.primary_key,
+            idEnergieversorgung: this.energy_map.get(this.counter_data.energy_type),
+            jahr: parseInt(this.counter_data.year),
+            wert: parseFloat(this.counter_data.value),
+         }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log("Success:", data);
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+      },
+
     },
   }
 </script>
