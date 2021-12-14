@@ -360,7 +360,7 @@
             idEnergieversorgung: this.energy_map.get(this.counter.energy_type),
             bezeichnung: this.counter.name,
             einheit: this.counter.unit,
-            gebauedeRef: this.buildingRefJSON(),
+            gebaeudeRef: this.buildingRefJSON(),
          }),
         })
           .then((response) => response.json())
@@ -399,9 +399,11 @@
         var buildingRefs = []
 
         for (var objekt of this.counter.building_references) {
-          buildingRefs.push(
-            parseInt(objekt[0]),
-          )
+          if(objekt[0] != null){
+            buildingRefs.push(
+              parseInt(objekt[0]),
+            )
+          }
         }
         return buildingRefs
       },
