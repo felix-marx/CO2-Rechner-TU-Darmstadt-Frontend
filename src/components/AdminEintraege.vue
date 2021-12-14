@@ -29,9 +29,9 @@
             <v-col class="text-left">
               <v-btn
                 color="primary"
+                @click="sendFactor"
               >
                 Absenden
-                @click="sendFactor"
               </v-btn>
             </v-col>
           </v-card-actions>
@@ -105,9 +105,9 @@
             <v-col class="text-left">
               <v-btn
                 color="primary"
+                @click="sendNewBuilding"
               >
                 Absenden
-                @click="sendNewBuilding"
               </v-btn>
             </v-col>
           </v-card-actions>
@@ -182,9 +182,9 @@
             <v-col class="text-left">
               <v-btn
                 color="primary"
+                @click="sendNewCounter"
               >
                 Absenden
-                @click="sendNewCounter"
               </v-btn>
             </v-col>
           </v-card-actions>
@@ -223,9 +223,9 @@
             <v-col class="text-left">
               <v-btn
                 color="primary"
+                @click="sendCounterData"
               >
                 Absenden
-                @click="sendCounterData"
               </v-btn>
             </v-col>
           </v-card-actions>
@@ -253,7 +253,7 @@
         ff: null,
         vf: null,
         freif: null,
-        gesf: null
+        gesamtf: null
       },
       counter: {
         primary_key: null,
@@ -298,7 +298,7 @@
 
       sendFactor: async function () {
 
-        await fetch("http://localhost:9000/umfrage/addFaktor", {
+        await fetch("http://localhost:9000/db/addFaktor", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -320,7 +320,7 @@
 
       sendNewBuilding: async function () {
 
-        await fetch("http://localhost:9000/umfrage/insertGebaeude", {
+        await fetch("http://localhost:9000/db/insertGebaeude", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -328,7 +328,7 @@
           body: JSON.stringify({
             nr: parseInt(this.building.number),
             bezeichnung: this.building.name,
-            flaeche: JSON.stringify({
+            flaeche: {
               hnf: parseFloat(this.building.hnf),
               nnf: parseFloat(this.building.nnf),
               ngf: parseFloat(this.building.ngf),
@@ -336,7 +336,7 @@
               vf: parseFloat(this.building.vf),
               freif: parseFloat(this.building.freif),
               gesamtf: parseFloat(this.building.gesamtf),
-            }),
+            },
          }),
         })
           .then((response) => response.json())
@@ -350,7 +350,7 @@
       
       sendNewCounter: async function () {
 
-        await fetch("http://localhost:9000/umfrage/insertZaehler", {
+        await fetch("http://localhost:9000/db/insertZaehler", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -360,7 +360,7 @@
             idEnergieversorgung: this.energy_map.get(this.counter.energy_type),
             bezeichnung: this.counter.name,
             einheit: this.counter.unit,
-            gebauedeRef: this.counter.building_references,
+            gebauedeRef: this.buildingRefJSON(),
          }),
         })
           .then((response) => response.json())
@@ -374,13 +374,13 @@
 
       sendCounterData: async function () {
 
-        await fetch("http://localhost:9000/umfrage/addZaehlerdaten", {
+        await fetch("http://localhost:9000/db/addZaehlerdaten", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            pkEnergie: this.counter_data.primary_key,
+            pkEnergie: parseInt(this.counter_data.primary_key),
             idEnergieversorgung: this.energy_map.get(this.counter_data.energy_type),
             jahr: parseInt(this.counter_data.year),
             wert: parseFloat(this.counter_data.value),
@@ -393,6 +393,17 @@
           .catch((error) => {
             console.error("Error:", error);
           });
+      },
+
+      buildingRefJSON: function() {
+        var buildingRefs = []
+
+        for (var objekt of this.counter.building_references) {
+          buildingRefs.push(
+            parseInt(objekt[0]),
+          )
+        }
+        return buildingRefs
       },
 
     },
