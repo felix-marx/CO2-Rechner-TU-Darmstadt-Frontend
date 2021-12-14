@@ -235,10 +235,8 @@ export default {
             this.setCookie("email", this.username)
           }
           //Message on success or error send from Backend
-          console.log((data.status == "success") ?  data.data.message : data.error.message) 
           this.errorMessage = (data.status == "success") ?  data.data.message : data.error.message
           console.log("Success:", data)
-          console.log("Message: " +  this.errorMessage)
         })
         .catch((error) => {
           //This is always the case when the backend returns nothing -> Timeout
@@ -281,11 +279,6 @@ export default {
     },
     
     deleteAbmelden: async function() {
-      console.log(document.cookie)
-      console.log(this.getCookieAttribut("email"))
-      console.log(JSON.stringify({
-          username: this.getCookieAttribut("email")
-        }))
       await fetch("http://localhost:9000/auth/abmeldung", {
         method: "DELETE",
         headers: {
@@ -303,7 +296,7 @@ export default {
             this.deleteCookieAttribut("email")
             this.deleteCookieAttribut("sessiontoken")
           }
-          //TODO: Message on success or error send from Backend 
+          //TODO Show error message in case of error 
           
           console.log("Success:", data)
         })
