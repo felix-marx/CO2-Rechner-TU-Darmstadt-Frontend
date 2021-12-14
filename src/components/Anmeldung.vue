@@ -231,7 +231,7 @@ export default {
         .then((data) => {
           //This is always the case when the backend returns a package
           if(data.status == "success") {
-            this.setCookie("sessiontoken", data.data.cookietoken)
+            this.setCookie("sessiontoken", data.data.sessiontoken)
             this.setCookie("email", this.username)
           }
           //Message on success or error send from Backend
