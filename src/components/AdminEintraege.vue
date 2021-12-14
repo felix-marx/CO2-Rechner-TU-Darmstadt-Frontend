@@ -2,6 +2,7 @@
   <v-container>
     <v-expansion-panels>
       <v-expansion-panel>
+        <!-- Past years' CO2 factors can be sent to the database-->
         <v-expansion-panel-header>
           CO2 Faktor
         </v-expansion-panel-header>
@@ -21,22 +22,22 @@
 
           <v-text-field
             v-model="co2_factor.value"
-            placeholder="Wert des CO2 Faktors"
+            placeholder="Wert des CO2 Faktors in g/kWh"
           />
 
           <v-card-actions>
-            <v-col class="text-right">
+            <v-col class="text-left">
               <v-btn
-                text
                 color="primary"
               >
-                Senden
+                Absenden
               </v-btn>
             </v-col>
           </v-card-actions>
         </v-expansion-panel-content>
       </v-expansion-panel>
 
+      <!-- New buildings can be sent to the database -->
       <v-expansion-panel>
         <v-expansion-panel-header>
           Gebäude Hinzufügen
@@ -52,24 +53,66 @@
             placeholder="Gebäudebezeichnung"
           />
 
-          <v-text-field
-            v-model="building.surface"
-            placeholder="Grundfläche in qm"
-          />
+          <v-row>
+            <v-col>
+              <v-text-field
+                v-model="building.hnf"
+                placeholder="Hauptnutzungsfläche in qm"
+              />
+            </v-col>
+            <v-col>
+              <v-text-field
+                v-model="building.nnf"
+                placeholder="Nebennutzungsfläche in qm"
+              />
+            </v-col>
+            <v-col>
+              <v-text-field
+                v-model="building.ngf"
+                placeholder="Nettogrundfläche in qm"
+              />
+            </v-col>
+            <v-col>
+              <v-text-field
+                v-model="building.ff"
+                placeholder="Funktionsfläche in qm"
+              />
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col>
+              <v-text-field
+                v-model="building.vf"
+                placeholder="Verkehrsfläche in qm"
+              />
+            </v-col>
+            <v-col>
+              <v-text-field
+                v-model="building.freif"
+                placeholder="Freifläche in qm"
+              />
+            </v-col>
+            <v-col>
+              <v-text-field
+                v-model="building.gesf"
+                placeholder="Gesamtfläche in qm"
+              />
+            </v-col>
+          </v-row>
 
           <v-card-actions>
-            <v-col class="text-right">
+            <v-col class="text-left">
               <v-btn
-                text
                 color="primary"
               >
-                Senden
+                Absenden
               </v-btn>
             </v-col>
           </v-card-actions>
         </v-expansion-panel-content>
       </v-expansion-panel>
 
+      <!-- Counters can be sent to the database as soon as the associated buildings exist (a hint is still missing here!) -->
       <v-expansion-panel>
         <v-expansion-panel-header>
           Zähler hinzufügen
@@ -82,7 +125,7 @@
 
           <v-select
             v-model="counter.type"
-            :items="energy_types"
+            :items="counter_types"
             flat
             placeholder="Zählertyp"
           />
@@ -92,24 +135,53 @@
             placeholder="Bezeichnung des Zählers"
           />
 
-          <v-text-field
-            v-model="counter.building_reference"
-            placeholder="Gebäudereferenz"
-          />
+
+
+          <div
+            v-for="(building_reference, i) in counter.building_references"
+            :key="'Gebäudereferenz-' + i"
+          >
+            <v-row>
+              <v-col cols="9">
+                <v-text-field
+                  v-model="building_reference[0]"
+                  placeholder="Gebäudereferenz"
+                />
+              </v-col>
+              <v-col>
+                <v-btn
+                  color="add"
+                  @click="newBuildingRef()"
+                >
+                  Hinzufügen
+                </v-btn>
+              </v-col>
+              <v-col>
+                <v-btn
+                  color="delete"
+                  @click="removeBuildingRef(i)"
+                >
+                  Löschen
+                </v-btn>
+              </v-col>
+            </v-row>
+          </div>
+
+
 
           <v-card-actions>
-            <v-col class="text-right">
+            <v-col class="text-left">
               <v-btn
-                text
                 color="primary"
               >
-                Senden
+                Absenden
               </v-btn>
             </v-col>
           </v-card-actions>
         </v-expansion-panel-content>
       </v-expansion-panel>
 
+      <!-- Past years' counter data can be sent to the database -->
       <v-expansion-panel>
         <v-expansion-panel-header>
           Zählerdaten eintragen
@@ -127,7 +199,7 @@
 
           <v-select
             v-model="counter_data.type"
-            :items="energy_types"
+            :items="counter_types"
             flat
             placeholder="Zählertyp"
           />
@@ -138,12 +210,11 @@
           />
 
           <v-card-actions>
-            <v-col class="text-right">
+            <v-col class="text-left">
               <v-btn
-                text
                 color="primary"
               >
-                Senden
+                Absenden
               </v-btn>
             </v-col>
           </v-card-actions>
@@ -165,13 +236,19 @@
       building: {
         number: null,
         name: null,
-        surface: null
+        hnf: null,
+        nnf: null,
+        ngf: null,
+        ff: null,
+        vf: null,
+        freif: null,
+        gesf: null
       },
       counter: {
         primary_key: null,
-        counter_type: null,
+        type: null,
         name: null,
-        building_reference: null
+        building_references: [[null]]
       },
       counter_data: {
         year: '',
@@ -179,7 +256,32 @@
         type: null,
         value: null
       },
-      energy_types: ['g/kWh'],
+      energy_types: ['Wärme', 'Strom', 'Kälte'],
+      counter_types: ['kWh', 'MWh']
     }),
+    methods: {
+      
+      /**
+       * Adds a new building reference to this counter
+       */
+      newBuildingRef(){
+        this.counter.building_references.push([
+          null
+        ])
+      },
+
+      /**
+       * Removes the building reference at index i from the counter
+       */
+      removeBuildingRef(i){
+        if(i >= 0 && this.counter.building_references.length > i) {
+          this.counter.building_references.splice(i, 1)
+          //When the only element is removed add a new, thereby clearing the values of the fields on the webpage
+          if(this.counter.building_references.length === 0) {
+            this.newBuildingRef()
+          }
+        }
+      },
+    },
   }
 </script>
