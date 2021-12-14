@@ -4,14 +4,37 @@
     width="500"
   >
     <template v-slot:activator="{ on, attrs }">
-      <v-btn
-        text
-        v-bind="attrs"
-        v-on="on"
+      <!-- Zeigt an welcher Nutzer angemeldet ist -->
+      <v-col
+        v-if="showAnmelden"
+        cols="2"
       >
-        <span class="mr-2">Anmelden</span>
-        <v-icon>mdi-account</v-icon>
-      </v-btn>
+        <h4>
+          Angemeldet als: {{ getCookieAttribut("email") }}
+        </h4>
+      </v-col>
+      <!-- Anmelde Button -->
+      <v-col
+        v-if="!showAnmelden"
+      >
+        <v-btn
+          text
+          v-bind="attrs"
+          v-on="on"
+        >
+          <span class="mr-2">Anmelden</span>
+          <v-icon>mdi-account</v-icon>
+        </v-btn>
+      </v-col>
+      <v-col v-if="showAnmelden">
+        <v-btn
+          text
+          @click="deleteAbmelden()"
+        >
+          <span class="mr-2">Abmelden</span>
+          <v-icon>mdi-account</v-icon>
+        </v-btn>
+      </v-col>
     </template>
 
     <v-card class="d-flex justify-center">
@@ -60,7 +83,7 @@
           />
         </v-row>
         <!-- Error Message on wrong user input and error in backend -->
-        <v-row v-if="errorMessage != null">
+        <v-row v-if="errorMessage != null && errorMessage != ''">
           <p
             class="mx-12"
           >
@@ -114,6 +137,12 @@ export default {
     ]
   }),
 
+  computed: {
+    showAnmelden:  function() {
+      return this.checkIfCookieAttributExists("email")
+    },
+  },
+
   methods: {
     passwordConfirmationRule() {
       return () => (this.password === this.rePassword) || 'Passwörter sind nicht gleich'
@@ -124,6 +153,36 @@ export default {
      */
     setCookie: function (identifier, value) {
       document.cookie = identifier + "=" + value + "; SameSite=Lax"
+    },
+
+    /**
+     * Checks if identifier is set in cookie
+     */
+    checkIfCookieAttributExists: function(identifier) {
+      return document.cookie
+      .split(";")
+      .some((item) => item.trim().startsWith(identifier))
+    },
+
+    /**
+     * Gets the value of the identifier set in the cookie if it is set else null
+     */
+    getCookieAttribut: function(identifier) {
+      if(this.checkIfCookieAttributExists(identifier)) {
+        return document.cookie
+          .split("; ")
+          .find(row => row.startsWith(identifier))
+          .split("=")[1]
+      }
+      return null
+    },
+
+    /**
+     * Deletes the value stored at the identifer in cookie
+     */
+    deleteCookieAttribut: function(identifier) {
+      //By setting the cookie expire date to an past date it automatically gets deleted
+      document.cookie = identifier + "=; SameSite=Lax; expires=Thu, 18 Dec 2013 12:00:00 UTC"
     },
 
     /**
@@ -143,8 +202,8 @@ export default {
         this.errorMessage = "Email Mindestlänge ist 5 Zeichen"
         return false
       }
-      if(this.password.length < 7) {
-        this.errorMessage = "Passwort Mindestlänge ist 7 Zeichen"
+      if(this.password.length < 8) {
+        this.errorMessage = "Passwort Mindestlänge ist 8 Zeichen"
         return false
       }
       this.errorMessage = null
@@ -171,13 +230,15 @@ export default {
         .then((response) => response.json())
         .then((data) => {
           //This is always the case when the backend returns a package
-          if(data.success) {
-            this.setCookie("sessiontoken", data.cookietoken)
+          if(data.status == "success") {
+            this.setCookie("sessiontoken", data.data.cookietoken)
             this.setCookie("email", this.username)
           }
-          //Message on success or error send from Backend 
-          this.errorMessage = data.message
+          //Message on success or error send from Backend
+          console.log((data.status == "success") ?  data.data.message : data.error.message) 
+          this.errorMessage = (data.status == "success") ?  data.data.message : data.error.message
           console.log("Success:", data)
+          console.log("Message: " +  this.errorMessage)
         })
         .catch((error) => {
           //This is always the case when the backend returns nothing -> Timeout
@@ -205,12 +266,45 @@ export default {
         .then((response) => response.json())
         .then((data) => {
           //This is always the case when the backend returns a package
-          if(data.success) {
-            this.setCookie("sessiontoken", data.cookietoken)
+          if(data.status == "success") {
+            this.setCookie("sessiontoken", data.data.sessiontoken)
             this.setCookie("email", this.username)
           } 
           //Message on success or error send from Backend 
-          this.message = data.message
+          this.message = (data.status == "success") ?  data.data.message : data.error.message
+          console.log("Success:", data)
+        })
+        .catch((error) => {
+          //This is always the case when the backend returns nothing -> Timeout
+          console.error("Error:", error)
+        });
+    },
+    
+    deleteAbmelden: async function() {
+      console.log(document.cookie)
+      console.log(this.getCookieAttribut("email"))
+      console.log(JSON.stringify({
+          username: this.getCookieAttribut("email")
+        }))
+      await fetch("http://localhost:9000/auth/abmeldung", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: this.getCookieAttribut("email")
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          //This is always the case when the backend returns a package
+          //Delete cookie on success
+          if(data.status == "success") {
+            this.deleteCookieAttribut("email")
+            this.deleteCookieAttribut("sessiontoken")
+          }
+          //TODO: Message on success or error send from Backend 
+          
           console.log("Success:", data)
         })
         .catch((error) => {
