@@ -130,7 +130,7 @@
           <h3>
             Welche Dienstreisen haben Sie in den letzten 12 Monaten unternommen?
             <Tooltip
-              tooltip-text="Zur Berechnung können Sie z.B. Google Maps verwenden."
+              tooltip-text="Zur Berechnung können Sie z.B. Google Maps verwenden. Bei Flugreisen können Sie als Distanz direkt die Summe aller Kurz- und Langstreckenflüge angeben."
             />
           </h3>
           <v-divider />
@@ -198,7 +198,7 @@
 
           <br>
           <h3>
-            Welche IT-Geräte benutzen Sie bei ihrer Arbeit?
+            Welche IT-Geräte benutzen Sie bei Ihrer Arbeit?
             <Tooltip
               tooltip-text="Gemeinschaftlich genutzte IT-Geräte wie z.B. Multifunktionsdrucker werden hier nicht betrachtet."
             />
@@ -315,11 +315,11 @@
               <td>{{ responseData.dienstreisenEmissionen }}</td>
             </tr>
             <tr>
-              <td>{{ "Pendelwegemission" }}</td>
+              <td>{{ "Pendelwegemissionen" }}</td>
               <td>{{ responseData.pendelwegeEmissionen }}</td>
             </tr>
             <tr>
-              <td>{{ "IT-Gräte-Emissionen" }}</td>
+              <td>{{ "IT-Geräte-Emissionen" }}</td>
               <td>{{ responseData.itGeraeteEmissionen }}</td>
             </tr>
           </tbody>
@@ -407,25 +407,28 @@ export default {
 
     //Rules for input validation
     tageImBueroRules: [
-      (v) => !!v || "Muss angegeben werden",
+      (v) => !!v || "Muss angegeben werden.",
       (v) =>
         (parseInt(v) < 8 && parseInt(v) >= 0) ||
-        "Bitte geben Sie die Tage pro Woche an",
+        "Bitte geben Sie die Tage pro Woche an.",
     ],
     streckeRules: [
-      (v) => !!v || "Muss angegeben werden",
-      (v) => parseInt(v) > 0 || "Bitte geben Sie eine valide Distanz an",
+      (v) => !!v || "Muss angegeben werden.",
+      (v) => parseInt(v) > 0 || "Bitte geben Sie eine valide Distanz an.",
     ],
     geraeteRules: [
       (v) =>
-        !!v || "Wenn Sie das Gerät nicht benutzten, wählen Sie es bitte ab",
-      (v) => parseInt(v) > 0 || "Bitte geben Sie eine valide Menge an",
+        !!v || "Wenn Sie das Gerät nicht benutzen, wählen Sie es bitte ab.",
+      (v) =>
+        parseInt(v) != 0 ||
+        "Wenn Sie das Gerät nicht benutzen, wählen Sie es bitte ab.",
+      (v) => parseInt(v) > 0 || "Bitte geben Sie eine valide Menge an.",
     ],
     mitfahrerRules: [
-      (v) => !!v || "Wenn Sie alleine fahren, wählen Sie bitte diese Option ab",
+      (v) => !!v || "Wenn Sie alleine fahren, wählen Sie bitte diese Option ab.",
       (v) =>
         parseInt(v) > 0 ||
-        "Bitte geben Sie eine positive Anzahl an Mitfahrern an",
+        "Bitte geben Sie eine positive Anzahl an Mitfahrenden an.",
     ],
 
     //stores response JSON
@@ -485,8 +488,8 @@ export default {
         ["Bahn", 7],
         ["U-Bahn", 8],
         ["Straßenbahn", 9],
-        ["MIX inkl. U-Bahn", 10],
-        ["MIX exkl. U-Bahn", 11],
+        ["Mix inkl. U-Bahn", 10],
+        ["Mix exkl. U-Bahn", 11],
       ]);
       if (verkehrmittel1 != "Öffentliche") {
         return verkehrsmittelMap.get(verkehrmittel1);

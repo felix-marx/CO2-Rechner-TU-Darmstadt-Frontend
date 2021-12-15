@@ -30,7 +30,7 @@
           <!-- Mitarbeiter in Abteilung -->
 
           <br>
-          <h3>Wie viele Mitarbeiter arbeiten in ihrer Abteilung?</h3>
+          <h3>Wie viele Mitarbeiter arbeiten in Ihrer Abteilung?</h3>
           <v-divider />
           <br>
 
@@ -50,16 +50,11 @@
 
           <br>
           <h3>
-            Welche Gebäude nutzt ihre Abteilung?
-            <v-tooltip bottom>
-              <template v-slot:activator="{ on }">
-                <v-icon v-on="on">
-                  mdi-help-circle-outline
-                </v-icon>
-              </template>
-              Alle Gebäude beginnen je nach Standort mit den Buchstaben S, B, L,
-              H oder W. Die Autovervollständigung sollte Ihnen dabei helfen.
-            </v-tooltip>
+            Welche Gebäude nutzt Ihre Abteilung?
+            <Tooltip
+              tooltip-text="Alle Gebäude beginnen je nach Standort mit den Buchstaben S, B, L,
+              H oder W. Die Autovervollständigung sollte Ihnen dabei helfen."
+            />
           </h3>
 
           <v-divider />
@@ -114,7 +109,7 @@
 
           <br>
           <h3>
-            Welche IT-Geräte benutzen Sie in ihrer Abteilung gemeinschaftlich?
+            Welche IT-Geräte benutzen Sie in Ihrer Abteilung gemeinschaftlich?
           </h3>
           <v-divider />
           <br>
@@ -196,9 +191,9 @@
 
           <!-- Papierverbrauch currently not used 
           <br>
-          <h3>Wie viel Papier benutzen Sie in ihrer Abteilung?</h3>
+          <h3>Wie viel Papier benutzen Sie in Ihrer Abteilung?</h3>
           <v-divider></v-divider>
-          <h5>Sollten Sie keine Angabe machen, werden ihre Mitarbeiter nach ihrem individuellen Papierverbrauch befragt.</h5>
+          <h5>Sollten Sie keine Angabe machen, werden Ihre Mitarbeiter nach Ihrem individuellen Papierverbrauch befragt.</h5>
           <br>
 
           <v-container>
@@ -256,7 +251,7 @@
               <td>{{ responseData.stromEmissionen }}</td>
             </tr>
             <tr>
-              <td>{{ "Wärmeemission" }}</td>
+              <td>{{ "Wärmeemissionen" }}</td>
               <td>{{ responseData.waermeEmissionen }}</td>
             </tr>
             <tr>
@@ -275,6 +270,7 @@
 </template>
 
 <script>
+import Tooltip from "@/components/componentParts/tooltip.vue";
 import MitarbeiterLinkComponent from "./mitarbeiterLinkComponent";
 import LoadingAnimation from "./componentParts/loadingAnimation";
 
@@ -282,6 +278,7 @@ export default {
   components: {
     MitarbeiterLinkComponent,
     LoadingAnimation,
+    Tooltip
   },
 
   data: () => ({
@@ -293,6 +290,7 @@ export default {
     gebaeude: [[null, null]],
 
     // mögliche gebäudeIDs
+    // TODO fetch from server on side load
     gebaeudeIDs: [
       "S101",
       "S102",
@@ -520,19 +518,19 @@ export default {
 
     geraeteRules: [
       (v) =>
-        !!v || "Wenn Sie das Gerät nicht benutzten, wählen Sie es bitte ab",
+        !!v || "Wenn Sie das Gerät nicht benutzen, wählen Sie es bitte ab.",
       (v) =>
         parseInt(v) != 0 ||
-        "Wenn Sie das Gerät nicht benutzten, wählen Sie es bitte ab",
-      (v) => parseInt(v) > 0 || "Bitte geben Sie eine valide Menge an",
+        "Wenn Sie das Gerät nicht benutzen, wählen Sie es bitte ab.",
+      (v) => parseInt(v) > 0 || "Bitte geben Sie eine valide Menge an.",
     ],
     nichtnegativRules: [
-      (v) => !!v || "Muss angegeben werden",
-      (v) => parseInt(v) >= 0 || "Bitte geben Sie einen positiven Wert an",
+      (v) => !!v || "Muss angegeben werden.",
+      (v) => parseInt(v) >= 0 || "Bitte geben Sie einen positiven Wert an.",
     ],
     absolutpositivRules: [
-      (v) => !!v || "Muss angegeben werden",
-      (v) => parseInt(v) > 0 || "Bitte geben Sie einen Wert größer Null an",
+      (v) => !!v || "Muss angegeben werden.",
+      (v) => parseInt(v) > 0 || "Bitte geben Sie einen Wert größer Null an.",
     ],
 
     // has Absenden Button been clicked
