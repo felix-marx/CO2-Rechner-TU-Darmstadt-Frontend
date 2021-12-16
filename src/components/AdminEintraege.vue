@@ -10,6 +10,7 @@
         <v-expansion-panel-content>
           <v-text-field
             v-model="co2_factor.year"
+            :rules="yearRule"
             placeholder="Jahr"
             prepend-icon="mdi-calendar-question"
           />
@@ -23,6 +24,7 @@
 
           <v-text-field
             v-model="co2_factor.value"
+            :rules="notNegativeRule"
             placeholder="Wert des CO2 Faktors in g/kWh"
           />
 
@@ -48,11 +50,13 @@
           <v-text-field
             v-model="building.number"
             placeholder="Gebäudenummer"
+            :rules="basicRule"
           />
 
           <v-text-field
             v-model="building.name"
             placeholder="Gebäudebezeichnung"
+            :rules="basicRule"
           />
 
           <v-row>
@@ -60,24 +64,28 @@
               <v-text-field
                 v-model="building.hnf"
                 placeholder="Hauptnutzungsfläche in qm"
+                :rules="notNegativeRule"
               />
             </v-col>
             <v-col>
               <v-text-field
                 v-model="building.nnf"
                 placeholder="Nebennutzungsfläche in qm"
+                :rules="notNegativeRule"
               />
             </v-col>
             <v-col>
               <v-text-field
                 v-model="building.ngf"
                 placeholder="Nettogrundfläche in qm"
+                :rules="notNegativeRule"
               />
             </v-col>
             <v-col>
               <v-text-field
                 v-model="building.ff"
                 placeholder="Funktionsfläche in qm"
+                :rules="notNegativeRule"
               />
             </v-col>
           </v-row>
@@ -86,18 +94,21 @@
               <v-text-field
                 v-model="building.vf"
                 placeholder="Verkehrsfläche in qm"
+                :rules="notNegativeRule"
               />
             </v-col>
             <v-col>
               <v-text-field
                 v-model="building.freif"
                 placeholder="Freifläche in qm"
+                :rules="notNegativeRule"
               />
             </v-col>
             <v-col>
               <v-text-field
                 v-model="building.gesf"
                 placeholder="Gesamtfläche in qm"
+                :rules="notNegativeRule"
               />
             </v-col>
           </v-row>
@@ -123,6 +134,7 @@
         <v-expansion-panel-content>
           <v-text-field
             v-model="counter.primary_key"
+            :rules="basicRule"
             placeholder="Primary Key des Zählers"
           />
 
@@ -142,6 +154,7 @@
 
           <v-text-field
             v-model="counter.name"
+            :rules="basicRule"
             placeholder="Bezeichnung des Zählers"
           />
 
@@ -155,6 +168,7 @@
               <v-col cols="9">
                 <v-text-field
                   v-model="building_reference[0]"
+                  :rules="basicRule"
                   placeholder="Gebäudereferenz"
                 />
               </v-col>
@@ -200,12 +214,14 @@
         <v-expansion-panel-content>
           <v-text-field
             v-model="counter_data.year"
+            :rules="yearRule"
             placeholder="Jahr der Zählerdaten"
             prepend-icon="mdi-calendar-question"
           />
           
           <v-text-field
             v-model="counter_data.primary_key"
+            :rules="basicRule"
             placeholder="Primary Key des Zählers"
           />
 
@@ -218,6 +234,7 @@
 
           <v-text-field
             v-model="counter_data.value"
+            :rules="notNegativeRule"
             placeholder="Zählerwert"
           />
 
@@ -272,7 +289,23 @@
       },
       energy_types: ['Wärme', 'Strom', 'Kälte'],
       energy_map: new Map([['Wärme', 1], ['Strom', 2], ['Kälte', 3]]),
-      units: ['kWh', 'MWh']
+      units: ['kWh', 'MWh'],
+
+
+
+      //Rules for input validation
+      basicRule: [
+        (v) => !!v || "Muss angegeben werden", 
+      ],
+      notNegativeRule: [
+        v => !!v || "Muss angegeben werden",
+        v => (parseInt(v) >= 0) || "Bitte geben Sie einen positiven Wert an"
+      ],
+      yearRule: [
+        (v) => !!v || "Muss angegeben werden",
+        (v) => parseInt(v) > 2017 || "Bitte geben Sie ein valides Jahr an",
+      ],
+      
     }),
     methods: {
       
