@@ -291,13 +291,14 @@ export default {
         .then((response) => response.json())
         .then((data) => {
           //This is always the case when the backend returns a package
-          //Delete cookie on success
+          //Delete cookie and log if not success
+          this.deleteCookieAttribut("email")
+          this.deleteCookieAttribut("sessiontoken")
           if(data.status == "success") {
-            this.deleteCookieAttribut("email")
-            this.deleteCookieAttribut("sessiontoken")
+            console.log("Server konnte nicht löschen")
           }
+
           //TODO Show error message in case of error 
-          
           console.log("Success:", data)
         })
         .catch((error) => {
