@@ -11,6 +11,7 @@
           <v-text-field
             v-model="co2_factor.year"
             placeholder="Jahr"
+            prepend-icon="mdi-calendar-question"
           />
 
           <v-select
@@ -200,6 +201,7 @@
           <v-text-field
             v-model="counter_data.year"
             placeholder="Jahr der Zählerdaten"
+            prepend-icon="mdi-calendar-question"
           />
           
           <v-text-field
