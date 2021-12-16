@@ -294,7 +294,7 @@ export default {
           //Delete cookie and log if not success
           this.deleteCookieAttribut("email")
           this.deleteCookieAttribut("sessiontoken")
-          if(data.status == "success") {
+          if(data.status != "success") {
             console.log("Server konnte nicht löschen")
           }
 
