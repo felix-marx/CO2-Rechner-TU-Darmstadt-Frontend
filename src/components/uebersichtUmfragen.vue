@@ -3,7 +3,6 @@
     <!-- Die erstellte Umfrage soll eine Karte erhalten. -->
     <v-card
       elevation="2"
-
       outlined
     >
       <v-list-item three-line>
@@ -31,11 +30,11 @@
           </v-icon>
           <span>bearbeiten</span>
         </v-btn>
-
+        
         <v-spacer />
 
         <v-checkbox
-          v-model="selected"
+          v-model="deleteSurvey"
         />
       </v-card-actions>
     </v-card>
@@ -46,6 +45,8 @@
         class="ma2"
         outlined
         text
+        :disabled="!deleteSurvey"
+        @click="removeSurvey(2)"
       >
         Ausgewählte löschen
       </v-btn>
@@ -55,10 +56,20 @@
 
 <script>
   export default {
-    data () {
-      return {
-        selected: ['Umfrage1'],
-      }
-    },
+    data: () => ({
+      deleteSurvey: false,
+    }),
+    methods: {
+      /**
+       * needs to be written
+       */
+      removeSurvey() {
+        return
+      },
+    }
   }
 </script>
+
+<!-- Ich muss alle für den entsprechenden Nutzer in der Datenbank angelegten Umfragen empfangen, damit diese angezeigt werden können -->
+<!-- Ich möchte einzelne Umfrage Objekte einsehen können-->
+<!-- Ich möchte einzelne Umfragen löschen können, auch aus der Datenbank-->
