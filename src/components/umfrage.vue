@@ -639,7 +639,7 @@ export default {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          bilanzierungsjahr: this.bilanzierungsjahr, // TODO how to include bilanzierungsjahr in POST request
+          jahr: parseInt(this.bilanzierungsjahr), // TODO test
           gebaeude: this.gebaeudeJSON(),
           anzahlMitarbeiter: parseInt(this.anzahlMitarbeiter),
           itGeraete: this.itGeraeteJSON(),
