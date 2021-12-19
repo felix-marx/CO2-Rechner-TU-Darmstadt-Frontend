@@ -283,6 +283,9 @@ export default {
   },
 
   data: () => ({
+    // Bilanzierungsjahr
+    bilanzierungsjahr: null,
+
     //Mitarbeiter
     anzahlMitarbeiter: null,
 
