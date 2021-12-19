@@ -540,10 +540,10 @@ export default {
   }),
   computed: {
     /**
-     * Returns a list beginning with the current year until 2015.
+     * Returns a list beginning with the current year until 2018.
      */
     possibleYears: function() {
-      const beginningYear = 2015;  // TODO what are the oldest data we have or that could be inserted?
+      const beginningYear = 2018;
       let currentYear = new Date().getFullYear();
       return Array.from(new Array(currentYear - beginningYear + 1), (x, i) => i + beginningYear).reverse();
     }
