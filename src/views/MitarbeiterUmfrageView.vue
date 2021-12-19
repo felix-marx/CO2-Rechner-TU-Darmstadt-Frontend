@@ -31,30 +31,50 @@ export default {
     SurveyNotFoundComponent
   },
 
-  props: {
-    surveyNotFound: {
-      default: false,
-      type: Boolean
-    }
-  },
+  data: () => ({
+      umfrageID: null
+  }),
 
   computed: {
 
     bodyComponent: function () {
-      if(this.surveyNotFound()) {
+      if(this.surveyNotFound) {
         return SurveyNotFoundComponent;
       } else {
         return MitarbeiterUmfrage;
       }
+    },
 
+    surveyNotFound: function() {
+      return this.umfrageID === "";
     }
   },
 
-  created: function () {
-    // TODO fetch from server if survey exists
-    this.surveyNotFound = function () {
-      return this.$route.params.umfrageID === "42";
-    }
-  }
+  created() {
+    this.fetchUmfrageExists(this.$route.params.umfrageID);
+  },
+
+  methods: {
+  fetchUmfrageExists: async function (givenID) {
+      await fetch("http://localhost:9000/mitarbeiterUmfrage/exists", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          umfrageID: givenID,
+        }),
+        })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Success:", data);
+          this.umfrageID = data.umfrageID;
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    },
+  },
+
 };
 </script>

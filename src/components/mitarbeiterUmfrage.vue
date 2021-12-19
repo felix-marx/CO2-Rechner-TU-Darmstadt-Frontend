@@ -45,7 +45,7 @@
                   v-model="medium[4]"
                   :rules="streckeRules"
                   :disabled="medium[0] === null"
-                  :min=0
+                  :min="0"
                   label="Einfacher Pendelweg"
                   type="number"
                   suffix="km"
@@ -99,7 +99,7 @@
                   "
                   v-model="medium[3]"
                   :rules="mitfahrerRules"
-                  :min=0
+                  :min="0"
                   label="Anzahl Mitfahrer"
                   type="number"
                   class="pr-5"
@@ -120,8 +120,8 @@
               <v-text-field
                 v-model="arbeitstageBuero"
                 :rules="tageImBueroRules"
-                :min=0
-                :max=7
+                :min="0"
+                :max="7"
                 label="Tage im Büro"
                 type="number"
               />
@@ -171,7 +171,7 @@
                   v-model="reise[2]"
                   :rules="streckeRules"
                   :disabled="reise[0] === null"
-                  :min=0
+                  :min="0"
                   label="Einfache Distanz"
                   suffix="km"
                   class="pr-5"
@@ -223,7 +223,7 @@
                 v-model="geraeteAnzahl[0][1]"
                 :rules="geraeteRules"
                 :disabled="!geraeteAnzahl[0][2]"
-                :min=0
+                :min="0"
                 label="Notebooks"
                 type="number"
                 class="pr-5"
@@ -240,7 +240,7 @@
                 v-model="geraeteAnzahl[1][1]"
                 :rules="geraeteRules"
                 :disabled="!geraeteAnzahl[1][2]"
-                :min=0
+                :min="0"
                 label="Desktop PCs"
                 type="number"
                 class="pr-5"
@@ -257,7 +257,7 @@
                 v-model="geraeteAnzahl[2][1]"
                 :rules="geraeteRules"
                 :disabled="!geraeteAnzahl[2][2]"
-                :min=0
+                :min="0"
                 label="Bildschirme"
                 type="number"
                 class="pr-5"
@@ -274,7 +274,7 @@
                 v-model="geraeteAnzahl[3][1]"
                 :rules="geraeteRules"
                 :disabled="!geraeteAnzahl[3][2]"
-                :min=0
+                :min="0"
                 label="Mobiltelefone"
                 type="number"
                 class="pr-5"
@@ -628,7 +628,7 @@ export default {
      * Sends an JSON POST request to the backend to insert the data into the database and start the calculation
      */
     sendData: async function () {
-      await fetch("http://localhost:9000/umfrage/mitarbeiter", {
+      await fetch("http://localhost:9000/mitarbeiterUmfrage/insertMitarbeiterUmfrage", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -638,6 +638,7 @@ export default {
           tageImBuero: parseInt(this.arbeitstageBuero),
           dienstreise: this.dienstreisenJSON(),
           itGeraete: this.itGeraeteJSON(),
+          idUmfrage: this.$route.params.umfrageID,
         }),
       })
         .then((response) => response.json())

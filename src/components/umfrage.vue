@@ -39,7 +39,7 @@
               <v-text-field
                 v-model="anzahlMitarbeiter"
                 :rules="absolutpositivRules"
-                :min=0
+                :min="0"
                 label="Mitarbeitendenzahl"
                 type="number"
                 prepend-icon="mdi-account"
@@ -80,7 +80,7 @@
                 <v-text-field
                   v-model="objekt[1]"
                   :rules="absolutpositivRules"
-                  :min=0
+                  :min="0"
                   label="Nutzfläche"
                   prepend-icon="mdi-domain"
                   type="number"
@@ -128,7 +128,7 @@
                 v-model="geraeteAnzahl[0][1]"
                 :rules="geraeteRules"
                 :disabled="!geraeteAnzahl[0][2]"
-                :min=0
+                :min="0"
                 label="Multifunktionsgeräte z.B. Netzwerkdrucker"
                 type="number"
                 class="pr-5"
@@ -138,7 +138,7 @@
                 v-model="geraeteAnzahl[1][1]"
                 :rules="nichtnegativRules"
                 :disabled="!geraeteAnzahl[0][2]"
-                :min=0
+                :min="0"
                 label="verbrauchte Toner"
                 type="number"
                 suffix="Toner"
@@ -154,7 +154,7 @@
                 v-model="geraeteAnzahl[2][1]"
                 :rules="geraeteRules"
                 :disabled="!geraeteAnzahl[2][2]"
-                :min=0
+                :min="0"
                 label="Laser- & Tintenstrahldrucker"
                 type="number"
                 suffix="Drucker"
@@ -164,7 +164,7 @@
                 v-model="geraeteAnzahl[3][1]"
                 :rules="nichtnegativRules"
                 :disabled="!geraeteAnzahl[2][2]"
-                :min=0
+                :min="0"
                 label="verbrauchte Toner"
                 suffix="Toner"
                 type="number"
@@ -177,7 +177,7 @@
                 v-model="geraeteAnzahl[4][1]"
                 :rules="geraeteRules"
                 :disabled="!geraeteAnzahl[4][2]"
-                :min=0
+                :min="0"
                 label="Beamer"
                 type="number"
                 suffix="Beamer"
@@ -190,7 +190,7 @@
                 v-model="geraeteAnzahl[5][1]"
                 :rules="geraeteRules"
                 :disabled="!geraeteAnzahl[5][2]"
-                :min=0
+                :min="0"
                 label="interne Server"
                 type="number"
                 suffix="Server"
@@ -225,14 +225,14 @@
 
     <!-- Component for showing Link for employees after sending formular data. -->
     <v-card
-      v-if="dataReceived"
+      v-if="displaySurveyLink"
       class="mt-2"
       elevation="2"
       outlined
     >
       <!-- TODO replace example link -->
       <MitarbeiterLinkComponent
-        :mitarbeiter-link="'www.tu-darmstadt.co2-rechner.de/dies_ist_ein_beispiellink'"
+        :mitarbeiter-link="'www.tu-darmstadt.co2-rechner.de/survey/'+this.responseData.umfrageID"
       />
     </v-card>
 
@@ -346,8 +346,7 @@ export default {
 
     // has Absenden Button been clicked
     dataRequestSent: false,
-    dataReceived: false,
-    responseData: {},
+    responseData: null,
   }),
   computed: {
     /**
@@ -357,6 +356,13 @@ export default {
       const beginningYear = 2018;
       let currentYear = new Date().getFullYear();
       return Array.from(new Array(currentYear - beginningYear + 1), (x, i) => i + beginningYear).reverse();
+    },
+
+    /**
+     * True, if a valid survey link was received and should be shown. False otherwise.
+     */
+    displaySurveyLink: function() {
+      return this.responseData && this.responseData.umfrageID !== "";
     }
   },
 
@@ -448,7 +454,7 @@ export default {
 
 
     sendData: async function () {
-      await fetch("http://localhost:9000/umfrage/hauptverantwortlicher", {
+      await fetch("http://localhost:9000/umfrage/insertUmfrage", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -470,7 +476,6 @@ export default {
         });
 
       this.dataRequestSent = false;
-      this.dataReceived = true;
     },
 
     fetchGebaeudeData: async function () {
@@ -478,7 +483,7 @@ export default {
         .then((response) => response.json())
         .then((data) => {
           console.log("Success:", data);
-          this.gebaeudeIDs = data.gebaeude.map(gebInt => translateGebaeudeIDToSymbolic(gebInt)); // TODO test
+          this.gebaeudeIDs = data.gebaeude.map(gebInt => translateGebaeudeIDToSymbolic(gebInt));
         })
         .catch((error) => {
           console.error("Error:", error);
