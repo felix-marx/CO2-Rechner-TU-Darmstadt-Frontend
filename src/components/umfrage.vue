@@ -291,208 +291,7 @@ export default {
     gebaeude: [[null, null]],
 
     // mögliche gebäudeIDs
-    // TODO fetch from server on side load
-    gebaeudeIDs: [
-      "S101",
-      "S102",
-      "S103",
-      "S105",
-      "S108",
-      "S109",
-      "S110",
-      "S111",
-      "S113",
-      "S114",
-      "S115",
-      "S117",
-      "S118",
-      "S119",
-      "S120",
-      "S121",
-      "S122",
-      "S160",
-      "S163",
-      "S201",
-      "S202",
-      "S203",
-      "S204",
-      "S205",
-      "S206",
-      "S207",
-      "S208",
-      "S209",
-      "S210",
-      "S211",
-      "S212",
-      "S214",
-      "S215",
-      "S217",
-      "S220",
-      "S240",
-      "S250",
-      "S260",
-      "S263",
-      "S266",
-      "S306",
-      "S307",
-      "S308",
-      "S309",
-      "S310",
-      "S311",
-      "S312",
-      "S313",
-      "S314",
-      "S315",
-      "S316",
-      "S317",
-      "S318",
-      "S319",
-      "S320",
-      "S321",
-      "S340",
-      "S401",
-      "S402",
-      "S407",
-      "S410",
-      "S413",
-      "S414",
-      "S415",
-      "S417",
-      "S418",
-      "S422",
-      "S423",
-      "S424",
-      "S425",
-      "S426",
-      "S484",
-      "S485",
-      "B101",
-      "B102",
-      "B103",
-      "B104",
-      "B106",
-      "B107",
-      "B108",
-      "B160",
-      "B161",
-      "B162",
-      "B163",
-      "B170",
-      "B201",
-      "B202",
-      "B203",
-      "B204",
-      "B205",
-      "B206",
-      "B207",
-      "B260",
-      "B261",
-      "B262",
-      "B263",
-      "B264",
-      "L101",
-      "L102",
-      "L103",
-      "L104",
-      "L105",
-      "L106",
-      "L107",
-      "L108",
-      "L109",
-      "L110",
-      "L111",
-      "L112",
-      "L113",
-      "L115",
-      "L160",
-      "L161",
-      "L162",
-      "L167",
-      "L168",
-      "L169",
-      "L170",
-      "L171",
-      "L201",
-      "L202",
-      "L203",
-      "L204",
-      "L205",
-      "L206",
-      "L207",
-      "L250",
-      "L260",
-      "L261",
-      "L262",
-      "L263",
-      "L264",
-      "L265",
-      "L266",
-      "L267",
-      "L268",
-      "L269",
-      "L270",
-      "L271",
-      "L272",
-      "L301",
-      "L302",
-      "L303",
-      "L360",
-      "L362",
-      "L401",
-      "L402",
-      "L501",
-      "L502",
-      "L503",
-      "L504",
-      "L505",
-      "L506",
-      "L507",
-      "L508",
-      "L540",
-      "L560",
-      "L562",
-      "L563",
-      "L564",
-      "L565",
-      "H101",
-      "H103",
-      "H105",
-      "H106",
-      "H108",
-      "H160",
-      "H161",
-      "H162",
-      "H163",
-      "H164",
-      "H165",
-      "H166",
-      "H170",
-      "H171",
-      "H172",
-      "H173",
-      "H174",
-      "H176",
-      "H177",
-      "H178",
-      "H179",
-      "H180",
-      "H182",
-      "H184",
-      "W101",
-      "W103",
-      "W104",
-      "W105",
-      "W106",
-      "W107",
-      "W108",
-      "W160",
-      "W161",
-      "W201",
-      "W202",
-      "W203",
-      "W204",
-      "W205",
-    ],
+    gebaeudeIDs: null,
 
     //IT Geräte
     /* Geraet an Array Position format [intern Geraete ID, Anzahl, enabled]
@@ -548,6 +347,10 @@ export default {
       let currentYear = new Date().getFullYear();
       return Array.from(new Array(currentYear - beginningYear + 1), (x, i) => i + beginningYear).reverse();
     }
+  },
+
+  created() {
+      this.fetchGebaeudeData();
   },
 
   methods: {
@@ -625,7 +428,7 @@ export default {
 
       for (var objekt of this.gebaeude) {
         gebaeudeJSON.push({
-          gebaeudeNr: parseInt(translateGebaeudeID(objekt[0])),
+          gebaeudeNr: parseInt(translateGebaeudeIDToNumeric(objekt[0])),
           flaechenanteil: parseInt(objekt[1]),
         });
       }
@@ -658,6 +461,18 @@ export default {
       this.dataRequestSent = false;
       this.dataReceived = true;
     },
+
+    fetchGebaeudeData: async function () {
+      await fetch("http://localhost:9000/umfrage/gebaeude")
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Success:", data);
+          this.gebaeudeIDs = data.gebaeude.map(gebInt => translateGebaeudeIDToSymbolic(gebInt)); // TODO test
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    },
   },
 };
 
@@ -665,14 +480,35 @@ export default {
  * Translates a given gebaeudeID to its numerical equivalent.
  * E.g. S101 is translated to 1101, L312 to 3312 and so on.
  */
-function translateGebaeudeID(gebaeudeID) {
+function translateGebaeudeIDToNumeric(gebaeudeID) {
+  if(!gebaeudeID) return null;
+
   let gebaeudeDict = {
-    S: 1,
-    B: 2,
-    L: 3,
-    H: 4,
-    W: 5,
+    "S": 1,
+    "B": 2,
+    "L": 3,
+    "H": 4,
+    "W": 5,
   };
+  let translatedID =
+    gebaeudeDict[gebaeudeID.substring(0, 1)] + gebaeudeID.substring(1);
+  return parseInt(translatedID);
+}
+
+/**
+ * Translates a given numeric gebaeudeID to its symbolic equivalent (string).
+ * E.g. 1101 is translated to S101, 3312 to L312 and so on.
+ */
+function translateGebaeudeIDToSymbolic(gebaeudeID) {
+  let gebaeudeDict = {
+    1: "S",
+    2: "B",
+    3: "L",
+    4: "H",
+    5: "W",
+  };
+
+  gebaeudeID = gebaeudeID.toString()
   let translatedID =
     gebaeudeDict[gebaeudeID.substring(0, 1)] + gebaeudeID.substring(1);
   return translatedID;
