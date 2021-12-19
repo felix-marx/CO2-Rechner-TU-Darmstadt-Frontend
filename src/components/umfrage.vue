@@ -27,10 +27,10 @@
             </v-col>
           </v-row>
 
-          <!-- Mitarbeiter in Abteilung -->
+          <!-- Mitarbeitende in Abteilung -->
 
           <br>
-          <h3>Wie viele Mitarbeiter arbeiten in Ihrer Abteilung?</h3>
+          <h3>Wie viele Mitarbeitende gibt es in Ihrer Abteilung?</h3>
           <v-divider />
           <br>
 
@@ -39,7 +39,8 @@
               <v-text-field
                 v-model="anzahlMitarbeiter"
                 :rules="absolutpositivRules"
-                label="Mitarbeiteranzahl"
+                :min=0
+                label="Mitarbeitendenzahl"
                 type="number"
                 prepend-icon="mdi-account"
               />
