@@ -232,7 +232,7 @@
     >
       <!-- TODO replace example link -->
       <MitarbeiterLinkComponent
-        :mitarbeiter-link="'www.tu-darmstadt.co2-rechner.de/survey/'+this.responseData.umfrageID"
+        :mitarbeiter-link="'www.tu-darmstadt.co2-rechner.de/survey/'+ responseData.umfrageID"
       />
     </v-card>
 
