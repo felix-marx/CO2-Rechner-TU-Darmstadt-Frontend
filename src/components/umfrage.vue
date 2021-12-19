@@ -68,6 +68,7 @@
             <v-row>
               <v-col cols="5">
                 <v-autocomplete
+                  v-if="gebaeudeIDs"
                   v-model="objekt[0]"
                   :items="gebaeudeIDs"
                   label="Gebäudenummer"
@@ -79,6 +80,7 @@
                 <v-text-field
                   v-model="objekt[1]"
                   :rules="absolutpositivRules"
+                  :min=0
                   label="Nutzfläche"
                   prepend-icon="mdi-domain"
                   type="number"
@@ -126,6 +128,7 @@
                 v-model="geraeteAnzahl[0][1]"
                 :rules="geraeteRules"
                 :disabled="!geraeteAnzahl[0][2]"
+                :min=0
                 label="Multifunktionsgeräte z.B. Netzwerkdrucker"
                 type="number"
                 class="pr-5"
@@ -135,6 +138,7 @@
                 v-model="geraeteAnzahl[1][1]"
                 :rules="nichtnegativRules"
                 :disabled="!geraeteAnzahl[0][2]"
+                :min=0
                 label="verbrauchte Toner"
                 type="number"
                 suffix="Toner"
@@ -150,6 +154,7 @@
                 v-model="geraeteAnzahl[2][1]"
                 :rules="geraeteRules"
                 :disabled="!geraeteAnzahl[2][2]"
+                :min=0
                 label="Laser- & Tintenstrahldrucker"
                 type="number"
                 suffix="Drucker"
@@ -159,6 +164,7 @@
                 v-model="geraeteAnzahl[3][1]"
                 :rules="nichtnegativRules"
                 :disabled="!geraeteAnzahl[2][2]"
+                :min=0
                 label="verbrauchte Toner"
                 suffix="Toner"
                 type="number"
@@ -171,6 +177,7 @@
                 v-model="geraeteAnzahl[4][1]"
                 :rules="geraeteRules"
                 :disabled="!geraeteAnzahl[4][2]"
+                :min=0
                 label="Beamer"
                 type="number"
                 suffix="Beamer"
@@ -183,6 +190,7 @@
                 v-model="geraeteAnzahl[5][1]"
                 :rules="geraeteRules"
                 :disabled="!geraeteAnzahl[5][2]"
+                :min=0
                 label="interne Server"
                 type="number"
                 suffix="Server"
