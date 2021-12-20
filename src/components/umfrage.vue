@@ -6,10 +6,31 @@
     >
       <v-form lazy-validation>
         <v-card class="pa-7">
-          <!-- Mitarbeiter in Abteilung -->
-          
+          <!-- Bilanzierungsjahr -->
+
           <br>
-          <h3>Wie viele Mitarbeiter arbeiten in ihrer Abteilung?</h3>
+          <h3>
+            Auf welches Bilanzierungsjahr beziehen Sie sich in dieser Umfrage?
+          </h3>
+          <v-divider />
+          <br>
+
+          <v-row>
+            <v-col cols="5">
+              <v-autocomplete
+                v-model="bilanzierungsjahr"
+                :items="possibleYears"
+                label="Bilanzierungsjahr"
+                prepend-icon="mdi-calendar-question"
+                class="pr-5"
+              />
+            </v-col>
+          </v-row>
+
+          <!-- Mitarbeitende in Abteilung -->
+
+          <br>
+          <h3>Wie viele Mitarbeitende gibt es in Ihrer Abteilung?</h3>
           <v-divider />
           <br>
 
@@ -17,8 +38,9 @@
             <v-row>
               <v-text-field
                 v-model="anzahlMitarbeiter"
-                :rules="absolutpositivRules" 
-                label="Mitarbeiteranzahl" 
+                :rules="absolutpositivRules"
+                :min="0"
+                label="Mitarbeitendenzahl"
                 type="number"
                 prepend-icon="mdi-account"
               />
@@ -28,7 +50,14 @@
           <!-- Genutzte Gebäude -->
 
           <br>
-          <h3>Welche Gebäude nutzt ihre Abteilung?</h3>
+          <h3>
+            Welche Gebäude nutzt Ihre Abteilung?
+            <Tooltip
+              tooltip-text="Alle Gebäude beginnen je nach Standort mit den Buchstaben S, B, L,
+              H oder W. Die Autovervollständigung sollte Ihnen dabei helfen."
+            />
+          </h3>
+
           <v-divider />
           <br>
 
@@ -37,30 +66,30 @@
             :key="index"
           >
             <v-row>
-              <v-col
-                cols="5"
-              >
-                <v-text-field 
-                  v-model="objekt[0]" 
-                  label="Gebäudenr" 
-                  prepend-icon="mdi-domain" 
+              <v-col cols="5">
+                <v-autocomplete
+                  v-if="gebaeudeIDs"
+                  v-model="objekt[0]"
+                  :items="gebaeudeIDs"
+                  label="Gebäudenummer"
+                  prepend-icon="mdi-domain"
                   class="pr-5"
                 />
               </v-col>
-              <v-col
-                cols="5"
-              >
-                <v-text-field 
-                  v-model="objekt[1]" 
+              <v-col cols="5">
+                <v-text-field
+                  v-model="objekt[1]"
                   :rules="absolutpositivRules"
-                  label="Nutzfläche" 
-                  prepend-icon="mdi-domain" 
+                  :min="0"
+                  label="Nutzfläche"
+                  prepend-icon="mdi-domain"
                   type="number"
                   suffix="qm"
                 />
               </v-col>
               <v-col>
                 <v-btn
+                  class="add_text--text"
                   color="add"
                   @click="newGebaeude()"
                 >
@@ -69,6 +98,7 @@
               </v-col>
               <v-col>
                 <v-btn
+                  class="delete_text--text"
                   color="delete"
                   @click="removeGebaeude(index)"
                 >
@@ -78,17 +108,19 @@
             </v-row>
           </div>
 
-          <!-- Umfrage für IT Geräte: Multifunktionsgeräte + Toner, Drucker + Toner, Beamer, Server -->  
+          <!-- Umfrage für IT Geräte: Multifunktionsgeräte + Toner, Drucker + Toner, Beamer, Server -->
 
           <br>
-          <h3>Welche IT-Geräte benutzen Sie in ihrer Abteilung gemeinschaftlich?</h3>
+          <h3>
+            Welche IT-Geräte benutzen Sie in Ihrer Abteilung gemeinschaftlich?
+          </h3>
           <v-divider />
           <br>
 
           <v-container>
             <!-- Multifunktionsgeräte -->
             <v-row>
-              <v-checkbox 
+              <v-checkbox
                 v-model="geraeteAnzahl[0][2]"
                 hide-details
               />
@@ -96,6 +128,7 @@
                 v-model="geraeteAnzahl[0][1]"
                 :rules="geraeteRules"
                 :disabled="!geraeteAnzahl[0][2]"
+                :min="0"
                 label="Multifunktionsgeräte z.B. Netzwerkdrucker"
                 type="number"
                 class="pr-5"
@@ -105,6 +138,7 @@
                 v-model="geraeteAnzahl[1][1]"
                 :rules="nichtnegativRules"
                 :disabled="!geraeteAnzahl[0][2]"
+                :min="0"
                 label="verbrauchte Toner"
                 type="number"
                 suffix="Toner"
@@ -120,6 +154,7 @@
                 v-model="geraeteAnzahl[2][1]"
                 :rules="geraeteRules"
                 :disabled="!geraeteAnzahl[2][2]"
+                :min="0"
                 label="Laser- & Tintenstrahldrucker"
                 type="number"
                 suffix="Drucker"
@@ -129,6 +164,7 @@
                 v-model="geraeteAnzahl[3][1]"
                 :rules="nichtnegativRules"
                 :disabled="!geraeteAnzahl[2][2]"
+                :min="0"
                 label="verbrauchte Toner"
                 suffix="Toner"
                 type="number"
@@ -141,6 +177,7 @@
                 v-model="geraeteAnzahl[4][1]"
                 :rules="geraeteRules"
                 :disabled="!geraeteAnzahl[4][2]"
+                :min="0"
                 label="Beamer"
                 type="number"
                 suffix="Beamer"
@@ -153,6 +190,7 @@
                 v-model="geraeteAnzahl[5][1]"
                 :rules="geraeteRules"
                 :disabled="!geraeteAnzahl[5][2]"
+                :min="0"
                 label="interne Server"
                 type="number"
                 suffix="Server"
@@ -162,9 +200,9 @@
 
           <!-- Papierverbrauch currently not used 
           <br>
-          <h3>Wie viel Papier benutzen Sie in ihrer Abteilung?</h3>
+          <h3>Wie viel Papier benutzen Sie in Ihrer Abteilung?</h3>
           <v-divider></v-divider>
-          <h5>Sollten Sie keine Angabe machen, werden ihre Mitarbeiter nach ihrem individuellen Papierverbrauch befragt.</h5>
+          <h5>Sollten Sie keine Angabe machen, werden Ihre Mitarbeiter nach Ihrem individuellen Papierverbrauch befragt.</h5>
           <br>
 
           <v-container>
@@ -187,60 +225,21 @@
 
     <!-- Component for showing Link for employees after sending formular data. -->
     <v-card
-      v-if="dataReceived"
+      v-if="displaySurveyLink"
       class="mt-2"
       elevation="2"
       outlined
     >
       <!-- TODO replace example link -->
       <MitarbeiterLinkComponent
-        :mitarbeiter-link="'www.tu-darmstadt.co2-rechner.de/dies_ist_ein_beispiellink'"
+        :mitarbeiter-link="'www.tu-darmstadt.co2-rechner.de/survey/'+ responseData.umfrageID"
       />
-    </v-card>
-
-    <!-- Anzeigen der Berechnungsergebnisse -->
-    <v-card
-      elevation="2"
-      class="mt-2"
-      outlined
-    >
-      <v-simple-table>
-        <template v-slot:default>
-          <thead>
-            <tr>
-              <th class="text-left">
-                Kategorie
-              </th>
-              <th class="text-left">
-                Wert
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>{{ "Stromemissionen" }}</td>
-              <td>{{ responseData.stromEmissionen }}</td>
-            </tr>
-            <tr>
-              <td>{{ "Wärmeemission" }}</td>
-              <td>{{ responseData.waermeEmissionen }}</td>
-            </tr>
-            <tr>
-              <td>{{ "Kälteemissionen" }}</td>
-              <td>{{ responseData.kaelteEmissionen }}</td>
-            </tr>
-            <tr>
-              <td>{{ "IT-Geräteemissionen" }}</td>
-              <td>{{ responseData.itGeraeteEmissionen }}</td>
-            </tr>
-          </tbody>
-        </template>
-      </v-simple-table>
     </v-card>
   </v-container>
 </template>
 
 <script>
+import Tooltip from "@/components/componentParts/tooltip.vue";
 import MitarbeiterLinkComponent from "./mitarbeiterLinkComponent";
 import LoadingAnimation from "./componentParts/loadingAnimation";
 
@@ -248,15 +247,22 @@ export default {
   components: {
     MitarbeiterLinkComponent,
     LoadingAnimation,
+    Tooltip
   },
 
   data: () => ({
+    // Bilanzierungsjahr
+    bilanzierungsjahr: null,
+
     //Mitarbeiter
     anzahlMitarbeiter: null,
 
-    //genutzte Gebäude
+    // genutzte Gebäude
     // Format: [gebaeudeID, flaechenanteil]
     gebaeude: [[null, null]],
+
+    // mögliche gebäudeIDs
+    gebaeudeIDs: [],
 
     //IT Geräte
     /* Geraet an Array Position format [intern Geraete ID, Anzahl, enabled]
@@ -282,54 +288,82 @@ export default {
     //Rules for input validation
 
     geraeteRules: [
-      v => !!v || "Wenn Sie das Gerät nicht benutzten, wählen Sie es bitte ab",
-      v => (parseInt(v) != 0) || "Wenn Sie das Gerät nicht benutzten, wählen Sie es bitte ab",
-      v => (parseInt(v) > 0) || "Bitte geben Sie eine valide Menge an"
+      (v) =>
+        !!v || "Wenn Sie das Gerät nicht benutzen, wählen Sie es bitte ab.",
+      (v) =>
+        parseInt(v) != 0 ||
+        "Wenn Sie das Gerät nicht benutzen, wählen Sie es bitte ab.",
+      (v) => parseInt(v) > 0 || "Bitte geben Sie eine valide Menge an.",
     ],
     nichtnegativRules: [
-      v => !!v || "Muss angegeben werden",
-      v => (parseInt(v) >= 0) || "Bitte geben Sie einen positiven Wert an"
+      (v) => !!v || "Muss angegeben werden.",
+      (v) => parseInt(v) >= 0 || "Bitte geben Sie einen positiven Wert an.",
     ],
     absolutpositivRules: [
-      v => !!v || "Muss angegeben werden",
-      v => (parseInt(v) > 0) || "Bitte geben Sie einen Wert größer Null an"
+      (v) => !!v || "Muss angegeben werden.",
+      (v) => parseInt(v) > 0 || "Bitte geben Sie einen Wert größer Null an.",
     ],
-    
+
     // has Absenden Button been clicked
     dataRequestSent: false,
-    dataReceived: false,
-    responseData: {},
+    responseData: null,
   }),
+  computed: {
+    /**
+     * Returns a list beginning with the current year until 2018.
+     */
+    possibleYears: function() {
+      const beginningYear = 2018;
+      let currentYear = new Date().getFullYear();
+      return Array.from(new Array(currentYear - beginningYear + 1), (x, i) => i + beginningYear).reverse();
+    },
+
+    /**
+     * True, if a valid survey link was received and should be shown. False otherwise.
+     */
+    displaySurveyLink: function() {
+      return this.responseData && this.responseData.umfrageID !== "";
+    }
+  },
+
+  created() {
+      this.fetchGebaeudeData();
+  },
+
   methods: {
     /**
      * Prints all variables to the console
      */
-    logging: function() {
-      console.log("Mitarbeiter:", this.anzahlMitarbeiter, "\n Gebäude:", this.gebaeude, "\n geraeteAnzahl:", this.geraeteAnzahl);
+    logging: function () {
+      console.log(
+        "Mitarbeiter:",
+        this.anzahlMitarbeiter,
+        "\n Gebäude:",
+        this.gebaeude,
+        "\n geraeteAnzahl:",
+        this.geraeteAnzahl
+      );
     },
 
     /**
      * Adds a new Gebäude to the array, so that it can be selected
      */
-    newGebaeude: function() {
-      this.gebaeude.push([
-        null, null
-      ])
+    newGebaeude: function () {
+      this.gebaeude.push([null, null]);
     },
 
     /**
      * Removes the Gebäude at position index so that it won't show
      */
-    removeGebaeude: function(index) {
-      if(index >= 0 && this.gebaeude.length > index) {
-        this.gebaeude.splice(index, 1)
+    removeGebaeude: function (index) {
+      if (index >= 0 && this.gebaeude.length > index) {
+        this.gebaeude.splice(index, 1);
         //When the only element is removed add a new, thereby clearing the values of the fields on the webpage
-        if(this.gebaeude.length === 0) {
-          this.newGebaeude()
+        if (this.gebaeude.length === 0) {
+          this.newGebaeude();
         }
-      }
-      else {
-        console.error("Negative or out of bounds array index supplied")
+      } else {
+        console.error("Negative or out of bounds array index supplied");
       }
     },
 
@@ -349,7 +383,7 @@ export default {
       this.geraeteAnzahl[3][2] = this.geraeteAnzahl[2][2];
 
       for (var geraet of this.geraeteAnzahl) {
-        if(geraet[1] > 0 && geraet[2]) {
+        if (geraet[1] > 0 && geraet[2]) {
           usedITGeraete.push({
             idITGeraete: parseInt(geraet[0]),
             anzahl: parseInt(geraet[1]),
@@ -366,26 +400,27 @@ export default {
      *   flaechenanteil: Integer
      * }]
      */
-    gebaeudeJSON: function() {
-      var gebaeudeJSON = []
+    gebaeudeJSON: function () {
+      var gebaeudeJSON = [];
 
       for (var objekt of this.gebaeude) {
         gebaeudeJSON.push({
-          gebaeudeNr: parseInt(objekt[0]),
-          flaechenanteil: parseInt(objekt[1])
-        })
+          gebaeudeNr: parseInt(translateGebaeudeIDToNumeric(objekt[0])),
+          flaechenanteil: parseInt(objekt[1]),
+        });
       }
-      return gebaeudeJSON
+      return gebaeudeJSON;
     },
-    
-    sendData: async function () {
 
-      await fetch("http://localhost:9000/umfrage/hauptverantwortlicher", {
+
+    sendData: async function () {
+      await fetch("http://localhost:9000/umfrage/insertUmfrage", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
+          jahr: parseInt(this.bilanzierungsjahr), // TODO test
           gebaeude: this.gebaeudeJSON(),
           anzahlMitarbeiter: parseInt(this.anzahlMitarbeiter),
           itGeraete: this.itGeraeteJSON(),
@@ -394,17 +429,66 @@ export default {
         .then((response) => response.json())
         .then((data) => {
           console.log("Success:", data);
-          this.responseData = data
+          this.responseData = data;
         })
         .catch((error) => {
           console.error("Error:", error);
         });
 
       this.dataRequestSent = false;
-      this.dataReceived = true;
+    },
+
+    fetchGebaeudeData: async function () {
+      await fetch("http://localhost:9000/umfrage/gebaeude")
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Success:", data);
+          this.gebaeudeIDs = data.gebaeude.map(gebInt => translateGebaeudeIDToSymbolic(gebInt));
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
     },
   },
 };
+
+/**
+ * Translates a given gebaeudeID to its numerical equivalent.
+ * E.g. S101 is translated to 1101, L312 to 3312 and so on.
+ */
+function translateGebaeudeIDToNumeric(gebaeudeID) {
+  if(!gebaeudeID) return null;
+
+  let gebaeudeDict = {
+    "S": 1,
+    "B": 2,
+    "L": 3,
+    "H": 4,
+    "W": 5,
+  };
+  let translatedID =
+    gebaeudeDict[gebaeudeID.substring(0, 1)] + gebaeudeID.substring(1);
+  return parseInt(translatedID);
+}
+
+/**
+ * Translates a given numeric gebaeudeID to its symbolic equivalent (string).
+ * E.g. 1101 is translated to S101, 3312 to L312 and so on.
+ */
+function translateGebaeudeIDToSymbolic(gebaeudeID) {
+  let gebaeudeDict = {
+    1: "S",
+    2: "B",
+    3: "L",
+    4: "H",
+    5: "W",
+  };
+
+  gebaeudeID = gebaeudeID.toString()
+  let translatedID =
+    gebaeudeDict[gebaeudeID.substring(0, 1)] + gebaeudeID.substring(1);
+  return translatedID;
+}
 </script>
 
 <!-- Removes the buttons in textfields to increase decrease number -->
