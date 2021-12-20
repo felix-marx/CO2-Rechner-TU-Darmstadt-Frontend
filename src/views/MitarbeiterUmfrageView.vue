@@ -21,6 +21,7 @@ import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import MitarbeiterUmfrage from "@/components/mitarbeiterUmfrage";
 import SurveyNotFoundComponent from "@/components/SurveyNotFoundComponent";
+import LoadingAnimation from "@/components/componentParts/loadingAnimation";
 
 export default {
   name: "MitarbeiterUmfrageView",
@@ -28,17 +29,22 @@ export default {
     Header,
     Footer,
     MitarbeiterUmfrage,
-    SurveyNotFoundComponent
+    SurveyNotFoundComponent,
+    LoadingAnimation
   },
 
   data: () => ({
-      tabList: [{ id: 0, title: 'Umfrage', componentType: MitarbeiterUmfrage}],
+      tabList: [{ id: 0, title: 'Umfrage', componentType: LoadingAnimation}],
       umfrageID: null
   }),
 
   computed: {
 
     bodyComponent: function () {
+      if (this.umfrageID === null) {
+        return LoadingAnimation;
+      }
+
       if(this.surveyNotFound) {
         return SurveyNotFoundComponent;
       } else {
