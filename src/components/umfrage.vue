@@ -302,7 +302,7 @@ export default {
     gebaeude: [[null, null]],
 
     // mögliche gebäudeIDs
-    gebaeudeIDs: null,
+    gebaeudeIDs: [],
 
     //IT Geräte
     /* Geraet an Array Position format [intern Geraete ID, Anzahl, enabled]
