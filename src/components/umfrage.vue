@@ -235,46 +235,6 @@
         :mitarbeiter-link="'www.tu-darmstadt.co2-rechner.de/survey/'+ responseData.umfrageID"
       />
     </v-card>
-
-    <!-- Anzeigen der Berechnungsergebnisse -->
-    <v-card
-      elevation="2"
-      class="mt-2"
-      outlined
-    >
-      <v-simple-table>
-        <template v-slot:default>
-          <thead>
-            <tr>
-              <th class="text-left">
-                Kategorie
-              </th>
-              <th class="text-left">
-                Wert
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>{{ "Stromemissionen" }}</td>
-              <td>{{ responseData.stromEmissionen }}</td>
-            </tr>
-            <tr>
-              <td>{{ "Wärmeemissionen" }}</td>
-              <td>{{ responseData.waermeEmissionen }}</td>
-            </tr>
-            <tr>
-              <td>{{ "Kälteemissionen" }}</td>
-              <td>{{ responseData.kaelteEmissionen }}</td>
-            </tr>
-            <tr>
-              <td>{{ "IT-Geräteemissionen" }}</td>
-              <td>{{ responseData.itGeraeteEmissionen }}</td>
-            </tr>
-          </tbody>
-        </template>
-      </v-simple-table>
-    </v-card>
   </v-container>
 </template>
 

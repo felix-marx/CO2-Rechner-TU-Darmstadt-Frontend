@@ -300,41 +300,6 @@
         </v-card>
       </v-form>
     </v-card>
-    <!-- Anzeigen der Berechnungsergebnisse -->
-    <v-card
-      elevation="2"
-      class="mt-2"
-      outlined
-    >
-      <v-simple-table>
-        <template v-slot:default>
-          <thead>
-            <tr>
-              <th class="text-left">
-                Kategorie
-              </th>
-              <th class="text-left">
-                Wert
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>{{ "Dienstreisenemissionen" }}</td>
-              <td>{{ responseData.dienstreisenEmissionen }}</td>
-            </tr>
-            <tr>
-              <td>{{ "Pendelwegemissionen" }}</td>
-              <td>{{ responseData.pendelwegeEmissionen }}</td>
-            </tr>
-            <tr>
-              <td>{{ "IT-Geräte-Emissionen" }}</td>
-              <td>{{ responseData.itGeraeteEmissionen }}</td>
-            </tr>
-          </tbody>
-        </template>
-      </v-simple-table>
-    </v-card>
   </v-container>
 </template>
 
