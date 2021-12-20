@@ -20,7 +20,7 @@
     <v-spacer />
 
     <!--- Anmelden Button --->
-    <Anmeldung/>
+    <Anmeldung />
   </v-app-bar>
 </template>
 
@@ -35,6 +35,7 @@ import AdminEintraege from "./AdminEintraege";
 
 export default {
   name: "Header",
+    components: { Anmeldung },
 
   data: () => ({
     // data on tabs and shown component when selecting the tab
@@ -55,7 +56,6 @@ export default {
             let data = { id: selectedTab, componentType: componentType };
             this.$emit("changeTab", data);
         },
-    },
-    components: { Anmeldung }
+    }
 };
 </script>
