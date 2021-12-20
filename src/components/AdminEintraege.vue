@@ -174,6 +174,7 @@
               </v-col>
               <v-col>
                 <v-btn
+                  class="add_text--text"
                   color="add"
                   @click="newBuildingRef()"
                 >
@@ -182,6 +183,7 @@
               </v-col>
               <v-col>
                 <v-btn
+                  class="delete_text--text"
                   color="delete"
                   @click="removeBuildingRef(i)"
                 >
