@@ -1,8 +1,8 @@
 <template>
   <v-app>
     <!-- Header -->
-    <SimpleHeader
-      tab-title="Umfrage"
+    <Header
+      :tabs="tabList"
       :anmelden-button="false"
     />
 
@@ -18,20 +18,21 @@
 
 <script>
 import Footer from "@/components/Footer";
-import SimpleHeader from "@/components/SimpleHeader";
+import Header from "@/components/Header";
 import MitarbeiterUmfrage from "@/components/mitarbeiterUmfrage";
 import SurveyNotFoundComponent from "@/components/SurveyNotFoundComponent";
 
 export default {
   name: "MitarbeiterUmfrageView",
   components: {
-    SimpleHeader,
+    Header,
     Footer,
     MitarbeiterUmfrage,
     SurveyNotFoundComponent
   },
 
   data: () => ({
+      tabList: [{ id: 0, title: 'Umfrage', componentType: MitarbeiterUmfrage}],
       umfrageID: null
   }),
 

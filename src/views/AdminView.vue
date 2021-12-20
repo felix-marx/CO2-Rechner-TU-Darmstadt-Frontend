@@ -2,8 +2,9 @@
   <v-app>
     <!-- Header -->
     <Header
-      :tabs="tabList" 
-      @changeTab="changeTab($event)"
+      :anmelden-button="false" 
+      :tabs="tabList"
+      @changeTab="changeTab($event)" 
     />
 
     <!-- main body -->
@@ -19,8 +20,9 @@
 <script>
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
-import Umfrage from "@/components/umfrage";
-import Uebersicht from "@/components/uebersichtUmfragen";
+import AdminEintraege from "@/components/AdminEintraege";
+import AdminAuswertung from "@/components/AdminAuswertung";
+import AdminUebersicht from "@/components/AdminUebersicht";
 
 export default {
   name: "App",
@@ -28,17 +30,20 @@ export default {
   components: {
     Footer,
     Header,
-    Umfrage,
+    AdminUebersicht,
+    AdminEintraege,
+    AdminAuswertung
   },
 
   data: () => ({
     // standard tab selected is the first tab / Umfrage tab
     // could extend this to be persistent on site refresh, but this would require additional plugins, like e.g. Vuex.
     selectedTab: 0,
-    currentTabType: Umfrage,
-    tabList: [
-        { id: 0, title: "Umfrage", componentType: Umfrage },
-        { id: 1, title: "Ergebnisse", componentType: Uebersicht },
+    currentTabType: AdminUebersicht,
+       tabList: [
+        { id: 0, title: "Übersicht", componentType: AdminUebersicht},
+        { id: 1, title: "Daten eintragen", componentType: AdminEintraege },
+        { id: 2, title: "Auswertung", componentType: AdminAuswertung},
       ],
   }),
 

@@ -16,13 +16,7 @@
     <v-spacer />
 
     <!--- Anmelden Button --->
-    <v-btn
-      v-if="anmeldenButton"
-      text
-    >
-      <span class="mr-2">Anmelden</span>
-      <v-icon>mdi-account</v-icon>
-    </v-btn>
+    <Anmeldung v-if="anmeldenButton" />
   </v-app-bar>
 </template>
 

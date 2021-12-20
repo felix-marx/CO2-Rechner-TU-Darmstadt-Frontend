@@ -20,31 +20,33 @@
     <v-spacer />
 
     <!--- Anmelden Button --->
-    <Anmeldung />
+    <Anmeldung v-if="anmeldenButton" />
   </v-app-bar>
 </template>
 
 
 <script>
-import Umfrage from "./umfrage";
-import Mitarbeiterumfrage from "./mitarbeiterUmfrage";
-import Uebersicht from "./uebersichtUmfragen";
 import Anmeldung from "./Anmeldung.vue";
-import AdminEintraege from "./AdminEintraege";
 
 
 export default {
   name: "Header",
     components: { Anmeldung },
 
+  props: {
+      anmeldenButton: {
+        default: true,
+        type: Boolean,
+      },
+      // data on tabs and shown component when selecting the tab
+      tabs: {
+        default: null,
+        type: Array
+      },
+    },
+
   data: () => ({
-    // data on tabs and shown component when selecting the tab
-    tabs: [
-      { id: 0, title: "Umfrage", componentType: Umfrage },
-      { id: 1, title: "Mitarbeiterumfrage", componentType: Mitarbeiterumfrage },
-      { id: 2, title: "Ergebnisse", componentType: Uebersicht },
-      { id: 3, title: "Datenbankeinträge", componentType: AdminEintraege }
-    ],
+    
   }),
     methods: {
         /**
