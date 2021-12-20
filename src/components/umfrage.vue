@@ -406,7 +406,7 @@ export default {
       for (var objekt of this.gebaeude) {
         gebaeudeJSON.push({
           gebaeudeNr: parseInt(translateGebaeudeIDToNumeric(objekt[0])),
-          flaechenanteil: parseInt(objekt[1]),
+          nutzflaeche: parseInt(objekt[1]),
         });
       }
       return gebaeudeJSON;
@@ -414,6 +414,7 @@ export default {
 
 
     sendData: async function () {
+      this.logging();
       await fetch("http://localhost:9000/umfrage/insertUmfrage", {
         method: "POST",
         headers: {
@@ -422,8 +423,9 @@ export default {
         body: JSON.stringify({
           jahr: parseInt(this.bilanzierungsjahr), // TODO test
           gebaeude: this.gebaeudeJSON(),
-          anzahlMitarbeiter: parseInt(this.anzahlMitarbeiter),
+          mitarbeiteranzahl: parseInt(this.anzahlMitarbeiter),
           itGeraete: this.itGeraeteJSON(),
+          nutzerEmail: "anton@tobi.com"
         }),
       })
         .then((response) => response.json())
