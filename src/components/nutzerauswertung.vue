@@ -1,8 +1,47 @@
 <template>
   <v-app>
-    <v-card>
+    <v-card v-if="true">
+      <v-card-title>Vue-Chartjs</v-card-title>
+      <DoughnutChart
+        :chartdata="chartdataDoughnut"
+        :options="optionsDoughnut"
+      />
+      <PieChart
+        :chartdata="chartdataPie"
+        :options="optionsPie"
+      />
+      <LineChart
+        :chartdata="chartdataLine"
+        :options="optionsLine"
+      />
+      <BarChart
+        :chartdata="chartdataBar"
+        :options="optionsBar"
+      />
+      <HorizontalBarChart
+        :chartdata="chartdataHorizontalBar"
+        :options="optionsHorizontalBar"
+      />
+      <RadarChart
+        :chartdata="chartdataRadar"
+        :options="optionsRadar"
+      />
+      <PolarAreaChart
+        :chartdata="chartdataPolarArea"
+        :options="optionsPolarArea"
+      />
+      <BubbleChart
+        :chartdata="chartdataBubble"
+        :options="optionsBubble"
+      />
+      <ScatterChart
+        :chartdata="chartdataScatter"
+        :options="optionsScatter"
+      />
+    </v-card>
+    <v-card v-if="true">
       <v-card-title>Chartkick mit chartjs</v-card-title>
-      <line-chart :data="chartData" />
+      <line-chart :data="[['Jan', 4], ['Feb', 2], ['Mar', 10], ['Apr', 5], ['May', 3]]" />
       <pie-chart :data="[['Blueberry', 44], ['Strawberry', 23]]" />
       <column-chart :data="[['Sun', 32], ['Mon', 46], ['Tue', 28]]" />
       <bar-chart :data="[['X-Small', 5], ['Small', 27]]" />
@@ -12,18 +51,6 @@
         xtitle="Size"
         ytitle="Population"
       />
-    </v-card>
-    <v-card>
-      <v-card-title>Vue-Chartjs</v-card-title>
-      <DoughnutChart :chartdata="chartdataDoughnut" :options="optionsDoughnut" />
-      <PieChart :chartdata="chartdataPie" :options="optionsPie" />
-      <LineChart :chartdata="chartdataLine" :options="optionsLine" />
-      <BarChart :chartdata="chartdataBar" :options="optionsBar" />
-      <HorizontalBarChart :chartdata="chartdataHorizontalBar" :options="optionsHorizontalBar" />
-      <RadarChart :chartdata="chartdataRadar" :options="optionsRadar" />
-      <PolarAreaChart :chartdata="chartdataPolarArea" :options="optionsPolarArea" />
-      <BubbleChart :chartdata="chartdataBubble" :options="optionsBubble" />
-      <ScatterChart :chartdata="chartdataScatter" :options="optionsScatter" />
     </v-card>
   </v-app>
 </template>
@@ -56,8 +83,6 @@ export default{
   },
 
   data: () => ({
-    chartData: [["Jan", 4], ["Feb", 2], ["Mar", 10], ["Apr", 5], ["May", 3]],
-
     chartdataDoughnut: {
       labels: [
         'Red',
@@ -114,7 +139,7 @@ export default{
     },
     optionsLine: {
       responsive: true,
-      maintainAspectRatio: false
+      maintainAspectRatio: false,
     },
 
     chartdataBar:{
@@ -140,26 +165,27 @@ export default{
           'rgb(153, 102, 255)',
           'rgb(201, 203, 207)'
         ],
-        borderWidth: 1
+        borderWidth: 1,
+        barPercentage: 0.5
       }]
     },
     optionsBar: {
       responsive: true,
       maintainAspectRatio: false,
       scales:{
-        y:{
-          beginAtZero: true
-        }
+        yAxes: [{
+            ticks: {
+                beginAtZero: true
+            }
+        }]
       }
     },
 
-    datachartHorizontalBar:{
+    chartdataHorizontalBar:{
       labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"],
       datasets: [{
-        axis: 'y',
         label: 'My First Dataset',
         data: [65, 59, 80, 81, 56, 55, 40],
-        fill: false,
         backgroundColor: [
           'rgba(255, 99, 132, 0.2)',
           'rgba(255, 159, 64, 0.2)',
@@ -178,14 +204,19 @@ export default{
           'rgb(153, 102, 255)',
           'rgb(201, 203, 207)'
         ],
-        borderWidth: 1
+        borderWidth: 1,
+        barPercentage: 0.5
       }]
     },
     optionsHorizontalBar: {
       responsive: true,
-      //maintainAspectRatio: false,
+      maintainAspectRatio: false,
       scales:{
-        indexAxis: "y"
+        yAxes: [{
+            ticks: {
+                beginAtZero: true
+            }
+        }]
       }
     },
 
@@ -306,7 +337,7 @@ export default{
       }
     },
 
-    
+
 
   })
 }
