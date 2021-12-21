@@ -39,6 +39,7 @@ export default {
         type: Boolean,
       },
       // data on tabs and shown component when selecting the tab
+      // entries should be of shape {id: int, title: "", component: ComponentType}
       tabs: {
         default: null,
         type: Array

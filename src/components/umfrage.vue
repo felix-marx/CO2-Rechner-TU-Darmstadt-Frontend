@@ -327,6 +327,7 @@ export default {
   },
 
   created() {
+    // get all possible gebaeude IDs on creation of the component
       this.fetchGebaeudeData();
   },
 
@@ -412,7 +413,9 @@ export default {
       return gebaeudeJSON;
     },
 
-
+    /**
+     * Sends all formular data to the server.
+     */
     sendData: async function () {
       this.logging();
       await fetch("http://localhost:9000/umfrage/insertUmfrage", {
@@ -440,6 +443,9 @@ export default {
       this.dataRequestSent = false;
     },
 
+    /**
+     * Fetches all possible gebaeudeIDs from the server to display in the dropdown menu of the formular.
+     */
     fetchGebaeudeData: async function () {
       await fetch("http://localhost:9000/umfrage/gebaeude")
         .then((response) => response.json())
