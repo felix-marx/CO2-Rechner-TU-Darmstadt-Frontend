@@ -3,9 +3,9 @@ import App from './App.vue'
 import vuetify from './plugins/vuetify'
 import router from './router'
 import Chartkick from 'vue-chartkick'
-import Highcharts from 'highcharts'
+import Chart from 'chart.js'
 
-Vue.use(Chartkick.use(Highcharts))
+Vue.use(Chartkick.use(Chart))
 Vue.config.productionTip = false
 
 new Vue({
