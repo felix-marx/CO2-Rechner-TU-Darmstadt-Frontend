@@ -414,7 +414,6 @@ export default {
 
 
     sendData: async function () {
-      this.logging();
       await fetch("http://localhost:9000/umfrage/insertUmfrage", {
         method: "POST",
         headers: {
