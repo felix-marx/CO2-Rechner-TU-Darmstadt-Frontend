@@ -45,10 +45,12 @@ export default {
      * if the corresponding id exists.
      */
     bodyComponent: function () {
+      // umfrageID is null until the server answered. Show loading animation during that.
       if (this.umfrageID === null) {
         return LoadingAnimation;
       }
 
+      // either show the survey or a message, that the requested survey could not be found.
       if(this.surveyNotFound) {
         return SurveyNotFoundComponent;
       } else {

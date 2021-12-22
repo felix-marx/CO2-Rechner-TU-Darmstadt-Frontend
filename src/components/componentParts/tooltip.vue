@@ -1,4 +1,5 @@
 <template>
+  <!-- general tooltip component. Small "pop-up" when hovering with mouse over circle with question mark -->
   <v-tooltip bottom>
     <template v-slot:activator="{ on }">
       <v-icon v-on="on">
@@ -14,6 +15,7 @@ export default {
   name: "Tooltip",
 
   props: {
+    // text to show as tooltip
     tooltipText: {
       default: "missing text",
       type: String
