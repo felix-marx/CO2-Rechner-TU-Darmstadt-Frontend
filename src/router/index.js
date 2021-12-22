@@ -1,14 +1,21 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+//import Home from '../views/Home.vue'
+import Anmeldung from '../components/Anmeldung.vue'
+import Registrierung from '../components/Registrierung.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    name: 'Home',
-    component: Home
+    name: 'Anmeldung',
+    component: Anmeldung
+  },
+  {
+    path: '/registrierung',
+    name: 'Registrierung',
+    component: Registrierung
   },
   {
     path: '/survey/:umfrageID',
