@@ -7,9 +7,10 @@
         outlined
       >
         <v-card-title class="justify-center">
-          Anmeldung
+          {{ istRegistrierung ? "Registrierung" : "Anmeldung" }}
         </v-card-title>
-        <v-container>
+        <!-- Signin -->
+        <v-container v-if="!istRegistrierung">
           <v-row>
             <v-col />
             <v-col cols="8">
@@ -52,11 +53,100 @@
             <v-btn
               color="error"
               :style="{ left: '50%', transform: 'translateX(-50%)' }"
-              @click="$router.push('registrierung')"
+              @click="istRegistrierung = true"
             >
               <span>Neues Konto erstellen</span>
               <v-icon>mdi-account</v-icon>
             </v-btn>
+          </v-row>
+        </v-container>
+        <!-- Register -->
+        <v-container v-if="istRegistrierung">
+          <v-row>
+            <v-col />
+            <v-col cols="8">
+              <v-text-field
+                v-model="username"
+                class="px-5"
+                :rules="requiredRule"
+                label="E-Mail Adresse"
+                prepend-icon="mdi-account"
+                required
+              />
+            </v-col>
+            <v-col />
+          </v-row>
+          <v-row>
+            <v-col />
+            <v-col cols="8">
+              <v-text-field
+                v-model="password"
+                class="px-5"
+                :rules="passwordRule.concat(requiredRule)"
+                label="Passwort"
+                type="password"
+                prepend-icon="mdi-key"
+              />
+            </v-col>
+            <v-col />
+          </v-row>
+          <v-row>
+            <v-col />
+            <v-col cols="8">
+              <v-text-field
+                v-model="rePassword"
+                class="px-5"
+                :rules="passwordRule.concat(requiredRule)"
+                label="Passwort wiederholen"
+                type="password"
+                prepend-icon="mdi-key"
+                hint="Mindestens 8 Zeichen"
+              />
+            </v-col>
+            <v-col />
+          </v-row>
+          <v-row
+            class="px-5"
+          >
+            <v-col />
+            <v-col cols="8">
+              <v-checkbox
+                v-model="agbBestaetigt"
+                label="Ich erkläre mich mit den AGB von TU-Darmstadt einverstanden."
+              />
+            </v-col>
+            <v-col />
+          </v-row>
+          <!-- Error Message on wrong user input and error in backend -->
+          <v-row
+            v-if="errorMessage != null && errorMessage != ''"
+            justify="center"
+          >
+            <p>
+              {{ errorMessage }}
+            </p>
+          </v-row>
+          <v-row>
+            <v-btn
+              color="error"
+              :style="{ left: '50%', transform: 'translateX(-50%)' }"
+              @click="postRegistrierung()"
+            >
+              <span>Konto erstellen</span>
+              <v-icon>mdi-account</v-icon>
+            </v-btn>
+          </v-row>
+          <v-row>
+            <v-col class="px-10">
+              <v-btn
+                color="primary"
+                :style="{ left: '50%', transform: 'translateX(-50%)' }"
+                @click="$router.push('/')"
+              >
+                <span>Anmelden</span>
+                <v-icon>mdi-account</v-icon>
+              </v-btn>
+            </v-col>
           </v-row>
         </v-container>
       </v-card>
