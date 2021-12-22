@@ -12,7 +12,7 @@
         <v-container>
           <v-row>
             <v-col />
-            <v-col>
+            <v-col cols="8">
               <v-text-field
                 v-model="username"
                 :rules="requiredRule"
@@ -25,7 +25,7 @@
           </v-row>
           <v-row>
             <v-col />
-            <v-col>
+            <v-col cols="8">
               <v-text-field
                 v-model="password"
                 :rules="passwordRule.concat(requiredRule)"
@@ -52,7 +52,7 @@
             <v-btn
               color="error"
               :style="{ left: '50%', transform: 'translateX(-50%)' }"
-              @click="postRegistrierung()"
+              @click="$router.push('registrierung')"
             >
               <span>Neues Konto erstellen</span>
               <v-icon>mdi-account</v-icon>
