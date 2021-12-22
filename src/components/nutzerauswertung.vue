@@ -1,57 +1,153 @@
 <template>
   <v-app>
-    <v-card v-if="true">
-      <v-card-title>Vue-Chartjs</v-card-title>
-      <DoughnutChart
-        :chartdata="chartdataDoughnut"
-        :options="optionsDoughnut"
-      />
-      <PieChart
-        :chartdata="chartdataPie"
-        :options="optionsPie"
-      />
-      <LineChart
-        :chartdata="chartdataLine"
-        :options="optionsLine"
-      />
-      <BarChart
-        :chartdata="chartdataBar"
-        :options="optionsBar"
-      />
-      <HorizontalBarChart
-        :chartdata="chartdataHorizontalBar"
-        :options="optionsHorizontalBar"
-      />
-      <RadarChart
-        :chartdata="chartdataRadar"
-        :options="optionsRadar"
-      />
-      <PolarAreaChart
-        :chartdata="chartdataPolarArea"
-        :options="optionsPolarArea"
-      />
-      <BubbleChart
-        :chartdata="chartdataBubble"
-        :options="optionsBubble"
-      />
-      <ScatterChart
-        :chartdata="chartdataScatter"
-        :options="optionsScatter"
-      />
-    </v-card>
-    <v-card v-if="true">
-      <v-card-title>Chartkick mit chartjs</v-card-title>
-      <line-chart :data="[['Jan', 4], ['Feb', 2], ['Mar', 10], ['Apr', 5], ['May', 3]]" />
-      <pie-chart :data="[['Blueberry', 44], ['Strawberry', 23]]" />
-      <column-chart :data="[['Sun', 32], ['Mon', 46], ['Tue', 28]]" />
-      <bar-chart :data="[['X-Small', 5], ['Small', 27]]" />
-      <area-chart :data="{'2017-01-01 00:00:00 -0800': 2, '2017-01-01 00:01:00 -0800': 5}" />
-      <scatter-chart
-        :data="[[174.0, 80.0], [176.5, 82.3]]"
-        xtitle="Size"
-        ytitle="Population"
-      />
-    </v-card>
+    <v-main>
+      <v-container>
+        <v-card
+          v-if="true"
+          class="pa-7"
+          elevation="2"
+          outlined
+        >
+          <v-card-title>Vue-Chartjs</v-card-title>
+
+          <v-container>
+            <v-row>
+              <v-col>
+                <v-card>
+                  <v-card-title>Doughnut chart</v-card-title>
+                  <DoughnutChart
+                    :chartdata="chartdataDoughnut"
+                    :options="optionsDoughnut"
+                  />
+                </v-card>
+              </v-col>
+              <v-col>
+                <v-card>
+                  <v-card-title>Pie chart</v-card-title>
+                  <PieChart
+                    :chartdata="chartdataPie"
+                    :options="optionsPie"
+                  />
+                </v-card>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col>
+                <v-card>
+                  <v-card-title>Line chart</v-card-title>
+                  <LineChart
+                    :chartdata="chartdataLine"
+                    :options="optionsLine"
+                  />
+                </v-card>
+              </v-col>
+              <v-col>
+                <v-card>
+                  <v-card-title>Line Area chart</v-card-title>
+                  <LineChart
+                    :chartdata="chartdataLineArea"
+                    :options="optionsLineArea"
+                  />
+                </v-card>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col>
+                <v-card>
+                  <v-card-title>Bar chart</v-card-title>
+                  <BarChart
+                    :chartdata="chartdataBar"
+                    :options="optionsBar"
+                  />
+                </v-card>
+              </v-col>
+              <v-col>
+                <v-card>
+                  <v-card-title>Horizontal bar chart</v-card-title>
+                  <HorizontalBarChart
+                    :chartdata="chartdataHorizontalBar"
+                    :options="optionsHorizontalBar"
+                  />
+                </v-card>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col>
+                <v-card>
+                  <v-card-title>Radar chart</v-card-title>
+                  <RadarChart
+                    :chartdata="chartdataRadar"
+                    :options="optionsRadar"
+                  />
+                </v-card>
+              </v-col>
+              <v-col>
+                <v-card>
+                  <v-card-title>Polar Area chart</v-card-title>
+                  <PolarAreaChart
+                    :chartdata="chartdataPolarArea"
+                    :options="optionsPolarArea"
+                  />
+                </v-card>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col>
+                <v-card>
+                  <v-card-title>Scatter chart</v-card-title>
+                  <ScatterChart
+                    :chartdata="chartdataScatter"
+                    :options="optionsScatter"
+                  />
+                </v-card>
+              </v-col>
+              <v-col>
+                <v-card>
+                  <v-card-title>Scatter chart with line</v-card-title>
+                  <ScatterChart
+                    :chartdata="chartdataScatterLine"
+                    :options="optionsScatterLine"
+                  />
+                </v-card>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col>
+                <v-card>
+                  <v-card-title>Bubble chart</v-card-title>
+                  <BubbleChart
+                    :chartdata="chartdataBubble"
+                    :options="optionsBubble"
+                  />
+                </v-card>
+              </v-col>
+              <v-col>
+                <v-card>
+                  <v-card-title>Mixed chart</v-card-title>
+                  <BarChart
+                    :chartdata="chartdataMixed"
+                    :options="optionsMixed"
+                  />
+                </v-card>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-card>
+        <v-card v-if="false">
+          <v-card-title>Chartkick mit chartjs</v-card-title>
+          <line-chart :data="[['Jan', 4], ['Feb', 2], ['Mar', 10], ['Apr', 5], ['May', 3]]" />
+          <pie-chart :data="[['Blueberry', 44], ['Strawberry', 23]]" />
+          <column-chart :data="[['Sun', 32], ['Mon', 46], ['Tue', 28]]" />
+          <bar-chart :data="[['X-Small', 5], ['Small', 27]]" />
+          <area-chart :data="{'2017-01-01 00:00:00 -0800': 2, '2017-01-01 00:01:00 -0800': 5}" />
+          <scatter-chart
+            :data="[[174.0, 80.0], [176.5, 82.3]]"
+            xtitle="Size"
+            ytitle="Population"
+          />
+        </v-card>
+      </v-container>
+    </v-main>
   </v-app>
 </template>
 
@@ -134,12 +230,50 @@ export default{
         data: [65, 59, 80, 81, 56, 55, 40],
         fill: false,
         borderColor: 'rgb(75, 192, 192)',
-        tension: 0.1
+        lineTension: 0.1
       }]
     },
     optionsLine: {
       responsive: true,
       maintainAspectRatio: false,
+      scales:{
+        yAxes: [{
+            ticks: {
+                beginAtZero: true
+            }
+        }]
+      }
+    },
+
+    chartdataLineArea:{
+      labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"],
+      datasets: [{
+        label: 'First Dataset',
+        data: [65, 59, 80, 81, 56, 55, 40],
+        fill: true,
+        borderColor: 'rgb(75, 192, 192)',
+        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+        lineTension: 0.4
+      },
+      {
+        label: 'Second Dataset',
+        data: [40, 20, 25, 25, 70, 70, 80],
+        fill: true,
+        borderColor: 'rgb(255, 99, 132)',
+        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+        lineTension: 0
+      }]
+    },
+    optionsLineArea: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales:{
+        yAxes: [{
+            ticks: {
+                beginAtZero: true
+            }
+        }]
+      }
     },
 
     chartdataBar:{
@@ -212,7 +346,7 @@ export default{
       responsive: true,
       maintainAspectRatio: false,
       scales:{
-        yAxes: [{
+        xAxes: [{
             ticks: {
                 beginAtZero: true
             }
@@ -300,11 +434,36 @@ export default{
           r: 10
         }],
         backgroundColor: 'rgb(255, 99, 132)'
+      }, 
+      {
+        label: 'Second Dataset',
+        data: [{
+          x: 0,
+          y: 40,
+          r: 10
+        }, {
+          x: 15,
+          y: 15,
+          r: 5
+        }],
+        backgroundColor: 'rgb(75, 192, 192)'
       }]
     },
     optionsBubble: {
       responsive: true,
       maintainAspectRatio: false,
+      scales: {
+        yAxes: [{
+            ticks: {
+                beginAtZero: true
+            }
+        }],
+        xAxes: [{
+            ticks: {
+                beginAtZero: true
+            }
+        }]
+      }
     },
 
     chartdataScatter: {
@@ -323,7 +482,7 @@ export default{
           x: 0.5,
           y: 5.5
         }],
-        backgroundColor: 'rgb(255, 99, 132)'
+        backgroundColor: 'rgb(255, 99, 132)',
       }],
     },
     optionsScatter: {
@@ -337,8 +496,72 @@ export default{
       }
     },
 
+    chartdataScatterLine: {
+      datasets: [{
+        label: 'Scatter Dataset',
+        data: [{
+          x: -10,
+          y: 0
+        }, {
+          x: 0,
+          y: 10
+        }, {
+          x: 10,
+          y: 5
+        }, {
+          x: 0.5,
+          y: 5.5
+        }],
+        backgroundColor: 'rgb(255, 99, 132)',
+        borderColor: 'rgb(75, 192, 192)',
+        showLine: true,
+        fill: false,
+      }],
+    },
+    optionsScatterLine: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        x: {
+          type: 'linear',
+          position: 'bottom'
+        }
+      }
+    },
 
-
+    chartdataMixed: {
+      labels: [
+        'January',
+        'February',
+        'March',
+        'April'
+      ],
+      datasets: [{
+        type: 'bar',
+        label: 'Bar Dataset',
+        data: [10, 20, 30, 40],
+        borderColor: 'rgb(255, 99, 132)',
+        backgroundColor: 'rgba(255, 99, 132, 0.2)'
+      }, {
+        type: 'line',
+        label: 'Line Dataset',
+        data: [10, 30, 60, 100],
+        fill: false,
+        borderColor: 'rgb(54, 162, 235)'
+      }]
+    },
+    optionsMixed: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        yAxes: [{
+            ticks: {
+                beginAtZero: true
+            }
+        }]
+      },
+      width: 200, 
+    }
   })
 }
 </script>
