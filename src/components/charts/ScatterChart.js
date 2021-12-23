@@ -1,10 +1,8 @@
-import { Doughnut, mixins } from 'vue-chartjs'
+import { Scatter, mixins  } from 'vue-chartjs'
 
 export default {
-  extends: Doughnut,
-
+  extends: Scatter,
   mixins: [mixins.reactiveProp],
-
   props: {
     chartData: {
       type: Object,
@@ -15,8 +13,7 @@ export default {
       default: null
     }
   },
-
   mounted () {
     this.renderChart(this.chartData, this.options)
-  },
+  }
 }

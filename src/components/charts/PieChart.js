@@ -1,10 +1,10 @@
-<script>
-import { PolarArea } from 'vue-chartjs'
+import { Pie, mixins  } from 'vue-chartjs'
 
 export default {
-  extends: PolarArea,
+  extends: Pie,
+  mixins: [mixins.reactiveProp],
   props: {
-    chartdata: {
+    chartData: {
       type: Object,
       default: null
     },
@@ -14,7 +14,6 @@ export default {
     }
   },
   mounted () {
-    this.renderChart(this.chartdata, this.options)
+    this.renderChart(this.chartData, this.options)
   }
 }
-</script>

@@ -25,7 +25,7 @@
                 <v-card>
                   <v-card-title>Pie chart</v-card-title>
                   <PieChart
-                    :chartdata="chartdataPie"
+                    :chart-data="chartdataPie"
                     :options="optionsPie"
                   />
                 </v-card>
@@ -36,7 +36,7 @@
                 <v-card>
                   <v-card-title>Line chart</v-card-title>
                   <LineChart
-                    :chartdata="chartdataLine"
+                    :chart-data="chartdataLine"
                     :options="optionsLine"
                   />
                 </v-card>
@@ -45,7 +45,7 @@
                 <v-card>
                   <v-card-title>Line Area chart</v-card-title>
                   <LineChart
-                    :chartdata="chartdataLineArea"
+                    :chart-data="chartdataLineArea"
                     :options="optionsLineArea"
                   />
                 </v-card>
@@ -56,7 +56,7 @@
                 <v-card>
                   <v-card-title>Bar chart</v-card-title>
                   <BarChart
-                    :chartdata="chartdataBar"
+                    :chart-data="chartdataBar"
                     :options="optionsBar"
                   />
                 </v-card>
@@ -65,7 +65,7 @@
                 <v-card>
                   <v-card-title>Horizontal bar chart</v-card-title>
                   <HorizontalBarChart
-                    :chartdata="chartdataHorizontalBar"
+                    :chart-data="chartdataHorizontalBar"
                     :options="optionsHorizontalBar"
                   />
                 </v-card>
@@ -76,7 +76,7 @@
                 <v-card>
                   <v-card-title>Radar chart</v-card-title>
                   <RadarChart
-                    :chartdata="chartdataRadar"
+                    :chart-data="chartdataRadar"
                     :options="optionsRadar"
                   />
                 </v-card>
@@ -85,7 +85,7 @@
                 <v-card>
                   <v-card-title>Polar Area chart</v-card-title>
                   <PolarAreaChart
-                    :chartdata="chartdataPolarArea"
+                    :chart-data="chartdataPolarArea"
                     :options="optionsPolarArea"
                   />
                 </v-card>
@@ -96,7 +96,7 @@
                 <v-card>
                   <v-card-title>Scatter chart</v-card-title>
                   <ScatterChart
-                    :chartdata="chartdataScatter"
+                    :chart-data="chartdataScatter"
                     :options="optionsScatter"
                   />
                 </v-card>
@@ -105,7 +105,7 @@
                 <v-card>
                   <v-card-title>Scatter chart with line</v-card-title>
                   <ScatterChart
-                    :chartdata="chartdataScatterLine"
+                    :chart-data="chartdataScatterLine"
                     :options="optionsScatterLine"
                   />
                 </v-card>
@@ -116,7 +116,7 @@
                 <v-card>
                   <v-card-title>Bubble chart</v-card-title>
                   <BubbleChart
-                    :chartdata="chartdataBubble"
+                    :chart-data="chartdataBubble"
                     :options="optionsBubble"
                   />
                 </v-card>
@@ -125,7 +125,7 @@
                 <v-card>
                   <v-card-title>Mixed chart</v-card-title>
                   <BarChart
-                    :chartdata="chartdataMixed"
+                    :chart-data="chartdataMixed"
                     :options="optionsMixed"
                   />
                 </v-card>
@@ -154,14 +154,14 @@
 
 <script>
 import DoughnutChart from "./charts/DoughnutChart.js"
-import LineChart from "./charts/LineChart.vue"
-import BarChart from "./charts/BarChart.vue"
-import HorizontalBarChart from "./charts/HorizontalBarChart.vue"
-import RadarChart from "./charts/RadarChart.vue"
-import PieChart from "./charts/PieChart.vue"
-import PolarAreaChart from "./charts/PolarAreaChart.vue"
-import BubbleChart from "./charts/BubbleChart.vue"
-import ScatterChart from "./charts/ScatterChart.vue"
+import LineChart from "./charts/LineChart.js"
+import BarChart from "./charts/BarChart.js"
+import HorizontalBarChart from "./charts/HorizontalBarChart.js"
+import RadarChart from "./charts/RadarChart.js"
+import PieChart from "./charts/PieChart.js"
+import PolarAreaChart from "./charts/PolarAreaChart.js"
+import BubbleChart from "./charts/BubbleChart.js"
+import ScatterChart from "./charts/ScatterChart.js"
 
 export default{
   name: "Nutzerauswertung",
