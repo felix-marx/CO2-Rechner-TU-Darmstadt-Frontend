@@ -16,7 +16,7 @@
                 <v-card>
                   <v-card-title>Doughnut chart</v-card-title>
                   <DoughnutChart
-                    :chartdata="chartdataDoughnut"
+                    :chart-data="chartdataDoughnut"
                     :options="optionsDoughnut"
                   />
                 </v-card>
@@ -153,7 +153,7 @@
 
 
 <script>
-import DoughnutChart from "./charts/DoughnutChart.vue"
+import DoughnutChart from "./charts/DoughnutChart.js"
 import LineChart from "./charts/LineChart.vue"
 import BarChart from "./charts/BarChart.vue"
 import HorizontalBarChart from "./charts/HorizontalBarChart.vue"
