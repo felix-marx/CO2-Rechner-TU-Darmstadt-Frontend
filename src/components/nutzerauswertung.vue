@@ -1,17 +1,35 @@
 <template>
   <v-container>
     <v-card
+      v-if="responsesuccessful"
       elevation="2"
       outlined
     >
-      <v-card-title>Auswertung</v-card-title>
+      <v-card-title>Auswertung der Umfrage {{ responsedata.id }}</v-card-title>
       <v-container>
+        <v-row>
+          <p>Bilanzierungsjahr: {{ responsedata.jahr }}</p>
+        </v-row>
+        <v-row>
+          <p>Mitarbeiteranzahl: {{ responsedata.mitarbeiteranzahl }}</p>
+        </v-row>
+
         <doughnut-chart
           :chart-data="chartdataDoughnut"
           :options="optionsDoughnut"
         />
-        <v-btn @click="changeData">Change</v-btn>
+        <v-btn @click="changeData">
+          Change
+        </v-btn>
       </v-container>
+    </v-card>
+
+    <v-card
+      v-if="!responsesuccessful"
+      elevation="2"
+      outlined
+    >
+      <v-card-title>Error {{ responseerror.code }}: {{ responseerror.message }}</v-card-title>
     </v-card>
   </v-container>
 </template>
@@ -35,6 +53,17 @@ export default{
 
   data() {
     return {
+      responsesuccessful: null,
+      responsedata: {
+        id: null,
+        jahr: null,
+        mitarbeiteranzahl: null
+      },
+      responseerror: {
+        code: null,
+        message: null,
+      },
+
       chartdataTemplate: {
         labels: ['Red', 'Blue', 'Yellow'],
         datasets: [{
@@ -50,7 +79,11 @@ export default{
       chartdataDoughnut: null,
       optionsDoughnut: {
         responsive: true,
-        maintainAspectRatio: false
+        maintainAspectRatio: false,
+        title: {
+          display: true,
+          text: 'Emissionen durch Energieverbrauch'
+        }
       },
     }
   },
@@ -67,11 +100,19 @@ export default{
           "Content-Type": "application/json",
         },
       }).then((response) => response.json())
-        .then((data) => {
-          console.log("Success:", data);
-          console.log(this.chartdataDoughnut)
-          this.chartdataTemplate.datasets[0].data = [30, 50, 10];
-          this.chartdataDoughnut = this.chartdataTemplate;
+        .then((body) => {
+          console.log("Success:", body);
+
+          if (body.status == "success"){
+            this.responsesuccessful = true
+            this.responsedata = body.data
+            console.log(this.responsedata)
+          }
+          else {  // Fehlerbehandlung
+            this.responsesuccessful = false
+            this.responseerror = body.error
+            console.log(this.responseerror)
+          }
         })
         .catch((error) => {
           console.error("Error:", error);
@@ -80,10 +121,10 @@ export default{
 
     changeData: function(){
       this.chartdataDoughnut = {
-            labels: ['Red', 'Blue', 'Yellow'],
+            labels: ['Wärme', 'Kälte', 'Strom'],
             datasets: [{
-              label: 'My First Dataset',
-              data: [1, 2, 3],
+              label: 'Emissionen',
+              data: [this.responsedata.emissionenWaerme, this.responsedata.emissionenKaelte, this.responsedata.emissionenStrom],
               backgroundColor: [
                 'rgb(255, 99, 132)',
                 'rgb(54, 162, 235)',
