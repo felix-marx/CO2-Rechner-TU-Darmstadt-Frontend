@@ -141,7 +141,7 @@
               <v-btn
                 color="primary"
                 :style="{ left: '50%', transform: 'translateX(-50%)' }"
-                @click="$router.push('/')"
+                @click="postAnmeldung()"
               >
                 <span>Anmelden</span>
                 <v-icon>mdi-account</v-icon>
@@ -282,6 +282,7 @@ export default {
           if (data.status == "success") {
             this.setCookie("sessiontoken", data.data.sessiontoken)
             this.setCookie("email", this.username)
+            this.$router.push('/survey')
           }
           //Message on success or error send from Backend
           this.errorMessage = (data.status == "success") ? data.data.message : data.error.message
@@ -316,6 +317,7 @@ export default {
           if (data.status == "success") {
             this.setCookie("sessiontoken", data.data.sessiontoken)
             this.setCookie("email", this.username)
+            this.$router.push("/survey")
           }
           //Message on success or error send from Backend 
           this.message = (data.status == "success") ? data.data.message : data.error.message
