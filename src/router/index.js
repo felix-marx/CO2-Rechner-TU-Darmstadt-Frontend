@@ -52,11 +52,10 @@ const router = new VueRouter({
 
 export default router
 
-async function  postCheckAnmeldung() {
+function  postCheckAnmeldung() {
   //User input validation and set error message
-  status = true
-  /*
-  await fetch("http://localhost:9000/auth/", {
+
+  fetch("http://localhost:9000/auth/pruefeSession", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -69,22 +68,26 @@ async function  postCheckAnmeldung() {
     .then((data) => {
       //This is always the case when the backend returns a package
       if (data.status == "success") {
-        console.log("Erfolgreiche anmeldung, sollte weitergeleitet werden")
-        return true;
+        status = true
       } else {
-        console.log("Fehler digga")
-        return false;
+        status = false
       }
     })
     .catch((error) => {
       //This is always the case when the backend returns nothing -> Timeout
       console.error("Error:", error)
-    }); */
+    }); 
 }
 
-/*
+
+function checkIfCookieAttributExists(identifier) {
+  return document.cookie
+  .split(";")
+  .some((item) => item.trim().startsWith(identifier))
+}
+
 function getCookieAttribut(identifier) {
-  if(this.checkIfCookieAttributExists(identifier)) {
+  if(checkIfCookieAttributExists(identifier)) {
     console.log(document.cookie
       .split("; ")
       .find(row => row.startsWith(identifier))
@@ -97,10 +100,4 @@ function getCookieAttribut(identifier) {
   return null
 }
 
-function checkIfCookieAttributExists(identifier) {
-  return document.cookie
-  .split(";")
-  .some((item) => item.trim().startsWith(identifier))
-}
-*/
 
