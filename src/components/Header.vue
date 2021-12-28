@@ -18,20 +18,12 @@
     </v-tabs>
 
     <v-spacer />
-
-    <!--- Anmelden Button --->
-    <Anmeldung v-if="anmeldenButton" />
   </v-app-bar>
 </template>
-
-
 <script>
-import Anmeldung from "./Anmeldung.vue";
-
 
 export default {
   name: "Header",
-    components: { Anmeldung },
 
   props: {
       anmeldenButton: {
