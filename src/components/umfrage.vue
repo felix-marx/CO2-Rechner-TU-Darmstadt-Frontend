@@ -1,5 +1,7 @@
 <template>
-  <v-container>
+  <v-app>
+    <Header />
+    <v-main>
     <v-card
       elevation="2"
       outlined
@@ -235,20 +237,26 @@
         :mitarbeiter-link="'www.tu-darmstadt.co2-rechner.de/survey/'+ responseData.umfrageID"
       />
     </v-card>
-  </v-container>
+  </v-main>
+  <Footer />
+  </v-app>
 </template>
 
 <script>
 import Tooltip from "@/components/componentParts/tooltip.vue";
 import MitarbeiterLinkComponent from "./mitarbeiterLinkComponent";
 import LoadingAnimation from "./componentParts/loadingAnimation";
+import Header from "./Header.vue";
+import Footer from "./Footer.vue"
 
 export default {
   components: {
     MitarbeiterLinkComponent,
     LoadingAnimation,
-    Tooltip
-  },
+    Tooltip,
+    Header,
+    Footer
+},
 
   data: () => ({
     // Bilanzierungsjahr
