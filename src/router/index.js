@@ -6,8 +6,6 @@ import Anmeldung from '../components/Anmeldung.vue'
 
 Vue.use(VueRouter)
 
-let status = false;
-
 const routes = [
   {
     path: '/',
@@ -19,10 +17,7 @@ const routes = [
     name: 'umfrage',
     component: Umfrage,
     beforeEnter: (to, from, next) => {
-      postCheckAnmeldung()  
-      console.log(status)
-      if(status) next();
-      else router.push('*')
+      postCheckAnmeldung(next); 
     }
   },
   {
@@ -52,10 +47,10 @@ const router = new VueRouter({
 
 export default router
 
-function  postCheckAnmeldung() {
+async function postCheckAnmeldung(next) {
   //User input validation and set error message
 
-  fetch("http://localhost:9000/auth/pruefeSession", {
+  await fetch("http://localhost:9000/auth/pruefeSession", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -68,9 +63,7 @@ function  postCheckAnmeldung() {
     .then((data) => {
       //This is always the case when the backend returns a package
       if (data.status == "success") {
-        status = true
-      } else {
-        status = false
+        next()
       }
     })
     .catch((error) => {
