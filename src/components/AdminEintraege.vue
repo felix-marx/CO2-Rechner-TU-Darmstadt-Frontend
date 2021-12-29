@@ -8,10 +8,10 @@
         </v-expansion-panel-header>
 
         <v-expansion-panel-content>
-          <v-text-field
-            v-model="co2_factor.year"
-            :rules="yearRule"
-            placeholder="Jahr"
+          <v-autocomplete
+            v-model="year"
+            :items="possibleYears"
+            label="Bilanzierungsjahr"
             prepend-icon="mdi-calendar-question"
           />
 
@@ -19,13 +19,13 @@
             v-model="co2_factor.energy_type"
             :items="energy_types"
             flat
-            placeholder="Energieart"
+            label="Energieart"
           />
 
           <v-text-field
             v-model="co2_factor.value"
             :rules="notNegativeRule"
-            placeholder="Wert des CO2 Faktors in g/kWh"
+            label="Wert des CO2 Faktors in g/kWh"
           />
 
           <v-card-actions>
@@ -47,44 +47,64 @@
           Gebäude Hinzufügen
         </v-expansion-panel-header>
         <v-expansion-panel-content>
-          <v-text-field
-            v-model="building.number"
-            placeholder="Gebäudenummer"
-            :rules="basicRule"
-          />
+          <v-row>
+            <v-col cols="11">
+              <v-text-field
+                v-model="building.number"
+                label="Gebäudenummer"
+                :rules="basicRule"
+              />
+            </v-col>
+            <v-col>
+              <Tooltip
+                tooltip-text="4 Ziffern: Die 1. Ziffer für den Campus (1=Stadtmitte, 2=Botanischer Garten, 
+                3=Lichtwiese, 4=Hochschulstadion und 5=Windkanal/August-Euler-Flugplatz). Die Ziffer 2-4 für die 
+                Gebäudenummer. Zum Beispiel 1101 für das Universitätszentrum."
+              />
+            </v-col>
+          </v-row>
 
-          <v-text-field
-            v-model="building.name"
-            placeholder="Gebäudebezeichnung"
-            :rules="basicRule"
-          />
+          <v-row>
+            <v-col cols="11">
+              <v-text-field
+                v-model="building.name"
+                label="Gebäudebezeichnung"
+                :rules="basicRule"
+              />
+            </v-col>
+            <v-col>
+              <Tooltip
+                tooltip-text="Eindeutige Bezeichnung des Gebäudes. Zum Beispiel 'Maschinenhaus'."
+              />
+            </v-col>
+          </v-row>
 
           <v-row>
             <v-col>
               <v-text-field
                 v-model="building.hnf"
-                placeholder="Hauptnutzungsfläche in qm"
+                label="Hauptnutzungsfläche in qm"
                 :rules="notNegativeRule"
               />
             </v-col>
             <v-col>
               <v-text-field
                 v-model="building.nnf"
-                placeholder="Nebennutzungsfläche in qm"
+                label="Nebennutzungsfläche in qm"
                 :rules="notNegativeRule"
               />
             </v-col>
             <v-col>
               <v-text-field
                 v-model="building.ngf"
-                placeholder="Nettogrundfläche in qm"
+                label="Nettogrundfläche in qm"
                 :rules="notNegativeRule"
               />
             </v-col>
             <v-col>
               <v-text-field
                 v-model="building.ff"
-                placeholder="Funktionsfläche in qm"
+                label="Funktionsfläche in qm"
                 :rules="notNegativeRule"
               />
             </v-col>
@@ -93,21 +113,21 @@
             <v-col>
               <v-text-field
                 v-model="building.vf"
-                placeholder="Verkehrsfläche in qm"
+                label="Verkehrsfläche in qm"
                 :rules="notNegativeRule"
               />
             </v-col>
             <v-col>
               <v-text-field
                 v-model="building.freif"
-                placeholder="Freifläche in qm"
+                label="Freifläche in qm"
                 :rules="notNegativeRule"
               />
             </v-col>
             <v-col>
               <v-text-field
                 v-model="building.gesf"
-                placeholder="Gesamtfläche in qm"
+                label="Gesamtfläche in qm"
                 :rules="notNegativeRule"
               />
             </v-col>
@@ -135,27 +155,27 @@
           <v-text-field
             v-model="counter.primary_key"
             :rules="basicRule"
-            placeholder="Primary Key des Zählers"
+            label="Primary Key des Zählers"
           />
 
           <v-select
             v-model="counter.unit"
             :items="units"
             flat
-            placeholder="Zählereinheit"
+            label="Zählereinheit"
           />
 
           <v-select
             v-model="counter.energy_type"
             :items="energy_types"
             flat
-            placeholder="Zählertyp"
+            label="Zählertyp"
           />
 
           <v-text-field
             v-model="counter.name"
             :rules="basicRule"
-            placeholder="Bezeichnung des Zählers"
+            label="Bezeichnung des Zählers"
           />
 
 
@@ -169,7 +189,7 @@
                 <v-text-field
                   v-model="building_reference[0]"
                   :rules="basicRule"
-                  placeholder="Gebäudereferenz"
+                  label="Gebäudereferenz"
                 />
               </v-col>
               <v-col>
@@ -214,30 +234,30 @@
           Zählerdaten eintragen
         </v-expansion-panel-header>
         <v-expansion-panel-content>
-          <v-text-field
-            v-model="counter_data.year"
-            :rules="yearRule"
-            placeholder="Jahr der Zählerdaten"
+          <v-autocomplete
+            v-model="year"
+            :items="possibleYears"
+            label="Bilanzierungsjahr"
             prepend-icon="mdi-calendar-question"
           />
-          
+
           <v-text-field
             v-model="counter_data.primary_key"
             :rules="basicRule"
-            placeholder="Primary Key des Zählers"
+            label="Primary Key des Zählers"
           />
 
           <v-select
             v-model="counter_data.energy_type"
             :items="energy_types"
             flat
-            placeholder="Zählertyp"
+            label="Zählertyp"
           />
 
           <v-text-field
             v-model="counter_data.value"
             :rules="notNegativeRule"
-            placeholder="Zählerwert"
+            label="Zählerwert"
           />
 
           <v-card-actions>
@@ -257,7 +277,13 @@
 </template>
 
 <script>
+import Tooltip from "@/components/componentParts/tooltip.vue";
+
   export default {
+    components: {
+      Tooltip
+    },
+
     data: () => ({
       date: null,
       co2_factor: {
@@ -309,6 +335,18 @@
       ],
       
     }),
+
+    computed: {
+      /**
+      * Returns a list beginning with the current year until 2018.
+      */
+      possibleYears: function() {
+        const beginningYear = 2018;
+        let currentYear = new Date().getFullYear();
+        return Array.from(new Array(currentYear - beginningYear + 1), (x, i) => i + beginningYear).reverse();
+      },
+    },
+
     methods: {
       
       /**
@@ -333,6 +371,9 @@
         }
       },
 
+      /**
+       * sends CO2 factor as a json file to db
+       */
       sendFactor: async function () {
 
         await fetch("http://localhost:9000/db/addFaktor", {
@@ -355,6 +396,9 @@
           });
       },
 
+      /**
+       * sends new building as a json file to db
+       */
       sendNewBuilding: async function () {
 
         await fetch("http://localhost:9000/db/insertGebaeude", {
@@ -385,6 +429,9 @@
           });
       },
       
+      /**
+       * sends new counter as a json file to db
+       */
       sendNewCounter: async function () {
 
         await fetch("http://localhost:9000/db/insertZaehler", {
@@ -409,6 +456,9 @@
           });
       },
 
+      /**
+       * sends counter data as a json file to db
+       */
       sendCounterData: async function () {
 
         await fetch("http://localhost:9000/db/addZaehlerdaten", {
@@ -432,6 +482,9 @@
           });
       },
 
+      /**
+       * parses the building references of a counter to integers
+       */
       buildingRefJSON: function() {
         var buildingRefs = []
 
