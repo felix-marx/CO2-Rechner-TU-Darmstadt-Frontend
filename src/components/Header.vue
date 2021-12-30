@@ -19,9 +19,9 @@
       <v-row>
         <v-col cols="8" />
         <v-col>
-        <h4>
-          Angemeldet als: {{ cookieAttribut }}
-        </h4>
+          <h4>
+            Angemeldet als: {{ cookieAttribut }}
+          </h4>
         </v-col>
       </v-row>
     </v-container>

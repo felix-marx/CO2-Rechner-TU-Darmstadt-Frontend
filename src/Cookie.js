@@ -49,6 +49,7 @@ async postCheckAnmeldung(next) {
       },
       body: JSON.stringify({
         username: this.getCookieAttribut('email'),
+        sessiontoken: this.getCookieAttribut('sessiontoken')
       }),
     })
       .then((response) => response.json())
