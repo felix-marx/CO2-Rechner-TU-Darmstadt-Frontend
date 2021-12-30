@@ -2,205 +2,205 @@
   <v-app>
     <Header />
     <v-main>
-    <v-card
-      elevation="2"
-      outlined
-    >
-      <v-form lazy-validation>
-        <v-card class="pa-7">
-          <!-- Bilanzierungsjahr -->
+      <v-card
+        elevation="2"
+        outlined
+      >
+        <v-form lazy-validation>
+          <v-card class="pa-7">
+            <!-- Bilanzierungsjahr -->
 
-          <br>
-          <h3>
-            Auf welches Bilanzierungsjahr beziehen Sie sich in dieser Umfrage?
-          </h3>
-          <v-divider />
-          <br>
+            <br>
+            <h3>
+              Auf welches Bilanzierungsjahr beziehen Sie sich in dieser Umfrage?
+            </h3>
+            <v-divider />
+            <br>
 
-          <v-row>
-            <v-col cols="5">
-              <v-autocomplete
-                v-model="bilanzierungsjahr"
-                :items="possibleYears"
-                label="Bilanzierungsjahr"
-                prepend-icon="mdi-calendar-question"
-                class="pr-5"
-              />
-            </v-col>
-          </v-row>
-
-          <!-- Mitarbeitende in Abteilung -->
-
-          <br>
-          <h3>Wie viele Mitarbeitende gibt es in Ihrer Abteilung?</h3>
-          <v-divider />
-          <br>
-
-          <v-container>
-            <v-row>
-              <v-text-field
-                v-model="anzahlMitarbeiter"
-                :rules="absolutpositivRules"
-                :min="0"
-                label="Mitarbeitendenzahl"
-                type="number"
-                prepend-icon="mdi-account"
-              />
-            </v-row>
-          </v-container>
-
-          <!-- Genutzte Gebäude -->
-
-          <br>
-          <h3>
-            Welche Gebäude nutzt Ihre Abteilung?
-            <Tooltip
-              tooltip-text="Alle Gebäude beginnen je nach Standort mit den Buchstaben S, B, L,
-              H oder W. Die Autovervollständigung sollte Ihnen dabei helfen."
-            />
-          </h3>
-
-          <v-divider />
-          <br>
-
-          <div
-            v-for="(objekt, index) in gebaeude"
-            :key="index"
-          >
             <v-row>
               <v-col cols="5">
                 <v-autocomplete
-                  v-if="gebaeudeIDs"
-                  v-model="objekt[0]"
-                  :items="gebaeudeIDs"
-                  label="Gebäudenummer"
-                  prepend-icon="mdi-domain"
+                  v-model="bilanzierungsjahr"
+                  :items="possibleYears"
+                  label="Bilanzierungsjahr"
+                  prepend-icon="mdi-calendar-question"
                   class="pr-5"
                 />
               </v-col>
-              <v-col cols="5">
+            </v-row>
+
+            <!-- Mitarbeitende in Abteilung -->
+
+            <br>
+            <h3>Wie viele Mitarbeitende gibt es in Ihrer Abteilung?</h3>
+            <v-divider />
+            <br>
+
+            <v-container>
+              <v-row>
                 <v-text-field
-                  v-model="objekt[1]"
+                  v-model="anzahlMitarbeiter"
                   :rules="absolutpositivRules"
                   :min="0"
-                  label="Nutzfläche"
-                  prepend-icon="mdi-domain"
+                  label="Mitarbeitendenzahl"
                   type="number"
-                  suffix="qm"
+                  prepend-icon="mdi-account"
                 />
-              </v-col>
-              <v-col>
-                <v-btn
-                  class="add_text--text"
-                  color="add"
-                  @click="newGebaeude()"
-                >
-                  Hinzufügen
-                </v-btn>
-              </v-col>
-              <v-col>
-                <v-btn
-                  class="delete_text--text"
-                  color="delete"
-                  @click="removeGebaeude(index)"
-                >
-                  Löschen
-                </v-btn>
-              </v-col>
-            </v-row>
-          </div>
+              </v-row>
+            </v-container>
 
-          <!-- Umfrage für IT Geräte: Multifunktionsgeräte + Toner, Drucker + Toner, Beamer, Server -->
+            <!-- Genutzte Gebäude -->
 
-          <br>
-          <h3>
-            Welche IT-Geräte benutzen Sie in Ihrer Abteilung gemeinschaftlich?
-          </h3>
-          <v-divider />
-          <br>
+            <br>
+            <h3>
+              Welche Gebäude nutzt Ihre Abteilung?
+              <Tooltip
+                tooltip-text="Alle Gebäude beginnen je nach Standort mit den Buchstaben S, B, L,
+              H oder W. Die Autovervollständigung sollte Ihnen dabei helfen."
+              />
+            </h3>
 
-          <v-container>
-            <!-- Multifunktionsgeräte -->
-            <v-row>
-              <v-checkbox
-                v-model="geraeteAnzahl[0][2]"
-                hide-details
-              />
-              <v-text-field
-                v-model="geraeteAnzahl[0][1]"
-                :rules="geraeteRules"
-                :disabled="!geraeteAnzahl[0][2]"
-                :min="0"
-                label="Multifunktionsgeräte z.B. Netzwerkdrucker"
-                type="number"
-                class="pr-5"
-                suffix="Gerät/e"
-              />
-              <v-text-field
-                v-model="geraeteAnzahl[1][1]"
-                :rules="nichtnegativRules"
-                :disabled="!geraeteAnzahl[0][2]"
-                :min="0"
-                label="verbrauchte Toner"
-                type="number"
-                suffix="Toner"
-              />
-            </v-row>
-            <!-- Drucker -->
-            <v-row>
-              <v-checkbox
-                v-model="geraeteAnzahl[2][2]"
-                hide-details
-              />
-              <v-text-field
-                v-model="geraeteAnzahl[2][1]"
-                :rules="geraeteRules"
-                :disabled="!geraeteAnzahl[2][2]"
-                :min="0"
-                label="Laser- & Tintenstrahldrucker"
-                type="number"
-                suffix="Drucker"
-                class="pr-5"
-              />
-              <v-text-field
-                v-model="geraeteAnzahl[3][1]"
-                :rules="nichtnegativRules"
-                :disabled="!geraeteAnzahl[2][2]"
-                :min="0"
-                label="verbrauchte Toner"
-                suffix="Toner"
-                type="number"
-              />
-            </v-row>
-            <!-- Beamer -->
-            <v-row>
-              <v-checkbox v-model="geraeteAnzahl[4][2]" />
-              <v-text-field
-                v-model="geraeteAnzahl[4][1]"
-                :rules="geraeteRules"
-                :disabled="!geraeteAnzahl[4][2]"
-                :min="0"
-                label="Beamer"
-                type="number"
-                suffix="Beamer"
-              />
-            </v-row>
-            <!-- Server -->
-            <v-row>
-              <v-checkbox v-model="geraeteAnzahl[5][2]" />
-              <v-text-field
-                v-model="geraeteAnzahl[5][1]"
-                :rules="geraeteRules"
-                :disabled="!geraeteAnzahl[5][2]"
-                :min="0"
-                label="interne Server"
-                type="number"
-                suffix="Server"
-              />
-            </v-row>
-          </v-container>
+            <v-divider />
+            <br>
 
-          <!-- Papierverbrauch currently not used 
+            <div
+              v-for="(objekt, index) in gebaeude"
+              :key="index"
+            >
+              <v-row>
+                <v-col cols="5">
+                  <v-autocomplete
+                    v-if="gebaeudeIDs"
+                    v-model="objekt[0]"
+                    :items="gebaeudeIDs"
+                    label="Gebäudenummer"
+                    prepend-icon="mdi-domain"
+                    class="pr-5"
+                  />
+                </v-col>
+                <v-col cols="5">
+                  <v-text-field
+                    v-model="objekt[1]"
+                    :rules="absolutpositivRules"
+                    :min="0"
+                    label="Nutzfläche"
+                    prepend-icon="mdi-domain"
+                    type="number"
+                    suffix="qm"
+                  />
+                </v-col>
+                <v-col>
+                  <v-btn
+                    class="add_text--text"
+                    color="add"
+                    @click="newGebaeude()"
+                  >
+                    Hinzufügen
+                  </v-btn>
+                </v-col>
+                <v-col>
+                  <v-btn
+                    class="delete_text--text"
+                    color="delete"
+                    @click="removeGebaeude(index)"
+                  >
+                    Löschen
+                  </v-btn>
+                </v-col>
+              </v-row>
+            </div>
+
+            <!-- Umfrage für IT Geräte: Multifunktionsgeräte + Toner, Drucker + Toner, Beamer, Server -->
+
+            <br>
+            <h3>
+              Welche IT-Geräte benutzen Sie in Ihrer Abteilung gemeinschaftlich?
+            </h3>
+            <v-divider />
+            <br>
+
+            <v-container>
+              <!-- Multifunktionsgeräte -->
+              <v-row>
+                <v-checkbox
+                  v-model="geraeteAnzahl[0][2]"
+                  hide-details
+                />
+                <v-text-field
+                  v-model="geraeteAnzahl[0][1]"
+                  :rules="geraeteRules"
+                  :disabled="!geraeteAnzahl[0][2]"
+                  :min="0"
+                  label="Multifunktionsgeräte z.B. Netzwerkdrucker"
+                  type="number"
+                  class="pr-5"
+                  suffix="Gerät/e"
+                />
+                <v-text-field
+                  v-model="geraeteAnzahl[1][1]"
+                  :rules="nichtnegativRules"
+                  :disabled="!geraeteAnzahl[0][2]"
+                  :min="0"
+                  label="verbrauchte Toner"
+                  type="number"
+                  suffix="Toner"
+                />
+              </v-row>
+              <!-- Drucker -->
+              <v-row>
+                <v-checkbox
+                  v-model="geraeteAnzahl[2][2]"
+                  hide-details
+                />
+                <v-text-field
+                  v-model="geraeteAnzahl[2][1]"
+                  :rules="geraeteRules"
+                  :disabled="!geraeteAnzahl[2][2]"
+                  :min="0"
+                  label="Laser- & Tintenstrahldrucker"
+                  type="number"
+                  suffix="Drucker"
+                  class="pr-5"
+                />
+                <v-text-field
+                  v-model="geraeteAnzahl[3][1]"
+                  :rules="nichtnegativRules"
+                  :disabled="!geraeteAnzahl[2][2]"
+                  :min="0"
+                  label="verbrauchte Toner"
+                  suffix="Toner"
+                  type="number"
+                />
+              </v-row>
+              <!-- Beamer -->
+              <v-row>
+                <v-checkbox v-model="geraeteAnzahl[4][2]" />
+                <v-text-field
+                  v-model="geraeteAnzahl[4][1]"
+                  :rules="geraeteRules"
+                  :disabled="!geraeteAnzahl[4][2]"
+                  :min="0"
+                  label="Beamer"
+                  type="number"
+                  suffix="Beamer"
+                />
+              </v-row>
+              <!-- Server -->
+              <v-row>
+                <v-checkbox v-model="geraeteAnzahl[5][2]" />
+                <v-text-field
+                  v-model="geraeteAnzahl[5][1]"
+                  :rules="geraeteRules"
+                  :disabled="!geraeteAnzahl[5][2]"
+                  :min="0"
+                  label="interne Server"
+                  type="number"
+                  suffix="Server"
+                />
+              </v-row>
+            </v-container>
+
+            <!-- Papierverbrauch currently not used 
           <br>
           <h3>Wie viel Papier benutzen Sie in Ihrer Abteilung?</h3>
           <v-divider></v-divider>
@@ -212,33 +212,33 @@
               <v-text-field v-model="papierverbrauch" label="Papierverbrauch" suffix="kg" type="number"></v-text-field>
             </v-row>
           </v-container> -->
-          <v-row class="mt-1">
-            <v-btn
-              class="mr-4"
-              @click="sendData()"
-            >
-              Absenden
-            </v-btn>
-            <LoadingAnimation v-if="dataRequestSent" />
-          </v-row>
-        </v-card>
-      </v-form>
-    </v-card>
+            <v-row class="mt-1">
+              <v-btn
+                class="mr-4"
+                @click="sendData()"
+              >
+                Absenden
+              </v-btn>
+              <LoadingAnimation v-if="dataRequestSent" />
+            </v-row>
+          </v-card>
+        </v-form>
+      </v-card>
 
-    <!-- Component for showing Link for employees after sending formular data. -->
-    <v-card
-      v-if="displaySurveyLink"
-      class="mt-2"
-      elevation="2"
-      outlined
-    >
-      <!-- TODO replace example link -->
-      <MitarbeiterLinkComponent
-        :mitarbeiter-link="'www.tu-darmstadt.co2-rechner.de/survey/'+ responseData.umfrageID"
-      />
-    </v-card>
-  </v-main>
-  <Footer />
+      <!-- Component for showing Link for employees after sending formular data. -->
+      <v-card
+        v-if="displaySurveyLink"
+        class="mt-2"
+        elevation="2"
+        outlined
+      >
+        <!-- TODO replace example link -->
+        <MitarbeiterLinkComponent
+          :mitarbeiter-link="'www.tu-darmstadt.co2-rechner.de/survey/'+ responseData.umfrageID"
+        />
+      </v-card>
+    </v-main>
+    <Footer />
   </v-app>
 </template>
 

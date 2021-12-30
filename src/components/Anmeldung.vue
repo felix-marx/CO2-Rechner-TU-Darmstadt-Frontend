@@ -158,6 +158,8 @@
 <script>
 import Footer from "../components/Footer.vue";
 import Header from "../components/Header.vue";
+import Cookies from "../Cookie.js"
+
 
 export default {
   name: "Anmeldung",
@@ -188,50 +190,13 @@ export default {
 
   computed: {
     showAnmelden: function () {
-      return this.checkIfCookieAttributExists("email")
+      return Cookies.checkIfCookieAttributExists("email")
     },
   },
 
   methods: {
     passwordConfirmationRule() {
       return () => (this.password === this.rePassword) || 'Passwörter sind nicht gleich'
-    },
-
-    /**
-     * Sets the cookie at the given identifier to the given value overwritting the existing value
-     */
-    setCookie: function (identifier, value) {
-      document.cookie = identifier + "=" + value + "; SameSite=Lax"
-    },
-
-    /**
-     * Checks if identifier is set in cookie
-     */
-    checkIfCookieAttributExists: function (identifier) {
-      return document.cookie
-        .split(";")
-        .some((item) => item.trim().startsWith(identifier))
-    },
-
-    /**
-     * Gets the value of the identifier set in the cookie if it is set else null
-     */
-    getCookieAttribut: function (identifier) {
-      if (this.checkIfCookieAttributExists(identifier)) {
-        return document.cookie
-          .split("; ")
-          .find(row => row.startsWith(identifier))
-          .split("=")[1]
-      }
-      return null
-    },
-
-    /**
-     * Deletes the value stored at the identifer in cookie
-     */
-    deleteCookieAttribut: function (identifier) {
-      //By setting the cookie expire date to an past date it automatically gets deleted
-      document.cookie = identifier + "=; SameSite=Lax; expires=Thu, 18 Dec 2013 12:00:00 UTC"
     },
 
     /**
@@ -280,8 +245,8 @@ export default {
         .then((data) => {
           //This is always the case when the backend returns a package
           if (data.status == "success") {
-            this.setCookie("sessiontoken", data.data.sessiontoken)
-            this.setCookie("email", this.username)
+            Cookies.setCookie("sessiontoken", data.data.sessiontoken)
+            Cookies.setCookie("email", this.username)
             this.$router.push('/survey')
           }
           //Message on success or error send from Backend
@@ -315,8 +280,8 @@ export default {
         .then((data) => {
           //This is always the case when the backend returns a package
           if (data.status == "success") {
-            this.setCookie("sessiontoken", data.data.sessiontoken)
-            this.setCookie("email", this.username)
+            Cookies.setCookie("sessiontoken", data.data.sessiontoken)
+            Cookies.setCookie("email", this.username)
             this.$router.push("/survey")
           }
           //Message on success or error send from Backend 
@@ -343,8 +308,8 @@ export default {
         .then((data) => {
           //This is always the case when the backend returns a package
           //Delete cookie and log if not success
-          this.deleteCookieAttribut("email")
-          this.deleteCookieAttribut("sessiontoken")
+          Cookies.deleteCookieAttribut("email")
+          Cookies.deleteCookieAttribut("sessiontoken")
           if (data.status != "success") {
             console.log("Server konnte nicht löschen")
           }

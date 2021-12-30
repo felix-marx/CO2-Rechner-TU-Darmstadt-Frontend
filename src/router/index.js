@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Umfrage from '../components/umfrage.vue'
 //import Home from '../views/Home.vue'
 import Anmeldung from '../components/Anmeldung.vue'
+import Cookies from '../Cookie.js'
 
 Vue.use(VueRouter)
 
@@ -17,7 +18,7 @@ const routes = [
     name: 'umfrage',
     component: Umfrage,
     beforeEnter: (to, from, next) => {
-      postCheckAnmeldung(next); 
+      Cookies.postCheckAnmeldung(next); 
     }
   },
   {
@@ -46,51 +47,3 @@ const router = new VueRouter({
 })
 
 export default router
-
-async function postCheckAnmeldung(next) {
-  //User input validation and set error message
-
-  await fetch("http://localhost:9000/auth/pruefeSession", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      username: getCookieAttribut('email'),
-    }),
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      //This is always the case when the backend returns a package
-      if (data.status == "success") {
-        next()
-      }
-    })
-    .catch((error) => {
-      //This is always the case when the backend returns nothing -> Timeout
-      console.error("Error:", error)
-    }); 
-}
-
-
-function checkIfCookieAttributExists(identifier) {
-  return document.cookie
-  .split(";")
-  .some((item) => item.trim().startsWith(identifier))
-}
-
-function getCookieAttribut(identifier) {
-  if(checkIfCookieAttributExists(identifier)) {
-    console.log(document.cookie
-      .split("; ")
-      .find(row => row.startsWith(identifier))
-      .split("=")[1])
-    return document.cookie
-      .split("; ")
-      .find(row => row.startsWith(identifier))
-      .split("=")[1]
-  }
-  return null
-}
-
-
