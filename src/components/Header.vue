@@ -5,7 +5,6 @@
     dark
   >
     <div class="d-flex align-center" />
-
     <!--- Tab Menu --->
     <v-tabs center-active>
       <v-tab
@@ -16,11 +15,21 @@
         {{ tab.title }}
       </v-tab>
     </v-tabs>
-
-    <v-spacer />
+    <v-container>
+      <v-row>
+        <v-col cols="8" />
+        <v-col>
+        <h4>
+          Angemeldet als: {{ cookieAttribut }}
+        </h4>
+        </v-col>
+      </v-row>
+    </v-container>
   </v-app-bar>
 </template>
 <script>
+
+import Cookies from "../Cookie"
 
 export default {
   name: "Header",
@@ -40,6 +49,11 @@ export default {
   data: () => ({
     
   }),
+  computed: {
+    cookieAttribut: function(){
+      return Cookies.getCookieAttribut('email')
+    }
+  },
     methods: {
         /**
          * Emits the selected tab and new component type to the parent.
@@ -50,6 +64,13 @@ export default {
             let data = { id: selectedTab, componentType: componentType };
             this.$emit("changeTab", data);
         },
-    }
+        checkIfCookieAttributExists(identifier){
+          Cookies.checkIfCookieAttributExists(identifier)
+        },
+        getCookieAttribut(identifier){
+          Cookies.getCookieAttribut(identifier)
+        }
+        
+  }
 };
 </script>
