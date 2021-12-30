@@ -412,6 +412,30 @@ export default {
       return gebaeudeJSON;
     },
 
+    // Temporär aus Anmeldung kopiert
+    // TODO: Bei Merge entfernen bzw. refaktorisieren
+
+    /**
+     * Checks if identifier is set in cookie
+     */
+    checkIfCookieAttributExists: function(identifier) {
+      return document.cookie
+      .split(";")
+      .some((item) => item.trim().startsWith(identifier))
+    },
+
+    /**
+     * Gets the value of the identifier set in the cookie if it is set else null
+     */
+    getCookieAttribut: function(identifier) {
+      if(this.checkIfCookieAttributExists(identifier)) {
+        return document.cookie
+          .split("; ")
+          .find(row => row.startsWith(identifier))
+          .split("=")[1]
+      }
+      return null
+    },
 
     sendData: async function () {
       await fetch("http://localhost:9000/umfrage/insertUmfrage", {
@@ -424,7 +448,10 @@ export default {
           gebaeude: this.gebaeudeJSON(),
           mitarbeiteranzahl: parseInt(this.anzahlMitarbeiter),
           itGeraete: this.itGeraeteJSON(),
-          nutzerEmail: "anton@tobi.com"
+          hauptverantwortlicher: {
+            username: this.getCookieAttribut("email"),
+            sessiontoken: this.getCookieAttribut("sessiontoken")
+          }
         }),
       })
         .then((response) => response.json())
