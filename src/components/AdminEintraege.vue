@@ -154,7 +154,7 @@
         <v-expansion-panel-content>
           <v-text-field
             v-model="counter.primary_key"
-            :rules="basicRule"
+            :rules="notNegativeRule"
             label="Primary Key des Zählers"
           />
 
@@ -243,7 +243,7 @@
 
           <v-text-field
             v-model="counter_data.primary_key"
-            :rules="basicRule"
+            :rules="notNegativeRule"
             label="Primary Key des Zählers"
           />
 
@@ -327,7 +327,7 @@ import Tooltip from "@/components/componentParts/tooltip.vue";
       ],
       notNegativeRule: [
         v => !!v || "Muss angegeben werden",
-        v => (parseInt(v) >= 0) || "Bitte geben Sie einen positiven Wert an"
+        v => (parseInt(v) >= 0) || "Bitte geben Sie eine nicht-negative Zahl an"
       ],
       yearRule: [
         (v) => !!v || "Muss angegeben werden",
