@@ -17,7 +17,7 @@
           <p>Anzahl an Mitarbeiterumfrgaen: {{ responsedata.umfragenanzahl }}</p>
         </v-row>
         <v-row>
-          <p>Gesamtemissionen: {{ emissionenGesamt }} g</p>
+          <p>Gesamtemissionen: {{ emissionenGesamt }} g CO<sub>2</sub> eq.</p>
         </v-row>
         <v-row>
           <doughnut-chart
@@ -25,7 +25,7 @@
             :options="optionsGesamt"
           />
           <bar-chart
-            :chart-data="chartdataGesamt"
+            :chart-data="chartdataGesamtBar"
             :options="optionsGesamtBar"
           />
         </v-row>
@@ -119,16 +119,40 @@ export default{
           text: 'Übersicht aller Emissionen'
         }
       },
+      chartdataGesamtBar: null,
       optionsGesamtBar:{
         responsive: true,
         maintainAspectRatio: false,
+        legend: {
+            display: false
+         },
         scales:{
           yAxes: [{
-              ticks: {
-                  beginAtZero: true
-              }
+            id: 'bar',
+            position: 'left',
+            ticks: {
+              beginAtZero: true
+            },
+            scaleLabel: {
+              display: true,
+              labelString: 'g C02 eq.'
+            }
+          },{
+            id: 'line',
+            position: 'right',
+            ticks: {
+              max: 1,
+              min: 0,
+            }
           }]
         },
+        // scales:{
+        //   yAxes: [{
+        //       ticks: {
+        //           beginAtZero: true
+        //       }
+        //   }]
+        // },
         title: {
           display: true,
           text: 'Übersicht aller Emissionen'
@@ -158,10 +182,10 @@ export default{
         jahr: 2000,
         mitarbeiteranzahl: 120,
         umfragenanzahl: 100,
-        emissionenWaerme: 2000000,
+        emissionenWaerme: 12000000,
         emissionenKaelte: 3000000,
         emissionenStrom: 4000000,
-        emissionenITGerate: 5000000,
+        emissionenITGerate: 15000000,
         emissionenDienstreisen: 6000000,
         emissionenPendelwege: 7000000
       };
@@ -198,6 +222,14 @@ export default{
     },
 
     setChartGesamt: function(){
+      let data = [
+        {label: 'Energie', value: this.emissionenEnergie},
+        {label: 'Dienstreisen', value: this.responsedata.emissionenDienstreisen},
+        {label: 'Pendelweg', value: this.responsedata.emissionenPendelwege},
+        {label: 'IT-Geräte', value: this.responsedata.emissionenITGerate},
+      ];
+      data.sort((a, b) => b.value - a.value)
+
       this.chartdataGesamt = {
         labels: ['Energie', 'Dienstreisen', 'Pendelwege', 'IT-Geräte'],
         datasets: [{
@@ -211,6 +243,29 @@ export default{
           ],
           hoverOffset: 4
         }]}
+
+      this.chartdataGesamtBar = {
+        labels: data.map(a => a.label),
+        datasets: [{
+          type: 'bar',
+          label: 'Emissionen',
+          yAxisID: 'bar',
+          data: data.map(a => a.value),
+          backgroundColor: 'rgb(75, 192, 192)',
+          borderWidth: 1,
+          order: 1,
+        },{
+          type: 'line',
+          label: 'kumulierte Emissionen',
+          yAxisID: 'line',
+          data: data.map((sum => a => sum += a.value)(0)).map(a => a / this.emissionenGesamt),
+          fill: false,
+          borderColor: 'rgb(54, 162, 235)',
+          lineTension: 0,
+          order: 0,
+        }
+
+      ]}
     },
 
     setChartEnergie: function(){
