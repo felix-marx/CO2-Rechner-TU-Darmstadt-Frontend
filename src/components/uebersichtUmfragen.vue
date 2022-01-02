@@ -8,7 +8,7 @@
       <v-list-item three-line>
         <v-list-item-content>
           <div class="text-overline mb-4">
-            Zuletzt bearbeitet am XX.YY.ZZZZ
+            Zuletzt bearbeitet am {{ editing_time }}
           </div>
 
           <v-list-item-title class="text-h5 mb-1">
@@ -19,17 +19,61 @@
 
       <!-- Die erstellte Umfrage soll bearbeitet und ausgewählt werden können. -->
       <v-card-actions>
-        <v-btn
-          class="ma2"
-          outlined
-          rounded
-          text
+        <v-dialog
+          v-model="dialog"
+          fullscreen
+          hide-overlay
+          transition="dialog-bottom-transition"
         >
-          <v-icon left>
-            mdi-square-edit-outline
-          </v-icon>
-          <span>bearbeiten</span>
-        </v-btn>
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn
+              class="ma2"
+              outlined
+              rounded
+              text
+              v-bind="attrs"
+              v-on="on"
+            >
+              <v-icon left>
+                mdi-square-edit-outline
+              </v-icon>
+              <span>bearbeiten</span>
+            </v-btn>
+          </template>
+          <v-card>
+            <v-toolbar
+              dark
+              color="primary"
+            >
+              <v-btn
+                icon
+                dark
+                @click="dialog = false"
+              >
+                <v-icon>mdi-close</v-icon>
+              </v-btn>
+              <v-toolbar-title>Umfrage 1</v-toolbar-title>
+              <v-spacer />
+              <v-toolbar-items>
+                <v-btn
+                  dark
+                  text
+                  @click="dialog = false"
+                >
+                  Speichern
+                </v-btn>
+              </v-toolbar-items>
+            </v-toolbar>
+            <!-- Hier kommt der Inhalt der Umfrage hin -->
+            <div>
+              Umfrage, die sich bearbeiten lässt
+            </div>
+            <v-divider />
+            <div>
+              Aktuelle Auswertung
+            </div>
+          </v-card>
+        </v-dialog>
         
         <v-spacer />
 
@@ -58,6 +102,11 @@
   export default {
     data: () => ({
       deleteSurvey: false,
+      dialog: false, 
+      notifications: false,
+      sound: true,
+      widgets: true,
+      editing_time: "XX.YY.ZZZZ",
     }),
     methods: {
       /**
