@@ -3,8 +3,6 @@
 */
 
 class Cookies{
-
-
  setCookie (identifier, value) {
     document.cookie = identifier + "=" + value + "; SameSite=Lax"
   } 
@@ -37,9 +35,41 @@ getCookieAttribut(identifier) {
 deleteCookieAttribut(identifier) {
     //By setting the cookie expire date to an past date it automatically gets deleted
     document.cookie = identifier + "=; SameSite=Lax; expires=Thu, 18 Dec 2013 12:00:00 UTC"
+}
+
+/**
+ * Checks the API for the correct user Role
+ */
+async postCheckUserRole(next){
+  await fetch("http://localhost:9000/auth/pruefeNutzerRolle", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username: this.getCookieAttribut('email'),
+        sessiontoken: this.getCookieAttribut('sessiontoken')
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        //This is always the case when the backend returns a package
+        if (data.status == "success") {
+          if(data.data == 0){
+            next('survey')
+          } else if (data.data == 1) {
+            next()
+          }
+        }
+      })
+      .catch((error) => {
+        //This is always the case when the backend returns nothing -> Timeout
+        console.error("Error:", error)
+      }); 
   }
 
-async postCheckAnmeldung(next) {
+
+async postCheckLogin(next) {
     //User input validation and set error message
   
     await fetch("http://localhost:9000/auth/pruefeSession", {
