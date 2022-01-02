@@ -13,14 +13,32 @@
         <v-row>
           <p>Mitarbeiteranzahl: {{ responsedata.mitarbeiteranzahl }}</p>
         </v-row>
-
-        <doughnut-chart
-          :chart-data="chartdataDoughnut"
-          :options="optionsDoughnut"
-        />
-        <v-btn @click="changeData">
-          Change
-        </v-btn>
+        <v-row>
+          <p>Anzahl an Mitarbeiterumfrgaen: {{ responsedata.umfragenanzahl }}</p>
+        </v-row>
+        <v-row>
+          <p>Gesamtemissionen: {{ emissionenGesamt }} g</p>
+        </v-row>
+        <v-row>
+          <doughnut-chart
+            :chart-data="chartdataGesamt"
+            :options="optionsGesamt"
+          />
+          <bar-chart
+            :chart-data="chartdataGesamt"
+            :options="optionsGesamtBar"
+          />
+        </v-row>
+        <v-row>
+          <doughnut-chart
+            :chart-data="chartdataEnergie"
+            :options="optionsEnergie"
+          />
+          <bar-chart
+            :chart-data="chartdataEnergie"
+            :options="optionsEnergieBar"
+          />
+        </v-row>
       </v-container>
     </v-card>
 
@@ -36,12 +54,14 @@
 
 <script>
 import DoughnutChart from "./charts/DoughnutChart.js";
+import BarChart from "./charts/BarChart.js";
 
 export default{
   name: "Auswertung" , 
 
   components: {
     DoughnutChart,
+    BarChart,
   },
 
   props: {
@@ -57,27 +77,16 @@ export default{
       responsedata: {
         id: null,
         jahr: null,
-        mitarbeiteranzahl: null
+        mitarbeiteranzahl: null,
+        umfragenanzahl: null
       },
       responseerror: {
         code: null,
         message: null,
       },
 
-      chartdataTemplate: {
-        labels: ['Red', 'Blue', 'Yellow'],
-        datasets: [{
-          label: 'My First Dataset',
-          data: null,
-          backgroundColor: [
-            'rgb(255, 99, 132)',
-            'rgb(54, 162, 235)',
-            'rgb(255, 205, 86)'
-          ],
-          hoverOffset: 4
-        }]},
-      chartdataDoughnut: null,
-      optionsDoughnut: {
+      chartdataEnergie: null,
+      optionsEnergie: {
         responsive: true,
         maintainAspectRatio: false,
         title: {
@@ -85,14 +94,83 @@ export default{
           text: 'Emissionen durch Energieverbrauch'
         }
       },
+      optionsEnergieBar:{
+        responsive: true,
+        maintainAspectRatio: false,
+        scales:{
+          yAxes: [{
+              ticks: {
+                  beginAtZero: true
+              }
+          }]
+        },
+        title: {
+          display: true,
+          text: 'Emissionen durch Energieverbrauch'
+        }
+      },
+
+      chartdataGesamt: null,
+      optionsGesamt: {
+        responsive: true,
+        maintainAspectRatio: false,
+        title: {
+          display: true,
+          text: 'Übersicht aller Emissionen'
+        }
+      },
+      optionsGesamtBar:{
+        responsive: true,
+        maintainAspectRatio: false,
+        scales:{
+          yAxes: [{
+              ticks: {
+                  beginAtZero: true
+              }
+          }]
+        },
+        title: {
+          display: true,
+          text: 'Übersicht aller Emissionen'
+        }
+      }
+    }
+  },
+
+  computed: {
+    emissionenGesamt: function(){
+      return this.responsedata.emissionenDienstreisen + this.responsedata.emissionenPendelwege + this.responsedata.emissionenITGerate + this.responsedata.emissionenKaelte + this.responsedata.emissionenStrom + this.responsedata.emissionenWaerme
+    },
+    emissionenEnergie: function(){
+      return this.responsedata.emissionenKaelte + this.responsedata.emissionenStrom + this.responsedata.emissionenWaerme
     }
   },
   
   created(){
-    this.getData();
+    // this.getData();
+    this.testdata();
   },
 
   methods: {
+    testdata: function(){
+      this.responsedata = {
+        id: 12,
+        jahr: 2000,
+        mitarbeiteranzahl: 120,
+        umfragenanzahl: 100,
+        emissionenWaerme: 2000000,
+        emissionenKaelte: 3000000,
+        emissionenStrom: 4000000,
+        emissionenITGerate: 5000000,
+        emissionenDienstreisen: 6000000,
+        emissionenPendelwege: 7000000
+      };
+      this.responsesuccessful = true;
+
+      this.setChartGesamt();
+      this.setChartEnergie();
+    },
+
     getData: async function(){
       await fetch(process.env.VUE_APP_BASEURL + "/auswertung?id=" + this.$props.umfrageid, {
         method: "GET",
@@ -119,21 +197,35 @@ export default{
         });
     },
 
-    changeData: function(){
-      this.chartdataDoughnut = {
-            labels: ['Wärme', 'Kälte', 'Strom'],
-            datasets: [{
-              label: 'Emissionen',
-              data: [this.responsedata.emissionenWaerme, this.responsedata.emissionenKaelte, this.responsedata.emissionenStrom],
-              backgroundColor: [
-                'rgb(255, 99, 132)',
-                'rgb(54, 162, 235)',
-                'rgb(255, 205, 86)'
-              ],
-              hoverOffset: 4
-            }]};
+    setChartGesamt: function(){
+      this.chartdataGesamt = {
+        labels: ['Energie', 'Dienstreisen', 'Pendelwege', 'IT-Geräte'],
+        datasets: [{
+          label: 'Emissionen',
+          data: [this.emissionenEnergie, this.responsedata.emissionenDienstreisen, this.responsedata.emissionenPendelwege, this.responsedata.emissionenITGerate],
+          backgroundColor: [
+            'rgb(255, 99, 132)',
+            'rgb(54, 162, 235)',
+            'rgb(255, 205, 86)',
+            'rgb(75, 192, 192)'
+          ],
+          hoverOffset: 4
+        }]}
+    },
 
-      console.log(this.chartdataDoughnut)
+    setChartEnergie: function(){
+      this.chartdataEnergie = {
+        labels: ['Wärme', 'Kälte', 'Strom'],
+        datasets: [{
+          label: 'Emissionen',
+          data: [this.responsedata.emissionenWaerme, this.responsedata.emissionenKaelte, this.responsedata.emissionenStrom],
+          backgroundColor: [
+            'rgb(255, 99, 132)',
+            'rgb(54, 162, 235)',
+            'rgb(255, 205, 86)',
+          ],
+          hoverOffset: 4
+        }]}
     }
   },
 }
