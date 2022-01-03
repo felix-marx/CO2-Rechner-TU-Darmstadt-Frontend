@@ -444,7 +444,7 @@ export default {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          jahr: parseInt(this.bilanzierungsjahr), // TODO test
+          jahr: parseInt(this.bilanzierungsjahr),
           gebaeude: this.gebaeudeJSON(),
           mitarbeiteranzahl: parseInt(this.anzahlMitarbeiter),
           itGeraete: this.itGeraeteJSON(),
