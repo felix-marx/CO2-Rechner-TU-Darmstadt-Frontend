@@ -92,7 +92,7 @@
         class="ma2"
         outlined
         text
-        :disabled="!deleteSurvey"
+        :disabled="!deleteSurvey.some(x => x)"
         @click="removeSurvey(2)"
       >
         Ausgewählte löschen
@@ -105,7 +105,7 @@
   export default {
     data: () => ({
       umfragen: [],
-      deleteSurvey: false,
+      deleteSurvey: [],
       dialog: false, 
       notifications: false,
       sound: true,
