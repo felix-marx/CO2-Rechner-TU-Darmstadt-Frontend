@@ -2,12 +2,13 @@
   <v-container>
     <!-- Die erstellte Umfrage soll eine Karte erhalten. -->
     <v-card
-    v-for="(umfrage, index) in umfragen"
-    :key="'umfrage_'+index"
+      v-for="(umfrage, index) in umfragen"
+      :key="'umfrage_'+index"
       elevation="2"
       outlined
     >
-      <v-list-item three-line
+      <v-list-item
+        three-line
       >
         <v-list-item-content>
           <div class="text-overline mb-4">
@@ -15,7 +16,7 @@
           </div>
 
           <v-list-item-title class="text-h5 mb-1">
-            Umfrage {{umfrage._id}}
+            Umfrage {{ umfrage._id }}
           </v-list-item-title>
         </v-list-item-content>
       </v-list-item>
@@ -55,7 +56,7 @@
               >
                 <v-icon>mdi-close</v-icon>
               </v-btn>
-              <v-toolbar-title>Umfrage {{umfrage._id}}</v-toolbar-title>
+              <v-toolbar-title>Umfrage {{ umfrage._id }}</v-toolbar-title>
               <v-spacer />
               <v-toolbar-items>
                 <v-btn
@@ -115,7 +116,8 @@
 
     created() {
       this.fetchUmfragen();
-      this.fetchMitarbeiterUmfragen("61b23e9855aa64762baf76d7") // TODO only for testing yet
+      this.fetchMitarbeiterUmfragen("61b23e9855aa64762baf76d7"); // TODO only for testing yet
+      this.updateUmfrage("61b23e9855aa64762baf76d7");
     },
 
     methods: {
@@ -152,6 +154,64 @@
         },
         body: JSON.stringify({
           umfrageID: umfrageID,
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Success:", data);
+          let mitarbeiterUmfragen = data.data;
+          return mitarbeiterUmfragen;
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+      },
+
+
+      // Temporär aus Anmeldung kopiert
+      // TODO: Bei Merge entfernen bzw. refaktorisieren
+
+        /**
+       * Checks if identifier is set in cookie
+       */
+      checkIfCookieAttributExists: function(identifier) {
+        return document.cookie
+        .split(";")
+        .some((item) => item.trim().startsWith(identifier))
+      },
+
+      /**
+       * Gets the value of the identifier set in the cookie if it is set else null
+       */
+      getCookieAttribut: function(identifier) {
+        if(this.checkIfCookieAttributExists(identifier)) {
+          return document.cookie
+            .split("; ")
+            .find(row => row.startsWith(identifier))
+            .split("=")[1]
+        }
+        return null
+      },
+
+      /**
+       * Updates an existing Umfrage with the given ID. Please pass all values even if they were not changed.
+       */
+      updateUmfrage: async function (umfrageID) {
+      await fetch("http://localhost:9000/umfrage/updateUmfrage", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          umfrageID: umfrageID,
+          mitarbeiteranzahl: 420,
+          jahr: 1969,
+          gebaeude: null,
+          itGeraete: null,
+          hauptverantwortlicher: {
+            username: this.getCookieAttribut("email"),
+            sessiontoken: this.getCookieAttribut("sessiontoken")
+          }
         }),
       })
         .then((response) => response.json())
