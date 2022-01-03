@@ -115,6 +115,7 @@
 
     created() {
       this.fetchUmfragen();
+      this.fetchMitarbeiterUmfragen("61b23e9855aa64762baf76d7") // TODO only for testing yet
     },
 
     methods: {
@@ -138,7 +139,31 @@
         .catch((error) => {
           console.error("Error:", error);
         });
-    },
+      },
+
+      /**
+       * Fetches all existent MitarbeiterUmfragen from the Server, given an Umfrage.
+       */
+      fetchMitarbeiterUmfragen: async function (umfrageID) {
+      await fetch("http://localhost:9000/mitarbeiterUmfrage/mitarbeiterUmfrageForUmfrage", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          umfrageID: umfrageID,
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Success:", data);
+          let mitarbeiterUmfragen = data.data;
+          return mitarbeiterUmfragen;
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+      },
     }
   }
 </script>
