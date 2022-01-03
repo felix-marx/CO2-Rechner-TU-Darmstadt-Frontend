@@ -118,6 +118,7 @@
       this.fetchUmfragen();
       this.fetchMitarbeiterUmfragen("61b23e9855aa64762baf76d7"); // TODO only for testing yet
       this.updateUmfrage("61b23e9855aa64762baf76d7");
+      this.updateMitarbeiterUmfrage("61b34f9324756df01eee5ff4");
     },
 
     methods: {
@@ -217,8 +218,36 @@
         .then((response) => response.json())
         .then((data) => {
           console.log("Success:", data);
-          let mitarbeiterUmfragen = data.data;
-          return mitarbeiterUmfragen;
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+      },
+
+      /**
+       * Updates an existing MitarbeiterUmfrage with the given ID. Please pass all values even if they were not changed.
+       */
+      updateMitarbeiterUmfrage: async function (umfrageID) {
+      await fetch("http://localhost:9000/mitarbeiterUmfrage/updateMitarbeiterUmfrage", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          umfrageID: umfrageID,
+          pendelweg: null,
+          tageImBuero: 2,
+          dienstreise: null,
+          itGeraete: null,
+          hauptverantwortlicher: {
+            username: this.getCookieAttribut("email"),
+            sessiontoken: this.getCookieAttribut("sessiontoken")
+          }
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Success:", data);
         })
         .catch((error) => {
           console.error("Error:", error);
