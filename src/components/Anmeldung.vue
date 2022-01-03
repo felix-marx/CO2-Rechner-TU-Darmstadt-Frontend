@@ -293,35 +293,6 @@ export default {
           console.error("Error:", error)
         });
     },
-
-    deleteAbmelden: async function () {
-      await fetch("http://localhost:9000/auth/abmeldung", {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username: this.getCookieAttribut("email")
-        }),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          //This is always the case when the backend returns a package
-          //Delete cookie and log if not success
-          Cookies.deleteCookieAttribut("email")
-          Cookies.deleteCookieAttribut("sessiontoken")
-          if (data.status != "success") {
-            console.log("Server konnte nicht löschen")
-          }
-
-          //TODO Show error message in case of error 
-          console.log("Success:", data)
-        })
-        .catch((error) => {
-          //This is always the case when the backend returns nothing -> Timeout
-          console.error("Error:", error)
-        });
-    }
   }
 };
 </script>

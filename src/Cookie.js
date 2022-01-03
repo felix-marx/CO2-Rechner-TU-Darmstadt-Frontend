@@ -27,7 +27,7 @@ getCookieAttribut(identifier) {
         .split("=")[1]
     }
     return null
-  }
+}
 
 /**
 * Deletes the value stored at the identifer in cookie
@@ -41,6 +41,7 @@ deleteCookieAttribut(identifier) {
  * Checks the API for the correct user Role
  */
 async postCheckUserRole(next){
+
   await fetch("http://localhost:9000/auth/pruefeNutzerRolle", {
       method: "POST",
       headers: {
@@ -59,7 +60,7 @@ async postCheckUserRole(next){
             next('survey')
           } else if (data.data == 1) {
             next()
-          }
+          } 
         }
       })
       .catch((error) => {
@@ -70,8 +71,6 @@ async postCheckUserRole(next){
 
 
 async postCheckLogin(next) {
-    //User input validation and set error message
-  
     await fetch("http://localhost:9000/auth/pruefeSession", {
       method: "POST",
       headers: {
