@@ -6,6 +6,7 @@
   >
     <div class="d-flex align-center" />
     <!--- Tab Menu --->
+
     <v-tabs center-active>
       <v-tab
         v-for="tab in tabs"
@@ -15,16 +16,20 @@
         {{ tab.title }}
       </v-tab>
     </v-tabs>
-    <v-container>
-      <v-row>
-        <v-col cols="8" />
-        <v-col>
-          <h4>
-            Angemeldet als: {{ cookieAttribut }}
-          </h4>
-        </v-col>
-      </v-row>
-    </v-container>
+    
+    <h4 
+      v-if="cookieAttribut != null"
+    >
+      Angemeldet als: {{ cookieAttribut }}
+    </h4>
+    <v-btn
+      v-if="cookieAttribut != null"
+      text
+      @click="deleteAbmelden()"
+    >
+      <span class="mr-2">Abmelden</span>
+      <v-icon>mdi-account</v-icon>
+    </v-btn>
   </v-app-bar>
 </template>
 <script>
@@ -69,7 +74,37 @@ export default {
         },
         getCookieAttribut(identifier){
           Cookies.getCookieAttribut(identifier)
-        }
+        },
+
+        deleteAbmelden: async function () {
+          await fetch("http://localhost:9000/auth/abmeldung", {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              username: this.getCookieAttribut("email")
+            }),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              //This is always the case when the backend returns a package
+              //Delete cookie and log if not success
+              Cookies.deleteCookieAttribut("email")
+              Cookies.deleteCookieAttribut("sessiontoken")
+              if (data.status != "success") {
+                console.log("Server konnte nicht löschen")
+              }
+              this.$router.push('/')
+              //TODO Show error message in case of error 
+              console.log("Success:", data)
+
+            })
+            .catch((error) => {
+              //This is always the case when the backend returns nothing -> Timeout
+              console.error("Error:", error)
+            });
+    }
         
   }
 };
