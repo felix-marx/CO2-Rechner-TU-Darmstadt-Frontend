@@ -2,17 +2,20 @@
   <v-container>
     <!-- Die erstellte Umfrage soll eine Karte erhalten. -->
     <v-card
+    v-for="(umfrage, index) in umfragen"
+    :key="'umfrage_'+index"
       elevation="2"
       outlined
     >
-      <v-list-item three-line>
+      <v-list-item three-line
+      >
         <v-list-item-content>
           <div class="text-overline mb-4">
             Zuletzt bearbeitet am {{ editing_time }}
           </div>
 
           <v-list-item-title class="text-h5 mb-1">
-            Umfrage 1
+            Umfrage {{umfrage._id}}
           </v-list-item-title>
         </v-list-item-content>
       </v-list-item>
@@ -52,7 +55,7 @@
               >
                 <v-icon>mdi-close</v-icon>
               </v-btn>
-              <v-toolbar-title>Umfrage 1</v-toolbar-title>
+              <v-toolbar-title>Umfrage {{umfrage._id}}</v-toolbar-title>
               <v-spacer />
               <v-toolbar-items>
                 <v-btn
@@ -78,7 +81,7 @@
         <v-spacer />
 
         <v-checkbox
-          v-model="deleteSurvey"
+          v-model="deleteSurvey[index]"
         />
       </v-card-actions>
     </v-card>
@@ -101,6 +104,7 @@
 <script>
   export default {
     data: () => ({
+      umfragen: [],
       deleteSurvey: false,
       dialog: false, 
       notifications: false,
@@ -108,6 +112,11 @@
       widgets: true,
       editing_time: "XX.YY.ZZZZ",
     }),
+
+    created() {
+      this.fetchUmfragen();
+    },
+
     methods: {
       /**
        * needs to be written
@@ -115,6 +124,21 @@
       removeSurvey() {
         return
       },
+
+      /**
+       * Fetches all existent Umfragen from the Server.
+       */
+      fetchUmfragen: async function () {
+      await fetch("http://localhost:9000/umfrage/alleUmfragen")
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Success:", data);
+          this.umfragen = data.data.umfragen;
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    },
     }
   }
 </script>
