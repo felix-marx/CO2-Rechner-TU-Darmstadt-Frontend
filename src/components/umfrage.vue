@@ -457,7 +457,7 @@ export default {
         .then((response) => response.json())
         .then((data) => {
           console.log("Success:", data);
-          this.responseData = data;
+          this.responseData = data.data;
         })
         .catch((error) => {
           console.error("Error:", error);
@@ -471,7 +471,7 @@ export default {
         .then((response) => response.json())
         .then((data) => {
           console.log("Success:", data);
-          this.gebaeudeIDs = data.gebaeude.map(gebInt => translateGebaeudeIDToSymbolic(gebInt));
+          this.gebaeudeIDs = data.data.gebaeude.map(gebInt => translateGebaeudeIDToSymbolic(gebInt));
         })
         .catch((error) => {
           console.error("Error:", error);
