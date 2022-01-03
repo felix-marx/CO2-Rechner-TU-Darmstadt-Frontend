@@ -4,40 +4,113 @@
       v-if="responsesuccessful"
       elevation="2"
       outlined
+      class="pa-7"
     >
       <v-card-title>Auswertung der Umfrage {{ responsedata.id }}</v-card-title>
+      <v-divider />
       <v-container>
         <v-row>
-          <p>Bilanzierungsjahr: {{ responsedata.jahr }}</p>
+          <v-col>
+            <p>
+              Bilanzierungsjahr: {{ responsedata.jahr }}
+            </p>
+          </v-col>
+          <v-col>
+            <p>Mitarbeiteranzahl: {{ responsedata.mitarbeiteranzahl }}</p>
+          </v-col>
+        </v-row>
+        <!-- <v-row>
+          <v-col>
+            <p>Mitarbeiteranzahl: {{ responsedata.mitarbeiteranzahl }}</p>
+          </v-col>
+        </v-row> -->
+        <v-row>
+          <v-col>
+            <p>Ausgefüllte Mitarbeiterumfragen: {{ responsedata.umfragenanzahl }}</p>
+          </v-col>
+          <v-col>
+            <v-progress-linear
+              v-model="umfragenanteil"
+              height="25"
+              color="cyan"
+            >
+              <strong>{{ umfragenanteil }}%</strong>
+            </v-progress-linear>
+          </v-col>
+        </v-row>
+      </v-container>
+      <!-- <v-divider /> -->
+
+      <v-card-title>
+        Emissionen
+      </v-card-title>
+
+      <v-divider />
+      <v-container>    
+        <v-row>
+          <v-col>
+            <p>Gesamtemissionen: {{ emissionenGesamt }} t CO<sub>2</sub> eq.</p>
+          </v-col>
+          <v-col>
+            <p>Emissionen pro Mitarbeiter: {{ emissionenProMitarbeiter }} t CO<sub>2</sub> eq.</p>
+          </v-col>
         </v-row>
         <v-row>
-          <p>Mitarbeiteranzahl: {{ responsedata.mitarbeiteranzahl }}</p>
+          <v-col class="d-flex justify-center">
+            <h4>
+              Aufteilung nach Hauptemissionsfaktoren
+            </h4>
+          </v-col>
         </v-row>
         <v-row>
-          <p>Anzahl an Mitarbeiterumfrgaen: {{ responsedata.umfragenanzahl }}</p>
+          <v-col>
+            <doughnut-chart
+              :chart-data="chartdataGesamtDoughnut"
+              :options="optionsGesamtDoughnut"
+            />
+          </v-col>
+          <v-col>
+            <bar-chart
+              :chart-data="chartdataGesamtPareto"
+              :options="optionsGesamtPareto"
+            />
+          </v-col>
         </v-row>
         <v-row>
-          <p>Gesamtemissionen: {{ emissionenGesamt }} g CO<sub>2</sub> eq.</p>
+          <v-col class="d-flex justify-center">
+            <h4>
+              Aufteilung der Emissionen nach Energieart
+              <v-tooltip bottom>
+                <template v-slot:activator="{ on }">
+                  <v-icon v-on="on">
+                    mdi-alert-circle-outline
+                  </v-icon>
+                </template>
+                Die angezeigten Emissionen für den Energieverbrauch können unvollständig sein. Der Grund dafür ist, dass nicht alle Gebäude der TU mit einem eingenen Zähler ausgestattet sind und keine Zählerdaten vorliegen.
+              </v-tooltip>
+            </h4>
+          </v-col>
         </v-row>
         <v-row>
-          <doughnut-chart
-            :chart-data="chartdataGesamt"
-            :options="optionsGesamt"
-          />
-          <bar-chart
-            :chart-data="chartdataGesamtBar"
-            :options="optionsGesamtBar"
-          />
+          <v-col>
+            <doughnut-chart
+              :chart-data="chartdataEnergieDoughnut"
+              :options="optionsEnergieDoughnut"
+            />
+          </v-col>
+          <v-col>
+            <bar-chart
+              :chart-data="chartdataEnergiePareto"
+              :options="optionsEnergiePareto"
+            />
+          </v-col>
         </v-row>
         <v-row>
-          <doughnut-chart
-            :chart-data="chartdataEnergie"
-            :options="optionsEnergie"
-          />
-          <bar-chart
-            :chart-data="chartdataEnergie"
-            :options="optionsEnergieBar"
-          />
+          <v-col>
+            <v-btn>
+              test
+            </v-btn>
+          </v-col>
         </v-row>
       </v-container>
     </v-card>
@@ -85,88 +158,32 @@ export default{
         message: null,
       },
 
-      chartdataEnergie: null,
-      optionsEnergie: {
-        responsive: true,
-        maintainAspectRatio: false,
-        title: {
-          display: true,
-          text: 'Emissionen durch Energieverbrauch'
-        }
-      },
-      optionsEnergieBar:{
-        responsive: true,
-        maintainAspectRatio: false,
-        scales:{
-          yAxes: [{
-              ticks: {
-                  beginAtZero: true
-              }
-          }]
-        },
-        title: {
-          display: true,
-          text: 'Emissionen durch Energieverbrauch'
-        }
-      },
+      chartdataGesamtDoughnut: null,
+      optionsGesamtDoughnut: null,
 
-      chartdataGesamt: null,
-      optionsGesamt: {
-        responsive: true,
-        maintainAspectRatio: false,
-        title: {
-          display: true,
-          text: 'Übersicht aller Emissionen'
-        }
-      },
-      chartdataGesamtBar: null,
-      optionsGesamtBar:{
-        responsive: true,
-        maintainAspectRatio: false,
-        legend: {
-            display: false
-         },
-        scales:{
-          yAxes: [{
-            id: 'bar',
-            position: 'left',
-            ticks: {
-              beginAtZero: true
-            },
-            scaleLabel: {
-              display: true,
-              labelString: 'g C02 eq.'
-            }
-          },{
-            id: 'line',
-            position: 'right',
-            ticks: {
-              max: 1,
-              min: 0,
-            }
-          }]
-        },
-        // scales:{
-        //   yAxes: [{
-        //       ticks: {
-        //           beginAtZero: true
-        //       }
-        //   }]
-        // },
-        title: {
-          display: true,
-          text: 'Übersicht aller Emissionen'
-        }
-      }
+      chartdataGesamtPareto: null,
+      optionsGesamtPareto:null,
+
+      chartdataEnergieDoughnut: null,
+      optionsEnergieDoughnut: null,
+
+      chartdataEnergiePareto: null,
+      optionsEnergiePareto:null,
     }
   },
 
   computed: {
     emissionenGesamt: function(){
-      return this.responsedata.emissionenDienstreisen + this.responsedata.emissionenPendelwege + this.responsedata.emissionenITGerate + this.responsedata.emissionenKaelte + this.responsedata.emissionenStrom + this.responsedata.emissionenWaerme
+      return this.responsedata.emissionenDienstreisen + this.responsedata.emissionenPendelwege + this.responsedata.emissionenITGeraete + this.responsedata.emissionenKaelte + this.responsedata.emissionenStrom + this.responsedata.emissionenWaerme
     },
     emissionenEnergie: function(){
       return this.responsedata.emissionenKaelte + this.responsedata.emissionenStrom + this.responsedata.emissionenWaerme
+    },
+    umfragenanteil: function(){
+      return Math.round(this.responsedata.umfragenanzahl / this.responsedata.mitarbeiteranzahl * 1000) / 10
+    },
+    emissionenProMitarbeiter: function(){
+      return Math.round(this.emissionenGesamt / this.responsedata.mitarbeiteranzahl * 1000) / 1000
     }
   },
   
@@ -178,16 +195,16 @@ export default{
   methods: {
     testdata: function(){
       this.responsedata = {
-        id: 12,
+        id: "507f1f77bcf86cd799439011",
         jahr: 2000,
         mitarbeiteranzahl: 120,
         umfragenanzahl: 100,
-        emissionenWaerme: 12000000,
-        emissionenKaelte: 3000000,
-        emissionenStrom: 4000000,
-        emissionenITGerate: 15000000,
-        emissionenDienstreisen: 6000000,
-        emissionenPendelwege: 7000000
+        emissionenWaerme: 12,
+        emissionenKaelte: 3,
+        emissionenStrom: 4,
+        emissionenITGeraete: 15,
+        emissionenDienstreisen: 6,
+        emissionenPendelwege: 7
       };
       this.responsesuccessful = true;
 
@@ -209,6 +226,9 @@ export default{
             this.responsesuccessful = true
             this.responsedata = body.data
             console.log(this.responsedata)
+
+            this.setChartGesamt();
+            this.setChartEnergie();
           }
           else {  // Fehlerbehandlung
             this.responsesuccessful = false
@@ -226,15 +246,16 @@ export default{
         {label: 'Energie', value: this.emissionenEnergie},
         {label: 'Dienstreisen', value: this.responsedata.emissionenDienstreisen},
         {label: 'Pendelweg', value: this.responsedata.emissionenPendelwege},
-        {label: 'IT-Geräte', value: this.responsedata.emissionenITGerate},
+        {label: 'IT-Geräte', value: this.responsedata.emissionenITGeraete},
       ];
-      data.sort((a, b) => b.value - a.value)
 
-      this.chartdataGesamt = {
-        labels: ['Energie', 'Dienstreisen', 'Pendelwege', 'IT-Geräte'],
+      this.chartdataGesamtDoughnut = {
+        // labels: ['Energie', 'Dienstreisen', 'Pendelwege', 'IT-Geräte'],
+        labels: data.map(a => a.label),
         datasets: [{
           label: 'Emissionen',
-          data: [this.emissionenEnergie, this.responsedata.emissionenDienstreisen, this.responsedata.emissionenPendelwege, this.responsedata.emissionenITGerate],
+          // data: [this.emissionenEnergie, this.responsedata.emissionenDienstreisen, this.responsedata.emissionenPendelwege, this.responsedata.emissionenITGeraete],
+          data: data.map(a => a.value),
           backgroundColor: [
             'rgb(255, 99, 132)',
             'rgb(54, 162, 235)',
@@ -243,8 +264,14 @@ export default{
           ],
           hoverOffset: 4
         }]}
+      this.optionsGesamtDoughnut = {
+        responsive: true,
+        maintainAspectRatio: false
+      }
 
-      this.chartdataGesamtBar = {
+      data.sort((a, b) => b.value - a.value)
+
+      this.chartdataGesamtPareto = {
         labels: data.map(a => a.label),
         datasets: [{
           type: 'bar',
@@ -263,17 +290,54 @@ export default{
           borderColor: 'rgb(54, 162, 235)',
           lineTension: 0,
           order: 0,
-        }
-
-      ]}
+        }]
+      };
+      this.optionsGesamtPareto = {
+        responsive: true,
+        maintainAspectRatio: false,
+        legend: {
+            display: false
+        },
+        scales:{
+          yAxes: [{
+            id: 'bar',
+            position: 'left',
+            ticks: {
+              beginAtZero: true
+            },
+            scaleLabel: {
+              display: true,
+              labelString: 't C02 eq.'
+            }
+          },{
+            id: 'line',
+            position: 'right',
+            ticks: {
+              max: 1,
+              min: 0,
+            },
+            gridLines: {
+                display:false
+            }
+          }]
+        },
+      };
     },
 
     setChartEnergie: function(){
-      this.chartdataEnergie = {
-        labels: ['Wärme', 'Kälte', 'Strom'],
+      let data = [
+        {label: 'Wärme', value: this.responsedata.emissionenWaerme},
+        {label: 'Kälte', value: this.responsedata.emissionenKaelte},
+        {label: 'Strom', value: this.responsedata.emissionenStrom},
+      ];
+
+      this.chartdataEnergieDoughnut = {
+        // labels: ['Wärme', 'Kälte', 'Strom'],
+        labels: data.map(a => a.label),
         datasets: [{
           label: 'Emissionen',
-          data: [this.responsedata.emissionenWaerme, this.responsedata.emissionenKaelte, this.responsedata.emissionenStrom],
+          // data: [this.responsedata.emissionenWaerme, this.responsedata.emissionenKaelte, this.responsedata.emissionenStrom],
+          data: data.map(a => a.value),
           backgroundColor: [
             'rgb(255, 99, 132)',
             'rgb(54, 162, 235)',
@@ -281,6 +345,64 @@ export default{
           ],
           hoverOffset: 4
         }]}
+      this.optionsEnergieDoughnut = {
+        responsive: true,
+        maintainAspectRatio: false,
+      }
+
+      data.sort((a, b) => b.value - a.value)
+
+      this.chartdataEnergiePareto = {
+        labels: data.map(a => a.label),
+        datasets: [{
+          type: 'bar',
+          label: 'Emissionen',
+          yAxisID: 'bar',
+          data: data.map(a => a.value),
+          backgroundColor: 'rgb(75, 192, 192)',
+          borderWidth: 1,
+          order: 1,
+        },{
+          type: 'line',
+          label: 'kumulierte Emissionen',
+          yAxisID: 'line',
+          data: data.map((sum => a => sum += a.value)(0)).map(a => a / this.emissionenEnergie),
+          fill: false,
+          borderColor: 'rgb(54, 162, 235)',
+          lineTension: 0,
+          order: 0,
+        }]
+      }
+      this.optionsEnergiePareto = {
+         responsive: true,
+        maintainAspectRatio: false,
+        legend: {
+            display: false
+        },
+        scales:{
+          yAxes: [{
+            id: 'bar',
+            position: 'left',
+            ticks: {
+              beginAtZero: true
+            },
+            scaleLabel: {
+              display: true,
+              labelString: 't C02 eq.'
+            }
+          },{
+            id: 'line',
+            position: 'right',
+            ticks: {
+              max: 1,
+              min: 0,
+            },
+            gridLines: {
+                display:false
+            }
+          }]
+        },
+      }
     }
   },
 }
