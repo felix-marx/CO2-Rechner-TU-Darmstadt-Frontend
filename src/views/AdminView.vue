@@ -40,11 +40,11 @@ export default {
     // could extend this to be persistent on site refresh, but this would require additional plugins, like e.g. Vuex.
     selectedTab: 0,
     currentTabType: AdminUebersicht,
-       tabList: [
-        { id: 0, title: "Übersicht", componentType: AdminUebersicht},
-        { id: 1, title: "Daten eintragen", componentType: AdminEintraege },
-        { id: 2, title: "Auswertung", componentType: AdminAuswertung},
-      ],
+    tabList: [
+      { id: 0, title: "Übersicht", componentType: AdminUebersicht},
+      { id: 1, title: "Daten eintragen", componentType: AdminEintraege },
+      { id: 2, title: "Auswertung", componentType: AdminAuswertung},
+    ],
   }),
 
   methods: {

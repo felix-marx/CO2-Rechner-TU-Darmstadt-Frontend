@@ -39,7 +39,7 @@ export default {
     tabList: [
         { id: 0, title: "Umfrage", componentType: Umfrage },
         { id: 1, title: "Ergebnisse", componentType: Uebersicht },
-      ],
+    ],
   }),
 
   methods: {
