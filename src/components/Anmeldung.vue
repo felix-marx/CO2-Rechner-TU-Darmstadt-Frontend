@@ -238,7 +238,7 @@ export default {
           if (data.status == "success") {
             Cookies.setCookie("sessiontoken", data.data.sessiontoken)
             Cookies.setCookie("email", this.username)
-            this.$router.push('/admin')
+            this.$router.push('/admin').catch(() => {})
           }
           //Message on success or error send from Backend
           this.errorMessage = (data.status == "success") ? data.data.message : data.error.message
