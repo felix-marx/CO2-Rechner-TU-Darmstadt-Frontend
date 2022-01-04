@@ -101,8 +101,8 @@
         </v-row>
         <v-row>
           <v-col>
-            <v-btn>
-              test
+            <v-btn color="primary">
+              Download als PDF
             </v-btn>
           </v-col>
         </v-row>
