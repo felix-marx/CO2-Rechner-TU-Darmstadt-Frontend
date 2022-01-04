@@ -15,7 +15,8 @@ export default new Vuetify({
             add: '#999999',
             add_text: 'white',
             delete: '#ee6363',
-            delete_text: 'white'
+            delete_text: 'white',
+            blue: "#42A5F5"
           },
         },
       },
