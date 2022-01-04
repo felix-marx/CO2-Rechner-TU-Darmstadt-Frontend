@@ -19,27 +19,21 @@
             <p>Mitarbeiteranzahl: {{ responsedata.mitarbeiteranzahl }}</p>
           </v-col>
         </v-row>
-        <!-- <v-row>
-          <v-col>
-            <p>Mitarbeiteranzahl: {{ responsedata.mitarbeiteranzahl }}</p>
-          </v-col>
-        </v-row> -->
         <v-row>
           <v-col>
             <p>Ausgefüllte Mitarbeiterumfragen: {{ responsedata.umfragenanzahl }}</p>
           </v-col>
           <v-col>
             <v-progress-linear
-              v-model="umfragenanteil"
               height="25"
               color="cyan"
+              :value="umfragenanteil"
             >
               <strong>{{ umfragenanteil }}%</strong>
             </v-progress-linear>
           </v-col>
         </v-row>
       </v-container>
-      <!-- <v-divider /> -->
 
       <v-card-title>
         Emissionen
