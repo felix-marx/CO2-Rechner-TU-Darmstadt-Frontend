@@ -174,10 +174,12 @@ export default{
 
   computed: {
     emissionenGesamt: function(){
-      return this.responsedata.emissionenDienstreisen + this.responsedata.emissionenPendelwege + this.responsedata.emissionenITGeraete + this.responsedata.emissionenKaelte + this.responsedata.emissionenStrom + this.responsedata.emissionenWaerme
+      return Math.round((this.responsedata.emissionenDienstreisen + this.responsedata.emissionenPendelwege 
+                       + this.responsedata.emissionenITGeraete + this.responsedata.emissionenKaelte 
+                       + this.responsedata.emissionenStrom + this.responsedata.emissionenWaerme) * 1000) / 1000
     },
     emissionenEnergie: function(){
-      return this.responsedata.emissionenKaelte + this.responsedata.emissionenStrom + this.responsedata.emissionenWaerme
+      return Math.round((this.responsedata.emissionenKaelte + this.responsedata.emissionenStrom + this.responsedata.emissionenWaerme) * 1000) / 1000
     },
     umfragenanteil: function(){
       return Math.round(this.responsedata.umfragenanzahl / this.responsedata.mitarbeiteranzahl * 1000) / 10
@@ -199,17 +201,31 @@ export default{
         jahr: 2000,
         mitarbeiteranzahl: 120,
         umfragenanzahl: 100,
-        emissionenWaerme: 12,
-        emissionenKaelte: 3,
-        emissionenStrom: 4,
-        emissionenITGeraete: 15,
-        emissionenDienstreisen: 6,
-        emissionenPendelwege: 7
+        emissionenWaerme: 12222000,
+        emissionenKaelte: 3000000,
+        emissionenStrom: 4000000,
+        emissionenITGeraete: 15000000,
+        emissionenDienstreisen: 6000400,
+        emissionenPendelwege: 7000500
       };
       this.responsesuccessful = true;
 
+      this.roundRespoonseData();
       this.setChartGesamt();
       this.setChartEnergie();
+    },
+
+    // round g to t with 3 decimal places
+    roundRespoonseData: function(){
+      let roundFactor1 = 1000
+      let roundFactor2 = 1000
+
+      this.responsedata.emissionenWaerme = Math.round(this.responsedata.emissionenWaerme / roundFactor1) / roundFactor2
+      this.responsedata.emissionenStrom = Math.round(this.responsedata.emissionenStrom / roundFactor1) / roundFactor2
+      this.responsedata.emissionenKaelte = Math.round(this.responsedata.emissionenKaelte / roundFactor1) / roundFactor2
+      this.responsedata.emissionenITGeraete = Math.round(this.responsedata.emissionenITGeraete / roundFactor1) / roundFactor2
+      this.responsedata.emissionenDienstreisen = Math.round(this.responsedata.emissionenDienstreisen / roundFactor1) / roundFactor2
+      this.responsedata.emissionenPendelwege = Math.round(this.responsedata.emissionenPendelwege / roundFactor1) / roundFactor2
     },
 
     getData: async function(){
@@ -403,7 +419,7 @@ export default{
           }]
         },
       }
-    }
+    },
   },
 }
 
