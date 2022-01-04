@@ -2,13 +2,8 @@
   <v-app>
     <Header />
     <v-main>
-      <v-card
-        elevation="2"
-        outlined
-      >
-        <v-card-title class="justify-center">
-          {{ istRegistrierung ? "Registrierung" : "Anmeldung" }}
-        </v-card-title>
+      <v-card elevation="2" outlined>
+        <v-card-title class="justify-center">{{ istRegistrierung ? "Registrierung" : "Anmeldung" }}</v-card-title>
         <!-- Signin -->
         <v-container v-if="!istRegistrierung">
           <v-row>
@@ -36,6 +31,9 @@
               />
             </v-col>
             <v-col />
+          </v-row>
+          <v-row v-if="errorMessage != null && errorMessage != ''" justify="center">
+            <p>{{ errorMessage }}</p>
           </v-row>
           <v-row>
             <v-col class="px-10">
@@ -105,9 +103,7 @@
             </v-col>
             <v-col />
           </v-row>
-          <v-row
-            class="px-5"
-          >
+          <v-row class="px-5">
             <v-col />
             <v-col cols="8">
               <v-checkbox
@@ -118,13 +114,8 @@
             <v-col />
           </v-row>
           <!-- Error Message on wrong user input and error in backend -->
-          <v-row
-            v-if="errorMessage != null && errorMessage != ''"
-            justify="center"
-          >
-            <p>
-              {{ errorMessage }}
-            </p>
+          <v-row v-if="errorMessage != null && errorMessage != ''" justify="center">
+            <p>{{ errorMessage }}</p>
           </v-row>
           <v-row>
             <v-btn
