@@ -2,7 +2,7 @@
   <v-app>
     <Header />
     <v-main>
-      <v-card elevation="2" outlined>
+      <v-card elevation="2" class="py-4" outlined>
         <v-card-title class="justify-center">{{ istRegistrierung ? "Registrierung" : "Anmeldung" }}</v-card-title>
         <!-- Signin -->
         <v-container v-if="!istRegistrierung">
