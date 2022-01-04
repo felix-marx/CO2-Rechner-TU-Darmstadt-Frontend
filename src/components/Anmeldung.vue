@@ -33,7 +33,7 @@
             <v-col />
           </v-row>
           <v-row v-if="errorMessage != null && errorMessage != ''" justify="center">
-            <p>{{ errorMessage }}</p>
+            <p class="error--text">{{ errorMessage }}</p>
           </v-row>
           <v-row>
             <v-col class="px-10">
@@ -49,12 +49,12 @@
           </v-row>
           <v-row>
             <v-btn
-              color="error"
+              color="blue"
               :style="{ left: '50%', transform: 'translateX(-50%)' }"
               @click="istRegistrierung = true"
             >
-              <span>Neues Konto erstellen</span>
-              <v-icon>mdi-account</v-icon>
+              <span class="white--text">Neues Konto erstellen</span>
+              <v-icon color="white">mdi-account</v-icon>
             </v-btn>
           </v-row>
         </v-container>
@@ -115,16 +115,16 @@
           </v-row>
           <!-- Error Message on wrong user input and error in backend -->
           <v-row v-if="errorMessage != null && errorMessage != ''" justify="center">
-            <p>{{ errorMessage }}</p>
+            <p class="error--text">{{ errorMessage }}</p>
           </v-row>
           <v-row>
             <v-btn
-              color="error"
+              color="blue"
               :style="{ left: '50%', transform: 'translateX(-50%)' }"
               @click="postRegistrierung()"
             >
-              <span>Konto erstellen</span>
-              <v-icon>mdi-account</v-icon>
+              <span class="white--text">Konto erstellen</span>
+              <v-icon color="white">mdi-account</v-icon>
             </v-btn>
           </v-row>
           <v-row>
