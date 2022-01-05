@@ -85,7 +85,14 @@
             </h4>
           </v-col>
         </v-row>
-        <v-row>
+        <v-row v-if="!displayEnergieCharts">
+          <v-col>
+            <v-alert type="error">
+              Für den Energieverbrauch konnten keine Emissionen berechnet werden, weil Daten für das ausgewählte Bilanzierungsjahr fehlen!
+            </v-alert>
+          </v-col>
+        </v-row>
+        <v-row v-if="displayEnergieCharts">
           <v-col>
             <doughnut-chart
               :chart-data="chartdataEnergieDoughnut"
@@ -110,7 +117,7 @@
     </v-card>
 
     <v-card
-      v-if="!responsesuccessful"
+      v-if="responseNotSuccessful"
       elevation="2"
       outlined
     >
@@ -140,7 +147,8 @@ export default{
 
   data() {
     return {
-      responsesuccessful: null,
+      responsesuccessful: false,
+      responseNotSuccessful: false,
       responsedata: {
         id: null,
         jahr: null,
@@ -151,6 +159,8 @@ export default{
         code: null,
         message: null,
       },
+
+      displayEnergieCharts: true,
 
       chartdataGesamtDoughnut: null,
       optionsGesamtDoughnut: null,
@@ -184,8 +194,8 @@ export default{
   },
   
   created(){
-    // this.getData();
-    this.testdata();
+    this.getData();
+    // this.testdata();
   },
 
   methods: {
@@ -237,11 +247,13 @@ export default{
             this.responsedata = body.data
             console.log(this.responsedata)
 
+            this.checkNegativValue();
+            this.roundRespoonseData();
             this.setChartGesamt();
             this.setChartEnergie();
           }
           else {  // Fehlerbehandlung
-            this.responsesuccessful = false
+            this.responseNotSuccessful = true
             this.responseerror = body.error
             console.log(this.responseerror)
           }
@@ -249,6 +261,12 @@ export default{
         .catch((error) => {
           console.error("Error:", error);
         });
+    },
+
+    checkNegativValue: function(){
+      if(this.responsedata.emissionenWaerme < 0 || this.responsedata.emissionenKaelte < 0 || this.responsedata.emissionenStrom < 0){
+        this.displayEnergieCharts = false;
+      }
     },
 
     setChartGesamt: function(){
@@ -260,11 +278,9 @@ export default{
       ];
 
       this.chartdataGesamtDoughnut = {
-        // labels: ['Energie', 'Dienstreisen', 'Pendelwege', 'IT-Geräte'],
         labels: data.map(a => a.label),
         datasets: [{
           label: 'Emissionen',
-          // data: [this.emissionenEnergie, this.responsedata.emissionenDienstreisen, this.responsedata.emissionenPendelwege, this.responsedata.emissionenITGeraete],
           data: data.map(a => a.value),
           backgroundColor: [
             'rgb(255, 99, 132)',
@@ -342,11 +358,9 @@ export default{
       ];
 
       this.chartdataEnergieDoughnut = {
-        // labels: ['Wärme', 'Kälte', 'Strom'],
         labels: data.map(a => a.label),
         datasets: [{
           label: 'Emissionen',
-          // data: [this.responsedata.emissionenWaerme, this.responsedata.emissionenKaelte, this.responsedata.emissionenStrom],
           data: data.map(a => a.value),
           backgroundColor: [
             'rgb(255, 99, 132)',
