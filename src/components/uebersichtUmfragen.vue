@@ -69,10 +69,10 @@
               </v-toolbar-items>
             </v-toolbar>
             <!-- Hier kommt der Inhalt der Umfrage hin -->
-            <div>
-              Umfrage, die sich bearbeiten lässt
-            </div>
-            <v-divider />
+            <v-card>
+              <umfrageBearbeiten />
+            </v-card>
+            <v-divider /> 
             <div>
               Aktuelle Auswertung
             </div>
@@ -103,7 +103,13 @@
 </template>
 
 <script>
+import umfrageBearbeiten from "./umfrageBearbeiten.vue";
+
   export default {
+    components: {
+      umfrageBearbeiten
+    },
+
     data: () => ({
       umfragen: [],
       deleteSurvey: [],
