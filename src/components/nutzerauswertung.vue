@@ -219,19 +219,9 @@ export default{
       this.setChartEnergie();
     },
 
-    // round g to t with 3 decimal places
-    roundRespoonseData: function(){
-      let roundFactor1 = 1000
-      let roundFactor2 = 1000
-
-      this.responsedata.emissionenWaerme = Math.round(this.responsedata.emissionenWaerme / roundFactor1) / roundFactor2
-      this.responsedata.emissionenStrom = Math.round(this.responsedata.emissionenStrom / roundFactor1) / roundFactor2
-      this.responsedata.emissionenKaelte = Math.round(this.responsedata.emissionenKaelte / roundFactor1) / roundFactor2
-      this.responsedata.emissionenITGeraete = Math.round(this.responsedata.emissionenITGeraete / roundFactor1) / roundFactor2
-      this.responsedata.emissionenDienstreisen = Math.round(this.responsedata.emissionenDienstreisen / roundFactor1) / roundFactor2
-      this.responsedata.emissionenPendelwege = Math.round(this.responsedata.emissionenPendelwege / roundFactor1) / roundFactor2
-    },
-
+    /**
+     * Fetches Get request to get survey data and evaluation.
+     */
     getData: async function(){
       await fetch(process.env.VUE_APP_BASEURL + "/auswertung?id=" + this.$props.umfrageid, {
         method: "GET",
@@ -263,12 +253,34 @@ export default{
         });
     },
 
+    /**
+     * Method checks for negativ values in energy emissions which indecated that the year of the survey has no data in the database.
+     * If dedected sets the flag displayEnergieChart to false
+     */
     checkNegativValue: function(){
       if(this.responsedata.emissionenWaerme < 0 || this.responsedata.emissionenKaelte < 0 || this.responsedata.emissionenStrom < 0){
         this.displayEnergieCharts = false;
       }
     },
 
+    /**
+     * Method rounds all emission values to unit t with 3 decimal places.
+     */
+    roundRespoonseData: function(){
+      let roundFactor1 = 1000
+      let roundFactor2 = 1000
+
+      this.responsedata.emissionenWaerme = Math.round(this.responsedata.emissionenWaerme / roundFactor1) / roundFactor2
+      this.responsedata.emissionenStrom = Math.round(this.responsedata.emissionenStrom / roundFactor1) / roundFactor2
+      this.responsedata.emissionenKaelte = Math.round(this.responsedata.emissionenKaelte / roundFactor1) / roundFactor2
+      this.responsedata.emissionenITGeraete = Math.round(this.responsedata.emissionenITGeraete / roundFactor1) / roundFactor2
+      this.responsedata.emissionenDienstreisen = Math.round(this.responsedata.emissionenDienstreisen / roundFactor1) / roundFactor2
+      this.responsedata.emissionenPendelwege = Math.round(this.responsedata.emissionenPendelwege / roundFactor1) / roundFactor2
+    },
+
+    /**
+     * Method sets data and options for the Gesamt charts.
+     */
     setChartGesamt: function(){
       let data = [
         {label: 'Energie', value: this.emissionenEnergie},
@@ -350,6 +362,9 @@ export default{
       };
     },
 
+    /**
+     * Method sets data and options for the Energie charts.
+     */
     setChartEnergie: function(){
       let data = [
         {label: 'Wärme', value: this.responsedata.emissionenWaerme},
