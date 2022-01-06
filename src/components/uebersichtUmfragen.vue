@@ -70,7 +70,9 @@
             </v-toolbar>
             <!-- Hier kommt der Inhalt der Umfrage hin -->
             <v-card>
-              <umfrageBearbeiten />
+              <UmfrageBearbeitenComponent
+                :bilanzierungsjahr="umfrage.jahr"
+              />
             </v-card>
             <v-divider /> 
             <div>
@@ -103,11 +105,11 @@
 </template>
 
 <script>
-import umfrageBearbeiten from "./umfrageBearbeiten.vue";
+import UmfrageBearbeitenComponent from "./UmfrageBearbeitenComponent.vue";
 
   export default {
     components: {
-      umfrageBearbeiten
+      UmfrageBearbeitenComponent
     },
 
     data: () => ({

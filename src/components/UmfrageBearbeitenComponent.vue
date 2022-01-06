@@ -244,6 +244,8 @@ import MitarbeiterLinkComponent from "./mitarbeiterLinkComponent";
 import LoadingAnimation from "./componentParts/loadingAnimation";
 
 export default {
+  name: "UmfrageBearbeitenComponent",
+  
   components: {
     MitarbeiterLinkComponent,
     LoadingAnimation,
@@ -252,8 +254,8 @@ export default {
 
   props: {
     bilanzierungsjahr: {
+      type: Number,
       default: null,
-      type: Number
     }
   },
 
