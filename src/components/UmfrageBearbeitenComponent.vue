@@ -37,7 +37,7 @@
           <v-container>
             <v-row>
               <v-text-field
-                v-model="anzahlMitarbeiter"
+                v-model="anzahlmitarbeiter"
                 :rules="absolutpositivRules"
                 :min="0"
                 label="Mitarbeitendenzahl"
@@ -121,13 +121,13 @@
             <!-- Multifunktionsgeräte -->
             <v-row>
               <v-checkbox
-                v-model="geraeteAnzahl[0][2]"
+                v-model="geraeteanzahl[0][2]"
                 hide-details
               />
               <v-text-field
-                v-model="geraeteAnzahl[0][1]"
+                v-model="geraeteanzahl[0][1]"
                 :rules="geraeteRules"
-                :disabled="!geraeteAnzahl[0][2]"
+                :disabled="!geraeteanzahl[0][2]"
                 :min="0"
                 label="Multifunktionsgeräte z.B. Netzwerkdrucker"
                 type="number"
@@ -135,9 +135,9 @@
                 suffix="Gerät/e"
               />
               <v-text-field
-                v-model="geraeteAnzahl[1][1]"
+                v-model="geraeteanzahl[1][1]"
                 :rules="nichtnegativRules"
-                :disabled="!geraeteAnzahl[0][2]"
+                :disabled="!geraeteanzahl[0][2]"
                 :min="0"
                 label="verbrauchte Toner"
                 type="number"
@@ -147,13 +147,13 @@
             <!-- Drucker -->
             <v-row>
               <v-checkbox
-                v-model="geraeteAnzahl[2][2]"
+                v-model="geraeteanzahl[2][2]"
                 hide-details
               />
               <v-text-field
-                v-model="geraeteAnzahl[2][1]"
+                v-model="geraeteanzahl[2][1]"
                 :rules="geraeteRules"
-                :disabled="!geraeteAnzahl[2][2]"
+                :disabled="!geraeteanzahl[2][2]"
                 :min="0"
                 label="Laser- & Tintenstrahldrucker"
                 type="number"
@@ -161,9 +161,9 @@
                 class="pr-5"
               />
               <v-text-field
-                v-model="geraeteAnzahl[3][1]"
+                v-model="geraeteanzahl[3][1]"
                 :rules="nichtnegativRules"
-                :disabled="!geraeteAnzahl[2][2]"
+                :disabled="!geraeteanzahl[2][2]"
                 :min="0"
                 label="verbrauchte Toner"
                 suffix="Toner"
@@ -172,11 +172,11 @@
             </v-row>
             <!-- Beamer -->
             <v-row>
-              <v-checkbox v-model="geraeteAnzahl[4][2]" />
+              <v-checkbox v-model="geraeteanzahl[4][2]" />
               <v-text-field
-                v-model="geraeteAnzahl[4][1]"
+                v-model="geraeteanzahl[4][1]"
                 :rules="geraeteRules"
-                :disabled="!geraeteAnzahl[4][2]"
+                :disabled="!geraeteanzahl[4][2]"
                 :min="0"
                 label="Beamer"
                 type="number"
@@ -185,11 +185,11 @@
             </v-row>
             <!-- Server -->
             <v-row>
-              <v-checkbox v-model="geraeteAnzahl[5][2]" />
+              <v-checkbox v-model="geraeteanzahl[5][2]" />
               <v-text-field
-                v-model="geraeteAnzahl[5][1]"
+                v-model="geraeteanzahl[5][1]"
                 :rules="geraeteRules"
-                :disabled="!geraeteAnzahl[5][2]"
+                :disabled="!geraeteanzahl[5][2]"
                 :min="0"
                 label="interne Server"
                 type="number"
@@ -256,23 +256,17 @@ export default {
     bilanzierungsjahr: {
       type: Number,
       default: null,
-    }
-  },
-
-  data: () => ({
-    // Bilanzierungsjahr
-    // bilanzierungsjahr: null,
-
-    //Mitarbeiter
-    anzahlMitarbeiter: null,
-
+    },
+    anzahlmitarbeiter: {
+      type: Number,
+      default: null,
+    },
     // genutzte Gebäude
     // Format: [gebaeudeID, flaechenanteil]
-    gebaeude: [[null, null]],
-
-    // mögliche gebäudeIDs
-    gebaeudeIDs: [],
-
+    gebaeude: {
+      type: Array,
+      default: () => [[null, null]],
+    },
     //IT Geräte
     /* Geraet an Array Position format [intern Geraete ID, Anzahl, enabled]
      * [0] Multigeraete
@@ -282,14 +276,23 @@ export default {
      * [4] beamer
      * [5] server
      */
-    geraeteAnzahl: [
-      [7, null, false],
-      [8, null, false],
-      [9, null, false],
-      [10, null, false],
-      [4, null, false],
-      [6, null, false],
-    ],
+    geraeteanzahl: {
+      type: Array,
+      default: () => [
+        [7, null, false],
+        [8, null, false],
+        [9, null, false],
+        [10, null, false],
+        [4, null, false],
+        [6, null, false],
+      ],
+    }
+  },
+
+  data: () => ({
+
+    // mögliche gebäudeIDs
+    gebaeudeIDs: [],
 
     //Papiernutzung currently not used
     //papierverbrauch: null
@@ -346,11 +349,11 @@ export default {
     logging: function () {
       console.log(
         "Mitarbeiter:",
-        this.anzahlMitarbeiter,
+        this.anzahlmitarbeiter,
         "\n Gebäude:",
         this.gebaeude,
-        "\n geraeteAnzahl:",
-        this.geraeteAnzahl
+        "\n geraeteanzahl:",
+        this.geraeteanzahl
       );
     },
 
@@ -388,10 +391,10 @@ export default {
       //Build IT Geräte Array of non-null gerate
       var usedITGeraete = [];
       //Special case were we set the Toner enabled value to the matchig geraete value
-      this.geraeteAnzahl[1][2] = this.geraeteAnzahl[0][2];
-      this.geraeteAnzahl[3][2] = this.geraeteAnzahl[2][2];
+      this.geraeteanzahl[1][2] = this.geraeteanzahl[0][2];
+      this.geraeteanzahl[3][2] = this.geraeteanzahl[2][2];
 
-      for (var geraet of this.geraeteAnzahl) {
+      for (var geraet of this.geraeteanzahl) {
         if (geraet[1] > 0 && geraet[2]) {
           usedITGeraete.push({
             idITGeraete: parseInt(geraet[0]),
@@ -455,7 +458,7 @@ export default {
         body: JSON.stringify({
           jahr: parseInt(this.bilanzierungsjahr),
           gebaeude: this.gebaeudeJSON(),
-          mitarbeiteranzahl: parseInt(this.anzahlMitarbeiter),
+          mitarbeiteranzahl: parseInt(this.anzahlmitarbeiter),
           itGeraete: this.itGeraeteJSON(),
           hauptverantwortlicher: {
             username: this.getCookieAttribut("email"),

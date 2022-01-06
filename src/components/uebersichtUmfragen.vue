@@ -72,7 +72,8 @@
             <v-card>
               <UmfrageBearbeitenComponent
                 :bilanzierungsjahr="umfrage.jahr"
-              />
+                :anzahlmitarbeiter="umfrage.mitarbeiteranzahl"
+              /> <!--:gebaeude="umfrage.gebaeude" und :geraeteanzahl="umfrage.itGeraete" ergänzen-->
             </v-card>
             <v-divider /> 
             <div>
