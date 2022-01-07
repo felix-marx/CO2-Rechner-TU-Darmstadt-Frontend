@@ -18,7 +18,7 @@
           <v-row>
             <v-col cols="5">
               <v-autocomplete
-                v-model="bilanzierungsjahr"
+                v-model="umfrage.jahr"
                 :items="possibleYears"
                 label="Bilanzierungsjahr"
                 prepend-icon="mdi-calendar-question"
@@ -37,10 +37,10 @@
           <v-container>
             <v-row>
               <v-text-field
-                v-model="anzahlmitarbeiter"
+                v-model="umfrage.mitarbeiteranzahl"
                 :rules="absolutpositivRules"
                 :min="0"
-                label="Mitarbeitendenzahl"
+                label="Mitarbeiteranzahl"
                 type="number"
                 prepend-icon="mdi-account"
               />
@@ -62,7 +62,7 @@
           <br>
 
           <div
-            v-for="(objekt, index) in gebaeude"
+            v-for="(objekt, index) in umfrage.gebaeude"
             :key="index"
           >
             <v-row>
@@ -121,13 +121,13 @@
             <!-- Multifunktionsgeräte -->
             <v-row>
               <v-checkbox
-                v-model="geraeteanzahl[0][2]"
+                v-model="umfrage.geraeteanzahl[0][2]"
                 hide-details
               />
               <v-text-field
-                v-model="geraeteanzahl[0][1]"
+                v-model="umfrage.geraeteanzahl[0][1]"
                 :rules="geraeteRules"
-                :disabled="!geraeteanzahl[0][2]"
+                :disabled="!umfrage.geraeteanzahl[0][2]"
                 :min="0"
                 label="Multifunktionsgeräte z.B. Netzwerkdrucker"
                 type="number"
@@ -135,9 +135,9 @@
                 suffix="Gerät/e"
               />
               <v-text-field
-                v-model="geraeteanzahl[1][1]"
+                v-model="umfrage.geraeteanzahl[1][1]"
                 :rules="nichtnegativRules"
-                :disabled="!geraeteanzahl[0][2]"
+                :disabled="!umfrage.geraeteanzahl[0][2]"
                 :min="0"
                 label="verbrauchte Toner"
                 type="number"
@@ -147,13 +147,13 @@
             <!-- Drucker -->
             <v-row>
               <v-checkbox
-                v-model="geraeteanzahl[2][2]"
+                v-model="umfrage.geraeteanzahl[2][2]"
                 hide-details
               />
               <v-text-field
-                v-model="geraeteanzahl[2][1]"
+                v-model="umfrage.geraeteanzahl[2][1]"
                 :rules="geraeteRules"
-                :disabled="!geraeteanzahl[2][2]"
+                :disabled="!umfrage.geraeteanzahl[2][2]"
                 :min="0"
                 label="Laser- & Tintenstrahldrucker"
                 type="number"
@@ -161,9 +161,9 @@
                 class="pr-5"
               />
               <v-text-field
-                v-model="geraeteanzahl[3][1]"
+                v-model="umfrage.geraeteanzahl[3][1]"
                 :rules="nichtnegativRules"
-                :disabled="!geraeteanzahl[2][2]"
+                :disabled="!umfrage.geraeteanzahl[2][2]"
                 :min="0"
                 label="verbrauchte Toner"
                 suffix="Toner"
@@ -172,11 +172,11 @@
             </v-row>
             <!-- Beamer -->
             <v-row>
-              <v-checkbox v-model="geraeteanzahl[4][2]" />
+              <v-checkbox v-model="umfrage.geraeteanzahl[4][2]" />
               <v-text-field
-                v-model="geraeteanzahl[4][1]"
+                v-model="umfrage.geraeteanzahl[4][1]"
                 :rules="geraeteRules"
-                :disabled="!geraeteanzahl[4][2]"
+                :disabled="!umfrage.geraeteanzahl[4][2]"
                 :min="0"
                 label="Beamer"
                 type="number"
@@ -185,11 +185,11 @@
             </v-row>
             <!-- Server -->
             <v-row>
-              <v-checkbox v-model="geraeteanzahl[5][2]" />
+              <v-checkbox v-model="umfrage.geraeteanzahl[5][2]" />
               <v-text-field
-                v-model="geraeteanzahl[5][1]"
+                v-model="umfrage.geraeteanzahl[5][1]"
                 :rules="geraeteRules"
-                :disabled="!geraeteanzahl[5][2]"
+                :disabled="!umfrage.geraeteanzahl[5][2]"
                 :min="0"
                 label="interne Server"
                 type="number"
@@ -253,17 +253,17 @@ export default {
   },
 
   props: {
-    bilanzierungsjahr: {
+    bilanzierungsjahrprop: {
       type: Number,
       default: null,
     },
-    anzahlmitarbeiter: {
+    anzahlmitarbeiterprop: {
       type: Number,
       default: null,
     },
     // genutzte Gebäude
     // Format: [gebaeudeID, flaechenanteil]
-    gebaeude: {
+    gebaeudeprop: {
       type: Array,
       default: () => [[null, null]],
     },
@@ -276,7 +276,7 @@ export default {
      * [4] beamer
      * [5] server
      */
-    geraeteanzahl: {
+    geraeteanzahlprop: {
       type: Array,
       default: () => [
         [7, null, false],
@@ -290,6 +290,13 @@ export default {
   },
 
   data: () => ({
+    umfrage: {
+      mitarbeiteranzahl: 42,
+      jahr: 2018,
+      gebaeude: [["S101", "69"]],
+      geraeteanzahl: [[7, "666", true], [8, "666", true], [9, "666", true], [10, "666", true], [4, "666", true], [6, "666", true]],
+      mitarbeiterumfrage: null,
+    },
 
     // mögliche gebäudeIDs
     gebaeudeIDs: [],
@@ -349,11 +356,11 @@ export default {
     logging: function () {
       console.log(
         "Mitarbeiter:",
-        this.anzahlmitarbeiter,
+        this.umfrage.mitarbeiteranzahl,
         "\n Gebäude:",
-        this.gebaeude,
+        this.umfrage.gebaeude,
         "\n geraeteanzahl:",
-        this.geraeteanzahl
+        this.umfrage.geraeteanzahl
       );
     },
 
@@ -361,17 +368,17 @@ export default {
      * Adds a new Gebäude to the array, so that it can be selected
      */
     newGebaeude: function () {
-      this.gebaeude.push([null, null]);
+      this.umfrage.gebaeude.push([null, null]);
     },
 
     /**
      * Removes the Gebäude at position index so that it won't show
      */
     removeGebaeude: function (index) {
-      if (index >= 0 && this.gebaeude.length > index) {
-        this.gebaeude.splice(index, 1);
+      if (index >= 0 && this.umfrage.gebaeude.length > index) {
+        this.umfrage.gebaeude.splice(index, 1);
         //When the only element is removed add a new, thereby clearing the values of the fields on the webpage
-        if (this.gebaeude.length === 0) {
+        if (this.umfrage.gebaeude.length === 0) {
           this.newGebaeude();
         }
       } else {
@@ -391,10 +398,10 @@ export default {
       //Build IT Geräte Array of non-null gerate
       var usedITGeraete = [];
       //Special case were we set the Toner enabled value to the matchig geraete value
-      this.geraeteanzahl[1][2] = this.geraeteanzahl[0][2];
-      this.geraeteanzahl[3][2] = this.geraeteanzahl[2][2];
+      this.umfrage.geraeteanzahl[1][2] = this.umfrage.geraeteanzahl[0][2];
+      this.umfrage.geraeteanzahl[3][2] = this.umfrage.geraeteanzahl[2][2];
 
-      for (var geraet of this.geraeteanzahl) {
+      for (var geraet of this.umfrage.geraeteanzahl) {
         if (geraet[1] > 0 && geraet[2]) {
           usedITGeraete.push({
             idITGeraete: parseInt(geraet[0]),
@@ -415,7 +422,7 @@ export default {
     gebaeudeJSON: function () {
       var gebaeudeJSON = [];
 
-      for (var objekt of this.gebaeude) {
+      for (var objekt of this.umfrage.gebaeude) {
         gebaeudeJSON.push({
           gebaeudeNr: parseInt(translateGebaeudeIDToNumeric(objekt[0])),
           nutzflaeche: parseInt(objekt[1]),
@@ -456,9 +463,9 @@ export default {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          jahr: parseInt(this.bilanzierungsjahr),
+          jahr: parseInt(this.umfrage.jahr),
           gebaeude: this.gebaeudeJSON(),
-          mitarbeiteranzahl: parseInt(this.anzahlmitarbeiter),
+          mitarbeiteranzahl: parseInt(this.umfrage.mitarbeiteranzahl),
           itGeraete: this.itGeraeteJSON(),
           hauptverantwortlicher: {
             username: this.getCookieAttribut("email"),
