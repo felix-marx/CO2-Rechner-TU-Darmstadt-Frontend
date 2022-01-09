@@ -219,10 +219,6 @@ import UmfrageBearbeitenComponent from "./UmfrageBearbeitenComponent.vue";
           jahr: 1969,
           gebaeude: null,
           itGeraete: null,
-          hauptverantwortlicher: {
-            username: this.getCookieAttribut("email"),
-            sessiontoken: this.getCookieAttribut("sessiontoken")
-          }
         }),
       })
         .then((response) => response.json())
@@ -249,10 +245,6 @@ import UmfrageBearbeitenComponent from "./UmfrageBearbeitenComponent.vue";
           tageImBuero: 2,
           dienstreise: null,
           itGeraete: null,
-          hauptverantwortlicher: {
-            username: this.getCookieAttribut("email"),
-            sessiontoken: this.getCookieAttribut("sessiontoken")
-          }
         }),
       })
         .then((response) => response.json())
