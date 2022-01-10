@@ -11,12 +11,13 @@
         three-line
       >
         <v-list-item-content>
+          <!--
           <div class="text-overline mb-4">
             Zuletzt bearbeitet am {{ editing_time }}
-          </div>
+          </div>   -->
 
           <v-list-item-title class="text-h5 mb-1">
-            Umfrage {{ umfrage._id }}
+            Umfrage {{ index + 1 }}
           </v-list-item-title>
         </v-list-item-content>
       </v-list-item>
@@ -56,7 +57,7 @@
               >
                 <v-icon>mdi-close</v-icon>
               </v-btn>
-              <v-toolbar-title>Umfrage {{ umfrage._id }}</v-toolbar-title>
+              <v-toolbar-title>Umfrage</v-toolbar-title>
               <v-spacer />
               <v-toolbar-items>
                 <v-btn
@@ -70,16 +71,20 @@
             </v-toolbar>
             <!-- Hier kommt der Inhalt der Umfrage hin -->
             <v-card>
-              <UmfrageBearbeitenComponent /> 
-              <!--:bilanzierungsjahr="umfrage.jahr"
-                  :anzahlmitarbeiter="umfrage.mitarbeiteranzahl"
-                  :gebaeude="umfrage.gebaeude"
+              <UmfrageBearbeitenComponent 
+                :bilanzierungsjahr="umfrage.jahr"
+                :anzahlmitarbeiter="umfrage.mitarbeiteranzahl"
+              /> 
+              <!--:gebaeude="umfrage.gebaeude"
                   :geraeteanzahl="umfrage.itGeraete" ergänzen-->
             </v-card>
+
+            <!--
             <v-divider /> 
             <div>
               Aktuelle Auswertung
             </div>
+            -->
           </v-card>
         </v-dialog>
         

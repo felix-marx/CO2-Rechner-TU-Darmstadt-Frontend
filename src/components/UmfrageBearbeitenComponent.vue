@@ -255,17 +255,17 @@ export default {
   props: {
     bilanzierungsjahrprop: {
       type: Number,
-      default: null,
+      default: null
     },
     anzahlmitarbeiterprop: {
       type: Number,
-      default: null,
+      default: null
     },
     // genutzte Gebäude
     // Format: [gebaeudeID, flaechenanteil]
     gebaeudeprop: {
       type: Array,
-      default: () => [[null, null]],
+      default: () => [[null, null]]
     },
     //IT Geräte
     /* Geraet an Array Position format [intern Geraete ID, Anzahl, enabled]
@@ -284,15 +284,15 @@ export default {
         [9, null, false],
         [10, null, false],
         [4, null, false],
-        [6, null, false],
-      ],
+        [6, null, false]
+      ]
     }
   },
 
   data: () => ({
     umfrage: {
-      mitarbeiteranzahl: 42,
-      jahr: 2018,
+      mitarbeiteranzahl: 1,
+      jahr: 2022,
       gebaeude: [["S101", "69"]],
       geraeteanzahl: [[7, "666", true], [8, "666", true], [9, "666", true], [10, "666", true], [4, "666", true], [6, "666", true]],
       mitarbeiterumfrage: null,
@@ -343,6 +343,7 @@ export default {
     displaySurveyLink: function() {
       return this.responseData && this.responseData.umfrageID !== "";
     }
+
   },
 
   created() {
@@ -496,6 +497,14 @@ export default {
           console.error("Error:", error);
         });
     },
+
+    getPropYear() {
+      if(this.bilanzierungsjahrprop != null){
+        return this.bilanzierungsjahrprop;
+      } else{
+        return 2020;
+      }
+    }
   },
 };
 
