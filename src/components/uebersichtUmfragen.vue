@@ -132,8 +132,8 @@ import UmfrageBearbeitenComponent from "./UmfrageBearbeitenComponent.vue";
     created() {
       this.fetchUmfragen();
       this.fetchMitarbeiterUmfragen("61b23e9855aa64762baf76d7"); // TODO only for testing yet
-      this.updateUmfrage("61b23e9855aa64762baf76d7");
-      this.updateMitarbeiterUmfrage("61b34f9324756df01eee5ff4");
+      // this.updateUmfrage("61b23e9855aa64762baf76d7");
+      // this.updateMitarbeiterUmfrage("61b34f9324756df01eee5ff4");
     },
 
     methods: {
