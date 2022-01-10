@@ -87,7 +87,7 @@
         </v-row>
         <v-row v-if="!displayEnergieCharts">
           <v-col>
-            <v-alert type="error">
+            <v-alert type="warning">
               Für den Energieverbrauch konnten keine Emissionen berechnet werden, weil Daten für das ausgewählte Bilanzierungsjahr fehlen!
             </v-alert>
           </v-col>
@@ -194,8 +194,8 @@ export default{
   },
   
   created(){
-    // this.getData();
-    this.testdata();
+    this.getData();
+    // this.testdata();
   },
 
   methods: {
