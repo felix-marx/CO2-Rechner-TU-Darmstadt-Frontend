@@ -427,7 +427,10 @@ export default {
           gebaeude: this.gebaeudeJSON(),
           mitarbeiteranzahl: parseInt(this.anzahlMitarbeiter),
           itGeraete: this.itGeraeteJSON(),
-          nutzerEmail: "anton@tobi.com"
+          hauptverantwortlicher: {
+            username: this.getCookieAttribut("email"),
+            sessiontoken: this.getCookieAttribut("sessiontoken")
+          }
         }),
       })
         .then((response) => response.json())
