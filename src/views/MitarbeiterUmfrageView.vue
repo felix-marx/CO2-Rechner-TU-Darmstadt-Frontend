@@ -76,22 +76,22 @@ export default {
      * Requests from the server whether a survey with the givenID exists.
      */
   fetchUmfrageExists: async function (givenID) {
-      await fetch(process.env.VUE_APP_BASEURL + "/mitarbeiterUmfrage/exists", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          umfrageID: givenID,
-        }),
+      await fetch(process.env.VUE_APP_BASEURL + "/mitarbeiterUmfrage/exists?id=" + givenID, {
+        method: "GET",
         })
         .then((response) => response.json())
         .then((data) => {
           console.log("Success:", data);
-          this.umfrageID = data.umfrageID;
+          if (data.status == "success"){
+            this.umfrageID = data.umfrageID;
+          }
+          else{
+            this.umfrageID = "";
+          }
         })
         .catch((error) => {
           console.error("Error:", error);
+          this.umfrageID = ""
         });
     },
   },

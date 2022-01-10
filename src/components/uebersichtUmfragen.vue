@@ -113,6 +113,7 @@
 
 <script>
 import UmfrageBearbeitenComponent from "./UmfrageBearbeitenComponent.vue";
+import Cookies from "../Cookie";
 
   export default {
     components: {
@@ -130,8 +131,9 @@ import UmfrageBearbeitenComponent from "./UmfrageBearbeitenComponent.vue";
     }),
 
     created() {
-      this.fetchUmfragen();
-      this.fetchMitarbeiterUmfragen("61b23e9855aa64762baf76d7"); // TODO only for testing yet
+      this.fetchUmfragenForUser();
+      // this.fetchUmfragen();
+      // this.fetchMitarbeiterUmfragen("61b23e9855aa64762baf76d7"); // TODO only for testing yet
       // this.updateUmfrage("61b23e9855aa64762baf76d7");
       // this.updateMitarbeiterUmfrage("61b34f9324756df01eee5ff4");
     },
@@ -159,18 +161,24 @@ import UmfrageBearbeitenComponent from "./UmfrageBearbeitenComponent.vue";
         });
       },
 
+      fetchUmfragenForUser: async function () {
+      await fetch(process.env.VUE_APP_BASEURL + "/umfrage/GetAllUmfragenForUser?user=" + Cookies.getCookieAttribut("email"))
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Success:", data);
+          this.umfragen = data.data.umfragen;
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+      },
+
       /**
        * Fetches all existent MitarbeiterUmfragen from the Server, given an Umfrage.
        */
       fetchMitarbeiterUmfragen: async function (umfrageID) {
-      await fetch(process.env.VUE_APP_BASEURL + "/mitarbeiterUmfrage/mitarbeiterUmfrageForUmfrage", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          umfrageID: umfrageID,
-        }),
+      await fetch(process.env.VUE_APP_BASEURL + "/mitarbeiterUmfrage/mitarbeiterUmfrageForUmfrage?id=" + umfrageID, {
+        method: "GET",
       })
         .then((response) => response.json())
         .then((data) => {
