@@ -194,8 +194,8 @@ export default{
   },
   
   created(){
-    this.getData();
-    // this.testdata();
+    // this.getData();
+    this.testdata();
   },
 
   methods: {
@@ -330,8 +330,8 @@ export default{
           order: 1,
           datalabels: {
             color: 'black',
+            align: 'start',
             anchor: 'end',
-            clamp: true,
             labels: {
               title: {
                 font: {
@@ -341,7 +341,7 @@ export default{
               value: {
                 color: 'green'
               }
-            }
+            },
           }
         },{
           type: 'line',
@@ -434,13 +434,12 @@ export default{
           label: 'Emissionen',
           yAxisID: 'bar',
           data: data.map(a => a.value),
-          backgroundColor: 'rgb(75, 192, 192)',
+          backgroundColor: 'rgba(75, 192, 192, 1)',
+          borderColor: 'rgb(75, 192, 192)',
           borderWidth: 1,
           order: 1,
           datalabels: {
             color: 'black',
-            anchor: 'end',
-            clamp: true,
             labels: {
               title: {
                 font: {
@@ -450,7 +449,9 @@ export default{
               value: {
                 color: 'green'
               }
-            }
+            },
+            align: 'start',
+            anchor: 'end',
           },
         },{
           type: 'line',
