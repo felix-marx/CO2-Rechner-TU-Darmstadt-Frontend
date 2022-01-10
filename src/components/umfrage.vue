@@ -247,8 +247,8 @@ export default {
   components: {
     MitarbeiterLinkComponent,
     LoadingAnimation,
-    Tooltip
-  },
+    Tooltip,
+},
 
   data: () => ({
     // Bilanzierungsjahr

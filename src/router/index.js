@@ -1,14 +1,28 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+//import Umfrage from '../components/umfrage.vue'
 import Home from '../views/Home.vue'
+import Anmeldung from '../components/Anmeldung.vue'
+import Cookies from '../Cookie.js'
+import AdminView from '../views/AdminView.vue'
+import PageNotFound from '../views/PageNotFound.vue'
+import MitarbeiterUmfrageView from '../views/MitarbeiterUmfrageView.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    name: 'Home',
-    component: Home
+    name: 'Anmeldung',
+    component: Anmeldung
+  },
+  {
+    path: '/survey',
+    name: 'umfrage',
+    component: Home,
+    beforeEnter: (to, from, next) => {
+      Cookies.postCheckLogin(next)
+    }
   },
   {
     path: '/survey/:umfrageID',
@@ -16,7 +30,7 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "mitarbeiterUmfrage" */ '../views/MitarbeiterUmfrageView.vue')
+    component: MitarbeiterUmfrageView
   },
   {
     path: '/admin',
@@ -24,10 +38,15 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "admin" */ '../views/AdminView.vue')
+    component: AdminView,
+    beforeEnter: (to, from, next) => {
+      Cookies.postCheckUserRole(next)
+    }
   },
-  { path: "*",
-  component: () => import(/* webpackChunkName: "pageNotFound" */ '../views/PageNotFound.vue') }
+  { 
+    path: "*",
+    component: PageNotFound
+  }
 ]
 
 const router = new VueRouter({
