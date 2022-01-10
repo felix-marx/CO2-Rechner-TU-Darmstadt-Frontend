@@ -221,7 +221,7 @@ import UmfrageBearbeitenComponent from "./UmfrageBearbeitenComponent.vue";
         body: JSON.stringify({
           umfrageID: umfrageID,
           mitarbeiteranzahl: 420,
-          jahr: 1969,
+          jahr: 2018,
           gebaeude: null,
           itGeraete: null,
         }),
