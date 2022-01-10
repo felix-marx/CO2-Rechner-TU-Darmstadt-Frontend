@@ -210,12 +210,13 @@
               <v-text-field v-model="papierverbrauch" label="Papierverbrauch" suffix="kg" type="number"></v-text-field>
             </v-row>
           </v-container> -->
-          <v-row class="mt-1">
+          <v-row class="mt-1 text-center">
             <v-btn
               class="mr-4"
+              color="primary"
               @click="sendData()"
             >
-              Absenden
+              Speichern & Link generieren
             </v-btn>
             <LoadingAnimation v-if="dataRequestSent" />
           </v-row>

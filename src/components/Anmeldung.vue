@@ -154,7 +154,7 @@
                 :style="{ left: '50%', transform: 'translateX(-50%)' }"
                 @click="postAnmeldung()"
               >
-                <span>Anmelden</span>
+                <span>Zurück zur Anmeldung</span>
                 <v-icon>mdi-account</v-icon>
               </v-btn>
             </v-col>

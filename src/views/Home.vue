@@ -37,7 +37,7 @@ export default {
     selectedTab: 0,
     currentTabType: Umfrage,
     tabList: [
-        { id: 0, title: "Umfrage", componentType: Umfrage },
+        { id: 0, title: "CO2 Fussabdruck", componentType: Umfrage },
         { id: 1, title: "Ergebnisse", componentType: Uebersicht },
     ],
   }),
