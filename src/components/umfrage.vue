@@ -450,7 +450,7 @@ export default {
      * Fetches all possible gebaeudeIDs from the server to display in the dropdown menu of the formular.
      */
     fetchGebaeudeData: async function () {
-      await fetch("http://localhost:9000/umfrage/gebaeude")
+      await fetch(process.env.VUE_APP_BASEURL + "/umfrage/gebaeude")
         .then((response) => response.json())
         .then((data) => {
           console.log("Success:", data);

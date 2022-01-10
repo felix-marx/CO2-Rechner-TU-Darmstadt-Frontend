@@ -75,7 +75,7 @@ export default {
     },
 
     deleteAbmelden: async function () {
-      await fetch("http://localhost:9000/auth/abmeldung", {
+      await fetch(process.env.VUE_APP_BASEURL + "/auth/abmeldung", {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",

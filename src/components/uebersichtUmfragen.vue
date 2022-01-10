@@ -148,7 +148,7 @@ import UmfrageBearbeitenComponent from "./UmfrageBearbeitenComponent.vue";
        * Fetches all existent Umfragen from the Server.
        */
       fetchUmfragen: async function () {
-      await fetch("http://localhost:9000/umfrage/alleUmfragen")
+      await fetch(process.env.VUE_APP_BASEURL + "/umfrage/alleUmfragen")
         .then((response) => response.json())
         .then((data) => {
           console.log("Success:", data);
@@ -163,7 +163,7 @@ import UmfrageBearbeitenComponent from "./UmfrageBearbeitenComponent.vue";
        * Fetches all existent MitarbeiterUmfragen from the Server, given an Umfrage.
        */
       fetchMitarbeiterUmfragen: async function (umfrageID) {
-      await fetch("http://localhost:9000/mitarbeiterUmfrage/mitarbeiterUmfrageForUmfrage", {
+      await fetch(process.env.VUE_APP_BASEURL + "/mitarbeiterUmfrage/mitarbeiterUmfrageForUmfrage", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -213,7 +213,7 @@ import UmfrageBearbeitenComponent from "./UmfrageBearbeitenComponent.vue";
        * Updates an existing Umfrage with the given ID. Please pass all values even if they were not changed.
        */
       updateUmfrage: async function (umfrageID) {
-      await fetch("http://localhost:9000/umfrage/updateUmfrage", {
+      await fetch(process.env.VUE_APP_BASEURL + "/umfrage/updateUmfrage", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -239,7 +239,7 @@ import UmfrageBearbeitenComponent from "./UmfrageBearbeitenComponent.vue";
        * Updates an existing MitarbeiterUmfrage with the given ID. Please pass all values even if they were not changed.
        */
       updateMitarbeiterUmfrage: async function (umfrageID) {
-      await fetch("http://localhost:9000/mitarbeiterUmfrage/updateMitarbeiterUmfrage", {
+      await fetch(process.env.VUE_APP_BASEURL + "/mitarbeiterUmfrage/updateMitarbeiterUmfrage", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

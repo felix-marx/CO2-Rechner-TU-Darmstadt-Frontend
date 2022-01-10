@@ -376,7 +376,7 @@ import Tooltip from "@/components/componentParts/tooltip.vue";
        */
       sendFactor: async function () {
 
-        await fetch("http://localhost:9000/db/addFaktor", {
+        await fetch(process.env.VUE_APP_BASEURL + "/db/addFaktor", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -401,7 +401,7 @@ import Tooltip from "@/components/componentParts/tooltip.vue";
        */
       sendNewBuilding: async function () {
 
-        await fetch("http://localhost:9000/db/insertGebaeude", {
+        await fetch(process.env.VUE_APP_BASEURL + "/db/insertGebaeude", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -434,7 +434,7 @@ import Tooltip from "@/components/componentParts/tooltip.vue";
        */
       sendNewCounter: async function () {
 
-        await fetch("http://localhost:9000/db/insertZaehler", {
+        await fetch(process.env.VUE_APP_BASEURL + "/db/insertZaehler", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -461,7 +461,7 @@ import Tooltip from "@/components/componentParts/tooltip.vue";
        */
       sendCounterData: async function () {
 
-        await fetch("http://localhost:9000/db/addZaehlerdaten", {
+        await fetch(process.env.VUE_APP_BASEURL + "/db/addZaehlerdaten", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

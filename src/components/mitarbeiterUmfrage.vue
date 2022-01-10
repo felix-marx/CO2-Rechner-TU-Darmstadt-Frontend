@@ -593,7 +593,7 @@ export default {
      * Sends a JSON POST request to the backend to insert the data into the database and start the calculation
      */
     sendData: async function () {
-      await fetch("http://localhost:9000/mitarbeiterUmfrage/insertMitarbeiterUmfrage", {
+      await fetch(process.env.VUE_APP_BASEURL + "/mitarbeiterUmfrage/insertMitarbeiterUmfrage", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

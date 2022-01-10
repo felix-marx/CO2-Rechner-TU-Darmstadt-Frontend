@@ -42,7 +42,7 @@ deleteCookieAttribut(identifier) {
  */
 async postCheckUserRole(next){
 
-  await fetch("http://localhost:9000/auth/pruefeNutzerRolle", {
+  await fetch(process.env.VUE_APP_BASEURL + "/auth/pruefeNutzerRolle", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -71,7 +71,7 @@ async postCheckUserRole(next){
 
 
 async postCheckLogin(next) {
-    await fetch("http://localhost:9000/auth/pruefeSession", {
+    await fetch(process.env.VUE_APP_BASEURL + "/auth/pruefeSession", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

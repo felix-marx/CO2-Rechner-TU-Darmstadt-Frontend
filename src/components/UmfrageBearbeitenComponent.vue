@@ -458,7 +458,7 @@ export default {
     },
 
     sendData: async function () {
-      await fetch("http://localhost:9000/umfrage/insertUmfrage", {
+      await fetch(process.env.VUE_APP_BASEURL + "/umfrage/insertUmfrage", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -487,7 +487,7 @@ export default {
     },
 
     fetchGebaeudeData: async function () {
-      await fetch("http://localhost:9000/umfrage/gebaeude")
+      await fetch(process.env.VUE_APP_BASEURL + "/umfrage/gebaeude")
         .then((response) => response.json())
         .then((data) => {
           console.log("Success:", data);

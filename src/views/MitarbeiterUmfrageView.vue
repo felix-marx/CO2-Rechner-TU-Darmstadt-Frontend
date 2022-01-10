@@ -76,7 +76,7 @@ export default {
      * Requests from the server whether a survey with the givenID exists.
      */
   fetchUmfrageExists: async function (givenID) {
-      await fetch("http://localhost:9000/mitarbeiterUmfrage/exists", {
+      await fetch(process.env.VUE_APP_BASEURL + "/mitarbeiterUmfrage/exists", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

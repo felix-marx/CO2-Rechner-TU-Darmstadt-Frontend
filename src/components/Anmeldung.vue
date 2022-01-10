@@ -242,7 +242,7 @@ export default {
         return
       }
 
-      await fetch("http://localhost:9000/auth/anmeldung", {
+      await fetch(process.env.VUE_APP_BASEURL + "/auth/anmeldung", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -277,7 +277,7 @@ export default {
         return
       }
 
-      await fetch("http://localhost:9000/auth/registrierung", {
+      await fetch(process.env.VUE_APP_BASEURL + "/auth/registrierung", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
