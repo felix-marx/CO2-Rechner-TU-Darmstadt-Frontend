@@ -26,9 +26,16 @@ export default {
   name: "Header",
 
   props: {
-    anmeldenButton: {
-      default: true,
-      type: Boolean,
+      anmeldenButton: {
+        default: true,
+        type: Boolean,
+      },
+      // data on tabs and shown component when selecting the tab
+      // entries should be of shape {id: int, title: "", component: ComponentType}
+      tabs: {
+        default: null,
+        type: Array
+      },
     },
     // data on tabs and shown component when selecting the tab
     tabs: {

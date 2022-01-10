@@ -40,11 +40,17 @@ export default {
 
   computed: {
 
+    /**
+     * Returns the component to be shown in the body of the view. LoadingAnimation while the server is requested, SurveyNotFound if the survey does not exist or the survey
+     * if the corresponding id exists.
+     */
     bodyComponent: function () {
+      // umfrageID is null until the server answered. Show loading animation during that.
       if (this.umfrageID === null) {
         return LoadingAnimation;
       }
 
+      // either show the survey or a message, that the requested survey could not be found.
       if(this.surveyNotFound) {
         return SurveyNotFoundComponent;
       } else {
@@ -52,16 +58,23 @@ export default {
       }
     },
 
+    /**
+     * True, if a corresponding survey could be found (umfrageID is not an empty string). False otherwise.
+     */
     surveyNotFound: function() {
       return this.umfrageID === "";
     }
   },
 
   created() {
+    // request if a survey exists with the corresponding ID from the URL
     this.fetchUmfrageExists(this.$route.params.umfrageID);
   },
 
   methods: {
+    /**
+     * Requests from the server whether a survey with the givenID exists.
+     */
   fetchUmfrageExists: async function (givenID) {
       await fetch("http://localhost:9000/mitarbeiterUmfrage/exists", {
         method: "POST",

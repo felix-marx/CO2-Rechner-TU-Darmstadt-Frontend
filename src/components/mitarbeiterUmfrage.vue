@@ -590,7 +590,7 @@ export default {
     },
 
     /**
-     * Sends an JSON POST request to the backend to insert the data into the database and start the calculation
+     * Sends a JSON POST request to the backend to insert the data into the database and start the calculation
      */
     sendData: async function () {
       await fetch("http://localhost:9000/mitarbeiterUmfrage/insertMitarbeiterUmfrage", {

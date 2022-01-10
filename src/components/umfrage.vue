@@ -327,6 +327,7 @@ export default {
   },
 
   created() {
+    // get all possible gebaeude IDs on creation of the component
       this.fetchGebaeudeData();
   },
 
@@ -412,9 +413,10 @@ export default {
       return gebaeudeJSON;
     },
 
-
+    /**
+     * Sends all formular data to the server.
+     */
     sendData: async function () {
-      this.logging();
       await fetch("http://localhost:9000/umfrage/insertUmfrage", {
         method: "POST",
         headers: {
@@ -431,7 +433,7 @@ export default {
         .then((response) => response.json())
         .then((data) => {
           console.log("Success:", data);
-          this.responseData = data;
+          this.responseData = data.data;
         })
         .catch((error) => {
           console.error("Error:", error);
@@ -440,12 +442,15 @@ export default {
       this.dataRequestSent = false;
     },
 
+    /**
+     * Fetches all possible gebaeudeIDs from the server to display in the dropdown menu of the formular.
+     */
     fetchGebaeudeData: async function () {
       await fetch("http://localhost:9000/umfrage/gebaeude")
         .then((response) => response.json())
         .then((data) => {
           console.log("Success:", data);
-          this.gebaeudeIDs = data.gebaeude.map(gebInt => translateGebaeudeIDToSymbolic(gebInt));
+          this.gebaeudeIDs = data.data.gebaeude.map(gebInt => translateGebaeudeIDToSymbolic(gebInt));
         })
         .catch((error) => {
           console.error("Error:", error);
