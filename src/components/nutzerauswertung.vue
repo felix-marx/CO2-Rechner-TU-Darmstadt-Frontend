@@ -189,7 +189,7 @@ export default{
       return Math.round(this.responsedata.umfragenanzahl / this.responsedata.mitarbeiteranzahl * 1000) / 10
     },
     emissionenProMitarbeiter: function(){
-      return Math.round(this.emissionenGesamt / this.responsedata.mitarbeiteranzahl * 1000) / 1000
+      return Math.round(this.emissionenGesamt / this.responsedata.mitarbeiteranzahl * 100) / 100
     }
   },
   
@@ -267,8 +267,8 @@ export default{
      * Method rounds all emission values to unit t with 3 decimal places.
      */
     roundRespoonseData: function(){
-      let roundFactor1 = 1000
-      let roundFactor2 = 1000
+      let roundFactor1 = 10000
+      let roundFactor2 = 100
 
       this.responsedata.emissionenWaerme = Math.round(this.responsedata.emissionenWaerme / roundFactor1) / roundFactor2
       this.responsedata.emissionenStrom = Math.round(this.responsedata.emissionenStrom / roundFactor1) / roundFactor2
@@ -347,7 +347,7 @@ export default{
           type: 'line',
           label: 'kumulierte Emissionen',
           yAxisID: 'line',
-          data: data.map((sum => a => sum += a.value)(0)).map(a => a / this.emissionenGesamt),
+          data: data.map((sum => a => sum += a.value)(0)).map(a => Math.round(a / this.emissionenGesamt * 1000) /1000),
           fill: false,
           borderColor: 'rgb(54, 162, 235)',
           lineTension: 0,
@@ -419,7 +419,7 @@ export default{
             display: true,
             // eslint-disable-next-line no-unused-vars
             formatter: (value, context) => {
-              return (Math.round(value / this.emissionenGesamt * 1000) / 10) + '%';
+              return (Math.round(value / this.emissionenEnergie * 1000) / 10) + '%';
             },
           },
         },
@@ -457,7 +457,7 @@ export default{
           type: 'line',
           label: 'kumulierte Emissionen',
           yAxisID: 'line',
-          data: data.map((sum => a => sum += a.value)(0)).map(a => a / this.emissionenEnergie),
+          data: data.map((sum => a => sum += a.value)(0)).map(a => Math.round(a / this.emissionenEnergie* 1000) /1000),
           fill: false,
           borderColor: 'rgb(54, 162, 235)',
           lineTension: 0,
