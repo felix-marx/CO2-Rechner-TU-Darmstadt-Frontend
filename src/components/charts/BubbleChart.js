@@ -1,4 +1,6 @@
-import { Bubble, mixins  } from 'vue-chartjs'
+import { Bubble, mixins  } from 'vue-chartjs';
+import ChartJsPluginDataLabels from 'chartjs-plugin-datalabels';
+
 
 export default {
   extends: Bubble,
@@ -14,6 +16,7 @@ export default {
     }
   },
   mounted () {
+    this.addPlugin(ChartJsPluginDataLabels)
     this.renderChart(this.chartData, this.options)
   }
 }

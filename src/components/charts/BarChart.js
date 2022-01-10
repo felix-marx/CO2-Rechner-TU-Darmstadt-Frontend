@@ -1,4 +1,5 @@
-import { Bar, mixins  } from 'vue-chartjs'
+import { Bar, mixins  } from 'vue-chartjs';
+import ChartJsPluginDataLabels from 'chartjs-plugin-datalabels';
 
 export default {
   extends: Bar,
@@ -16,6 +17,7 @@ export default {
     }
   },
   mounted () {
+    this.addPlugin(ChartJsPluginDataLabels)
     this.renderChart(this.chartData, this.options)
   }
 }
