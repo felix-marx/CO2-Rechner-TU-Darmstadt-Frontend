@@ -329,7 +329,7 @@ export default{
           borderWidth: 1,
           order: 1,
           datalabels: {
-            color: 'blue',
+            color: 'black',
             anchor: 'end',
             clamp: true,
             labels: {
@@ -438,7 +438,7 @@ export default{
           borderWidth: 1,
           order: 1,
           datalabels: {
-            color: 'blue',
+            color: 'black',
             anchor: 'end',
             clamp: true,
             labels: {
