@@ -239,6 +239,7 @@
 </template>
 
 <script>
+import Cookies from '../Cookie'
 import Tooltip from "@/components/componentParts/tooltip.vue";
 import MitarbeiterLinkComponent from "./mitarbeiterLinkComponent";
 import LoadingAnimation from "./componentParts/loadingAnimation";
@@ -417,7 +418,7 @@ export default {
      * Sends all formular data to the server.
      */
     sendData: async function () {
-      await fetch("http://localhost:9000/umfrage/insertUmfrage", {
+      await fetch(process.env.VUE_APP_BASEURL + "/umfrage/insertUmfrage", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -428,8 +429,8 @@ export default {
           mitarbeiteranzahl: parseInt(this.anzahlMitarbeiter),
           itGeraete: this.itGeraeteJSON(),
           hauptverantwortlicher: {
-            username: this.getCookieAttribut("email"),
-            sessiontoken: this.getCookieAttribut("sessiontoken")
+            username: Cookies.getCookieAttribut("email"),
+            sessiontoken: Cookies.getCookieAttribut("sessiontoken")
           }
         }),
       })

@@ -2,8 +2,14 @@
   <v-app>
     <Header />
     <v-main>
-      <v-card elevation="2" class="py-4" outlined>
-        <v-card-title class="justify-center">{{ istRegistrierung ? "Registrierung" : "Anmeldung" }}</v-card-title>
+      <v-card
+        elevation="2"
+        class="py-4"
+        outlined
+      >
+        <v-card-title class="justify-center">
+          {{ istRegistrierung ? "Registrierung" : "Anmeldung" }}
+        </v-card-title>
         <!-- Signin -->
         <v-container v-if="!istRegistrierung">
           <v-row>
@@ -32,8 +38,13 @@
             </v-col>
             <v-col />
           </v-row>
-          <v-row v-if="errorMessage != null && errorMessage != ''" justify="center">
-            <p class="error--text">{{ errorMessage }}</p>
+          <v-row
+            v-if="errorMessage != null && errorMessage != ''"
+            justify="center"
+          >
+            <p class="error--text">
+              {{ errorMessage }}
+            </p>
           </v-row>
           <v-row>
             <v-col class="px-10">
@@ -54,7 +65,9 @@
               @click="istRegistrierung = true"
             >
               <span class="white--text">Neues Konto erstellen</span>
-              <v-icon color="white">mdi-account</v-icon>
+              <v-icon color="white">
+                mdi-account
+              </v-icon>
             </v-btn>
           </v-row>
         </v-container>
@@ -114,8 +127,13 @@
             <v-col />
           </v-row>
           <!-- Error Message on wrong user input and error in backend -->
-          <v-row v-if="errorMessage != null && errorMessage != ''" justify="center">
-            <p class="error--text">{{ errorMessage }}</p>
+          <v-row
+            v-if="errorMessage != null && errorMessage != ''"
+            justify="center"
+          >
+            <p class="error--text">
+              {{ errorMessage }}
+            </p>
           </v-row>
           <v-row>
             <v-btn
@@ -124,7 +142,9 @@
               @click="postRegistrierung()"
             >
               <span class="white--text">Konto erstellen</span>
-              <v-icon color="white">mdi-account</v-icon>
+              <v-icon color="white">
+                mdi-account
+              </v-icon>
             </v-btn>
           </v-row>
           <v-row>

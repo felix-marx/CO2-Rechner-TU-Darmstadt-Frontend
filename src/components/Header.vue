@@ -1,5 +1,9 @@
 <template>
-  <v-app-bar app color="primary" dark>
+  <v-app-bar
+    app
+    color="primary"
+    dark
+  >
     <div class="d-flex align-center" />
     <!--- Tab Menu --->
 
@@ -8,11 +12,19 @@
         v-for="tab in tabs"
         :key="'tab-' + tab.id"
         @click="changeTab(tab.id, tab.componentType)"
-      >{{ tab.title }}</v-tab>
+      >
+        {{ tab.title }}
+      </v-tab>
     </v-tabs>
 
-    <h4 v-if="cookieAttribut != null">Angemeldet als: {{ cookieAttribut }}</h4>
-    <v-btn v-if="cookieAttribut != null" text @click="deleteAbmelden()">
+    <h4 v-if="cookieAttribut != null">
+      Angemeldet als: {{ cookieAttribut }}
+    </h4>
+    <v-btn
+      v-if="cookieAttribut != null"
+      text
+      @click="deleteAbmelden()"
+    >
       <span class="mr-2">Abmelden</span>
       <v-icon>mdi-account</v-icon>
     </v-btn>
@@ -26,24 +38,17 @@ export default {
   name: "Header",
 
   props: {
-      anmeldenButton: {
-        default: true,
-        type: Boolean,
-      },
-      // data on tabs and shown component when selecting the tab
-      // entries should be of shape {id: int, title: "", component: ComponentType}
-      tabs: {
-        default: null,
-        type: Array
-      },
+    anmeldenButton: {
+      default: true,
+      type: Boolean,
     },
     // data on tabs and shown component when selecting the tab
+    // entries should be of shape {id: int, title: "", component: ComponentType}
     tabs: {
       default: null,
       type: Array
     },
   },
-
   data: () => ({
 
   }),
