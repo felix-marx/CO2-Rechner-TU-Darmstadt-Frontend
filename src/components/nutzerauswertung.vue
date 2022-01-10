@@ -194,8 +194,8 @@ export default{
   },
   
   created(){
-    this.getData();
-    // this.testdata();
+    // this.getData();
+    this.testdata();
   },
 
   methods: {
@@ -304,7 +304,16 @@ export default{
         }]}
       this.optionsGesamtDoughnut = {
         responsive: true,
-        maintainAspectRatio: false
+        maintainAspectRatio: false,
+        plugins:{
+          datalabels: {
+            display: true,
+            // eslint-disable-next-line no-unused-vars
+            formatter: (value, context) => {
+              return (Math.round(value / this.emissionenGesamt * 1000) / 10) + '%';
+            },
+          },
+        },
       }
 
       data.sort((a, b) => b.value - a.value)
@@ -319,6 +328,21 @@ export default{
           backgroundColor: 'rgb(75, 192, 192)',
           borderWidth: 1,
           order: 1,
+          datalabels: {
+            color: 'blue',
+            anchor: 'end',
+            clamp: true,
+            labels: {
+              title: {
+                font: {
+                  weight: 'bold'
+                }
+              },
+              value: {
+                color: 'green'
+              }
+            }
+          }
         },{
           type: 'line',
           label: 'kumulierte Emissionen',
@@ -328,6 +352,9 @@ export default{
           borderColor: 'rgb(54, 162, 235)',
           lineTension: 0,
           order: 0,
+          datalabels: {
+            display: false,
+          },
         }]
       };
       this.optionsGesamtPareto = {
@@ -387,6 +414,15 @@ export default{
       this.optionsEnergieDoughnut = {
         responsive: true,
         maintainAspectRatio: false,
+        plugins:{
+          datalabels: {
+            display: true,
+            // eslint-disable-next-line no-unused-vars
+            formatter: (value, context) => {
+              return (Math.round(value / this.emissionenGesamt * 1000) / 10) + '%';
+            },
+          },
+        },
       }
 
       data.sort((a, b) => b.value - a.value)
@@ -401,6 +437,21 @@ export default{
           backgroundColor: 'rgb(75, 192, 192)',
           borderWidth: 1,
           order: 1,
+          datalabels: {
+            color: 'blue',
+            anchor: 'end',
+            clamp: true,
+            labels: {
+              title: {
+                font: {
+                  weight: 'bold'
+                }
+              },
+              value: {
+                color: 'green'
+              }
+            }
+          },
         },{
           type: 'line',
           label: 'kumulierte Emissionen',
@@ -410,6 +461,9 @@ export default{
           borderColor: 'rgb(54, 162, 235)',
           lineTension: 0,
           order: 0,
+          datalabels: {
+            display: false,
+          },
         }]
       }
       this.optionsEnergiePareto = {
