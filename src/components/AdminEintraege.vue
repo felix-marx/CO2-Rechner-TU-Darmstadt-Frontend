@@ -9,7 +9,7 @@
 
         <v-expansion-panel-content>
           <v-autocomplete
-            v-model="year"
+            v-model="co2_factor.year"
             :items="possibleYears"
             label="Bilanzierungsjahr"
             prepend-icon="mdi-calendar-question"
@@ -235,7 +235,7 @@
         </v-expansion-panel-header>
         <v-expansion-panel-content>
           <v-autocomplete
-            v-model="year"
+            v-model="counter_data.year"
             :items="possibleYears"
             label="Bilanzierungsjahr"
             prepend-icon="mdi-calendar-question"
