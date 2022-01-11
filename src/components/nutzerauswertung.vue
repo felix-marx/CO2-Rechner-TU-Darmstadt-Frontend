@@ -119,8 +119,11 @@
         </v-row>
         <v-row>
           <v-col>
-            <v-btn color="primary">
-              Download als PDF
+            <v-btn
+              color="primary"
+              @click="makeSpreadsheet"
+            >
+              Download als XLSX
             </v-btn>
           </v-col>
         </v-row>
@@ -140,6 +143,8 @@
 <script>
 import DoughnutChart from "./charts/DoughnutChart.js";
 import BarChart from "./charts/BarChart.js";
+import XLSX from "xlsx"
+import saveAs from 'file-saver';
 
 export default{
   name: "Auswertung" , 
@@ -235,6 +240,52 @@ export default{
       this.roundRespoonseData();
       this.setChartGesamt();
       this.setChartEnergie();
+    },
+
+    makeSpreadsheet: function(){
+      var data = [
+        {"Kategorie":"Energie", 
+        "Emissionen": this.emissionenEnergie, 
+        "Anteil": this.emissionenEnergie / this.emissionenGesamt,
+        "Extra": "bla"},
+
+        {"Kategorie":"Pendelwege", 
+        "Emissionen": this.responsedata.emissionenPendelwege, 
+        "Anteil": this.responsedata.emissionenPendelwege / this.emissionenGesamt,
+        "Extra2": "blub"},
+        {"Kategorie":"Dienstreisen", 
+        "Emissionen": this.responsedata.emissionenDienstreisen, 
+        "Anteil": this.responsedata.emissionenDienstreisen / this.emissionenGesamt},
+        {"Kategorie":"IT-Geräte", 
+        "Emissionen": this.emissionenITGeraete, 
+        "Anteil": this.emissionenITGeraete / this.emissionenGesamt},
+      ];
+      var options = {
+        header: ["Kategorie", "Anteil", "Extra2", "Emissionen", "Extra"]
+      }
+
+        // workbook
+      var wb = XLSX.utils.book_new();
+      wb.Props = {
+        Title: "CO2 Rechner",
+        CreatedDate: new Date()
+      };
+      wb.SheetNames.push("Emissionen");
+
+        // worksheet
+      var ws = XLSX.utils.json_to_sheet(data, options);
+      wb.Sheets["Emissionen"] = ws;
+
+      var wbout = XLSX.write(wb, {bookType:'xlsx',  type: 'binary'});
+
+      function s2ab(s) { 
+        var buf = new ArrayBuffer(s.length); //convert s to arrayBuffer
+        var view = new Uint8Array(buf);  //create uint8array as viewer
+        for (var i=0; i<s.length; i++) view[i] = s.charCodeAt(i) & 0xFF; //convert to octet
+        return buf;    
+      }
+
+      saveAs(new Blob([s2ab(wbout)],{type:"application/octet-stream"}), 'Emissionen.xlsx');
     },
 
     /**
