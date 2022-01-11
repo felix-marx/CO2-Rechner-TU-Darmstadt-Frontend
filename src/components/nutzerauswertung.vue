@@ -33,6 +33,15 @@
             </v-progress-linear>
           </v-col>
         </v-row>
+        <v-row v-if="displayExtrapolationWarning">
+          <v-col>
+            <v-alert
+              type="warning"
+            >
+              Die Hochrechnung der Emissionsdaten ist ungenau, weil bisher nur {{ umfragenanteil }}% der Mitarbeiter die Umfrage ausgefüllt haben.
+            </v-alert>
+          </v-col>
+        </v-row>
       </v-container>
 
       <v-card-title>
@@ -87,7 +96,10 @@
         </v-row>
         <v-row v-if="!displayEnergieCharts">
           <v-col>
-            <v-alert type="warning">
+            <v-alert
+              text
+              type="warning"
+            >
               Für den Energieverbrauch konnten keine Emissionen berechnet werden, weil Daten für das ausgewählte Bilanzierungsjahr fehlen!
             </v-alert>
           </v-col>
@@ -194,6 +206,9 @@ export default{
     emissionenITGeraete: function(){
       return Math.round((this.responsedata.emissionenITGeraeteHauptverantwortlicher + this.responsedata.emissionenITGeraeteMitarbeiter) * 1000) / 1000
     },
+    displayExtrapolationWarning: function(){
+      return this.umfragenanteil <= 50.0
+    }
   },
   
   created(){
@@ -207,7 +222,7 @@ export default{
         id: "507f1f77bcf86cd799439011",
         jahr: 2000,
         mitarbeiteranzahl: 120,
-        umfragenanzahl: 100,
+        umfragenanzahl: 33,
         emissionenWaerme: 12222000,
         emissionenKaelte: 3000000,
         emissionenStrom: 4000000,
