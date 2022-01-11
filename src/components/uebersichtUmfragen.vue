@@ -87,6 +87,29 @@
             -->
           </v-card>
         </v-dialog>
+
+        <v-dialog
+          hide-overlay
+          transition="dialog-bottom-transition"
+        >
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn
+              class="ma2"
+              outlined
+              rounded
+              text
+              v-bind="attrs"
+              v-on="on"
+            >
+              <span>Auswertung</span>
+            </v-btn>
+          </template>
+          <v-card>
+            <v-card>
+              <Nutzerauswertung />
+            </v-card>
+          </v-card>
+        </v-dialog>
         
         <v-spacer />
 
@@ -113,17 +136,20 @@
 
 <script>
 import UmfrageBearbeitenComponent from "./UmfrageBearbeitenComponent.vue";
+import Nutzerauswertung from "./nutzerauswertung.vue";
 import Cookies from "../Cookie";
 
   export default {
     components: {
-      UmfrageBearbeitenComponent
+      UmfrageBearbeitenComponent,
+      Nutzerauswertung,
     },
 
     data: () => ({
       umfragen: [],
       deleteSurvey: [],
       dialog: false, 
+      dialog2: false, 
       notifications: false,
       sound: true,
       widgets: true,

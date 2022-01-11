@@ -438,7 +438,7 @@ export default{
           hoverOffset: 4
         }]}
       this.optionsGesamtDoughnut = {
-        responsive: true,
+        responsive: false,
         maintainAspectRatio: false,
         plugins:{
           datalabels: {
@@ -487,7 +487,7 @@ export default{
         }]
       };
       this.optionsGesamtPareto = {
-        responsive: true,
+        responsive: false,
         maintainAspectRatio: false,
         legend: {
             display: false
@@ -541,7 +541,7 @@ export default{
           hoverOffset: 4
         }]}
       this.optionsEnergieDoughnut = {
-        responsive: true,
+        responsive: false,
         maintainAspectRatio: false,
         plugins:{
           datalabels: {
@@ -590,7 +590,7 @@ export default{
         }]
       }
       this.optionsEnergiePareto = {
-         responsive: true,
+        responsive: false,
         maintainAspectRatio: false,
         legend: {
             display: false
