@@ -171,7 +171,7 @@ export default{
         message: null,
       },
 
-      displayEnergieCharts: false,
+      displayEnergieCharts: true,
 
       chartdataGesamtDoughnut: null,
       optionsGesamtDoughnut: null,
@@ -331,6 +331,10 @@ export default{
             formatter: (value, context) => {
               return (Math.round(value / this.emissionenGesamt * 1000) / 10) + '%';
             },
+            font: {
+              weight: 'bold',
+              size: 14,
+            },
           },
         },
       }
@@ -344,23 +348,13 @@ export default{
           label: 'Emissionen',
           yAxisID: 'bar',
           data: data.map(a => a.value),
-          backgroundColor: 'rgb(75, 192, 192)',
+          backgroundColor: 'rgb(53, 212, 212)',
           borderWidth: 1,
           order: 1,
           datalabels: {
             color: 'black',
             align: 'start',
             anchor: 'end',
-            labels: {
-              title: {
-                font: {
-                  weight: 'bold'
-                }
-              },
-              value: {
-                color: 'green'
-              }
-            },
           }
         },{
           type: 'line',
@@ -368,7 +362,7 @@ export default{
           yAxisID: 'line',
           data: data.map((sum => a => sum += a.value)(0)).map(a => Math.round(a / this.emissionenGesamt * 1000) /1000),
           fill: false,
-          borderColor: 'rgb(54, 162, 235)',
+          borderColor: 'rgb(21, 134, 209)',
           lineTension: 0,
           order: 0,
           datalabels: {
@@ -424,9 +418,9 @@ export default{
           label: 'Emissionen',
           data: data.map(a => a.value),
           backgroundColor: [
-            'rgb(255, 99, 132)',
-            'rgb(54, 162, 235)',
-            'rgb(255, 205, 86)',
+            'rgb(240, 128, 128)',
+            'rgb(0, 204, 255)',
+            'rgb(255, 219, 77)',
           ],
           hoverOffset: 4
         }]}
@@ -439,6 +433,10 @@ export default{
             // eslint-disable-next-line no-unused-vars
             formatter: (value, context) => {
               return (Math.round(value / this.emissionenEnergie * 1000) / 10) + '%';
+            },
+            font: {
+              weight: 'bold',
+              size: 14,
             },
           },
         },
@@ -453,22 +451,11 @@ export default{
           label: 'Emissionen',
           yAxisID: 'bar',
           data: data.map(a => a.value),
-          backgroundColor: 'rgba(75, 192, 192, 1)',
-          borderColor: 'rgb(75, 192, 192)',
+          backgroundColor: 'rgb(0, 220, 220)',
           borderWidth: 1,
           order: 1,
           datalabels: {
             color: 'black',
-            labels: {
-              title: {
-                font: {
-                  weight: 'bold'
-                }
-              },
-              value: {
-                color: 'green'
-              }
-            },
             align: 'start',
             anchor: 'end',
           },
