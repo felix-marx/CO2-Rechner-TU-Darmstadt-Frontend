@@ -179,7 +179,7 @@ export default{
   computed: {
     emissionenGesamt: function(){
       return Math.round((this.responsedata.emissionenDienstreisen + this.responsedata.emissionenPendelwege 
-                       + this.responsedata.emissionenITGeraete + this.responsedata.emissionenKaelte 
+                       + this.emissionenITGeraete + this.responsedata.emissionenKaelte 
                        + this.responsedata.emissionenStrom + this.responsedata.emissionenWaerme) * 1000) / 1000
     },
     emissionenEnergie: function(){
@@ -190,7 +190,10 @@ export default{
     },
     emissionenProMitarbeiter: function(){
       return Math.round(this.emissionenGesamt / this.responsedata.mitarbeiteranzahl * 100) / 100
-    }
+    },
+    emissionenITGeraete: function(){
+      return Math.round((this.responsedata.emissionenITGeraeteHauptverantwortlicher + this.responsedata.emissionenITGeraeteMitarbeiter) * 1000) / 1000
+    },
   },
   
   created(){
@@ -208,7 +211,8 @@ export default{
         emissionenWaerme: 12222000,
         emissionenKaelte: 3000000,
         emissionenStrom: 4000000,
-        emissionenITGeraete: 15000000,
+        emissionenITGeraeteHauptverantwortlicher: 10000000,
+        emissionenITGeraeteMitarbeiter: 5000000,
         emissionenDienstreisen: 6000400,
         emissionenPendelwege: 7000500
       };
@@ -273,7 +277,8 @@ export default{
       this.responsedata.emissionenWaerme = Math.round(this.responsedata.emissionenWaerme / roundFactor1) / roundFactor2
       this.responsedata.emissionenStrom = Math.round(this.responsedata.emissionenStrom / roundFactor1) / roundFactor2
       this.responsedata.emissionenKaelte = Math.round(this.responsedata.emissionenKaelte / roundFactor1) / roundFactor2
-      this.responsedata.emissionenITGeraete = Math.round(this.responsedata.emissionenITGeraete / roundFactor1) / roundFactor2
+      this.responsedata.emissionenITGeraeteHauptverantwortlicher = Math.round(this.responsedata.emissionenITGeraeteHauptverantwortlicher / roundFactor1) / roundFactor2
+      this.responsedata.emissionenITGeraeteMitarbeiter = Math.round(this.responsedata.emissionenITGeraeteMitarbeiter / roundFactor1) / roundFactor2
       this.responsedata.emissionenDienstreisen = Math.round(this.responsedata.emissionenDienstreisen / roundFactor1) / roundFactor2
       this.responsedata.emissionenPendelwege = Math.round(this.responsedata.emissionenPendelwege / roundFactor1) / roundFactor2
     },
@@ -286,7 +291,7 @@ export default{
         {label: 'Energie', value: this.emissionenEnergie},
         {label: 'Dienstreisen', value: this.responsedata.emissionenDienstreisen},
         {label: 'Pendelweg', value: this.responsedata.emissionenPendelwege},
-        {label: 'IT-Geräte', value: this.responsedata.emissionenITGeraete},
+        {label: 'IT-Geräte', value: this.emissionenITGeraete},
       ];
 
       this.chartdataGesamtDoughnut = {
