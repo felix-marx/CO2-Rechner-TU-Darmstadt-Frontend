@@ -25,7 +25,7 @@
       <!-- Die erstellte Umfrage soll bearbeitet und ausgewählt werden können. -->
       <v-card-actions>
         <v-dialog
-          v-model="dialog"
+          v-model="dialog[index]"
           fullscreen
           hide-overlay
           transition="dialog-bottom-transition"
@@ -53,7 +53,7 @@
               <v-btn
                 icon
                 dark
-                @click="dialog = false"
+                @click="closeDialog(index)"
               >
                 <v-icon>mdi-close</v-icon>
               </v-btn>
@@ -63,7 +63,7 @@
                 <v-btn
                   dark
                   text
-                  @click="dialog = false"
+                  @click="closeDialog(index)"
                 >
                   Speichern
                 </v-btn>
@@ -89,6 +89,8 @@
         </v-dialog>
 
         <v-dialog
+          v-model="dialogAuswertung[index]"
+          fullscreen
           hide-overlay
           transition="dialog-bottom-transition"
         >
@@ -105,8 +107,31 @@
             </v-btn>
           </template>
           <v-card>
+            <v-toolbar
+              dark
+              color="primary"
+            >
+              <v-btn
+                icon
+                dark
+                @click="closeDialogAuswertung(index)"
+              >
+                <v-icon>mdi-close</v-icon>
+              </v-btn>
+              <v-toolbar-title>Umfrage</v-toolbar-title>
+              <v-spacer />
+              <v-toolbar-items>
+                <v-btn
+                  dark
+                  text
+                  @click="closeDialogAuswertung(index)"
+                >
+                  Speichern
+                </v-btn>
+              </v-toolbar-items>
+            </v-toolbar>
             <v-card>
-              <Nutzerauswertung />
+              <Nutzerauswertung :umfrageid="umfrage._id" />
             </v-card>
           </v-card>
         </v-dialog>
@@ -148,8 +173,8 @@ import Cookies from "../Cookie";
     data: () => ({
       umfragen: [],
       deleteSurvey: [],
-      dialog: false, 
-      dialog2: false, 
+      dialog: [], 
+      dialogAuswertung: [], 
       notifications: false,
       sound: true,
       widgets: true,
@@ -170,6 +195,14 @@ import Cookies from "../Cookie";
        */
       removeSurvey() {
         return
+      },
+
+      closeDialog(index) {
+        this.$set(this.dialog, index, false)
+      },
+
+      closeDialogAuswertung(index) {
+        this.$set(this.dialogAuswertung, index, false)
       },
 
       /**
@@ -193,6 +226,9 @@ import Cookies from "../Cookie";
         .then((data) => {
           console.log("Success:", data);
           this.umfragen = data.data.umfragen;
+          
+          this.dialog = new Array(this.umfragen.length).fill(false)
+          this.dialogAuswertung = new Array(this.umfragen.length).fill(false)
         })
         .catch((error) => {
           console.error("Error:", error);

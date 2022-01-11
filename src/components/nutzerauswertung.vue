@@ -216,8 +216,9 @@ export default{
   },
   
   created(){
-    // this.getData();
-    this.testdata();
+    console.log(this.umfrageid)
+    this.getData();
+    // this.testdata();
   },
 
   methods: {
