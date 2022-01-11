@@ -72,11 +72,11 @@
             <!-- Hier kommt der Inhalt der Umfrage hin -->
             <v-card>
               <UmfrageBearbeitenComponent 
-                :bilanzierungsjahr="umfrage.jahr"
-                :anzahlmitarbeiter="umfrage.mitarbeiteranzahl"
-              /> 
-              <!--:gebaeude="umfrage.gebaeude"
-                  :geraeteanzahl="umfrage.itGeraete" ergänzen-->
+                :bilanzierungsjahrprop="umfrage.jahr"
+                :anzahlmitarbeiterprop="umfrage.mitarbeiteranzahl"
+                :gebaeudeprop="umfrage.gebaeude"
+                :geraeteanzahl="umfrage.itGeraete"
+              />
             </v-card>
 
             <!--
