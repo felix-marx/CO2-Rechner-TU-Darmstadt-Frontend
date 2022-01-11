@@ -97,10 +97,9 @@
         <v-row v-if="!displayEnergieCharts">
           <v-col>
             <v-alert
-              text
               type="warning"
             >
-              Für den Energieverbrauch konnten keine Emissionen berechnet werden, weil Daten für das ausgewählte Bilanzierungsjahr fehlen!
+              Es ist kein Auswertung der Emissionen durch den Energieverbrauch möglich. Für das ausgewählte Bilanzierungsjahr fehlen Daten seitens der TU Darmstadt, um die Emissionen berechnen zu können.
             </v-alert>
           </v-col>
         </v-row>
@@ -172,7 +171,7 @@ export default{
         message: null,
       },
 
-      displayEnergieCharts: true,
+      displayEnergieCharts: false,
 
       chartdataGesamtDoughnut: null,
       optionsGesamtDoughnut: null,
