@@ -197,10 +197,16 @@ import Cookies from "../Cookie";
         return
       },
 
+      /**
+       * Closes v-dialog with dialog as v-model
+       */
       closeDialog(index) {
         this.$set(this.dialog, index, false)
       },
 
+      /**
+       * Closes v-dialog with dialogAuswertung as v-model
+       */
       closeDialogAuswertung(index) {
         this.$set(this.dialogAuswertung, index, false)
       },
@@ -251,32 +257,6 @@ import Cookies from "../Cookie";
         .catch((error) => {
           console.error("Error:", error);
         });
-      },
-
-
-      // Temporär aus Anmeldung kopiert
-      // TODO: Bei Merge entfernen bzw. refaktorisieren
-
-        /**
-       * Checks if identifier is set in cookie
-       */
-      checkIfCookieAttributExists: function(identifier) {
-        return document.cookie
-        .split(";")
-        .some((item) => item.trim().startsWith(identifier))
-      },
-
-      /**
-       * Gets the value of the identifier set in the cookie if it is set else null
-       */
-      getCookieAttribut: function(identifier) {
-        if(this.checkIfCookieAttributExists(identifier)) {
-          return document.cookie
-            .split("; ")
-            .find(row => row.startsWith(identifier))
-            .split("=")[1]
-        }
-        return null
       },
 
       /**
