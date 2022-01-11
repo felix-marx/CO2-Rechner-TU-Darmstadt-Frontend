@@ -244,24 +244,89 @@ export default{
 
     makeSpreadsheet: function(){
       var data = [
-        {"Kategorie":"Energie", 
-        "Emissionen": this.emissionenEnergie, 
-        "Anteil": this.emissionenEnergie / this.emissionenGesamt,
-        "Extra": "bla"},
-
-        {"Kategorie":"Pendelwege", 
-        "Emissionen": this.responsedata.emissionenPendelwege, 
-        "Anteil": this.responsedata.emissionenPendelwege / this.emissionenGesamt,
-        "Extra2": "blub"},
-        {"Kategorie":"Dienstreisen", 
-        "Emissionen": this.responsedata.emissionenDienstreisen, 
-        "Anteil": this.responsedata.emissionenDienstreisen / this.emissionenGesamt},
-        {"Kategorie":"IT-Geräte", 
-        "Emissionen": this.emissionenITGeraete, 
-        "Anteil": this.emissionenITGeraete / this.emissionenGesamt},
+        {
+          "col1": "Auswertung der Umfrage",
+        },
+        {
+          "col1": "Jahr",
+          "col2": this.responsedata.jahr,
+        },
+        {
+          "col1": "Mitarbeiteranzahl",
+          "col2": this.responsedata.mitarbeiteranzahl,
+        },
+        {
+          "col1": "ausgefüllte Mitarbeiterumfrage",
+          "col2": this.responsedata.umfragenanzahl,
+        },
+        {
+          "col1": "Fortschritt",
+          "col2": (this.umfragenanteil / 100),
+        },
+        { },
+        {
+          "col1": "Emissionsüberblick",
+          "col2": "t CO2 eq.",
+        },
+        {
+          "col1": "Gesamtemissionen",
+          "col2": this.emissionenGesamt,
+        },
+        {
+          "col1": "Emissionen pro Mitarbeiter",
+          "col2": this.emissionenProMitarbeiter,
+        },
+        { },
+        {
+          "col1": "Aufteilung nach Hauptemissonsfaktoren",
+          "col2": "t CO2 eq.",
+          "col3": "%",
+        },
+        {
+          "col1":"Energie", 
+          "col2": this.emissionenEnergie, 
+          "col3": Math.round(this.emissionenEnergie / this.emissionenGesamt * 1000) / 10,
+        },
+        {
+          "col1":"Pendelwege", 
+          "col2": this.responsedata.emissionenPendelwege, 
+          "col3": Math.round(this.responsedata.emissionenPendelwege / this.emissionenGesamt * 1000) / 10,
+        },
+        {
+          "col1":"Dienstreisen", 
+          "col2": this.responsedata.emissionenDienstreisen, 
+          "col3": Math.round(this.responsedata.emissionenDienstreisen / this.emissionenGesamt * 1000) / 10,
+        },
+        {
+          "col1":"IT-Geräte", 
+          "col2": this.emissionenITGeraete, 
+          "col3": Math.round(this.emissionenITGeraete / this.emissionenGesamt * 1000) / 10
+        },
+        { },
+        {
+          "col1": "Aufteilung nach Energieart",
+          "col2": "t CO2 eq.",
+          "col3": "%",
+        },
+        {
+          "col1":"Wärme", 
+          "col2": this.responsedata.emissionenWaerme, 
+          "col3": Math.round(this.responsedata.emissionenWaerme / this.emissionenEnergie * 1000) / 10,
+        },
+        {
+          "col1":"Kälte", 
+          "col2": this.responsedata.emissionenKaelte, 
+          "col3": Math.round(this.responsedata.emissionenKaelte / this.emissionenEnergie * 1000) / 10,
+        },
+        {
+          "col1":"Strom", 
+          "col2": this.responsedata.emissionenStrom, 
+          "col3": Math.round(this.responsedata.emissionenStrom / this.emissionenEnergie * 1000) / 10,
+        },
       ];
       var options = {
-        header: ["Kategorie", "Anteil", "Extra2", "Emissionen", "Extra"]
+        header: ["col1", "col2", "col3"],
+        skipHeader: true,
       }
 
         // workbook
