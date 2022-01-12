@@ -9,9 +9,7 @@
           <!-- Bilanzierungsjahr -->
 
           <br>
-          <h3>
-            Auf welches Bilanzierungsjahr beziehen Sie sich in dieser Umfrage?
-          </h3>
+          <h3>Auf welches Bilanzierungsjahr beziehen Sie sich in dieser Umfrage?</h3>
           <v-divider />
           <br>
 
@@ -111,9 +109,7 @@
           <!-- Umfrage für IT Geräte: Multifunktionsgeräte + Toner, Drucker + Toner, Beamer, Server -->
 
           <br>
-          <h3>
-            Welche IT-Geräte benutzen Sie in Ihrer Abteilung gemeinschaftlich?
-          </h3>
+          <h3>Welche IT-Geräte benutzen Sie in Ihrer Abteilung gemeinschaftlich?</h3>
           <v-divider />
           <br>
 
@@ -209,7 +205,7 @@
             <v-row>
               <v-text-field v-model="papierverbrauch" label="Papierverbrauch" suffix="kg" type="number"></v-text-field>
             </v-row>
-          </v-container> -->
+          </v-container>-->
           <v-row class="mt-1 text-center">
             <v-btn
               class="mr-4"
@@ -233,7 +229,7 @@
     >
       <!-- TODO replace example link -->
       <MitarbeiterLinkComponent
-        :mitarbeiter-link="'www.tu-darmstadt.co2-rechner.de/survey/'+ responseData.umfrageID"
+        :mitarbeiter-link="'www.tu-darmstadt.co2-rechner.de/survey/' + responseData.umfrageID"
       />
     </v-card>
   </v-container>
@@ -250,7 +246,7 @@ export default {
     MitarbeiterLinkComponent,
     LoadingAnimation,
     Tooltip,
-},
+  },
 
   data: () => ({
     // Bilanzierungsjahr
@@ -314,7 +310,7 @@ export default {
     /**
      * Returns a list beginning with the current year until 2018.
      */
-    possibleYears: function() {
+    possibleYears: function () {
       const beginningYear = 2018;
       let currentYear = new Date().getFullYear();
       return Array.from(new Array(currentYear - beginningYear + 1), (x, i) => i + beginningYear).reverse();
@@ -323,14 +319,14 @@ export default {
     /**
      * True, if a valid survey link was received and should be shown. False otherwise.
      */
-    displaySurveyLink: function() {
+    displaySurveyLink: function () {
       return this.responseData && this.responseData.umfrageID !== "";
     }
   },
 
   created() {
     // get all possible gebaeude IDs on creation of the component
-      this.fetchGebaeudeData();
+    this.fetchGebaeudeData();
   },
 
   methods: {
@@ -407,7 +403,7 @@ export default {
       var gebaeudeJSON = [];
 
       for (var objekt of this.gebaeude) {
-        if ((objekt[0] !== null) && (objekt[1] !== null)){
+        if ((objekt[0] !== null) && (objekt[1] !== null)) {
           gebaeudeJSON.push({
             gebaeudeNr: parseInt(translateGebaeudeIDToNumeric(objekt[0])),
             nutzflaeche: parseInt(objekt[1]),
@@ -471,7 +467,7 @@ export default {
  * E.g. S101 is translated to 1101, L312 to 3312 and so on.
  */
 function translateGebaeudeIDToNumeric(gebaeudeID) {
-  if(!gebaeudeID) return null;
+  if (!gebaeudeID) return null;
 
   let gebaeudeDict = {
     "S": 1,
