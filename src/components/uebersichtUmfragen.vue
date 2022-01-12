@@ -138,20 +138,62 @@
         
         <v-spacer />
 
-        <!-- Mit diesem Button sollen ausgewählte Umfragen gelöscht werden können. -->
-        <v-col class="text-right">
-          <v-btn
-            class="ma2"
-            outlined
-            text
-            color="delete"
-            @click="removeSurvey(index, umfrage._id)"
-          >
-            <v-icon>mdi-delete-outline</v-icon>
-            Löschen
-          </v-btn>
-        </v-col>
+        <v-dialog
+          v-model="deleteSurvey[index]"
+          transition="dialog-bottom-transition"
+        >
+          <template v-slot:activator="{ on, attrs }">
+            <!-- Mit diesem Button sollen ausgewählte Umfragen gelöscht werden können. -->
+            <v-col class="text-right">
+              <v-btn
+                class="ma2"
+                outlined
+                text
+                color="delete"
+                v-bind="attrs"
+                v-on="on"
+              >
+                <v-icon>mdi-delete-outline</v-icon>
+                Löschen
+              </v-btn>
+            </v-col>
+          </template>
+
+          <v-card>
+            <v-toolbar
+              color="primary"
+              dark
+            >
+              Löschen der Umfrage
+            </v-toolbar>
+            <v-card-text>
+              <div class="pt-6">
+                Sind Sie sicher, dass Sie die Umfrage {{ umfrage.bezeichnung }} löschen möchten?
+                Diese Aktion kann nicht zurückgenommen werden.
+              </div>
+            </v-card-text>
+
+            <v-divider />
+
+            <v-card-actions>
+              <v-spacer />
+              <v-btn
+                color="primary"
+                text
+                @click="removeSurvey(index, umfrage._id)"
+              >
+                Ich bestätige
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
       </v-card-actions>
+      <v-alert
+        v-show="deleteError[index]"
+        type="error"
+      >
+        {{ message }}
+      </v-alert>
     </v-card>
   </v-container>
 </template>
@@ -172,6 +214,9 @@ import Cookies from "../Cookie";
       deleteSurvey: [],
       dialog: [], 
       dialogAuswertung: [], 
+      deleteError: [],
+      message: "",
+
       notifications: false,
       sound: true,
       widgets: true,
@@ -188,11 +233,17 @@ import Cookies from "../Cookie";
 
     methods: {
       /**
-       * needs to be written
+       * Loescht eine Umfrage nach Nutzerbestaetigung
        */
-      removeSurvey(index, umfrageID) {
-        this.deleteUmfrage(umfrageID)
-        this.umfragen.splice(index, 1)
+      async removeSurvey(index, umfrageID) {
+        var ret = this.deleteUmfrage(index, umfrageID)
+        if(ret) {
+          this.umfragen.splice(index, 1)
+          this.deleteSurvey.splice(index, 1)
+          this.dialog.splice(index, 1)
+          this.dialogAuswertung.splice(index,1)
+          this.deleteError.splice(index, 1)
+        }
         return
       },
 
@@ -234,6 +285,7 @@ import Cookies from "../Cookie";
           
           this.dialog = new Array(this.umfragen.length).fill(false)
           this.dialogAuswertung = new Array(this.umfragen.length).fill(false)
+          this.deleteError = new Array(this.umfragen.length).fill(false)
         })
         .catch((error) => {
           console.error("Error:", error);
@@ -311,9 +363,9 @@ import Cookies from "../Cookie";
       },
 
       /**
-       * Loescht die Umfrage mit der gegebenen ID
+       * Loescht die Umfrage mit der gegebenen ID, gibt false bei error, true bei success zurueck
        */
-      deleteUmfrage: async function (umfrageID) {
+      deleteUmfrage: async function (index, umfrageID) {
          await fetch(process.env.VUE_APP_BASEURL + "/umfrage/deleteUmfrage", {
         method: "DELETE",
         headers: {
@@ -329,10 +381,19 @@ import Cookies from "../Cookie";
       })
         .then((response) => response.json())
         .then((data) => {
+          if(data.status === "error") {
+            this.deleteError[index] = true
+            this.message = data.error.message
+            return false
+          }
           console.log("Success:", data);
+          return true
         })
         .catch((error) => {
+          this.deleteError[index] = true
+          this.message = error.error.message
           console.error("Error:", error);
+          return false
         });
       }
     }
