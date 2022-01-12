@@ -62,6 +62,9 @@ export default {
       }
     },
 
+    /**
+     * Returns properties depending on the current component
+     */
     properties: function() {
       if(this.bodyComponent === MitarbeiterUmfrage){
         return {bezeichnung: this.bezeichnung}
