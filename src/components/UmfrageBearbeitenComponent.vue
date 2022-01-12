@@ -293,8 +293,8 @@ export default {
     umfrage: {
       mitarbeiteranzahl: null,
       jahr: null,
-      gebaeude: [["S101", "69"]],
-      geraeteanzahl: [[7, "666", true], [8, "666", true], [9, "666", true], [10, "666", true], [4, "666", true], [6, "666", true]],
+      gebaeude: [[null, null]],
+      geraeteanzahl: [[7, null, false], [8, null, false], [9, null, false], [10, null, false], [4, null, false], [6, null, false]],
     },
 
     // mögliche gebäudeIDs
@@ -349,8 +349,8 @@ export default {
       this.fetchGebaeudeData();
       this.umfrage.jahr = JSON.parse(JSON.stringify(this.bilanzierungsjahrprop));
       this.umfrage.mitarbeiteranzahl = JSON.parse(JSON.stringify(this.anzahlmitarbeiterprop));
-      // this.umfrage.gebaeude = JSON.parse(JSON.stringify(this.gebaeudeprop));
-      // this.umfrage.geraeteanzahl = JSON.parse(JSON.stringify(this.geraeteanzahlprop));
+      this.umfrage.gebaeude = JSON.parse(JSON.stringify(this.gebaeudeprop));
+      this.umfrage.geraeteanzahl = JSON.parse(JSON.stringify(this.geraeteanzahlprop));
   },
 
   methods: {

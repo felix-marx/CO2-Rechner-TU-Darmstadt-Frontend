@@ -83,8 +83,8 @@
                 <UmfrageBearbeitenComponent 
                   :bilanzierungsjahrprop="umfrage.jahr"
                   :anzahlmitarbeiterprop="umfrage.mitarbeiteranzahl"
-                  :gebaeudeprop="umfrage.gebaeude"
-                  :geraeteanzahl="umfrage.itGeraete"
+                  :gebaeudeprop="parseGebaeudeData(umfrage.gebaeude)"
+                  :geraeteanzahlprop="parseGeraeteData(umfrage.itGeraete)"
                 />
               </v-card>
 
@@ -261,6 +261,40 @@ import Cookies from "../Cookie";
         this.$set(this.dialogAuswertung, index, false)
       },
 
+      /**
+       * 
+       */
+      parseGebaeudeData(gebaeude) {
+        let gebauedeData = new Array(gebaeude.length);
+        for(let i=0; i<gebaeude.length; i++){
+          let gebau = new Array(2);
+          gebau[0] = translateGebaeudeIDToSymbolic(gebaeude[i].gebaeudeNr);
+          gebau[1] = gebaeude[i].nutzflaeche;
+          gebauedeData[i] = gebau;
+        }
+        return gebauedeData;
+      },
+
+      /**
+       * 
+       */
+      parseGeraeteData(geraete) {
+        let geraeteData = new Array(6);
+        for(let i=0; i<geraeteData.length; i++){
+          let geraet = new Array(3);
+          geraet[0]=parseInt(geraete[i].idITGeraete);
+          geraet[1]=parseInt(geraete[i].anzahl);
+          if(geraet[1] > 0){
+            geraet[2]=true;
+          }
+          else{
+            geraet[2]=false;
+          }
+          geraeteData[i]=geraet;
+        }
+        return geraeteData;
+      },
+
       fetchUmfragenForUser: async function () {
       await fetch(process.env.VUE_APP_BASEURL + "/umfrage/GetAllUmfragenForUser?user=" + Cookies.getCookieAttribut("email"))
         .then((response) => response.json())
@@ -387,6 +421,26 @@ import Cookies from "../Cookie";
       }
     }
   }
+
+  /**
+  * Translates a given numeric gebaeudeID to its symbolic equivalent (string).
+  * E.g. 1101 is translated to S101, 3312 to L312 and so on.
+  */
+  function translateGebaeudeIDToSymbolic(gebaeudeID) {
+    let gebaeudeDict = {
+      1: "S",
+      2: "B",
+      3: "L",
+      4: "H",
+      5: "W",
+    };
+
+    gebaeudeID = gebaeudeID.toString()
+    let translatedID =
+      gebaeudeDict[gebaeudeID.substring(0, 1)] + gebaeudeID.substring(1);
+    return translatedID;
+  }
+  
 </script>
 
 <!-- Ich muss alle für den entsprechenden Nutzer in der Datenbank angelegten Umfragen empfangen, damit diese angezeigt werden können -->
