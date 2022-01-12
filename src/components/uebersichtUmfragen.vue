@@ -30,7 +30,7 @@
           hide-overlay
           transition="dialog-bottom-transition"
         >
-          <template v-slot:activator="{ on, attrs }">
+          <template #activator="{ on, attrs }">
             <v-btn
               class="ma2"
               outlined
@@ -183,10 +183,6 @@ import Cookies from "../Cookie";
 
     created() {
       this.fetchUmfragenForUser();
-      // this.fetchUmfragen();
-      // this.fetchMitarbeiterUmfragen("61b23e9855aa64762baf76d7"); // TODO only for testing yet
-      // this.updateUmfrage("61b23e9855aa64762baf76d7");
-      // this.updateMitarbeiterUmfrage("61b34f9324756df01eee5ff4");
     },
 
     methods: {
@@ -209,21 +205,6 @@ import Cookies from "../Cookie";
        */
       closeDialogAuswertung(index) {
         this.$set(this.dialogAuswertung, index, false)
-      },
-
-      /**
-       * Fetches all existent Umfragen from the Server.
-       */
-      fetchUmfragen: async function () {
-      await fetch(process.env.VUE_APP_BASEURL + "/umfrage/alleUmfragen")
-        .then((response) => response.json())
-        .then((data) => {
-          console.log("Success:", data);
-          this.umfragen = data.data.umfragen;
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
       },
 
       fetchUmfragenForUser: async function () {
