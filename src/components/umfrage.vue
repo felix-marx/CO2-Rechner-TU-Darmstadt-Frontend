@@ -1,6 +1,5 @@
 <template>
   <v-container>
-
     <!-- Umfrage Card -->
     <v-card
       elevation="2"
@@ -27,9 +26,8 @@
         </p>
         <p>Vielen Dank, dass Sie den CO2-Rechner verwenden und so einen Beitrag zur Nachhaltigkeit an der TU Darmstadt leisten. </p>
     
-      <!-- Umfrage -->
-      <v-form lazy-validation>
-        
+        <!-- Umfrage -->
+        <v-form lazy-validation>
           <!-- Bilanzierungsjahr -->
           <br>
           <h3>
@@ -242,9 +240,8 @@
               Speichern &amp; Link generieren
             </v-btn>
           </v-row>
-       
-      </v-form>
-       </v-card>
+        </v-form>
+      </v-card>
     </v-card>
 
     <!-- Component for showing Link for employees after sending formular data. -->
@@ -261,6 +258,13 @@
         :mitarbeiter-link="'www.tu-darmstadt.co2-rechner.de/survey/'+ responseData.umfrageID"
       />
     </v-card>
+
+    <MailvorlageComponent
+      v-if="displaySurveyLink"
+      :umfrage-jahr="String(bilanzierungsjahr)"
+      :umfrage-link="'www.tu-darmstadt.co2-rechner.de/survey/'+ responseData.umfrageID"
+      :user-mail="getCookieAttribut('email')"
+    />
   </v-container>
 </template>
 
@@ -268,11 +272,13 @@
 import Cookies from '../Cookie'
 import Tooltip from "@/components/componentParts/tooltip.vue";
 import MitarbeiterLinkComponent from "./mitarbeiterLinkComponent";
+import MailvorlageComponent from "./MailvorlageComponent";
 import LoadingAnimation from "./componentParts/loadingAnimation";
 
 export default {
   components: {
     MitarbeiterLinkComponent,
+    MailvorlageComponent,
     LoadingAnimation,
     Tooltip,
 },
