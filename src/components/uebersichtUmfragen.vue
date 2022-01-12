@@ -380,7 +380,7 @@ import Cookies from "../Cookie";
         })
         .catch((error) => {
           this.deleteError[index] = true
-          this.message = error.error.message
+          this.message = "Server nicht erreichbar."
           console.error("Error:", error);
           return false
         });

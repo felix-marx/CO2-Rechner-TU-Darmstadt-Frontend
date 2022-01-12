@@ -269,6 +269,15 @@
         :mitarbeiter-link="mitarbeiterumfrageBaseURL + responseData.umfrageID"
       />
     </v-card>
+    <v-card
+      v-if="!displaySurveyLink && errorMessage"
+    >
+      <v-alert
+        type="error"
+      >
+        {{ errorMessage }}
+      </v-alert>
+    </v-card>
   </v-container>
 </template>
 
@@ -329,6 +338,9 @@ export default {
 
     // base url for Mitarbeiterumfragen
     mitarbeiterumfrageBaseURL: process.env.VUE_APP_URL + '/survey/',
+
+    // Error Nachricht von Server bei Fehler
+    errorMessage: null,
     
     //Rules for input validation
 
@@ -483,9 +495,7 @@ export default {
      */
     sendData: async function () {
       // Disable Inputfields
-      console.log(this.blockInput)
       this.blockInput = true
-      console.log(this.blockInput)
 
       await fetch(process.env.VUE_APP_BASEURL + "/umfrage/insertUmfrage", {
         method: "POST",
@@ -508,9 +518,13 @@ export default {
         .then((data) => {
           console.log("Success:", data);
           this.responseData = data.data;
+          if(data.status == "error") {
+            this.errorMessage = data.error.message
+          }
         })
         .catch((error) => {
           console.error("Error:", error);
+          this.errorMessage = "Server nicht erreichbar."
         });
 
       this.dataRequestSent = false;
