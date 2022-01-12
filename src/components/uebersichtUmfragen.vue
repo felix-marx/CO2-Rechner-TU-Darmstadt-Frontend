@@ -17,7 +17,7 @@
           </div>   -->
 
           <v-list-item-title class="text-h5 mb-1">
-            Umfrage {{ index + 1 }}
+            Umfrage: {{ umfrage.bezeichnung }}
           </v-list-item-title>
         </v-list-item-content>
       </v-list-item>
