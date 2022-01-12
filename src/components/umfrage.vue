@@ -133,7 +133,15 @@
               </v-col>
             </v-row>
           </div>
-
+          <v-row
+            v-if="duplicateBuilding"
+          >
+            <v-alert
+              type="warning"
+            >
+              Sie haben mehrmals das selbe Gebäude ausgewählt.
+            </v-alert>
+          </v-row>
           <!-- Umfrage für IT Geräte: Multifunktionsgeräte + Toner, Drucker + Toner, Beamer, Server -->
 
           <br>
@@ -376,6 +384,20 @@ export default {
      */
     displaySurveyLink: function() {
       return this.responseData && this.responseData.umfrageID !== "";
+    },
+
+    /**
+     * Vergleicht ob das selbe Gebaeude zweimal ausgewaehlt wurde
+     */
+    duplicateBuilding: function() {
+      for(var i = 0; i < this.gebaeude.length; i++) {
+        for(var j = 0; j < i; j++) {
+          if(this.gebaeude[i][0] == this.gebaeude[j][0] && this.gebaeude[i][0] != null) {
+            return true
+          }
+        }
+      }
+      return false
     }
   },
 
