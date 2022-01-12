@@ -107,9 +107,10 @@ export default {
           this.dataUmfrageComplete = false;
         });
     },
-    /**
-     * Requests from the server whether a survey with the givenID exists.
-     */
+    
+  /**
+   * Requests from the server whether a survey with the givenID exists.
+   */
   fetchUmfrageNotComplete: async function (givenID) {
       await fetch(process.env.VUE_APP_BASEURL + "/mitarbeiterUmfrage/exists?id=" + givenID, {
         method: "GET",
