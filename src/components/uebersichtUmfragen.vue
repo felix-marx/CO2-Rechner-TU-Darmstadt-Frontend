@@ -138,24 +138,21 @@
         
         <v-spacer />
 
-        <v-checkbox
-          v-model="deleteSurvey[index]"
-        />
+        <!-- Mit diesem Button sollen ausgewählte Umfragen gelöscht werden können. -->
+        <v-col class="text-right">
+          <v-btn
+            class="ma2"
+            outlined
+            text
+            color="delete"
+            @click="removeSurvey(index, umfrage._id)"
+          >
+            <v-icon>mdi-delete-outline</v-icon>
+            Löschen
+          </v-btn>
+        </v-col>
       </v-card-actions>
     </v-card>
-
-    <!-- Mit diesem Button sollen ausgewählte Umfragen gelöscht werden können. -->
-    <v-col class="text-right">
-      <v-btn
-        class="ma2"
-        outlined
-        text
-        :disabled="!deleteSurvey.some(x => x)"
-        @click="removeSurvey(2)"
-      >
-        Ausgewählte löschen
-      </v-btn>
-    </v-col>
   </v-container>
 </template>
 
@@ -193,7 +190,9 @@ import Cookies from "../Cookie";
       /**
        * needs to be written
        */
-      removeSurvey() {
+      removeSurvey(index, umfrageID) {
+        this.deleteUmfrage(umfrageID)
+        this.umfragen.splice(index, 1)
         return
       },
 
@@ -310,6 +309,32 @@ import Cookies from "../Cookie";
           console.error("Error:", error);
         });
       },
+
+      /**
+       * Loescht die Umfrage mit der gegebenen ID
+       */
+      deleteUmfrage: async function (umfrageID) {
+         await fetch(process.env.VUE_APP_BASEURL + "/umfrage/deleteUmfrage", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          umfrageID: umfrageID,
+          hauptverantwortlicher: {
+            username: Cookies.getCookieAttribut("email"),
+            sessiontoken: Cookies.getCookieAttribut("sessiontoken"),
+          }
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Success:", data);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+      }
     }
   }
 </script>
