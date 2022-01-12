@@ -118,17 +118,8 @@
               >
                 <v-icon>mdi-close</v-icon>
               </v-btn>
-              <v-toolbar-title>Umfrage</v-toolbar-title>
+              <v-toolbar-title>Auswertung</v-toolbar-title>
               <v-spacer />
-              <v-toolbar-items>
-                <v-btn
-                  dark
-                  text
-                  @click="closeDialogAuswertung(index)"
-                >
-                  Speichern
-                </v-btn>
-              </v-toolbar-items>
             </v-toolbar>
             <v-card>
               <Nutzerauswertung :umfrageid="umfrage._id" />

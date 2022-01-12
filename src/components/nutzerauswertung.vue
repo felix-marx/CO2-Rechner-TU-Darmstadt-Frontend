@@ -6,7 +6,7 @@
       outlined
       class="pa-7"
     >
-      <v-card-title>Auswertung der Umfrage {{ responsedata.id }}</v-card-title>
+      <v-card-title>Auswertung der Umfrage "{{ responsedata.bezeichnung }}"</v-card-title>
       <v-divider />
       <v-container>
         <v-row>
@@ -167,6 +167,7 @@ export default{
       responseNotSuccessful: false,
       responsedata: {
         id: null,
+        bezeichnung: null,
         jahr: null,
         mitarbeiteranzahl: null,
         umfragenanzahl: null
