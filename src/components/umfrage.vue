@@ -252,7 +252,7 @@
     >
       <!-- TODO replace example link -->
       <MitarbeiterLinkComponent
-        :mitarbeiter-link="'www.tu-darmstadt.co2-rechner.de/survey/'+ responseData.umfrageID"
+        :mitarbeiter-link="mitarbeiterumfrageBaseURL + responseData.umfrageID"
       />
     </v-card>
   </v-container>
@@ -331,6 +331,9 @@ export default {
     // has Absenden Button been clicked
     dataRequestSent: false,
     responseData: null,
+
+    // base url for Mitarbeiterumfragen
+    mitarbeiterumfrageBaseURL: process.env.VUE_APP_URL + '/survey/'
   }),
   computed: {
     /**

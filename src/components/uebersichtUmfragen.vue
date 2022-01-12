@@ -19,6 +19,10 @@
           <v-list-item-title class="text-h5 mb-1">
             Umfrage: {{ umfrage.bezeichnung }}
           </v-list-item-title>
+
+          <div>
+            Link zur Mitarbeiterumfrage: {{ mitarbeiterumfrageBaseURL + umfrage._id }}
+          </div>
         </v-list-item-content>
       </v-list-item>
 
@@ -170,6 +174,9 @@ import Cookies from "../Cookie";
       sound: true,
       widgets: true,
       editing_time: "XX.YY.ZZZZ",
+
+      // base url for Mitarbeiterumfragen
+      mitarbeiterumfrageBaseURL: process.env.VUE_APP_URL + '/survey/'
     }),
 
     created() {
