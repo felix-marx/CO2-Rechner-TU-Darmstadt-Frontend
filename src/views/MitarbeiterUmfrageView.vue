@@ -22,6 +22,7 @@ import Header from "@/components/Header";
 import MitarbeiterUmfrage from "@/components/mitarbeiterUmfrage";
 import SurveyNotFoundComponent from "@/components/SurveyNotFoundComponent";
 import LoadingAnimation from "@/components/componentParts/loadingAnimation";
+import UmfrageCompleteComponent from "@/components/UmfrageCompleteComponent"
 
 export default {
   name: "MitarbeiterUmfrageView",
@@ -30,12 +31,14 @@ export default {
     Footer,
     MitarbeiterUmfrage,
     SurveyNotFoundComponent,
+    UmfrageCompleteComponent,
     LoadingAnimation
   },
 
   data: () => ({
       tabList: [{ id: 0, title: 'Umfrage', componentType: LoadingAnimation}],
-      umfrageID: null
+      umfrageID: null,
+      umfrageComplete: false
   }),
 
   computed: {
@@ -50,12 +53,19 @@ export default {
         return LoadingAnimation;
       }
 
-      // either show the survey or a message, that the requested survey could not be found.
+      // show a message that the requested survey could not be found.
       if(this.surveyNotFound) {
         return SurveyNotFoundComponent;
-      } else {
-        return MitarbeiterUmfrage;
+      } 
+
+      // show a message that the requested survey is already complete.
+      if(this.umfrageComplete){
+        return UmfrageCompleteComponent;
       }
+
+      // else show MitarbeiterUmfrage
+      return MitarbeiterUmfrage;
+      
     },
 
     /**
@@ -63,7 +73,7 @@ export default {
      */
     surveyNotFound: function() {
       return this.umfrageID === "";
-    }
+    },
   },
 
   created() {
@@ -76,6 +86,31 @@ export default {
      * Requests from the server whether a survey with the givenID exists.
      */
   fetchUmfrageExists: async function (givenID) {
+      await fetch(process.env.VUE_APP_BASEURL + "/mitarbeiterUmfrage/exists?id=" + givenID, {
+        method: "GET",
+        })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Success:", data);
+          if (data.status == "success"){
+            this.umfrageID = data.data.umfrageID;
+            this.umfrageComplete = data.data.complete;
+          }
+          else{
+            this.umfrageID = "";
+            this.dataUmfrageComplete = false;
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+          this.umfrageID = "";
+          this.dataUmfrageComplete = false;
+        });
+    },
+    /**
+     * Requests from the server whether a survey with the givenID exists.
+     */
+  fetchUmfrageNotComplete: async function (givenID) {
       await fetch(process.env.VUE_APP_BASEURL + "/mitarbeiterUmfrage/exists?id=" + givenID, {
         method: "GET",
         })
