@@ -4,7 +4,7 @@
       elevation="2"
       outlined
     >
-      <h3>Survey with ID: {{ $route.params.umfrageID }}</h3>
+      <h3>Umfrage: {{ bezeichnung }}</h3>
 
       <v-form>
         <v-card class="pa-7">
@@ -309,6 +309,13 @@ import Tooltip from "@/components/componentParts/tooltip.vue";
 export default {
   components: {
     Tooltip,
+  },
+
+  props: {
+    bezeichnung: {
+      default: "",
+      type: String
+    }
   },
 
   data: () => ({
