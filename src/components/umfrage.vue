@@ -272,6 +272,9 @@ export default {
 },
 
   data: () => ({
+    // Bezeichnung
+    bezeichnung: null,
+
     // Bilanzierungsjahr
     bilanzierungsjahr: null,
 
