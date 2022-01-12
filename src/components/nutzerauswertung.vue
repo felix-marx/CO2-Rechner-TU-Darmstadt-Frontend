@@ -59,6 +59,22 @@
           </v-col>
         </v-row>
         <v-row>
+          <v-col>
+            <p>Ihr Gesamtverbrauch entspricht: </p>
+          </v-col>
+          <v-col>
+            <p>{{ responsedata.vergleich4PersonenHaushalt }}  4-Personen Haushalte in einem Jahr oder </p>
+            <p>{{ responsedata.vergleich2PersonenHaushalt }}  2-Personen Haushalte in einem Jahr</p>
+          </v-col>
+        </v-row>
+        <!-- <v-row>
+          <v-col />
+          <v-col>
+            <p>{{ responsedata.vergleich2PersonenHaushalt }} 2-Personen Haushalte in einem Jahr</p>
+          </v-col>
+        </v-row> -->
+
+        <v-row>
           <v-col class="d-flex justify-center">
             <h4>
               Aufteilung nach Hauptemissionsfaktoren
@@ -184,6 +200,9 @@ export default{
         emissionenPendelwege: null,
         emissionenGesamt: null,
         emissionenProMitarbeiter: null,
+
+        vergleich2PersonenHaushalt: null,
+        vergleich4PersonenHaushalt: null,
       },
       responseerror: {
         code: null,
@@ -259,7 +278,7 @@ export default{
         },
         {
           "col1": "Fortschritt",
-          "col2": (this.responsedata.umfragenanteil / 100),
+          "col2": this.responsedata.umfragenanteil + "%",
         },
         { },
         {
@@ -273,6 +292,15 @@ export default{
         {
           "col1": "Emissionen pro Mitarbeiter",
           "col2": this.responsedata.emissionenProMitarbeiter,
+        },
+        { },
+        {
+          "col1": "Vergleich 4-Personen Haushalt",
+          "col2": this.responsedata.vergleich4PersonenHaushalt,
+        },
+        {
+          "col1": "Vergleich 2-Personen Haushalt",
+          "col2": this.responsedata.vergleich2PersonenHaushalt,
         },
         { },
         {
@@ -418,6 +446,8 @@ export default{
       this.responsedata.emissionenProMitarbeiter = Math.round(this.responsedata.emissionenProMitarbeiter / roundFactor1) / roundFactor2
 
       this.responsedata.umfragenanteil = Math.round(this.responsedata.umfragenanteil * 1000) / 10
+      this.responsedata.vergleich2PersonenHaushalt = Math.round(this.responsedata.vergleich2PersonenHaushalt * 100) / 100
+      this.responsedata.vergleich4PersonenHaushalt = Math.round(this.responsedata.vergleich4PersonenHaushalt * 100) / 100
     },
 
     /**
