@@ -260,7 +260,11 @@ import Cookies from "../Cookie";
         .then((response) => response.json())
         .then((data) => {
           console.log("Success:", data);
-          this.umfragen = data.data.umfragen;
+          if(data.data.umfragen !== null) {
+            this.umfragen = data.data.umfragen;
+          } else {
+            this.umfragen = []
+          }
           
           this.dialog = new Array(this.umfragen.length).fill(false)
           this.dialogAuswertung = new Array(this.umfragen.length).fill(false)
