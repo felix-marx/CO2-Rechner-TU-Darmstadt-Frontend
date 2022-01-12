@@ -1,13 +1,36 @@
 <template>
   <v-container>
+
+    <!-- Umfrage Card -->
     <v-card
       elevation="2"
       outlined
-    >
+    > 
+      <!-- Introduction Text -->
+      <v-card class="pa-7">
+        <p>
+          Sehr geehrte Teilnehmer*Innen,
+        </p>
+        <p>
+          in diesem CO2-Rechner werden Daten zur Berechnung von CO2-Emissionen, die im Zusammenhang mit der Arbeit der Mitarbeitenden Ihrer TU-Einheit entstehen, erfragt. Der Rechnerbesteht aus zwei Teilen: einem allgemeinen Teil, der zentral für alle Mitarbeitende der Einheit ausfüllt wird und einen zweiten Teil, den jeder Mitarbeitende Ihrer TU-Einheit in einer Umfrage ausfüllt.
+        </p>
+        <p>
+          Die gesamte Berechnung bezieht sich immer auf ein vollständig abgeschlossenes Kalenderjahr.
+        </p>
+        <p>Der erste Teil des CO2-Rechner erfragt allgemeine Angaben über Ihre TU-Einheit, wie beispielsweise Anzahl der Mitarbeitenden, Standort Ihrer Einheit und gemeinschaftlich genutzte IT-Geräte. Wenn Sie diesen ersten Teil beantwortet haben, klicken Sie auf "<i>Speichern &amp; Link generieren</i>". Dadurch wird ein Link generiert, der zu der Umfrage für die Mitarbeitenden führt. Schicken Sie diesen Link an alle Mitarbeitende Ihrer TU-Einheit. Eine Mailvorlage finden Sie unter dem Link.</p>
+        <p>Hinter einigen Fragen befindet sich ein Fragezeichensymbol, dort finden Sie zusätzliche Hinweise und Informationen, die zur Beantwortung der Frage hilfreich sind.  </p>
+        <p>Falls Sie zu einem späteren Zeitpunkt nochmals Angaben ändern oder vervollständigen möchten, können Sie in der linken oberen Ecke „<i>Umfragenübersicht</i>“ auswählen, um auf den ersten Teil des CO2-Rechners wieder zuzugreifen. Bitte klicken Sie am Ende auf „Speichern“ um ihre Änderungen final einzutragen. </p>
+        <p>
+          Bei weiteren Nachfragen oder Anmerkungen wenden Sie sich gerne an <a
+            href="mailto:nachhaltigkeit@tu-darmstadt.de"
+          >nachhaltigkeit@tu-darmstadt.de</a>.
+        </p>
+        <p>Vielen Dank, dass Sie den CO2-Rechner verwenden und so einen Beitrag zur Nachhaltigkeit an der TU Darmstadt leisten. </p>
+    
+      <!-- Umfrage -->
       <v-form lazy-validation>
-        <v-card class="pa-7">
+        
           <!-- Bilanzierungsjahr -->
-
           <br>
           <h3>
             Auf welches Bilanzierungsjahr beziehen Sie sich in dieser Umfrage?
@@ -216,11 +239,12 @@
               color="primary"
               @click="sendData()"
             >
-              Speichern & Link generieren
+              Speichern &amp; Link generieren
             </v-btn>
           </v-row>
-        </v-card>
+       
       </v-form>
+       </v-card>
     </v-card>
 
     <!-- Component for showing Link for employees after sending formular data. -->
@@ -232,7 +256,8 @@
     >
       <!-- TODO replace example link -->
       <LoadingAnimation v-if="displayLoadingAnimation" />
-      <MitarbeiterLinkComponent v-if="displaySurveyLink"
+      <MitarbeiterLinkComponent
+        v-if="displaySurveyLink"
         :mitarbeiter-link="'www.tu-darmstadt.co2-rechner.de/survey/'+ responseData.umfrageID"
       />
     </v-card>
