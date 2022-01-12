@@ -15,7 +15,7 @@
           <br>
 
           <v-row>
-            <v-col cols="5">
+            <v-col>
               <v-text-field
                 v-model="bezeichnung"
                 :min="0"
