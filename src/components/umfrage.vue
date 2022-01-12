@@ -218,7 +218,6 @@
             >
               Speichern & Link generieren
             </v-btn>
-            <LoadingAnimation v-if="dataRequestSent" />
           </v-row>
         </v-card>
       </v-form>
@@ -226,13 +225,14 @@
 
     <!-- Component for showing Link for employees after sending formular data. -->
     <v-card
-      v-if="displaySurveyLink"
+      v-if="displaySurveyLink || displayLoadingAnimation"
       class="mt-2"
       elevation="2"
       outlined
     >
       <!-- TODO replace example link -->
-      <MitarbeiterLinkComponent
+      <LoadingAnimation v-if="displayLoadingAnimation" />
+      <MitarbeiterLinkComponent v-if="displaySurveyLink"
         :mitarbeiter-link="'www.tu-darmstadt.co2-rechner.de/survey/'+ responseData.umfrageID"
       />
     </v-card>
@@ -307,7 +307,7 @@ export default {
     ],
 
     // has Absenden Button been clicked
-    dataRequestSent: false,
+    displayLoadingAnimation: false,
     responseData: null,
   }),
   computed: {
@@ -421,6 +421,7 @@ export default {
      * Sends all formular data to the server.
      */
     sendData: async function () {
+      this.displayLoadingAnimation = true;
       await fetch(process.env.VUE_APP_BASEURL + "/umfrage/insertUmfrage", {
         method: "POST",
         headers: {
@@ -446,7 +447,7 @@ export default {
           console.error("Error:", error);
         });
 
-      this.dataRequestSent = false;
+      this.displayLoadingAnimation = false;
     },
 
     /**
