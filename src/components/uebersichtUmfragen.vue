@@ -1,87 +1,92 @@
 <template>
   <v-container>
-    <!-- Die erstellte Umfrage soll eine Karte erhalten. -->
-    <v-card
-      v-for="(umfrage, index) in umfragen"
-      :key="'umfrage_'+index"
-      elevation="2"
-      outlined
-    >
-      <v-list-item
-        three-line
+    <v-card>
+      <v-card-title>
+        Gespeicherte Umfragen:
+      </v-card-title>
+
+      <!-- Die erstellte Umfrage soll eine Karte erhalten. -->
+      <v-card
+        v-for="(umfrage, index) in umfragen"
+        :key="'umfrage_'+index"
+        elevation="2"
+        outlined
       >
-        <v-list-item-content>
-          <!--
+        <v-list-item
+          three-line
+        >
+          <v-list-item-content>
+            <!--
           <div class="text-overline mb-4">
             Zuletzt bearbeitet am {{ editing_time }}
           </div>   -->
 
-          <v-list-item-title class="text-h5 mb-1">
-            Umfrage: {{ umfrage.bezeichnung }}
-          </v-list-item-title>
+            <v-list-item-title class="text-h5 mb-1">
+              Umfrage: {{ umfrage.bezeichnung }}
+            </v-list-item-title>
 
-          <div>
-            Link zur Mitarbeiterumfrage: {{ mitarbeiterumfrageBaseURL + umfrage._id }}
-          </div>
-        </v-list-item-content>
-      </v-list-item>
+            <div>
+              Link zur Mitarbeiterumfrage: {{ mitarbeiterumfrageBaseURL + umfrage._id }}
+            </div>
+          </v-list-item-content>
+        </v-list-item>
 
-      <!-- Die erstellte Umfrage soll bearbeitet und ausgewählt werden können. -->
-      <v-card-actions>
-        <v-dialog
-          v-model="dialog[index]"
-          fullscreen
-          hide-overlay
-          transition="dialog-bottom-transition"
-        >
-          <template #activator="{ on, attrs }">
-            <v-btn
-              class="ma2"
-              outlined
-              rounded
-              text
-              v-bind="attrs"
-              v-on="on"
-            >
-              <v-icon left>
-                mdi-square-edit-outline
-              </v-icon>
-              <span>bearbeiten</span>
-            </v-btn>
-          </template>
-          <v-card>
-            <v-toolbar
-              dark
-              color="primary"
-            >
+        <!-- Die erstellte Umfrage soll bearbeitet und ausgewählt werden können. -->
+        <v-card-actions>
+          <v-dialog
+            v-model="dialog[index]"
+            fullscreen
+            hide-overlay
+            transition="dialog-bottom-transition"
+          >
+            <template #activator="{ on, attrs }">
               <v-btn
-                icon
-                dark
-                @click="closeDialog(index)"
+                class="ma2"
+                outlined
+                rounded
+                text
+                v-bind="attrs"
+                v-on="on"
               >
-                <v-icon>mdi-close</v-icon>
+                <v-icon left>
+                  mdi-square-edit-outline
+                </v-icon>
+                <span>bearbeiten</span>
               </v-btn>
-              <v-toolbar-title>Umfrage</v-toolbar-title>
-              <v-spacer />
-              <v-toolbar-items>
+            </template>
+            <v-card>
+              <v-toolbar
+                dark
+                color="primary"
+              >
                 <v-btn
+                  icon
                   dark
-                  text
                   @click="closeDialog(index)"
                 >
-                  Speichern
+                  <v-icon>mdi-close</v-icon>
                 </v-btn>
-              </v-toolbar-items>
-            </v-toolbar>
-            <!-- Hier kommt der Inhalt der Umfrage hin -->
-            <v-card>
-              <UmfrageBearbeitenComponent 
-                :bilanzierungsjahrprop="umfrage.jahr"
-                :anzahlmitarbeiterprop="umfrage.mitarbeiteranzahl"
-                :gebaeudeprop="umfrage.gebaeude"
-                :geraeteanzahl="umfrage.itGeraete"
-              />
-            </v-card>
+                <v-toolbar-title>Umfrage</v-toolbar-title>
+                <v-spacer />
+                <v-toolbar-items>
+                  <v-btn
+                    dark
+                    text
+                    @click="closeDialog(index)"
+                  >
+                    Speichern
+                  </v-btn>
+                </v-toolbar-items>
+              </v-toolbar>
+              <!-- Hier kommt der Inhalt der Umfrage hin -->
+              <v-card>
+                <UmfrageBearbeitenComponent 
+                  :bilanzierungsjahrprop="umfrage.jahr"
+                  :anzahlmitarbeiterprop="umfrage.mitarbeiteranzahl"
+                  :gebaeudeprop="umfrage.gebaeude"
+                  :geraeteanzahl="umfrage.itGeraete"
+                />
+              </v-card>
 
             <!--
             <v-divider /> 
@@ -89,106 +94,107 @@
               Aktuelle Auswertung
             </div>
             -->
-          </v-card>
-        </v-dialog>
-
-        <v-dialog
-          v-model="dialogAuswertung[index]"
-          fullscreen
-          hide-overlay
-          transition="dialog-bottom-transition"
-        >
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn
-              class="ma2"
-              outlined
-              rounded
-              text
-              v-bind="attrs"
-              v-on="on"
-            >
-              <span>Auswertung</span>
-            </v-btn>
-          </template>
-          <v-card>
-            <v-toolbar
-              dark
-              color="primary"
-            >
-              <v-btn
-                icon
-                dark
-                @click="closeDialogAuswertung(index)"
-              >
-                <v-icon>mdi-close</v-icon>
-              </v-btn>
-              <v-toolbar-title>Auswertung</v-toolbar-title>
-              <v-spacer />
-            </v-toolbar>
-            <v-card>
-              <Nutzerauswertung :umfrageid="umfrage._id" />
             </v-card>
-          </v-card>
-        </v-dialog>
-        
-        <v-spacer />
+          </v-dialog>
 
-        <v-dialog
-          v-model="deleteSurvey[index]"
-          transition="dialog-bottom-transition"
-        >
-          <template v-slot:activator="{ on, attrs }">
-            <!-- Mit diesem Button sollen ausgewählte Umfragen gelöscht werden können. -->
-            <v-col class="text-right">
+          <v-dialog
+            v-model="dialogAuswertung[index]"
+            fullscreen
+            hide-overlay
+            transition="dialog-bottom-transition"
+          >
+            <template v-slot:activator="{ on, attrs }">
               <v-btn
                 class="ma2"
                 outlined
+                rounded
                 text
-                color="delete"
                 v-bind="attrs"
                 v-on="on"
               >
-                <v-icon>mdi-delete-outline</v-icon>
-                Löschen
+                <span>Auswertung</span>
               </v-btn>
-            </v-col>
-          </template>
-
-          <v-card>
-            <v-toolbar
-              color="primary"
-              dark
-            >
-              Löschen der Umfrage
-            </v-toolbar>
-            <v-card-text>
-              <div class="pt-6">
-                Sind Sie sicher, dass Sie die Umfrage {{ umfrage.bezeichnung }} löschen möchten?
-                Diese Aktion kann nicht zurückgenommen werden.
-              </div>
-            </v-card-text>
-
-            <v-divider />
-
-            <v-card-actions>
-              <v-spacer />
-              <v-btn
+            </template>
+            <v-card>
+              <v-toolbar
+                dark
                 color="primary"
-                text
-                @click="removeSurvey(index, umfrage._id)"
               >
-                Ich bestätige
-              </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-      </v-card-actions>
-      <v-alert
-        v-show="deleteError[index]"
-        type="error"
-      >
-        {{ message }}
-      </v-alert>
+                <v-btn
+                  icon
+                  dark
+                  @click="closeDialogAuswertung(index)"
+                >
+                  <v-icon>mdi-close</v-icon>
+                </v-btn>
+                <v-toolbar-title>Auswertung</v-toolbar-title>
+                <v-spacer />
+              </v-toolbar>
+              <v-card>
+                <Nutzerauswertung :umfrageid="umfrage._id" />
+              </v-card>
+            </v-card>
+          </v-dialog>
+        
+          <v-spacer />
+
+          <v-dialog
+            v-model="deleteSurvey[index]"
+            transition="dialog-bottom-transition"
+          >
+            <template v-slot:activator="{ on, attrs }">
+              <!-- Mit diesem Button sollen ausgewählte Umfragen gelöscht werden können. -->
+              <v-col class="text-right">
+                <v-btn
+                  class="ma2"
+                  outlined
+                  text
+                  color="delete"
+                  v-bind="attrs"
+                  v-on="on"
+                >
+                  <v-icon>mdi-delete-outline</v-icon>
+                  Löschen
+                </v-btn>
+              </v-col>
+            </template>
+
+            <v-card>
+              <v-toolbar
+                color="primary"
+                dark
+              >
+                Löschen der Umfrage
+              </v-toolbar>
+              <v-card-text>
+                <div class="pt-6">
+                  Sind Sie sicher, dass Sie die Umfrage {{ umfrage.bezeichnung }} löschen möchten?
+                  Diese Aktion kann nicht zurückgenommen werden.
+                </div>
+              </v-card-text>
+
+              <v-divider />
+
+              <v-card-actions>
+                <v-spacer />
+                <v-btn
+                  color="primary"
+                  text
+                  @click="removeSurvey(index, umfrage._id)"
+                >
+                  Ich bestätige
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+        </v-card-actions>
+        <v-alert
+          v-show="deleteError[index]"
+          type="error"
+        >
+          {{ message }}
+        </v-alert>
+      </v-card>
     </v-card>
   </v-container>
 </template>
