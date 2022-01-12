@@ -232,33 +232,13 @@ export default{
   },
   
   created(){
-    console.log(this.umfrageid)
     this.getData();
-    // this.testdata();
   },
 
   methods: {
-    testdata: function(){
-      this.responsedata = {
-        id: "507f1f77bcf86cd799439011",
-        jahr: 2000,
-        mitarbeiteranzahl: 120,
-        umfragenanzahl: 33,
-        emissionenWaerme: 12222000,
-        emissionenKaelte: 3000000,
-        emissionenStrom: 4000000,
-        emissionenITGeraeteHauptverantwortlicher: 10000000,
-        emissionenITGeraeteMitarbeiter: 5000000,
-        emissionenDienstreisen: 6000400,
-        emissionenPendelwege: 7000500
-      };
-      this.responsesuccessful = true;
-
-      this.roundRespoonseData();
-      this.setChartGesamt();
-      this.setChartEnergie();
-    },
-
+    /**
+     * Creates XLSX file and makes it downloadable.
+     */
     makeSpreadsheet: function(){
       var data = [
         {
@@ -390,12 +370,9 @@ export default{
         },
       }).then((response) => response.json())
         .then((body) => {
-          console.log("Success:", body);
-
           if (body.status == "success"){
             this.responsesuccessful = true
             this.responsedata = body.data
-            console.log(this.responsedata)
 
             this.checkNegativValue();
             this.roundRespoonseData();
@@ -405,7 +382,6 @@ export default{
           else {  // Fehlerbehandlung
             this.responseNotSuccessful = true
             this.responseerror = body.error
-            console.log(this.responseerror)
           }
         })
         .catch((error) => {
