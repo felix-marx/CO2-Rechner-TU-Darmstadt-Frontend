@@ -122,7 +122,7 @@
             </v-col>
             <v-col>
               <v-text-field
-                v-model="building.gesf"
+                v-model="building.gesamtf"
                 label="Gesamtfläche in qm"
                 :rules="notNegativeRule"
               />
