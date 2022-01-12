@@ -22,6 +22,7 @@
                 label="Bezeichnung"
                 type="string"
                 prepend-icon="mdi-form-textbox"
+                :disabled="blockInput"
               />
             </v-col>
           </v-row>
@@ -42,6 +43,7 @@
                 label="Bilanzierungsjahr"
                 prepend-icon="mdi-calendar-question"
                 class="pr-5"
+                :disabled="blockInput"
               />
             </v-col>
           </v-row>
@@ -62,6 +64,7 @@
                 label="Mitarbeitendenzahl"
                 type="number"
                 prepend-icon="mdi-account"
+                :disabled="blockInput"
               />
             </v-row>
           </v-container>
@@ -93,6 +96,7 @@
                   label="Gebäudenummer"
                   prepend-icon="mdi-domain"
                   class="pr-5"
+                  :disabled="blockInput"
                 />
               </v-col>
               <v-col cols="5">
@@ -104,12 +108,14 @@
                   prepend-icon="mdi-domain"
                   type="number"
                   suffix="qm"
+                  :disabled="blockInput"
                 />
               </v-col>
               <v-col>
                 <v-btn
                   class="add_text--text"
                   color="add"
+                  :disabled="blockInput"
                   @click="newGebaeude()"
                 >
                   Hinzufügen
@@ -119,6 +125,7 @@
                 <v-btn
                   class="delete_text--text"
                   color="delete"
+                  :disabled="blockInput"
                   @click="removeGebaeude(index)"
                 >
                   Löschen
@@ -142,11 +149,12 @@
               <v-checkbox
                 v-model="geraeteAnzahl[0][2]"
                 hide-details
+                :disabled="blockInput"
               />
               <v-text-field
                 v-model="geraeteAnzahl[0][1]"
                 :rules="geraeteRules"
-                :disabled="!geraeteAnzahl[0][2]"
+                :disabled="!geraeteAnzahl[0][2] || blockInput"
                 :min="0"
                 label="Multifunktionsgeräte z.B. Netzwerkdrucker"
                 type="number"
@@ -156,7 +164,7 @@
               <v-text-field
                 v-model="geraeteAnzahl[1][1]"
                 :rules="nichtnegativRules"
-                :disabled="!geraeteAnzahl[0][2]"
+                :disabled="!geraeteAnzahl[0][2] || blockInput"
                 :min="0"
                 label="verbrauchte Toner"
                 type="number"
@@ -168,11 +176,12 @@
               <v-checkbox
                 v-model="geraeteAnzahl[2][2]"
                 hide-details
+                :disabled="blockInput"
               />
               <v-text-field
                 v-model="geraeteAnzahl[2][1]"
                 :rules="geraeteRules"
-                :disabled="!geraeteAnzahl[2][2]"
+                :disabled="!geraeteAnzahl[2][2] || blockInput"
                 :min="0"
                 label="Laser- & Tintenstrahldrucker"
                 type="number"
@@ -182,7 +191,7 @@
               <v-text-field
                 v-model="geraeteAnzahl[3][1]"
                 :rules="nichtnegativRules"
-                :disabled="!geraeteAnzahl[2][2]"
+                :disabled="!geraeteAnzahl[2][2] || blockInput"
                 :min="0"
                 label="verbrauchte Toner"
                 suffix="Toner"
@@ -191,11 +200,15 @@
             </v-row>
             <!-- Beamer -->
             <v-row>
-              <v-checkbox v-model="geraeteAnzahl[4][2]" />
+              <v-checkbox
+                v-model="geraeteAnzahl[4][2]"
+                hide-details
+                :disabled="blockInput"
+              />
               <v-text-field
                 v-model="geraeteAnzahl[4][1]"
                 :rules="geraeteRules"
-                :disabled="!geraeteAnzahl[4][2]"
+                :disabled="!geraeteAnzahl[4][2] || blockInput"
                 :min="0"
                 label="Beamer"
                 type="number"
@@ -204,11 +217,15 @@
             </v-row>
             <!-- Server -->
             <v-row>
-              <v-checkbox v-model="geraeteAnzahl[5][2]" />
+              <v-checkbox
+                v-model="geraeteAnzahl[5][2]"
+                hide-details
+                :disabled="blockInput"
+              />
               <v-text-field
                 v-model="geraeteAnzahl[5][1]"
                 :rules="geraeteRules"
-                :disabled="!geraeteAnzahl[5][2]"
+                :disabled="!geraeteAnzahl[5][2] || blockInput"
                 :min="0"
                 label="interne Server"
                 type="number"
@@ -217,25 +234,22 @@
             </v-row>
           </v-container>
 
-          <!-- Papierverbrauch currently not used 
-          <br>
-          <h3>Wie viel Papier benutzen Sie in Ihrer Abteilung?</h3>
-          <v-divider></v-divider>
-          <h5>Sollten Sie keine Angabe machen, werden Ihre Mitarbeiter nach Ihrem individuellen Papierverbrauch befragt.</h5>
-          <br>
-
-          <v-container>
-            <v-row>
-              <v-text-field v-model="papierverbrauch" label="Papierverbrauch" suffix="kg" type="number"></v-text-field>
-            </v-row>
-          </v-container> -->
           <v-row class="mt-1 text-center">
             <v-btn
               class="mr-4"
               color="primary"
+              :disabled="blockInput"
               @click="sendData()"
             >
               Speichern & Link generieren
+            </v-btn>
+            <v-btn
+              v-if="displaySurveyLink"
+              class="mr-4"
+              color="primary"
+              @click="resetPage()"
+            >
+              Weitere Umfrage erstellen
             </v-btn>
             <LoadingAnimation v-if="dataRequestSent" />
           </v-row>
@@ -306,9 +320,16 @@ export default {
       [6, null, false],
     ],
 
-    //Papiernutzung currently not used
-    //papierverbrauch: null
+    // Blockiere Inputfelder nach Absenden der Umfrage
+    blockInput: false,
 
+    // has Absenden Button been clicked
+    dataRequestSent: false,
+    responseData: null,
+
+    // base url for Mitarbeiterumfragen
+    mitarbeiterumfrageBaseURL: process.env.VUE_APP_URL + '/survey/',
+    
     //Rules for input validation
 
     geraeteRules: [
@@ -327,13 +348,6 @@ export default {
       (v) => !!v || "Muss angegeben werden.",
       (v) => parseInt(v) > 0 || "Bitte geben Sie einen Wert größer Null an.",
     ],
-
-    // has Absenden Button been clicked
-    dataRequestSent: false,
-    responseData: null,
-
-    // base url for Mitarbeiterumfragen
-    mitarbeiterumfrageBaseURL: process.env.VUE_APP_URL + '/survey/'
   }),
   computed: {
     /**
@@ -378,6 +392,28 @@ export default {
      */
     newGebaeude: function () {
       this.gebaeude.push([null, null]);
+    },
+
+    /**
+     * Setzt alle Felder auf den Default zurueck und schaltet den 
+     */
+    resetPage: function () {
+      this.bezeichnung =  null
+      this.bilanzierungsjahr = null
+      this.anzahlMitarbeiter = null
+      this.gebaeude = [[null, null]]
+      this.gebaeudeIDs = []
+      this.geraeteAnzahl = [
+        [7, null, false],
+        [8, null, false],
+        [9, null, false],
+        [10, null, false],
+        [4, null, false],
+        [6, null, false],
+      ]
+      this.blockInput = false
+      this.dataRequestSent = false
+      this.responseData = null
     },
 
     /**
@@ -446,6 +482,11 @@ export default {
      * Sends all formular data to the server.
      */
     sendData: async function () {
+      // Disable Inputfields
+      console.log(this.blockInput)
+      this.blockInput = true
+      console.log(this.blockInput)
+
       await fetch(process.env.VUE_APP_BASEURL + "/umfrage/insertUmfrage", {
         method: "POST",
         headers: {
