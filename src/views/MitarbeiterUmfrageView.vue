@@ -8,7 +8,10 @@
 
     <!-- main body -->
     <v-main>
-      <component :is="bodyComponent" />
+      <component
+        :is="bodyComponent"
+        v-bind="properties"
+      />
     </v-main>
 
     <!-- Footer -->
@@ -35,7 +38,8 @@ export default {
 
   data: () => ({
       tabList: [{ id: 0, title: 'Umfrage', componentType: LoadingAnimation}],
-      umfrageID: null
+      umfrageID: null,
+      bezeichnung: "",
   }),
 
   computed: {
@@ -56,6 +60,16 @@ export default {
       } else {
         return MitarbeiterUmfrage;
       }
+    },
+
+    /**
+     * Returns properties depending on the current component
+     */
+    properties: function() {
+      if(this.bodyComponent === MitarbeiterUmfrage){
+        return {bezeichnung: this.bezeichnung}
+      }
+      return {}
     },
 
     /**
@@ -83,7 +97,8 @@ export default {
         .then((data) => {
           console.log("Success:", data);
           if (data.status == "success"){
-            this.umfrageID = data.umfrageID;
+            this.umfrageID = data.data.umfrageID;
+            this.bezeichnung = data.data.bezeichnung;
           }
           else{
             this.umfrageID = "";

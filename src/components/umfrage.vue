@@ -6,8 +6,27 @@
     >
       <v-form lazy-validation>
         <v-card class="pa-7">
-          <!-- Bilanzierungsjahr -->
+          <!-- Bezeichnung -->
+          <br>
+          <h3>
+            Wie soll Ihre Umfrage bezeichnet werden?
+          </h3>
+          <v-divider />
+          <br>
 
+          <v-row>
+            <v-col>
+              <v-text-field
+                v-model="bezeichnung"
+                :min="0"
+                label="Bezeichnung"
+                type="string"
+                prepend-icon="mdi-form-textbox"
+              />
+            </v-col>
+          </v-row>
+
+          <!-- Bilanzierungsjahr -->
           <br>
           <h3>
             Auf welches Bilanzierungsjahr beziehen Sie sich in dieser Umfrage?
@@ -253,6 +272,9 @@ export default {
 },
 
   data: () => ({
+    // Bezeichnung
+    bezeichnung: null,
+
     // Bilanzierungsjahr
     bilanzierungsjahr: null,
 
@@ -427,6 +449,7 @@ export default {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
+          bezeichnung: this.bezeichnung,
           jahr: parseInt(this.bilanzierungsjahr),
           gebaeude: this.gebaeudeJSON(),
           mitarbeiteranzahl: parseInt(this.anzahlMitarbeiter),
