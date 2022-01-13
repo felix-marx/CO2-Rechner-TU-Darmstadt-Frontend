@@ -1,9 +1,40 @@
 <template>
   <v-container>
     <!-- Die erstellte Umfrage soll eine Karte erhalten. -->
+
+    <v-row align="baseline">
+       <v-col
+        cols=2
+        align="center"
+      >
+      Sortieren nach:
+      </v-col>
+      <v-col cols=5>
+        <v-select
+              item-text="name"
+              item-value="key"
+              v-model="sortingOptionSelected"
+              :items="sortingOptions"
+              v-on:change="sortUmfragen"
+              label="Sortierkriterium"
+              solo
+            ></v-select>
+        </v-col>
+        <v-col cols=5>
+          <v-select
+              item-text="name"
+              item-value="key"
+              v-model="sortingOrderSelected"
+              :items="sortingOrders"
+              v-on:change="sortUmfragen"
+              label="Reihenfolge"
+              solo
+            ></v-select>
+        </v-col>
+      </v-row>
     <v-card
       v-for="(umfrage, index) in umfragen"
-      :key="'umfrage_'+index"
+      :key="umfrage._id"
       elevation="2"
       outlined
     >
@@ -151,6 +182,33 @@ import Cookies from "../Cookie";
 
     data: () => ({
       umfragen: [],
+      sortingOptionSelected: {
+        name: "Jahr",
+        key: "jahr",
+      },
+      sortingOrderSelected: {
+        name: "absteigend",
+        key: "descending",
+      },
+      sortingOptions: [
+        {
+          name: "Jahr",
+          key: "jahr"},
+        {
+          name: "Bezeichnung",
+          key: "bezeichnung",
+        }
+      ],
+      sortingOrders: [
+        {
+          name: "absteigend",
+          key: "descending",
+        },
+        {
+          name: "aufsteigend",
+          key: "ascending",
+        }
+      ],
       deleteSurvey: [],
       dialog: [], 
       dialogAuswertung: [], 
@@ -161,14 +219,25 @@ import Cookies from "../Cookie";
     }),
 
     created() {
-      // this.fetchUmfragenForUser();
       this.fetchUmfragen();
-      // this.fetchMitarbeiterUmfragen("61b23e9855aa64762baf76d7"); // TODO only for testing yet
-      // this.updateUmfrage("61b23e9855aa64762baf76d7");
-      // this.updateMitarbeiterUmfrage("61b34f9324756df01eee5ff4");
+      this.sortUmfragen();
     },
 
     methods: {
+      /**
+       * Sorts Umfragen by a given attribute and order
+       */
+      sortUmfragen() {
+        if(this.umfragen.length === 0) {
+          return;
+        }
+        // TODO does not always update shown Umfragen
+        this.umfragen.sort(GetSortOrder(this.sortingOptionSelected.key));
+        if (this.sortingOrderSelected.key === "descending") {
+          this.umfragen.reverse();
+        }
+      },
+      
       /**
        * needs to be written
        */
@@ -199,6 +268,7 @@ import Cookies from "../Cookie";
         .then((data) => {
           console.log("Success:", data);
           this.umfragen = data.data.umfragen;
+          this.sortUmfragen();
         })
         .catch((error) => {
           console.error("Error:", error);
@@ -291,6 +361,26 @@ import Cookies from "../Cookie";
       },
     }
   }
+
+  //Comparer Function for sorting list of Umfragen    
+  function GetSortOrder(prop) {    
+      return function(a, b) {    
+          let aProp = a[prop];
+          let bProp = b[prop];
+          if (aProp !== null && bProp === null){
+              return 1;
+          }
+          if (aProp === null && bProp !== null){
+              return -1;
+          }
+          if (aProp > bProp) {    
+              return 1;    
+          } else if (aProp < bProp) {    
+              return -1;    
+          }    
+          return 0;    
+      }    
+  }    
 </script>
 
 <!-- Ich muss alle für den entsprechenden Nutzer in der Datenbank angelegten Umfragen empfangen, damit diese angezeigt werden können -->
