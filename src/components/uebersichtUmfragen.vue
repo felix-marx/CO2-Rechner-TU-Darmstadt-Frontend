@@ -57,26 +57,15 @@
               >
                 <v-icon>mdi-close</v-icon>
               </v-btn>
-              <v-toolbar-title>Umfrage</v-toolbar-title>
-              <v-spacer />
-              <v-toolbar-items>
-                <v-btn
-                  dark
-                  text
-                  @click="closeDialog(index)"
-                >
-                  Speichern
-                </v-btn>
-              </v-toolbar-items>
+              <v-toolbar-title>Umfragedaten</v-toolbar-title>
             </v-toolbar>
             <!-- Hier kommt der Inhalt der Umfrage hin -->
             <v-card>
+              <v-card>
               <UmfrageBearbeitenComponent 
-                :bilanzierungsjahrprop="umfrage.jahr"
-                :anzahlmitarbeiterprop="umfrage.mitarbeiteranzahl"
-                :gebaeudeprop="umfrage.gebaeude"
-                :geraeteanzahl="umfrage.itGeraete"
+                :umfrage-prop="umfrage"
               />
+            </v-card>
             </v-card>
 
             <!--
@@ -118,17 +107,7 @@
               >
                 <v-icon>mdi-close</v-icon>
               </v-btn>
-              <v-toolbar-title>Umfrage</v-toolbar-title>
-              <v-spacer />
-              <v-toolbar-items>
-                <v-btn
-                  dark
-                  text
-                  @click="closeDialogAuswertung(index)"
-                >
-                  Speichern
-                </v-btn>
-              </v-toolbar-items>
+              <v-toolbar-title>Auswertungsergebnisse</v-toolbar-title>
             </v-toolbar>
             <v-card>
               <Nutzerauswertung :umfrageid="umfrage._id" />

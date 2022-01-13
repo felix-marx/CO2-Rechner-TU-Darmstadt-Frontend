@@ -176,7 +176,7 @@
                 :rules="geraeteRules"
                 :disabled="!geraeteAnzahl[2][2]"
                 :min="0"
-                label="Laser- & Tintenstrahldrucker"
+                label="Laser- &amp; Tintenstrahldrucker"
                 type="number"
                 suffix="Drucker"
                 class="pr-5"

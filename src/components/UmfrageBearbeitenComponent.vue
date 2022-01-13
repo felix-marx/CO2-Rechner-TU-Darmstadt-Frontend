@@ -1,13 +1,16 @@
 <template>
   <v-container>
+    <!-- Umfrage Card -->
     <v-card
       elevation="2"
       outlined
-    >
-      <v-form lazy-validation>
-        <v-card class="pa-7">
+    > 
+      <!-- Introduction Text -->
+      <v-card class="pa-7">
+    
+        <!-- Umfrage -->
+        <v-form lazy-validation>
           <!-- Bilanzierungsjahr -->
-
           <br>
           <h3>
             Auf welches Bilanzierungsjahr beziehen Sie sich in dieser Umfrage?
@@ -18,7 +21,7 @@
           <v-row>
             <v-col cols="5">
               <v-autocomplete
-                v-model="umfrage.jahr"
+                v-model="bilanzierungsjahr"
                 :items="possibleYears"
                 label="Bilanzierungsjahr"
                 prepend-icon="mdi-calendar-question"
@@ -37,10 +40,10 @@
           <v-container>
             <v-row>
               <v-text-field
-                v-model="umfrage.mitarbeiteranzahl"
+                v-model="anzahlMitarbeiter"
                 :rules="absolutpositivRules"
                 :min="0"
-                label="Mitarbeiteranzahl"
+                label="Mitarbeitendenzahl"
                 type="number"
                 prepend-icon="mdi-account"
               />
@@ -62,7 +65,7 @@
           <br>
 
           <div
-            v-for="(objekt, index) in umfrage.gebaeude"
+            v-for="(objekt, index) in gebaeude"
             :key="index"
           >
             <v-row>
@@ -121,13 +124,13 @@
             <!-- Multifunktionsgeräte -->
             <v-row>
               <v-checkbox
-                v-model="umfrage.geraeteanzahl[0][2]"
+                v-model="geraeteAnzahl[0][2]"
                 hide-details
               />
               <v-text-field
-                v-model="umfrage.geraeteanzahl[0][1]"
+                v-model="geraeteAnzahl[0][1]"
                 :rules="geraeteRules"
-                :disabled="!umfrage.geraeteanzahl[0][2]"
+                :disabled="!geraeteAnzahl[0][2]"
                 :min="0"
                 label="Multifunktionsgeräte z.B. Netzwerkdrucker"
                 type="number"
@@ -135,9 +138,9 @@
                 suffix="Gerät/e"
               />
               <v-text-field
-                v-model="umfrage.geraeteanzahl[1][1]"
+                v-model="geraeteAnzahl[1][1]"
                 :rules="nichtnegativRules"
-                :disabled="!umfrage.geraeteanzahl[0][2]"
+                :disabled="!geraeteAnzahl[0][2]"
                 :min="0"
                 label="verbrauchte Toner"
                 type="number"
@@ -147,13 +150,13 @@
             <!-- Drucker -->
             <v-row>
               <v-checkbox
-                v-model="umfrage.geraeteanzahl[2][2]"
+                v-model="geraeteAnzahl[2][2]"
                 hide-details
               />
               <v-text-field
-                v-model="umfrage.geraeteanzahl[2][1]"
+                v-model="geraeteAnzahl[2][1]"
                 :rules="geraeteRules"
-                :disabled="!umfrage.geraeteanzahl[2][2]"
+                :disabled="!geraeteAnzahl[2][2]"
                 :min="0"
                 label="Laser- & Tintenstrahldrucker"
                 type="number"
@@ -161,9 +164,9 @@
                 class="pr-5"
               />
               <v-text-field
-                v-model="umfrage.geraeteanzahl[3][1]"
+                v-model="geraeteAnzahl[3][1]"
                 :rules="nichtnegativRules"
-                :disabled="!umfrage.geraeteanzahl[2][2]"
+                :disabled="!geraeteAnzahl[2][2]"
                 :min="0"
                 label="verbrauchte Toner"
                 suffix="Toner"
@@ -172,11 +175,11 @@
             </v-row>
             <!-- Beamer -->
             <v-row>
-              <v-checkbox v-model="umfrage.geraeteanzahl[4][2]" />
+              <v-checkbox v-model="geraeteAnzahl[4][2]" />
               <v-text-field
-                v-model="umfrage.geraeteanzahl[4][1]"
+                v-model="geraeteAnzahl[4][1]"
                 :rules="geraeteRules"
-                :disabled="!umfrage.geraeteanzahl[4][2]"
+                :disabled="!geraeteAnzahl[4][2]"
                 :min="0"
                 label="Beamer"
                 type="number"
@@ -185,11 +188,11 @@
             </v-row>
             <!-- Server -->
             <v-row>
-              <v-checkbox v-model="umfrage.geraeteanzahl[5][2]" />
+              <v-checkbox v-model="geraeteAnzahl[5][2]" />
               <v-text-field
-                v-model="umfrage.geraeteanzahl[5][1]"
+                v-model="geraeteAnzahl[5][1]"
                 :rules="geraeteRules"
-                :disabled="!umfrage.geraeteanzahl[5][2]"
+                :disabled="!geraeteAnzahl[5][2]"
                 :min="0"
                 label="interne Server"
                 type="number"
@@ -210,101 +213,123 @@
               <v-text-field v-model="papierverbrauch" label="Papierverbrauch" suffix="kg" type="number"></v-text-field>
             </v-row>
           </v-container> -->
-          <v-row class="mt-1">
-            <v-btn
-              class="mr-4"
-              @click="sendData()"
-            >
-              Absenden
-            </v-btn>
-            <LoadingAnimation v-if="dataRequestSent" />
+          <v-row>
+                <!-- TODO replace example link -->
+    
           </v-row>
-        </v-card>
-      </v-form>
+        </v-form>
+        <br>
+        <v-divider />
+        <v-row justify='end'>
+          <v-col>
+            <br>
+            <LoadingAnimation v-if="saveRequestSent" />
+            <v-alert
+              v-if="showSaveWarning && !saveRequestSent"
+              dense
+              outlined
+              text
+              type="warning"
+            >
+              Vergessen Sie nicht, Ihre Änderungen zu speichern!
+            </v-alert>
+            <v-alert
+              v-if="showSaveSuccessful && !saveRequestSent"
+              dense
+              outlined
+              text
+              type="success"
+            >
+              Änderungen erfolgreich gespeichert.
+            </v-alert>
+            <v-alert
+              v-if="showSaveFailed && !saveRequestSent"
+              dense
+              outlined
+              text
+              type="error"
+            >
+              Änderungen konnten nicht übernommen werden. Falls das Problem weiterhin besteht, kontaktieren Sie bitte ihren Systemadministrator.
+            </v-alert>
+          </v-col>
+          <v-col cols=2>
+            <br>
+            <v-btn
+                class="delete_text--text"
+                color="delete"
+                @click="saveButtonClicked()"
+              >
+              Änderungen speichern
+            </v-btn>
+          </v-col>
+        </v-row>
+      </v-card>
+    </v-card>
+
+    <v-card
+      elevation="2"
+      outlined
+    > 
+
+    <MitarbeiterLinkComponent
+      :mitarbeiter-link="mitarbeiterLink"
+    />
     </v-card>
 
     <!-- Component for showing Link for employees after sending formular data. -->
-    <v-card
-      v-if="displaySurveyLink"
-      class="mt-2"
-      elevation="2"
-      outlined
-    >
-      <!-- TODO replace example link -->
-      <MitarbeiterLinkComponent
-        :mitarbeiter-link="'www.tu-darmstadt.co2-rechner.de/survey/'+ responseData.umfrageID"
-      />
-    </v-card>
+
+    <MailvorlageComponent
+      :umfrage-jahr="String(bilanzierungsjahr)"
+      :umfrage-link="'www.tu-darmstadt.co2-rechner.de/survey/'+ umfrageID"
+      :user-mail="getUserMail()"
+    />
   </v-container>
 </template>
 
 <script>
 import Tooltip from "@/components/componentParts/tooltip.vue";
-import MitarbeiterLinkComponent from "./mitarbeiterLinkComponent";
+import MailvorlageComponent from "./MailvorlageComponent";
 import LoadingAnimation from "./componentParts/loadingAnimation";
+import MitarbeiterLinkComponent from "./mitarbeiterLinkComponent"
+import Cookies from '../Cookie'
 
 export default {
   name: "UmfrageBearbeitenComponent",
   
   components: {
+    MailvorlageComponent,
     MitarbeiterLinkComponent,
     LoadingAnimation,
     Tooltip
   },
 
   props: {
-    bilanzierungsjahrprop: {
-      type: Number,
+    umfrageProp: {
+      type: Object,
       default: null
-    },
-    anzahlmitarbeiterprop: {
-      type: Number,
-      default: null
-    },
-    // genutzte Gebäude
-    // Format: [gebaeudeID, flaechenanteil]
-    gebaeudeprop: {
-      type: Array,
-      default: () => [[null, null]]
-    },
-    //IT Geräte
-    /* Geraet an Array Position format [intern Geraete ID, Anzahl, enabled]
-     * [0] Multigeraete
-     * [1] MultigeraetToner
-     * [2] Laserdrucker
-     * [3] LaserdruckerToner
-     * [4] beamer
-     * [5] server
-     */
-    geraeteanzahlprop: {
-      type: Array,
-      default: () => [
-        [7, null, false],
-        [8, null, false],
-        [9, null, false],
-        [10, null, false],
-        [4, null, false],
-        [6, null, false]
-      ]
     }
   },
 
   data: () => ({
-    umfrage: {
-      mitarbeiteranzahl: null,
-      jahr: null,
-      gebaeude: [["S101", "69"]],
-      geraeteanzahl: [[7, "666", true], [8, "666", true], [9, "666", true], [10, "666", true], [4, "666", true], [6, "666", true]],
-    },
+    // umfrage data
+    umfrageID: null,
+    mitarbeiterLink: null,
+
+    geraeteAnzahl: null,
+    gebaeude: null,
+    bilanzierungsjahr: null,
+    anzahlMitarbeiter: null,
+
+    // display of alerts
+    showSaveWarning: true,
+    showSaveSuccessful: false,
+    showSaveFailed: false,
+    saveRequestSent: false,
 
     // mögliche gebäudeIDs
     gebaeudeIDs: [],
 
-    //Papiernutzung currently not used
-    //papierverbrauch: null
-
     //Rules for input validation
-
     geraeteRules: [
       (v) =>
         !!v || "Wenn Sie das Gerät nicht benutzen, wählen Sie es bitte ab.",
@@ -323,7 +348,6 @@ export default {
     ],
 
     // has Absenden Button been clicked
-    dataRequestSent: false,
     responseData: null,
   }),
   computed: {
@@ -346,43 +370,130 @@ export default {
   },
 
   created() {
+      this.parseUmfrageDataForDisplay();
       this.fetchGebaeudeData();
-      this.umfrage.jahr = JSON.parse(JSON.stringify(this.bilanzierungsjahrprop));
-      this.umfrage.mitarbeiteranzahl = JSON.parse(JSON.stringify(this.anzahlmitarbeiterprop));
-      // this.umfrage.gebaeude = JSON.parse(JSON.stringify(this.gebaeudeprop));
-      // this.umfrage.geraeteanzahl = JSON.parse(JSON.stringify(this.geraeteanzahlprop));
   },
 
   methods: {
+
+    saveButtonClicked: function() {
+      this.saveRequestSent = true;
+      this.sendData();
+    },
+
+    /**
+     * Returns the mail of the currently logged in user.
+     */
+    getUserMail: function() {
+      return Cookies.getCookieAttribut('email');
+    },
+
     /**
      * Prints all variables to the console
      */
     logging: function () {
       console.log(
         "Mitarbeiter:",
-        this.umfrage.mitarbeiteranzahl,
+        this.umfrageProp.mitarbeiteranzahl,
         "\n Gebäude:",
-        this.umfrage.gebaeude,
-        "\n geraeteanzahl:",
-        this.umfrage.geraeteanzahl
+        this.umfrageProp.gebaeude,
+        "\n itGeraete:",
+        this.umfrageProp.itGeraete
       );
+    },
+
+    /**
+     * Parses all data to be in line with reusing the code from umfrage.vue for display.
+     */
+    parseUmfrageDataForDisplay: function() {
+      this.umfrageID = this.umfrageProp._id;
+      this.mitarbeiterLink = 'www.tu-darmstadt.co2-rechner.de/survey/' + this.umfrageID;
+      this.anzahlMitarbeiter = this.umfrageProp.mitarbeiteranzahl;
+      this.bilanzierungsjahr = this.umfrageProp.jahr;
+      this.gebaeude = [[null, null]];
+      this.geraeteAnzahl = [
+          [7, null, false],     // Multifunktionsgeraete
+          [8, null, false],   // Multifuntionstoner
+          [9, null, false],   // Tintenstrahldrucker
+          [10, null, false],  // Tintenstrahltoner
+          [4, null, false],   // Beamer
+          [6, null, false],   // Server
+      ];
+
+
+      for(let i = 0; i < this.umfrageProp.gebaeude.length; i++){
+        // extend array if there is more than the one default (null)-element
+        if (i > 0) {
+          this.newGebaeude();
+        }
+
+        // set gebaeude entry
+        let gebID = translateGebaeudeIDToSymbolic(this.umfrageProp.gebaeude[i].gebaeudeNr);
+        let flaeche = String(this.umfrageProp.gebaeude[i].nutzflaeche);
+        let gebEntry = [gebID, flaeche];
+
+        this.gebaeude[i] = gebEntry;     
+      }
+
+      // IT geraete
+      for(let i = 0; i < this.umfrageProp.itGeraete.length; i++){
+        let geraet = this.umfrageProp.itGeraete[i];
+        switch (geraet.idITGeraete) {
+          case 4:
+            if (geraet.anzahl > 0) {
+              this.geraeteAnzahl[4][1] = geraet.anzahl;
+              this.geraeteAnzahl[4][2] = true;
+            }
+          break;
+          case 6:
+            if (geraet.anzahl > 0) {
+              this.geraeteAnzahl[5][1] = geraet.anzahl;
+              this.geraeteAnzahl[5][2] = true;
+            }
+          break;
+          case 7:
+            if (geraet.anzahl > 0) {
+              this.geraeteAnzahl[0][1] = geraet.anzahl;
+              this.geraeteAnzahl[0][2] = true;
+            }
+          break;
+          case 8:
+            if (geraet.anzahl > 0) {
+              this.geraeteAnzahl[1][1] = geraet.anzahl;
+              this.geraeteAnzahl[1][2] = true;
+            }
+          break;
+          case 9:
+            if (geraet.anzahl > 0) {
+              this.geraeteAnzahl[2][1] = geraet.anzahl;
+              this.geraeteAnzahl[2][2] = true;
+              
+            }
+          break;
+          case 10:
+            if (geraet.anzahl > 0) {
+              this.geraeteAnzahl[3][1] = geraet.anzahl;
+              this.geraeteAnzahl[3][2] = true;
+            }
+        }
+      }
     },
 
     /**
      * Adds a new Gebäude to the array, so that it can be selected
      */
     newGebaeude: function () {
-      this.umfrage.gebaeude.push([null, null]);
+      this.gebaeude.push([null, null]);
     },
 
     /**
      * Removes the Gebäude at position index so that it won't show
      */
     removeGebaeude: function (index) {
-      if (index >= 0 && this.umfrage.gebaeude.length > index) {
-        this.umfrage.gebaeude.splice(index, 1);
+      if (index >= 0 && this.gebaeude.length > index) {
+        this.gebaeude.splice(index, 1);
         //When the only element is removed add a new, thereby clearing the values of the fields on the webpage
-        if (this.umfrage.gebaeude.length === 0) {
+        if (this.gebaeude.length === 0) {
           this.newGebaeude();
         }
       } else {
@@ -402,10 +513,10 @@ export default {
       //Build IT Geräte Array of non-null gerate
       var usedITGeraete = [];
       //Special case were we set the Toner enabled value to the matchig geraete value
-      this.umfrage.geraeteanzahl[1][2] = this.umfrage.geraeteanzahl[0][2];
-      this.umfrage.geraeteanzahl[3][2] = this.umfrage.geraeteanzahl[2][2];
+      this.geraeteAnzahl[1][2] = this.geraeteAnzahl[0][2];
+      this.geraeteAnzahl[3][2] = this.geraeteAnzahl[2][2];
 
-      for (var geraet of this.umfrage.geraeteanzahl) {
+      for (var geraet of this.geraeteAnzahl) {
         if (geraet[1] > 0 && geraet[2]) {
           usedITGeraete.push({
             idITGeraete: parseInt(geraet[0]),
@@ -426,67 +537,61 @@ export default {
     gebaeudeJSON: function () {
       var gebaeudeJSON = [];
 
-      for (var objekt of this.umfrage.gebaeude) {
-        gebaeudeJSON.push({
-          gebaeudeNr: parseInt(translateGebaeudeIDToNumeric(objekt[0])),
-          nutzflaeche: parseInt(objekt[1]),
-        });
+      for (var objekt of this.gebaeude) {
+        if ((objekt[0] !== null) && (objekt[1] !== null)){
+          gebaeudeJSON.push({
+            gebaeudeNr: parseInt(translateGebaeudeIDToNumeric(objekt[0])),
+            nutzflaeche: parseInt(objekt[1]),
+          });
+        }
       }
       return gebaeudeJSON;
     },
 
-    // Temporär aus Anmeldung kopiert
-    // TODO: Bei Merge entfernen bzw. refaktorisieren
-
     /**
-     * Checks if identifier is set in cookie
+     * Sends an update request to the server
      */
-    checkIfCookieAttributExists: function(identifier) {
-      return document.cookie
-      .split(";")
-      .some((item) => item.trim().startsWith(identifier))
-    },
-
-    /**
-     * Gets the value of the identifier set in the cookie if it is set else null
-     */
-    getCookieAttribut: function(identifier) {
-      if(this.checkIfCookieAttributExists(identifier)) {
-        return document.cookie
-          .split("; ")
-          .find(row => row.startsWith(identifier))
-          .split("=")[1]
-      }
-      return null
-    },
-
     sendData: async function () {
-      await fetch(process.env.VUE_APP_BASEURL + "/umfrage/insertUmfrage", {
+      this.saveRequestSent = true;
+      await fetch(process.env.VUE_APP_BASEURL + "/umfrage/updateUmfrage", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          jahr: parseInt(this.umfrage.jahr),
+          umfrageID: this.umfrageID,
+          jahr: parseInt(this.bilanzierungsjahr),
           gebaeude: this.gebaeudeJSON(),
-          mitarbeiteranzahl: parseInt(this.umfrage.mitarbeiteranzahl),
+          mitarbeiteranzahl: parseInt(this.anzahlMitarbeiter),
           itGeraete: this.itGeraeteJSON(),
           hauptverantwortlicher: {
-            username: this.getCookieAttribut("email"),
-            sessiontoken: this.getCookieAttribut("sessiontoken")
+            username: Cookies.getCookieAttribut("email"),
+            sessiontoken: Cookies.getCookieAttribut("sessiontoken")
           }
         }),
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log("Success:", data);
-          this.responseData = data.data;
+          this.saveRequestSent = false;
+          if(data.status === "success"){
+            console.log("Success:", data);
+            this.responseData = data.data;
+            this.showSaveWarning = false;
+            this.showSaveFailed = false;
+            this.showSaveSuccessful = true;
+          } else {
+            console.error("Error:", data.error);
+            this.showSaveWarning = false;
+            this.showSaveSuccessful = false;
+            this.showSaveFailed = true;
+          }
         })
         .catch((error) => {
           console.error("Error:", error);
+          this.showSaveWarning = false;
+          this.showSaveSuccessful = false;
+          this.showSaveFailed = true;
         });
-
-      this.dataRequestSent = false;
     },
 
     fetchGebaeudeData: async function () {
