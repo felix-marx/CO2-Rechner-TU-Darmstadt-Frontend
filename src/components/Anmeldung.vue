@@ -261,7 +261,7 @@ export default {
             this.$router.push('/admin').catch(() => {})
           }
           //Message on success or error send from Backend
-          this.errorMessage = (data.status == "success") ? data.data.message : data.error.message
+          this.errorMessage = (data.status == "success") ? '' : data.error.message
           console.log("Success:", data)
         })
         .catch((error) => {
