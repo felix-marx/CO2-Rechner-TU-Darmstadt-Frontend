@@ -459,6 +459,11 @@ export default {
      * Sends all formular data to the server.
      */
     sendData: async function () {
+      // prohibit sending the data if the request was already sent
+      if (this.responseData !== null) {
+        return
+      }
+
       this.displayLoadingAnimation = true;
       await fetch(process.env.VUE_APP_BASEURL + "/umfrage/insertUmfrage", {
         method: "POST",
