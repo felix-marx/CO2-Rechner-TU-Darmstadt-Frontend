@@ -16,15 +16,12 @@
           three-line
         >
           <v-list-item-content>
-            <!--
-          <div class="text-overline mb-4">
-            Zuletzt bearbeitet am {{ editing_time }}
-          </div>   -->
-
-            <v-list-item-title class="text-h5 mb-1">
+            <div class="text-overline mb-1">
+              Bilanzierungsjahr {{ umfrage.jahr }}
+            </div> 
+            <v-list-item-title class="text-h5 mb-4">
               Umfrage: {{ umfrage.bezeichnung }}
             </v-list-item-title>
-
             <div>
               Link zur Mitarbeiterumfrage: {{ mitarbeiterumfrageBaseURL + umfrage._id }}
             </div>
@@ -49,9 +46,9 @@
                 v-on="on"
               >
                 <v-icon left>
-                  mdi-square-edit-outline
+                  mdi-clipboard-edit
                 </v-icon>
-                <span>bearbeiten</span>
+                <span>anzeigen</span>
               </v-btn>
             </template>
             <v-card>
@@ -262,7 +259,7 @@ import Cookies from "../Cookie";
       },
 
       /**
-       * 
+       * Formats the backend Gebaede data to frontend Gebaeude data in order to display them
        */
       parseGebaeudeData(gebaeude) {
         let gebauedeData = new Array(gebaeude.length);
@@ -276,7 +273,7 @@ import Cookies from "../Cookie";
       },
 
       /**
-       * 
+       * Formats the backend Geraete data to frontend Geraete data in order to display them
        */
       parseGeraeteData(geraete) {
         let geraeteData = new Array(6);
