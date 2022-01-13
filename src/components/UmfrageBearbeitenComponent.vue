@@ -257,6 +257,8 @@
             
             <v-btn
               v-if="!blockInput"
+              color="blue"
+              class="white--text"
               @click="sendEdit()"
             >
               <v-icon left>
