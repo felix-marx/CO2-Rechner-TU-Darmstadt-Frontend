@@ -3,9 +3,7 @@
     <v-expansion-panels>
       <v-expansion-panel>
         <!-- Past years' CO2 factors can be sent to the database-->
-        <v-expansion-panel-header>
-          CO2 Faktor
-        </v-expansion-panel-header>
+        <v-expansion-panel-header>CO2 Faktor</v-expansion-panel-header>
 
         <v-expansion-panel-content>
           <v-autocomplete
@@ -43,9 +41,7 @@
 
       <!-- New buildings can be sent to the database -->
       <v-expansion-panel>
-        <v-expansion-panel-header>
-          Gebäude Hinzufügen
-        </v-expansion-panel-header>
+        <v-expansion-panel-header>Gebäude Hinzufügen</v-expansion-panel-header>
         <v-expansion-panel-content>
           <v-row>
             <v-col cols="11">
@@ -126,7 +122,7 @@
             </v-col>
             <v-col>
               <v-text-field
-                v-model="building.gesf"
+                v-model="building.gesamtf"
                 label="Gesamtfläche in qm"
                 :rules="notNegativeRule"
               />
@@ -148,9 +144,7 @@
 
       <!-- Counters can be sent to the database as soon as the associated buildings exist (a hint is still missing here!) -->
       <v-expansion-panel>
-        <v-expansion-panel-header>
-          Zähler hinzufügen
-        </v-expansion-panel-header>
+        <v-expansion-panel-header>Zähler hinzufügen</v-expansion-panel-header>
         <v-expansion-panel-content>
           <v-text-field
             v-model="counter.primary_key"
@@ -177,8 +171,6 @@
             :rules="basicRule"
             label="Bezeichnung des Zählers"
           />
-
-
 
           <div
             v-for="(building_reference, i) in counter.building_references"
@@ -213,8 +205,6 @@
             </v-row>
           </div>
 
-
-
           <v-card-actions>
             <v-col class="text-left">
               <v-btn
@@ -230,9 +220,7 @@
 
       <!-- Past years' counter data can be sent to the database -->
       <v-expansion-panel>
-        <v-expansion-panel-header>
-          Zählerdaten eintragen
-        </v-expansion-panel-header>
+        <v-expansion-panel-header>Zählerdaten eintragen</v-expansion-panel-header>
         <v-expansion-panel-content>
           <v-autocomplete
             v-model="counter_data.year"
@@ -278,226 +266,243 @@
 
 <script>
 import Tooltip from "@/components/componentParts/tooltip.vue";
+import Cookies from "../Cookie"
 
-  export default {
-    components: {
-      Tooltip
+export default {
+  components: {
+    Tooltip
+  },
+
+  data: () => ({
+    date: null,
+    co2_factor: {
+      year: '',
+      energy_type: null,
+      value: null
+    },
+    building: {
+      number: null,
+      name: null,
+      hnf: null,
+      nnf: null,
+      ngf: null,
+      ff: null,
+      vf: null,
+      freif: null,
+      gesamtf: null
+    },
+    counter: {
+      primary_key: null,
+      unit: null,
+      energy_type: null,
+      name: null,
+      building_references: [[null]]
+    },
+    counter_data: {
+      year: '',
+      primary_key: null,
+      energy_type: null,
+      value: null
+    },
+    energy_types: ['Wärme', 'Strom', 'Kälte'],
+    energy_map: new Map([['Wärme', 1], ['Strom', 2], ['Kälte', 3]]),
+    units: ['kWh', 'MWh'],
+
+
+
+    //Rules for input validation
+    basicRule: [
+      (v) => !!v || "Muss angegeben werden",
+    ],
+    notNegativeRule: [
+      v => !!v || "Muss angegeben werden",
+      v => (parseInt(v) >= 0) || "Bitte geben Sie eine nicht-negative Zahl an"
+    ],
+    yearRule: [
+      (v) => !!v || "Muss angegeben werden",
+      (v) => parseInt(v) > 2017 || "Bitte geben Sie ein valides Jahr an",
+    ],
+
+  }),
+
+  computed: {
+    /**
+    * Returns a list beginning with the current year until 2018.
+    */
+    possibleYears: function () {
+      const beginningYear = 2018;
+      let currentYear = new Date().getFullYear();
+      return Array.from(new Array(currentYear - beginningYear + 1), (x, i) => i + beginningYear).reverse();
+    },
+  },
+
+  methods: {
+
+    /**
+     * Adds a new building reference to this counter
+     */
+    newBuildingRef() {
+      this.counter.building_references.push([
+        null
+      ])
     },
 
-    data: () => ({
-      date: null,
-      co2_factor: {
-        year: '',
-        energy_type: null,
-        value: null
-      },
-      building: {
-        number: null,
-        name: null,
-        hnf: null,
-        nnf: null,
-        ngf: null,
-        ff: null,
-        vf: null,
-        freif: null,
-        gesamtf: null
-      },
-      counter: {
-        primary_key: null,
-        unit: null,
-        energy_type: null,
-        name: null,
-        building_references: [[null]]
-      },
-      counter_data: {
-        year: '',
-        primary_key: null,
-        energy_type: null,
-        value: null
-      },
-      energy_types: ['Wärme', 'Strom', 'Kälte'],
-      energy_map: new Map([['Wärme', 1], ['Strom', 2], ['Kälte', 3]]),
-      units: ['kWh', 'MWh'],
-
-
-
-      //Rules for input validation
-      basicRule: [
-        (v) => !!v || "Muss angegeben werden", 
-      ],
-      notNegativeRule: [
-        v => !!v || "Muss angegeben werden",
-        v => (parseInt(v) >= 0) || "Bitte geben Sie eine nicht-negative Zahl an"
-      ],
-      yearRule: [
-        (v) => !!v || "Muss angegeben werden",
-        (v) => parseInt(v) > 2017 || "Bitte geben Sie ein valides Jahr an",
-      ],
-      
-    }),
-
-    computed: {
-      /**
-      * Returns a list beginning with the current year until 2018.
-      */
-      possibleYears: function() {
-        const beginningYear = 2018;
-        let currentYear = new Date().getFullYear();
-        return Array.from(new Array(currentYear - beginningYear + 1), (x, i) => i + beginningYear).reverse();
-      },
-    },
-
-    methods: {
-      
-      /**
-       * Adds a new building reference to this counter
-       */
-      newBuildingRef(){
-        this.counter.building_references.push([
-          null
-        ])
-      },
-
-      /**
-       * Removes the building reference at index i from the counter
-       */
-      removeBuildingRef(i){
-        if(i >= 0 && this.counter.building_references.length > i) {
-          this.counter.building_references.splice(i, 1)
-          //When the only element is removed add a new, thereby clearing the values of the fields on the webpage
-          if(this.counter.building_references.length === 0) {
-            this.newBuildingRef()
-          }
+    /**
+     * Removes the building reference at index i from the counter
+     */
+    removeBuildingRef(i) {
+      if (i >= 0 && this.counter.building_references.length > i) {
+        this.counter.building_references.splice(i, 1)
+        //When the only element is removed add a new, thereby clearing the values of the fields on the webpage
+        if (this.counter.building_references.length === 0) {
+          this.newBuildingRef()
         }
-      },
-
-      /**
-       * sends CO2 factor as a json file to db
-       */
-      sendFactor: async function () {
-
-        await fetch(process.env.VUE_APP_BASEURL + "/db/addFaktor", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            idEnergieversorgung: this.energy_map.get(this.co2_factor.energy_type),
-            jahr: parseInt(this.co2_factor.year),
-            wert: parseInt(this.co2_factor.value),
-         }),
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            console.log("Success:", data);
-          })
-          .catch((error) => {
-            console.error("Error:", error);
-          });
-      },
-
-      /**
-       * sends new building as a json file to db
-       */
-      sendNewBuilding: async function () {
-
-        await fetch(process.env.VUE_APP_BASEURL + "/db/insertGebaeude", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            nr: parseInt(this.building.number),
-            bezeichnung: this.building.name,
-            flaeche: {
-              hnf: parseFloat(this.building.hnf),
-              nnf: parseFloat(this.building.nnf),
-              ngf: parseFloat(this.building.ngf),
-              ff: parseFloat(this.building.ff),
-              vf: parseFloat(this.building.vf),
-              freif: parseFloat(this.building.freif),
-              gesamtf: parseFloat(this.building.gesamtf),
-            },
-         }),
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            console.log("Success:", data);
-          })
-          .catch((error) => {
-            console.error("Error:", error);
-          });
-      },
-      
-      /**
-       * sends new counter as a json file to db
-       */
-      sendNewCounter: async function () {
-
-        await fetch(process.env.VUE_APP_BASEURL + "/db/insertZaehler", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            pkEnergie: parseInt(this.counter.primary_key),
-            idEnergieversorgung: this.energy_map.get(this.counter.energy_type),
-            bezeichnung: this.counter.name,
-            einheit: this.counter.unit,
-            gebaeudeRef: this.buildingRefJSON(),
-         }),
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            console.log("Success:", data);
-          })
-          .catch((error) => {
-            console.error("Error:", error);
-          });
-      },
-
-      /**
-       * sends counter data as a json file to db
-       */
-      sendCounterData: async function () {
-
-        await fetch(process.env.VUE_APP_BASEURL + "/db/addZaehlerdaten", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            pkEnergie: parseInt(this.counter_data.primary_key),
-            idEnergieversorgung: this.energy_map.get(this.counter_data.energy_type),
-            jahr: parseInt(this.counter_data.year),
-            wert: parseFloat(this.counter_data.value),
-         }),
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            console.log("Success:", data);
-          })
-          .catch((error) => {
-            console.error("Error:", error);
-          });
-      },
-
-      /**
-       * parses the building references of a counter to integers
-       */
-      buildingRefJSON: function() {
-        var buildingRefs = []
-
-        for (var objekt of this.counter.building_references) {
-          if(objekt[0] != null){
-            buildingRefs.push(
-              parseInt(objekt[0]),
-            )
-          }
-        }
-        return buildingRefs
-      },
-
+      }
     },
-  }
+
+    /**
+     * sends CO2 factor as a json file to db
+     */
+    sendFactor: async function () {
+
+      await fetch(process.env.VUE_APP_BASEURL + "/db/addFaktor", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          authToken: {
+            username: Cookies.getCookieAttribut('email'),
+            sessiontoken: Cookies.getCookieAttribut('sessiontoken'),
+          },
+          idEnergieversorgung: this.energy_map.get(this.co2_factor.energy_type),
+          jahr: parseInt(this.co2_factor.year),
+          wert: parseInt(this.co2_factor.value),
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Success:", data);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    },
+
+    /**
+     * sends new building as a json file to db
+     */
+    sendNewBuilding: async function () {
+
+      await fetch(process.env.VUE_APP_BASEURL + "/db/insertGebaeude", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          authToken: {
+            username: Cookies.getCookieAttribut('email'),
+            sessiontoken: Cookies.getCookieAttribut('sessiontoken'),
+          },
+          nr: parseInt(this.building.number),
+          bezeichnung: this.building.name,
+          flaeche: {
+            hnf: parseFloat(this.building.hnf),
+            nnf: parseFloat(this.building.nnf),
+            ngf: parseFloat(this.building.ngf),
+            ff: parseFloat(this.building.ff),
+            vf: parseFloat(this.building.vf),
+            freif: parseFloat(this.building.freif),
+            gesamtf: parseFloat(this.building.gesamtf),
+          },
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Success:", data);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    },
+
+    /**
+     * sends new counter as a json file to db
+     */
+    sendNewCounter: async function () {
+
+      await fetch(process.env.VUE_APP_BASEURL + "/db/insertZaehler", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          authToken: {
+            username: Cookies.getCookieAttribut('email'),
+            sessiontoken: Cookies.getCookieAttribut('sessiontoken'),
+          },
+          pkEnergie: parseInt(this.counter.primary_key),
+          idEnergieversorgung: this.energy_map.get(this.counter.energy_type),
+          bezeichnung: this.counter.name,
+          einheit: this.counter.unit,
+          gebaeudeRef: this.buildingRefJSON(),
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Success:", data);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    },
+
+    /**
+     * sends counter data as a json file to db
+     */
+    sendCounterData: async function () {
+
+      await fetch(process.env.VUE_APP_BASEURL + "/db/addZaehlerdaten", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          authToken: {
+            username: Cookies.getCookieAttribut('email'),
+            sessiontoken: Cookies.getCookieAttribut('sessiontoken'),
+          },
+          pkEnergie: parseInt(this.counter_data.primary_key),
+          idEnergieversorgung: this.energy_map.get(this.counter_data.energy_type),
+          jahr: parseInt(this.counter_data.year),
+          wert: parseFloat(this.counter_data.value),
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Success:", data);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    },
+
+    /**
+     * parses the building references of a counter to integers
+     */
+    buildingRefJSON: function () {
+      var buildingRefs = []
+
+      for (var objekt of this.counter.building_references) {
+        if (objekt[0] != null) {
+          buildingRefs.push(
+            parseInt(objekt[0]),
+          )
+        }
+      }
+      return buildingRefs
+    },
+
+  },
+}
 </script>

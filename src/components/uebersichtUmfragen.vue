@@ -201,11 +201,11 @@ import UmfrageBearbeitenComponent from "./UmfrageBearbeitenComponent.vue";
 import Nutzerauswertung from "./nutzerauswertung.vue";
 import Cookies from "../Cookie";
 
-  export default {
-    components: {
-      UmfrageBearbeitenComponent,
-      Nutzerauswertung,
-    },
+export default {
+  components: {
+    UmfrageBearbeitenComponent,
+    Nutzerauswertung,
+  },
 
     data: () => ({
       umfragen: [],
@@ -244,12 +244,12 @@ import Cookies from "../Cookie";
         return
       },
 
-      /**
-       * Closes v-dialog with dialog as v-model
-       */
-      closeDialog(index) {
-        this.$set(this.dialog, index, false)
-      },
+    /**
+     * Closes v-dialog with dialog as v-model
+     */
+    closeDialog(index) {
+      this.$set(this.dialog, index, false)
+    },
 
       /**
        * Closes v-dialog with dialogAuswertung as v-model
@@ -310,12 +310,12 @@ import Cookies from "../Cookie";
         .catch((error) => {
           console.error("Error:", error);
         });
-      },
+    },
 
-      /**
-       * Fetches all existent MitarbeiterUmfragen from the Server, given an Umfrage.
-       */
-      fetchMitarbeiterUmfragen: async function (umfrageID) {
+    /**
+     * Fetches all existent MitarbeiterUmfragen from the Server, given an Umfrage.
+     */
+    fetchMitarbeiterUmfragen: async function (umfrageID) {
       await fetch(process.env.VUE_APP_BASEURL + "/mitarbeiterUmfrage/mitarbeiterUmfrageForUmfrage?id=" + umfrageID, {
         method: "GET",
       })
@@ -328,18 +328,22 @@ import Cookies from "../Cookie";
         .catch((error) => {
           console.error("Error:", error);
         });
-      },
+    },
 
-      /**
-       * Updates an existing Umfrage with the given ID. Please pass all values even if they were not changed.
-       */
-      updateUmfrage: async function (umfrageID) {
+    /**
+     * Updates an existing Umfrage with the given ID. Please pass all values even if they were not changed.
+     */
+    updateUmfrage: async function (umfrageID) {
       await fetch(process.env.VUE_APP_BASEURL + "/umfrage/updateUmfrage", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
+          authToken: {
+            username: Cookies.getCookieAttribut('email'),
+            sessiontoken: Cookies.getCookieAttribut('sessiontoken'),
+          },
           umfrageID: umfrageID,
           mitarbeiteranzahl: 420,
           jahr: 2018,
@@ -354,18 +358,22 @@ import Cookies from "../Cookie";
         .catch((error) => {
           console.error("Error:", error);
         });
-      },
+    },
 
-      /**
-       * Updates an existing MitarbeiterUmfrage with the given ID. Please pass all values even if they were not changed.
-       */
-      updateMitarbeiterUmfrage: async function (umfrageID) {
+    /**
+     * Updates an existing MitarbeiterUmfrage with the given ID. Please pass all values even if they were not changed.
+     */
+    updateMitarbeiterUmfrage: async function (umfrageID) {
       await fetch(process.env.VUE_APP_BASEURL + "/mitarbeiterUmfrage/updateMitarbeiterUmfrage", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
+          authToken: {
+            username: Cookies.getCookieAttribut('email'),
+            sessiontoken: Cookies.getCookieAttribut('sessiontoken'),
+          },
           umfrageID: umfrageID,
           pendelweg: null,
           tageImBuero: 2,

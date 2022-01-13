@@ -93,7 +93,7 @@ export default {
           if (data.status != "success") {
             console.log("Server konnte nicht löschen")
           }
-          this.$router.push('/')
+          this.$router.push('/').catch(() => {})
           //TODO Show error message in case of error 
           console.log("Success:", data)
 
