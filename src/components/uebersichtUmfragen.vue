@@ -65,24 +65,13 @@
                   <v-icon>mdi-close</v-icon>
                 </v-btn>
                 <v-toolbar-title>Umfrage</v-toolbar-title>
-                <v-spacer />
-                <v-toolbar-items>
-                  <v-btn
-                    dark
-                    text
-                    @click="closeDialog(index)"
-                  >
-                    Speichern
-                  </v-btn>
-                </v-toolbar-items>
               </v-toolbar>
               <!-- Hier kommt der Inhalt der Umfrage hin -->
-              <v-card>
+              <v-card
+                v-if="dialog[index]"
+              >
                 <UmfrageBearbeitenComponent 
-                  :bilanzierungsjahrprop="umfrage.jahr"
-                  :anzahlmitarbeiterprop="umfrage.mitarbeiteranzahl"
-                  :gebaeudeprop="parseGebaeudeData(umfrage.gebaeude)"
-                  :geraeteanzahlprop="parseGeraeteData(umfrage.itGeraete)"
+                  :umfrageidprop="umfrage._id"
                 />
               </v-card>
 
@@ -130,7 +119,9 @@
                 <v-toolbar-title>Auswertung</v-toolbar-title>
                 <v-spacer />
               </v-toolbar>
-              <v-card>
+              <v-card
+                v-if="dialogAuswertung[index]"
+              >
                 <Nutzerauswertung :umfrageid="umfrage._id" />
               </v-card>
             </v-card>
@@ -261,40 +252,6 @@ export default {
         this.$set(this.dialogAuswertung, index, false)
       },
 
-      /**
-       * Formats the backend Gebaede data to frontend Gebaeude data in order to display them
-       */
-      parseGebaeudeData(gebaeude) {
-        let gebauedeData = new Array(gebaeude.length);
-        for(let i=0; i<gebaeude.length; i++){
-          let gebau = new Array(2);
-          gebau[0] = translateGebaeudeIDToSymbolic(gebaeude[i].gebaeudeNr);
-          gebau[1] = gebaeude[i].nutzflaeche;
-          gebauedeData[i] = gebau;
-        }
-        return gebauedeData;
-      },
-
-      /**
-       * Formats the backend Geraete data to frontend Geraete data in order to display them
-       */
-      parseGeraeteData(geraete) {
-        let geraeteData = [[7, null, false], [8, null, false], [9, null, false], [10, null, false], [4, null, false], [6, null, false]];
-        for(let i=0; i<geraete.length; i++){
-          let geraet = new Array(3);
-          geraet[0]=parseInt(geraete[i].idITGeraete);
-          geraet[1]=parseInt(geraete[i].anzahl);
-          if(geraet[1] > 0){
-            geraet[2]=true;
-          }
-          else{
-            geraet[2]=false;
-          }
-          geraeteData[i]=geraet;
-        }
-        return geraeteData;
-      },
-
       fetchUmfragenForUser: async function () {
       await fetch(process.env.VUE_APP_BASEURL + "/umfrage/GetAllUmfragenForUser?user=" + Cookies.getCookieAttribut("email"))
         .then((response) => response.json())
@@ -314,84 +271,6 @@ export default {
           console.error("Error:", error);
         });
     },
-
-    /**
-     * Fetches all existent MitarbeiterUmfragen from the Server, given an Umfrage.
-     */
-    fetchMitarbeiterUmfragen: async function (umfrageID) {
-      await fetch(process.env.VUE_APP_BASEURL + "/mitarbeiterUmfrage/mitarbeiterUmfrageForUmfrage?id=" + umfrageID, {
-        method: "GET",
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log("Success:", data);
-          let mitarbeiterUmfragen = data.data;
-          return mitarbeiterUmfragen;
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
-    },
-
-    /**
-     * Updates an existing Umfrage with the given ID. Please pass all values even if they were not changed.
-     */
-    updateUmfrage: async function (umfrageID) {
-      await fetch(process.env.VUE_APP_BASEURL + "/umfrage/updateUmfrage", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          authToken: {
-            username: Cookies.getCookieAttribut('email'),
-            sessiontoken: Cookies.getCookieAttribut('sessiontoken'),
-          },
-          umfrageID: umfrageID,
-          mitarbeiteranzahl: 420,
-          jahr: 2018,
-          gebaeude: null,
-          itGeraete: null,
-        }),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log("Success:", data);
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
-    },
-
-    /**
-     * Updates an existing MitarbeiterUmfrage with the given ID. Please pass all values even if they were not changed.
-     */
-    updateMitarbeiterUmfrage: async function (umfrageID) {
-      await fetch(process.env.VUE_APP_BASEURL + "/mitarbeiterUmfrage/updateMitarbeiterUmfrage", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          authToken: {
-            username: Cookies.getCookieAttribut('email'),
-            sessiontoken: Cookies.getCookieAttribut('sessiontoken'),
-          },
-          umfrageID: umfrageID,
-          pendelweg: null,
-          tageImBuero: 2,
-          dienstreise: null,
-          itGeraete: null,
-        }),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log("Success:", data);
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
-      },
 
       /**
        * Loescht die Umfrage mit der gegebenen ID, gibt false bei error, true bei success zurueck
@@ -428,25 +307,6 @@ export default {
         });
       }
     }
-  }
-
-  /**
-  * Translates a given numeric gebaeudeID to its symbolic equivalent (string).
-  * E.g. 1101 is translated to S101, 3312 to L312 and so on.
-  */
-  function translateGebaeudeIDToSymbolic(gebaeudeID) {
-    let gebaeudeDict = {
-      1: "S",
-      2: "B",
-      3: "L",
-      4: "H",
-      5: "W",
-    };
-
-    gebaeudeID = gebaeudeID.toString()
-    let translatedID =
-      gebaeudeDict[gebaeudeID.substring(0, 1)] + gebaeudeID.substring(1);
-    return translatedID;
   }
   
 </script>
