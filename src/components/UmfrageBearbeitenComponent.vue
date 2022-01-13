@@ -243,23 +243,28 @@
           </v-container>
 
           <v-row class="mt-1 text-center">
-            <v-col cols="2">
-              <v-btn
-                class="mr-4"
-                color="primary"
-                @click="flipBearbeiten()"
-              >
-                {{ ( blockInput ? "Bearbeiten aktivieren" : "Bearbeiten deaktivieren") }}
-              </v-btn>
-            </v-col>
-            <v-col cols="2">
-              <v-btn
-                v-if="!blockInput"
-                @click="sendEdit()"
-              >
-                Änderungen speichern
-              </v-btn>
-            </v-col>
+            <v-btn
+              class="mr-4"
+              color="primary"
+              @click="flipBearbeiten()"
+            >
+              <v-icon left>
+                mdi-pencil
+              </v-icon>
+              {{ ( blockInput ? " Bearbeiten aktivieren" : " Bearbeiten deaktivieren") }}
+            </v-btn>
+            
+            
+            <v-btn
+              v-if="!blockInput"
+              @click="sendEdit()"
+            >
+              <v-icon left>
+                mdi-content-save
+              </v-icon>
+              Änderungen speichern
+            </v-btn>
+           
             <LoadingAnimation v-if="dataRequestSent" />
           </v-row>
         </v-card>
