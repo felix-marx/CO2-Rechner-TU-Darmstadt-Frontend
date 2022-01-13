@@ -276,8 +276,8 @@ import Cookies from "../Cookie";
        * Formats the backend Geraete data to frontend Geraete data in order to display them
        */
       parseGeraeteData(geraete) {
-        let geraeteData = new Array(6);
-        for(let i=0; i<geraeteData.length; i++){
+        let geraeteData = [[7, null, false], [8, null, false], [9, null, false], [10, null, false], [4, null, false], [6, null, false]];
+        for(let i=0; i<geraete.length; i++){
           let geraet = new Array(3);
           geraet[0]=parseInt(geraete[i].idITGeraete);
           geraet[1]=parseInt(geraete[i].anzahl);
