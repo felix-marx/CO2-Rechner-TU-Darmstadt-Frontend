@@ -58,6 +58,14 @@
             <p>Emissionen pro Mitarbeiter: {{ emissionenProMitarbeiter }} t CO<sub>2</sub> eq.</p>
           </v-col>
         </v-row>
+
+        <!-- Referenzwerte (Haushalte) -->
+        <v-row justify="center">
+          <v-card outlined class="pa-7">
+            <v-icon>mdi-thought-bubble-outline</v-icon> <b>Did you know?</b>: {{haushalteReferenzText}}
+          </v-card>
+        </v-row>
+
         <v-row>
           <v-col class="d-flex justify-center">
             <h4>
@@ -201,6 +209,35 @@ export default{
     emissionenEnergie: function(){
       return Math.round((this.responsedata.emissionenKaelte + this.responsedata.emissionenStrom + this.responsedata.emissionenWaerme) * 1000) / 1000
     },
+    anzahlZweiPersonenHaushalte: function(){
+      const ZWEI_PERSONEN_HAUSHALT = 23.2;
+      return Math.round((this.emissionenGesamt / ZWEI_PERSONEN_HAUSHALT))
+    },
+    anzahlVierPersonenHaushalte: function(){
+      const VIER_PERSONEN_HAUSHALT = 46.4;
+      return Math.round((this.emissionenGesamt / VIER_PERSONEN_HAUSHALT))
+    },
+    haushalteReferenzText: function(){
+      let base_text_beginning = "Ihr Gesamtverbrauch entspricht circa ";
+      let base_text_middle = " bzw. ";
+
+      let text_zweiPersonenHaushalt = "";
+      if (this.anzahlZweiPersonenHaushalte > 1) {
+        text_zweiPersonenHaushalt = this.anzahlZweiPersonenHaushalte + " Zwei-Personen-Haushalten";
+      }else if (this.anzahlZweiPersonenHaushalte == 1){
+        text_zweiPersonenHaushalt = "einem Zwei-Personen-Haushalt";
+      }
+
+      let text_vierPersonenHaushalt = ""
+      if (this.anzahlVierPersonenHaushalte > 1) {
+        text_vierPersonenHaushalt = this.anzahlVierPersonenHaushalte + " Vier-Personen-Haushalten";
+      }else if (this.anzahlVierPersonenHaushalte == 1){
+        text_vierPersonenHaushalt = "einem Vier-Personen-Haushalt";
+      }
+
+      let base_text_ending =" in einem Jahr."
+      return base_text_beginning + text_vierPersonenHaushalt + base_text_middle + text_zweiPersonenHaushalt + base_text_ending;
+    },
     umfragenanteil: function(){
       return Math.round(this.responsedata.umfragenanzahl / this.responsedata.mitarbeiteranzahl * 1000) / 10
     },
@@ -238,7 +275,7 @@ export default{
       };
       this.responsesuccessful = true;
 
-      this.roundRespoonseData();
+      this.roundResponseData();
       this.setChartGesamt();
       this.setChartEnergie();
     },
@@ -373,7 +410,7 @@ export default{
             console.log(this.responsedata)
 
             this.checkNegativValue();
-            this.roundRespoonseData();
+            this.roundResponseData();
             this.setChartGesamt();
             this.setChartEnergie();
           }
@@ -401,7 +438,7 @@ export default{
     /**
      * Method rounds all emission values to unit t with 3 decimal places.
      */
-    roundRespoonseData: function(){
+    roundResponseData: function(){
       let roundFactor1 = 10000
       let roundFactor2 = 100
 
