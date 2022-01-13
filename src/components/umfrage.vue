@@ -263,7 +263,7 @@
       v-if="displaySurveyLink"
       :umfrage-jahr="String(bilanzierungsjahr)"
       :umfrage-link="'www.tu-darmstadt.co2-rechner.de/survey/'+ responseData.umfrageID"
-      :user-mail="getCookieAttribut('email')"
+      :user-mail="getUserMail()"
     />
   </v-container>
 </template>
@@ -377,6 +377,13 @@ export default {
         "\n geraeteAnzahl:",
         this.geraeteAnzahl
       );
+    },
+
+    /**
+     * Returns the mail of the currently logged in user.
+     */
+    getUserMail: function() {
+      return Cookies.getCookieAttribut('email');
     },
 
     /**
