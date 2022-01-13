@@ -139,7 +139,8 @@
               color="primary"
               @click="makeSpreadsheet"
             >
-              Download als XLSX
+              <v-icon>mdi-file-chart-outline</v-icon>
+               Download als XLSX
             </v-btn>
           </v-col>
         </v-row>

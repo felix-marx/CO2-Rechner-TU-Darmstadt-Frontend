@@ -38,14 +38,15 @@
           >
             <template #activator="{ on, attrs }">
               <v-btn
-                class="ma2"
-                outlined
+                class="mx-2"
+                color="primary"
                 rounded
-                text
                 v-bind="attrs"
                 v-on="on"
               >
-                <v-icon left>
+                <v-icon 
+                  left 
+                >
                   mdi-clipboard-edit
                 </v-icon>
                 <span>anzeigen</span>
@@ -102,14 +103,16 @@
           >
             <template v-slot:activator="{ on, attrs }">
               <v-btn
-                class="ma2"
-                outlined
+                class="mx-2"
+                color="primary"
                 rounded
-                text
                 v-bind="attrs"
                 v-on="on"
               >
-                <span>Auswertung</span>
+                <v-icon left>
+                  mdi-chart-bar
+                </v-icon>
+                Auswertung
               </v-btn>
             </template>
             <v-card>
