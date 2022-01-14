@@ -58,6 +58,14 @@
             <p>Emissionen pro Mitarbeiter: {{ responsedata.emissionenProMitarbeiter }} t CO<sub>2</sub> eq.</p>
           </v-col>
         </v-row>
+
+        <!-- Referenzwerte (Haushalte) -->
+        <v-row justify="center">
+          <v-card outlined class="pa-7">
+            <v-icon>mdi-thought-bubble-outline</v-icon> <b>Did you know?</b>: {{haushalteReferenzText}}
+          </v-card>
+        </v-row>
+
         <v-row>
           <v-col>
             <p>Ihr Gesamtverbrauch entspricht: </p>
@@ -376,7 +384,7 @@ export default{
             this.responsedata = body.data
 
             this.checkNegativValue();
-            this.roundRespoonseData();
+            this.roundResponseData();
             this.setChartGesamt();
             this.setChartEnergie();
           }
@@ -403,7 +411,7 @@ export default{
     /**
      * Method rounds all emission values to unit t with 3 decimal places.
      */
-    roundRespoonseData: function(){
+    roundResponseData: function(){
       let roundFactor1 = 10000
       let roundFactor2 = 100
 

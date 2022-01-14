@@ -5,9 +5,18 @@
       outlined
     >
       <h3>Umfrage: {{ bezeichnung }}</h3>
+      <v-card class="pa-7">
+        <!-- Introduction Text -->
+        <p>Sehr geehrte Teilnehmer*Innen, </p>
+        <p>in der folgenden Umfrage sollen CO2-Emissionen, die während Ihrer Tätigkeit an der TU entstehen, ermittelt werden. Es werden Ihr Pendelweg, Ihre Dienstreisen und die von Ihnen verwendeten IT-Geräte abgefragt. Alle Angaben werden dabei anonymisiert verarbeitet und dargestellt, sodass ein Rückschluss auf einzelne Personen nicht möglich ist. Die Umfrage nimmt ungefähr 10 Minuten Ihrer Zeit in Anspruch. </p>
+        <p>Für die Umfrage wird das vollständige Kalenderjahr {{ umfrageYear }} betrachtet. </p>
+        <p>Hinter einigen Fragen befindet sich ein Fragezeichensymbol, dort finden Sie zusätzliche Hinweise und Informationen, die zur Beantwortung der Frage hilfreich sind. </p>  
 
-      <v-form>
-        <v-card class="pa-7">
+        <p>Wenn Sie die Umfrage durchgeführt haben, klicken Sie auf „Absenden“. </p>
+        <p>Vielen Dank für Ihre Teilnahme an der Umfrage. </p>
+
+        <!-- Umfrage -->
+        <v-form>
           <h3>
             Wie kommen Sie ins Büro?
             <Tooltip
@@ -297,8 +306,8 @@
           <v-btn @click="sendData()">
             Absenden
           </v-btn>
-        </v-card>
-      </v-form>
+        </v-form>
+      </v-card>
     </v-card>
   </v-container>
 </template>
@@ -319,6 +328,8 @@ export default {
   },
 
   data: () => ({
+    umfrageYear: "UnknownYear",
+
     //Arbeitstage
     arbeitstageBuero: null,
 
@@ -415,6 +426,11 @@ export default {
     //stores response JSON
     responseData: {},
   }),
+
+  created() {
+    // request the year of the umfrage
+    this.fetchUmfrageYear(this.$route.params.umfrageID);
+  },
 
   methods: {
     /**
@@ -620,6 +636,29 @@ export default {
         })
         .catch((error) => {
           console.error("Error:", error);
+        });
+    },
+
+    /**
+   * Requests from the server to which year the survey belongs.
+   */
+    fetchUmfrageYear: async function (givenID) {
+      await fetch(process.env.VUE_APP_BASEURL + "/umfrage/GetUmfrageYear?id=" + givenID, {
+        method: "GET",
+        })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Success:", data);
+          if (data.status == "success"){
+            this.umfrageYear = String(data.data.jahr);
+          }
+          else{
+            this.umfrageYear = "UnknownYear";
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+          this.umfrageYear = "UnknownYear";
         });
     },
   },
