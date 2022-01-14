@@ -61,27 +61,13 @@
 
         <!-- Referenzwerte (Haushalte) -->
         <v-row justify="center">
-          <v-card outlined class="pa-7">
-            <v-icon>mdi-thought-bubble-outline</v-icon> <b>Did you know?</b>: {{haushalteReferenzText}}
+          <v-card
+            outlined
+            class="pa-7"
+          >
+            <v-icon>mdi-thought-bubble-outline</v-icon> <b>Did you know?</b>: {{ haushalteReferenzText }}
           </v-card>
         </v-row>
-
-        <v-row>
-          <v-col>
-            <p>Ihr Gesamtverbrauch entspricht: </p>
-          </v-col>
-          <v-col>
-            <p>{{ responsedata.vergleich4PersonenHaushalt }}  4-Personen Haushalte in einem Jahr oder </p>
-            <p>{{ responsedata.vergleich2PersonenHaushalt }}  2-Personen Haushalte in einem Jahr</p>
-          </v-col>
-        </v-row>
-        <!-- <v-row>
-          <v-col />
-          <v-col>
-            <p>{{ responsedata.vergleich2PersonenHaushalt }} 2-Personen Haushalte in einem Jahr</p>
-          </v-col>
-        </v-row> -->
-
         <v-row>
           <v-col class="d-flex justify-center">
             <h4>
@@ -147,8 +133,10 @@
               color="primary"
               @click="makeSpreadsheet"
             >
-              <v-icon>mdi-file-chart-outline</v-icon>
-               Download als XLSX
+              <v-icon left>
+                mdi-file-chart-outline
+              </v-icon>
+              Download als XLSX
             </v-btn>
           </v-col>
         </v-row>
@@ -235,6 +223,14 @@ export default{
   },
 
   computed: {
+    haushalteReferenzText: function(){
+      let base_text_beginning = "Ihr Gesamtverbrauch entspricht circa ";
+      let base_text_middle = " bzw. ";
+      let text_zweiPersonenHaushalt = this.responsedata.vergleich2PersonenHaushalt + " Zwei-Personen-Haushalten";
+      let text_vierPersonenHaushalt = this.responsedata.vergleich4PersonenHaushalt + " Vier-Personen-Haushalten";
+      let base_text_ending =" in einem Jahr."
+      return base_text_beginning + text_vierPersonenHaushalt + base_text_middle + text_zweiPersonenHaushalt + base_text_ending;
+    },
     displayExtrapolationWarning: function(){
       return this.responsedata.umfragenanteil <= 50.0
     }

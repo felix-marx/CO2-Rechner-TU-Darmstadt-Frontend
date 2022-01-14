@@ -19,9 +19,7 @@
       <p>Die Umfrage nimmt ungefähr 10 Minuten Ihrer Zeit in Anspruch. Für die Umfrage wird das vergangene vollständige Kalenderjahr betrachtet. </p>
       <p>Hinter einigen Fragen befindet sich ein Fragezeichensymbol, dort finden Sie zusätzliche Hinweise und Informationen, die zur Beantwortung der Fragen hilfreich sind. </p>
       <p>
-        Bei weiteren Nachfragen oder Anmerkungen wenden Sie sich gerne an <a
-          :href="'mailto:'+userMail"
-        >{{ userMail }}</a>.
+        Bei weiteren Nachfragen oder Anmerkungen wenden Sie sich gerne an [Hier Ihre Mailadresse einfügen].
       </p>
       <p>Vielen Dank für Ihre Teilnahme. </p>
     </v-card>
@@ -41,10 +39,6 @@ props: {
       default: "UNKNOWN_LINK",
       type: String
     },
-    userMail: {
-      default: "UNKNOWN_MAIL",
-      type: String
-    }
   },
 
 data: () => ({}),

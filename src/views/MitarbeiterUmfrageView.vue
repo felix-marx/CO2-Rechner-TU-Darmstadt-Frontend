@@ -115,34 +115,10 @@ export default {
             this.umfrageID = "";
             this.dataUmfrageComplete = false;
           }
-        })
+        }).catch((error) => {
           console.error("Error:", error);
-        .catch((error) => {
           this.umfrageID = "";
           this.dataUmfrageComplete = false;
-        });
-    },
-    
-  /**
-   * Requests from the server whether a survey with the givenID exists.
-   */
-  fetchUmfrageNotComplete: async function (givenID) {
-      await fetch(process.env.VUE_APP_BASEURL + "/mitarbeiterUmfrage/exists?id=" + givenID, {
-        method: "GET",
-        })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log("Success:", data);
-          if (data.status == "success"){
-            this.umfrageID = data.umfrageID;
-          }
-          else{
-            this.umfrageID = "";
-          }
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-          this.umfrageID = ""
         });
     },
   },

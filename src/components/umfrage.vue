@@ -9,9 +9,8 @@
       <v-card class="pa-7">
         <p>
           Sehr geehrte Teilnehmer*Innen,
-        <p>
+        </p><p>
           in diesem CO2-Rechner werden Daten zur Berechnung von CO2-Emissionen, die im Zusammenhang mit der Arbeit der Mitarbeitenden Ihrer TU-Einheit entstehen, erfragt. Der Rechnerbesteht aus zwei Teilen: einem allgemeinen Teil, der zentral für alle Mitarbeitende der Einheit ausfüllt wird und einen zweiten Teil, den jeder Mitarbeitende Ihrer TU-Einheit in einer Umfrage ausfüllt.
-        </p>
         </p>
         <p>
           Die gesamte Berechnung bezieht sich immer auf ein vollständig abgeschlossenes Kalenderjahr.
@@ -25,10 +24,11 @@
           >nachhaltigkeit@tu-darmstadt.de</a>.
         </p>
         <p>Vielen Dank, dass Sie den CO2-Rechner verwenden und so einen Beitrag zur Nachhaltigkeit an der TU Darmstadt leisten. </p>
-    
+      </v-card>
+
+      <v-card class="pa-7 mt-2">
         <!-- Umfrage -->
-      <v-form lazy-validation>
-        <v-card class="pa-7">
+        <v-form lazy-validation>
           <!-- Bezeichnung -->
           <br>
           <h3>
@@ -302,8 +302,7 @@
     <MailvorlageComponent
       v-if="displaySurveyLink"
       :umfrage-jahr="String(bilanzierungsjahr)"
-      :umfrage-link="'www.tu-darmstadt.co2-rechner.de/survey/'+ responseData.umfrageID"
-      :user-mail="getUserMail()"
+      :umfrage-link="mitarbeiterumfrageBaseURL+ responseData.umfrageID"
     />
     <v-card
       v-if="!displaySurveyLink && errorMessage"
@@ -401,7 +400,6 @@ export default {
 
     // has Absenden Button been clicked
     displayLoadingAnimation: false,
-    responseData: null,
   }),
   computed: {
     /**

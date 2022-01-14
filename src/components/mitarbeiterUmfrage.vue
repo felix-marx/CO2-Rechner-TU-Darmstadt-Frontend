@@ -1,298 +1,303 @@
 <template>
   <v-container>
+    <v-card class="pa-7">
+      <!-- Introduction Text -->
+      <p>Sehr geehrte Teilnehmer*Innen, </p>
+      <p>in der folgenden Umfrage sollen CO2-Emissionen, die während Ihrer Tätigkeit an der TU entstehen, ermittelt werden. Es werden Ihr Pendelweg, Ihre Dienstreisen und die von Ihnen verwendeten IT-Geräte abgefragt. Alle Angaben werden dabei anonymisiert verarbeitet und dargestellt, sodass ein Rückschluss auf einzelne Personen nicht möglich ist. Die Umfrage nimmt ungefähr 10 Minuten Ihrer Zeit in Anspruch. </p>
+      <p>Für die Umfrage wird das vollständige Kalenderjahr {{ umfrageYear }} betrachtet. </p>
+      <p>Hinter einigen Fragen befindet sich ein Fragezeichensymbol, dort finden Sie zusätzliche Hinweise und Informationen, die zur Beantwortung der Frage hilfreich sind. </p>  
+
+      <p>Wenn Sie die Umfrage durchgeführt haben, klicken Sie auf „Absenden“. </p>
+      <p>Vielen Dank für Ihre Teilnahme an der Umfrage. </p>
+    </v-card>
     <v-card
       elevation="2"
+      class="pa-7"
       outlined
     >
-      <h3>Umfrage: {{ bezeichnung }}</h3>
-      <v-card class="pa-7">
-        <!-- Introduction Text -->
-        <p>Sehr geehrte Teilnehmer*Innen, </p>
-        <p>in der folgenden Umfrage sollen CO2-Emissionen, die während Ihrer Tätigkeit an der TU entstehen, ermittelt werden. Es werden Ihr Pendelweg, Ihre Dienstreisen und die von Ihnen verwendeten IT-Geräte abgefragt. Alle Angaben werden dabei anonymisiert verarbeitet und dargestellt, sodass ein Rückschluss auf einzelne Personen nicht möglich ist. Die Umfrage nimmt ungefähr 10 Minuten Ihrer Zeit in Anspruch. </p>
-        <p>Für die Umfrage wird das vollständige Kalenderjahr {{ umfrageYear }} betrachtet. </p>
-        <p>Hinter einigen Fragen befindet sich ein Fragezeichensymbol, dort finden Sie zusätzliche Hinweise und Informationen, die zur Beantwortung der Frage hilfreich sind. </p>  
+      <v-card-title>
+        Umfrage: {{ bezeichnung }}
+      </v-card-title>
+      <v-divider />
 
-        <p>Wenn Sie die Umfrage durchgeführt haben, klicken Sie auf „Absenden“. </p>
-        <p>Vielen Dank für Ihre Teilnahme an der Umfrage. </p>
+      <!-- Umfrage -->
+      <v-form>
+        <h3>
+          Wie kommen Sie ins Büro?
+          <Tooltip
+            tooltip-text="Zur Berechnung können Sie z.B. Google Maps verwenden. Falls Sie eine Fahrgemeinschaft haben, berechnen Sie die mittlere Fahrstrecke (mit z.B. Google Maps)."
+          />
+        </h3>
+        <v-divider />
+        <br>
 
-        <!-- Umfrage -->
-        <v-form>
-          <h3>
-            Wie kommen Sie ins Büro?
-            <Tooltip
-              tooltip-text="Zur Berechnung können Sie z.B. Google Maps verwenden. Falls Sie eine Fahrgemeinschaft haben, berechnen Sie die mittlere Fahrstrecke (mit z.B. Google Maps)."
-            />
-          </h3>
-          <v-divider />
-          <br>
-
-          <div
-            v-for="(medium, index) in verkehrsmittel"
-            :key="'dienstreise-' + index"
-          >
-            <v-row>
-              <!-- The length of the column is calculated based on the selection, so that the button to add new elements in this line -->
-              <v-col :cols="medium[0] === 'Öffentliche' ? 4 : 6">
-                <v-select
-                  v-model="medium[0]"
-                  :items="fahrtmediumListe"
-                  label="Verkehrsmedium"
-                />
-              </v-col>
-              <v-col
-                v-if="medium[0] === 'Öffentliche'"
-                :cols="medium[0] === 'Öffentliche' ? 3 : 0"
-              >
-                <v-select
-                  v-model="medium[1]"
-                  :items="fahrtmediumÖPNVListe"
-                  label="ÖPNV"
-                />
-              </v-col>
-              <v-col :cols="medium[0] === 'Öffentliche' ? 3 : 4">
-                <v-text-field
-                  v-model="medium[4]"
-                  :rules="streckeRules"
-                  :disabled="medium[0] === null"
-                  :min="0"
-                  label="Einfacher Pendelweg"
-                  type="number"
-                  suffix="km"
-                />
-              </v-col>
-              <v-col>
-                <v-btn
-                  class="add_text--text"
-                  color="add"
-                  @click="newVerkehrsmittel()"
-                >
-                  Hinzufügen
-                </v-btn>
-              </v-col>
-              <v-col>
-                <v-btn
-                  class="delete_text--text"
-                  color="delete"
-                  @click="removeVerkehrsmittel(index)"
-                >
-                  Löschen
-                </v-btn>
-              </v-col>
-            </v-row>
-            <!-- Weitere Reihe für PKWs mit Fahrgemeinschaft -->
-            <h4
-              v-show="
-                medium[0] === 'PKW (Diesel)' || medium[0] === 'PKW (Benzin)'
-              "
-              class="my-3"
+        <div
+          v-for="(medium, index) in verkehrsmittel"
+          :key="'dienstreise-' + index"
+        >
+          <v-row>
+            <!-- The length of the column is calculated based on the selection, so that the button to add new elements in this line -->
+            <v-col :cols="medium[0] === 'Öffentliche' ? 4 : 6">
+              <v-select
+                v-model="medium[0]"
+                :items="fahrtmediumListe"
+                label="Verkehrsmedium"
+              />
+            </v-col>
+            <v-col
+              v-if="medium[0] === 'Öffentliche'"
+              :cols="medium[0] === 'Öffentliche' ? 3 : 0"
             >
-              Fahren Sie in einer Fahrgemeinschaft?
-            </h4>
-            <v-row>
-              <v-col :cols="1">
-                <v-checkbox
-                  v-show="
-                    medium[0] === 'PKW (Diesel)' || medium[0] === 'PKW (Benzin)'
-                  "
-                  v-model="medium[2]"
-                  label="Ja"
-                  class="pr-4"
-                />
-              </v-col>
-              <v-col :cols="9">
-                <v-text-field
-                  v-show="
-                    medium[2] &&
-                      (medium[0] === 'PKW (Diesel)' ||
-                        medium[0] === 'PKW (Benzin)')
-                  "
-                  v-model="medium[3]"
-                  :rules="mitfahrerRules"
-                  :min="0"
-                  label="Anzahl Mitfahrer"
-                  type="number"
-                  class="pr-5"
-                />
-              </v-col>
-            </v-row>
-          </div>
-
-          <!-- Arbeitstage im Büro -->
-
-          <br>
-          <h3>Wie viele Tage in der Woche sind Sie im Büro?</h3>
-          <v-divider />
-          <br>
-
-          <v-container>
-            <v-row>
-              <v-text-field
-                v-model="arbeitstageBuero"
-                :rules="tageImBueroRules"
-                :min="0"
-                :max="7"
-                label="Tage im Büro"
-                type="number"
+              <v-select
+                v-model="medium[1]"
+                :items="fahrtmediumÖPNVListe"
+                label="ÖPNV"
               />
-            </v-row>
-          </v-container>
-
-          <!-- Dienstreisen Abfrage Option mehrere anzugeben -->
-
-          <br>
-          <h3>
-            Welche Dienstreisen haben Sie in den letzten 12 Monaten unternommen?
-            <Tooltip
-              tooltip-text="Zur Berechnung können Sie z.B. Google Maps verwenden. Bei Flugreisen können Sie als Distanz direkt die Summe aller Kurz- und Langstreckenflüge angeben."
-            />
-          </h3>
-          <v-divider />
-          <br>
-
-          <div
-            v-for="(reise, index) in dienstreise"
-            :key="'verkehrsmittel-' + index"
-          >
-            <v-row>
-              <v-col :cols="reise[0] === 'Flugzeug' ? 4 : 5">
-                <v-select
-                  v-model="reise[0]"
-                  label="Verkehrsmittel"
-                  :items="dienstreiseMediumListe"
-                  class="pr-5"
-                />
-              </v-col>
-              <!--<v-select v-model="flugklasse" label="Klasse" v-show="reise[0] === 'Flugzeug'" :items="flugklasseListe"></v-select>-->
-              <v-col
-                v-if="reise[0] === 'Flugzeug'"
-                :cols="reise[0] === 'Flugzeug' ? 3 : 0"
+            </v-col>
+            <v-col :cols="medium[0] === 'Öffentliche' ? 3 : 4">
+              <v-text-field
+                v-model="medium[4]"
+                :rules="streckeRules"
+                :disabled="medium[0] === null"
+                :min="0"
+                label="Einfacher Pendelweg"
+                type="number"
+                suffix="km"
+              />
+            </v-col>
+            <v-col>
+              <v-btn
+                class="add_text--text"
+                color="add"
+                @click="newVerkehrsmittel()"
               >
-                <v-select
-                  v-show="reise[0] === 'Flugzeug'"
-                  v-model="reise[1]"
-                  label="Flugstrecke"
-                  :items="flugstreckeListe"
-                  class="pr-5"
-                />
-              </v-col>
-              <v-col :cols="reise[0] === 'Flugzeug' ? 3 : 5">
-                <v-text-field
-                  v-model="reise[2]"
-                  :rules="streckeRules"
-                  :disabled="reise[0] === null"
-                  :min="0"
-                  label="Einfache Distanz"
-                  suffix="km"
-                  class="pr-5"
-                  type="number"
-                />
-              </v-col>
-              <v-col>
-                <v-btn
-                  class="add_text--text"
-                  color="add"
-                  @click="newDienstreise()"
-                >
-                  Hinzufügen
-                </v-btn>
-              </v-col>
-              <v-col>
-                <v-btn
-                  class="delete_text--text"
-                  color="delete"
-                  @click="removeDienstreise(index)"
-                >
-                  Löschen
-                </v-btn>
-              </v-col>
-            </v-row>
-          </div>
+                Hinzufügen
+              </v-btn>
+            </v-col>
+            <v-col>
+              <v-btn
+                class="delete_text--text"
+                color="delete"
+                @click="removeVerkehrsmittel(index)"
+              >
+                Löschen
+              </v-btn>
+            </v-col>
+          </v-row>
+          <!-- Weitere Reihe für PKWs mit Fahrgemeinschaft -->
+          <h4
+            v-show="
+              medium[0] === 'PKW (Diesel)' || medium[0] === 'PKW (Benzin)'
+            "
+            class="my-3"
+          >
+            Fahren Sie in einer Fahrgemeinschaft?
+          </h4>
+          <v-row>
+            <v-col :cols="1">
+              <v-checkbox
+                v-show="
+                  medium[0] === 'PKW (Diesel)' || medium[0] === 'PKW (Benzin)'
+                "
+                v-model="medium[2]"
+                label="Ja"
+                class="pr-4"
+              />
+            </v-col>
+            <v-col :cols="9">
+              <v-text-field
+                v-show="
+                  medium[2] &&
+                    (medium[0] === 'PKW (Diesel)' ||
+                      medium[0] === 'PKW (Benzin)')
+                "
+                v-model="medium[3]"
+                :rules="mitfahrerRules"
+                :min="0"
+                label="Anzahl Mitfahrer"
+                type="number"
+                class="pr-5"
+              />
+            </v-col>
+          </v-row>
+        </div>
 
-          <!-- Umfrage für die IT Geräte Notebook, Desktop PC, Bildschirm, Mobiltelfon -->
+        <!-- Arbeitstage im Büro -->
 
-          <br>
-          <h3>
-            Welche IT-Geräte benutzen Sie bei Ihrer Arbeit?
-            <Tooltip
-              tooltip-text="Gemeinschaftlich genutzte IT-Geräte wie z.B. Multifunktionsdrucker werden hier nicht betrachtet."
+        <br>
+        <h3>Wie viele Tage in der Woche sind Sie im Büro?</h3>
+        <v-divider />
+        <br>
+
+        <v-container>
+          <v-row>
+            <v-text-field
+              v-model="arbeitstageBuero"
+              :rules="tageImBueroRules"
+              :min="0"
+              :max="7"
+              label="Tage im Büro"
+              type="number"
             />
-          </h3>
+          </v-row>
+        </v-container>
 
-          <v-divider />
-          <br>
+        <!-- Dienstreisen Abfrage Option mehrere anzugeben -->
 
-          <v-container>
-            <!-- Notebook -->
-            <v-row>
-              <v-checkbox
-                v-model="geraeteAnzahl[0][2]"
-                hide-details
-              />
-              <v-text-field
-                v-model="geraeteAnzahl[0][1]"
-                :rules="geraeteRules"
-                :disabled="!geraeteAnzahl[0][2]"
-                :min="0"
-                label="Notebooks"
-                type="number"
-                class="pr-5"
-                suffix="Gerät/e"
-              />
-            </v-row>
-            <!-- Desktop PC -->
-            <v-row>
-              <v-checkbox
-                v-model="geraeteAnzahl[1][2]"
-                hide-details
-              />
-              <v-text-field
-                v-model="geraeteAnzahl[1][1]"
-                :rules="geraeteRules"
-                :disabled="!geraeteAnzahl[1][2]"
-                :min="0"
-                label="Desktop PCs"
-                type="number"
-                class="pr-5"
-                suffix="Gerät/e"
-              />
-            </v-row>
-            <!-- Bildschirm -->
-            <v-row>
-              <v-checkbox
-                v-model="geraeteAnzahl[2][2]"
-                hide-details
-              />
-              <v-text-field
-                v-model="geraeteAnzahl[2][1]"
-                :rules="geraeteRules"
-                :disabled="!geraeteAnzahl[2][2]"
-                :min="0"
-                label="Bildschirme"
-                type="number"
-                class="pr-5"
-                suffix="Gerät/e"
-              />
-            </v-row>
-            <!-- Mobiltelefon -->
-            <v-row>
-              <v-checkbox
-                v-model="geraeteAnzahl[3][2]"
-                hide-details
-              />
-              <v-text-field
-                v-model="geraeteAnzahl[3][1]"
-                :rules="geraeteRules"
-                :disabled="!geraeteAnzahl[3][2]"
-                :min="0"
-                label="Mobiltelefone"
-                type="number"
-                class="pr-5"
-                suffix="Gerät/e"
-              />
-            </v-row>
-          </v-container>
+        <br>
+        <h3>
+          Welche Dienstreisen haben Sie in den letzten 12 Monaten unternommen?
+          <Tooltip
+            tooltip-text="Zur Berechnung können Sie z.B. Google Maps verwenden. Bei Flugreisen können Sie als Distanz direkt die Summe aller Kurz- und Langstreckenflüge angeben."
+          />
+        </h3>
+        <v-divider />
+        <br>
 
-          <!--- Papierverbrauch currently not used
+        <div
+          v-for="(reise, index) in dienstreise"
+          :key="'verkehrsmittel-' + index"
+        >
+          <v-row>
+            <v-col :cols="reise[0] === 'Flugzeug' ? 4 : 5">
+              <v-select
+                v-model="reise[0]"
+                label="Verkehrsmittel"
+                :items="dienstreiseMediumListe"
+                class="pr-5"
+              />
+            </v-col>
+            <!--<v-select v-model="flugklasse" label="Klasse" v-show="reise[0] === 'Flugzeug'" :items="flugklasseListe"></v-select>-->
+            <v-col
+              v-if="reise[0] === 'Flugzeug'"
+              :cols="reise[0] === 'Flugzeug' ? 3 : 0"
+            >
+              <v-select
+                v-show="reise[0] === 'Flugzeug'"
+                v-model="reise[1]"
+                label="Flugstrecke"
+                :items="flugstreckeListe"
+                class="pr-5"
+              />
+            </v-col>
+            <v-col :cols="reise[0] === 'Flugzeug' ? 3 : 5">
+              <v-text-field
+                v-model="reise[2]"
+                :rules="streckeRules"
+                :disabled="reise[0] === null"
+                :min="0"
+                label="Einfache Distanz"
+                suffix="km"
+                class="pr-5"
+                type="number"
+              />
+            </v-col>
+            <v-col>
+              <v-btn
+                class="add_text--text"
+                color="add"
+                @click="newDienstreise()"
+              >
+                Hinzufügen
+              </v-btn>
+            </v-col>
+            <v-col>
+              <v-btn
+                class="delete_text--text"
+                color="delete"
+                @click="removeDienstreise(index)"
+              >
+                Löschen
+              </v-btn>
+            </v-col>
+          </v-row>
+        </div>
+
+        <!-- Umfrage für die IT Geräte Notebook, Desktop PC, Bildschirm, Mobiltelfon -->
+
+        <br>
+        <h3>
+          Welche IT-Geräte benutzen Sie bei Ihrer Arbeit?
+          <Tooltip
+            tooltip-text="Gemeinschaftlich genutzte IT-Geräte wie z.B. Multifunktionsdrucker werden hier nicht betrachtet."
+          />
+        </h3>
+
+        <v-divider />
+        <br>
+
+        <v-container>
+          <!-- Notebook -->
+          <v-row>
+            <v-checkbox
+              v-model="geraeteAnzahl[0][2]"
+              hide-details
+            />
+            <v-text-field
+              v-model="geraeteAnzahl[0][1]"
+              :rules="geraeteRules"
+              :disabled="!geraeteAnzahl[0][2]"
+              :min="0"
+              label="Notebooks"
+              type="number"
+              class="pr-5"
+              suffix="Gerät/e"
+            />
+          </v-row>
+          <!-- Desktop PC -->
+          <v-row>
+            <v-checkbox
+              v-model="geraeteAnzahl[1][2]"
+              hide-details
+            />
+            <v-text-field
+              v-model="geraeteAnzahl[1][1]"
+              :rules="geraeteRules"
+              :disabled="!geraeteAnzahl[1][2]"
+              :min="0"
+              label="Desktop PCs"
+              type="number"
+              class="pr-5"
+              suffix="Gerät/e"
+            />
+          </v-row>
+          <!-- Bildschirm -->
+          <v-row>
+            <v-checkbox
+              v-model="geraeteAnzahl[2][2]"
+              hide-details
+            />
+            <v-text-field
+              v-model="geraeteAnzahl[2][1]"
+              :rules="geraeteRules"
+              :disabled="!geraeteAnzahl[2][2]"
+              :min="0"
+              label="Bildschirme"
+              type="number"
+              class="pr-5"
+              suffix="Gerät/e"
+            />
+          </v-row>
+          <!-- Mobiltelefon -->
+          <v-row>
+            <v-checkbox
+              v-model="geraeteAnzahl[3][2]"
+              hide-details
+            />
+            <v-text-field
+              v-model="geraeteAnzahl[3][1]"
+              :rules="geraeteRules"
+              :disabled="!geraeteAnzahl[3][2]"
+              :min="0"
+              label="Mobiltelefone"
+              type="number"
+              class="pr-5"
+              suffix="Gerät/e"
+            />
+          </v-row>
+        </v-container>
+
+        <!--- Papierverbrauch currently not used
           <br>
           <h3>Schätzen Sie bitte wie viele Blätter Papier Sie in einer typischen Woche verbrauchen.</h3>
           <v-divider></v-divider>
@@ -303,11 +308,10 @@
             </v-row>
           </v-container> -->
 
-          <v-btn @click="sendData()">
-            Absenden
-          </v-btn>
-        </v-form>
-      </v-card>
+        <v-btn @click="sendData()">
+          Absenden
+        </v-btn>
+      </v-form>
     </v-card>
   </v-container>
 </template>
