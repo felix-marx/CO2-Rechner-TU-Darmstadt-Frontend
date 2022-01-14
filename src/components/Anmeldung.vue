@@ -7,9 +7,15 @@
         class="py-4"
         outlined
       >
-        <v-card-title class="justify-center">
-          {{ istRegistrierung ? "Registrierung" : "Anmeldung" }}
-        </v-card-title>
+        <div class="text-center">
+          <v-card-title class="justify-center">
+            <h2>TU-Darmstadt CO2-Rechner</h2>
+          </v-card-title>
+          Willkommen bei dem TU-Darmstadt CO2-Rechner, mit diesem können Sie die CO2-Emissionen von TU Einheiten berechnen.
+          <v-card-title class="justify-center">
+            {{ istRegistrierung ? "Registrierung" : "Anmeldung" }}
+          </v-card-title>
+        </div>
         <!-- Signin -->
         <v-container v-if="!istRegistrierung">
           <v-row>
@@ -116,13 +122,45 @@
             </v-col>
             <v-col />
           </v-row>
-          <v-row class="px-5">
+          <v-row
+            class="px-5"
+          >
             <v-col />
-            <v-col cols="8">
-              <v-checkbox
-                v-model="agbBestaetigt"
-                label="Ich erkläre mich mit den AGB von TU-Darmstadt einverstanden."
-              />
+            <v-col
+              cols="8"
+              class="text-center"
+            >
+              <div>
+                Indem Sie auf „Konto erstellen“ klicken, stimmen Sie unseren Nutzungsbedingungen zu. <br> In unserer 
+                <!-- <v-tooltip bottom>
+                      <template v-slot:activator="{ on }">
+                        <a
+                          target="_blank"
+                          href="https://vuetifyjs.com"
+                          @click.stop
+                          v-on="on"
+                        >
+                          AGB
+                        </a>
+                      </template>
+                      Öffnet eine neue Seite mit der AGB
+                    </v-tooltip>
+                    und der -->
+                <v-tooltip bottom>
+                  <template v-slot:activator="{ on }">
+                    <a
+                      target="_blank"
+                      href="https://www.tu-darmstadt.de/datenschutzerklaerung.de.jsp"
+                      @click.stop
+                      v-on="on"
+                    >
+                      Datenschutzerklärung
+                    </a>
+                  </template>
+                  Öffnet eine neue Seite mit der Datenschutzerklärung
+                </v-tooltip>
+                erfahren Sie, welche Daten wir erfassen und verwenden.
+              </div>
             </v-col>
             <v-col />
           </v-row>
@@ -258,7 +296,7 @@ export default {
           if (data.status == "success") {
             Cookies.setCookie("sessiontoken", data.data.sessiontoken)
             Cookies.setCookie("email", this.username)
-            this.$router.push('/admin').catch(() => {})
+            this.$router.push('/admin').catch(() => { })
           }
           //Message on success or error send from Backend
           this.errorMessage = (data.status == "success") ? '' : data.error.message
