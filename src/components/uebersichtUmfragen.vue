@@ -1,64 +1,340 @@
 <template>
   <v-container>
-    <!-- Die erstellte Umfrage soll eine Karte erhalten. -->
-    <v-card
-      elevation="2"
+    <v-card>
+      <v-card-title>
+        Gespeicherte Umfragen:
+      </v-card-title>
 
-      outlined
-    >
-      <v-list-item three-line>
-        <v-list-item-content>
-          <div class="text-overline mb-4">
-            Zuletzt bearbeitet am XX.YY.ZZZZ
-          </div>
-
-          <v-list-item-title class="text-h5 mb-1">
-            Umfrage 1
-          </v-list-item-title>
-        </v-list-item-content>
-      </v-list-item>
-
-      <!-- Die erstellte Umfrage soll bearbeitet und ausgewählt werden können. -->
-      <v-card-actions>
-        <v-btn
-          class="ma2"
-          outlined
-          rounded
-          text
-        >
-          <v-icon left>
-            mdi-square-edit-outline
-          </v-icon>
-          <span>bearbeiten</span>
-        </v-btn>
-
-        <v-spacer />
-
-        <v-checkbox
-          v-model="selected"
-        />
-      </v-card-actions>
-    </v-card>
-
-    <!-- Mit diesem Button sollen ausgewählte Umfragen gelöscht werden können. -->
-    <v-col class="text-right">
-      <v-btn
-        class="ma2"
+      <!-- Die erstellte Umfrage soll eine Karte erhalten. -->
+      <v-card
+        v-for="(umfrage, index) in umfragen"
+        :key="'umfrage_'+index"
+        elevation="2"
         outlined
-        text
       >
-        Ausgewählte löschen
-      </v-btn>
-    </v-col>
+        <v-list-item
+          three-line
+        >
+          <v-list-item-content>
+            <div class="text-overline mb-1">
+              Bilanzierungsjahr {{ umfrage.jahr }}
+            </div> 
+            <v-list-item-title class="text-h5 mb-4">
+              Umfrage: {{ umfrage.bezeichnung }}
+            </v-list-item-title>
+            <v-row>
+              <v-col 
+                cols="8"
+                align-self="center"
+              >
+                <div>
+                  Link zur Mitarbeiterumfrage: {{ mitarbeiterumfrageBaseURL + umfrage._id }}
+                </div>
+              </v-col>
+              <v-col 
+                align-self="center"
+                cols="3"
+                class="text-right"
+              >
+                <div>
+                  {{ umfrage.mitarbeiterUmfrageRef.length }}/{{ umfrage.mitarbeiteranzahl }}:
+                </div>
+              </v-col>
+              <v-col>
+                <v-progress-circular 
+                  :value="100*(umfrage.mitarbeiterUmfrageRef.length / umfrage.mitarbeiteranzahl)"
+                  :size="35"
+                >
+                  {{ value }}
+                </v-progress-circular>
+              </v-col>
+            </v-row>
+          </v-list-item-content>
+        </v-list-item>
+
+        <!-- Die erstellte Umfrage soll bearbeitet und ausgewählt werden können. -->
+        <v-card-actions>
+          <v-dialog
+            v-model="dialog[index]"
+            fullscreen
+            hide-overlay
+            transition="dialog-bottom-transition"
+          >
+            <template #activator="{ on, attrs }">
+              <v-btn
+                class="mx-2"
+                color="primary"
+                rounded
+                v-bind="attrs"
+                v-on="on"
+              >
+                <v-icon 
+                  left 
+                >
+                  mdi-clipboard-edit
+                </v-icon>
+                <span>anzeigen</span>
+              </v-btn>
+            </template>
+            <v-card>
+              <v-toolbar
+                dark
+                color="primary"
+              >
+                <v-btn
+                  icon
+                  dark
+                  @click="closeDialog(index)"
+                >
+                  <v-icon>mdi-close</v-icon>
+                </v-btn>
+                <v-toolbar-title>Umfrage</v-toolbar-title>
+              </v-toolbar>
+              <!-- Hier kommt der Inhalt der Umfrage hin -->
+              <v-card
+                v-if="dialog[index]"
+              >
+                <UmfrageBearbeitenComponent 
+                  :umfrageidprop="umfrage._id"
+                />
+              </v-card>
+
+            <!--
+            <v-divider /> 
+            <div>
+              Aktuelle Auswertung
+            </div>
+            -->
+            </v-card>
+          </v-dialog>
+
+          <v-dialog
+            v-model="dialogAuswertung[index]"
+            fullscreen
+            hide-overlay
+            transition="dialog-bottom-transition"
+          >
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn
+                class="mx-2"
+                color="primary"
+                rounded
+                v-bind="attrs"
+                v-on="on"
+              >
+                <v-icon left>
+                  mdi-chart-bar
+                </v-icon>
+                Auswertung
+              </v-btn>
+            </template>
+            <v-card>
+              <v-toolbar
+                dark
+                color="primary"
+              >
+                <v-btn
+                  icon
+                  dark
+                  @click="closeDialogAuswertung(index)"
+                >
+                  <v-icon>mdi-close</v-icon>
+                </v-btn>
+                <v-toolbar-title>Auswertung</v-toolbar-title>
+                <v-spacer />
+              </v-toolbar>
+              <v-card
+                v-if="dialogAuswertung[index]"
+              >
+                <Nutzerauswertung :umfrageid="umfrage._id" />
+              </v-card>
+            </v-card>
+          </v-dialog>
+        
+          <v-spacer />
+
+          <v-dialog
+            v-model="deleteSurvey[index]"
+            transition="dialog-bottom-transition"
+          >
+            <template v-slot:activator="{ on, attrs }">
+              <!-- Mit diesem Button sollen ausgewählte Umfragen gelöscht werden können. -->
+              <v-col class="text-right">
+                <v-btn
+                  class="ma2"
+                  outlined
+                  text
+                  color="delete"
+                  v-bind="attrs"
+                  v-on="on"
+                >
+                  <v-icon>mdi-delete-outline</v-icon>
+                  Löschen
+                </v-btn>
+              </v-col>
+            </template>
+
+            <v-card>
+              <v-toolbar
+                color="primary"
+                dark
+              >
+                Löschen der Umfrage
+              </v-toolbar>
+              <v-card-text>
+                <div class="pt-6">
+                  Sind Sie sicher, dass Sie die Umfrage {{ umfrage.bezeichnung }} löschen möchten?
+                  Diese Aktion kann nicht zurückgenommen werden.
+                </div>
+              </v-card-text>
+
+              <v-divider />
+
+              <v-card-actions>
+                <v-spacer />
+                <v-btn
+                  color="primary"
+                  text
+                  @click="removeSurvey(index, umfrage._id)"
+                >
+                  Ich bestätige
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+        </v-card-actions>
+        <v-alert
+          v-show="deleteError[index]"
+          type="error"
+        >
+          {{ message }}
+        </v-alert>
+      </v-card>
+    </v-card>
   </v-container>
 </template>
 
 <script>
-  export default {
-    data () {
-      return {
-        selected: ['Umfrage1'],
-      }
+import UmfrageBearbeitenComponent from "./UmfrageBearbeitenComponent.vue";
+import Nutzerauswertung from "./nutzerauswertung.vue";
+import Cookies from "../Cookie";
+
+export default {
+  components: {
+    UmfrageBearbeitenComponent,
+    Nutzerauswertung,
+  },
+
+    data: () => ({
+      umfragen: [],
+      deleteSurvey: [],
+      dialog: [], 
+      dialogAuswertung: [], 
+      deleteError: [],
+      message: "",
+
+      notifications: false,
+      sound: true,
+      widgets: true,
+      anteilMitarbeiterUmfrage: 40,
+
+      // base url for Mitarbeiterumfragen
+      mitarbeiterumfrageBaseURL: process.env.VUE_APP_URL + '/survey/'
+    }),
+
+    created() {
+      this.fetchUmfragenForUser();
     },
+
+    methods: {
+      /**
+       * Loescht eine Umfrage nach Nutzerbestaetigung
+       */
+      async removeSurvey(index, umfrageID) {
+        var ret = this.deleteUmfrage(index, umfrageID)
+        if(ret) {
+          this.umfragen.splice(index, 1)
+          this.deleteSurvey.splice(index, 1)
+          this.dialog.splice(index, 1)
+          this.dialogAuswertung.splice(index,1)
+          this.deleteError.splice(index, 1)
+        }
+        return
+      },
+
+    /**
+     * Closes v-dialog with dialog as v-model
+     */
+    closeDialog(index) {
+      this.$set(this.dialog, index, false)
+    },
+
+      /**
+       * Closes v-dialog with dialogAuswertung as v-model
+       */
+      closeDialogAuswertung(index) {
+        this.$set(this.dialogAuswertung, index, false)
+      },
+
+      fetchUmfragenForUser: async function () {
+      await fetch(process.env.VUE_APP_BASEURL + "/umfrage/GetAllUmfragenForUser?user=" + Cookies.getCookieAttribut("email"))
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Success:", data);
+          if(data.data.umfragen !== null) {
+            this.umfragen = data.data.umfragen;
+          } else {
+            this.umfragen = []
+          }
+          
+          this.dialog = new Array(this.umfragen.length).fill(false)
+          this.dialogAuswertung = new Array(this.umfragen.length).fill(false)
+          this.deleteError = new Array(this.umfragen.length).fill(false)
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    },
+
+      /**
+       * Loescht die Umfrage mit der gegebenen ID, gibt false bei error, true bei success zurueck
+       */
+      deleteUmfrage: async function (index, umfrageID) {
+         await fetch(process.env.VUE_APP_BASEURL + "/umfrage/deleteUmfrage", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          umfrageID: umfrageID,
+          hauptverantwortlicher: {
+            username: Cookies.getCookieAttribut("email"),
+            sessiontoken: Cookies.getCookieAttribut("sessiontoken"),
+          }
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if(data.status === "error") {
+            this.deleteError[index] = true
+            this.message = data.error.message
+            return false
+          }
+          console.log("Success:", data);
+          return true
+        })
+        .catch((error) => {
+          this.deleteError[index] = true
+          this.message = "Server nicht erreichbar."
+          console.error("Error:", error);
+          return false
+        });
+      }
+    }
   }
+  
 </script>
+
+<!-- Ich muss alle für den entsprechenden Nutzer in der Datenbank angelegten Umfragen empfangen, damit diese angezeigt werden können -->
+<!-- Ich möchte einzelne Umfrage Objekte einsehen können-->
+<!-- Ich möchte einzelne Umfragen löschen können, auch aus der Datenbank-->
