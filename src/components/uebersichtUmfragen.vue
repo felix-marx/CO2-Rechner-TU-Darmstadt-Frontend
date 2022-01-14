@@ -22,9 +22,33 @@
             <v-list-item-title class="text-h5 mb-4">
               Umfrage: {{ umfrage.bezeichnung }}
             </v-list-item-title>
-            <div>
-              Link zur Mitarbeiterumfrage: {{ mitarbeiterumfrageBaseURL + umfrage._id }}
-            </div>
+            <v-row>
+              <v-col 
+                cols="8"
+                align-self="center"
+              >
+                <div>
+                  Link zur Mitarbeiterumfrage: {{ mitarbeiterumfrageBaseURL + umfrage._id }}
+                </div>
+              </v-col>
+              <v-col 
+                align-self="center"
+                cols="3"
+                class="text-right"
+              >
+                <div>
+                  {{ umfrage.mitarbeiterUmfrageRef.length }}/{{ umfrage.mitarbeiteranzahl }}:
+                </div>
+              </v-col>
+              <v-col>
+                <v-progress-circular 
+                  :value="100*(umfrage.mitarbeiterUmfrageRef.length / umfrage.mitarbeiteranzahl)"
+                  :size="35"
+                >
+                  {{ value }}
+                </v-progress-circular>
+              </v-col>
+            </v-row>
           </v-list-item-content>
         </v-list-item>
 
@@ -212,7 +236,7 @@ export default {
       notifications: false,
       sound: true,
       widgets: true,
-      editing_time: "XX.YY.ZZZZ",
+      anteilMitarbeiterUmfrage: 40,
 
       // base url for Mitarbeiterumfragen
       mitarbeiterumfrageBaseURL: process.env.VUE_APP_URL + '/survey/'
