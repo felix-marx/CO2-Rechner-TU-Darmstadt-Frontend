@@ -45,7 +45,6 @@
                   :value="100*(umfrage.mitarbeiterUmfrageRef.length / umfrage.mitarbeiteranzahl)"
                   :size="35"
                 >
-                  {{ value }}
                 </v-progress-circular>
               </v-col>
             </v-row>
