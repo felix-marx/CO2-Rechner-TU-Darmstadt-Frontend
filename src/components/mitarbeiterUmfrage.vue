@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-card class="pa-7">
+    <v-card class="pa-7 mt-2">
       <!-- Introduction Text -->
       <p>Sehr geehrte Teilnehmer*Innen, </p>
       <p>in der folgenden Umfrage sollen CO2-Emissionen, die während Ihrer Tätigkeit an der TU entstehen, ermittelt werden. Es werden Ihr Pendelweg, Ihre Dienstreisen und die von Ihnen verwendeten IT-Geräte abgefragt. Alle Angaben werden dabei anonymisiert verarbeitet und dargestellt, sodass ein Rückschluss auf einzelne Personen nicht möglich ist. Die Umfrage nimmt ungefähr 10 Minuten Ihrer Zeit in Anspruch. </p>
@@ -12,7 +12,7 @@
     </v-card>
     <v-card
       elevation="2"
-      class="pa-7"
+      class="pa-7 mt-2"
       outlined
     >
       <v-card-title>
@@ -41,6 +41,7 @@
               <v-select
                 v-model="medium[0]"
                 :items="fahrtmediumListe"
+                :disabled="submittedDataSuccessfully"
                 label="Verkehrsmedium"
               />
             </v-col>
@@ -50,6 +51,7 @@
             >
               <v-select
                 v-model="medium[1]"
+                :disabled="submittedDataSuccessfully"
                 :items="fahrtmediumÖPNVListe"
                 label="ÖPNV"
               />
@@ -58,7 +60,7 @@
               <v-text-field
                 v-model="medium[4]"
                 :rules="streckeRules"
-                :disabled="medium[0] === null"
+                :disabled="medium[0] === null || submittedDataSuccessfully"
                 :min="0"
                 label="Einfacher Pendelweg"
                 type="number"
@@ -69,6 +71,7 @@
               <v-btn
                 class="add_text--text"
                 color="add"
+                :disabled="submittedDataSuccessfully"
                 @click="newVerkehrsmittel()"
               >
                 Hinzufügen
@@ -78,6 +81,7 @@
               <v-btn
                 class="delete_text--text"
                 color="delete"
+                :disabled="submittedDataSuccessfully"
                 @click="removeVerkehrsmittel(index)"
               >
                 Löschen
@@ -100,6 +104,7 @@
                   medium[0] === 'PKW (Diesel)' || medium[0] === 'PKW (Benzin)'
                 "
                 v-model="medium[2]"
+                :disabled="submittedDataSuccessfully"
                 label="Ja"
                 class="pr-4"
               />
@@ -113,6 +118,7 @@
                 "
                 v-model="medium[3]"
                 :rules="mitfahrerRules"
+                :disabled="submittedDataSuccessfully"
                 :min="0"
                 label="Anzahl Mitfahrer"
                 type="number"
@@ -134,6 +140,7 @@
             <v-text-field
               v-model="arbeitstageBuero"
               :rules="tageImBueroRules"
+              :disabled="submittedDataSuccessfully"
               :min="0"
               :max="7"
               label="Tage im Büro"
@@ -162,6 +169,7 @@
             <v-col :cols="reise[0] === 'Flugzeug' ? 4 : 5">
               <v-select
                 v-model="reise[0]"
+                :disabled="submittedDataSuccessfully"
                 label="Verkehrsmittel"
                 :items="dienstreiseMediumListe"
                 class="pr-5"
@@ -177,6 +185,7 @@
                 v-model="reise[1]"
                 label="Flugstrecke"
                 :items="flugstreckeListe"
+                :disabled="submittedDataSuccessfully"
                 class="pr-5"
               />
             </v-col>
@@ -184,7 +193,7 @@
               <v-text-field
                 v-model="reise[2]"
                 :rules="streckeRules"
-                :disabled="reise[0] === null"
+                :disabled="reise[0] === null || submittedDataSuccessfully"
                 :min="0"
                 label="Einfache Distanz"
                 suffix="km"
@@ -196,6 +205,7 @@
               <v-btn
                 class="add_text--text"
                 color="add"
+                :disabled="submittedDataSuccessfully"
                 @click="newDienstreise()"
               >
                 Hinzufügen
@@ -205,6 +215,7 @@
               <v-btn
                 class="delete_text--text"
                 color="delete"
+                :disabled="submittedDataSuccessfully"
                 @click="removeDienstreise(index)"
               >
                 Löschen
@@ -231,12 +242,13 @@
           <v-row>
             <v-checkbox
               v-model="geraeteAnzahl[0][2]"
+              :disabled="submittedDataSuccessfully"
               hide-details
             />
             <v-text-field
               v-model="geraeteAnzahl[0][1]"
               :rules="geraeteRules"
-              :disabled="!geraeteAnzahl[0][2]"
+              :disabled="!geraeteAnzahl[0][2] || submittedDataSuccessfully"
               :min="0"
               label="Notebooks"
               type="number"
@@ -249,11 +261,12 @@
             <v-checkbox
               v-model="geraeteAnzahl[1][2]"
               hide-details
+              :disabled="submittedDataSuccessfully"
             />
             <v-text-field
               v-model="geraeteAnzahl[1][1]"
               :rules="geraeteRules"
-              :disabled="!geraeteAnzahl[1][2]"
+              :disabled="!geraeteAnzahl[1][2] || submittedDataSuccessfully"
               :min="0"
               label="Desktop PCs"
               type="number"
@@ -266,11 +279,12 @@
             <v-checkbox
               v-model="geraeteAnzahl[2][2]"
               hide-details
+              :disabled="submittedDataSuccessfully"
             />
             <v-text-field
               v-model="geraeteAnzahl[2][1]"
               :rules="geraeteRules"
-              :disabled="!geraeteAnzahl[2][2]"
+              :disabled="!geraeteAnzahl[2][2] || submittedDataSuccessfully"
               :min="0"
               label="Bildschirme"
               type="number"
@@ -283,11 +297,12 @@
             <v-checkbox
               v-model="geraeteAnzahl[3][2]"
               hide-details
+              :disabled="submittedDataSuccessfully"
             />
             <v-text-field
               v-model="geraeteAnzahl[3][1]"
               :rules="geraeteRules"
-              :disabled="!geraeteAnzahl[3][2]"
+              :disabled="!geraeteAnzahl[3][2] || submittedDataSuccessfully"
               :min="0"
               label="Mobiltelefone"
               type="number"
@@ -308,9 +323,32 @@
             </v-row>
           </v-container> -->
 
-        <v-btn @click="sendData()">
-          Absenden
-        </v-btn>
+        <v-row>
+          <v-col cols=2>
+            <v-btn @click="sendData()" :disabled="submittedDataSuccessfully">
+              Absenden
+            </v-btn>
+          </v-col>
+          <v-col cols=10>
+            <LoadingAnimation v-if="displayLoadingAnimation" />
+            <v-alert
+              :value="errorMessage !== null"
+              dense
+              text
+              type="error"
+              >
+              {{ errorMessage }}
+            </v-alert>
+            <v-alert
+              :value="submittedDataSuccessfully"
+              dense
+              text
+              type="success"
+              >
+              Die Daten wurden erfolgreich übermittelt. Vielen Dank für Ihre Teilnahme! Sie können dieses Fenster nun schließen.
+            </v-alert>
+          </v-col>
+        </v-row>
       </v-form>
     </v-card>
   </v-container>
@@ -318,10 +356,12 @@
 
 <script>
 import Tooltip from "@/components/componentParts/tooltip.vue";
+import LoadingAnimation from './componentParts/loadingAnimation.vue';
 
 export default {
   components: {
     Tooltip,
+    LoadingAnimation
   },
 
   props: {
@@ -333,6 +373,11 @@ export default {
 
   data: () => ({
     umfrageYear: "UnknownYear",
+
+    // display of alerts
+    displayLoadingAnimation: false,
+    errorMessage: null,
+    submittedDataSuccessfully: false,
 
     //Arbeitstage
     arbeitstageBuero: null,
@@ -620,6 +665,7 @@ export default {
      * Sends a JSON POST request to the backend to insert the data into the database and start the calculation
      */
     sendData: async function () {
+      this.displayLoadingAnimation = true;
       await fetch(process.env.VUE_APP_BASEURL + "/mitarbeiterUmfrage/insertMitarbeiterUmfrage", {
         method: "POST",
         headers: {
@@ -636,10 +682,19 @@ export default {
         .then((response) => response.json())
         .then((data) => {
           console.log("Success:", data);
-          this.responseData = data;
+          if(data.status === "success"){
+            this.responseData = data;
+            this.submittedDataSuccessfully = true;
+            this.errorMessage = null;
+          }else if(data.status == "error") {
+            this.errorMessage = data.error.message;
+          }
+          this.displayLoadingAnimation = false;
         })
         .catch((error) => {
           console.error("Error:", error);
+          this.errorMessage = "Server nicht erreichbar.";
+          this.displayLoadingAnimation = false;
         });
     },
 
