@@ -291,7 +291,6 @@
       elevation="2"
       outlined
     >
-      <!-- TODO replace example link -->
       <LoadingAnimation v-if="displayLoadingAnimation" />
       <MitarbeiterLinkComponent
         v-if="displaySurveyLink"

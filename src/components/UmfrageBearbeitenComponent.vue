@@ -272,10 +272,20 @@
         </v-card>
       </v-form>
     </v-card>
+
     <v-card
-      v-if="errorMessage"
+      v-if="displaySuccess || displayLoadingAnimation || displayError"
+      elevation="2"
     >
+      <LoadingAnimation v-if="displayLoadingAnimation" />
       <v-alert
+        v-if="displaySuccess"
+        type="success"
+      >
+        Die Umfrage wurde erfolgreich geändert.
+      </v-alert>
+      <v-alert
+        v-if="displayError"
         type="error"
       >
         {{ errorMessage }}
@@ -326,6 +336,12 @@ export default {
 
     // has Absenden Button been clicked
     dataRequestSent: false,
+
+    // for user feedback after updating survey
+    displayLoadingAnimation: false,
+    displayError: false,
+    displaySuccess: false,
+
 
     //Rules for input validation
     geraeteRules: [
@@ -379,6 +395,9 @@ export default {
   methods: {
     flipBearbeiten: function() {
         this.blockInput = !this.blockInput
+        this.displaySuccess = false
+        this.displayError = false
+        this.displayLoadingAnimation = false
     },
 
     /**
@@ -449,6 +468,8 @@ export default {
     },
 
     sendEdit: async function () {
+      this.displayLoadingAnimation = true
+
       await fetch(process.env.VUE_APP_BASEURL + "/umfrage/updateUmfrage", {
         method: "POST",
         headers: {
@@ -472,9 +493,13 @@ export default {
           console.log("Success:", data);
           if(data.status == "success") {
             this.blockInput = true
+            this.displaySuccess = true
+            this.displayLoadingAnimation = false
           }
           if(data.status == "error") {
             this.errorMessage = data.error.message
+            this.displayError = true
+            this.displayLoadingAnimation = false
           }
         })
         .catch((error) => {
