@@ -38,10 +38,6 @@ export default {
   name: "Header",
 
   props: {
-    anmeldenButton: {
-      default: true,
-      type: Boolean,
-    },
     // data on tabs and shown component when selecting the tab
     // entries should be of shape {id: int, title: "", component: ComponentType}
     tabs: {
@@ -66,12 +62,6 @@ export default {
     changeTab(selectedTab, componentType) {
       let data = { id: selectedTab, componentType: componentType };
       this.$emit("changeTab", data);
-    },
-    checkIfCookieAttributExists(identifier) {
-      Cookies.checkIfCookieAttributExists(identifier)
-    },
-    getCookieAttribut(identifier) {
-      Cookies.getCookieAttribut(identifier)
     },
 
     deleteAbmelden: async function () {
