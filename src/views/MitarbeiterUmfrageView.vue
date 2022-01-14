@@ -25,6 +25,7 @@ import Header from "@/components/Header";
 import MitarbeiterUmfrage from "@/components/mitarbeiterUmfrage";
 import SurveyNotFoundComponent from "@/components/SurveyNotFoundComponent";
 import LoadingAnimation from "@/components/componentParts/loadingAnimation";
+import UmfrageCompleteComponent from "@/components/UmfrageCompleteComponent"
 
 export default {
   name: "MitarbeiterUmfrageView",
@@ -33,6 +34,7 @@ export default {
     Footer,
     MitarbeiterUmfrage,
     SurveyNotFoundComponent,
+    UmfrageCompleteComponent,
     LoadingAnimation
   },
 
@@ -40,6 +42,7 @@ export default {
       tabList: [{ id: 0, title: 'Umfrage', componentType: LoadingAnimation}],
       umfrageID: null,
       bezeichnung: "",
+      umfrageComplete: false
   }),
 
   computed: {
@@ -54,12 +57,19 @@ export default {
         return LoadingAnimation;
       }
 
-      // either show the survey or a message, that the requested survey could not be found.
+      // show a message that the requested survey could not be found.
       if(this.surveyNotFound) {
         return SurveyNotFoundComponent;
-      } else {
-        return MitarbeiterUmfrage;
+      } 
+
+      // show a message that the requested survey is already complete.
+      if(this.umfrageComplete){
+        return UmfrageCompleteComponent;
       }
+
+      // else show MitarbeiterUmfrage
+      return MitarbeiterUmfrage;
+      
     },
 
     /**
@@ -77,7 +87,7 @@ export default {
      */
     surveyNotFound: function() {
       return this.umfrageID === "";
-    }
+    },
   },
 
   created() {
@@ -98,15 +108,17 @@ export default {
           console.log("Success:", data);
           if (data.status == "success"){
             this.umfrageID = data.data.umfrageID;
+            this.umfrageComplete = data.data.complete;
             this.bezeichnung = data.data.bezeichnung;
           }
           else{
             this.umfrageID = "";
+            this.dataUmfrageComplete = false;
           }
-        })
-        .catch((error) => {
+        }).catch((error) => {
           console.error("Error:", error);
-          this.umfrageID = ""
+          this.umfrageID = "";
+          this.dataUmfrageComplete = false;
         });
     },
   },

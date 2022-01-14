@@ -460,6 +460,7 @@ export default {
             sessiontoken: Cookies.getCookieAttribut("sessiontoken")
           },
           umfrageID: this.umfrage.umfrageID,
+          bezeichnung: this.umfrage.bezeichnung,
           jahr: parseInt(this.umfrage.jahr),
           gebaeude: this.gebaeudeJSON(),
           mitarbeiteranzahl: parseInt(this.umfrage.mitarbeiteranzahl),
@@ -469,6 +470,9 @@ export default {
         .then((response) => response.json())
         .then((data) => {
           console.log("Success:", data);
+          if(data.status == "success") {
+            this.blockInput = true
+          }
           if(data.status == "error") {
             this.errorMessage = data.error.message
           }
