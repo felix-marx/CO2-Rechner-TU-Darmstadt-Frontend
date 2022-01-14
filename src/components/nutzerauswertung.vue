@@ -361,7 +361,7 @@ export default{
         return buf;    
       }
 
-      saveAs(new Blob([s2ab(wbout)],{type:"application/octet-stream"}), 'Emissionen.xlsx');
+      saveAs(new Blob([s2ab(wbout)],{type:"application/octet-stream"}), 'Emissionen_' +this.responsedata.bezeichnung + '.xlsx');
     },
 
     /**
