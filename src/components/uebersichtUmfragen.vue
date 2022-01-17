@@ -98,13 +98,6 @@
                   :umfrageidprop="umfrage._id"
                 />
               </v-card>
-
-            <!--
-            <v-divider /> 
-            <div>
-              Aktuelle Auswertung
-            </div>
-            -->
             </v-card>
           </v-dialog>
 
@@ -262,17 +255,19 @@ export default {
         return
       },
 
-    /**
-     * Closes v-dialog with dialog as v-model
-     */
-    closeDialog(index) {
-      this.$set(this.dialog, index, false)
-    },
+      /**
+       * Closes v-dialog with dialog as v-model
+       */
+      closeDialog(index) {
+        this.fetchUmfragenForUser()
+        this.$set(this.dialog, index, false)
+      },
 
       /**
        * Closes v-dialog with dialogAuswertung as v-model
        */
       closeDialogAuswertung(index) {
+        this.fetchUmfragenForUser()
         this.$set(this.dialogAuswertung, index, false)
       },
 
