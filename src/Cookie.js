@@ -62,6 +62,8 @@ async postCheckUserRole(next){
         } 
       }
       else{
+        this.deleteCookieAttribut('email')
+        this.deleteCookieAttribut('seesiontoken')
         next('/')
       }
     })
@@ -92,6 +94,8 @@ async postCheckUserRoleForLoginPage(next){
         } 
       }
       else{
+        this.deleteCookieAttribut('email')
+        this.deleteCookieAttribut('sessiontoken')
         next(true)
       }
     })
@@ -119,6 +123,8 @@ async postCheckLogin(next) {
         next()
       }
       else{
+        this.deleteCookieAttribut('email')
+        this.deleteCookieAttribut('seesiontoken')
         next("/")
       }
     })
