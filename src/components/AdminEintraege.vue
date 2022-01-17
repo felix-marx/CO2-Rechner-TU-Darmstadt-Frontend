@@ -22,6 +22,14 @@
             <a href="https://cloud.mongodb.com/freemonitoring/cluster/4IDCKVOR6VNZ4GPVS52C52QPDPO2DRI6">https://cloud.mongodb.com/freemonitoring/cluster/4IDCKVOR6VNZ4GPVS52C52QPDPO2DRI6</a>
           </v-col>
         </v-row>
+        <v-row>
+          <v-col cols="3">
+            MongoDB Compass:
+          </v-col>
+          <v-col>
+            mongodb://[username]:[password]@192.168.101.123:27017/
+          </v-col>
+        </v-row>
       </v-container>
     </v-card>
 
