@@ -469,6 +469,7 @@ export default {
 
     sendEdit: async function () {
       this.displayLoadingAnimation = true
+      this.blockInput = true
 
       await fetch(process.env.VUE_APP_BASEURL + "/umfrage/updateUmfrage", {
         method: "POST",
@@ -492,7 +493,6 @@ export default {
         .then((data) => {
           console.log("Success:", data);
           if(data.status == "success") {
-            this.blockInput = true
             this.displaySuccess = true
             this.displayLoadingAnimation = false
           }
