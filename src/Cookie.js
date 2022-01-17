@@ -41,63 +41,91 @@ deleteCookieAttribut(identifier) {
  * Checks the API for the correct user Role
  */
 async postCheckUserRole(next){
-
   await fetch(process.env.VUE_APP_BASEURL + "/auth/pruefeNutzerRolle", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        username: this.getCookieAttribut('email'),
-        sessiontoken: this.getCookieAttribut('sessiontoken')
-      }),
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      username: this.getCookieAttribut('email'),
+      sessiontoken: this.getCookieAttribut('sessiontoken')
+    }),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      //This is always the case when the backend returns a package
+      if (data.status == "success") {
+        if(data.data == 0){
+          next('survey')
+        } else if (data.data == 1) {
+          next()
+        } 
+      }
+      else{
+        next('/')
+      }
     })
-      .then((response) => response.json())
-      .then((data) => {
-        //This is always the case when the backend returns a package
-        if (data.status == "success") {
-          if(data.data == 0){
-            next('survey')
-          } else if (data.data == 1) {
-            next()
-          } 
-        }
-        else{
-          next('/')
-        }
-      })
-      .catch((error) => {
-        //This is always the case when the backend returns nothing -> Timeout
-        console.error("Error:", error)
-      }); 
-  }
+    .catch((error) => {
+      //This is always the case when the backend returns nothing -> Timeout
+      console.error("Error:", error)
+  }); 
+}
 
+async postCheckUserRoleForLoginPage(next){
+  await fetch(process.env.VUE_APP_BASEURL + "/auth/pruefeNutzerRolle", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      username: this.getCookieAttribut('email'),
+      sessiontoken: this.getCookieAttribut('sessiontoken')
+    }),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.status == "success") {
+        if(data.data == 0){
+          next('survey')
+        } else if (data.data == 1) {
+          next('admin')
+        } 
+      }
+      else{
+        next(true)
+      }
+    })
+    .catch((error) => {
+      //This is always the case when the backend returns nothing -> Timeout
+      console.error("Error:", error)
+  }); 
+}
 
 async postCheckLogin(next) {
-    await fetch(process.env.VUE_APP_BASEURL + "/auth/pruefeSession", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        username: this.getCookieAttribut('email'),
-        sessiontoken: this.getCookieAttribut('sessiontoken')
-      }),
+  await fetch(process.env.VUE_APP_BASEURL + "/auth/pruefeSession", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      username: this.getCookieAttribut('email'),
+      sessiontoken: this.getCookieAttribut('sessiontoken')
+    }),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      //This is always the case when the backend returns a package
+      if (data.status == "success") {
+        next()
+      }
+      else{
+        next("/")
+      }
     })
-      .then((response) => response.json())
-      .then((data) => {
-        //This is always the case when the backend returns a package
-        if (data.status == "success") {
-          next()
-        }
-        else{
-          next("/")
-        }
-      })
-      .catch((error) => {
-        //This is always the case when the backend returns nothing -> Timeout
-        console.error("Error:", error)
-      }); 
+    .catch((error) => {
+      //This is always the case when the backend returns nothing -> Timeout
+      console.error("Error:", error)
+    }); 
   }
 }
 

@@ -14,7 +14,10 @@ const routes = [
   {
     path: '/',
     name: 'Anmeldung',
-    component: Anmeldung
+    component: Anmeldung,
+    beforeEnter: (to, from, next) => {
+      Cookies.postCheckUserRoleForLoginPage(next)
+    }
   },
   {
     path: '/survey',
