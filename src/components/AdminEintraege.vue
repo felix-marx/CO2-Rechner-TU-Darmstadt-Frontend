@@ -451,6 +451,14 @@ export default {
       this.$set(this.displayError, 0, false)
       this.$set(this.displayLoadingAnimation, 0, true)
 
+      if(this.co2_factor.year === '' || this.co2_factor.energy_type === null || this.co2_factor.value === null){
+        this.errorMessage = "Alle Felder müssen ausgefüllt sein"
+        this.$set(this.displayLoadingAnimation, 0, false)
+        this.$set(this.displayError, 0, true)
+
+        return
+      }
+
       await fetch(process.env.VUE_APP_BASEURL + "/db/addFaktor", {
         method: "POST",
         headers: {
@@ -492,6 +500,16 @@ export default {
       this.$set(this.displaySuccess, 1, false)
       this.$set(this.displayError, 1, false)
       this.$set(this.displayLoadingAnimation, 1, true)
+
+      if(this.building.number === null || this.building.name === null || this.building.hnf === null ||
+         this.building.nnf === null || this.building.ngf === null || this.building.ff === null ||
+         this.building.vf === null || this.building.freif === null || this.building.gesamtf === null){
+        this.errorMessage = "Alle Felder müssen ausgefüllt sein"
+        this.$set(this.displayLoadingAnimation, 1, false)
+        this.$set(this.displayError, 1, true)
+
+        return
+      }
 
       await fetch(process.env.VUE_APP_BASEURL + "/db/insertGebaeude", {
         method: "POST",
@@ -543,6 +561,17 @@ export default {
       this.$set(this.displayError, 2, false)
       this.$set(this.displayLoadingAnimation, 2, true)
 
+      console.log(this.buildingRefJSON())
+
+      if(this.counter.primary_key === null || this.counter.unit === null || this.counter.energy_type === null ||
+         this.counter.name === null || this.buildingRefJSON().length === 0){
+        this.errorMessage = "Alle Felder müssen ausgefüllt sein"
+        this.$set(this.displayLoadingAnimation, 2, false)
+        this.$set(this.displayError, 2, true)
+
+        return
+      }
+
       await fetch(process.env.VUE_APP_BASEURL + "/db/insertZaehler", {
         method: "POST",
         headers: {
@@ -586,6 +615,15 @@ export default {
       this.$set(this.displaySuccess, 3, false)
       this.$set(this.displayError, 3, false)
       this.$set(this.displayLoadingAnimation, 3, true)
+
+      if(this.counter_data.year === '' || this.counter_data.primary_key === null || 
+         this.counter_data.energy_type === null || this.counter_data.value === null){
+        this.errorMessage = "Alle Felder müssen ausgefüllt sein"
+        this.$set(this.displayLoadingAnimation, 3, false)
+        this.$set(this.displayError, 3, true)
+
+        return
+      }
 
       await fetch(process.env.VUE_APP_BASEURL + "/db/addZaehlerdaten", {
         method: "POST",
