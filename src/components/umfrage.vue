@@ -569,7 +569,7 @@ export default {
           gebaeude: this.gebaeudeJSON(),
           mitarbeiteranzahl: parseInt(this.anzahlMitarbeiter),
           itGeraete: this.itGeraeteJSON(),
-          hauptverantwortlicher: {
+          authToken: {
             username: Cookies.getCookieAttribut("email"),
             sessiontoken: Cookies.getCookieAttribut("sessiontoken")
           }

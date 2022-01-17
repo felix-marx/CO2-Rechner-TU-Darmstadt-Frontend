@@ -300,7 +300,7 @@ export default {
         },
         body: JSON.stringify({
           umfrageID: umfrageID,
-          hauptverantwortlicher: {
+          authToken: {
             username: Cookies.getCookieAttribut("email"),
             sessiontoken: Cookies.getCookieAttribut("sessiontoken"),
           }
