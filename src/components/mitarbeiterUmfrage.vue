@@ -324,19 +324,22 @@
           </v-container> -->
 
         <v-row>
-          <v-col cols=2>
-            <v-btn @click="sendData()" :disabled="submittedDataSuccessfully">
+          <v-col cols="2">
+            <v-btn
+              :disabled="submittedDataSuccessfully"
+              @click="sendData()"
+            >
               Absenden
             </v-btn>
           </v-col>
-          <v-col cols=10>
+          <v-col cols="10">
             <LoadingAnimation v-if="displayLoadingAnimation" />
             <v-alert
               :value="errorMessage !== null"
               dense
               text
               type="error"
-              >
+            >
               {{ errorMessage }}
             </v-alert>
             <v-alert
@@ -344,7 +347,7 @@
               dense
               text
               type="success"
-              >
+            >
               Die Daten wurden erfolgreich übermittelt. Vielen Dank für Ihre Teilnahme! Sie können dieses Fenster nun schließen.
             </v-alert>
           </v-col>
@@ -471,9 +474,6 @@ export default {
         parseInt(v) > 0 ||
         "Bitte geben Sie eine positive Anzahl an Mitfahrenden an.",
     ],
-
-    //stores response JSON
-    responseData: {},
   }),
 
   created() {
@@ -683,7 +683,6 @@ export default {
         .then((data) => {
           console.log("Success:", data);
           if(data.status === "success"){
-            this.responseData = data;
             this.submittedDataSuccessfully = true;
             this.errorMessage = null;
           }else if(data.status == "error") {
