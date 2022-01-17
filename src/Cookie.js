@@ -62,6 +62,9 @@ async postCheckUserRole(next){
             next()
           } 
         }
+        else{
+          next('/')
+        }
       })
       .catch((error) => {
         //This is always the case when the backend returns nothing -> Timeout
