@@ -36,6 +36,25 @@
               </v-btn>
             </v-col>
           </v-card-actions>
+
+          <v-card
+            v-if="displaySuccess[0] || displayLoadingAnimation[0] || displayError[0]"
+            elevation="2"
+          >
+            <LoadingAnimation v-if="displayLoadingAnimation[0]" />
+            <v-alert
+              v-if="displaySuccess[0]"
+              type="success"
+            >
+              {{ successMessage }}
+            </v-alert>
+            <v-alert
+              v-if="displayError[0]"
+              type="error"
+            >
+              {{ errorMessage }}
+            </v-alert>
+          </v-card>
         </v-expansion-panel-content>
       </v-expansion-panel>
 
@@ -139,6 +158,25 @@
               </v-btn>
             </v-col>
           </v-card-actions>
+
+          <v-card
+            v-if="displaySuccess[1] || displayLoadingAnimation[1] || displayError[1]"
+            elevation="2"
+          >
+            <LoadingAnimation v-if="displayLoadingAnimation[1]" />
+            <v-alert
+              v-if="displaySuccess[1]"
+              type="success"
+            >
+              {{ successMessage }}
+            </v-alert>
+            <v-alert
+              v-if="displayError[1]"
+              type="error"
+            >
+              {{ errorMessage }}
+            </v-alert>
+          </v-card>
         </v-expansion-panel-content>
       </v-expansion-panel>
 
@@ -215,6 +253,25 @@
               </v-btn>
             </v-col>
           </v-card-actions>
+
+          <v-card
+            v-if="displaySuccess[2] || displayLoadingAnimation[2] || displayError[2]"
+            elevation="2"
+          >
+            <LoadingAnimation v-if="displayLoadingAnimation[2]" />
+            <v-alert
+              v-if="displaySuccess[2]"
+              type="success"
+            >
+              {{ successMessage }}
+            </v-alert>
+            <v-alert
+              v-if="displayError[2]"
+              type="error"
+            >
+              {{ errorMessage }}
+            </v-alert>
+          </v-card>
         </v-expansion-panel-content>
       </v-expansion-panel>
 
@@ -258,6 +315,25 @@
               </v-btn>
             </v-col>
           </v-card-actions>
+
+          <v-card
+            v-if="displaySuccess[3] || displayLoadingAnimation[3] || displayError[3]"
+            elevation="2"
+          >
+            <LoadingAnimation v-if="displayLoadingAnimation[3]" />
+            <v-alert
+              v-if="displaySuccess[3]"
+              type="success"
+            >
+              {{ successMessage }}
+            </v-alert>
+            <v-alert
+              v-if="displayError[3]"
+              type="error"
+            >
+              {{ errorMessage }}
+            </v-alert>
+          </v-card>
         </v-expansion-panel-content>
       </v-expansion-panel>
     </v-expansion-panels>
@@ -266,11 +342,13 @@
 
 <script>
 import Tooltip from "@/components/componentParts/tooltip.vue";
+import LoadingAnimation from "./componentParts/loadingAnimation.vue";
 import Cookies from "../Cookie"
 
 export default {
   components: {
-    Tooltip
+    Tooltip,
+    LoadingAnimation
   },
 
   data: () => ({
@@ -308,7 +386,12 @@ export default {
     energy_map: new Map([['Wärme', 1], ['Strom', 2], ['Kälte', 3]]),
     units: ['kWh', 'MWh'],
 
+    displaySuccess: [false, false, false, false],
+    displayError: [false, false, false, false],
+    displayLoadingAnimation: [false, false, false, false], 
 
+    errorMessage: "",
+    successMessage: "",
 
     //Rules for input validation
     basicRule: [
@@ -364,6 +447,9 @@ export default {
      * sends CO2 factor as a json file to db
      */
     sendFactor: async function () {
+      this.$set(this.displaySuccess, 0, false)
+      this.$set(this.displayError, 0, false)
+      this.$set(this.displayLoadingAnimation, 0, true)
 
       await fetch(process.env.VUE_APP_BASEURL + "/db/addFaktor", {
         method: "POST",
@@ -383,6 +469,16 @@ export default {
         .then((response) => response.json())
         .then((data) => {
           console.log("Success:", data);
+          if(data.status == "success"){
+            this.successMessage = "Der CO2-Faktor wurde erfolgreich in der Datenbank gespeichert."
+            this.$set(this.displayLoadingAnimation, 0, false)
+            this.$set(this.displaySuccess, 0, true)
+          }
+          else if(data.status == "error"){
+            this.errorMessage = "Code " + data.error.code + ": " + data.error.message
+            this.$set(this.displayLoadingAnimation, 0, false)
+            this.$set(this.displayError, 0, true)
+          }
         })
         .catch((error) => {
           console.error("Error:", error);
@@ -393,6 +489,9 @@ export default {
      * sends new building as a json file to db
      */
     sendNewBuilding: async function () {
+      this.$set(this.displaySuccess, 1, false)
+      this.$set(this.displayError, 1, false)
+      this.$set(this.displayLoadingAnimation, 1, true)
 
       await fetch(process.env.VUE_APP_BASEURL + "/db/insertGebaeude", {
         method: "POST",
@@ -420,6 +519,16 @@ export default {
         .then((response) => response.json())
         .then((data) => {
           console.log("Success:", data);
+          if(data.status == "success"){
+            this.successMessage = "Das Gebäude wurde erfolgreich in der Datenbank gespeichert."
+            this.$set(this.displayLoadingAnimation, 1, false)
+            this.$set(this.displaySuccess, 1, true)
+          }
+          else if(data.status == "error"){
+            this.errorMessage = "Code " + data.error.code + ": " + data.error.message
+            this.$set(this.displayLoadingAnimation, 1, false)
+            this.$set(this.displayError, 1, true)
+          }
         })
         .catch((error) => {
           console.error("Error:", error);
@@ -430,6 +539,9 @@ export default {
      * sends new counter as a json file to db
      */
     sendNewCounter: async function () {
+      this.$set(this.displaySuccess, 2, false)
+      this.$set(this.displayError, 2, false)
+      this.$set(this.displayLoadingAnimation, 2, true)
 
       await fetch(process.env.VUE_APP_BASEURL + "/db/insertZaehler", {
         method: "POST",
@@ -451,6 +563,16 @@ export default {
         .then((response) => response.json())
         .then((data) => {
           console.log("Success:", data);
+          if(data.status == "success"){
+            this.successMessage = "Der Zähler wurde erfolgreich in der Datenbank gespeichert."
+            this.$set(this.displayLoadingAnimation, 2, false)
+            this.$set(this.displaySuccess, 2, true)
+          }
+          else if(data.status == "error"){
+            this.errorMessage = "Code " + data.error.code + ": " + data.error.message
+            this.$set(this.displayLoadingAnimation, 2, false)
+            this.$set(this.displayError, 2, true)
+          }
         })
         .catch((error) => {
           console.error("Error:", error);
@@ -461,6 +583,9 @@ export default {
      * sends counter data as a json file to db
      */
     sendCounterData: async function () {
+      this.$set(this.displaySuccess, 3, false)
+      this.$set(this.displayError, 3, false)
+      this.$set(this.displayLoadingAnimation, 3, true)
 
       await fetch(process.env.VUE_APP_BASEURL + "/db/addZaehlerdaten", {
         method: "POST",
@@ -481,6 +606,16 @@ export default {
         .then((response) => response.json())
         .then((data) => {
           console.log("Success:", data);
+          if(data.status == "success"){
+            this.successMessage = "Die Zählerdaten wurden erfolgreich in der Datenbank gespeichert."
+            this.$set(this.displayLoadingAnimation, 3, false)
+            this.$set(this.displaySuccess, 3, true)
+          }
+          else if(data.status == "error"){
+            this.errorMessage = "Code " + data.error.code + ": " + data.error.message
+            this.$set(this.displayLoadingAnimation, 3, false)
+            this.$set(this.displayError, 3, true)
+          }
         })
         .catch((error) => {
           console.error("Error:", error);
