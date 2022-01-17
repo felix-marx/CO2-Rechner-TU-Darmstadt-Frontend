@@ -42,7 +42,7 @@ export default {
     currentTabType: AdminUebersicht,
     tabList: [
       { id: 0, title: "Übersicht", componentType: AdminUebersicht},
-      { id: 1, title: "Daten eintragen", componentType: AdminEintraege },
+      { id: 1, title: "Datenbank", componentType: AdminEintraege},
       { id: 2, title: "Auswertung", componentType: AdminAuswertung},
     ],
   }),

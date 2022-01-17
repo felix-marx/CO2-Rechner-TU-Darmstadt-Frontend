@@ -3,35 +3,35 @@
     <!-- Die erstellte Umfrage soll eine Karte erhalten. -->
 
     <v-row align="baseline">
-       <v-col
-        cols=2
+      <v-col
+        cols="2"
         align="center"
       >
-      Sortieren nach:
+        Sortieren nach:
       </v-col>
-      <v-col cols=5>
+      <v-col cols="5">
         <v-select
-              item-text="name"
-              item-value="key"
-              v-model="sortingOptionSelected"
-              :items="sortingOptions"
-              v-on:change="sortUmfragen"
-              label="Sortierkriterium"
-              solo
-            ></v-select>
-        </v-col>
-        <v-col cols=5>
-          <v-select
-              item-text="name"
-              item-value="key"
-              v-model="sortingOrderSelected"
-              :items="sortingOrders"
-              v-on:change="sortUmfragen"
-              label="Reihenfolge"
-              solo
-            ></v-select>
-        </v-col>
-      </v-row>
+          v-model="sortingOptionSelected"
+          item-text="name"
+          item-value="key"
+          :items="sortingOptions"
+          label="Sortierkriterium"
+          solo
+          @change="sortUmfragen"
+        />
+      </v-col>
+      <v-col cols="5">
+        <v-select
+          v-model="sortingOrderSelected"
+          item-text="name"
+          item-value="key"
+          :items="sortingOrders"
+          label="Reihenfolge"
+          solo
+          @change="sortUmfragen"
+        />
+      </v-col>
+    </v-row>
     <v-card
       v-for="(umfrage, index) in umfragen"
       :key="umfrage._id"
