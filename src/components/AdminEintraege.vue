@@ -1,342 +1,349 @@
 <template>
   <v-container>
-    <v-expansion-panels>
-      <v-expansion-panel>
-        <!-- Past years' CO2 factors can be sent to the database-->
-        <v-expansion-panel-header>CO2 Faktor</v-expansion-panel-header>
+    <v-card class="px-4 pb-4">
+      <v-card-title>
+        Eintragen neuer Daten
+      </v-card-title>
+      <v-expansion-panels
+        focusable
+      >
+        <v-expansion-panel>
+          <!-- Past years' CO2 factors can be sent to the database-->
+          <v-expansion-panel-header>CO2 Faktor</v-expansion-panel-header>
 
-        <v-expansion-panel-content>
-          <v-autocomplete
-            v-model="co2_factor.year"
-            :items="possibleYears"
-            label="Bilanzierungsjahr"
-            prepend-icon="mdi-calendar-question"
-          />
+          <v-expansion-panel-content>
+            <v-autocomplete
+              v-model="co2_factor.year"
+              :items="possibleYears"
+              label="Bilanzierungsjahr"
+              prepend-icon="mdi-calendar-question"
+            />
 
-          <v-select
-            v-model="co2_factor.energy_type"
-            :items="energy_types"
-            flat
-            label="Energieart"
-          />
+            <v-select
+              v-model="co2_factor.energy_type"
+              :items="energy_types"
+              flat
+              label="Energieart"
+            />
 
-          <v-text-field
-            v-model="co2_factor.value"
-            :rules="notNegativeRule"
-            label="Wert des CO2 Faktors in g/kWh"
-          />
+            <v-text-field
+              v-model="co2_factor.value"
+              :rules="notNegativeRule"
+              label="Wert des CO2 Faktors in g/kWh"
+            />
 
-          <v-card-actions>
-            <v-col class="text-left">
-              <v-btn
-                color="primary"
-                @click="sendFactor"
+            <v-card-actions>
+              <v-col class="text-left">
+                <v-btn
+                  color="primary"
+                  @click="sendFactor"
+                >
+                  Absenden
+                </v-btn>
+              </v-col>
+            </v-card-actions>
+
+            <v-card
+              v-if="displaySuccess[0] || displayLoadingAnimation[0] || displayError[0]"
+              elevation="2"
+            >
+              <LoadingAnimation v-if="displayLoadingAnimation[0]" />
+              <v-alert
+                v-if="displaySuccess[0]"
+                type="success"
               >
-                Absenden
-              </v-btn>
-            </v-col>
-          </v-card-actions>
+                {{ successMessage }}
+              </v-alert>
+              <v-alert
+                v-if="displayError[0]"
+                type="error"
+              >
+                {{ errorMessage }}
+              </v-alert>
+            </v-card>
+          </v-expansion-panel-content>
+        </v-expansion-panel>
 
-          <v-card
-            v-if="displaySuccess[0] || displayLoadingAnimation[0] || displayError[0]"
-            elevation="2"
-          >
-            <LoadingAnimation v-if="displayLoadingAnimation[0]" />
-            <v-alert
-              v-if="displaySuccess[0]"
-              type="success"
-            >
-              {{ successMessage }}
-            </v-alert>
-            <v-alert
-              v-if="displayError[0]"
-              type="error"
-            >
-              {{ errorMessage }}
-            </v-alert>
-          </v-card>
-        </v-expansion-panel-content>
-      </v-expansion-panel>
-
-      <!-- New buildings can be sent to the database -->
-      <v-expansion-panel>
-        <v-expansion-panel-header>Gebäude Hinzufügen</v-expansion-panel-header>
-        <v-expansion-panel-content>
-          <v-row>
-            <v-col cols="11">
-              <v-text-field
-                v-model="building.number"
-                label="Gebäudenummer"
-                :rules="basicRule"
-              />
-            </v-col>
-            <v-col>
-              <Tooltip
-                tooltip-text="4 Ziffern: Die 1. Ziffer für den Campus (1=Stadtmitte, 2=Botanischer Garten, 
+        <!-- New buildings can be sent to the database -->
+        <v-expansion-panel>
+          <v-expansion-panel-header>Gebäude Hinzufügen</v-expansion-panel-header>
+          <v-expansion-panel-content>
+            <v-row>
+              <v-col cols="11">
+                <v-text-field
+                  v-model="building.number"
+                  label="Gebäudenummer"
+                  :rules="basicRule"
+                />
+              </v-col>
+              <v-col align-self="center">
+                <Tooltip
+                  tooltip-text="4 Ziffern: Die 1. Ziffer für den Campus (1=Stadtmitte, 2=Botanischer Garten, 
                 3=Lichtwiese, 4=Hochschulstadion und 5=Windkanal/August-Euler-Flugplatz). Die Ziffer 2-4 für die 
                 Gebäudenummer. Zum Beispiel 1101 für das Universitätszentrum."
-              />
-            </v-col>
-          </v-row>
+                />
+              </v-col>
+            </v-row>
 
-          <v-row>
-            <v-col cols="11">
-              <v-text-field
-                v-model="building.name"
-                label="Gebäudebezeichnung"
-                :rules="basicRule"
-              />
-            </v-col>
-            <v-col>
-              <Tooltip
-                tooltip-text="Eindeutige Bezeichnung des Gebäudes. Zum Beispiel 'Maschinenhaus'."
-              />
-            </v-col>
-          </v-row>
-
-          <v-row>
-            <v-col>
-              <v-text-field
-                v-model="building.hnf"
-                label="Hauptnutzungsfläche in qm"
-                :rules="notNegativeRule"
-              />
-            </v-col>
-            <v-col>
-              <v-text-field
-                v-model="building.nnf"
-                label="Nebennutzungsfläche in qm"
-                :rules="notNegativeRule"
-              />
-            </v-col>
-            <v-col>
-              <v-text-field
-                v-model="building.ngf"
-                label="Nettogrundfläche in qm"
-                :rules="notNegativeRule"
-              />
-            </v-col>
-            <v-col>
-              <v-text-field
-                v-model="building.ff"
-                label="Funktionsfläche in qm"
-                :rules="notNegativeRule"
-              />
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col>
-              <v-text-field
-                v-model="building.vf"
-                label="Verkehrsfläche in qm"
-                :rules="notNegativeRule"
-              />
-            </v-col>
-            <v-col>
-              <v-text-field
-                v-model="building.freif"
-                label="Freifläche in qm"
-                :rules="notNegativeRule"
-              />
-            </v-col>
-            <v-col>
-              <v-text-field
-                v-model="building.gesamtf"
-                label="Gesamtfläche in qm"
-                :rules="notNegativeRule"
-              />
-            </v-col>
-          </v-row>
-
-          <v-card-actions>
-            <v-col class="text-left">
-              <v-btn
-                color="primary"
-                @click="sendNewBuilding"
-              >
-                Absenden
-              </v-btn>
-            </v-col>
-          </v-card-actions>
-
-          <v-card
-            v-if="displaySuccess[1] || displayLoadingAnimation[1] || displayError[1]"
-            elevation="2"
-          >
-            <LoadingAnimation v-if="displayLoadingAnimation[1]" />
-            <v-alert
-              v-if="displaySuccess[1]"
-              type="success"
-            >
-              {{ successMessage }}
-            </v-alert>
-            <v-alert
-              v-if="displayError[1]"
-              type="error"
-            >
-              {{ errorMessage }}
-            </v-alert>
-          </v-card>
-        </v-expansion-panel-content>
-      </v-expansion-panel>
-
-      <!-- Counters can be sent to the database as soon as the associated buildings exist (a hint is still missing here!) -->
-      <v-expansion-panel>
-        <v-expansion-panel-header>Zähler hinzufügen</v-expansion-panel-header>
-        <v-expansion-panel-content>
-          <v-text-field
-            v-model="counter.primary_key"
-            :rules="notNegativeRule"
-            label="Primary Key des Zählers"
-          />
-
-          <v-select
-            v-model="counter.unit"
-            :items="units"
-            flat
-            label="Zählereinheit"
-          />
-
-          <v-select
-            v-model="counter.energy_type"
-            :items="energy_types"
-            flat
-            label="Zählertyp"
-          />
-
-          <v-text-field
-            v-model="counter.name"
-            :rules="basicRule"
-            label="Bezeichnung des Zählers"
-          />
-
-          <div
-            v-for="(building_reference, i) in counter.building_references"
-            :key="'Gebäudereferenz-' + i"
-          >
             <v-row>
-              <v-col cols="9">
+              <v-col cols="11">
                 <v-text-field
-                  v-model="building_reference[0]"
+                  v-model="building.name"
+                  label="Gebäudebezeichnung"
                   :rules="basicRule"
-                  label="Gebäudereferenz"
+                />
+              </v-col>
+              <v-col align-self="center">
+                <Tooltip
+                  tooltip-text="Eindeutige Bezeichnung des Gebäudes. Zum Beispiel 'Maschinenhaus'."
+                />
+              </v-col>
+            </v-row>
+
+            <v-row>
+              <v-col>
+                <v-text-field
+                  v-model="building.hnf"
+                  label="Hauptnutzungsfläche in qm"
+                  :rules="notNegativeRule"
                 />
               </v-col>
               <v-col>
-                <v-btn
-                  class="add_text--text"
-                  color="add"
-                  @click="newBuildingRef()"
-                >
-                  Hinzufügen
-                </v-btn>
+                <v-text-field
+                  v-model="building.nnf"
+                  label="Nebennutzungsfläche in qm"
+                  :rules="notNegativeRule"
+                />
               </v-col>
               <v-col>
-                <v-btn
-                  class="delete_text--text"
-                  color="delete"
-                  @click="removeBuildingRef(i)"
-                >
-                  Löschen
-                </v-btn>
+                <v-text-field
+                  v-model="building.ngf"
+                  label="Nettogrundfläche in qm"
+                  :rules="notNegativeRule"
+                />
+              </v-col>
+              <v-col>
+                <v-text-field
+                  v-model="building.ff"
+                  label="Funktionsfläche in qm"
+                  :rules="notNegativeRule"
+                />
               </v-col>
             </v-row>
-          </div>
+            <v-row>
+              <v-col>
+                <v-text-field
+                  v-model="building.vf"
+                  label="Verkehrsfläche in qm"
+                  :rules="notNegativeRule"
+                />
+              </v-col>
+              <v-col>
+                <v-text-field
+                  v-model="building.freif"
+                  label="Freifläche in qm"
+                  :rules="notNegativeRule"
+                />
+              </v-col>
+              <v-col>
+                <v-text-field
+                  v-model="building.gesamtf"
+                  label="Gesamtfläche in qm"
+                  :rules="notNegativeRule"
+                />
+              </v-col>
+            </v-row>
 
-          <v-card-actions>
-            <v-col class="text-left">
-              <v-btn
-                color="primary"
-                @click="sendNewCounter"
+            <v-card-actions>
+              <v-col class="text-left">
+                <v-btn
+                  color="primary"
+                  @click="sendNewBuilding"
+                >
+                  Absenden
+                </v-btn>
+              </v-col>
+            </v-card-actions>
+
+            <v-card
+              v-if="displaySuccess[1] || displayLoadingAnimation[1] || displayError[1]"
+              elevation="2"
+            >
+              <LoadingAnimation v-if="displayLoadingAnimation[1]" />
+              <v-alert
+                v-if="displaySuccess[1]"
+                type="success"
               >
-                Absenden
-              </v-btn>
-            </v-col>
-          </v-card-actions>
-
-          <v-card
-            v-if="displaySuccess[2] || displayLoadingAnimation[2] || displayError[2]"
-            elevation="2"
-          >
-            <LoadingAnimation v-if="displayLoadingAnimation[2]" />
-            <v-alert
-              v-if="displaySuccess[2]"
-              type="success"
-            >
-              {{ successMessage }}
-            </v-alert>
-            <v-alert
-              v-if="displayError[2]"
-              type="error"
-            >
-              {{ errorMessage }}
-            </v-alert>
-          </v-card>
-        </v-expansion-panel-content>
-      </v-expansion-panel>
-
-      <!-- Past years' counter data can be sent to the database -->
-      <v-expansion-panel>
-        <v-expansion-panel-header>Zählerdaten eintragen</v-expansion-panel-header>
-        <v-expansion-panel-content>
-          <v-autocomplete
-            v-model="counter_data.year"
-            :items="possibleYears"
-            label="Bilanzierungsjahr"
-            prepend-icon="mdi-calendar-question"
-          />
-
-          <v-text-field
-            v-model="counter_data.primary_key"
-            :rules="notNegativeRule"
-            label="Primary Key des Zählers"
-          />
-
-          <v-select
-            v-model="counter_data.energy_type"
-            :items="energy_types"
-            flat
-            label="Zählertyp"
-          />
-
-          <v-text-field
-            v-model="counter_data.value"
-            :rules="notNegativeRule"
-            label="Zählerwert"
-          />
-
-          <v-card-actions>
-            <v-col class="text-left">
-              <v-btn
-                color="primary"
-                @click="sendCounterData"
+                {{ successMessage }}
+              </v-alert>
+              <v-alert
+                v-if="displayError[1]"
+                type="error"
               >
-                Absenden
-              </v-btn>
-            </v-col>
-          </v-card-actions>
+                {{ errorMessage }}
+              </v-alert>
+            </v-card>
+          </v-expansion-panel-content>
+        </v-expansion-panel>
 
-          <v-card
-            v-if="displaySuccess[3] || displayLoadingAnimation[3] || displayError[3]"
-            elevation="2"
-          >
-            <LoadingAnimation v-if="displayLoadingAnimation[3]" />
-            <v-alert
-              v-if="displaySuccess[3]"
-              type="success"
+        <!-- Counters can be sent to the database as soon as the associated buildings exist (a hint is still missing here!) -->
+        <v-expansion-panel>
+          <v-expansion-panel-header>Zähler hinzufügen</v-expansion-panel-header>
+          <v-expansion-panel-content>
+            <v-text-field
+              v-model="counter.primary_key"
+              :rules="notNegativeRule"
+              label="Primary Key des Zählers"
+            />
+
+            <v-select
+              v-model="counter.unit"
+              :items="units"
+              flat
+              label="Zählereinheit"
+            />
+
+            <v-select
+              v-model="counter.energy_type"
+              :items="energy_types"
+              flat
+              label="Zählertyp"
+            />
+
+            <v-text-field
+              v-model="counter.name"
+              :rules="basicRule"
+              label="Bezeichnung des Zählers"
+            />
+
+            <div
+              v-for="(building_reference, i) in counter.building_references"
+              :key="'Gebäudereferenz-' + i"
             >
-              {{ successMessage }}
-            </v-alert>
-            <v-alert
-              v-if="displayError[3]"
-              type="error"
+              <v-row>
+                <v-col cols="9">
+                  <v-text-field
+                    v-model="building_reference[0]"
+                    :rules="basicRule"
+                    label="Gebäudereferenz"
+                  />
+                </v-col>
+                <v-col>
+                  <v-btn
+                    class="add_text--text"
+                    color="add"
+                    @click="newBuildingRef()"
+                  >
+                    Hinzufügen
+                  </v-btn>
+                </v-col>
+                <v-col>
+                  <v-btn
+                    class="delete_text--text"
+                    color="delete"
+                    @click="removeBuildingRef(i)"
+                  >
+                    Löschen
+                  </v-btn>
+                </v-col>
+              </v-row>
+            </div>
+
+            <v-card-actions>
+              <v-col class="text-left">
+                <v-btn
+                  color="primary"
+                  @click="sendNewCounter"
+                >
+                  Absenden
+                </v-btn>
+              </v-col>
+            </v-card-actions>
+
+            <v-card
+              v-if="displaySuccess[2] || displayLoadingAnimation[2] || displayError[2]"
+              elevation="2"
             >
-              {{ errorMessage }}
-            </v-alert>
-          </v-card>
-        </v-expansion-panel-content>
-      </v-expansion-panel>
-    </v-expansion-panels>
+              <LoadingAnimation v-if="displayLoadingAnimation[2]" />
+              <v-alert
+                v-if="displaySuccess[2]"
+                type="success"
+              >
+                {{ successMessage }}
+              </v-alert>
+              <v-alert
+                v-if="displayError[2]"
+                type="error"
+              >
+                {{ errorMessage }}
+              </v-alert>
+            </v-card>
+          </v-expansion-panel-content>
+        </v-expansion-panel>
+
+        <!-- Past years' counter data can be sent to the database -->
+        <v-expansion-panel>
+          <v-expansion-panel-header>Zählerdaten eintragen</v-expansion-panel-header>
+          <v-expansion-panel-content>
+            <v-autocomplete
+              v-model="counter_data.year"
+              :items="possibleYears"
+              label="Bilanzierungsjahr"
+              prepend-icon="mdi-calendar-question"
+            />
+
+            <v-text-field
+              v-model="counter_data.primary_key"
+              :rules="notNegativeRule"
+              label="Primary Key des Zählers"
+            />
+
+            <v-select
+              v-model="counter_data.energy_type"
+              :items="energy_types"
+              flat
+              label="Zählertyp"
+            />
+
+            <v-text-field
+              v-model="counter_data.value"
+              :rules="notNegativeRule"
+              label="Zählerwert"
+            />
+
+            <v-card-actions>
+              <v-col class="text-left">
+                <v-btn
+                  color="primary"
+                  @click="sendCounterData"
+                >
+                  Absenden
+                </v-btn>
+              </v-col>
+            </v-card-actions>
+
+            <v-card
+              v-if="displaySuccess[3] || displayLoadingAnimation[3] || displayError[3]"
+              elevation="2"
+            >
+              <LoadingAnimation v-if="displayLoadingAnimation[3]" />
+              <v-alert
+                v-if="displaySuccess[3]"
+                type="success"
+              >
+                {{ successMessage }}
+              </v-alert>
+              <v-alert
+                v-if="displayError[3]"
+                type="error"
+              >
+                {{ errorMessage }}
+              </v-alert>
+            </v-card>
+          </v-expansion-panel-content>
+        </v-expansion-panel>
+      </v-expansion-panels>
+    </v-card>
   </v-container>
 </template>
 
