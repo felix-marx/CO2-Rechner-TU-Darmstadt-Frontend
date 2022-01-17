@@ -2,6 +2,32 @@
   <v-container>
     <v-card class="px-4 pb-4">
       <v-card-title>
+        Datenbankinformationen
+      </v-card-title>
+      <v-divider />
+      <v-container>
+        <v-row>
+          <v-col cols="3">
+            Datenbankversion:
+          </v-col>
+          <v-col>
+            MongoDB v4.4.11
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col cols="3">
+            Monitoring:
+          </v-col>
+          <v-col>
+            <a href="https://cloud.mongodb.com/freemonitoring/cluster/4IDCKVOR6VNZ4GPVS52C52QPDPO2DRI6">https://cloud.mongodb.com/freemonitoring/cluster/4IDCKVOR6VNZ4GPVS52C52QPDPO2DRI6</a>
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-card>
+
+
+    <v-card class="px-4 pb-4 mt-2">
+      <v-card-title>
         Eintragen neuer Daten
       </v-card-title>
       <v-expansion-panels
