@@ -30,6 +30,7 @@
       <v-card-title>
         Eintragen neuer Daten
       </v-card-title>
+      <v-divider />
       <v-expansion-panels
         focusable
       >
