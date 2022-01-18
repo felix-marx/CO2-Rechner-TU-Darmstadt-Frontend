@@ -176,7 +176,7 @@
               <v-btn
                 color="primary"
                 :style="{ left: '50%', transform: 'translateX(-50%)' }"
-                @click="postAnmeldung()"
+                @click="istRegistrierung = false"
               >
                 <span>Zurück zur Anmeldung</span>
                 <v-icon>mdi-account</v-icon>
