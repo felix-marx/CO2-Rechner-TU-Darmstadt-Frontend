@@ -77,6 +77,11 @@ async postCheckUserRole(next){
  * Prueft die Rolle des Nutzers. Wenn Admin leite auf /admin weiter, sonst auf /survey
  */
 async postCheckUserRoleForLoginPage(next){
+  if (this.getCookieAttribut('username') === null && this.getCookieAttribut('sessiontoken') === null){
+    next(true)
+    return
+  }
+
   await fetch(process.env.VUE_APP_BASEURL + "/auth/pruefeNutzerRolle", {
     method: "POST",
     headers: {
