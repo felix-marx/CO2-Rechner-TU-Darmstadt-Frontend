@@ -39,6 +39,16 @@
         Eintragen neuer Daten
       </v-card-title>
       <v-divider />
+
+      <v-alert
+        type="warning"
+        border="bottom"
+        colored-border
+        elevation="3"
+      >
+        Bei Dezimalzahlen muss Punkt als Dezimaltrenner verwendet werden!
+      </v-alert>
+
       <v-expansion-panels
         focusable
       >
