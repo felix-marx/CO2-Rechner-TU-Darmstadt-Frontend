@@ -132,20 +132,6 @@
             >
               <div>
                 Indem Sie auf „Konto erstellen“ klicken, stimmen Sie unseren Nutzungsbedingungen zu. <br> In unserer 
-                <!-- <v-tooltip bottom>
-                      <template v-slot:activator="{ on }">
-                        <a
-                          target="_blank"
-                          href="https://vuetifyjs.com"
-                          @click.stop
-                          v-on="on"
-                        >
-                          AGB
-                        </a>
-                      </template>
-                      Öffnet eine neue Seite mit der AGB
-                    </v-tooltip>
-                    und der -->
                 <v-tooltip bottom>
                   <template v-slot:activator="{ on }">
                     <a
@@ -233,7 +219,7 @@ export default {
       v => !!v || "Muss angegeben werden",
     ],
     passwordRule: [
-      v => (v && v.length >= 8) || 'Min 8 characters'
+      v => (v && v.length >= 8) || 'Mindestens 8 Zeichen'
     ]
   }),
 
@@ -262,7 +248,7 @@ export default {
         return false
       }
       if (this.username.length < 5) {
-        this.errorMessage = "Email Mindestlänge ist 5 Zeichen"
+        this.errorMessage = "Benutzername Mindestlänge ist 5 Zeichen"
         return false
       }
       if (this.password.length < 8) {

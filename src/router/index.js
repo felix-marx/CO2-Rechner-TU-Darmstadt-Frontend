@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-//import Umfrage from '../components/umfrage.vue'
 import Home from '../views/Home.vue'
 import Anmeldung from '../components/Anmeldung.vue'
 import Cookies from '../Cookie.js'
