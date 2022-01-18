@@ -518,7 +518,7 @@ export default {
         },
         body: JSON.stringify({
           authToken: {
-            username: Cookies.getCookieAttribut('email'),
+            username: Cookies.getCookieAttribut('username'),
             sessiontoken: Cookies.getCookieAttribut('sessiontoken'),
           },
           idEnergieversorgung: this.energy_map.get(this.co2_factor.energy_type),
@@ -570,7 +570,7 @@ export default {
         },
         body: JSON.stringify({
           authToken: {
-            username: Cookies.getCookieAttribut('email'),
+            username: Cookies.getCookieAttribut('username'),
             sessiontoken: Cookies.getCookieAttribut('sessiontoken'),
           },
           nr: parseInt(this.building.number),
@@ -631,7 +631,7 @@ export default {
         },
         body: JSON.stringify({
           authToken: {
-            username: Cookies.getCookieAttribut('email'),
+            username: Cookies.getCookieAttribut('username'),
             sessiontoken: Cookies.getCookieAttribut('sessiontoken'),
           },
           pkEnergie: parseInt(this.counter.primary_key),
@@ -684,7 +684,7 @@ export default {
         },
         body: JSON.stringify({
           authToken: {
-            username: Cookies.getCookieAttribut('email'),
+            username: Cookies.getCookieAttribut('username'),
             sessiontoken: Cookies.getCookieAttribut('sessiontoken'),
           },
           pkEnergie: parseInt(this.counter_data.primary_key),

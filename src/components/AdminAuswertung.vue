@@ -276,7 +276,7 @@ import Cookies from "../Cookie";
       },
 
       fetchUmfragenForUser: async function () {
-      await fetch(process.env.VUE_APP_BASEURL + "/umfrage/GetAllUmfragenForUser?user=" + Cookies.getCookieAttribut("email"))
+      await fetch(process.env.VUE_APP_BASEURL + "/umfrage/GetAllUmfragenForUser?user=" + Cookies.getCookieAttribut("username"))
         .then((response) => response.json())
         .then((data) => {
           console.log("Success:", data);

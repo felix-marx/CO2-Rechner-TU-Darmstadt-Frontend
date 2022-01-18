@@ -50,7 +50,7 @@ export default {
   }),
   computed: {
     cookieAttribut: function () {
-      return Cookies.getCookieAttribut('email')
+      return Cookies.getCookieAttribut('username')
     }
   },
   methods: {
@@ -71,14 +71,14 @@ export default {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          username: Cookies.getCookieAttribut('email')
+          username: Cookies.getCookieAttribut('username')
         }),
       })
         .then((response) => response.json())
         .then((data) => {
           //This is always the case when the backend returns a package
           //Delete cookie and log if not success
-          Cookies.deleteCookieAttribut("email")
+          Cookies.deleteCookieAttribut("username")
           Cookies.deleteCookieAttribut("sessiontoken")
           if (data.status != "success") {
             console.log("Server konnte nicht löschen")

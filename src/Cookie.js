@@ -47,7 +47,7 @@ async postCheckUserRole(next){
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      username: this.getCookieAttribut('email'),
+      username: this.getCookieAttribut('username'),
       sessiontoken: this.getCookieAttribut('sessiontoken')
     }),
   })
@@ -62,7 +62,7 @@ async postCheckUserRole(next){
         } 
       }
       else{
-        this.deleteCookieAttribut('email')
+        this.deleteCookieAttribut('username')
         this.deleteCookieAttribut('seesiontoken')
         next('/')
       }
@@ -83,7 +83,7 @@ async postCheckUserRoleForLoginPage(next){
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      username: this.getCookieAttribut('email'),
+      username: this.getCookieAttribut('username'),
       sessiontoken: this.getCookieAttribut('sessiontoken')
     }),
   })
@@ -97,7 +97,7 @@ async postCheckUserRoleForLoginPage(next){
         } 
       }
       else{
-        this.deleteCookieAttribut('email')
+        this.deleteCookieAttribut('username')
         this.deleteCookieAttribut('sessiontoken')
         next(true)
       }
@@ -119,7 +119,7 @@ async postCheckLogin(next) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      username: this.getCookieAttribut('email'),
+      username: this.getCookieAttribut('username'),
       sessiontoken: this.getCookieAttribut('sessiontoken')
     }),
   })
@@ -130,7 +130,7 @@ async postCheckLogin(next) {
         next()
       }
       else{
-        this.deleteCookieAttribut('email')
+        this.deleteCookieAttribut('username')
         this.deleteCookieAttribut('sessiontoken')
         next("/")
       }

@@ -478,7 +478,7 @@ export default {
         },
         body: JSON.stringify({
           authToken: {
-            username: Cookies.getCookieAttribut("email"),
+            username: Cookies.getCookieAttribut("username"),
             sessiontoken: Cookies.getCookieAttribut("sessiontoken")
           },
           umfrageID: this.umfrage.umfrageID,
@@ -529,7 +529,7 @@ export default {
         },
         body: JSON.stringify({
           authToken: {
-            username: Cookies.getCookieAttribut("email"),
+            username: Cookies.getCookieAttribut("username"),
             sessiontoken: Cookies.getCookieAttribut("sessiontoken")
           },
           umfrageID: this.umfrage.umfrageID,

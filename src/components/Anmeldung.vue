@@ -225,7 +225,7 @@ export default {
 
   computed: {
     showAnmelden: function () {
-      return Cookies.checkIfCookieAttributExists("email")
+      return Cookies.checkIfCookieAttributExists("username")
     },
   },
 
@@ -281,7 +281,7 @@ export default {
           //This is always the case when the backend returns a package
           if (data.status == "success") {
             Cookies.setCookie("sessiontoken", data.data.sessiontoken)
-            Cookies.setCookie("email", this.username)
+            Cookies.setCookie("username", this.username)
             this.$router.push('/admin').catch(() => { })
           }
           //Message on success or error send from Backend
@@ -316,7 +316,7 @@ export default {
           //This is always the case when the backend returns a package
           if (data.status == "success") {
             Cookies.setCookie("sessiontoken", data.data.sessiontoken)
-            Cookies.setCookie("email", this.username)
+            Cookies.setCookie("username", this.username)
             this.$router.push('/survey')
           }
           //Message on success or error send from Backend 

@@ -456,7 +456,7 @@ export default {
      * Returns the mail of the currently logged in user.
      */
     getUserMail: function() {
-      return Cookies.getCookieAttribut('email');
+      return Cookies.getCookieAttribut('username');
     },
 
     /**
@@ -570,7 +570,7 @@ export default {
           mitarbeiteranzahl: parseInt(this.anzahlMitarbeiter),
           itGeraete: this.itGeraeteJSON(),
           authToken: {
-            username: Cookies.getCookieAttribut("email"),
+            username: Cookies.getCookieAttribut("username"),
             sessiontoken: Cookies.getCookieAttribut("sessiontoken")
           }
         }),

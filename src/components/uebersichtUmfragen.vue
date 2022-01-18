@@ -270,7 +270,7 @@ export default {
       },
 
       fetchUmfragenForUser: async function () {
-      await fetch(process.env.VUE_APP_BASEURL + "/umfrage/GetAllUmfragenForUser?user=" + Cookies.getCookieAttribut("email"))
+      await fetch(process.env.VUE_APP_BASEURL + "/umfrage/GetAllUmfragenForUser?user=" + Cookies.getCookieAttribut("username"))
         .then((response) => response.json())
         .then((data) => {
           console.log("Success:", data);
@@ -301,7 +301,7 @@ export default {
         body: JSON.stringify({
           umfrageID: umfrageID,
           authToken: {
-            username: Cookies.getCookieAttribut("email"),
+            username: Cookies.getCookieAttribut("username"),
             sessiontoken: Cookies.getCookieAttribut("sessiontoken"),
           }
         }),
