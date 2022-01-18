@@ -73,6 +73,9 @@ async postCheckUserRole(next){
   }); 
 }
 
+/**
+ * Prueft die Rolle des Nutzers. Wenn Admin leite auf /admin weiter, sonst auf /survey
+ */
 async postCheckUserRoleForLoginPage(next){
   await fetch(process.env.VUE_APP_BASEURL + "/auth/pruefeNutzerRolle", {
     method: "POST",
@@ -105,6 +108,10 @@ async postCheckUserRoleForLoginPage(next){
   }); 
 }
 
+/**
+ * Prüft ob der Nutzer einen noch gueltigen Sessiontoken registriert hat.
+ * Falls der Token abgelaufen ist, werden die Cookiedaten geloescht.
+ */
 async postCheckLogin(next) {
   await fetch(process.env.VUE_APP_BASEURL + "/auth/pruefeSession", {
     method: "POST",
@@ -124,7 +131,7 @@ async postCheckLogin(next) {
       }
       else{
         this.deleteCookieAttribut('email')
-        this.deleteCookieAttribut('seesiontoken')
+        this.deleteCookieAttribut('sessiontoken')
         next("/")
       }
     })
