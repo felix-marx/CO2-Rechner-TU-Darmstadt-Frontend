@@ -263,7 +263,18 @@ import Cookies from "../Cookie";
        * Fetches all existent Umfragen from the Server.
        */
       fetchUmfragen: async function () {
-      await fetch(process.env.VUE_APP_BASEURL + "/umfrage/alleUmfragen")
+      await fetch(process.env.VUE_APP_BASEURL + "/umfrage/alleUmfragen", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          authToken: {
+            username: Cookies.getCookieAttribut("username"),
+            sessiontoken: Cookies.getCookieAttribut("sessiontoken")
+          },
+        }),
+      })
         .then((response) => response.json())
         .then((data) => {
           console.log("Success:", data);
