@@ -389,7 +389,7 @@ export default {
   created() {
       this.fetchGebaeudeData();
       this.umfrage.umfrageID = JSON.parse(JSON.stringify(this.umfrageidprop));
-      this.getUmfrageData();
+      this.fetchUmfrageData();
   },
 
   methods: {
@@ -521,7 +521,7 @@ export default {
         });
     },
 
-    getUmfrageData: async function() {
+    fetchUmfrageData: async function() {
        await fetch(process.env.VUE_APP_BASEURL + "/umfrage/getUmfrage", {
         method: "POST",
         headers: {
