@@ -11,9 +11,7 @@
       <v-container>
         <v-row>
           <v-col>
-            <p>
-              Bilanzierungsjahr: {{ responsedata.jahr }}
-            </p>
+            <p>Bilanzierungsjahr: {{ responsedata.jahr }}</p>
           </v-col>
           <v-col>
             <p>Mitarbeiteranzahl: {{ responsedata.mitarbeiteranzahl }}</p>
@@ -44,18 +42,22 @@
         </v-row>
       </v-container>
 
-      <v-card-title>
-        Emissionen
-      </v-card-title>
+      <v-card-title>Emissionen</v-card-title>
 
       <v-divider />
-      <v-container>    
+      <v-container>
         <v-row>
           <v-col>
-            <p>Gesamtemissionen: {{ responsedata.emissionenGesamt }} t CO<sub>2</sub> eq.</p>
+            <p>
+              Gesamtemissionen: {{ responsedata.emissionenGesamt }} t CO
+              <sub>2</sub> eq.
+            </p>
           </v-col>
           <v-col>
-            <p>Emissionen pro Mitarbeiter: {{ responsedata.emissionenProMitarbeiter }} t CO<sub>2</sub> eq.</p>
+            <p>
+              Emissionen pro Mitarbeiter: {{ responsedata.emissionenProMitarbeiter }} t CO
+              <sub>2</sub> eq.
+            </p>
           </v-col>
         </v-row>
 
@@ -65,14 +67,14 @@
             outlined
             class="pa-7"
           >
-            <v-icon>mdi-thought-bubble-outline</v-icon> <b>Did you know?</b>: {{ haushalteReferenzText }}
+            <v-icon>mdi-thought-bubble-outline</v-icon>
+            <b>Did you know?</b>
+            : {{ haushalteReferenzText }}
           </v-card>
         </v-row>
         <v-row>
           <v-col class="d-flex justify-center">
-            <h4>
-              Aufteilung nach Hauptemissionsfaktoren
-            </h4>
+            <h4>Aufteilung nach Hauptemissionsfaktoren</h4>
           </v-col>
         </v-row>
         <v-row>
@@ -135,8 +137,7 @@
             >
               <v-icon left>
                 mdi-file-chart-outline
-              </v-icon>
-              Download als XLSX
+              </v-icon>Download als XLSX
             </v-btn>
           </v-col>
         </v-row>
@@ -158,9 +159,10 @@ import DoughnutChart from "./charts/DoughnutChart.js";
 import BarChart from "./charts/BarChart.js";
 import XLSX from "xlsx"
 import saveAs from 'file-saver';
+import Cookies from '../Cookie'
 
-export default{
-  name: "Auswertung" , 
+export default {
+  name: "Auswertung",
 
   components: {
     DoughnutChart,
@@ -171,7 +173,7 @@ export default{
     umfrageid: {
       default: "",
       type: String,
-    }  
+    }
   },
 
   data() {
@@ -212,31 +214,31 @@ export default{
       optionsGesamtDoughnut: null,
 
       chartdataGesamtPareto: null,
-      optionsGesamtPareto:null,
+      optionsGesamtPareto: null,
 
       chartdataEnergieDoughnut: null,
       optionsEnergieDoughnut: null,
 
       chartdataEnergiePareto: null,
-      optionsEnergiePareto:null,
+      optionsEnergiePareto: null,
     }
   },
 
   computed: {
-    haushalteReferenzText: function(){
+    haushalteReferenzText: function () {
       let base_text_beginning = "Ihr Gesamtverbrauch entspricht circa ";
       let base_text_middle = " bzw. ";
       let text_zweiPersonenHaushalt = this.responsedata.vergleich2PersonenHaushalt + " Zwei-Personen-Haushalten";
       let text_vierPersonenHaushalt = this.responsedata.vergleich4PersonenHaushalt + " Vier-Personen-Haushalten";
-      let base_text_ending =" in einem Jahr."
+      let base_text_ending = " in einem Jahr."
       return base_text_beginning + text_vierPersonenHaushalt + base_text_middle + text_zweiPersonenHaushalt + base_text_ending;
     },
-    displayExtrapolationWarning: function(){
+    displayExtrapolationWarning: function () {
       return this.responsedata.umfragenanteil <= 50.0
     }
   },
-  
-  created(){
+
+  created() {
     this.getData();
   },
 
@@ -244,7 +246,7 @@ export default{
     /**
      * Creates XLSX file and makes it downloadable.
      */
-    makeSpreadsheet: function(){
+    makeSpreadsheet: function () {
       var data = [
         {
           "col1": "Auswertung der Umfrage",
@@ -265,7 +267,7 @@ export default{
           "col1": "Fortschritt",
           "col2": this.responsedata.umfragenanteil + "%",
         },
-        { },
+        {},
         {
           "col1": "Emissionsüberblick",
           "col2": "t CO2 eq.",
@@ -278,7 +280,7 @@ export default{
           "col1": "Emissionen pro Mitarbeiter",
           "col2": this.responsedata.emissionenProMitarbeiter,
         },
-        { },
+        {},
         {
           "col1": "Vergleich 4-Personen Haushalt",
           "col2": this.responsedata.vergleich4PersonenHaushalt,
@@ -287,51 +289,51 @@ export default{
           "col1": "Vergleich 2-Personen Haushalt",
           "col2": this.responsedata.vergleich2PersonenHaushalt,
         },
-        { },
+        {},
         {
           "col1": "Aufteilung nach Hauptemissonsfaktoren",
           "col2": "t CO2 eq.",
           "col3": "%",
         },
         {
-          "col1":"Energie", 
-          "col2": this.responsedata.emissionenEnergie, 
+          "col1": "Energie",
+          "col2": this.responsedata.emissionenEnergie,
           "col3": Math.round(this.responsedata.emissionenEnergie / this.responsedata.emissionenGesamt * 1000) / 10,
         },
         {
-          "col1":"Pendelwege", 
-          "col2": this.responsedata.emissionenPendelwege, 
+          "col1": "Pendelwege",
+          "col2": this.responsedata.emissionenPendelwege,
           "col3": Math.round(this.responsedata.emissionenPendelwege / this.responsedata.emissionenGesamt * 1000) / 10,
         },
         {
-          "col1":"Dienstreisen", 
-          "col2": this.responsedata.emissionenDienstreisen, 
+          "col1": "Dienstreisen",
+          "col2": this.responsedata.emissionenDienstreisen,
           "col3": Math.round(this.responsedata.emissionenDienstreisen / this.responsedata.emissionenGesamt * 1000) / 10,
         },
         {
-          "col1":"IT-Geräte", 
-          "col2": this.responsedata.emissionenITGeraete, 
+          "col1": "IT-Geräte",
+          "col2": this.responsedata.emissionenITGeraete,
           "col3": Math.round(this.responsedata.emissionenITGeraete / this.responsedata.emissionenGesamt * 1000) / 10
         },
-        { },
+        {},
         {
           "col1": "Aufteilung nach Energieart",
           "col2": "t CO2 eq.",
           "col3": "%",
         },
         {
-          "col1":"Wärme", 
-          "col2": this.responsedata.emissionenWaerme, 
+          "col1": "Wärme",
+          "col2": this.responsedata.emissionenWaerme,
           "col3": Math.round(this.responsedata.emissionenWaerme / this.responsedata.emissionenEnergie * 1000) / 10,
         },
         {
-          "col1":"Kälte", 
-          "col2": this.responsedata.emissionenKaelte, 
+          "col1": "Kälte",
+          "col2": this.responsedata.emissionenKaelte,
           "col3": Math.round(this.responsedata.emissionenKaelte / this.responsedata.emissionenEnergie * 1000) / 10,
         },
         {
-          "col1":"Strom", 
-          "col2": this.responsedata.emissionenStrom, 
+          "col1": "Strom",
+          "col2": this.responsedata.emissionenStrom,
           "col3": Math.round(this.responsedata.emissionenStrom / this.responsedata.emissionenEnergie * 1000) / 10,
         },
       ];
@@ -340,7 +342,7 @@ export default{
         skipHeader: true,
       }
 
-        // workbook
+      // workbook
       var wb = XLSX.utils.book_new();
       wb.Props = {
         Title: "CO2 Rechner",
@@ -348,34 +350,71 @@ export default{
       };
       wb.SheetNames.push("Emissionen");
 
-        // worksheet
+      // worksheet
       var ws = XLSX.utils.json_to_sheet(data, options);
       wb.Sheets["Emissionen"] = ws;
 
-      var wbout = XLSX.write(wb, {bookType:'xlsx',  type: 'binary'});
+      var wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
 
-      function s2ab(s) { 
+      function s2ab(s) {
         var buf = new ArrayBuffer(s.length); //convert s to arrayBuffer
         var view = new Uint8Array(buf);  //create uint8array as viewer
-        for (var i=0; i<s.length; i++) view[i] = s.charCodeAt(i) & 0xFF; //convert to octet
-        return buf;    
+        for (var i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF; //convert to octet
+        return buf;
       }
 
-      saveAs(new Blob([s2ab(wbout)],{type:"application/octet-stream"}), 'Emissionen_' +this.responsedata.bezeichnung + '.xlsx');
+      saveAs(new Blob([s2ab(wbout)], { type: "application/octet-stream" }), 'Emissionen_' + this.responsedata.bezeichnung + '.xlsx');
     },
 
+    // /**
+    //  * Fetches Get request to get survey data and evaluation.
+    //  */
+    // getData: async function(){
+    //   await fetch(process.env.VUE_APP_BASEURL + "/auswertung?id=" + this.$props.umfrageid, {
+    //     method: "GET",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //   }).then((response) => response.json())
+    //     .then((body) => {
+    //       if (body.status == "success"){
+    //         this.responsesuccessful = true
+    //         this.responsedata = body.data
+
+    //         this.checkNegativValue();
+    //         this.roundResponseData();
+    //         this.setChartGesamt();
+    //         this.setChartEnergie();
+    //       }
+    //       else {  // Fehlerbehandlung
+    //         this.responseNotSuccessful = true
+    //         this.responseerror = body.error
+    //       }
+    //     })
+    //     .catch((error) => {
+    //       console.error("Error:", error);
+    //     });
+    // },
     /**
-     * Fetches Get request to get survey data and evaluation.
-     */
-    getData: async function(){
-      await fetch(process.env.VUE_APP_BASEURL + "/auswertung?id=" + this.$props.umfrageid, {
-        method: "GET",
+ * Fetches Get request to get survey data and evaluation.
+ */
+    getData: async function () {
+      await fetch(process.env.VUE_APP_BASEURL + "/auswertung", {
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
+        body: JSON.stringify({
+          authToken: {
+            username: Cookies.getCookieAttribut("username"),
+            sessiontoken: Cookies.getCookieAttribut("sessiontoken")
+          },
+          umfrageID: this.$props.umfrageid,
+        }),
       }).then((response) => response.json())
         .then((body) => {
-          if (body.status == "success"){
+          console.log(body)
+          if (body.status == "success") {
             this.responsesuccessful = true
             this.responsedata = body.data
 
@@ -398,8 +437,8 @@ export default{
      * Method checks for negativ values in energy emissions which indecated that the year of the survey has no data in the database.
      * If dedected sets the flag displayEnergieChart to false
      */
-    checkNegativValue: function(){
-      if(this.responsedata.emissionenWaerme < 0 || this.responsedata.emissionenKaelte < 0 || this.responsedata.emissionenStrom < 0){
+    checkNegativValue: function () {
+      if (this.responsedata.emissionenWaerme < 0 || this.responsedata.emissionenKaelte < 0 || this.responsedata.emissionenStrom < 0) {
         this.displayEnergieCharts = false;
       }
     },
@@ -407,7 +446,7 @@ export default{
     /**
      * Method rounds all emission values to unit t with 3 decimal places.
      */
-    roundResponseData: function(){
+    roundResponseData: function () {
       let roundFactor1 = 10000
       let roundFactor2 = 100
 
@@ -434,12 +473,12 @@ export default{
     /**
      * Method sets data and options for the Gesamt charts.
      */
-    setChartGesamt: function(){
+    setChartGesamt: function () {
       let data = [
-        {label: 'Energie', value: this.responsedata.emissionenEnergie},
-        {label: 'Dienstreisen', value: this.responsedata.emissionenDienstreisen},
-        {label: 'Pendelweg', value: this.responsedata.emissionenPendelwege},
-        {label: 'IT-Geräte', value: this.responsedata.emissionenITGeraete},
+        { label: 'Energie', value: this.responsedata.emissionenEnergie },
+        { label: 'Dienstreisen', value: this.responsedata.emissionenDienstreisen },
+        { label: 'Pendelweg', value: this.responsedata.emissionenPendelwege },
+        { label: 'IT-Geräte', value: this.responsedata.emissionenITGeraete },
       ];
 
       this.chartdataGesamtDoughnut = {
@@ -454,15 +493,17 @@ export default{
             'rgb(75, 192, 192)'
           ],
           hoverOffset: 4
-        }]}
+        }]
+      }
       this.optionsGesamtDoughnut = {
         responsive: false,
         maintainAspectRatio: false,
-        plugins:{
+        plugins: {
           datalabels: {
             display: true,
             // eslint-disable-next-line no-unused-vars
             formatter: (value, context) => {
+              if(this.responsedata.emissionenGesamt === 0) return 0
               return (Math.round(value / this.responsedata.emissionenGesamt * 1000) / 10) + '%';
             },
             font: {
@@ -490,11 +531,11 @@ export default{
             align: 'start',
             anchor: 'end',
           }
-        },{
+        }, {
           type: 'line',
           label: 'kumulierte Emissionen',
           yAxisID: 'line',
-          data: data.map((sum => a => sum += a.value)(0)).map(a => Math.round(a / this.responsedata.emissionenGesamt * 1000) /1000),
+          data: data.map((sum => a => sum += a.value)(0)).map(a => Math.round(a / this.responsedata.emissionenGesamt * 1000) / 1000),
           fill: false,
           borderColor: 'rgb(21, 134, 209)',
           lineTension: 0,
@@ -508,9 +549,9 @@ export default{
         responsive: false,
         maintainAspectRatio: false,
         legend: {
-            display: false
+          display: false
         },
-        scales:{
+        scales: {
           yAxes: [{
             id: 'bar',
             position: 'left',
@@ -521,7 +562,7 @@ export default{
               display: true,
               labelString: 't C02 eq.'
             }
-          },{
+          }, {
             id: 'line',
             position: 'right',
             ticks: {
@@ -529,7 +570,7 @@ export default{
               min: 0,
             },
             gridLines: {
-                display:false
+              display: false
             }
           }]
         },
@@ -539,11 +580,11 @@ export default{
     /**
      * Method sets data and options for the Energie charts.
      */
-    setChartEnergie: function(){
+    setChartEnergie: function () {
       let data = [
-        {label: 'Wärme', value: this.responsedata.emissionenWaerme},
-        {label: 'Kälte', value: this.responsedata.emissionenKaelte},
-        {label: 'Strom', value: this.responsedata.emissionenStrom},
+        { label: 'Wärme', value: this.responsedata.emissionenWaerme },
+        { label: 'Kälte', value: this.responsedata.emissionenKaelte },
+        { label: 'Strom', value: this.responsedata.emissionenStrom },
       ];
 
       this.chartdataEnergieDoughnut = {
@@ -557,15 +598,17 @@ export default{
             'rgb(255, 219, 77)',
           ],
           hoverOffset: 4
-        }]}
+        }]
+      }
       this.optionsEnergieDoughnut = {
         responsive: false,
         maintainAspectRatio: false,
-        plugins:{
+        plugins: {
           datalabels: {
             display: true,
             // eslint-disable-next-line no-unused-vars
             formatter: (value, context) => {
+              if(this.responsedata.emissionenEnergie === 0) return 0
               return (Math.round(value / this.responsedata.emissionenEnergie * 1000) / 10) + '%';
             },
             font: {
@@ -593,11 +636,11 @@ export default{
             align: 'start',
             anchor: 'end',
           },
-        },{
+        }, {
           type: 'line',
           label: 'kumulierte Emissionen',
           yAxisID: 'line',
-          data: data.map((sum => a => sum += a.value)(0)).map(a => Math.round(a / this.responsedata.emissionenEnergie* 1000) /1000),
+          data: data.map((sum => a => sum += a.value)(0)).map(a => Math.round(a / this.responsedata.emissionenEnergie * 1000) / 1000),
           fill: false,
           borderColor: 'rgb(54, 162, 235)',
           lineTension: 0,
@@ -611,9 +654,9 @@ export default{
         responsive: false,
         maintainAspectRatio: false,
         legend: {
-            display: false
+          display: false
         },
-        scales:{
+        scales: {
           yAxes: [{
             id: 'bar',
             position: 'left',
@@ -624,7 +667,7 @@ export default{
               display: true,
               labelString: 't C02 eq.'
             }
-          },{
+          }, {
             id: 'line',
             position: 'right',
             ticks: {
@@ -632,7 +675,7 @@ export default{
               min: 0,
             },
             gridLines: {
-                display:false
+              display: false
             }
           }]
         },
