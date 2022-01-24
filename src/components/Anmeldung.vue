@@ -230,9 +230,9 @@ export default {
   },
 
   methods: {
-    passwordConfirmationRule() {
-      return () => (this.password === this.rePassword) || 'Passwörter sind nicht gleich'
-    },
+    // passwordConfirmationRule() {
+    //   return () => (this.password === this.rePassword) || 'Passwörter sind nicht gleich'
+    // },
 
     /**
      * Checks if the user input is valid and returns true if valid
@@ -320,7 +320,7 @@ export default {
             this.$router.push('/survey')
           }
           //Message on success or error send from Backend 
-          this.message = (data.status == "success") ? data.data.message : data.error.message
+          this.errorMessage = (data.status == "success") ? data.data.message : data.error.message
           console.log("Success:", data)
         })
         .catch((error) => {
