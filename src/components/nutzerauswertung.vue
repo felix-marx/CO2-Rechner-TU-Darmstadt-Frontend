@@ -366,36 +366,7 @@ export default {
       saveAs(new Blob([s2ab(wbout)], { type: "application/octet-stream" }), 'Emissionen_' + this.responsedata.bezeichnung + '.xlsx');
     },
 
-    // /**
-    //  * Fetches Get request to get survey data and evaluation.
-    //  */
-    // getData: async function(){
-    //   await fetch(process.env.VUE_APP_BASEURL + "/auswertung?id=" + this.$props.umfrageid, {
-    //     method: "GET",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //   }).then((response) => response.json())
-    //     .then((body) => {
-    //       if (body.status == "success"){
-    //         this.responsesuccessful = true
-    //         this.responsedata = body.data
-
-    //         this.checkNegativValue();
-    //         this.roundResponseData();
-    //         this.setChartGesamt();
-    //         this.setChartEnergie();
-    //       }
-    //       else {  // Fehlerbehandlung
-    //         this.responseNotSuccessful = true
-    //         this.responseerror = body.error
-    //       }
-    //     })
-    //     .catch((error) => {
-    //       console.error("Error:", error);
-    //     });
-    // },
-    /**
+/**
  * Fetches Get request to get survey data and evaluation.
  */
     getData: async function () {
