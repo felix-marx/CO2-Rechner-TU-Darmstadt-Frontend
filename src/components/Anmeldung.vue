@@ -68,7 +68,7 @@
             <v-btn
               color="blue"
               :style="{ left: '50%', transform: 'translateX(-50%)' }"
-              @click="istRegistrierung = true"
+              @click="() => {istRegistrierung = true; errorMessage = ''}"
             >
               <span class="white--text">Neues Konto erstellen</span>
               <v-icon color="white">
@@ -176,7 +176,7 @@
               <v-btn
                 color="primary"
                 :style="{ left: '50%', transform: 'translateX(-50%)' }"
-                @click="istRegistrierung = false"
+                @click="() => {istRegistrierung = false; errorMessage = ''}"
               >
                 <span>Zurück zur Anmeldung</span>
                 <v-icon>mdi-account</v-icon>
