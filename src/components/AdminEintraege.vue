@@ -97,13 +97,13 @@
                 v-if="displaySuccess[0]"
                 type="success"
               >
-                {{ successMessage }}
+                {{ successMessage[0] }}
               </v-alert>
               <v-alert
                 v-if="displayError[0]"
                 type="error"
               >
-                {{ errorMessage }}
+                {{ errorMessage[0] }}
               </v-alert>
             </v-card>
           </v-expansion-panel-content>
@@ -219,13 +219,13 @@
                 v-if="displaySuccess[1]"
                 type="success"
               >
-                {{ successMessage }}
+                {{ successMessage[1] }}
               </v-alert>
               <v-alert
                 v-if="displayError[1]"
                 type="error"
               >
-                {{ errorMessage }}
+                {{ errorMessage[1] }}
               </v-alert>
             </v-card>
           </v-expansion-panel-content>
@@ -314,13 +314,13 @@
                 v-if="displaySuccess[2]"
                 type="success"
               >
-                {{ successMessage }}
+                {{ successMessage[2] }}
               </v-alert>
               <v-alert
                 v-if="displayError[2]"
                 type="error"
               >
-                {{ errorMessage }}
+                {{ errorMessage[2] }}
               </v-alert>
             </v-card>
           </v-expansion-panel-content>
@@ -376,13 +376,13 @@
                 v-if="displaySuccess[3]"
                 type="success"
               >
-                {{ successMessage }}
+                {{ successMessage[3] }}
               </v-alert>
               <v-alert
                 v-if="displayError[3]"
                 type="error"
               >
-                {{ errorMessage }}
+                {{ errorMessage[3] }}
               </v-alert>
             </v-card>
           </v-expansion-panel-content>
@@ -407,7 +407,7 @@ export default {
     date: null,
     co2_factor: {
       year: '',
-      energy_type: null,
+      energy_type: '',
       value: null
     },
     building: {
@@ -423,15 +423,15 @@ export default {
     },
     counter: {
       primary_key: null,
-      unit: null,
-      energy_type: null,
+      unit: '',
+      energy_type: '',
       name: null,
       building_references: [[null]]
     },
     counter_data: {
       year: '',
       primary_key: null,
-      energy_type: null,
+      energy_type: '',
       value: null
     },
     energy_types: ['Wärme', 'Strom', 'Kälte'],
@@ -442,8 +442,8 @@ export default {
     displayError: [false, false, false, false],
     displayLoadingAnimation: [false, false, false, false], 
 
-    errorMessage: "",
-    successMessage: "",
+    errorMessage: ["", "", "", ""],
+    successMessage: ["", "", "", ""],
 
     //Rules for input validation
     basicRule: [
@@ -503,8 +503,10 @@ export default {
       this.$set(this.displayError, 0, false)
       this.$set(this.displayLoadingAnimation, 0, true)
 
-      if(this.co2_factor.year === '' || this.co2_factor.energy_type === null || this.co2_factor.value === null){
-        this.errorMessage = "Alle Felder müssen ausgefüllt sein"
+      console.log(this.co2_factor)
+
+      if(!this.co2_factor.year || !this.co2_factor.energy_type || !this.co2_factor.value){
+        this.$set(this.errorMessage, 0, "Alle Felder müssen ausgefüllt sein")
         this.$set(this.displayLoadingAnimation, 0, false)
         this.$set(this.displayError, 0, true)
 
@@ -530,12 +532,12 @@ export default {
         .then((data) => {
           console.log("Success:", data);
           if(data.status == "success"){
-            this.successMessage = "Der CO2-Faktor wurde erfolgreich in der Datenbank gespeichert."
+            this.$set(this.successMessage, 0, "Der CO2-Faktor wurde erfolgreich in der Datenbank gespeichert.")
             this.$set(this.displayLoadingAnimation, 0, false)
             this.$set(this.displaySuccess, 0, true)
           }
           else if(data.status == "error"){
-            this.errorMessage = "Code " + data.error.code + ": " + data.error.message
+            this.$set(this.errorMessage, 0, "Code " + data.error.code + ": " + data.error.message)
             this.$set(this.displayLoadingAnimation, 0, false)
             this.$set(this.displayError, 0, true)
           }
@@ -553,10 +555,9 @@ export default {
       this.$set(this.displayError, 1, false)
       this.$set(this.displayLoadingAnimation, 1, true)
 
-      if(this.building.number === null || this.building.name === null || this.building.hnf === null ||
-         this.building.nnf === null || this.building.ngf === null || this.building.ff === null ||
-         this.building.vf === null || this.building.freif === null || this.building.gesamtf === null){
-        this.errorMessage = "Alle Felder müssen ausgefüllt sein"
+      if(!this.building.number || !this.building.name || !this.building.hnf || !this.building.nnf  || !this.building.ngf || 
+         !this.building.ff || !this.building.vf || !this.building.freif || !this.building.gesamtf){
+        this.$set(this.errorMessage, 1, "Alle Felder müssen ausgefüllt sein")
         this.$set(this.displayLoadingAnimation, 1, false)
         this.$set(this.displayError, 1, true)
 
@@ -590,12 +591,12 @@ export default {
         .then((data) => {
           console.log("Success:", data);
           if(data.status == "success"){
-            this.successMessage = "Das Gebäude wurde erfolgreich in der Datenbank gespeichert."
+            this.$set(this.successMessage, 1, "Das Gebäude wurde erfolgreich in der Datenbank gespeichert.")
             this.$set(this.displayLoadingAnimation, 1, false)
             this.$set(this.displaySuccess, 1, true)
           }
           else if(data.status == "error"){
-            this.errorMessage = "Code " + data.error.code + ": " + data.error.message
+            this.$set(this.errorMessage, 1, "Code " + data.error.code + ": " + data.error.message)
             this.$set(this.displayLoadingAnimation, 1, false)
             this.$set(this.displayError, 1, true)
           }
@@ -613,11 +614,9 @@ export default {
       this.$set(this.displayError, 2, false)
       this.$set(this.displayLoadingAnimation, 2, true)
 
-      console.log(this.buildingRefJSON())
-
-      if(this.counter.primary_key === null || this.counter.unit === null || this.counter.energy_type === null ||
-         this.counter.name === null || this.buildingRefJSON().length === 0){
-        this.errorMessage = "Alle Felder müssen ausgefüllt sein"
+      if(!this.counter.primary_key || !this.counter.unit || !this.counter.energy_type ||
+         !this.counter.name || this.buildingRefJSON().length === 0){
+        this.$set(this.errorMessage, 2, "Alle Felder müssen ausgefüllt sein")
         this.$set(this.displayLoadingAnimation, 2, false)
         this.$set(this.displayError, 2, true)
 
@@ -645,12 +644,12 @@ export default {
         .then((data) => {
           console.log("Success:", data);
           if(data.status == "success"){
-            this.successMessage = "Der Zähler wurde erfolgreich in der Datenbank gespeichert."
+            this.$set(this.successMessage, 2, "Der Zähler wurde erfolgreich in der Datenbank gespeichert.")
             this.$set(this.displayLoadingAnimation, 2, false)
             this.$set(this.displaySuccess, 2, true)
           }
           else if(data.status == "error"){
-            this.errorMessage = "Code " + data.error.code + ": " + data.error.message
+            this.$set(this.errorMessage, 2, "Code " + data.error.code + ": " + data.error.message)
             this.$set(this.displayLoadingAnimation, 2, false)
             this.$set(this.displayError, 2, true)
           }
@@ -668,9 +667,8 @@ export default {
       this.$set(this.displayError, 3, false)
       this.$set(this.displayLoadingAnimation, 3, true)
 
-      if(this.counter_data.year === '' || this.counter_data.primary_key === null || 
-         this.counter_data.energy_type === null || this.counter_data.value === null){
-        this.errorMessage = "Alle Felder müssen ausgefüllt sein"
+      if(!this.counter_data.year || !this.counter_data.primary_key || !this.counter_data.energy_type || !this.counter_data.value){
+        this.$set(this.errorMessage, 3, "Alle Felder müssen ausgefüllt sein")
         this.$set(this.displayLoadingAnimation, 3, false)
         this.$set(this.displayError, 3, true)
 
@@ -697,12 +695,12 @@ export default {
         .then((data) => {
           console.log("Success:", data);
           if(data.status == "success"){
-            this.successMessage = "Die Zählerdaten wurden erfolgreich in der Datenbank gespeichert."
+            this.$set(this.successMessage, 3, "Die Zählerdaten wurden erfolgreich in der Datenbank gespeichert.")
             this.$set(this.displayLoadingAnimation, 3, false)
             this.$set(this.displaySuccess, 3, true)
           }
           else if(data.status == "error"){
-            this.errorMessage = "Code " + data.error.code + ": " + data.error.message
+            this.$set(this.errorMessage, 3, "Code " + data.error.code + ": " + data.error.message)
             this.$set(this.displayLoadingAnimation, 3, false)
             this.$set(this.displayError, 3, true)
           }
