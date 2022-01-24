@@ -467,6 +467,9 @@ export default {
       return gebaeudeJSON;
     },
 
+    /**
+     * sendEdit sendet eine POST Request ans Backend, wodurch die Werte der Umfrage mit ID umfrageID aktualisiert werden
+     */
     sendEdit: async function () {
       this.displayLoadingAnimation = true
       this.blockInput = true
@@ -509,6 +512,9 @@ export default {
       this.dataRequestSent = false;
     },
 
+    /**
+     * fetchGebaeudeData sendet eine POST Request ans Backend welche alle gespeicherten Gebaeude fetched.
+     */
     fetchGebaeudeData: async function () {
       await fetch(process.env.VUE_APP_BASEURL + "/umfrage/gebaeude",{
         method: "POST",
@@ -532,6 +538,10 @@ export default {
         });
     },
 
+    /**
+     * fetchUmfrageData sendet eine POST Request ans Backend. 
+     * Liefert die aktuell in der Datenbank liegenden Umfragewerte der Umfrage mit ID umfrageID zurueck.
+     */
     fetchUmfrageData: async function() {
        await fetch(process.env.VUE_APP_BASEURL + "/umfrage/getUmfrage", {
         method: "POST",
@@ -575,6 +585,9 @@ export default {
         });
     },
 
+    /**
+     * parseGebaeude uebersetzt die numerische Gebaeudekennung (1101) in symbolische (S101) fuer alle Gebaeude in umfrage.gebaeude 
+     */
     parseGebaeude: function(gebaeude) {
       this.umfrage.gebaeude = []
       for(var i = 0; i < gebaeude.length; i++) {
@@ -583,6 +596,9 @@ export default {
       return this.umfrage.gebaeude
     },
 
+    /**
+     * parseITGeraete traegt die IT Geraete aus itGeraete in das Array geraeteanzahl an den korrekten Stellen ein.
+     */
     parseITGeraete: function(itGeraete) {
     var map = new Map([[7,0], [8,1], [9,2], [10,3], [4,4], [6,5]])
     this.geraeteanzahl = [[7, null, false], [8, null, false], [9, null, false], [10, null, false], [4, null, false], [6, null, false]]
