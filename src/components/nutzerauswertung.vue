@@ -499,8 +499,8 @@ export default {
           order: 1,
           datalabels: {
             color: 'black',
-            align: 'start',
-            anchor: 'end',
+            align: 'end',
+            anchor: 'start',
           }
         }, {
           type: 'line',
@@ -606,8 +606,8 @@ export default {
           order: 1,
           datalabels: {
             color: 'black',
-            align: 'start',
-            anchor: 'end',
+            align: 'end',
+            anchor: 'start',
           },
         }, {
           type: 'line',
