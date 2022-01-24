@@ -263,7 +263,18 @@ import Cookies from "../Cookie";
        * Fetches all existent Umfragen from the Server.
        */
       fetchUmfragen: async function () {
-      await fetch(process.env.VUE_APP_BASEURL + "/umfrage/alleUmfragen")
+      await fetch(process.env.VUE_APP_BASEURL + "/umfrage/alleUmfragen", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          authToken: {
+            username: Cookies.getCookieAttribut("username"),
+            sessiontoken: Cookies.getCookieAttribut("sessiontoken")
+          },
+        }),
+      })
         .then((response) => response.json())
         .then((data) => {
           console.log("Success:", data);
@@ -276,7 +287,18 @@ import Cookies from "../Cookie";
       },
 
       fetchUmfragenForUser: async function () {
-      await fetch(process.env.VUE_APP_BASEURL + "/umfrage/GetAllUmfragenForUser?user=" + Cookies.getCookieAttribut("username"))
+      await fetch(process.env.VUE_APP_BASEURL + "/umfrage/GetAllUmfragenForUser", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          authToken: {
+            username: Cookies.getCookieAttribut("username"),
+            sessiontoken: Cookies.getCookieAttribut("sessiontoken")
+          },
+        }),
+      })
         .then((response) => response.json())
         .then((data) => {
           console.log("Success:", data);
@@ -294,8 +316,18 @@ import Cookies from "../Cookie";
        * Fetches all existent MitarbeiterUmfragen from the Server, given an Umfrage.
        */
       fetchMitarbeiterUmfragen: async function (umfrageID) {
-      await fetch(process.env.VUE_APP_BASEURL + "/mitarbeiterUmfrage/mitarbeiterUmfrageForUmfrage?id=" + umfrageID, {
-        method: "GET",
+      await fetch(process.env.VUE_APP_BASEURL + "/mitarbeiterUmfrage/mitarbeiterUmfrageForUmfrage", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          authToken: {
+            username: Cookies.getCookieAttribut("username"),
+            sessiontoken: Cookies.getCookieAttribut("sessiontoken")
+          },
+          umfrageID: umfrageID,
+        }),
       })
         .then((response) => response.json())
         .then((data) => {

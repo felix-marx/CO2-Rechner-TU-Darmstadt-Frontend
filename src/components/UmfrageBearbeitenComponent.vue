@@ -389,7 +389,7 @@ export default {
   created() {
       this.fetchGebaeudeData();
       this.umfrage.umfrageID = JSON.parse(JSON.stringify(this.umfrageidprop));
-      this.getUmfrageData();
+      this.fetchUmfrageData();
   },
 
   methods: {
@@ -510,7 +510,18 @@ export default {
     },
 
     fetchGebaeudeData: async function () {
-      await fetch(process.env.VUE_APP_BASEURL + "/umfrage/gebaeude")
+      await fetch(process.env.VUE_APP_BASEURL + "/umfrage/gebaeude",{
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          authToken: {
+            username: Cookies.getCookieAttribut("username"),
+            sessiontoken: Cookies.getCookieAttribut("sessiontoken")
+          }
+        }),
+      })
         .then((response) => response.json())
         .then((data) => {
           console.log("Success:", data);
@@ -521,7 +532,7 @@ export default {
         });
     },
 
-    getUmfrageData: async function() {
+    fetchUmfrageData: async function() {
        await fetch(process.env.VUE_APP_BASEURL + "/umfrage/getUmfrage", {
         method: "POST",
         headers: {
