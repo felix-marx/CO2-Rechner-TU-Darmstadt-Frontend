@@ -298,22 +298,22 @@ export default {
         {
           "col1": "Energie",
           "col2": this.responsedata.emissionenEnergie,
-          "col3": Math.round(this.responsedata.emissionenEnergie / this.responsedata.emissionenGesamt * 1000) / 10,
+          "col3": this.responsedata.emissionenGesamt === 0.0 ? 0 : Math.round(this.responsedata.emissionenEnergie / this.responsedata.emissionenGesamt * 1000) / 10,
         },
         {
           "col1": "Pendelwege",
           "col2": this.responsedata.emissionenPendelwege,
-          "col3": Math.round(this.responsedata.emissionenPendelwege / this.responsedata.emissionenGesamt * 1000) / 10,
+          "col3": this.responsedata.emissionenGesamt === 0.0 ? 0 : Math.round(this.responsedata.emissionenPendelwege / this.responsedata.emissionenGesamt * 1000) / 10,
         },
         {
           "col1": "Dienstreisen",
           "col2": this.responsedata.emissionenDienstreisen,
-          "col3": Math.round(this.responsedata.emissionenDienstreisen / this.responsedata.emissionenGesamt * 1000) / 10,
+          "col3": this.responsedata.emissionenGesamt === 0.0 ? 0 : Math.round(this.responsedata.emissionenDienstreisen / this.responsedata.emissionenGesamt * 1000) / 10,
         },
         {
           "col1": "IT-Geräte",
           "col2": this.responsedata.emissionenITGeraete,
-          "col3": Math.round(this.responsedata.emissionenITGeraete / this.responsedata.emissionenGesamt * 1000) / 10
+          "col3": this.responsedata.emissionenGesamt === 0.0 ? 0 : Math.round(this.responsedata.emissionenITGeraete / this.responsedata.emissionenGesamt * 1000) / 10
         },
         {},
         {
@@ -324,17 +324,17 @@ export default {
         {
           "col1": "Wärme",
           "col2": this.responsedata.emissionenWaerme,
-          "col3": Math.round(this.responsedata.emissionenWaerme / this.responsedata.emissionenEnergie * 1000) / 10,
+          "col3": this.responsedata.emissionenEnergie === 0.0 ? 0 : Math.round(this.responsedata.emissionenWaerme / this.responsedata.emissionenEnergie * 1000) / 10,
         },
         {
           "col1": "Kälte",
           "col2": this.responsedata.emissionenKaelte,
-          "col3": Math.round(this.responsedata.emissionenKaelte / this.responsedata.emissionenEnergie * 1000) / 10,
+          "col3": this.responsedata.emissionenEnergie === 0.0 ? 0 : Math.round(this.responsedata.emissionenKaelte / this.responsedata.emissionenEnergie * 1000) / 10,
         },
         {
           "col1": "Strom",
           "col2": this.responsedata.emissionenStrom,
-          "col3": Math.round(this.responsedata.emissionenStrom / this.responsedata.emissionenEnergie * 1000) / 10,
+          "col3": this.responsedata.emissionenEnergie === 0.0 ? 0 : Math.round(this.responsedata.emissionenStrom / this.responsedata.emissionenEnergie * 1000) / 10,
         },
       ];
       var options = {
@@ -369,39 +369,39 @@ export default {
 /**
  * Fetches Get request to get survey data and evaluation.
  */
-    getData: async function () {
-      await fetch(process.env.VUE_APP_BASEURL + "/auswertung", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+  getData: async function () {
+    await fetch(process.env.VUE_APP_BASEURL + "/auswertung", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        authToken: {
+          username: Cookies.getCookieAttribut("username"),
+          sessiontoken: Cookies.getCookieAttribut("sessiontoken")
         },
-        body: JSON.stringify({
-          authToken: {
-            username: Cookies.getCookieAttribut("username"),
-            sessiontoken: Cookies.getCookieAttribut("sessiontoken")
-          },
-          umfrageID: this.$props.umfrageid,
-        }),
-      }).then((response) => response.json())
-        .then((body) => {
-          console.log(body)
-          if (body.status == "success") {
-            this.responsesuccessful = true
-            this.responsedata = body.data
+        umfrageID: this.$props.umfrageid,
+      }),
+    }).then((response) => response.json())
+      .then((body) => {
+        console.log(body)
+        if (body.status == "success") {
+          this.responsesuccessful = true
+          this.responsedata = body.data
 
-            this.checkNegativValue();
-            this.roundResponseData();
-            this.setChartGesamt();
-            this.setChartEnergie();
-          }
-          else {  // Fehlerbehandlung
-            this.responseNotSuccessful = true
-            this.responseerror = body.error
-          }
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
+          this.checkNegativValue();
+          this.roundResponseData();
+          this.setChartGesamt();
+          this.setChartEnergie();
+        }
+        else {  // Fehlerbehandlung
+          this.responseNotSuccessful = true
+          this.responseerror = body.error
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
     },
 
     /**
@@ -474,7 +474,9 @@ export default {
             display: true,
             // eslint-disable-next-line no-unused-vars
             formatter: (value, context) => {
-              if(this.responsedata.emissionenGesamt === 0) return 0
+              if(this.responsedata.emissionenGesamt === 0){
+                return 0
+              }
               return (Math.round(value / this.responsedata.emissionenGesamt * 1000) / 10) + '%';
             },
             font: {
@@ -506,7 +508,7 @@ export default {
           type: 'line',
           label: 'kumulierte Emissionen',
           yAxisID: 'line',
-          data: data.map((sum => a => sum += a.value)(0)).map(a => Math.round(a / this.responsedata.emissionenGesamt * 1000) / 1000),
+          data: data.map((sum => a => sum += a.value)(0)).map(a => this.responsedata.emissionenGesamt === 0.0 ? 0 : Math.round(a / this.responsedata.emissionenGesamt * 1000) / 1000),
           fill: false,
           borderColor: 'rgb(21, 134, 209)',
           lineTension: 0,
@@ -579,7 +581,9 @@ export default {
             display: true,
             // eslint-disable-next-line no-unused-vars
             formatter: (value, context) => {
-              if(this.responsedata.emissionenEnergie === 0) return 0
+              if(this.responsedata.emissionenEnergie === 0){
+                return 0
+              }
               return (Math.round(value / this.responsedata.emissionenEnergie * 1000) / 10) + '%';
             },
             font: {
@@ -611,7 +615,7 @@ export default {
           type: 'line',
           label: 'kumulierte Emissionen',
           yAxisID: 'line',
-          data: data.map((sum => a => sum += a.value)(0)).map(a => Math.round(a / this.responsedata.emissionenEnergie * 1000) / 1000),
+          data: data.map((sum => a => sum += a.value)(0)).map(a => this.responsedata.emissionenEnergie === 0.0 ? 0 : Math.round(a / this.responsedata.emissionenEnergie * 1000) / 1000),
           fill: false,
           borderColor: 'rgb(54, 162, 235)',
           lineTension: 0,
