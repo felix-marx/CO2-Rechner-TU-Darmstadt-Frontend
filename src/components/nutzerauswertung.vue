@@ -49,14 +49,12 @@
         <v-row>
           <v-col>
             <p>
-              Gesamtemissionen: {{ responsedata.emissionenGesamt }} t CO
-              <sub>2</sub> eq.
+              Gesamtemissionen: {{ responsedata.emissionenGesamt }} t CO<sub>2</sub> eq.
             </p>
           </v-col>
           <v-col>
             <p>
-              Emissionen pro Mitarbeiter: {{ responsedata.emissionenProMitarbeiter }} t CO
-              <sub>2</sub> eq.
+              Emissionen pro Mitarbeiter: {{ responsedata.emissionenProMitarbeiter }} t CO<sub>2</sub> eq.
             </p>
           </v-col>
         </v-row>
