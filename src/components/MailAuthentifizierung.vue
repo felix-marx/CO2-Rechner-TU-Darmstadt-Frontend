@@ -36,12 +36,11 @@ export default {
         })
             .then((response) => response.json())
             .then((data) => {
+            console.log(data)
             //This is always the case when the backend returns a package
             if (data.status == "success") {
-                this.$router.push('/')
+                this.$router.replace('/').catch(() => { })
             }
-            //Message on success or error send from Backend 
-            this.errorMessage = (data.status == "success") ? data.data.message : data.error.message
             })
             .catch((error) => {
             //This is always the case when the backend returns nothing -> Timeout
