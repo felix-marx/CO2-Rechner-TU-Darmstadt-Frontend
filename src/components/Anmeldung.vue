@@ -24,7 +24,7 @@
               <v-text-field
                 v-model="username"
                 :rules="requiredRule"
-                label="Nutzername"
+                label="E-Mail"
                 prepend-icon="mdi-account"
                 required
               />
@@ -59,8 +59,10 @@
                 :style="{ left: '50%', transform: 'translateX(-50%)' }"
                 @click="postAnmeldung()"
               >
+                <v-icon left>
+                  mdi-account
+                </v-icon>
                 <span>Anmelden</span>
-                <v-icon>mdi-account</v-icon>
               </v-btn>
             </v-col>
           </v-row>
@@ -70,10 +72,13 @@
               :style="{ left: '50%', transform: 'translateX(-50%)' }"
               @click="() => {istRegistrierung = true; errorMessage = ''}"
             >
-              <span class="white--text">Neues Konto erstellen</span>
-              <v-icon color="white">
-                mdi-account
+              <v-icon
+                color="white"
+                left
+              >
+                mdi-account-plus
               </v-icon>
+              <span class="white--text">Neues Konto erstellen</span>
             </v-btn>
           </v-row>
         </v-container>
@@ -86,7 +91,7 @@
                 v-model="username"
                 class="px-5"
                 :rules="requiredRule"
-                label="Nutzername"
+                label="E-Mail"
                 prepend-icon="mdi-account"
                 required
               />
@@ -131,7 +136,7 @@
               class="text-center"
             >
               <div>
-                Indem Sie auf „Konto erstellen“ klicken, stimmen Sie unseren Nutzungsbedingungen zu. <br> In unserer 
+                Indem Sie auf „Konto erstellen“ klicken, stimmen Sie unseren Datenschutzerklärung zu. <br> In unserer 
                 <v-tooltip bottom>
                   <template v-slot:activator="{ on }">
                     <a
@@ -165,10 +170,13 @@
               :style="{ left: '50%', transform: 'translateX(-50%)' }"
               @click="postRegistrierung()"
             >
-              <span class="white--text">Konto erstellen</span>
-              <v-icon color="white">
-                mdi-account
+              <v-icon
+                color="white"           
+                left
+              >
+                mdi-account-plus
               </v-icon>
+              <span class="white--text">Konto erstellen</span>
             </v-btn>
           </v-row>
           <v-row>
@@ -178,8 +186,10 @@
                 :style="{ left: '50%', transform: 'translateX(-50%)' }"
                 @click="() => {istRegistrierung = false; errorMessage = ''}"
               >
+                <v-icon left>
+                  mdi-account
+                </v-icon>
                 <span>Zurück zur Anmeldung</span>
-                <v-icon>mdi-account</v-icon>
               </v-btn>
             </v-col>
           </v-row>
@@ -248,7 +258,7 @@ export default {
         return false
       }
       if (this.username.length < 5) {
-        this.errorMessage = "Benutzername Mindestlänge ist 5 Zeichen"
+        this.errorMessage = "E-Mail Mindestlänge ist 5 Zeichen"
         return false
       }
       if (this.password.length < 8) {
