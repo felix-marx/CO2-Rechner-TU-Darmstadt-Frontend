@@ -11,7 +11,8 @@
           <v-card-title class="justify-center">
             <h2>TU-Darmstadt CO2-Rechner</h2>
           </v-card-title>
-          Willkommen bei dem TU-Darmstadt CO2-Rechner, mit diesem können Sie die CO2-Emissionen von TU Einheiten berechnen.
+          Willkommen bei dem TU-Darmstadt CO2-Rechner, mit diesem können Sie die CO2-Emissionen von TU Einheiten berechnen. <br>
+          Erstellen Sie einfach einen Konto um eine Umfrage für Ihre TU-Einheit zu erstellen.
           <v-card-title class="justify-center">
             {{ istRegistrierung ? "Registrierung" : "Anmeldung" }}
           </v-card-title>
