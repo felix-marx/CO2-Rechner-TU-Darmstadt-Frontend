@@ -6,6 +6,7 @@ import Cookies from '../Cookie.js'
 import AdminView from '../views/AdminView.vue'
 import PageNotFound from '../views/PageNotFound.vue'
 import MitarbeiterUmfrageView from '../views/MitarbeiterUmfrageView.vue'
+import MailAuthentifizierungVue from '../components/MailAuthentifizierung.vue'
 
 Vue.use(VueRouter)
 
@@ -33,6 +34,14 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: MitarbeiterUmfrageView
+  },
+  {
+    path: '/user/:userID',
+    name: 'MailAuthentifizierung',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: MailAuthentifizierungVue
   },
   {
     path: '/admin',
