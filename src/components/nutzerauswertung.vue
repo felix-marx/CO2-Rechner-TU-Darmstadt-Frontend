@@ -137,9 +137,30 @@
                 mdi-file-chart-outline
               </v-icon>Download als XLSX
             </v-btn>
+            <v-btn
+              class="ml-8"
+              @click="updateFlipLinkShare"
+            >
+              <v-icon left>
+                mdi-link-plus
+              </v-icon>
+              {{ "Linksharing " + ((responsedata.linkShare == 0) ? "aktivieren" : "deaktivieren") }}
+            </v-btn>
           </v-col>
         </v-row>
       </v-container>
+    </v-card>
+
+    <v-card
+      v-if="showLoading || displaySuccess"
+    >
+      <LoadingAnimation v-if="showLoading" />
+      <v-alert
+        v-if="displaySuccess"
+        type="success"
+      >
+        Die Einstellung wurde erfolgreich angepasst.
+      </v-alert>
     </v-card>
 
     <v-card
@@ -155,9 +176,10 @@
 <script>
 import DoughnutChart from "./charts/DoughnutChart.js";
 import BarChart from "./charts/BarChart.js";
-import XLSX from "xlsx"
+import XLSX from "xlsx";
 import saveAs from 'file-saver';
-import Cookies from '../Cookie'
+import Cookies from '../Cookie';
+import LoadingAnimation from "./componentParts/loadingAnimation.vue";
 
 export default {
   name: "Auswertung",
@@ -165,7 +187,8 @@ export default {
   components: {
     DoughnutChart,
     BarChart,
-  },
+    LoadingAnimation
+},
 
   props: {
     umfrageid: {
@@ -185,6 +208,7 @@ export default {
         mitarbeiteranzahl: null,
         umfragenanzahl: null,
         umfragenanteil: null,
+        linkShare: null,
 
         emissionenWaerme: null,
         emissionenStrom: null,
@@ -205,6 +229,9 @@ export default {
         code: null,
         message: null,
       },
+      // Wenn Link Sharing korrekt geflipped wurde
+      displaySuccess: false,
+      showLoading: false,
 
       displayEnergieCharts: true,
 
@@ -393,6 +420,50 @@ export default {
           this.setChartEnergie();
         }
         else {  // Fehlerbehandlung
+          this.responseNotSuccessful = true
+          this.responseerror = body.error
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+    },
+
+    /**
+     * updateFlipLinkShare sendet eine POST update Request ans Backend, wodurch das Link Sharing für diese Umfrage aktiviert wird, wenn es aktuell deaktiviert ist
+     * bzw. deaktiviert wenn es gerade aktiviert ist.
+     * Im Erfolgsfall wird eine Erfolgsnachricht angezeigt und sonst eine Fehlermeldung.
+     * Der lokal gespeicherte LinkShare Wert wird angepasst.
+     */
+    updateFlipLinkShare: async function() {
+      this.showLoading = true;
+      this.displaySuccess = false;
+      var linkShareFlippedValue = (this.responsedata.linkShare == 0) ? 1 : 0;
+
+      await fetch(process.env.VUE_APP_BASEURL + "/auswertung/updateSetLinkShare", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          authToken: {
+            username: Cookies.getCookieAttribut("username"),
+            sessiontoken: Cookies.getCookieAttribut("sessiontoken")
+          },
+          umfrageID: this.$props.umfrageid,
+          // linkShareValue 0 ist teilen deaktiviert, 1 aktiviert und wir flippen hier
+          linkShareValue: linkShareFlippedValue,
+        }),
+      }).then((response) => response.json())
+        .then((body) => {
+          this.showLoading = false
+          console.log(body)
+          if (body.status == "success") {
+            this.responsedata.linkShare = linkShareFlippedValue
+            this.displaySuccess = true
+        }
+        else {  // Fehlerbehandlung
+          this.showLoading = false
           this.responseNotSuccessful = true
           this.responseerror = body.error
         }
