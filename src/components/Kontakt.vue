@@ -33,6 +33,15 @@
 
         <!--- Kontakt Adresse --->
         <v-list-item-content>
+          <!-- Webseite -->
+          <v-card elevation="0">
+            <v-icon class="mr-2">
+              mdi-web
+            </v-icon>
+            <a
+              href="https://www.tu-darmstadt.de/nachhaltigkeit/buero_fuer_nachhaltigkeit/index.de.jsp"
+            >Büro für Nachhaltigkeit</a>
+          </v-card>
           <!-- Mail -->
           <v-card elevation="0">
             <v-icon class="mr-2">
