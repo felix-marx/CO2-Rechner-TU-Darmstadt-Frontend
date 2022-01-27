@@ -25,6 +25,7 @@ import Header from "@/components/Header";
 import SurveyNotFoundComponent from "@/components/SurveyNotFoundComponent";
 import LoadingAnimation from "@/components/componentParts/loadingAnimation";
 import Nutzerauswertung from "@/components/nutzerauswertung";
+import ResultSharingDisabledComponent from "../components/ResultSharingDisabledComponents.vue";
 
 export default {
   name: "AuswertungView",
@@ -33,7 +34,8 @@ export default {
     Footer,
     SurveyNotFoundComponent,
     LoadingAnimation,
-    Nutzerauswertung
+    Nutzerauswertung,
+    ResultSharingDisabledComponent
   },
 
   data: () => ({
@@ -60,6 +62,10 @@ export default {
         return SurveyNotFoundComponent;
       } 
 
+      if(this.surveyShareDisabled) {
+        return ResultSharingDisabledComponent;
+      }
+
       // else show Nutzerauswertung
       return Nutzerauswertung;
       
@@ -81,6 +87,13 @@ export default {
     surveyNotFound: function() {
       return this.umfrageID === "";
     },
+
+    /**
+     * True, if the corresponding survey has result sharing enabled
+     */
+    surveyShareDisabled: function() {
+      return this.freigegeben === 0;
+    }
   },
 
   created() {
@@ -101,9 +114,13 @@ export default {
           console.log("Success:", data);
           this.umfrageID = givenID;
           if (data.status == "success"){
+            // Umfrage exists
+            this.umfrageID = givenID;
             this.freigegeben = data.data.freigegeben;
           }
           else{
+            // Umfrage doesn't exists
+            this.umfrageID = "";
             this.freigegeben = 0;
           }
         }).catch((error) => {
