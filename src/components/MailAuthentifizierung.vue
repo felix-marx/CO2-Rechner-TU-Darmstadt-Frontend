@@ -31,7 +31,7 @@ export default {
             "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                userID: userID
+                nutzerID: userID
             }),
         })
             .then((response) => response.json())
