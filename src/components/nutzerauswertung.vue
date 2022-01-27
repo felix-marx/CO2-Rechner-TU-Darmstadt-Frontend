@@ -109,7 +109,7 @@
             <v-alert
               type="warning"
             >
-              Es ist kein Auswertung der Emissionen durch den Energieverbrauch möglich. Für das ausgewählte Bilanzierungsjahr fehlen Daten seitens der TU Darmstadt, um die Emissionen berechnen zu können. Die Zählerinfrastruktur wird durch das Energiemanagment immer weiter ausgebaut. 
+              Es ist kein Auswertung der Emissionen durch den Energieverbrauch möglich. Für das ausgewählte Bilanzierungsjahr fehlen Daten seitens der TU Darmstadt, um die Emissionen berechnen zu können. Die Zählerinfrastruktur wird durch das Energiemanagment immer weiter ausgebaut. <br>
               Sie können leider nichts tun, um die Auswertung zu vervollständigen.
             </v-alert>
           </v-col>
@@ -134,7 +134,9 @@
               outlined
               class="pa-7"
             >
-              Tipps zum Energiesparen am Arbeitsplatz hat das Büro für Nachhaltigkeit für Sie hier zusammengestellt: <a href="https://www.tu-darmstadt.de/nachhaltigkeit/buero_fuer_nachhaltigkeit/projekte_buero/news_projekte_buero_details_348992.de.jsp">Link</a>
+              <v-icon>mdi-thought-bubble-outline</v-icon>
+              <b>Did you know?</b>
+              : Das Büro für Nachhaltigkeit hat Tipps zum <a href="https://www.tu-darmstadt.de/nachhaltigkeit/buero_fuer_nachhaltigkeit/projekte_buero/news_projekte_buero_details_348992.de.jsp">Energiesparen am Arbeitsplatz</a> zusammengestellt.
             </v-card>
           </v-col>
         </v-row>
