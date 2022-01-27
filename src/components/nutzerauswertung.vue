@@ -262,7 +262,7 @@ export default {
           "col2": this.responsedata.umfragenanzahl,
         },
         {
-          "col1": "Fortschritt",
+          "col1": "Quote",
           "col2": this.responsedata.umfragenanteil + "%",
         },
         {},
