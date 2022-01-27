@@ -153,21 +153,14 @@
     </v-card>
 
     <v-card
-      v-if="showLoading || displaySuccess"
+      v-if="showLoading || responsedata.linkShare == 1"
     >
       <LoadingAnimation v-if="showLoading" />
-      <v-alert
-        v-if="displaySuccess"
-        type="success"
-      >
-        Die Einstellung wurde erfolgreich angepasst.
-      </v-alert>
-      <v-alert
-        v-if="displaySuccess && responsedata.linkShare == 1"
-        type="info"
-      >
-        Sie können die Auswertung Dritten über den folgen Link zugänglich machen: localhost:8080/#/survey/results/{{ responsedata.id }}
-      </v-alert>
+      <MitarbeiterLinkComponent
+        v-if="!this.$props.shared && responsedata.linkShare == 1"
+        :mitarbeiter-link="linkshareBaseURL + responsedata.id"
+        :link-ziel="'Auswertung'"
+      />
     </v-card>
 
     <v-card
@@ -187,6 +180,7 @@ import XLSX from "xlsx";
 import saveAs from 'file-saver';
 import Cookies from '../Cookie';
 import LoadingAnimation from "./componentParts/loadingAnimation.vue";
+import MitarbeiterLinkComponent from "./mitarbeiterLinkComponent.vue";
 
 export default {
   name: "Auswertung",
@@ -194,7 +188,8 @@ export default {
   components: {
     DoughnutChart,
     BarChart,
-    LoadingAnimation
+    LoadingAnimation,
+    MitarbeiterLinkComponent
 },
 
   props: {
@@ -243,6 +238,9 @@ export default {
       // Wenn Link Sharing korrekt geflipped wurde
       displaySuccess: false,
       showLoading: false,
+
+      // base url for Mitarbeiterumfragen
+      linkshareBaseURL: process.env.VUE_APP_URL + '/survey/results/',
 
       displayEnergieCharts: true,
 

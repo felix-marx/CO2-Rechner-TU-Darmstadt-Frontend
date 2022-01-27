@@ -3,7 +3,7 @@
     <v-row>
       <h4>
         Leiten Sie den folgenden Link an ihre Mitarbeitenden weiter, um ihnen
-        Zugang zur Umfrage zu gewähren:
+        Zugang zur {{ this.$props.linkZiel }} zu gewähren:
       </h4>
     </v-row>
     <v-row>
@@ -45,6 +45,10 @@ export default {
     mitarbeiterLink: {
       type: String,
       default: "",
+    },
+    linkZiel: {
+      type: String,
+      default: "Umfrage",
     },
   },
 
