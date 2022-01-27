@@ -135,7 +135,7 @@
             >
               <v-icon left>
                 mdi-file-chart-outline
-              </v-icon>Download als XLSX
+              </v-icon>Download als Excel
             </v-btn>
           </v-col>
         </v-row>
