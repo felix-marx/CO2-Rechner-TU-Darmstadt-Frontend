@@ -130,14 +130,15 @@
         </v-row>
         <v-row>
           <v-col>
-            <v-card
-              outlined
-              class="pa-7"
+            <v-alert 
+              text
+              type="info"
             >
-              <v-icon>mdi-thought-bubble-outline</v-icon>
-              <b>Did you know?</b>
-              : Das Büro für Nachhaltigkeit hat Tipps zum <a href="https://www.tu-darmstadt.de/nachhaltigkeit/buero_fuer_nachhaltigkeit/projekte_buero/news_projekte_buero_details_348992.de.jsp">Energiesparen am Arbeitsplatz</a> zusammengestellt.
-            </v-card>
+              Das Büro für Nachhaltigkeit hat Tipps zum <a
+                href="https://www.tu-darmstadt.de/nachhaltigkeit/buero_fuer_nachhaltigkeit/projekte_buero/news_projekte_buero_details_348992.de.jsp"
+                style="color:hsl(229, 100%, 50%);"
+              >Energiesparen am Arbeitsplatz</a> zusammengestellt.
+            </v-alert>
           </v-col>
         </v-row>
         <v-row>
