@@ -103,7 +103,7 @@
 
           <v-divider />
           <br>
-
+          
           <div
             v-for="(objekt, index) in gebaeude"
             :key="index"
@@ -154,10 +154,9 @@
               </v-col>
             </v-row>
           </div>
-          <v-row
-            v-if="duplicateBuilding"
-          >
+          <v-row>
             <v-alert
+              v-if="duplicateBuilding"
               type="warning"
             >
               Sie haben mehrmals das selbe Gebäude ausgewählt.
@@ -166,7 +165,7 @@
           <!-- Umfrage für IT Geräte: Multifunktionsgeräte + Toner, Drucker + Toner, Beamer, Server -->
 
           <br>
-          <h3>Welche IT-Geräte benutzen Sie in Ihrer Abteilung gemeinschaftlich?</h3>
+          <h3>Welche und wie viele IT-Geräte benutzen Sie in Ihrer Abteilung gemeinschaftlich in allen Gebäuden zusammen?</h3>
           <v-divider />
           <br>
 
@@ -260,9 +259,79 @@
               />
             </v-row>
           </v-container>
-
           <v-row class="mt-1 text-center">
+            <v-dialog
+              v-model="errorDialog"
+              transition="dialog-bottom-transition"
+            >
+              <!-- Mit diesem Button soll die Umfrage abgesendet werden. -->
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn
+                  class="mr-4"
+                  color="primary"
+                  :disabled="blockInput"
+                  v-bind="attrs"
+                  v-on="on"
+                >
+                  Speichern &amp; Link generieren
+                </v-btn>
+              </template>
+
+              <v-card>
+                <v-toolbar
+                  color="primary"
+                  dark
+                >
+                  {{ (problemeInUmfrage() != "") ? "Probleme mit Ihrer Eingabe!" : "Umfrage vollständig?" }}
+                </v-toolbar>
+                <v-card-text>
+                  <div
+                    v-if="errorText != ''"
+                    class="pt-6"
+                  >
+                    Ihre Umfrage enthält folgende Probleme: <br>
+                    <!-- TODO Fix the fucking linebreaks -->
+                    {{ errorText }}
+                  </div>
+                  <div 
+                    v-if="errorText == ''"
+                    class="pt-6"
+                  >
+                    Möchten Sie ihre Umfrage wirklich absenden?<br>
+                    Sie können sie anschließend noch weiter in der Umfragenübersicht bearbeiten und auswerten.
+                  </div>
+                </v-card-text>
+
+                <v-divider />
+
+                <v-card-actions>
+                  <v-spacer />
+                  <v-btn
+                    color="primary"
+                    text
+                    @click="errorDialog = false"
+                  >
+                    Weiter bearbeiten
+                  </v-btn>
+                  <v-btn
+                    color="primary"
+                    text
+                    @click="sendData(), errorDialog = false"
+                  >
+                    {{ (errorText == "") ? "Umfrage absenden" : "Umfrage trotzdem absenden" }}
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
             <v-btn
+              v-if="displaySurveyLink"
+              class="mr-4"
+              color="primary"
+              @click="resetPage()"
+            >
+              Weitere Umfrage erstellen
+            </v-btn>
+            <!--<v-btn
               class="mr-4"
               color="primary"
               :disabled="blockInput"
@@ -277,7 +346,7 @@
               @click="resetPage()"
             >
               Weitere Umfrage erstellen
-            </v-btn>
+            </v-btn>-->
             <LoadingAnimation v-if="dataRequestSent" />
           </v-row>
         </v-form>
@@ -371,6 +440,9 @@ export default {
     // has Absenden Button been clicked
     dataRequestSent: false,
     responseData: null,
+    // Dialogvariable + Text mit fehlerhaften Eingaben
+    errorDialog: false,
+    errorText: "",
 
     // base url for Mitarbeiterumfragen
     mitarbeiterumfrageBaseURL: process.env.VUE_APP_URL + '/survey/',
@@ -450,6 +522,44 @@ export default {
         "\n geraeteAnzahl:",
         this.geraeteAnzahl
       );
+    },
+
+    problemeInUmfrage: function() {
+      this.geraeteAnzahl[1][2] = this.geraeteAnzahl[0][2];
+      this.geraeteAnzahl[3][2] = this.geraeteAnzahl[2][2];
+      var stringBuilder = ""
+      //Bilanzjahr
+      if(!this.possibleYears.includes(parseInt(this.bilanzierungsjahr))) {
+        stringBuilder += "Für Ihre Angabe zum Bilanzierungsjahr liegen uns keine Daten vor. \n"
+      }
+      // Mitarbeiter
+      if(this.anzahlMitarbeiter == 0) {
+        stringBuilder += "Sie haben angegeben, dass Sie keine Mitarbeitenden in Ihrer Abteilung haben.\n"
+      } else if(this.anzahlMitarbeiter < 0) {
+        stringBuilder += "Sie haben eine negative Mitarbeitendenanzahl angegeben.\n"
+      }
+      // Gebaeude
+      if(this.duplicateBuilding) {
+        stringBuilder += "Sie haben das mehrmals das selbe Gebäude ausgewählt.\n"
+      } 
+      for(const gebaeude of this.gebaeude) {
+        if(gebaeude[0] != null && gebaeude[1] <=0) {
+          stringBuilder += "Sie haben für das Gebäude " + gebaeude[0] + " keine gültige Nutzfläche angegeben.\n"
+        }
+      }
+      // IT Geraete
+      for(const it of this.geraeteAnzahl) {
+        if(it[2] && it[1] <= 0) { 
+          if((it[0] != 8 && it[0] != 10)) {
+            stringBuilder += "Sie haben das Gerät " + resolveITGeraetID(it[0]) + " angewählt, aber keine gültige Anzahl angegeben. \n"
+          } else { // Toner
+            stringBuilder += "Sie haben einem ausgewählten Gerät keine verwendeten Toner hinzugefügt. Wenn Sie das Gerät nicht in Benutzung haben, ignorieren Sie diese Nachricht.\n"
+          }
+          
+        }
+      }
+      this.errorText = stringBuilder;
+      return stringBuilder;
     },
 
     /**
@@ -656,6 +766,19 @@ function translateGebaeudeIDToSymbolic(gebaeudeID) {
     gebaeudeDict[gebaeudeID.substring(0, 1)] + gebaeudeID.substring(1);
   return translatedID;
 }
+
+function resolveITGeraetID(geraetID) {
+  let ITGeraetIDDict = {
+    7: "Multifunktionsgeräte",
+    8: "Multifunktionsgeräte Toner",
+    9: "Laser & Tintenstrahldrucker",
+    10: "Laser & Tintenstrahldrucker Toner",
+    4: "Beamer",
+    6: "interne Server"
+  };
+  return ITGeraetIDDict[geraetID]
+}
+
 </script>
 
 <!-- Removes the buttons in textfields to increase decrease number -->
