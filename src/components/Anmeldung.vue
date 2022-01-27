@@ -293,7 +293,7 @@ export default {
           if (data.status == "success") {
             Cookies.setCookie("sessiontoken", data.data.sessiontoken)
             Cookies.setCookie("username", this.username)
-            this.$router.push('/admin').catch(() => { })
+            this.$router.push('/survey').catch(() => { })
           }
           //Message on success or error send from Backend
           this.errorMessage = (data.status == "success") ? '' : data.error.message
