@@ -513,18 +513,6 @@ export default {
             align: 'end',
             anchor: 'start',
           }
-        }, {
-          type: 'line',
-          label: 'kumulierte Emissionen',
-          yAxisID: 'line',
-          data: data.map((sum => a => sum += a.value)(0)).map(a => this.responsedata.emissionenGesamt === 0.0 ? 0 : Math.round(a / this.responsedata.emissionenGesamt * 1000) / 1000),
-          fill: false,
-          borderColor: 'rgb(21, 134, 209)',
-          lineTension: 0,
-          order: 0,
-          datalabels: {
-            display: false,
-          },
         }]
       };
       this.optionsGesamtPareto = {
@@ -543,16 +531,6 @@ export default {
             scaleLabel: {
               display: true,
               labelString: 't C02 eq.'
-            }
-          }, {
-            id: 'line',
-            position: 'right',
-            ticks: {
-              max: 1,
-              min: 0,
-            },
-            gridLines: {
-              display: false
             }
           }]
         },
@@ -620,18 +598,6 @@ export default {
             align: 'end',
             anchor: 'start',
           },
-        }, {
-          type: 'line',
-          label: 'kumulierte Emissionen',
-          yAxisID: 'line',
-          data: data.map((sum => a => sum += a.value)(0)).map(a => this.responsedata.emissionenEnergie === 0.0 ? 0 : Math.round(a / this.responsedata.emissionenEnergie * 1000) / 1000),
-          fill: false,
-          borderColor: 'rgb(54, 162, 235)',
-          lineTension: 0,
-          order: 0,
-          datalabels: {
-            display: false,
-          },
         }]
       }
       this.optionsEnergiePareto = {
@@ -650,16 +616,6 @@ export default {
             scaleLabel: {
               display: true,
               labelString: 't C02 eq.'
-            }
-          }, {
-            id: 'line',
-            position: 'right',
-            ticks: {
-              max: 1,
-              min: 0,
-            },
-            gridLines: {
-              display: false
             }
           }]
         },
