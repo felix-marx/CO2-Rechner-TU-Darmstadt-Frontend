@@ -39,7 +39,7 @@ export default {
             console.log(data)
             //This is always the case when the backend returns a package
             if (data.status == "success") {
-                this.$router.replace('/').catch(() => { })
+                this.$router.push('/').catch(() => { })
             }
             })
             .catch((error) => {

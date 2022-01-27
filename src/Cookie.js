@@ -96,9 +96,9 @@ async postCheckUserRoleForLoginPage(next){
     .then((data) => {
       if (data.status == "success") {
         if(data.data == 0){
-          next('survey')
+          next({path: '/survey'})
         } else if (data.data == 1) {
-          next('admin')
+          next({path: '/admin'})
         } 
       }
       else{
@@ -137,7 +137,7 @@ async postCheckLogin(next) {
       else{
         this.deleteCookieAttribut('username')
         this.deleteCookieAttribut('sessiontoken')
-        next("/")
+        next({path: '/'})
       }
     })
     .catch((error) => {
