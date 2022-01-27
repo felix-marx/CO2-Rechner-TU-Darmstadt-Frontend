@@ -138,6 +138,7 @@
               </v-icon>Download als XLSX
             </v-btn>
             <v-btn
+              v-if="!this.$props.shared"
               class="ml-8"
               @click="updateFlipLinkShare"
             >
@@ -160,6 +161,12 @@
         type="success"
       >
         Die Einstellung wurde erfolgreich angepasst.
+      </v-alert>
+      <v-alert
+        v-if="displaySuccess && responsedata.linkShare == 1"
+        type="info"
+      >
+        Sie können die Auswertung Dritten über den folgen Link zugänglich machen: localhost:8080/#/survey/results/{{ responsedata.id }}
       </v-alert>
     </v-card>
 
@@ -194,7 +201,11 @@ export default {
     umfrageid: {
       default: "",
       type: String,
-    }
+    },
+    shared: {
+      default: false,
+      type: Boolean,
+    },
   },
 
   data() {

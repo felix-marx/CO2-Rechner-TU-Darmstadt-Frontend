@@ -70,7 +70,7 @@ export default {
      */
     properties: function() {
       if(this.bodyComponent === Nutzerauswertung){
-        return {umfrageid: this.umfrageID}
+        return {umfrageid: this.umfrageID, shared: true}
       }
       return {}
     },
