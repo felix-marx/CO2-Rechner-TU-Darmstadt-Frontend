@@ -16,7 +16,7 @@
       outlined
     >
       <v-card-title>
-        Umfrage: {{ bezeichnung }}
+        {{ bezeichnung }}
       </v-card-title>
       <v-divider />
 

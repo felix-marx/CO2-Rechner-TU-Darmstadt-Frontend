@@ -51,7 +51,7 @@
               Bilanzierungsjahr {{ umfrage.jahr }}
             </div> 
             <v-list-item-title class="text-h5 mb-4">
-              Umfrage: {{ umfrage.bezeichnung }}
+              {{ umfrage.bezeichnung }}
             </v-list-item-title>
             <v-row>
               <v-col 
