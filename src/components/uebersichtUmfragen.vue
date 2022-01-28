@@ -28,7 +28,7 @@
                 align-self="center"
               >
                 <div>
-                  Link zur Mitarbeiterumfrage: {{ mitarbeiterumfrageBaseURL + umfrage._id }}
+                  Link zur Mitarbeitendenumfrage: {{ mitarbeiterumfrageBaseURL + umfrage._id }}
                 </div>
               </v-col>
               <v-col 
