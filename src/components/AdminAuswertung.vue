@@ -447,7 +447,3 @@ export default {
       }    
   }    
 </script>
-
-<!-- Ich muss alle für den entsprechenden Nutzer in der Datenbank angelegten Umfragen empfangen, damit diese angezeigt werden können -->
-<!-- Ich möchte einzelne Umfrage Objekte einsehen können-->
-<!-- Ich möchte einzelne Umfragen löschen können, auch aus der Datenbank-->
