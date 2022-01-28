@@ -19,6 +19,7 @@ const routes = [
     // beforeEnter: (to, from, next) => {
     //   Cookies.postCheckUserRoleForLoginPage(next)
     // }
+    meta: { loginPage: true }
   },
   {
     path: '/survey',
@@ -32,7 +33,8 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: MitarbeiterUmfrageView
+    component: MitarbeiterUmfrageView,
+    meta: { noAuth: true }
   },
   {
     path: '/user/:userID',
@@ -40,7 +42,8 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: MailAuthentifizierungVue
+    component: MailAuthentifizierungVue,
+    meta: { noAuth: true }
   },
   {
     path: '/admin',
@@ -53,7 +56,8 @@ const routes = [
   },
   {
     path: "*",
-    component: PageNotFound
+    component: PageNotFound,
+    meta: { noAuth: true } 
   }
 ]
 
@@ -62,22 +66,33 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  // //If user isnt logged in currently
-  // if(Cookies.getCookieAttribut('username') != null && Cookies.getCookieAttribut('sessiontoken') != null){
-  //     next('/survey')
-  // }
-
-  if(to.meta.requiresAuth) {
+  if(to.meta.loginPage) {
+       // Authentication
+       Authentication.postCheckLogin().then((data) => {
+        //   This is always the case when the backend returns a package
+        if (data.status == "success") {
+          next({path: '/survey'})
+        }
+        else {
+          Cookies.deleteCookieAttribut('username')
+          Cookies.deleteCookieAttribut('sessiontoken')
+          next(true)
+        }
+      }).catch((error) => {
+        //This is always the case when the backend returns nothing -> Timeout
+        console.error("Error:", error)
+      });
+  } else if(to.meta.requiresAuth) {
     // Authentication
     Authentication.postCheckLogin().then((data) => {
       //   This is always the case when the backend returns a package
       if (data.status == "success") {
         if(data.data.rolle === 1){
-          next('/admin')
+          next({path: '/admin'})
         } else if(data.data.rolle === 0){
           next()
         } else {
-          next('/')
+          next({path: '/'})
         }
       }
       else {
@@ -97,9 +112,9 @@ router.beforeEach((to, from, next) => {
         if(data.data.rolle === 1){
           next()
         } else if(data.data.rolle === 0){
-          next('/survey')
+          next({path: '/survey'})
         } else {
-          next('/')
+          next({path: '/'})
         }
       }
       else {
@@ -111,8 +126,9 @@ router.beforeEach((to, from, next) => {
       //This is always the case when the backend returns nothing -> Timeout
       console.error("Error:", error)
     });
+  } else if(to.meta.noAuth){
+    next()
   }
-  next()
 })
 
 export default router
