@@ -153,7 +153,7 @@
 
         <br>
         <h3>
-          Welche Dienstreisen haben Sie in den letzten 12 Monaten unternommen?
+          Welche Dienstreisen haben Sie {{ umfrageYear }} unternommen?
           <Tooltip
             tooltip-text="Zur Berechnung können Sie z.B. Google Maps verwenden. Bei Flugreisen können Sie als Distanz direkt die Summe aller Kurz- und Langstreckenflüge angeben."
           />
