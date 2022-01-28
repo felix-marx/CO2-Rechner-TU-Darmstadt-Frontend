@@ -6,6 +6,34 @@
     >
       <v-form lazy-validation>
         <v-card class="pa-7">
+          <v-row class="mt-1 text-center">
+            <v-spacer />
+            
+            <v-btn
+              class="mr-4"
+              color="primary"
+              @click="flipBearbeiten()"
+            >
+              <v-icon left>
+                mdi-pencil
+              </v-icon>
+              {{ ( blockInput ? " Bearbeiten aktivieren" : " Bearbeiten deaktivieren") }}
+            </v-btn>
+            
+            
+            <v-btn
+              v-if="!blockInput"
+              color="blue"
+              class="white--text"
+              @click="sendEdit()"
+            >
+              <v-icon left>
+                mdi-content-save
+              </v-icon>
+              Änderungen speichern
+            </v-btn>
+          </v-row>
+          
           <!-- Bezeichnung -->
           <br>
           <h3>
@@ -241,34 +269,7 @@
               />
             </v-row>
           </v-container>
-
-          <v-row class="mt-1 text-center">
-            <v-btn
-              class="mr-4"
-              color="primary"
-              @click="flipBearbeiten()"
-            >
-              <v-icon left>
-                mdi-pencil
-              </v-icon>
-              {{ ( blockInput ? " Bearbeiten aktivieren" : " Bearbeiten deaktivieren") }}
-            </v-btn>
-            
-            
-            <v-btn
-              v-if="!blockInput"
-              color="blue"
-              class="white--text"
-              @click="sendEdit()"
-            >
-              <v-icon left>
-                mdi-content-save
-              </v-icon>
-              Änderungen speichern
-            </v-btn>
-           
-            <LoadingAnimation v-if="dataRequestSent" />
-          </v-row>
+          <LoadingAnimation v-if="dataRequestSent" />
         </v-card>
       </v-form>
     </v-card>

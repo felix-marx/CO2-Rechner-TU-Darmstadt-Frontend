@@ -2,7 +2,7 @@
   <v-container class="pa-7">
     <v-row>
       <h4>
-        Leiten Sie den folgenden Link an ihre Mitarbeitenden weiter, um ihnen
+        Leiten Sie den folgenden Link an Ihre Mitarbeitenden weiter, um ihnen
         Zugang zur Umfrage zu gewähren:
       </h4>
     </v-row>

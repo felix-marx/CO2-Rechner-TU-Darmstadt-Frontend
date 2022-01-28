@@ -4,8 +4,8 @@
       <!-- Introduction Text -->
       <p>Sehr geehrte Teilnehmer*Innen, </p>
       <p>in der folgenden Umfrage sollen CO2-Emissionen, die während Ihrer Tätigkeit an der TU entstehen, ermittelt werden. Es werden Ihr Pendelweg, Ihre Dienstreisen und die von Ihnen verwendeten IT-Geräte abgefragt. Alle Angaben werden dabei anonymisiert verarbeitet und dargestellt, sodass ein Rückschluss auf einzelne Personen nicht möglich ist. Die Umfrage nimmt ungefähr 10 Minuten Ihrer Zeit in Anspruch. </p>
-      <p>Für die Umfrage wird das vollständige Kalenderjahr {{ umfrageYear }} betrachtet. </p>
-      <p>Hinter einigen Fragen befindet sich ein Fragezeichensymbol, dort finden Sie zusätzliche Hinweise und Informationen, die zur Beantwortung der Frage hilfreich sind. </p>  
+      <p>Für die Umfrage wird das vollständige Kalenderjahr <b>{{ umfrageYear }}</b> betrachtet. </p>
+      <p>Hinter einigen Fragen befindet sich ein Fragezeichensymbol. Dort finden Sie zusätzliche Hinweise und Informationen, die zur Beantwortung der Frage hilfreich sind. </p>  
 
       <p>Wenn Sie die Umfrage durchgeführt haben, klicken Sie auf „Absenden“. </p>
       <p>Vielen Dank für Ihre Teilnahme an der Umfrage. </p>
@@ -16,7 +16,7 @@
       outlined
     >
       <v-card-title>
-        Umfrage: {{ bezeichnung }}
+        {{ bezeichnung }}
       </v-card-title>
       <v-divider />
 
@@ -153,7 +153,7 @@
 
         <br>
         <h3>
-          Welche Dienstreisen haben Sie in den letzten 12 Monaten unternommen?
+          Welche Dienstreisen haben Sie {{ umfrageYear }} unternommen?
           <Tooltip
             tooltip-text="Zur Berechnung können Sie z.B. Google Maps verwenden. Bei Flugreisen können Sie als Distanz direkt die Summe aller Kurz- und Langstreckenflüge angeben."
           />

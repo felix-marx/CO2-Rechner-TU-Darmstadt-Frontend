@@ -20,7 +20,7 @@
               Bilanzierungsjahr {{ umfrage.jahr }}
             </div> 
             <v-list-item-title class="text-h5 mb-4">
-              Umfrage: {{ umfrage.bezeichnung }}
+              {{ umfrage.bezeichnung }}
             </v-list-item-title>
             <v-row>
               <v-col 
@@ -28,7 +28,7 @@
                 align-self="center"
               >
                 <div>
-                  Link zur Mitarbeiterumfrage: {{ mitarbeiterumfrageBaseURL + umfrage._id }}
+                  Link zur Mitarbeitendenumfrage: {{ mitarbeiterumfrageBaseURL + umfrage._id }}
                 </div>
               </v-col>
               <v-col 
@@ -338,7 +338,3 @@ export default {
   }
   
 </script>
-
-<!-- Ich muss alle für den entsprechenden Nutzer in der Datenbank angelegten Umfragen empfangen, damit diese angezeigt werden können -->
-<!-- Ich möchte einzelne Umfrage Objekte einsehen können-->
-<!-- Ich möchte einzelne Umfragen löschen können, auch aus der Datenbank-->
