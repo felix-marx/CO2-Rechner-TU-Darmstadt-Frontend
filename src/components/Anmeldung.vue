@@ -128,6 +128,21 @@
             </v-col>
             <v-col />
           </v-row>
+          <v-row class="text-center">
+            <v-col />
+            <v-col cols="7" v-if="bestaetigungAnzeigen">
+              <v-alert
+                outlined
+                type="success"
+                text
+              >
+                Ihr Konto wurde erfolgreich erstellt. Damit Sie ihr Konto verwenden können, müssen Sie ihre E-Mail bestätigen. <br>
+                Unsere Bestätigungs Mail ist schon auf den weg zu Ihnen und Sie können gleich loslegen! 
+              </v-alert>
+            </v-col>
+            <v-col />
+          </v-row>
+          
           <v-row
             class="px-5"
           >
@@ -221,6 +236,7 @@ export default {
     password: null,
     rePassword: null,
     istRegistrierung: false,
+    bestaetigungAnzeigen: false,
     agbBestaetigt: false,
     dialog: false,
     //Für Fehlermeldung bei Response
@@ -328,7 +344,7 @@ export default {
           if (data.status == "success") {
             Cookies.setCookie("sessiontoken", data.data.sessiontoken)
             Cookies.setCookie("username", this.username)
-            this.$router.push('/survey')
+            this.bestaetigungAnzeigen = true
           }
           //Message on success or error send from Backend 
           this.errorMessage = (data.status == "success") ? data.data.message : data.error.message
