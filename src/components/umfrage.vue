@@ -154,14 +154,13 @@
               </v-col>
             </v-row>
           </div>
-          <v-row>
-            <v-alert
-              v-if="duplicateBuilding"
-              type="warning"
-            >
-              Sie haben mehrmals das selbe Gebäude ausgewählt.
-            </v-alert>
-          </v-row>
+          <v-alert
+            v-if="duplicateBuilding"
+            type="warning"
+            dense
+          >
+            Sie haben mehrmals das selbe Gebäude ausgewählt.
+          </v-alert>
           <!-- Umfrage für IT Geräte: Multifunktionsgeräte + Toner, Drucker + Toner, Beamer, Server -->
 
           <br>
@@ -272,6 +271,7 @@
                   :disabled="blockInput"
                   v-bind="attrs"
                   v-on="on"
+                  @click="problemeInUmfrage()"
                 >
                   Speichern &amp; Link generieren
                 </v-btn>
@@ -282,23 +282,60 @@
                   color="primary"
                   dark
                 >
-                  {{ (problemeInUmfrage() != "") ? "Probleme mit Ihrer Eingabe!" : "Umfrage vollständig?" }}
+                  {{ (errorTextArray.required.length != 0 || errorTextArray.nonRequired.length != 0) ? "Probleme mit Ihrer Eingabe!" : "Umfrage vollständig?" }}
                 </v-toolbar>
                 <v-card-text>
                   <div
-                    v-if="errorText != ''"
+                    v-if="errorTextArray.nonRequired.length != 0 || errorTextArray.required.length != 0"
                     class="pt-6"
                   >
-                    Ihre Umfrage enthält folgende Probleme: <br>
-                    <!-- TODO Fix the fucking linebreaks -->
-                    {{ errorText }}
+                    <div
+                      v-if="errorTextArray.required.length != 0"
+                    >
+                      Sie haben folgende Pflichtfelder nicht angegeben: <br>
+                      <v-list
+                        flat
+                      >
+                        <v-list-item
+                          v-for="(problem, index) in errorTextArray.required"
+                          :key="index"
+                        >
+                          <v-list-item-content>
+                            <v-list-item-title
+                              class="text-sm-body-2 delete--text font-weight-black"
+                              v-text="problem"
+                            />
+                          </v-list-item-content>
+                        </v-list-item>
+                      </v-list>
+                    </div>
+                    <div
+                      v-if="errorTextArray.nonRequired.length != 0"
+                    >
+                      Ihre Umfrage enthält folgende kleinere Probleme: <br>
+                      <v-list
+                        flat
+                      >
+                        <v-list-item
+                          v-for="(problem, index) in errorTextArray.nonRequired"
+                          :key="index"
+                        >
+                          <v-list-item-content>
+                            <v-list-item-title
+                              class="text-sm-body-2"
+                              v-text="problem"
+                            />
+                          </v-list-item-content>
+                        </v-list-item>
+                      </v-list>
+                    </div>
                   </div>
                   <div 
-                    v-if="errorText == ''"
+                    v-if="errorTextArray.required.length == 0 && errorTextArray.nonRequired.length == 0"
                     class="pt-6"
                   >
                     Möchten Sie ihre Umfrage wirklich absenden?<br>
-                    Sie können sie anschließend noch weiter in der Umfragenübersicht bearbeiten und auswerten.
+                    Sie können sie anschließend noch weiter in der Umfragenübersicht bearbeiten, auswerten und mit Mitarbeitenden teilen.
                   </div>
                 </v-card-text>
 
@@ -314,15 +351,17 @@
                     Weiter bearbeiten
                   </v-btn>
                   <v-btn
+                    v-if="errorTextArray.required.length == 0"
                     color="primary"
                     text
                     @click="sendData(), errorDialog = false"
                   >
-                    {{ (errorText == "") ? "Umfrage absenden" : "Umfrage trotzdem absenden" }}
+                    {{ (errorTextArray.nonRequired.length == 0) ? "Umfrage absenden" : "Umfrage trotzdem absenden" }}
                   </v-btn>
                 </v-card-actions>
               </v-card>
             </v-dialog>
+            <!-- Ende des Absende Dialogs -->
             <v-btn
               v-if="displaySurveyLink"
               class="mr-4"
@@ -331,22 +370,6 @@
             >
               Weitere Umfrage erstellen
             </v-btn>
-            <!--<v-btn
-              class="mr-4"
-              color="primary"
-              :disabled="blockInput"
-              @click="sendData()"
-            >
-              Speichern &amp; Link generieren
-            </v-btn>
-            <v-btn
-              v-if="displaySurveyLink"
-              class="mr-4"
-              color="primary"
-              @click="resetPage()"
-            >
-              Weitere Umfrage erstellen
-            </v-btn>-->
             <LoadingAnimation v-if="dataRequestSent" />
           </v-row>
         </v-form>
@@ -440,9 +463,12 @@ export default {
     // has Absenden Button been clicked
     dataRequestSent: false,
     responseData: null,
-    // Dialogvariable + Text mit fehlerhaften Eingaben
+    // Dialogvariable + Array mit fehlerhaften Eingaben {fehler: "", pflicht: 0}
     errorDialog: false,
-    errorText: "",
+    errorTextArray: {
+      required: [],
+      nonRequired: []
+    },
 
     // base url for Mitarbeiterumfragen
     mitarbeiterumfrageBaseURL: process.env.VUE_APP_URL + '/survey/',
@@ -524,42 +550,56 @@ export default {
       );
     },
 
+    /**
+     * Returns an array containing a list with every required field missing
+     */
+    requiredFieldsMissingArray: function() {
+      var fieldsarray = []
+      if(this.bezeichnung == "" || this.bezeichnung == null) {
+        fieldsarray.push("Bezeichnung")
+      }
+      if(!this.possibleYears.includes(parseInt(this.bilanzierungsjahr))) {
+        fieldsarray.push("Bilanzierungsjahr")
+      }
+      if(this.anzahlMitarbeiter == null || this.anzahlMitarbeiter <= 0) {
+        fieldsarray.push("Anzahl Mitarbeitenden")
+      }
+      return fieldsarray
+    },
+
+    /**
+     * Determines errors in Umfrage and writes Error message and if the field is requiered to the errorTextArray variable
+     * {
+     *  nonRequired: []
+     *  required:    []
+     * }
+     */
     problemeInUmfrage: function() {
       this.geraeteAnzahl[1][2] = this.geraeteAnzahl[0][2];
       this.geraeteAnzahl[3][2] = this.geraeteAnzahl[2][2];
-      var stringBuilder = ""
-      //Bilanzjahr
-      if(!this.possibleYears.includes(parseInt(this.bilanzierungsjahr))) {
-        stringBuilder += "Für Ihre Angabe zum Bilanzierungsjahr liegen uns keine Daten vor. \n"
-      }
-      // Mitarbeiter
-      if(this.anzahlMitarbeiter == 0) {
-        stringBuilder += "Sie haben angegeben, dass Sie keine Mitarbeitenden in Ihrer Abteilung haben.\n"
-      } else if(this.anzahlMitarbeiter < 0) {
-        stringBuilder += "Sie haben eine negative Mitarbeitendenanzahl angegeben.\n"
-      }
+      var nonRequiredArray = []
+      
       // Gebaeude
       if(this.duplicateBuilding) {
-        stringBuilder += "Sie haben das mehrmals das selbe Gebäude ausgewählt.\n"
+        nonRequiredArray.push("Sie haben das mehrmals das selbe Gebäude ausgewählt.")
       } 
       for(const gebaeude of this.gebaeude) {
         if(gebaeude[0] != null && gebaeude[1] <=0) {
-          stringBuilder += "Sie haben für das Gebäude " + gebaeude[0] + " keine gültige Nutzfläche angegeben.\n"
+          nonRequiredArray.push("Sie haben für das Gebäude " + gebaeude[0] + " keine gültige Nutzfläche angegeben.")
         }
       }
       // IT Geraete
       for(const it of this.geraeteAnzahl) {
         if(it[2] && it[1] <= 0) { 
           if((it[0] != 8 && it[0] != 10)) {
-            stringBuilder += "Sie haben das Gerät " + resolveITGeraetID(it[0]) + " angewählt, aber keine gültige Anzahl angegeben. \n"
+            nonRequiredArray.push("Sie haben das Gerät " + resolveITGeraetID(it[0]) + " angewählt, aber keine gültige Anzahl angegeben.")
           } else { // Toner
-            stringBuilder += "Sie haben einem ausgewählten Gerät keine verwendeten Toner hinzugefügt. Wenn Sie das Gerät nicht in Benutzung haben, ignorieren Sie diese Nachricht.\n"
+            nonRequiredArray.push("Sie haben einem ausgewählten Gerät keine verwendeten Toner hinzugefügt. Wenn Sie das Gerät nicht in Benutzung haben, ignorieren Sie diese Nachricht.")
           }
-          
         }
       }
-      this.errorText = stringBuilder;
-      return stringBuilder;
+      this.errorTextArray.nonRequired = nonRequiredArray
+      this.errorTextArray.required = this.requiredFieldsMissingArray()
     },
 
     /**
