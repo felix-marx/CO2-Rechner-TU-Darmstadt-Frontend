@@ -399,8 +399,8 @@ export default {
       "Bus",
       "U-Bahn",
       "Straßenbahn",
-      "MIX inkl. U-Bahn",
-      "MIX exkl. U-Bahn",
+      "Mix inkl. U-Bahn",
+      "Mix exkl. U-Bahn",
     ],
     /*
      * verkehrmittel Array format:
@@ -700,7 +700,7 @@ export default {
         .then((data) => {
           console.log("Success:", data);
           if(data.status === "success"){
-            this.submittedDataSuccessfully = true;
+            //this.submittedDataSuccessfully = true;
             this.errorMessage = null;
           }else if(data.status == "error") {
             this.errorMessage = data.error.message;
