@@ -17,9 +17,7 @@
       </v-tab>
     </v-tabs>
 
-    <h4 v-if="cookieAttribut != null">
-      Angemeldet als: {{ cookieAttribut }}
-    </h4>
+    <UserSettings />
     <v-btn
       v-if="cookieAttribut != null"
       text
@@ -33,9 +31,14 @@
 <script>
 
 import Cookies from "../Cookie"
+import UserSettings from "./componentParts/userSettings.vue";
 
 export default {
   name: "Header",
+
+  components: {
+    UserSettings
+  },
 
   props: {
     // data on tabs and shown component when selecting the tab
