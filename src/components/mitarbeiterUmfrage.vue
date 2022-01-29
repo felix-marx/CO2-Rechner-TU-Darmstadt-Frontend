@@ -599,9 +599,6 @@ export default {
       //Build Pendelweg Array
       var buildPendelweg = [];
       for (var pendel of this.verkehrsmittel) {
-
-        console.log(pendel)
-
         // eslint-disable-next-line no-extra-boolean-cast
         if(!!pendel[0]){
           buildPendelweg.push({
@@ -616,9 +613,6 @@ export default {
           });
         }
       }
-
-      console.log(buildPendelweg)
-
       return buildPendelweg;
     },
 
@@ -658,9 +652,6 @@ export default {
       //Build Dienstreisen Array
       var buildDienstreisen = [];
       for (var reise of this.dienstreise) {
-
-        console.log(reise)
-
         // eslint-disable-next-line no-extra-boolean-cast
         if(!!reise[0]){
           var dienstreisetyp = this.mapDienstreisemittel(reise[0]);
@@ -673,8 +664,6 @@ export default {
           });
         }
       }
-      console.log(buildDienstreisen)
-
       return buildDienstreisen;
     },
 
@@ -700,7 +689,7 @@ export default {
         .then((data) => {
           console.log("Success:", data);
           if(data.status === "success"){
-            //this.submittedDataSuccessfully = true;
+            this.submittedDataSuccessfully = true;
             this.errorMessage = null;
           }else if(data.status == "error") {
             this.errorMessage = data.error.message;
