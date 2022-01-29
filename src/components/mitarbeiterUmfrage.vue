@@ -618,7 +618,7 @@ export default {
       }
 
       console.log(buildPendelweg)
-      
+
       return buildPendelweg;
     },
 
@@ -658,15 +658,23 @@ export default {
       //Build Dienstreisen Array
       var buildDienstreisen = [];
       for (var reise of this.dienstreise) {
-        var dienstreisetyp = this.mapDienstreisemittel(reise[0]);
-        buildDienstreisen.push({
-          idDienstreise: parseInt(dienstreisetyp[0]),
-          //Catches spezial case were user selects Flugtyp but then changes to other Verkehrsmedium
-          streckentyp: parseInt(dienstreisetyp[0]) == 3 ? reise[1] : "",
-          strecke: parseInt(reise[2]),
-          tankart: dienstreisetyp[1],
-        });
+
+        console.log(reise)
+
+        // eslint-disable-next-line no-extra-boolean-cast
+        if(!!reise[0]){
+          var dienstreisetyp = this.mapDienstreisemittel(reise[0]);
+          buildDienstreisen.push({
+            idDienstreise: parseInt(dienstreisetyp[0]),
+            //Catches spezial case were user selects Flugtyp but then changes to other Verkehrsmedium
+            streckentyp: parseInt(dienstreisetyp[0]) == 3 ? reise[1] : "",
+            strecke: parseInt(reise[2]),
+            tankart: dienstreisetyp[1],
+          });
+        }
       }
+      console.log(buildDienstreisen)
+
       return buildDienstreisen;
     },
 
