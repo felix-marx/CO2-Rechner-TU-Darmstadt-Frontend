@@ -459,10 +459,12 @@ export default {
       var gebaeudeJSON = [];
 
       for (var objekt of this.umfrage.gebaeude) {
-        gebaeudeJSON.push({
-          gebaeudeNr: parseInt(translateGebaeudeIDToNumeric(objekt[0])),
-          nutzflaeche: parseInt(objekt[1]),
-        });
+        if ((objekt[0] !== null) && (objekt[1] !== null)) {
+          gebaeudeJSON.push({
+            gebaeudeNr: parseInt(translateGebaeudeIDToNumeric(objekt[0])),
+            nutzflaeche: parseInt(objekt[1]),
+          });
+        }
       }
       return gebaeudeJSON;
     },
