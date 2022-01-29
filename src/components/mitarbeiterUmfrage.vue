@@ -599,17 +599,26 @@ export default {
       //Build Pendelweg Array
       var buildPendelweg = [];
       for (var pendel of this.verkehrsmittel) {
-        buildPendelweg.push({
-          strecke: parseInt(pendel[4]),
-          idPendelweg: parseInt(
-            this.mapPendelverkehrsmittel(pendel[0], pendel[1])
-          ),
-          //return 1 for no fahrgemeinschaft. In Question we ask Anzahl Mitfahrer so pendel[3]+1 are all persons in the vehicle
-          personenanzahl: parseInt(
-            pendel[3] == null ? 1 : parseInt(pendel[3]) + 1
-          ),
-        });
+
+        console.log(pendel)
+
+        // eslint-disable-next-line no-extra-boolean-cast
+        if(!!pendel[0]){
+          buildPendelweg.push({
+            strecke: parseInt(pendel[4]),
+            idPendelweg: parseInt(
+              this.mapPendelverkehrsmittel(pendel[0], pendel[1])
+            ),
+            //return 1 for no fahrgemeinschaft. In Question we ask Anzahl Mitfahrer so pendel[3]+1 are all persons in the vehicle
+            personenanzahl: parseInt(
+              pendel[3] == null ? 1 : parseInt(pendel[3]) + 1
+            ),
+          });
+        }
       }
+
+      console.log(buildPendelweg)
+      
       return buildPendelweg;
     },
 
