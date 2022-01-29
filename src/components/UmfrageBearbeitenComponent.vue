@@ -459,7 +459,7 @@ export default {
       var gebaeudeJSON = [];
 
       for (var objekt of this.umfrage.gebaeude) {
-        if ((objekt[0] !== null) && (objekt[1] !== null)) {
+        if (!!objekt[0] && !!objekt[1]) {
           gebaeudeJSON.push({
             gebaeudeNr: parseInt(translateGebaeudeIDToNumeric(objekt[0])),
             nutzflaeche: parseInt(objekt[1]),
