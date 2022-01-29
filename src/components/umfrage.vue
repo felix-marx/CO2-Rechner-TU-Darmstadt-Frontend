@@ -474,7 +474,6 @@ export default {
       this.bilanzierungsjahr = null
       this.anzahlMitarbeiter = null
       this.gebaeude = [[null, null]]
-      //this.gebaeudeIDs = []
       this.geraeteAnzahl = [
         [7, null, false],
         [8, null, false],
@@ -538,13 +537,7 @@ export default {
      */
     gebaeudeJSON: function () {
       var gebaeudeJSON = [];
-
-      console.log("Fields:", this.gebaeude)
-
       for (var objekt of this.gebaeude) {
-
-        console.log("Objekt:", objekt)
-
         if ((objekt[0] !== null) && (objekt[1] !== null)) {
           gebaeudeJSON.push({
             gebaeudeNr: parseInt(translateGebaeudeIDToNumeric(objekt[0])),
@@ -552,9 +545,6 @@ export default {
           });
         }
       }
-
-      console.log("Gebauede: ", gebaeudeJSON)
-
       return gebaeudeJSON;
     },
 
