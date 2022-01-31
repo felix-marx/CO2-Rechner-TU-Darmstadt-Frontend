@@ -10,10 +10,11 @@
         <div class="text-center">
           <v-card-title class="justify-center">
             <h2>TU-Darmstadt CO2-Rechner</h2>
-          </v-card-title>
-          Willkommen bei dem TU-Darmstadt CO2-Rechner, mit diesem können Sie die CO2-Emissionen von TU Einheiten berechnen. <br>
-          Erstellen Sie einfach einen Konto, um eine Umfrage für Ihre TU-Einheit zu erstellen.
-          <v-card-title class="justify-center">
+          </v-card-title>Willkommen bei dem TU-Darmstadt CO2-Rechner, mit diesem können Sie die CO2-Emissionen von TU Einheiten berechnen.
+          <br>Erstellen Sie einfach einen Konto, um eine Umfrage für Ihre TU-Einheit zu erstellen.
+          <v-card-title
+            class="justify-center"
+          >
             {{ istRegistrierung ? "Registrierung" : "Anmeldung" }}
           </v-card-title>
         </div>
@@ -71,7 +72,7 @@
             <v-btn
               color="blue"
               :style="{ left: '50%', transform: 'translateX(-50%)' }"
-              @click="() => {istRegistrierung = true; errorMessage = ''}"
+              @click="() => { istRegistrierung = true; errorMessage = '' }"
             >
               <v-icon
                 color="white"
@@ -130,29 +131,31 @@
           </v-row>
           <v-row class="text-center">
             <v-col />
-            <v-col cols="7" v-if="bestaetigungAnzeigen">
+            <v-col
+              v-if="bestaetigungAnzeigen"
+              cols="7"
+            >
               <v-alert
                 outlined
                 type="success"
                 text
               >
-                Ihr Konto wurde erfolgreich erstellt. Damit Sie ihr Konto verwenden können, müssen Sie ihre E-Mail bestätigen. <br>
-                Unsere Bestätigungs Mail ist schon auf den weg zu Ihnen und Sie können gleich loslegen! 
+                Ihr Konto wurde erfolgreich erstellt. Damit Sie ihr Konto verwenden können, müssen Sie ihre E-Mail bestätigen.
+                <br>Unsere Bestätigungs Mail ist schon auf den weg zu Ihnen und Sie können gleich loslegen!
               </v-alert>
             </v-col>
             <v-col />
           </v-row>
-          
-          <v-row
-            class="px-5"
-          >
+
+          <v-row class="px-5">
             <v-col />
             <v-col
               cols="8"
               class="text-center"
             >
               <div>
-                Indem Sie auf „Konto erstellen“ klicken, stimmen Sie unseren Datenschutzerklärung zu. <br> In unserer 
+                Indem Sie auf „Konto erstellen“ klicken, stimmen Sie unseren Datenschutzerklärung zu.
+                <br>In unserer
                 <v-tooltip bottom>
                   <template v-slot:activator="{ on }">
                     <a
@@ -160,13 +163,10 @@
                       href="https://www.tu-darmstadt.de/datenschutzerklaerung.de.jsp"
                       @click.stop
                       v-on="on"
-                    >
-                      Datenschutzerklärung
-                    </a>
+                    >Datenschutzerklärung</a>
                   </template>
                   Öffnet eine neue Seite mit der Datenschutzerklärung
-                </v-tooltip>
-                erfahren Sie, welche Daten wir erfassen und verwenden.
+                </v-tooltip>erfahren Sie, welche Daten wir erfassen und verwenden.
               </div>
             </v-col>
             <v-col />
@@ -187,7 +187,7 @@
               @click="postRegistrierung()"
             >
               <v-icon
-                color="white"           
+                color="white"
                 left
               >
                 mdi-account-plus
@@ -200,7 +200,7 @@
               <v-btn
                 color="primary"
                 :style="{ left: '50%', transform: 'translateX(-50%)' }"
-                @click="() => {istRegistrierung = false; errorMessage = ''}"
+                @click="() => { istRegistrierung = false; errorMessage = '' }"
               >
                 <v-icon left>
                   mdi-account
