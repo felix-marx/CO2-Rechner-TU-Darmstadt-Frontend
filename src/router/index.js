@@ -8,6 +8,7 @@ import PageNotFound from '../views/PageNotFound.vue'
 import MitarbeiterUmfrageView from '../views/MitarbeiterUmfrageView.vue'
 import MailAuthentifizierungVue from '../components/MailAuthentifizierung.vue'
 import Authentication from '../Authentication.js'
+import PasswortVergessen from '../components/PasswortVergessen.vue'
 
 Vue.use(VueRouter)
 
@@ -58,6 +59,11 @@ const routes = [
     path: "*",
     component: PageNotFound,
     meta: { noAuth: true } 
+  },
+  {
+    path: "/passwortVergessen",
+    component: PasswortVergessen,
+    meta: {noAuth: true}
   }
 ]
 
