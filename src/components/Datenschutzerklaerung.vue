@@ -152,7 +152,7 @@
 
             Die Ergebnisse der werden im Co2-Rechner gespeichert und dort den Umfrage-Verantwortlichen zur Verfügung.<br>
             Die Ergebnisse sind so weit anonymisiert, dass Rückschlüsse auf einzelne Personen nicht möglich sind.<br>
-            Die Löschung der Ergebnisse erfolgt durch die Umfrage-Verantworrtlichen.
+            Die Löschung der Ergebnisse erfolgt durch die Umfrage-Verantwortlichen.
           </p>
         </v-card>
       </v-container>
