@@ -56,14 +56,14 @@ export default {
   },
 
   methods: {
-    postMailBestaetigung: async function (userID) {
+    postMailBestaetigung: async function (nutzerID) {
       await fetch(process.env.VUE_APP_BASEURL + "/auth/emailBestaetigung", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          nutzerID: userID
+          nutzerID: nutzerID
         }),
       })
         .then((response) => response.json())

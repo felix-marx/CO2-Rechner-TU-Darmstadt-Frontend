@@ -37,7 +37,7 @@ const routes = [
     meta: { noAuth: true }
   },
   {
-    path: '/user/:userID',
+    path: '/user/:nutzerID',
     name: 'MailAuthentifizierung',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
@@ -67,10 +67,14 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   if(to.meta.loginPage) {
-       // Authentication
-       Authentication.postCheckLogin().then((data) => {
-        //   This is always the case when the backend returns a package
-        if (data.status == "success") {
+    if(Cookies.getCookieAttribut('sessiontoken') === null && Cookies.getCookieAttribut('username') === null){
+      next()
+      return
+    }
+    // Authentication
+    Authentication.postCheckLogin().then((data) => {
+    //   This is always the case when the backend returns a package
+    if (data.status == "success") {
           next({path: '/survey'})
         }
         else {
