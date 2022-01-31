@@ -17,7 +17,7 @@
           <v-btn
             color="primary"
             large
-            @click="$router.push({ path:'/'})"
+            @click="$router.push({ path: '/' })"
           >
             <v-icon left>
               mdi-account
@@ -27,7 +27,10 @@
         </v-card>
       </v-container>
 
-      <v-container v-if="emailNotConfirmed">
+      <v-container
+        v-if="emailNotConfirmed"
+        class="text-center"
+      >
         <v-card class="pa-7 mt-2">
           <h2>Leider ist ein Fehler aufgetreten. Bitte probiere Sie es erneut oder wenden sich an den Administrator.</h2>
         </v-card>
@@ -74,11 +77,16 @@ export default {
             this.emailConfirmed = true
             this.displayLoadingAnimation = false
             //this.$router.push('/').catch(() => { })
+          } else {
+            this.displayLoadingAnimation = false
+            this.emailNotConfirmed = true
           }
         })
         .catch((error) => {
           //This is always the case when the backend returns nothing -> Timeout
           console.error("Error:", error)
+          this.displayLoadingAnimation = false
+          this.emailNotConfirmed = true
         });
     },
   }
