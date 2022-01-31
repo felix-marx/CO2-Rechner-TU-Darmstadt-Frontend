@@ -128,8 +128,12 @@
           </v-col>
         </v-row>
         <v-row>
-          <v-col>
+          <v-col
+            cols="2"
+            class="align-self-center"
+          >
             <v-btn
+              class="ml-8 "
               color="primary"
               @click="makeSpreadsheet"
             >
@@ -137,27 +141,27 @@
                 mdi-file-chart-outline
               </v-icon>Download als XLSX
             </v-btn>
-            <v-btn
+          </v-col>
+          <v-col cols="2">
+            <v-switch
               v-if="!this.$props.shared"
+              v-model="responsedata.linkShare"
               class="ml-8"
+              inset
+              :label="`Linksharing ${(responsedata.linkShare ? 'aktiviert' : 'deaktiviert')}`"
               @click="updateFlipLinkShare"
-            >
-              <v-icon left>
-                mdi-link-plus
-              </v-icon>
-              {{ "Linksharing " + ((responsedata.linkShare == 0) ? "aktivieren" : "deaktivieren") }}
-            </v-btn>
+            />
           </v-col>
         </v-row>
       </v-container>
     </v-card>
 
     <v-card
-      v-if="showLoading || responsedata.linkShare == 1"
+      v-if="showLoading || responsedata.linkShare"
     >
       <LoadingAnimation v-if="showLoading" />
       <MitarbeiterLinkComponent
-        v-if="!this.$props.shared && responsedata.linkShare == 1"
+        v-if="!this.$props.shared && responsedata.linkShare && !showLoading"
         :mitarbeiter-link="linkshareBaseURL + responsedata.id"
         :link-ziel="'Auswertung'"
       />
@@ -422,6 +426,7 @@ export default {
         if (body.status == "success") {
           this.responsesuccessful = true
           this.responsedata = body.data
+          this.responsedata.linkShare = (body.data.linkShare == 1) ? true : false
 
           this.checkNegativValue();
           this.roundResponseData();
@@ -447,7 +452,6 @@ export default {
     updateFlipLinkShare: async function() {
       this.showLoading = true;
       this.displaySuccess = false;
-      var linkShareFlippedValue = (this.responsedata.linkShare == 0) ? 1 : 0;
 
       await fetch(process.env.VUE_APP_BASEURL + "/auswertung/updateSetLinkShare", {
         method: "POST",
@@ -461,14 +465,13 @@ export default {
           },
           umfrageID: this.$props.umfrageid,
           // linkShareValue 0 ist teilen deaktiviert, 1 aktiviert und wir flippen hier
-          linkShareValue: linkShareFlippedValue,
+          linkShareValue: ((this.responsedata.linkShare) ? 1 : 0),
         }),
       }).then((response) => response.json())
         .then((body) => {
           this.showLoading = false
           console.log(body)
           if (body.status == "success") {
-            this.responsedata.linkShare = linkShareFlippedValue
             this.displaySuccess = true
         }
         else {  // Fehlerbehandlung
