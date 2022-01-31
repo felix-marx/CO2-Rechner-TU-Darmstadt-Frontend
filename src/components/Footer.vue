@@ -56,7 +56,7 @@ export default {
       },
       {
         text: "Datenschutzerklärung",
-        href: "https://www.tu-darmstadt.de/datenschutzerklaerung.de.jsp", // TODO keep link to TU Darmstadt website or make own Datenschutzerklärung? --> AG Meeting
+        href: process.env.VUE_APP_URL + "/datenschutz", // Eigene Datenschutzerklaerung
       },
     ],
   })

@@ -7,6 +7,7 @@ import AdminView from '../views/AdminView.vue'
 import PageNotFound from '../views/PageNotFound.vue'
 import MitarbeiterUmfrageView from '../views/MitarbeiterUmfrageView.vue'
 import AuswertungView from '../views/AuswertungView.vue'
+import Datenschutz from '../components/Datenschutzerklaerung.vue'
 
 Vue.use(VueRouter)
 
@@ -51,6 +52,14 @@ const routes = [
     beforeEnter: (to, from, next) => {
       Cookies.postCheckUserRole(next)
     }
+  },
+  {
+    path: "/datenschutz",
+    name: "Datenschutzerklärung",
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: Datenschutz,
   },
   { 
     path: "*",
