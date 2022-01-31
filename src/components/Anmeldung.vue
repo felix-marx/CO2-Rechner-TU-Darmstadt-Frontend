@@ -11,7 +11,7 @@
           <v-card-title class="justify-center">
             <h2>TU-Darmstadt CO2-Rechner</h2>
           </v-card-title>Willkommen bei dem TU-Darmstadt CO2-Rechner, mit diesem können Sie die CO2-Emissionen von TU Einheiten berechnen.
-          <br>Erstellen Sie einfach einen Konto, um eine Umfrage für Ihre TU-Einheit zu erstellen.
+          <br> Erstellen Sie einfach einen Konto, um eine Umfrage für Ihre TU-Einheit zu erstellen.
           <v-card-title
             class="justify-center"
           >
@@ -55,10 +55,9 @@
             </p>
           </v-row>
           <v-row>
-            <v-col class="px-10">
+            <v-col class="text-center ma-0 pa-0">
               <v-btn
                 color="primary"
-                :style="{ left: '50%', transform: 'translateX(-50%)' }"
                 @click="postAnmeldung()"
               >
                 <v-icon left>
@@ -69,19 +68,36 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-btn
-              color="blue"
-              :style="{ left: '50%', transform: 'translateX(-50%)' }"
-              @click="() => { istRegistrierung = true; errorMessage = '' }"
-            >
-              <v-icon
-                color="white"
-                left
+            <v-col class="text-center">
+              <v-tooltip
+                bottom
+              > 
+                <template v-slot:activator="{ on }">
+                  <a
+                    target="_blank"
+                    @click="$router.push('/passwortVergessen')"
+                    v-on="on"
+                  >Passwort vergessen?</a>
+                </template>
+                Öffnet die Passwort vergessen Seite.
+              </v-tooltip>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col class="text-center ma-0 pa-0">
+              <v-btn
+                color="blue"
+                @click="() => { istRegistrierung = true; errorMessage = '' }"
               >
-                mdi-account-plus
-              </v-icon>
-              <span class="white--text">Neues Konto erstellen</span>
-            </v-btn>
+                <v-icon
+                  color="white"
+                  left
+                >
+                  mdi-account-plus
+                </v-icon>
+                <span class="white--text">Neues Konto erstellen</span>
+              </v-btn>
+            </v-col>
           </v-row>
         </v-container>
         <!-- Register -->
@@ -141,7 +157,7 @@
                 text
               >
                 Ihr Konto wurde erfolgreich erstellt. Damit Sie ihr Konto verwenden können, müssen Sie ihre E-Mail bestätigen.
-                <br>Unsere Bestätigungs Mail ist schon auf den weg zu Ihnen und Sie können gleich loslegen!
+                <br> Unsere Bestätigungs Mail ist schon auf den weg zu Ihnen und Sie können gleich loslegen!
               </v-alert>
             </v-col>
             <v-col />
@@ -166,7 +182,7 @@
                     >Datenschutzerklärung</a>
                   </template>
                   Öffnet eine neue Seite mit der Datenschutzerklärung
-                </v-tooltip>erfahren Sie, welche Daten wir erfassen und verwenden.
+                </v-tooltip> erfahren Sie, welche Daten wir erfassen und verwenden.
               </div>
             </v-col>
             <v-col />
@@ -181,25 +197,25 @@
             </p>
           </v-row>
           <v-row>
-            <v-btn
-              color="blue"
-              :style="{ left: '50%', transform: 'translateX(-50%)' }"
-              @click="postRegistrierung()"
-            >
-              <v-icon
-                color="white"
-                left
+            <v-col class="text-center py-3">
+              <v-btn
+                color="blue"
+                @click="postRegistrierung()"
               >
-                mdi-account-plus
-              </v-icon>
-              <span class="white--text">Konto erstellen</span>
-            </v-btn>
+                <v-icon
+                  color="white"
+                  left
+                >
+                  mdi-account-plus
+                </v-icon>
+                <span class="white--text">Konto erstellen</span>
+              </v-btn>
+            </v-col>
           </v-row>
           <v-row>
-            <v-col class="px-10">
+            <v-col class="ma-0 pa-0 text-center">
               <v-btn
                 color="primary"
-                :style="{ left: '50%', transform: 'translateX(-50%)' }"
                 @click="() => { istRegistrierung = false; errorMessage = '' }"
               >
                 <v-icon left>
