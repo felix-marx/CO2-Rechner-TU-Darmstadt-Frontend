@@ -11,15 +11,24 @@
       <v-container>
         <v-row>
           <v-col>
-            <p>Bilanzierungsjahr: {{ responsedata.jahr }}</p>
+            <v-icon>
+              mdi-calendar
+            </v-icon>
+            Bilanzierungsjahr: {{ responsedata.jahr }}
           </v-col>
           <v-col>
-            <p>Mitarbeiteranzahl: {{ responsedata.mitarbeiteranzahl }}</p>
+            <v-icon>
+              mdi-account
+            </v-icon>
+            Mitarbeiteranzahl: {{ responsedata.mitarbeiteranzahl }}
           </v-col>
         </v-row>
         <v-row>
           <v-col>
-            <p>Ausgefüllte Mitarbeiterumfragen: {{ responsedata.umfragenanzahl }}</p>
+            <v-icon>
+              mdi-account-edit
+            </v-icon>
+            Ausgefüllte Mitarbeiterumfragen: {{ responsedata.umfragenanzahl }}
           </v-col>
           <v-col>
             <v-progress-linear
@@ -48,14 +57,16 @@
       <v-container>
         <v-row>
           <v-col>
-            <p>
-              Gesamtemissionen: {{ responsedata.emissionenGesamt }} t CO<sub>2</sub> eq.
-            </p>
+            <v-icon>
+              mdi-thought-bubble
+            </v-icon>
+            Gesamtemissionen: {{ responsedata.emissionenGesamt }} t CO<sub>2</sub> eq.
           </v-col>
           <v-col>
-            <p>
-              Emissionen pro Mitarbeiter: {{ responsedata.emissionenProMitarbeiter }} t CO<sub>2</sub> eq.
-            </p>
+            <v-icon>
+              mdi-human-male-board-poll
+            </v-icon>
+            Emissionen pro Mitarbeiter: {{ responsedata.emissionenProMitarbeiter }} t CO<sub>2</sub> eq.
           </v-col>
         </v-row>
 
@@ -109,7 +120,9 @@
             <v-alert
               type="warning"
             >
-              Es ist kein Auswertung der Emissionen durch den Energieverbrauch möglich. Für das ausgewählte Bilanzierungsjahr fehlen Daten seitens der TU Darmstadt, um die Emissionen berechnen zu können. Die Zählerinfrastruktur wird durch das Energiemanagment immer weiter ausgebaut. <br>
+              Es ist kein Auswertung der Emissionen durch den Energieverbrauch möglich. 
+              Für das ausgewählte Bilanzierungsjahr fehlen Daten seitens der TU Darmstadt, um die Emissionen berechnen zu können. 
+              Die Zählerinfrastruktur wird durch das Energiemanagment immer weiter ausgebaut.
               Sie können leider nichts tun, um die Auswertung zu vervollständigen.
             </v-alert>
           </v-col>
@@ -136,6 +149,7 @@
             >
               Das Büro für Nachhaltigkeit hat Tipps zum <a
                 href="https://www.tu-darmstadt.de/nachhaltigkeit/buero_fuer_nachhaltigkeit/projekte_buero/news_projekte_buero_details_348992.de.jsp"
+                target="_blank"
                 style="color:hsl(229, 100%, 50%);"
               >Energiesparen am Arbeitsplatz</a> zusammengestellt.
             </v-alert>
@@ -628,3 +642,11 @@ export default {
 }
 
 </script>
+
+<style>
+.p{
+  overflow: hidden; 
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+</style>

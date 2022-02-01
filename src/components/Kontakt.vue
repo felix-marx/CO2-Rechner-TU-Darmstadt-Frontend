@@ -40,6 +40,7 @@
             </v-icon>
             <a
               href="https://www.tu-darmstadt.de/nachhaltigkeit/buero_fuer_nachhaltigkeit/index.de.jsp"
+              target="_blank"
             >Büro für Nachhaltigkeit</a>
           </v-card>
           <!-- Mail -->
