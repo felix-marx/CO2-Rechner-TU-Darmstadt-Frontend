@@ -15,7 +15,7 @@
         <p>
           Die gesamte Berechnung bezieht sich immer auf ein vollständig abgeschlossenes Kalenderjahr.
         </p>
-        <p>Der erste Teil des CO2-Rechner erfragt allgemeine Angaben über Ihre TU-Einheit, wie beispielsweise Anzahl der Mitarbeitenden, Standort Ihrer Einheit und gemeinschaftlich genutzte IT-Geräte. Wenn Sie diesen ersten Teil beantwortet haben, klicken Sie auf "<i>Speichern &amp; Link generieren</i>". Dadurch wird ein Link generiert, der zu der Umfrage für die Mitarbeitenden führt. Schicken Sie diesen Link an alle Mitarbeitenden Ihrer TU-Einheit. Eine Mailvorlage finden Sie unter dem Link.</p>
+        <p>Der erste Teil des CO2-Rechner erfragt allgemeine Angaben über Ihre TU-Einheit, wie beispielsweise Anzahl der Mitarbeitenden, Standort Ihrer Einheit und gemeinschaftlich genutzte IT-Geräte. Wenn Sie diesen ersten Teil beantwortet haben, klicken Sie auf „<i>Speichern &amp; Link generieren</i>“. Dadurch wird ein Link generiert, der zu der Umfrage für die Mitarbeitenden führt. Schicken Sie diesen Link an alle Mitarbeitenden Ihrer TU-Einheit. Eine Mailvorlage finden Sie unter dem Link.</p>
         <p>Hinter einigen Fragen befindet sich ein Fragezeichensymbol. Dort finden Sie zusätzliche Hinweise und Informationen, die zur Beantwortung der Frage hilfreich sind.  </p>
         <p>Falls Sie zu einem späteren Zeitpunkt nochmals Angaben ändern oder vervollständigen möchten, können Sie in der Kopfleiste rechts auf „<i>Umfragenübersicht</i>“ wechseln, um auf den ersten Teil des CO2-Rechners wieder zuzugreifen. Bitte klicken Sie am Ende auf „<i>Speichern</i>“, um ihre Änderungen final einzutragen. </p>
         <p>

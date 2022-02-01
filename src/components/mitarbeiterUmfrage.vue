@@ -18,7 +18,6 @@
       <v-card-title>
         {{ bezeichnung }}
       </v-card-title>
-      <v-divider />
 
       <!-- Umfrage -->
       <v-form>
