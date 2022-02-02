@@ -226,6 +226,38 @@
             </v-col>
           </v-row>
         </v-container>
+        <!-- Logos -->
+        <v-container class="d-flex justify-space-around mb-6 py-10">
+          <v-row>
+            <v-col>
+              <v-img
+                contain
+                class="mx-auto py-15"
+                max-height="177"
+                max-width="250"
+                src="../assets/logo_Maschinenbau.png"
+              />
+            </v-col>
+            <v-col>
+              <v-img
+                contain
+                class="mx-auto"
+                max-height="177"
+                max-width="250"
+                src="../assets/logo_Nachhaltigkeit.jpg"
+              />
+            </v-col>
+            <v-col>
+              <v-img
+                contain
+                class="mx-auto"
+                max-height="177"
+                max-width="250"
+                src="../assets/logo_tud.png"
+              />
+            </v-col>
+          </v-row>
+        </v-container>
       </v-card>
     </v-main>
     <Footer />
