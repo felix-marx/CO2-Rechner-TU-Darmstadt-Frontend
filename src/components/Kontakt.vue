@@ -22,7 +22,7 @@
       <v-list-item>
         <!--- Kontakt Bild --->
         <v-list-item-avatar
-          size="150"
+          size="130"
           left
         >
           <v-img

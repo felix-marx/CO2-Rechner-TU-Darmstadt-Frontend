@@ -24,24 +24,26 @@
             </v-list-item-title>
             <v-row>
               <v-col 
-                cols="8"
+                cols="7"
                 align-self="center"
               >
                 <div>
-                  Link zur Mitarbeitendenumfrage: {{ mitarbeiterumfrageBaseURL + umfrage._id }}
+                  Link zur Mitarbeitendenumfrage: <br> {{ mitarbeiterumfrageBaseURL + umfrage._id }}
                 </div>
               </v-col>
               <v-col 
                 align-self="center"
-                cols="3"
+                cols="4"
                 class="text-right"
               >
                 <div>
-                  {{ umfrage.mitarbeiterUmfrageRef.length }}/{{ umfrage.mitarbeiteranzahl }}:
+                  <b>{{ umfrage.mitarbeiterUmfrageRef.length }}/{{ umfrage.mitarbeiteranzahl }} </b> Mitarbeitende haben ausgefüllt
                 </div>
               </v-col>
               <v-col>
+                <!-- TODO circle green if complete -->
                 <v-progress-circular 
+                  :color=" umfrage.mitarbeiterUmfrageRef.length == umfrage.mitarbeiteranzahl ? 'black' : 'primary'"
                   :value="100*(umfrage.mitarbeiterUmfrageRef.length / umfrage.mitarbeiteranzahl)"
                   :size="35"
                 />
