@@ -17,9 +17,6 @@ const routes = [
     path: '/',
     name: 'Anmeldung',
     component: Anmeldung,
-    // beforeEnter: (to, from, next) => {
-    //   Cookies.postCheckUserRoleForLoginPage(next)
-    // }
     meta: { loginPage: true }
   },
   {
