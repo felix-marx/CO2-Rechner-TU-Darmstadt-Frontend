@@ -105,30 +105,30 @@ export default {
   },
 
   methods: {
-      postPasswortVergessen: async function () {
-        await fetch(process.env.VUE_APP_BASEURL + "/auth/passwortVergessen", {
-            method: "POST",
-            headers: {
-            "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-            username: this.username,
-            }),
+    postPasswortVergessen: async function () {
+      await fetch(process.env.VUE_APP_BASEURL + "/auth/passwortVergessen", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: this.username,
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data)
+          if(data.status === "success"){
+              this.passwortZurueck = 1 //Hat korrekt funktioniert
+          } else {
+              this.passwortZurueck = 2 //Irgendwas ist schief gegangen
+          }
         })
-            .then((response) => response.json())
-            .then((data) => {
-                console.log(data)
-                if(data.status === "success"){
-                    this.passwortZurueck = 1 //Hat korrekt funktioniert
-                } else {
-                    this.passwortZurueck = 2 //Irgendwas ist schief gegangen
-                }
-            })
-            .catch((error) => {
-            //This is always the case when the backend returns nothing -> Timeout
-            console.error("Error:", error)
-            });
-        },    
+        .catch((error) => {
+        //This is always the case when the backend returns nothing -> Timeout
+        console.error("Error:", error)
+        });
+      },    
     }, 
 };
 </script>

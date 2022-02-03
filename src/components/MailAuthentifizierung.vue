@@ -76,7 +76,6 @@ export default {
           if (data.status == "success") {
             this.emailConfirmed = true
             this.displayLoadingAnimation = false
-            //this.$router.push('/').catch(() => { })
           } else {
             this.displayLoadingAnimation = false
             this.emailNotConfirmed = true
