@@ -157,7 +157,7 @@
                 text
               >
                 Ihr Konto wurde erfolgreich erstellt. Damit Sie ihr Konto verwenden können, müssen Sie ihre E-Mail bestätigen.
-                <br> Unsere Bestätigungs Mail ist schon auf dem Weg zu Ihnen und Sie können gleich loslegen!
+                <br> Unsere Bestätigungsmail ist schon auf dem Weg zu Ihnen und Sie können gleich loslegen!
               </v-alert>
             </v-col>
             <v-col />
