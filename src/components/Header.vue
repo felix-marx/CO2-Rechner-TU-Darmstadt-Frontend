@@ -7,7 +7,8 @@
     <div class="d-flex align-center" />
     <!--- Tab Menu --->
 
-    <v-tabs center-active>
+    <v-tabs center-active
+    :value="selectedTab">
       <v-tab
         v-for="tab in filteredTabs"
         :key="'tab-' + tab.id"
@@ -15,13 +16,15 @@
       >
         {{ tab.title }}
       </v-tab>
-      <v-tab />
+      <v-tab 
+      class="pa-0 ma-0" style="min-width:0px"
+      />
     </v-tabs>
 
     <span>
       <UserSettingsHeader
         v-if="cookieAttribut != null"
-        @openAccountSettings="changeTab(-1, accountSettings)"
+        @openAccountSettings="changeTab(2, accountSettings)"
       />
     </span>
   </v-app-bar>
@@ -48,7 +51,8 @@ export default {
     },
   },
   data: () => ({
-    accountSettings: AccountSettings
+    accountSettings: AccountSettings,
+    selectedTab: 0,
   }),
   computed: {
     cookieAttribut: function () {
@@ -69,6 +73,7 @@ export default {
      * @param componentType - the component to be shown when the corresponding tab is selected.
      */
     changeTab(selectedTab, componentType) {
+      this.selectedTab = selectedTab;
       let data = { id: selectedTab, componentType: componentType };
       this.$emit("changeTab", data);
     },
