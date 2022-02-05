@@ -43,9 +43,8 @@
                 cols="1"
                 align-self="center"
               >
-                <!-- TODO circle green if complete -->
                 <v-progress-circular 
-                  :color=" umfrage.mitarbeiterUmfrageRef.length == umfrage.mitarbeiteranzahl ? 'black' : 'primary'"
+                  :color=" umfrage.mitarbeiterUmfrageRef.length == umfrage.mitarbeiteranzahl ? 'primary' : 'grey'"
                   :value="100*(umfrage.mitarbeiterUmfrageRef.length / umfrage.mitarbeiteranzahl)"
                   :size="35"
                 />
