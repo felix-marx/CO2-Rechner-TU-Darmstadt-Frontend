@@ -23,24 +23,26 @@
               {{ umfrage.bezeichnung }}
             </v-list-item-title>
             <v-row>
-              <v-col 
-                cols="7"
-                align-self="center"
-              >
-                <div>
-                  Link zur Mitarbeitendenumfrage: <br> {{ mitarbeiterumfrageBaseURL + umfrage._id }}
-                </div>
+              <v-col
+              cols="7">
+              <KopierenButton
+                :button-text="'Link zur Umfrage kopieren'"
+                :textToCopy="mitarbeiterumfrageBaseURL + umfrage._id"
+              />
               </v-col>
               <v-col 
-                align-self="center"
-                cols="4"
+                cols=""
                 class="text-right"
+                align-self="center"
               >
                 <div>
                   <b>{{ umfrage.mitarbeiterUmfrageRef.length }}/{{ umfrage.mitarbeiteranzahl }} </b> Mitarbeitende haben ausgefüllt
                 </div>
               </v-col>
-              <v-col>
+              <v-col
+                cols="1"
+                align-self="center"
+              >
                 <!-- TODO circle green if complete -->
                 <v-progress-circular 
                   :color=" umfrage.mitarbeiterUmfrageRef.length == umfrage.mitarbeiteranzahl ? 'black' : 'primary'"
@@ -211,11 +213,13 @@
 import UmfrageBearbeitenComponent from "./UmfrageBearbeitenComponent.vue";
 import Nutzerauswertung from "./nutzerauswertung.vue";
 import Cookies from "../Cookie";
+import KopierenButton from './componentParts/kopierenButton.vue';
 
 export default {
   components: {
     UmfrageBearbeitenComponent,
     Nutzerauswertung,
+    KopierenButton,
   },
 
     data: () => ({
@@ -232,8 +236,8 @@ export default {
       anteilMitarbeiterUmfrage: 40,
 
       // base url for Mitarbeiterumfragen
-      mitarbeiterumfrageBaseURL: process.env.VUE_APP_URL + '/survey/'
-    }),
+      mitarbeiterumfrageBaseURL: process.env.VUE_APP_URL + '/survey/',
+  }),
 
     created() {
       this.fetchUmfragenForUser();
@@ -335,8 +339,10 @@ export default {
           console.error("Error:", error);
           return false
         });
-      }
-    }
+      },
+  }
+
+    
   }
   
 </script>

@@ -63,16 +63,16 @@
                   v-if="displayLoadingAnimation"
                 />
                 <v-alert
-                    v-if="accountDeleted && signedOut && !displayLoadingAnimation"
-                    type="success"
-                  >
-                    Ihr Account wurde erfolgreich gelöscht. Sie können dieses Fenster nun schließen.
+                  v-if="accountDeleted && signedOut && !displayLoadingAnimation"
+                  type="success"
+                >
+                  Ihr Account wurde erfolgreich gelöscht. Sie können dieses Fenster nun schließen.
                 </v-alert>
                 <v-alert
-                    v-if="deleteRequestError && !displayLoadingAnimation"
-                    type="error"
-                  >
-                    Ihr Account konnte nicht gelöscht werden. Bitte versuchen Sie es erneut.
+                  v-if="deleteRequestError && !displayLoadingAnimation"
+                  type="error"
+                >
+                  Ihr Account konnte nicht gelöscht werden. Bitte versuchen Sie es erneut.
                 </v-alert>
                 <v-spacer />
                 <v-btn
@@ -113,14 +113,6 @@ export default {
     displayLoadingAnimation: false,
     signedOut: true,
   }),
-
-  watch:{
-    showDeleteDialog: function(newValue){
-      if(!newValue && this.accountDeleted){
-        this.forwardToLoginPage();
-      }
-    }
-  },
   
   computed: {
     /**
@@ -135,6 +127,14 @@ export default {
      */
     cookieAttribut: function () {
       return Cookies.getCookieAttribut('username')
+    }
+  },
+
+  watch:{
+    showDeleteDialog: function(newValue){
+      if(!newValue && this.accountDeleted){
+        this.forwardToLoginPage();
+      }
     }
   },
 
