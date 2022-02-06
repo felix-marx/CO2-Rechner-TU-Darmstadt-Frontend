@@ -41,7 +41,25 @@
                 type="success"
                 text
               >
-                Wir haben Ihnen eine Mail mit einem neuen Kennwort geschickt! 
+                Falls ein Konto mit dieser Mailadresse existiert, haben wir Ihnen ein neues Kennwort zugeschickt!
+              </v-alert>
+            </v-col>
+            <v-col />
+          </v-row>
+          <v-row
+            v-if="passwortZurueck === 2"
+            class="text-center"
+          >
+            <v-col />
+            <v-col
+              cols="13"
+            >
+              <v-alert
+                outlined
+                type="error"
+                text
+              >
+                Leider ist etwas schief gegangen, bitte wenden Sie sich an den Administrator oder probieren Sie es erneut.
               </v-alert>
             </v-col>
             <v-col />
@@ -125,8 +143,9 @@ export default {
           }
         })
         .catch((error) => {
-        //This is always the case when the backend returns nothing -> Timeout
-        console.error("Error:", error)
+          //This is always the case when the backend returns nothing -> Timeout
+          console.error("Error:", error)
+          this.passwortZurueck = 2 //Irgendwas ist schief gegangen
         });
       },    
     }, 
