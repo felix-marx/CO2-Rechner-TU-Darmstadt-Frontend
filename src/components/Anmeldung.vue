@@ -390,12 +390,10 @@ export default {
         .then((data) => {
           //This is always the case when the backend returns a package
           if (data.status == "success") {
-            Cookies.setCookie("sessiontoken", data.data.sessiontoken)
-            Cookies.setCookie("username", this.username)
             this.bestaetigungAnzeigen = true
           }
           //Message on success or error send from Backend 
-          this.errorMessage = (data.status == "success") ? data.data.message : data.error.message
+          this.errorMessage = (data.status == "success") ? '' : data.error.message
           console.log("Success:", data)
         })
         .catch((error) => {
