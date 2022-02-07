@@ -398,8 +398,8 @@ export default {
       "Bus",
       "U-Bahn",
       "Straßenbahn",
-      "MIX inkl. U-Bahn",
-      "MIX exkl. U-Bahn",
+      "Mix inkl. U-Bahn",
+      "Mix exkl. U-Bahn",
     ],
     /*
      * verkehrmittel Array format:
@@ -598,16 +598,19 @@ export default {
       //Build Pendelweg Array
       var buildPendelweg = [];
       for (var pendel of this.verkehrsmittel) {
-        buildPendelweg.push({
-          strecke: parseInt(pendel[4]),
-          idPendelweg: parseInt(
-            this.mapPendelverkehrsmittel(pendel[0], pendel[1])
-          ),
-          //return 1 for no fahrgemeinschaft. In Question we ask Anzahl Mitfahrer so pendel[3]+1 are all persons in the vehicle
-          personenanzahl: parseInt(
-            pendel[3] == null ? 1 : parseInt(pendel[3]) + 1
-          ),
-        });
+        // eslint-disable-next-line no-extra-boolean-cast
+        if(!!pendel[0]){
+          buildPendelweg.push({
+            strecke: parseInt(pendel[4]),
+            idPendelweg: parseInt(
+              this.mapPendelverkehrsmittel(pendel[0], pendel[1])
+            ),
+            //return 1 for no fahrgemeinschaft. In Question we ask Anzahl Mitfahrer so pendel[3]+1 are all persons in the vehicle
+            personenanzahl: parseInt(
+              pendel[3] == null ? 1 : parseInt(pendel[3]) + 1
+            ),
+          });
+        }
       }
       return buildPendelweg;
     },
@@ -648,14 +651,17 @@ export default {
       //Build Dienstreisen Array
       var buildDienstreisen = [];
       for (var reise of this.dienstreise) {
-        var dienstreisetyp = this.mapDienstreisemittel(reise[0]);
-        buildDienstreisen.push({
-          idDienstreise: parseInt(dienstreisetyp[0]),
-          //Catches spezial case were user selects Flugtyp but then changes to other Verkehrsmedium
-          streckentyp: parseInt(dienstreisetyp[0]) == 3 ? reise[1] : "",
-          strecke: parseInt(reise[2]),
-          tankart: dienstreisetyp[1],
-        });
+        // eslint-disable-next-line no-extra-boolean-cast
+        if(!!reise[0]){
+          var dienstreisetyp = this.mapDienstreisemittel(reise[0]);
+          buildDienstreisen.push({
+            idDienstreise: parseInt(dienstreisetyp[0]),
+            //Catches spezial case were user selects Flugtyp but then changes to other Verkehrsmedium
+            streckentyp: parseInt(dienstreisetyp[0]) == 3 ? reise[1] : "",
+            strecke: parseInt(reise[2]),
+            tankart: dienstreisetyp[1],
+          });
+        }
       }
       return buildDienstreisen;
     },

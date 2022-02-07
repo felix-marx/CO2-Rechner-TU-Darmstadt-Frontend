@@ -474,7 +474,6 @@ export default {
       this.bilanzierungsjahr = null
       this.anzahlMitarbeiter = null
       this.gebaeude = [[null, null]]
-      this.gebaeudeIDs = []
       this.geraeteAnzahl = [
         [7, null, false],
         [8, null, false],
@@ -538,9 +537,8 @@ export default {
      */
     gebaeudeJSON: function () {
       var gebaeudeJSON = [];
-
       for (var objekt of this.gebaeude) {
-        if ((objekt[0] !== null) && (objekt[1] !== null)) {
+        if (!!objekt[0] && !!objekt[1]) {
           gebaeudeJSON.push({
             gebaeudeNr: parseInt(translateGebaeudeIDToNumeric(objekt[0])),
             nutzflaeche: parseInt(objekt[1]),

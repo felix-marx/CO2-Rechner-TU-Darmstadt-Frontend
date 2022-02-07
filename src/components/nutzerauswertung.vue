@@ -11,15 +11,24 @@
       <v-container>
         <v-row>
           <v-col>
-            <p>Bilanzierungsjahr: {{ responsedata.jahr }}</p>
+            <v-icon>
+              mdi-calendar
+            </v-icon>
+            Bilanzierungsjahr: {{ responsedata.jahr }}
           </v-col>
           <v-col>
-            <p>Mitarbeiteranzahl: {{ responsedata.mitarbeiteranzahl }}</p>
+            <v-icon>
+              mdi-account
+            </v-icon>
+            Mitarbeiteranzahl: {{ responsedata.mitarbeiteranzahl }}
           </v-col>
         </v-row>
         <v-row>
           <v-col>
-            <p>Ausgefüllte Mitarbeiterumfragen: {{ responsedata.umfragenanzahl }}</p>
+            <v-icon>
+              mdi-account-edit
+            </v-icon>
+            Ausgefüllte Mitarbeiterumfragen: {{ responsedata.umfragenanzahl }}
           </v-col>
           <v-col>
             <v-progress-linear
@@ -48,14 +57,16 @@
       <v-container>
         <v-row>
           <v-col>
-            <p>
-              Gesamtemissionen: {{ responsedata.emissionenGesamt }} t CO<sub>2</sub> eq.
-            </p>
+            <v-icon>
+              mdi-thought-bubble
+            </v-icon>
+            Gesamtemissionen: {{ responsedata.emissionenGesamt }} t CO<sub>2</sub> eq.
           </v-col>
           <v-col>
-            <p>
-              Emissionen pro Mitarbeiter: {{ responsedata.emissionenProMitarbeiter }} t CO<sub>2</sub> eq.
-            </p>
+            <v-icon>
+              mdi-human-male-board-poll
+            </v-icon>
+            Emissionen pro Mitarbeiter: {{ responsedata.emissionenProMitarbeiter }} t CO<sub>2</sub> eq.
           </v-col>
         </v-row>
 
@@ -109,7 +120,10 @@
             <v-alert
               type="warning"
             >
-              Es ist kein Auswertung der Emissionen durch den Energieverbrauch möglich. Für das ausgewählte Bilanzierungsjahr fehlen Daten seitens der TU Darmstadt, um die Emissionen berechnen zu können.
+              Es ist kein Auswertung der Emissionen durch den Energieverbrauch möglich. 
+              Für das ausgewählte Bilanzierungsjahr fehlen Daten seitens der TU Darmstadt, um die Emissionen berechnen zu können. 
+              Die Zählerinfrastruktur wird durch das Energiemanagment immer weiter ausgebaut.
+              Sie können leider nichts tun, um die Auswertung zu vervollständigen.
             </v-alert>
           </v-col>
         </v-row>
@@ -129,13 +143,27 @@
         </v-row>
         <v-row>
           <v-col>
+            <v-alert 
+              text
+              type="info"
+            >
+              Das Büro für Nachhaltigkeit hat Tipps zum <a
+                href="https://www.tu-darmstadt.de/nachhaltigkeit/buero_fuer_nachhaltigkeit/projekte_buero/news_projekte_buero_details_348992.de.jsp"
+                target="_blank"
+                style="color:hsl(229, 100%, 50%);"
+              >Energiesparen am Arbeitsplatz</a> zusammengestellt.
+            </v-alert>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col>
             <v-btn
               color="primary"
               @click="makeSpreadsheet"
             >
               <v-icon left>
                 mdi-file-chart-outline
-              </v-icon>Download als XLSX
+              </v-icon>Download als Excel
             </v-btn>
           </v-col>
         </v-row>
@@ -262,7 +290,7 @@ export default {
           "col2": this.responsedata.umfragenanzahl,
         },
         {
-          "col1": "Fortschritt",
+          "col1": "Quote",
           "col2": this.responsedata.umfragenanteil + "%",
         },
         {},
@@ -502,18 +530,6 @@ export default {
             align: 'end',
             anchor: 'start',
           }
-        }, {
-          type: 'line',
-          label: 'kumulierte Emissionen',
-          yAxisID: 'line',
-          data: data.map((sum => a => sum += a.value)(0)).map(a => this.responsedata.emissionenGesamt === 0.0 ? 0 : Math.round(a / this.responsedata.emissionenGesamt * 1000) / 1000),
-          fill: false,
-          borderColor: 'rgb(21, 134, 209)',
-          lineTension: 0,
-          order: 0,
-          datalabels: {
-            display: false,
-          },
         }]
       };
       this.optionsGesamtPareto = {
@@ -532,16 +548,6 @@ export default {
             scaleLabel: {
               display: true,
               labelString: 't C02 eq.'
-            }
-          }, {
-            id: 'line',
-            position: 'right',
-            ticks: {
-              max: 1,
-              min: 0,
-            },
-            gridLines: {
-              display: false
             }
           }]
         },
@@ -609,18 +615,6 @@ export default {
             align: 'end',
             anchor: 'start',
           },
-        }, {
-          type: 'line',
-          label: 'kumulierte Emissionen',
-          yAxisID: 'line',
-          data: data.map((sum => a => sum += a.value)(0)).map(a => this.responsedata.emissionenEnergie === 0.0 ? 0 : Math.round(a / this.responsedata.emissionenEnergie * 1000) / 1000),
-          fill: false,
-          borderColor: 'rgb(54, 162, 235)',
-          lineTension: 0,
-          order: 0,
-          datalabels: {
-            display: false,
-          },
         }]
       }
       this.optionsEnergiePareto = {
@@ -640,16 +634,6 @@ export default {
               display: true,
               labelString: 't C02 eq.'
             }
-          }, {
-            id: 'line',
-            position: 'right',
-            ticks: {
-              max: 1,
-              min: 0,
-            },
-            gridLines: {
-              display: false
-            }
           }]
         },
       }
@@ -658,3 +642,11 @@ export default {
 }
 
 </script>
+
+<style>
+.p{
+  overflow: hidden; 
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+</style>
