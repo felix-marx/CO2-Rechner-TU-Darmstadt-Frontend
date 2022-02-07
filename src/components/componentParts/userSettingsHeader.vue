@@ -90,7 +90,6 @@ export default {
           console.log("Server konnte nicht löschen")
         }
         this.$router.push('/').catch(() => {})
-        //TODO Show error message in case of error 
         console.log("Success:", data)
   
       })
