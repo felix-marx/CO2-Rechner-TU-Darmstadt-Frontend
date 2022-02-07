@@ -38,4 +38,6 @@ class Cookies{
   }
 }
 
+
+
 export default new Cookies

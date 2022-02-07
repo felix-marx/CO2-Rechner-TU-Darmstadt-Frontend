@@ -54,25 +54,28 @@
               {{ umfrage.bezeichnung }}
             </v-list-item-title>
             <v-row>
-              <v-col 
-                cols="8"
-                align-self="center"
-              >
-                <div>
-                  Link zur Mitarbeiterumfrage: {{ mitarbeiterumfrageBaseURL + umfrage._id }}
-                </div>
+              <v-col
+              cols="7">
+              <KopierenButton
+                :button-text="'Link zur Umfrage kopieren'"
+                :textToCopy="mitarbeiterumfrageBaseURL + umfrage._id"
+              />
               </v-col>
               <v-col 
-                align-self="center"
-                cols="3"
+                cols=""
                 class="text-right"
+                align-self="center"
               >
                 <div>
-                  {{ umfrage.mitarbeiterUmfrageRef.length }}/{{ umfrage.mitarbeiteranzahl }}:
+                  <b>{{ umfrage.mitarbeiterUmfrageRef.length }}/{{ umfrage.mitarbeiteranzahl }} </b> Mitarbeitende haben ausgefüllt
                 </div>
               </v-col>
-              <v-col>
+              <v-col
+                cols="1"
+                align-self="center"
+              >
                 <v-progress-circular 
+                  :color=" umfrage.mitarbeiterUmfrageRef.length == umfrage.mitarbeiteranzahl ? 'primary' : 'grey'"
                   :value="100*(umfrage.mitarbeiterUmfrageRef.length / umfrage.mitarbeiteranzahl)"
                   :size="35"
                 />
@@ -127,13 +130,6 @@
                   :umfrageidprop="umfrage._id"
                 />
               </v-card>
-
-            <!--
-            <v-divider /> 
-            <div>
-              Aktuelle Auswertung
-            </div>
-            -->
             </v-card>
           </v-dialog>
 
@@ -247,11 +243,13 @@
 import UmfrageBearbeitenComponent from "./UmfrageBearbeitenComponent.vue";
 import Nutzerauswertung from "./nutzerauswertung.vue";
 import Cookies from "../Cookie";
+import KopierenButton from './componentParts/kopierenButton.vue';
 
 export default {
   components: {
     UmfrageBearbeitenComponent,
     Nutzerauswertung,
+    KopierenButton
   },
 
     data: () => ({
@@ -312,7 +310,6 @@ export default {
         if(this.umfragen.length === 0) {
           return;
         }
-        // TODO does not always update shown Umfragen
         this.umfragen.sort(GetSortOrder(this.sortingOptionSelected));
         if (this.sortingOrderSelected === "descending") {
           this.umfragen.reverse();

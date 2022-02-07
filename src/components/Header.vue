@@ -7,35 +7,40 @@
     <div class="d-flex align-center" />
     <!--- Tab Menu --->
 
-    <v-tabs center-active>
+    <v-tabs center-active
+    :value="selectedTab">
       <v-tab
-        v-for="tab in tabs"
+        v-for="tab in filteredTabs"
         :key="'tab-' + tab.id"
         @click="changeTab(tab.id, tab.componentType)"
       >
         {{ tab.title }}
       </v-tab>
+      <v-tab 
+      class="pa-0 ma-0" style="min-width:0px"
+      />
     </v-tabs>
 
-    <h4 v-if="cookieAttribut != null">
-      Angemeldet als: {{ cookieAttribut }}
-    </h4>
-    <v-btn
-      v-if="cookieAttribut != null"
-      text
-      @click="deleteAbmelden()"
-    >
-      <span class="mr-2">Abmelden</span>
-      <v-icon>mdi-account</v-icon>
-    </v-btn>
+    <span>
+      <UserSettingsHeader
+        v-if="cookieAttribut != null"
+        @openAccountSettings="changeTab(2, accountSettings)"
+      />
+    </span>
   </v-app-bar>
 </template>
 <script>
 
 import Cookies from "../Cookie"
+import UserSettingsHeader from "./componentParts/userSettingsHeader.vue";
+import AccountSettings from "./AccountSettings.vue"
 
 export default {
   name: "Header",
+
+  components: {
+    UserSettingsHeader
+  },
 
   props: {
     // data on tabs and shown component when selecting the tab
@@ -46,11 +51,19 @@ export default {
     },
   },
   data: () => ({
-
+    accountSettings: AccountSettings,
+    selectedTab: 0,
   }),
   computed: {
     cookieAttribut: function () {
       return Cookies.getCookieAttribut('username')
+    },
+
+    /**
+     * Returns all tabs with id >= 0. Tab with index -1 is a placeholder for when settings are shown.
+     */
+    filteredTabs: function() {
+      return this.tabs.filter(tab => tab.id != 2)
     }
   },
   methods: {
@@ -60,40 +73,10 @@ export default {
      * @param componentType - the component to be shown when the corresponding tab is selected.
      */
     changeTab(selectedTab, componentType) {
+      this.selectedTab = selectedTab;
       let data = { id: selectedTab, componentType: componentType };
       this.$emit("changeTab", data);
     },
-
-    deleteAbmelden: async function () {
-      await fetch(process.env.VUE_APP_BASEURL + "/auth/abmeldung", {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username: Cookies.getCookieAttribut('username')
-        }),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          //This is always the case when the backend returns a package
-          //Delete cookie and log if not success
-          Cookies.deleteCookieAttribut("username")
-          Cookies.deleteCookieAttribut("sessiontoken")
-          if (data.status != "success") {
-            console.log("Server konnte nicht löschen")
-          }
-          this.$router.push('/').catch(() => {})
-          //TODO Show error message in case of error 
-          console.log("Success:", data)
-
-        })
-        .catch((error) => {
-          //This is always the case when the backend returns nothing -> Timeout
-          console.error("Error:", error)
-        });
-    }
-
   }
 };
 </script>

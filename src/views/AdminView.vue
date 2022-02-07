@@ -22,6 +22,7 @@ import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import AdminEintraege from "@/components/AdminEintraege";
 import AdminAuswertung from "@/components/AdminAuswertung";
+import AccountSettings from '../components/AccountSettings.vue';
 
 export default {
   name: "App",
@@ -30,7 +31,8 @@ export default {
     Footer,
     Header,
     AdminEintraege,
-    AdminAuswertung
+    AdminAuswertung,
+    AccountSettings
   },
 
   data: () => ({
@@ -39,6 +41,7 @@ export default {
     selectedTab: 0,
     currentTabType: AdminAuswertung,
     tabList: [
+      { id: 2, title: "Accounteinstellungen", componentType: AccountSettings},
       { id: 0, title: "Umfragenübersicht", componentType: AdminAuswertung},
       { id: 1, title: "Datenbank", componentType: AdminEintraege},
     ],
