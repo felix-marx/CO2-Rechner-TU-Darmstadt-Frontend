@@ -15,9 +15,9 @@
         <p>
           Die gesamte Berechnung bezieht sich immer auf ein vollständig abgeschlossenes Kalenderjahr.
         </p>
-        <p>Der erste Teil des CO2-Rechner erfragt allgemeine Angaben über Ihre TU-Einheit, wie beispielsweise Anzahl der Mitarbeitenden, Standort Ihrer Einheit und gemeinschaftlich genutzte IT-Geräte. Wenn Sie diesen ersten Teil beantwortet haben, klicken Sie auf „<i>Speichern &amp; Link generieren</i>“. Dadurch wird ein Link generiert, der zu der Umfrage für die Mitarbeitenden führt. Schicken Sie diesen Link an alle Mitarbeitenden Ihrer TU-Einheit. Eine Mailvorlage finden Sie unter dem Link.</p>
-        <p>Hinter einigen Fragen befindet sich ein Fragezeichensymbol. Dort finden Sie zusätzliche Hinweise und Informationen, die zur Beantwortung der Frage hilfreich sind.  </p>
-        <p>Falls Sie zu einem späteren Zeitpunkt nochmals Angaben ändern oder vervollständigen möchten, können Sie in der Kopfleiste rechts auf „<i>Umfragenübersicht</i>“ wechseln, um auf den ersten Teil des CO2-Rechners wieder zuzugreifen. Bitte klicken Sie am Ende auf „<i>Speichern</i>“, um ihre Änderungen final einzutragen. </p>
+        <p>Der erste Teil des CO2-Rechner erfragt allgemeine Angaben über Ihre TU-Einheit, wie beispielsweise Anzahl der Mitarbeitenden, Standort Ihrer Einheit und gemeinschaftlich genutzte IT-Geräte. Sollten Sie keine genauen Angaben kennen, geben Sie bitte eine grobe Schätzung an. Wenn Sie diesen ersten Teil beantwortet haben, klicken Sie auf "<i>Speichern &amp; Link generieren</i>". Dadurch wird ein Link generiert, der zu der Umfrage für die Mitarbeitenden führt. Schicken Sie diesen Link an alle Mitarbeitende Ihrer TU-Einheit. Eine Mailvorlage finden Sie unter dem Link.</p>
+        <p>Hinter einigen Fragen befindet sich ein Fragezeichensymbol, dort finden Sie zusätzliche Hinweise und Informationen, die zur Beantwortung der Frage hilfreich sind.  </p>
+        <p>Falls Sie zu einem späteren Zeitpunkt nochmals Angaben ändern oder vervollständigen möchten, können Sie in der linken oberen Ecke „<i>Umfragenübersicht</i>“ auswählen, um auf den ersten Teil des CO2-Rechners wieder zuzugreifen. Bitte klicken Sie am Ende auf „Speichern“ um ihre Änderungen final einzutragen. </p>
         <p>
           Bei weiteren Nachfragen oder Anmerkungen wenden Sie sich gerne an <a
             href="mailto:nachhaltigkeit@tu-darmstadt.de"
@@ -94,7 +94,10 @@
 
           <br>
           <h3>
-            Welche Gebäude nutzt Ihre Abteilung?
+            Welche Gebäude nutzt Ihre Abteilung (<a
+              href="https://www.tu-darmstadt.de/universitaet/campus/index.de.jsp"
+              target="_blank"
+            >Campus Start</a>)?
             <Tooltip
               tooltip-text="Alle Gebäude beginnen je nach Standort mit den Buchstaben S, B, L,
               H oder W. Die Autovervollständigung sollte Ihnen dabei helfen."
@@ -103,7 +106,7 @@
 
           <v-divider />
           <br>
-
+          
           <div
             v-for="(objekt, index) in gebaeude"
             :key="index"
@@ -125,7 +128,7 @@
                   v-model="objekt[1]"
                   :rules="absolutpositivRules"
                   :min="0"
-                  label="Nutzfläche"
+                  label="Nutzfläche des ausgewählten Gebäudes"
                   prepend-icon="mdi-domain"
                   type="number"
                   suffix="qm"
@@ -154,19 +157,17 @@
               </v-col>
             </v-row>
           </div>
-          <v-row
+          <v-alert
             v-if="duplicateBuilding"
+            type="warning"
+            dense
           >
-            <v-alert
-              type="warning"
-            >
-              Sie haben mehrmals das selbe Gebäude ausgewählt.
-            </v-alert>
-          </v-row>
+            Sie haben mehrmals das selbe Gebäude ausgewählt.
+          </v-alert>
           <!-- Umfrage für IT Geräte: Multifunktionsgeräte + Toner, Drucker + Toner, Beamer, Server -->
 
           <br>
-          <h3>Welche IT-Geräte benutzen Sie in Ihrer Abteilung gemeinschaftlich?</h3>
+          <h3>Welche und wie viele IT-Geräte benutzen Sie in Ihrer Abteilung gemeinschaftlich in allen Gebäuden zusammen?</h3>
           <v-divider />
           <br>
 
@@ -260,16 +261,110 @@
               />
             </v-row>
           </v-container>
-
           <v-row class="mt-1 text-center">
-            <v-btn
-              class="mr-4"
-              color="primary"
-              :disabled="blockInput"
-              @click="sendData()"
+            <v-dialog
+              v-model="errorDialog"
+              transition="dialog-bottom-transition"
             >
-              Speichern &amp; Link generieren
-            </v-btn>
+              <!-- Mit diesem Button soll die Umfrage abgesendet werden. -->
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn
+                  class="mr-4"
+                  color="primary"
+                  :disabled="blockInput"
+                  v-bind="attrs"
+                  v-on="on"
+                  @click="problemeInUmfrage()"
+                >
+                  Speichern &amp; Link generieren
+                </v-btn>
+              </template>
+
+              <v-card>
+                <v-toolbar
+                  color="primary"
+                  dark
+                >
+                  {{ (errorTextArray.required.length != 0 || errorTextArray.nonRequired.length != 0) ? "Probleme mit Ihrer Eingabe!" : "Umfrage vollständig?" }}
+                </v-toolbar>
+                <v-card-text>
+                  <div
+                    v-if="errorTextArray.nonRequired.length != 0 || errorTextArray.required.length != 0"
+                    class="pt-6"
+                  >
+                    <div
+                      v-if="errorTextArray.required.length != 0"
+                    >
+                      Sie haben folgende Pflichtfelder nicht angegeben: <br>
+                      <v-list
+                        flat
+                      >
+                        <v-list-item
+                          v-for="(problem, index) in errorTextArray.required"
+                          :key="index"
+                        >
+                          <v-list-item-content>
+                            <v-list-item-title
+                              class="text-sm-body-2 delete--text font-weight-black"
+                              v-text="problem"
+                            />
+                          </v-list-item-content>
+                        </v-list-item>
+                      </v-list>
+                    </div>
+                    <div
+                      v-if="errorTextArray.nonRequired.length != 0"
+                    >
+                      Ihre Umfrage enthält folgende kleinere Probleme: <br>
+                      <v-list
+                        flat
+                      >
+                        <v-list-item
+                          v-for="(problem, index) in errorTextArray.nonRequired"
+                          :key="index"
+                        >
+                          <v-list-item-content>
+                            <v-list-item-title
+                              class="text-sm-body-2"
+                              v-text="problem"
+                            />
+                          </v-list-item-content>
+                        </v-list-item>
+                      </v-list>
+                    </div>
+                  </div>
+                  <div 
+                    v-if="errorTextArray.required.length == 0 && errorTextArray.nonRequired.length == 0"
+                    class="pt-6"
+                  >
+                    Möchten Sie ihre Umfrage wirklich absenden?<br>
+                    Sie können sie anschließend noch weiter in der Umfragenübersicht bearbeiten, auswerten und mit Mitarbeitenden teilen.
+                  </div>
+                </v-card-text>
+
+                <v-divider />
+
+                <v-card-actions>
+                  <v-spacer />
+                  <v-btn
+                    color="primary"
+                    text
+                    @click="errorDialog = false"
+                  >
+                    Weiter bearbeiten
+                  </v-btn>
+                  <v-btn
+                    v-if="errorTextArray.required.length == 0"
+                    color="primary"
+                    text
+                    @click="sendData(), errorDialog = false"
+                  >
+                    {{ (errorTextArray.nonRequired.length == 0) ? "Umfrage absenden" : "Umfrage trotzdem absenden" }}
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+            <!-- Ende des Absende Dialogs -->
             <v-btn
               v-if="displaySurveyLink"
               class="mr-4"
@@ -371,6 +466,12 @@ export default {
     // has Absenden Button been clicked
     dataRequestSent: false,
     responseData: null,
+    // Dialogvariable + Array mit fehlerhaften Eingaben {fehler: "", pflicht: 0}
+    errorDialog: false,
+    errorTextArray: {
+      required: [],
+      nonRequired: []
+    },
 
     // base url for Mitarbeiterumfragen
     mitarbeiterumfrageBaseURL: process.env.VUE_APP_URL + '/survey/',
@@ -450,6 +551,58 @@ export default {
         "\n geraeteAnzahl:",
         this.geraeteAnzahl
       );
+    },
+
+    /**
+     * Returns an array containing a list with every required field missing
+     */
+    requiredFieldsMissingArray: function() {
+      var fieldsarray = []
+      if(this.bezeichnung == "" || this.bezeichnung == null) {
+        fieldsarray.push("Bezeichnung")
+      }
+      if(!this.possibleYears.includes(parseInt(this.bilanzierungsjahr))) {
+        fieldsarray.push("Bilanzierungsjahr")
+      }
+      if(this.anzahlMitarbeiter == null || this.anzahlMitarbeiter <= 0) {
+        fieldsarray.push("Anzahl Mitarbeitenden")
+      }
+      return fieldsarray
+    },
+
+    /**
+     * Determines errors in Umfrage and writes Error message and if the field is requiered to the errorTextArray variable
+     * {
+     *  nonRequired: []
+     *  required:    []
+     * }
+     */
+    problemeInUmfrage: function() {
+      this.geraeteAnzahl[1][2] = this.geraeteAnzahl[0][2];
+      this.geraeteAnzahl[3][2] = this.geraeteAnzahl[2][2];
+      var nonRequiredArray = []
+      
+      // Gebaeude
+      if(this.duplicateBuilding) {
+        nonRequiredArray.push("Sie haben das mehrmals das selbe Gebäude ausgewählt.")
+      } 
+      for(const gebaeude of this.gebaeude) {
+        if(gebaeude[0] != null && gebaeude[1] <=0) {
+          nonRequiredArray.push("Sie haben für das Gebäude " + gebaeude[0] + " keine gültige Nutzfläche angegeben.")
+        }
+      }
+      // IT Geraete
+      for(const it of this.geraeteAnzahl) {
+        if(it[2] && it[1] <= 0) { 
+          if((it[0] != 8 && it[0] != 10)) {
+            nonRequiredArray.push("Sie haben das Gerät " + resolveITGeraetID(it[0]) + " angewählt, aber keine gültige Anzahl angegeben.")
+          } else { // Toner
+            nonRequiredArray.push("Sie haben einem ausgewählten Gerät keine verwendeten Toner hinzugefügt. Wenn Sie das Gerät nicht in Benutzung haben, ignorieren Sie diese Nachricht.")
+          }
+        }
+      }
+      this.errorTextArray.nonRequired = nonRequiredArray
+      this.errorTextArray.required = this.requiredFieldsMissingArray()
     },
 
     /**
@@ -654,6 +807,19 @@ function translateGebaeudeIDToSymbolic(gebaeudeID) {
     gebaeudeDict[gebaeudeID.substring(0, 1)] + gebaeudeID.substring(1);
   return translatedID;
 }
+
+function resolveITGeraetID(geraetID) {
+  let ITGeraetIDDict = {
+    7: "Multifunktionsgeräte",
+    8: "Multifunktionsgeräte Toner",
+    9: "Laser & Tintenstrahldrucker",
+    10: "Laser & Tintenstrahldrucker Toner",
+    4: "Beamer",
+    6: "interne Server"
+  };
+  return ITGeraetIDDict[geraetID]
+}
+
 </script>
 
 <!-- Removes the buttons in textfields to increase decrease number -->

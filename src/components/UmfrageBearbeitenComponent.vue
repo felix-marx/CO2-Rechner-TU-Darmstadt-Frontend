@@ -7,8 +7,6 @@
       <v-form lazy-validation>
         <v-card class="pa-7">
           <v-row class="mt-1 text-center">
-            <v-spacer />
-            
             <v-btn
               class="mr-4"
               color="primary"
@@ -20,18 +18,113 @@
               {{ ( blockInput ? " Bearbeiten aktivieren" : " Bearbeiten deaktivieren") }}
             </v-btn>
             
-            
-            <v-btn
-              v-if="!blockInput"
-              color="blue"
-              class="white--text"
-              @click="sendEdit()"
+            <v-dialog
+              v-model="errorDialog"
+              transition="dialog-bottom-transition"
             >
-              <v-icon left>
-                mdi-content-save
-              </v-icon>
-              Änderungen speichern
-            </v-btn>
+              <!-- Mit diesem Button soll die Umfrage abgesendet werden. -->
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn
+                  color="blue"
+                  class="white--text"
+                  :disabled="blockInput"
+                  v-bind="attrs"
+                  v-on="on"
+                  @click="problemeInUmfrage()"
+                >
+                  <v-icon left>
+                    mdi-content-save
+                  </v-icon>
+                  Änderungen speichern
+                </v-btn>
+              </template>
+
+              <v-card>
+                <v-toolbar
+                  color="primary"
+                  dark
+                >
+                  {{ (errorTextArray.required.length != 0 || errorTextArray.nonRequired.length != 0) ? "Probleme mit Ihrer Eingabe!" : "Umfrage vollständig?" }}
+                </v-toolbar>
+                <v-card-text>
+                  <div
+                    v-if="errorTextArray.nonRequired.length != 0 || errorTextArray.required.length != 0"
+                    class="pt-6"
+                  >
+                    <div
+                      v-if="errorTextArray.required.length != 0"
+                    >
+                      Sie haben folgende Pflichtfelder nicht angegeben: <br>
+                      <v-list
+                        flat
+                      >
+                        <v-list-item
+                          v-for="(problem, index) in errorTextArray.required"
+                          :key="index"
+                        >
+                          <v-list-item-content>
+                            <v-list-item-title
+                              class="text-sm-body-2 delete--text font-weight-black"
+                              v-text="problem"
+                            />
+                          </v-list-item-content>
+                        </v-list-item>
+                      </v-list>
+                    </div>
+                    <div
+                      v-if="errorTextArray.nonRequired.length != 0"
+                    >
+                      Ihre Umfrage enthält folgende kleinere Probleme: <br>
+                      <v-list
+                        flat
+                      >
+                        <v-list-item
+                          v-for="(problem, index) in errorTextArray.nonRequired"
+                          :key="index"
+                        >
+                          <v-list-item-content>
+                            <v-list-item-title
+                              class="text-sm-body-2"
+                              v-text="problem"
+                            />
+                          </v-list-item-content>
+                        </v-list-item>
+                      </v-list>
+                    </div>
+                  </div>
+                  <div 
+                    v-if="errorTextArray.required.length == 0 && errorTextArray.nonRequired.length == 0"
+                    class="pt-6"
+                  >
+                    Möchten Sie ihre Änderungen wirklich speichern?
+                  </div>
+                </v-card-text>
+
+                <v-divider />
+
+                <v-card-actions>
+                  <v-spacer />
+                  <v-btn
+                    color="primary"
+                    text
+                    @click="errorDialog = false"
+                  >
+                    Weiter bearbeiten
+                  </v-btn>
+                  <v-btn
+                    v-if="errorTextArray.required.length == 0"
+                    color="primary"
+                    text
+                    @click="sendEdit(), errorDialog = false"
+                  >
+                    {{ (errorTextArray.nonRequired.length == 0) ? "Änderungen speichern" : "Änderungen trotzdem speichern" }}
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+            <!-- Ende des Absende Dialogs -->
+           
+            <LoadingAnimation v-if="dataRequestSent" />
           </v-row>
           
           <!-- Bezeichnung -->
@@ -101,7 +194,10 @@
 
           <br>
           <h3>
-            Welche Gebäude nutzt Ihre Abteilung?
+            Welche Gebäude nutzt Ihre Abteilung (<a
+              href="https://www.tu-darmstadt.de/universitaet/campus/index.de.jsp"
+              target="_blank"
+            >Campus Start</a>)?
             <Tooltip
               tooltip-text="Alle Gebäude beginnen je nach Standort mit den Buchstaben S, B, L,
               H oder W. Die Autovervollständigung sollte Ihnen dabei helfen."
@@ -132,7 +228,7 @@
                   v-model="objekt[1]"
                   :rules="absolutpositivRules"
                   :min="0"
-                  label="Nutzfläche"
+                  label="Nutzfläche des ausgewählten Gebäudes"
                   prepend-icon="mdi-domain"
                   type="number"
                   suffix="qm"
@@ -269,7 +365,6 @@
               />
             </v-row>
           </v-container>
-          <LoadingAnimation v-if="dataRequestSent" />
         </v-card>
       </v-form>
     </v-card>
@@ -343,6 +438,12 @@ export default {
     displayError: false,
     displaySuccess: false,
 
+    // Dialogvariable + Array mit fehlerhaften Eingaben {fehler: "", pflicht: 0}
+    errorDialog: false,
+    errorTextArray: {
+      required: [],
+      nonRequired: []
+    },
 
     //Rules for input validation
     geraeteRules: [
@@ -399,6 +500,58 @@ export default {
         this.displaySuccess = false
         this.displayError = false
         this.displayLoadingAnimation = false
+    },
+
+    /**
+     * Returns an array containing a list with every required field missing
+     */
+    requiredFieldsMissingArray: function() {
+      var fieldsarray = []
+      if(this.umfrage.bezeichnung == "" || this.umfrage.bezeichnung == null) {
+        fieldsarray.push("Bezeichnung")
+      }
+      if(!this.possibleYears.includes(parseInt(this.umfrage.jahr))) {
+        fieldsarray.push("Bilanzierungsjahr")
+      }
+      if(this.umfrage.mitarbeiteranzahl == null || this.umfrage.mitarbeiteranzahl <= 0) {
+        fieldsarray.push("Anzahl Mitarbeitenden")
+      }
+      return fieldsarray
+    },
+
+    /**
+     * Determines errors in Umfrage and writes Error message and if the field is requiered to the errorTextArray variable
+     * {
+     *  nonRequired: []
+     *  required:    []
+     * }
+     */
+    problemeInUmfrage: function() {
+      this.umfrage.geraeteanzahl[1][2] = this.umfrage.geraeteanzahl[0][2];
+      this.umfrage.geraeteanzahl[3][2] = this.umfrage.geraeteanzahl[2][2];
+      var nonRequiredArray = []
+      
+      // Gebaeude
+      if(this.duplicateBuilding) {
+        nonRequiredArray.push("Sie haben das mehrmals das selbe Gebäude ausgewählt.")
+      } 
+      for(const gebaeude of this.umfrage.gebaeude) {
+        if(gebaeude[0] != null && gebaeude[1] <=0) {
+          nonRequiredArray.push("Sie haben für das Gebäude " + gebaeude[0] + " keine gültige Nutzfläche angegeben.")
+        }
+      }
+      // IT Geraete
+      for(const it of this.umfrage.geraeteanzahl) {
+        if(it[2] && it[1] <= 0) { 
+          if((it[0] != 8 && it[0] != 10)) {
+            nonRequiredArray.push("Sie haben das Gerät " + resolveITGeraetID(it[0]) + " angewählt, aber keine gültige Anzahl angegeben.")
+          } else { // Toner
+            nonRequiredArray.push("Sie haben einem ausgewählten Gerät keine verwendeten Toner hinzugefügt. Wenn Sie das Gerät nicht in Benutzung haben, ignorieren Sie diese Nachricht.")
+          }
+        }
+      }
+      this.errorTextArray.nonRequired = nonRequiredArray
+      this.errorTextArray.required = this.requiredFieldsMissingArray()
     },
 
     /**
@@ -652,6 +805,19 @@ function translateGebaeudeIDToSymbolic(gebaeudeID) {
     gebaeudeDict[gebaeudeID.substring(0, 1)] + gebaeudeID.substring(1);
   return translatedID;
 }
+
+function resolveITGeraetID(geraetID) {
+  let ITGeraetIDDict = {
+    7: "Multifunktionsgeräte",
+    8: "Multifunktionsgeräte Toner",
+    9: "Laser & Tintenstrahldrucker",
+    10: "Laser & Tintenstrahldrucker Toner",
+    4: "Beamer",
+    6: "interne Server"
+  };
+  return ITGeraetIDDict[geraetID]
+}
+
 </script>
 
 <!-- Removes the buttons in textfields to increase decrease number -->
