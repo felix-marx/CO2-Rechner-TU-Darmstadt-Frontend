@@ -9,6 +9,8 @@ import MitarbeiterUmfrageView from '../views/MitarbeiterUmfrageView.vue'
 import MailAuthentifizierungVue from '../components/MailAuthentifizierung.vue'
 import Authentication from '../Authentication.js'
 import PasswortVergessen from '../components/PasswortVergessen.vue'
+import AuswertungView from '../views/AuswertungView.vue'
+import Datenschutz from '../components/Datenschutzerklaerung.vue'
 
 Vue.use(VueRouter)
 
@@ -44,6 +46,12 @@ const routes = [
     meta: { noAuth: true }
   },
   {
+    path: '/survey/results/:umfrageID',
+    name: 'Umfrageauswertung',
+    component: AuswertungView,
+    meta: { noAuth: true }
+  },
+  {
     path: '/admin',
     name: 'Admin',
     // route level code-splitting
@@ -53,15 +61,21 @@ const routes = [
     meta: { requiresAdminAuth: true }
   },
   {
+    path: "/passwortVergessen",
+    component: PasswortVergessen,
+    meta: {noAuth: true}
+  },
+  {
+    path: "/datenschutz",
+    name: "Datenschutz",
+    component: Datenschutz,
+    meta: {noAuth: true}
+  },
+  {
     path: "*",
     component: PageNotFound,
     meta: { noAuth: true } 
   },
-  {
-    path: "/passwortVergessen",
-    component: PasswortVergessen,
-    meta: {noAuth: true}
-  }
 ]
 
 const router = new VueRouter({

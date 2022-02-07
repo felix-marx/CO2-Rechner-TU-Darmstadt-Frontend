@@ -156,8 +156,12 @@
           </v-col>
         </v-row>
         <v-row>
-          <v-col>
+          <v-col
+            cols="2"
+            class="align-self-center"
+          >
             <v-btn
+              class="ml-8 "
               color="primary"
               @click="makeSpreadsheet"
             >
@@ -166,8 +170,29 @@
               </v-icon>Download als Excel
             </v-btn>
           </v-col>
+          <v-col cols="2">
+            <v-switch
+              v-if="!this.$props.shared"
+              v-model="responsedata.linkShare"
+              class="ml-8"
+              inset
+              :label="`Linksharing ${(responsedata.linkShare ? 'aktiviert' : 'deaktiviert')}`"
+              @click="updateFlipLinkShare"
+            />
+          </v-col>
         </v-row>
       </v-container>
+    </v-card>
+
+    <v-card
+      v-if="showLoading || responsedata.linkShare"
+    >
+      <LoadingAnimation v-if="showLoading" />
+      <MitarbeiterLinkComponent
+        v-if="!this.$props.shared && responsedata.linkShare && !showLoading"
+        :mitarbeiter-link="linkshareBaseURL + responsedata.id"
+        :link-ziel="'Auswertung'"
+      />
     </v-card>
 
     <v-card
@@ -183,9 +208,11 @@
 <script>
 import DoughnutChart from "./charts/DoughnutChart.js";
 import BarChart from "./charts/BarChart.js";
-import XLSX from "xlsx"
+import XLSX from "xlsx";
 import saveAs from 'file-saver';
-import Cookies from '../Cookie'
+import Cookies from '../Cookie';
+import LoadingAnimation from "./componentParts/loadingAnimation.vue";
+import MitarbeiterLinkComponent from "./mitarbeiterLinkComponent.vue";
 
 export default {
   name: "Auswertung",
@@ -193,13 +220,19 @@ export default {
   components: {
     DoughnutChart,
     BarChart,
-  },
+    LoadingAnimation,
+    MitarbeiterLinkComponent
+},
 
   props: {
     umfrageid: {
       default: "",
       type: String,
-    }
+    },
+    shared: {
+      default: false,
+      type: Boolean,
+    },
   },
 
   data() {
@@ -213,6 +246,7 @@ export default {
         mitarbeiteranzahl: null,
         umfragenanzahl: null,
         umfragenanteil: null,
+        linkShare: null,
 
         emissionenWaerme: null,
         emissionenStrom: null,
@@ -233,6 +267,12 @@ export default {
         code: null,
         message: null,
       },
+      // Wenn Link Sharing korrekt geflipped wurde
+      displaySuccess: false,
+      showLoading: false,
+
+      // base url for Mitarbeiterumfragen
+      linkshareBaseURL: process.env.VUE_APP_URL + '/survey/results/',
 
       displayEnergieCharts: true,
 
@@ -414,6 +454,7 @@ export default {
         if (body.status == "success") {
           this.responsesuccessful = true
           this.responsedata = body.data
+          this.responsedata.linkShare = (body.data.linkShare == 1) ? true : false
 
           this.checkNegativValue();
           this.roundResponseData();
@@ -421,6 +462,48 @@ export default {
           this.setChartEnergie();
         }
         else {  // Fehlerbehandlung
+          this.responseNotSuccessful = true
+          this.responseerror = body.error
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+    },
+
+    /**
+     * updateFlipLinkShare sendet eine POST update Request ans Backend, wodurch das Link Sharing für diese Umfrage aktiviert wird, wenn es aktuell deaktiviert ist
+     * bzw. deaktiviert wenn es gerade aktiviert ist.
+     * Im Erfolgsfall wird eine Erfolgsnachricht angezeigt und sonst eine Fehlermeldung.
+     * Der lokal gespeicherte LinkShare Wert wird angepasst.
+     */
+    updateFlipLinkShare: async function() {
+      this.showLoading = true;
+      this.displaySuccess = false;
+
+      await fetch(process.env.VUE_APP_BASEURL + "/auswertung/updateSetLinkShare", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          authToken: {
+            username: Cookies.getCookieAttribut("username"),
+            sessiontoken: Cookies.getCookieAttribut("sessiontoken")
+          },
+          umfrageID: this.$props.umfrageid,
+          // linkShareValue 0 ist teilen deaktiviert, 1 aktiviert und wir flippen hier
+          linkShareValue: ((this.responsedata.linkShare) ? 1 : 0),
+        }),
+      }).then((response) => response.json())
+        .then((body) => {
+          this.showLoading = false
+          console.log(body)
+          if (body.status == "success") {
+            this.displaySuccess = true
+        }
+        else {  // Fehlerbehandlung
+          this.showLoading = false
           this.responseNotSuccessful = true
           this.responseerror = body.error
         }

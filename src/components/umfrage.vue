@@ -390,6 +390,7 @@
       <MitarbeiterLinkComponent
         v-if="displaySurveyLink"
         :mitarbeiter-link="mitarbeiterumfrageBaseURL + responseData.umfrageID"
+        :link-ziel="'Umfrage'"
       />
     </v-card>
 
