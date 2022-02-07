@@ -7,8 +7,10 @@
     <div class="d-flex align-center" />
     <!--- Tab Menu --->
 
-    <v-tabs center-active
-    :value="selectedTab">
+    <v-tabs
+      center-active
+      :value="selectedTab"
+    >
       <v-tab
         v-for="tab in filteredTabs"
         :key="'tab-' + tab.id"
@@ -17,7 +19,8 @@
         {{ tab.title }}
       </v-tab>
       <v-tab 
-      class="pa-0 ma-0" style="min-width:0px"
+        class="pa-0 ma-0"
+        style="min-width:0px"
       />
     </v-tabs>
 
@@ -63,6 +66,9 @@ export default {
      * Returns all tabs with id >= 0. Tab with index -1 is a placeholder for when settings are shown.
      */
     filteredTabs: function() {
+      if (this.tabs === null){
+        return null
+      }
       return this.tabs.filter(tab => tab.id != 2)
     }
   },
