@@ -220,7 +220,7 @@
             Welche Gebäude nutzt Ihre Abteilung (<a
               href="https://www.tu-darmstadt.de/universitaet/campus/index.de.jsp"
               target="_blank"
-            >Campus Start</a>)?
+            >Lageplan</a>)?
             <Tooltip
               tooltip-text="Alle Gebäude beginnen je nach Standort mit den Buchstaben S, B, L,
               H oder W. Die Autovervollständigung sollte Ihnen dabei helfen."

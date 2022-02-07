@@ -176,7 +176,7 @@
                   <template v-slot:activator="{ on }">
                     <a
                       target="_blank"
-                      href="https://www.tu-darmstadt.de/datenschutzerklaerung.de.jsp"
+                      :href="datenschutzlink"
                       @click.stop
                       v-on="on"
                     >Datenschutzerklärung</a>
@@ -289,6 +289,7 @@ export default {
     dialog: false,
     //Für Fehlermeldung bei Response
     errorMessage: null,
+    datenschutzlink: process.env.VUE_APP_URL + "/datenschutz",
 
     requiredRule: [
       v => !!v || "Muss angegeben werden",
