@@ -6,19 +6,34 @@
     >
       <v-form lazy-validation>
         <v-card class="pa-7">
-          <v-row class="mt-1 text-center">
-            <v-btn
-              class="mr-4"
-              color="primary"
-              @click="flipBearbeiten()"
+          <v-row
+            class="mt-1"
+            dense
+          >
+            <v-spacer />
+
+            <LoadingAnimation
+              v-if="displayLoadingAnimation"
+            />
+            <v-alert
+              v-if="displaySuccess"
+              type="success"
+              dense
             >
-              <v-icon left>
-                mdi-pencil
-              </v-icon>
-              {{ ( blockInput ? " Bearbeiten aktivieren" : " Bearbeiten deaktivieren") }}
-            </v-btn>
-            
+              Die Umfrage wurde erfolgreich geändert.
+            </v-alert>
+            <v-alert
+              v-if="displayError"
+              type="error"
+              dense
+            >
+              {{ errorMessage }}
+            </v-alert>
+
+            <!-- <v-spacer /> -->
+                    
             <v-dialog
+              v-if="!blockInput"
               v-model="errorDialog"
               transition="dialog-bottom-transition"
             >
@@ -122,9 +137,17 @@
                 </v-card-actions>
               </v-card>
             </v-dialog>
-            <!-- Ende des Absende Dialogs -->
-           
-            <LoadingAnimation v-if="dataRequestSent" />
+
+            <v-btn
+              class="ml-4"
+              color="primary"
+              @click="flipBearbeiten()"
+            >
+              <v-icon left>
+                mdi-pencil
+              </v-icon>
+              {{ ( blockInput ? " Bearbeiten aktivieren" : " Bearbeiten deaktivieren") }}
+            </v-btn>
           </v-row>
           
           <!-- Bezeichnung -->
@@ -367,25 +390,6 @@
           </v-container>
         </v-card>
       </v-form>
-    </v-card>
-
-    <v-card
-      v-if="displaySuccess || displayLoadingAnimation || displayError"
-      elevation="2"
-    >
-      <LoadingAnimation v-if="displayLoadingAnimation" />
-      <v-alert
-        v-if="displaySuccess"
-        type="success"
-      >
-        Die Umfrage wurde erfolgreich geändert.
-      </v-alert>
-      <v-alert
-        v-if="displayError"
-        type="error"
-      >
-        {{ errorMessage }}
-      </v-alert>
     </v-card>
   </v-container>
 </template>
