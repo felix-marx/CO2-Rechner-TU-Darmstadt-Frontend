@@ -188,7 +188,7 @@
       v-if="showLoading || responsedata.linkShare"
     >
       <LoadingAnimation v-if="showLoading" />
-      <MitarbeiterLinkComponent
+      <LinkSharingComponent
         v-if="!this.$props.shared && responsedata.linkShare && !showLoading"
         :mitarbeiter-link="linkshareBaseURL + responsedata.id"
         :link-ziel="'Auswertung'"
@@ -206,22 +206,22 @@
 </template>
 
 <script>
-import DoughnutChart from "./charts/DoughnutChart.js";
-import BarChart from "./charts/BarChart.js";
+import DoughnutChart from "../charts/DoughnutChart.js";
+import BarChart from "../charts/BarChart.js";
 import XLSX from "xlsx";
 import saveAs from 'file-saver';
-import Cookies from '../Cookie';
-import LoadingAnimation from "./componentParts/loadingAnimation.vue";
-import MitarbeiterLinkComponent from "./mitarbeiterLinkComponent.vue";
+import Cookies from '../Cookie.js';
+import LoadingAnimation from "../componentParts/LoadingAnimation.vue";
+import LinkSharingComponent from "../componentParts/LinkSharingComponent.vue";
 
 export default {
-  name: "Auswertung",
+  name: "SurveyEvaluation",
 
   components: {
     DoughnutChart,
     BarChart,
     LoadingAnimation,
-    MitarbeiterLinkComponent
+    LinkSharingComponent
 },
 
   props: {

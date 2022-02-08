@@ -162,17 +162,17 @@
 </template>
 
 <script>
-import Header from './Header.vue'
-import Footer from './Footer.vue'
-import loadingAnimationVue from './componentParts/loadingAnimation.vue'
+import Header from '../componentParts/Header.vue'
+import Footer from '../componentParts/Footer.vue'
+import loadingAnimation from '../componentParts/LoadingAnimation.vue'
 export default {
-    name: "Datenschutzerklaerung",
+    name: "PrivacyPolicy",
     components: {
         Header,
         Footer
     },
     data: () => ({
-        tabList: [{ id: 0, title: 'Datenschutzerklärung', componentType: loadingAnimationVue}],
+        tabList: [{ id: 0, title: 'Datenschutzerklärung', componentType: loadingAnimation}],
     }),
 }
 

@@ -7,9 +7,5 @@
 <script>
 export default {
   name: "LoadingAnimation",
-
-  data: () => ({
-    //
-  }),
 };
 </script>

@@ -387,14 +387,14 @@
       outlined
     >
       <LoadingAnimation v-if="displayLoadingAnimation" />
-      <MitarbeiterLinkComponent
+      <LinkSharingComponent
         v-if="displaySurveyLink"
         :mitarbeiter-link="mitarbeiterumfrageBaseURL + responseData.umfrageID"
         :link-ziel="'Umfrage'"
       />
     </v-card>
 
-    <MailvorlageComponent
+    <MailTemplate
       v-if="displaySurveyLink"
       :umfrage-jahr="String(bilanzierungsjahr)"
       :umfrage-link="mitarbeiterumfrageBaseURL+ responseData.umfrageID"
@@ -412,16 +412,16 @@
 </template>
 
 <script>
-import Cookies from '../Cookie'
-import Tooltip from "@/components/componentParts/tooltip.vue";
-import MitarbeiterLinkComponent from "./mitarbeiterLinkComponent";
-import MailvorlageComponent from "./MailvorlageComponent";
-import LoadingAnimation from "./componentParts/loadingAnimation";
+import Cookies from '../Cookie.js'
+import Tooltip from "@/components/componentParts/Tooltip.vue";
+import LinkSharingComponent from "../componentParts/LinkSharingComponent";
+import MailTemplate from "./MailTemplate";
+import LoadingAnimation from "../componentParts/LoadingAnimation";
 
 export default {
   components: {
-    MitarbeiterLinkComponent,
-    MailvorlageComponent,
+    LinkSharingComponent,
+    MailTemplate,
     LoadingAnimation,
     Tooltip,
   },

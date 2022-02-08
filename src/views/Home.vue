@@ -17,11 +17,11 @@
 </template>
 
 <script>
-import Footer from "@/components/Footer";
-import Header from "@/components/Header";
-import Umfrage from "@/components/umfrage";
-import Uebersicht from "@/components/uebersichtUmfragen";
-import AccountSettings from '../components/AccountSettings.vue';
+import Footer from "@/components/componentParts/Footer";
+import Header from "@/components/componentParts/Header";
+import Survey from "@/components/userSurvey/Survey";
+import SurveyOverview from "@/components/userSurveyManagement/SurveyOverview";
+import AccountSettings from '../components/settings/AccountSettings.vue';
 
 export default {
   name: "App",
@@ -29,18 +29,18 @@ export default {
   components: {
     Footer,
     Header,
-    Umfrage,
+    Survey,
   },
 
   data: () => ({
-    // standard tab selected is the first tab / Umfrage tab
+    // standard tab selected is the first tab / Survey tab
     // could extend this to be persistent on site refresh, but this would require additional plugins, like e.g. Vuex.
     selectedTab: 0,
-    currentTabType: Umfrage,
+    currentTabType: Survey,
     tabList: [
         { id: 2, title: "Accounteinstellungen", componentType: AccountSettings},
-        { id: 0, title: "CO2-Rechner", componentType: Umfrage },
-        { id: 1, title: "Umfragenübersicht", componentType: Uebersicht },
+        { id: 0, title: "CO2-Rechner", componentType: Survey },
+        { id: 1, title: "Umfragenübersicht", componentType: SurveyOverview },
     ],
   }),
 

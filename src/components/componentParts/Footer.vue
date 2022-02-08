@@ -26,8 +26,8 @@
               <span class="mx-2">{{ fElem.text }}</span>
             </v-btn>
 
-            <!--- Kontakt Dialog --->
-            <Kontakt />
+            <!--- Contact Dialog --->
+            <Contact />
           </v-card-text>
         </v-row>
       </v-card>
@@ -36,19 +36,19 @@
 </template>
 
 <script>
-import Kontakt from "./Kontakt";
+import Contact from "../legal/Contact.vue";
 
 export default {
   name: "Footer",
   components: {
-      Kontakt
+      Contact
   },
 
   data: () => ({
     padless: true,
     dialog: false,
     
-    // Kontakt component not in footerButtons for it is as Dialog and not a Button
+    // Contact component not in footerButtons for it is as Dialog and not a Button
     footerButtons: [
       {
         text: "Impressum",

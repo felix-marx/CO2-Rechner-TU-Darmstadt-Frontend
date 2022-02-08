@@ -140,18 +140,18 @@
 
 
 <script>
-import DoughnutChart from "./charts/DoughnutChart.js"
-import LineChart from "./charts/LineChart.js"
-import BarChart from "./charts/BarChart.js"
-import HorizontalBarChart from "./charts/HorizontalBarChart.js"
-import RadarChart from "./charts/RadarChart.js"
-import PieChart from "./charts/PieChart.js"
-import PolarAreaChart from "./charts/PolarAreaChart.js"
-import BubbleChart from "./charts/BubbleChart.js"
-import ScatterChart from "./charts/ScatterChart.js"
+import DoughnutChart from "./DoughnutChart.js"
+import LineChart from "./LineChart.js"
+import BarChart from "./BarChart.js"
+import HorizontalBarChart from "./HorizontalBarChart.js"
+import RadarChart from "./RadarChart.js"
+import PieChart from "./PieChart.js"
+import PolarAreaChart from "./PolarAreaChart.js"
+import BubbleChart from "./BubbleChart.js"
+import ScatterChart from "./ScatterChart.js"
 
 export default{
-  name: "Nutzerauswertung",
+  name: "Charttest",
 
   components: {
     DoughnutChart,

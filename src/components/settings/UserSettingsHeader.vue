@@ -42,8 +42,8 @@
 </template>
 
 <script>
-import Cookies from "../../Cookie"
-import AccountSettings from "../AccountSettings.vue"
+import Cookies from "../Cookie.js"
+import AccountSettings from "./AccountSettings.vue"
 
 export default {
   name: "UserSettingsHeader",

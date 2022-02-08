@@ -12,8 +12,7 @@
 
 <script>
 export default {
-  name: "ResultSharingDisabledComponent",
+  name: "ResultSharingDisabled",
 
-  data: () => ({}),
 };
 </script>

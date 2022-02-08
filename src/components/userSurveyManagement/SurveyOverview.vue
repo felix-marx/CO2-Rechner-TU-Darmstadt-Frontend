@@ -24,11 +24,12 @@
             </v-list-item-title>
             <v-row>
               <v-col
-              cols="7">
-              <KopierenButton
-                :button-text="'Link zur Umfrage kopieren'"
-                :textToCopy="mitarbeiterumfrageBaseURL + umfrage._id"
-              />
+                cols="7"
+              >
+                <CopyButton
+                  :button-text="'Link zur Umfrage kopieren'"
+                  :text-to-copy="mitarbeiterumfrageBaseURL + umfrage._id"
+                />
               </v-col>
               <v-col 
                 cols=""
@@ -95,7 +96,7 @@
               <v-card
                 v-if="dialog[index]"
               >
-                <UmfrageBearbeitenComponent 
+                <EditSurvey 
                   :umfrageidprop="umfrage._id"
                 />
               </v-card>
@@ -140,7 +141,7 @@
               <v-card
                 v-if="dialogAuswertung[index]"
               >
-                <Nutzerauswertung
+                <SurveyEvaluation
                   :umfrageid="umfrage._id"
                   :shared="false"
                 />
@@ -212,16 +213,16 @@
 </template>
 
 <script>
-import UmfrageBearbeitenComponent from "./UmfrageBearbeitenComponent.vue";
-import Nutzerauswertung from "./nutzerauswertung.vue";
+import EditSurvey from "./EditSurvey.vue";
+import SurveyEvaluation from "../evaluation/SurveyEvaluation.vue";
 import Cookies from "../Cookie";
-import KopierenButton from './componentParts/kopierenButton.vue';
+import CopyButton from '../componentParts/CopyButton.vue';
 
 export default {
   components: {
-    UmfrageBearbeitenComponent,
-    Nutzerauswertung,
-    KopierenButton,
+    EditSurvey,
+    SurveyEvaluation,
+    CopyButton,
   },
 
     data: () => ({

@@ -187,13 +187,12 @@
         </v-row>
       </v-container>
     </v-card>
-
   </v-card>
 </template>
 
 <script>
-import Cookies from "../Cookie"
-import LoadingAnimation from "./componentParts/loadingAnimation"
+import Cookies from "../Cookie.js"
+import LoadingAnimation from "../componentParts/LoadingAnimation"
 
 
 export default {

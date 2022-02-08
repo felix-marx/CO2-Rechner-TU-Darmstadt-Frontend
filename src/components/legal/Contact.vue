@@ -26,7 +26,7 @@
           left
         >
           <v-img
-            :src="require('../assets/kontakt_solarhaus.jpg')"
+            :src="require('../../assets/kontakt_solarhaus.jpg')"
             alt="Bild des Solarhauses am Campus Lichtwiese. Der Sitz des Büros für Nachhaltigkeit."
           />
         </v-list-item-avatar>
@@ -77,7 +77,7 @@
 
 <script>
 export default {
-  name: "Kontakt",
+  name: "Contact",
   
   data() {
     return {

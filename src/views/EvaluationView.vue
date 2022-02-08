@@ -20,22 +20,22 @@
 </template>
 
 <script>
-import Footer from "@/components/Footer";
-import Header from "@/components/Header";
-import SurveyNotFoundComponent from "@/components/SurveyNotFoundComponent";
-import LoadingAnimation from "@/components/componentParts/loadingAnimation";
-import Nutzerauswertung from "@/components/nutzerauswertung";
-import ResultSharingDisabledComponent from "../components/ResultSharingDisabledComponents.vue";
+import Footer from "@/components/componentParts/Footer";
+import Header from "@/components/componentParts/Header";
+import SurveyNotFound from "@/components/colleagueSurvey/SurveyNotFound";
+import LoadingAnimation from "@/components/componentParts/LoadingAnimation";
+import SurveyEvaluation from "@/components/evaluation/SurveyEvaluation";
+import ResultSharingDisabled from "../components/evaluation/ResultSharingDisabled.vue";
 
 export default {
   name: "AuswertungView",
   components: {
     Header,
     Footer,
-    SurveyNotFoundComponent,
+    SurveyNotFound,
     LoadingAnimation,
-    Nutzerauswertung,
-    ResultSharingDisabledComponent
+    SurveyEvaluation,
+    ResultSharingDisabled
   },
 
   data: () => ({
@@ -49,7 +49,7 @@ export default {
     /**
      * Returns the component to be shown in the body of the view. 
      * LoadingAnimation while the server is requested, SurveyNotFound if the survey does not exist 
-     * or the Nutzerauswertung if the corresponding id exists.
+     * or the SurveyEvaluation if the corresponding id exists.
      */
     bodyComponent: function () {
       // umfrageID is null until the server answered. Show loading animation during that.
@@ -59,15 +59,15 @@ export default {
 
       // show a message that the requested survey could not be found.
       if(this.surveyNotFound) {
-        return SurveyNotFoundComponent;
+        return SurveyNotFound;
       } 
 
       if(this.surveyShareDisabled) {
-        return ResultSharingDisabledComponent;
+        return ResultSharingDisabled;
       }
 
-      // else show Nutzerauswertung
-      return Nutzerauswertung;
+      // else show SurveyEvaluation
+      return SurveyEvaluation;
       
     },
 
@@ -75,7 +75,7 @@ export default {
      * Returns properties depending on the current component
      */
     properties: function() {
-      if(this.bodyComponent === Nutzerauswertung){
+      if(this.bodyComponent === SurveyEvaluation){
         return {umfrageid: this.umfrageID, shared: true}
       }
       return {}

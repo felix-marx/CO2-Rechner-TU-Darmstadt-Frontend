@@ -34,9 +34,9 @@
 </template>
 <script>
 
-import Cookies from "../Cookie"
-import UserSettingsHeader from "./componentParts/userSettingsHeader.vue";
-import AccountSettings from "./AccountSettings.vue"
+import Cookies from "../Cookie.js"
+import UserSettingsHeader from "../settings/UserSettingsHeader.vue";
+import AccountSettings from "../settings/AccountSettings.vue"
 
 export default {
   name: "Header",

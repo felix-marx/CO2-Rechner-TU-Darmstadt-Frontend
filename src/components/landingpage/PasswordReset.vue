@@ -101,13 +101,11 @@
 </template>
 
 <script>
-import Footer from "../components/Footer.vue";
-import Header from "../components/Header.vue";
-//import Cookies from "../Cookie.js"
-
+import Footer from "../componentParts/Footer.vue";
+import Header from "../componentParts/Header.vue";
 
 export default {
-  name: "Anmeldung",
+  name: "PasswordReset",
 
   components: {
     Header,
@@ -118,9 +116,6 @@ export default {
     username: null,
     passwortZurueck: 0
   }),
-
-  computed: {
-  },
 
   methods: {
     postPasswortVergessen: async function () {

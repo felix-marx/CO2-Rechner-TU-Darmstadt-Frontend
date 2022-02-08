@@ -1,4 +1,4 @@
-import Cookies from "./Cookie";
+import Cookies from "../components/Cookie";
 
 class Authentication{
    /**

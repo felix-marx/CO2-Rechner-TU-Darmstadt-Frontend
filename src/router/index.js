@@ -1,54 +1,54 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
-import Anmeldung from '../components/Anmeldung.vue'
-import Cookies from '../Cookie.js'
+import Login from '../components/landingpage/Login.vue'
+import Cookies from '../components/Cookie.js'
 import AdminView from '../views/AdminView.vue'
 import PageNotFound from '../views/PageNotFound.vue'
-import MitarbeiterUmfrageView from '../views/MitarbeiterUmfrageView.vue'
-import MailAuthentifizierungVue from '../components/MailAuthentifizierung.vue'
-import Authentication from '../Authentication.js'
-import PasswortVergessen from '../components/PasswortVergessen.vue'
-import AuswertungView from '../views/AuswertungView.vue'
-import Datenschutz from '../components/Datenschutzerklaerung.vue'
+import ColleagueSurveyView from '../views/ColleagueSurveyView.vue'
+import MailAuthentication from '../components/landingpage/MailAuthentication.vue'
+import Authentication from './Authentication.js'
+import PasswordReset from '../components/landingpage/PasswordReset.vue'
+import EvaluationView from '../views/EvaluationView.vue'
+import PrivacyPolicy from '../components/legal/PrivacyPolicy.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    name: 'Anmeldung',
-    component: Anmeldung,
+    name: 'Login',
+    component: Login,
     meta: { loginPage: true }
   },
   {
     path: '/survey',
-    name: 'umfrage',
+    name: 'Survey',
     component: Home,
     meta: { requiresAuth: true }
   },
   {
     path: '/survey/:umfrageID',
-    name: 'MitarbeiterUmfrage',
+    name: 'ColleagueSurvey',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: MitarbeiterUmfrageView,
+    component: ColleagueSurveyView,
     meta: { noAuth: true }
   },
   {
     path: '/user/:nutzerID',
-    name: 'MailAuthentifizierung',
+    name: 'MailAuthentication',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: MailAuthentifizierungVue,
+    component: MailAuthentication,
     meta: { noAuth: true }
   },
   {
     path: '/survey/results/:umfrageID',
-    name: 'Umfrageauswertung',
-    component: AuswertungView,
+    name: 'SurveyEvaluation',
+    component: EvaluationView,
     meta: { noAuth: true }
   },
   {
@@ -62,13 +62,13 @@ const routes = [
   },
   {
     path: "/passwortVergessen",
-    component: PasswortVergessen,
+    component: PasswordReset,
     meta: {noAuth: true}
   },
   {
     path: "/datenschutz",
-    name: "Datenschutz",
-    component: Datenschutz,
+    name: "PrivacyPolicy",
+    component: PrivacyPolicy,
     meta: {noAuth: true}
   },
   {

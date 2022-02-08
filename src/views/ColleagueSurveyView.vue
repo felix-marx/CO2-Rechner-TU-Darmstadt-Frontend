@@ -20,21 +20,21 @@
 </template>
 
 <script>
-import Footer from "@/components/Footer";
-import Header from "@/components/Header";
-import MitarbeiterUmfrage from "@/components/mitarbeiterUmfrage";
-import SurveyNotFoundComponent from "@/components/SurveyNotFoundComponent";
-import LoadingAnimation from "@/components/componentParts/loadingAnimation";
-import UmfrageCompleteComponent from "@/components/UmfrageCompleteComponent"
+import Footer from "@/components/componentParts/Footer";
+import Header from "@/components/componentParts/Header";
+import ColleagueSurvey from "@/components/colleagueSurvey/ColleagueSurvey";
+import SurveyNotFound from "@/components/colleagueSurvey/SurveyNotFound";
+import LoadingAnimation from "@/components/componentParts/LoadingAnimation";
+import UmfrageCompleted from "@/components/colleagueSurvey/SurveyCompleted"
 
 export default {
-  name: "MitarbeiterUmfrageView",
+  name: "ColleagueSurveyView",
   components: {
     Header,
     Footer,
-    MitarbeiterUmfrage,
-    SurveyNotFoundComponent,
-    UmfrageCompleteComponent,
+    ColleagueSurvey,
+    SurveyNotFound,
+    UmfrageCompleted,
     LoadingAnimation
   },
 
@@ -59,16 +59,16 @@ export default {
 
       // show a message that the requested survey could not be found.
       if(this.surveyNotFound) {
-        return SurveyNotFoundComponent;
+        return SurveyNotFound;
       } 
 
       // show a message that the requested survey is already complete.
       if(this.umfrageComplete){
-        return UmfrageCompleteComponent;
+        return UmfrageCompleted;
       }
 
-      // else show MitarbeiterUmfrage
-      return MitarbeiterUmfrage;
+      // else show ColleagueSurvey
+      return ColleagueSurvey;
       
     },
 
@@ -76,7 +76,7 @@ export default {
      * Returns properties depending on the current component
      */
     properties: function() {
-      if(this.bodyComponent === MitarbeiterUmfrage){
+      if(this.bodyComponent === ColleagueSurvey){
         return {bezeichnung: this.bezeichnung}
       }
       return {}

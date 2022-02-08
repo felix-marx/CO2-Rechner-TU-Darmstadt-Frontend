@@ -28,7 +28,7 @@
 
 <script>
 export default {
-  name: "MailvorlageComponent",
+  name: "MailTemplate",
 
 props: {
     umfrageJahr: {
@@ -40,7 +40,5 @@ props: {
       type: String
     },
   },
-
-data: () => ({}),
 };
 </script>

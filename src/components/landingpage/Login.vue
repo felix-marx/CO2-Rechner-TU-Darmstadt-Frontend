@@ -235,7 +235,7 @@
                 class="mx-auto py-15"
                 max-height="177"
                 max-width="250"
-                src="../assets/logo_Maschinenbau.png"
+                src="../../assets/logo_Maschinenbau.png"
               />
             </v-col>
             <v-col>
@@ -244,7 +244,7 @@
                 class="mx-auto"
                 max-height="177"
                 max-width="250"
-                src="../assets/logo_Nachhaltigkeit.jpg"
+                src="../../assets/logo_Nachhaltigkeit.jpg"
               />
             </v-col>
             <v-col>
@@ -253,7 +253,7 @@
                 class="mx-auto"
                 max-height="177"
                 max-width="250"
-                src="../assets/logo_tud.png"
+                src="../../assets/logo_tud.png"
               />
             </v-col>
           </v-row>
@@ -265,13 +265,13 @@
 </template>
 
 <script>
-import Footer from "../components/Footer.vue";
-import Header from "../components/Header.vue";
+import Footer from "../componentParts/Footer.vue";
+import Header from "../componentParts/Header.vue";
 import Cookies from "../Cookie.js"
 
 
 export default {
-  name: "Anmeldung",
+  name: "Login",
 
   components: {
     Header,

@@ -41,9 +41,9 @@
 </template>
 
 <script>
-import Footer from "./Footer.vue";
-import Header from "./Header.vue";
-import LoadingAnimationVue from "./componentParts/loadingAnimation.vue";
+import Footer from "../componentParts/Footer.vue";
+import Header from "../componentParts/Header.vue";
+import LoadingAnimationVue from "../componentParts/LoadingAnimation.vue";
 
 export default {
 

@@ -393,8 +393,8 @@
 </template>
 
 <script>
-import Tooltip from "@/components/componentParts/tooltip.vue";
-import LoadingAnimation from "./componentParts/loadingAnimation.vue";
+import Tooltip from "@/components/componentParts/Tooltip.vue";
+import LoadingAnimation from "../componentParts/LoadingAnimation.vue";
 import Cookies from "../Cookie"
 
 export default {

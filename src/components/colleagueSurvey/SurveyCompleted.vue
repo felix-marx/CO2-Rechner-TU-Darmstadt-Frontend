@@ -1,8 +1,7 @@
 <template>
   <div class="text-center">
     <h3 class="text-center">
-      Es tut uns leid, aber die Umfrage mit ID
-      "{{ this.$route.params.umfrageID }}" konnte nicht gefunden werden.
+      Diese Umfrage ist bereits vollständig ausgefüllt.
     </h3>
     <p>
       Bitte wenden Sie sich an die Person, von der Sie den Link für die Umfrage erhalten haben.  
@@ -12,8 +11,6 @@
 
 <script>
 export default {
-  name: "SurveyNotFoundComponent",
-
-  data: () => ({}),
+  name: "SurveyCompleted",
 };
 </script>
