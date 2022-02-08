@@ -6,6 +6,150 @@
     >
       <v-form lazy-validation>
         <v-card class="pa-7">
+          <v-row
+            class="mt-1"
+            dense
+          >
+            <v-spacer />
+
+            <LoadingAnimation
+              v-if="displayLoadingAnimation"
+            />
+            <v-alert
+              v-if="displaySuccess"
+              type="success"
+              dense
+            >
+              Die Umfrage wurde erfolgreich geändert.
+            </v-alert>
+            <v-alert
+              v-if="displayError"
+              type="error"
+              dense
+            >
+              {{ errorMessage }}
+            </v-alert>
+
+            <!-- <v-spacer /> -->
+                    
+            <v-dialog
+              v-if="!blockInput"
+              v-model="errorDialog"
+              transition="dialog-bottom-transition"
+            >
+              <!-- Mit diesem Button soll die Umfrage abgesendet werden. -->
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn
+                  color="blue"
+                  class="white--text"
+                  :disabled="blockInput"
+                  v-bind="attrs"
+                  v-on="on"
+                  @click="problemeInUmfrage()"
+                >
+                  <v-icon left>
+                    mdi-content-save
+                  </v-icon>
+                  Änderungen speichern
+                </v-btn>
+              </template>
+
+              <v-card>
+                <v-toolbar
+                  color="primary"
+                  dark
+                >
+                  {{ (errorTextArray.required.length != 0 || errorTextArray.nonRequired.length != 0) ? "Probleme mit Ihrer Eingabe!" : "Umfrage vollständig?" }}
+                </v-toolbar>
+                <v-card-text>
+                  <div
+                    v-if="errorTextArray.nonRequired.length != 0 || errorTextArray.required.length != 0"
+                    class="pt-6"
+                  >
+                    <div
+                      v-if="errorTextArray.required.length != 0"
+                    >
+                      Sie haben folgende Pflichtfelder nicht angegeben: <br>
+                      <v-list
+                        flat
+                      >
+                        <v-list-item
+                          v-for="(problem, index) in errorTextArray.required"
+                          :key="index"
+                        >
+                          <v-list-item-content>
+                            <v-list-item-title
+                              class="text-sm-body-2 delete--text font-weight-black"
+                              v-text="problem"
+                            />
+                          </v-list-item-content>
+                        </v-list-item>
+                      </v-list>
+                    </div>
+                    <div
+                      v-if="errorTextArray.nonRequired.length != 0"
+                    >
+                      Ihre Umfrage enthält folgende kleinere Probleme: <br>
+                      <v-list
+                        flat
+                      >
+                        <v-list-item
+                          v-for="(problem, index) in errorTextArray.nonRequired"
+                          :key="index"
+                        >
+                          <v-list-item-content>
+                            <v-list-item-title
+                              class="text-sm-body-2"
+                              v-text="problem"
+                            />
+                          </v-list-item-content>
+                        </v-list-item>
+                      </v-list>
+                    </div>
+                  </div>
+                  <div 
+                    v-if="errorTextArray.required.length == 0 && errorTextArray.nonRequired.length == 0"
+                    class="pt-6"
+                  >
+                    Möchten Sie ihre Änderungen wirklich speichern?
+                  </div>
+                </v-card-text>
+
+                <v-divider />
+
+                <v-card-actions>
+                  <v-spacer />
+                  <v-btn
+                    color="primary"
+                    text
+                    @click="errorDialog = false"
+                  >
+                    Weiter bearbeiten
+                  </v-btn>
+                  <v-btn
+                    v-if="errorTextArray.required.length == 0"
+                    color="primary"
+                    text
+                    @click="sendEdit(), errorDialog = false"
+                  >
+                    {{ (errorTextArray.nonRequired.length == 0) ? "Änderungen speichern" : "Änderungen trotzdem speichern" }}
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+
+            <v-btn
+              class="ml-4"
+              color="primary"
+              @click="flipBearbeiten()"
+            >
+              <v-icon left>
+                mdi-pencil
+              </v-icon>
+              {{ ( blockInput ? " Bearbeiten aktivieren" : " Bearbeiten deaktivieren") }}
+            </v-btn>
+          </v-row>
+          
           <!-- Bezeichnung -->
           <br>
           <h3>
@@ -73,7 +217,10 @@
 
           <br>
           <h3>
-            Welche Gebäude nutzt Ihre Abteilung?
+            Welche Gebäude nutzt Ihre Abteilung (<a
+              href="https://www.tu-darmstadt.de/universitaet/campus/index.de.jsp"
+              target="_blank"
+            >Lageplan</a>)?
             <Tooltip
               tooltip-text="Alle Gebäude beginnen je nach Standort mit den Buchstaben S, B, L,
               H oder W. Die Autovervollständigung sollte Ihnen dabei helfen."
@@ -104,7 +251,7 @@
                   v-model="objekt[1]"
                   :rules="absolutpositivRules"
                   :min="0"
-                  label="Nutzfläche"
+                  label="Nutzfläche des ausgewählten Gebäudes"
                   prepend-icon="mdi-domain"
                   type="number"
                   suffix="qm"
@@ -241,55 +388,8 @@
               />
             </v-row>
           </v-container>
-
-          <v-row class="mt-1 text-center">
-            <v-btn
-              class="mr-4"
-              color="primary"
-              @click="flipBearbeiten()"
-            >
-              <v-icon left>
-                mdi-pencil
-              </v-icon>
-              {{ ( blockInput ? " Bearbeiten aktivieren" : " Bearbeiten deaktivieren") }}
-            </v-btn>
-            
-            
-            <v-btn
-              v-if="!blockInput"
-              color="blue"
-              class="white--text"
-              @click="sendEdit()"
-            >
-              <v-icon left>
-                mdi-content-save
-              </v-icon>
-              Änderungen speichern
-            </v-btn>
-           
-            <LoadingAnimation v-if="dataRequestSent" />
-          </v-row>
         </v-card>
       </v-form>
-    </v-card>
-
-    <v-card
-      v-if="displaySuccess || displayLoadingAnimation || displayError"
-      elevation="2"
-    >
-      <LoadingAnimation v-if="displayLoadingAnimation" />
-      <v-alert
-        v-if="displaySuccess"
-        type="success"
-      >
-        Die Umfrage wurde erfolgreich geändert.
-      </v-alert>
-      <v-alert
-        v-if="displayError"
-        type="error"
-      >
-        {{ errorMessage }}
-      </v-alert>
     </v-card>
   </v-container>
 </template>
@@ -342,6 +442,12 @@ export default {
     displayError: false,
     displaySuccess: false,
 
+    // Dialogvariable + Array mit fehlerhaften Eingaben {fehler: "", pflicht: 0}
+    errorDialog: false,
+    errorTextArray: {
+      required: [],
+      nonRequired: []
+    },
 
     //Rules for input validation
     geraeteRules: [
@@ -389,7 +495,7 @@ export default {
   created() {
       this.fetchGebaeudeData();
       this.umfrage.umfrageID = JSON.parse(JSON.stringify(this.umfrageidprop));
-      this.getUmfrageData();
+      this.fetchUmfrageData();
   },
 
   methods: {
@@ -398,6 +504,58 @@ export default {
         this.displaySuccess = false
         this.displayError = false
         this.displayLoadingAnimation = false
+    },
+
+    /**
+     * Returns an array containing a list with every required field missing
+     */
+    requiredFieldsMissingArray: function() {
+      var fieldsarray = []
+      if(this.umfrage.bezeichnung == "" || this.umfrage.bezeichnung == null) {
+        fieldsarray.push("Bezeichnung")
+      }
+      if(!this.possibleYears.includes(parseInt(this.umfrage.jahr))) {
+        fieldsarray.push("Bilanzierungsjahr")
+      }
+      if(this.umfrage.mitarbeiteranzahl == null || this.umfrage.mitarbeiteranzahl <= 0) {
+        fieldsarray.push("Anzahl Mitarbeitenden")
+      }
+      return fieldsarray
+    },
+
+    /**
+     * Determines errors in Umfrage and writes Error message and if the field is requiered to the errorTextArray variable
+     * {
+     *  nonRequired: []
+     *  required:    []
+     * }
+     */
+    problemeInUmfrage: function() {
+      this.umfrage.geraeteanzahl[1][2] = this.umfrage.geraeteanzahl[0][2];
+      this.umfrage.geraeteanzahl[3][2] = this.umfrage.geraeteanzahl[2][2];
+      var nonRequiredArray = []
+      
+      // Gebaeude
+      if(this.duplicateBuilding) {
+        nonRequiredArray.push("Sie haben das mehrmals das selbe Gebäude ausgewählt.")
+      } 
+      for(const gebaeude of this.umfrage.gebaeude) {
+        if(gebaeude[0] != null && gebaeude[1] <=0) {
+          nonRequiredArray.push("Sie haben für das Gebäude " + gebaeude[0] + " keine gültige Nutzfläche angegeben.")
+        }
+      }
+      // IT Geraete
+      for(const it of this.umfrage.geraeteanzahl) {
+        if(it[2] && it[1] <= 0) { 
+          if((it[0] != 8 && it[0] != 10)) {
+            nonRequiredArray.push("Sie haben das Gerät " + resolveITGeraetID(it[0]) + " angewählt, aber keine gültige Anzahl angegeben.")
+          } else { // Toner
+            nonRequiredArray.push("Sie haben einem ausgewählten Gerät keine verwendeten Toner hinzugefügt. Wenn Sie das Gerät nicht in Benutzung haben, ignorieren Sie diese Nachricht.")
+          }
+        }
+      }
+      this.errorTextArray.nonRequired = nonRequiredArray
+      this.errorTextArray.required = this.requiredFieldsMissingArray()
     },
 
     /**
@@ -459,16 +617,22 @@ export default {
       var gebaeudeJSON = [];
 
       for (var objekt of this.umfrage.gebaeude) {
-        gebaeudeJSON.push({
-          gebaeudeNr: parseInt(translateGebaeudeIDToNumeric(objekt[0])),
-          nutzflaeche: parseInt(objekt[1]),
-        });
+        if (!!objekt[0] && !!objekt[1]) {
+          gebaeudeJSON.push({
+            gebaeudeNr: parseInt(translateGebaeudeIDToNumeric(objekt[0])),
+            nutzflaeche: parseInt(objekt[1]),
+          });
+        }
       }
       return gebaeudeJSON;
     },
 
+    /**
+     * sendEdit sendet eine POST Request ans Backend, wodurch die Werte der Umfrage mit ID umfrageID aktualisiert werden
+     */
     sendEdit: async function () {
       this.displayLoadingAnimation = true
+      this.blockInput = true
 
       await fetch(process.env.VUE_APP_BASEURL + "/umfrage/updateUmfrage", {
         method: "POST",
@@ -477,7 +641,7 @@ export default {
         },
         body: JSON.stringify({
           authToken: {
-            username: Cookies.getCookieAttribut("email"),
+            username: Cookies.getCookieAttribut("username"),
             sessiontoken: Cookies.getCookieAttribut("sessiontoken")
           },
           umfrageID: this.umfrage.umfrageID,
@@ -492,7 +656,6 @@ export default {
         .then((data) => {
           console.log("Success:", data);
           if(data.status == "success") {
-            this.blockInput = true
             this.displaySuccess = true
             this.displayLoadingAnimation = false
           }
@@ -509,8 +672,22 @@ export default {
       this.dataRequestSent = false;
     },
 
+    /**
+     * fetchGebaeudeData sendet eine POST Request ans Backend welche alle gespeicherten Gebaeude fetched.
+     */
     fetchGebaeudeData: async function () {
-      await fetch(process.env.VUE_APP_BASEURL + "/umfrage/gebaeude")
+      await fetch(process.env.VUE_APP_BASEURL + "/umfrage/gebaeude",{
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          authToken: {
+            username: Cookies.getCookieAttribut("username"),
+            sessiontoken: Cookies.getCookieAttribut("sessiontoken")
+          }
+        }),
+      })
         .then((response) => response.json())
         .then((data) => {
           console.log("Success:", data);
@@ -521,7 +698,11 @@ export default {
         });
     },
 
-    getUmfrageData: async function() {
+    /**
+     * fetchUmfrageData sendet eine POST Request ans Backend. 
+     * Liefert die aktuell in der Datenbank liegenden Umfragewerte der Umfrage mit ID umfrageID zurueck.
+     */
+    fetchUmfrageData: async function() {
        await fetch(process.env.VUE_APP_BASEURL + "/umfrage/getUmfrage", {
         method: "POST",
         headers: {
@@ -529,7 +710,7 @@ export default {
         },
         body: JSON.stringify({
           authToken: {
-            username: Cookies.getCookieAttribut("email"),
+            username: Cookies.getCookieAttribut("username"),
             sessiontoken: Cookies.getCookieAttribut("sessiontoken")
           },
           umfrageID: this.umfrage.umfrageID,
@@ -564,6 +745,9 @@ export default {
         });
     },
 
+    /**
+     * parseGebaeude uebersetzt die numerische Gebaeudekennung (1101) in symbolische (S101) fuer alle Gebaeude in umfrage.gebaeude 
+     */
     parseGebaeude: function(gebaeude) {
       this.umfrage.gebaeude = []
       for(var i = 0; i < gebaeude.length; i++) {
@@ -572,6 +756,9 @@ export default {
       return this.umfrage.gebaeude
     },
 
+    /**
+     * parseITGeraete traegt die IT Geraete aus itGeraete in das Array geraeteanzahl an den korrekten Stellen ein.
+     */
     parseITGeraete: function(itGeraete) {
     var map = new Map([[7,0], [8,1], [9,2], [10,3], [4,4], [6,5]])
     this.geraeteanzahl = [[7, null, false], [8, null, false], [9, null, false], [10, null, false], [4, null, false], [6, null, false]]
@@ -622,6 +809,19 @@ function translateGebaeudeIDToSymbolic(gebaeudeID) {
     gebaeudeDict[gebaeudeID.substring(0, 1)] + gebaeudeID.substring(1);
   return translatedID;
 }
+
+function resolveITGeraetID(geraetID) {
+  let ITGeraetIDDict = {
+    7: "Multifunktionsgeräte",
+    8: "Multifunktionsgeräte Toner",
+    9: "Laser & Tintenstrahldrucker",
+    10: "Laser & Tintenstrahldrucker Toner",
+    4: "Beamer",
+    6: "interne Server"
+  };
+  return ITGeraetIDDict[geraetID]
+}
+
 </script>
 
 <!-- Removes the buttons in textfields to increase decrease number -->

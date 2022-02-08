@@ -21,6 +21,7 @@ import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Umfrage from "@/components/umfrage";
 import Uebersicht from "@/components/uebersichtUmfragen";
+import AccountSettings from '../components/AccountSettings.vue';
 
 export default {
   name: "App",
@@ -37,7 +38,8 @@ export default {
     selectedTab: 0,
     currentTabType: Umfrage,
     tabList: [
-        { id: 0, title: "CO2 Fussabdruck", componentType: Umfrage },
+        { id: 2, title: "Accounteinstellungen", componentType: AccountSettings},
+        { id: 0, title: "CO2-Rechner", componentType: Umfrage },
         { id: 1, title: "Umfragenübersicht", componentType: Uebersicht },
     ],
   }),

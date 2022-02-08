@@ -4,8 +4,8 @@
       <!-- Introduction Text -->
       <p>Sehr geehrte Teilnehmer*Innen, </p>
       <p>in der folgenden Umfrage sollen CO2-Emissionen, die während Ihrer Tätigkeit an der TU entstehen, ermittelt werden. Es werden Ihr Pendelweg, Ihre Dienstreisen und die von Ihnen verwendeten IT-Geräte abgefragt. Alle Angaben werden dabei anonymisiert verarbeitet und dargestellt, sodass ein Rückschluss auf einzelne Personen nicht möglich ist. Die Umfrage nimmt ungefähr 10 Minuten Ihrer Zeit in Anspruch. </p>
-      <p>Für die Umfrage wird das vollständige Kalenderjahr {{ umfrageYear }} betrachtet. </p>
-      <p>Hinter einigen Fragen befindet sich ein Fragezeichensymbol, dort finden Sie zusätzliche Hinweise und Informationen, die zur Beantwortung der Frage hilfreich sind. </p>  
+      <p>Für die Umfrage wird das vollständige Kalenderjahr <b>{{ umfrageYear }}</b> betrachtet. </p>
+      <p>Hinter einigen Fragen befindet sich ein Fragezeichensymbol. Dort finden Sie zusätzliche Hinweise und Informationen, die zur Beantwortung der Frage hilfreich sind. </p>  
 
       <p>Wenn Sie die Umfrage durchgeführt haben, klicken Sie auf „Absenden“. </p>
       <p>Vielen Dank für Ihre Teilnahme an der Umfrage. </p>
@@ -16,9 +16,8 @@
       outlined
     >
       <v-card-title>
-        Umfrage: {{ bezeichnung }}
+        {{ bezeichnung }}
       </v-card-title>
-      <v-divider />
 
       <!-- Umfrage -->
       <v-form>
@@ -153,7 +152,7 @@
 
         <br>
         <h3>
-          Welche Dienstreisen haben Sie in den letzten 12 Monaten unternommen?
+          Welche Dienstreisen haben Sie {{ umfrageYear }} unternommen?
           <Tooltip
             tooltip-text="Zur Berechnung können Sie z.B. Google Maps verwenden. Bei Flugreisen können Sie als Distanz direkt die Summe aller Kurz- und Langstreckenflüge angeben."
           />
@@ -324,19 +323,22 @@
           </v-container> -->
 
         <v-row>
-          <v-col cols=2>
-            <v-btn @click="sendData()" :disabled="submittedDataSuccessfully">
+          <v-col cols="2">
+            <v-btn
+              :disabled="submittedDataSuccessfully"
+              @click="sendData()"
+            >
               Absenden
             </v-btn>
           </v-col>
-          <v-col cols=10>
+          <v-col cols="10">
             <LoadingAnimation v-if="displayLoadingAnimation" />
             <v-alert
               :value="errorMessage !== null"
               dense
               text
               type="error"
-              >
+            >
               {{ errorMessage }}
             </v-alert>
             <v-alert
@@ -344,7 +346,7 @@
               dense
               text
               type="success"
-              >
+            >
               Die Daten wurden erfolgreich übermittelt. Vielen Dank für Ihre Teilnahme! Sie können dieses Fenster nun schließen.
             </v-alert>
           </v-col>
@@ -396,8 +398,8 @@ export default {
       "Bus",
       "U-Bahn",
       "Straßenbahn",
-      "MIX inkl. U-Bahn",
-      "MIX exkl. U-Bahn",
+      "Mix inkl. U-Bahn",
+      "Mix exkl. U-Bahn",
     ],
     /*
      * verkehrmittel Array format:
@@ -471,9 +473,6 @@ export default {
         parseInt(v) > 0 ||
         "Bitte geben Sie eine positive Anzahl an Mitfahrenden an.",
     ],
-
-    //stores response JSON
-    responseData: {},
   }),
 
   created() {
@@ -599,16 +598,19 @@ export default {
       //Build Pendelweg Array
       var buildPendelweg = [];
       for (var pendel of this.verkehrsmittel) {
-        buildPendelweg.push({
-          strecke: parseInt(pendel[4]),
-          idPendelweg: parseInt(
-            this.mapPendelverkehrsmittel(pendel[0], pendel[1])
-          ),
-          //return 1 for no fahrgemeinschaft. In Question we ask Anzahl Mitfahrer so pendel[3]+1 are all persons in the vehicle
-          personenanzahl: parseInt(
-            pendel[3] == null ? 1 : parseInt(pendel[3]) + 1
-          ),
-        });
+        // eslint-disable-next-line no-extra-boolean-cast
+        if(!!pendel[0]){
+          buildPendelweg.push({
+            strecke: parseInt(pendel[4]),
+            idPendelweg: parseInt(
+              this.mapPendelverkehrsmittel(pendel[0], pendel[1])
+            ),
+            //return 1 for no fahrgemeinschaft. In Question we ask Anzahl Mitfahrer so pendel[3]+1 are all persons in the vehicle
+            personenanzahl: parseInt(
+              pendel[3] == null ? 1 : parseInt(pendel[3]) + 1
+            ),
+          });
+        }
       }
       return buildPendelweg;
     },
@@ -649,14 +651,17 @@ export default {
       //Build Dienstreisen Array
       var buildDienstreisen = [];
       for (var reise of this.dienstreise) {
-        var dienstreisetyp = this.mapDienstreisemittel(reise[0]);
-        buildDienstreisen.push({
-          idDienstreise: parseInt(dienstreisetyp[0]),
-          //Catches spezial case were user selects Flugtyp but then changes to other Verkehrsmedium
-          streckentyp: parseInt(dienstreisetyp[0]) == 3 ? reise[1] : "",
-          strecke: parseInt(reise[2]),
-          tankart: dienstreisetyp[1],
-        });
+        // eslint-disable-next-line no-extra-boolean-cast
+        if(!!reise[0]){
+          var dienstreisetyp = this.mapDienstreisemittel(reise[0]);
+          buildDienstreisen.push({
+            idDienstreise: parseInt(dienstreisetyp[0]),
+            //Catches spezial case were user selects Flugtyp but then changes to other Verkehrsmedium
+            streckentyp: parseInt(dienstreisetyp[0]) == 3 ? reise[1] : "",
+            strecke: parseInt(reise[2]),
+            tankart: dienstreisetyp[1],
+          });
+        }
       }
       return buildDienstreisen;
     },
@@ -683,7 +688,6 @@ export default {
         .then((data) => {
           console.log("Success:", data);
           if(data.status === "success"){
-            this.responseData = data;
             this.submittedDataSuccessfully = true;
             this.errorMessage = null;
           }else if(data.status == "error") {

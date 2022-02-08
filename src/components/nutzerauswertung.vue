@@ -11,17 +11,24 @@
       <v-container>
         <v-row>
           <v-col>
-            <p>
-              Bilanzierungsjahr: {{ responsedata.jahr }}
-            </p>
+            <v-icon>
+              mdi-calendar
+            </v-icon>
+            Bilanzierungsjahr: {{ responsedata.jahr }}
           </v-col>
           <v-col>
-            <p>Mitarbeiteranzahl: {{ responsedata.mitarbeiteranzahl }}</p>
+            <v-icon>
+              mdi-account
+            </v-icon>
+            Mitarbeiteranzahl: {{ responsedata.mitarbeiteranzahl }}
           </v-col>
         </v-row>
         <v-row>
           <v-col>
-            <p>Ausgefüllte Mitarbeiterumfragen: {{ responsedata.umfragenanzahl }}</p>
+            <v-icon>
+              mdi-account-edit
+            </v-icon>
+            Ausgefüllte Mitarbeiterumfragen: {{ responsedata.umfragenanzahl }}
           </v-col>
           <v-col>
             <v-progress-linear
@@ -44,18 +51,22 @@
         </v-row>
       </v-container>
 
-      <v-card-title>
-        Emissionen
-      </v-card-title>
+      <v-card-title>Emissionen</v-card-title>
 
       <v-divider />
-      <v-container>    
+      <v-container>
         <v-row>
           <v-col>
-            <p>Gesamtemissionen: {{ responsedata.emissionenGesamt }} t CO<sub>2</sub> eq.</p>
+            <v-icon>
+              mdi-thought-bubble
+            </v-icon>
+            Gesamtemissionen: {{ responsedata.emissionenGesamt }} t CO<sub>2</sub> eq.
           </v-col>
           <v-col>
-            <p>Emissionen pro Mitarbeiter: {{ responsedata.emissionenProMitarbeiter }} t CO<sub>2</sub> eq.</p>
+            <v-icon>
+              mdi-human-male-board-poll
+            </v-icon>
+            Emissionen pro Mitarbeiter: {{ responsedata.emissionenProMitarbeiter }} t CO<sub>2</sub> eq.
           </v-col>
         </v-row>
 
@@ -65,14 +76,14 @@
             outlined
             class="pa-7"
           >
-            <v-icon>mdi-thought-bubble-outline</v-icon> <b>Did you know?</b>: {{ haushalteReferenzText }}
+            <v-icon>mdi-thought-bubble-outline</v-icon>
+            <b>Did you know?</b>
+            : {{ haushalteReferenzText }}
           </v-card>
         </v-row>
         <v-row>
           <v-col class="d-flex justify-center">
-            <h4>
-              Aufteilung nach Hauptemissionsfaktoren
-            </h4>
+            <h4>Aufteilung nach Hauptemissionsfaktoren</h4>
           </v-col>
         </v-row>
         <v-row>
@@ -109,7 +120,10 @@
             <v-alert
               type="warning"
             >
-              Es ist kein Auswertung der Emissionen durch den Energieverbrauch möglich. Für das ausgewählte Bilanzierungsjahr fehlen Daten seitens der TU Darmstadt, um die Emissionen berechnen zu können.
+              Es ist kein Auswertung der Emissionen durch den Energieverbrauch möglich. 
+              Für das ausgewählte Bilanzierungsjahr fehlen Daten seitens der TU Darmstadt, um die Emissionen berechnen zu können. 
+              Die Zählerinfrastruktur wird durch das Energiemanagment immer weiter ausgebaut.
+              Sie können leider nichts tun, um die Auswertung zu vervollständigen.
             </v-alert>
           </v-col>
         </v-row>
@@ -129,18 +143,56 @@
         </v-row>
         <v-row>
           <v-col>
+            <v-alert 
+              text
+              type="info"
+            >
+              Das Büro für Nachhaltigkeit hat Tipps zum <a
+                href="https://www.tu-darmstadt.de/nachhaltigkeit/buero_fuer_nachhaltigkeit/projekte_buero/news_projekte_buero_details_348992.de.jsp"
+                target="_blank"
+                style="color:hsl(229, 100%, 50%);"
+              >Energiesparen am Arbeitsplatz</a> zusammengestellt.
+            </v-alert>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col
+            cols="2"
+            class="align-self-center"
+          >
             <v-btn
+              class="ml-8 "
               color="primary"
               @click="makeSpreadsheet"
             >
               <v-icon left>
                 mdi-file-chart-outline
-              </v-icon>
-              Download als XLSX
+              </v-icon>Download als Excel
             </v-btn>
+          </v-col>
+          <v-col cols="2">
+            <v-switch
+              v-if="!this.$props.shared"
+              v-model="responsedata.linkShare"
+              class="ml-8"
+              inset
+              :label="`Linksharing ${(responsedata.linkShare ? 'aktiviert' : 'deaktiviert')}`"
+              @click="updateFlipLinkShare"
+            />
           </v-col>
         </v-row>
       </v-container>
+    </v-card>
+
+    <v-card
+      v-if="showLoading || responsedata.linkShare"
+    >
+      <LoadingAnimation v-if="showLoading" />
+      <MitarbeiterLinkComponent
+        v-if="!this.$props.shared && responsedata.linkShare && !showLoading"
+        :mitarbeiter-link="linkshareBaseURL + responsedata.id"
+        :link-ziel="'Auswertung'"
+      />
     </v-card>
 
     <v-card
@@ -156,22 +208,31 @@
 <script>
 import DoughnutChart from "./charts/DoughnutChart.js";
 import BarChart from "./charts/BarChart.js";
-import XLSX from "xlsx"
+import XLSX from "xlsx";
 import saveAs from 'file-saver';
+import Cookies from '../Cookie';
+import LoadingAnimation from "./componentParts/loadingAnimation.vue";
+import MitarbeiterLinkComponent from "./mitarbeiterLinkComponent.vue";
 
-export default{
-  name: "Auswertung" , 
+export default {
+  name: "Auswertung",
 
   components: {
     DoughnutChart,
     BarChart,
-  },
+    LoadingAnimation,
+    MitarbeiterLinkComponent
+},
 
   props: {
     umfrageid: {
       default: "",
       type: String,
-    }  
+    },
+    shared: {
+      default: false,
+      type: Boolean,
+    },
   },
 
   data() {
@@ -185,6 +246,7 @@ export default{
         mitarbeiteranzahl: null,
         umfragenanzahl: null,
         umfragenanteil: null,
+        linkShare: null,
 
         emissionenWaerme: null,
         emissionenStrom: null,
@@ -205,6 +267,12 @@ export default{
         code: null,
         message: null,
       },
+      // Wenn Link Sharing korrekt geflipped wurde
+      displaySuccess: false,
+      showLoading: false,
+
+      // base url for Mitarbeiterumfragen
+      linkshareBaseURL: process.env.VUE_APP_URL + '/survey/results/',
 
       displayEnergieCharts: true,
 
@@ -212,31 +280,31 @@ export default{
       optionsGesamtDoughnut: null,
 
       chartdataGesamtPareto: null,
-      optionsGesamtPareto:null,
+      optionsGesamtPareto: null,
 
       chartdataEnergieDoughnut: null,
       optionsEnergieDoughnut: null,
 
       chartdataEnergiePareto: null,
-      optionsEnergiePareto:null,
+      optionsEnergiePareto: null,
     }
   },
 
   computed: {
-    haushalteReferenzText: function(){
+    haushalteReferenzText: function () {
       let base_text_beginning = "Ihr Gesamtverbrauch entspricht circa ";
       let base_text_middle = " bzw. ";
       let text_zweiPersonenHaushalt = this.responsedata.vergleich2PersonenHaushalt + " Zwei-Personen-Haushalten";
       let text_vierPersonenHaushalt = this.responsedata.vergleich4PersonenHaushalt + " Vier-Personen-Haushalten";
-      let base_text_ending =" in einem Jahr."
+      let base_text_ending = " in einem Jahr."
       return base_text_beginning + text_vierPersonenHaushalt + base_text_middle + text_zweiPersonenHaushalt + base_text_ending;
     },
-    displayExtrapolationWarning: function(){
+    displayExtrapolationWarning: function () {
       return this.responsedata.umfragenanteil <= 50.0
     }
   },
-  
-  created(){
+
+  created() {
     this.getData();
   },
 
@@ -244,7 +312,7 @@ export default{
     /**
      * Creates XLSX file and makes it downloadable.
      */
-    makeSpreadsheet: function(){
+    makeSpreadsheet: function () {
       var data = [
         {
           "col1": "Auswertung der Umfrage",
@@ -262,10 +330,10 @@ export default{
           "col2": this.responsedata.umfragenanzahl,
         },
         {
-          "col1": "Fortschritt",
+          "col1": "Quote",
           "col2": this.responsedata.umfragenanteil + "%",
         },
-        { },
+        {},
         {
           "col1": "Emissionsüberblick",
           "col2": "t CO2 eq.",
@@ -278,7 +346,7 @@ export default{
           "col1": "Emissionen pro Mitarbeiter",
           "col2": this.responsedata.emissionenProMitarbeiter,
         },
-        { },
+        {},
         {
           "col1": "Vergleich 4-Personen Haushalt",
           "col2": this.responsedata.vergleich4PersonenHaushalt,
@@ -287,52 +355,52 @@ export default{
           "col1": "Vergleich 2-Personen Haushalt",
           "col2": this.responsedata.vergleich2PersonenHaushalt,
         },
-        { },
+        {},
         {
           "col1": "Aufteilung nach Hauptemissonsfaktoren",
           "col2": "t CO2 eq.",
           "col3": "%",
         },
         {
-          "col1":"Energie", 
-          "col2": this.responsedata.emissionenEnergie, 
-          "col3": Math.round(this.responsedata.emissionenEnergie / this.responsedata.emissionenGesamt * 1000) / 10,
+          "col1": "Energie",
+          "col2": this.responsedata.emissionenEnergie,
+          "col3": this.responsedata.emissionenGesamt === 0.0 ? 0 : Math.round(this.responsedata.emissionenEnergie / this.responsedata.emissionenGesamt * 1000) / 10,
         },
         {
-          "col1":"Pendelwege", 
-          "col2": this.responsedata.emissionenPendelwege, 
-          "col3": Math.round(this.responsedata.emissionenPendelwege / this.responsedata.emissionenGesamt * 1000) / 10,
+          "col1": "Pendelwege",
+          "col2": this.responsedata.emissionenPendelwege,
+          "col3": this.responsedata.emissionenGesamt === 0.0 ? 0 : Math.round(this.responsedata.emissionenPendelwege / this.responsedata.emissionenGesamt * 1000) / 10,
         },
         {
-          "col1":"Dienstreisen", 
-          "col2": this.responsedata.emissionenDienstreisen, 
-          "col3": Math.round(this.responsedata.emissionenDienstreisen / this.responsedata.emissionenGesamt * 1000) / 10,
+          "col1": "Dienstreisen",
+          "col2": this.responsedata.emissionenDienstreisen,
+          "col3": this.responsedata.emissionenGesamt === 0.0 ? 0 : Math.round(this.responsedata.emissionenDienstreisen / this.responsedata.emissionenGesamt * 1000) / 10,
         },
         {
-          "col1":"IT-Geräte", 
-          "col2": this.responsedata.emissionenITGeraete, 
-          "col3": Math.round(this.responsedata.emissionenITGeraete / this.responsedata.emissionenGesamt * 1000) / 10
+          "col1": "IT-Geräte",
+          "col2": this.responsedata.emissionenITGeraete,
+          "col3": this.responsedata.emissionenGesamt === 0.0 ? 0 : Math.round(this.responsedata.emissionenITGeraete / this.responsedata.emissionenGesamt * 1000) / 10
         },
-        { },
+        {},
         {
           "col1": "Aufteilung nach Energieart",
           "col2": "t CO2 eq.",
           "col3": "%",
         },
         {
-          "col1":"Wärme", 
-          "col2": this.responsedata.emissionenWaerme, 
-          "col3": Math.round(this.responsedata.emissionenWaerme / this.responsedata.emissionenEnergie * 1000) / 10,
+          "col1": "Wärme",
+          "col2": this.responsedata.emissionenWaerme,
+          "col3": this.responsedata.emissionenEnergie === 0.0 ? 0 : Math.round(this.responsedata.emissionenWaerme / this.responsedata.emissionenEnergie * 1000) / 10,
         },
         {
-          "col1":"Kälte", 
-          "col2": this.responsedata.emissionenKaelte, 
-          "col3": Math.round(this.responsedata.emissionenKaelte / this.responsedata.emissionenEnergie * 1000) / 10,
+          "col1": "Kälte",
+          "col2": this.responsedata.emissionenKaelte,
+          "col3": this.responsedata.emissionenEnergie === 0.0 ? 0 : Math.round(this.responsedata.emissionenKaelte / this.responsedata.emissionenEnergie * 1000) / 10,
         },
         {
-          "col1":"Strom", 
-          "col2": this.responsedata.emissionenStrom, 
-          "col3": Math.round(this.responsedata.emissionenStrom / this.responsedata.emissionenEnergie * 1000) / 10,
+          "col1": "Strom",
+          "col2": this.responsedata.emissionenStrom,
+          "col3": this.responsedata.emissionenEnergie === 0.0 ? 0 : Math.round(this.responsedata.emissionenStrom / this.responsedata.emissionenEnergie * 1000) / 10,
         },
       ];
       var options = {
@@ -340,7 +408,7 @@ export default{
         skipHeader: true,
       }
 
-        // workbook
+      // workbook
       var wb = XLSX.utils.book_new();
       wb.Props = {
         Title: "CO2 Rechner",
@@ -348,58 +416,109 @@ export default{
       };
       wb.SheetNames.push("Emissionen");
 
-        // worksheet
+      // worksheet
       var ws = XLSX.utils.json_to_sheet(data, options);
       wb.Sheets["Emissionen"] = ws;
 
-      var wbout = XLSX.write(wb, {bookType:'xlsx',  type: 'binary'});
+      var wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
 
-      function s2ab(s) { 
+      function s2ab(s) {
         var buf = new ArrayBuffer(s.length); //convert s to arrayBuffer
         var view = new Uint8Array(buf);  //create uint8array as viewer
-        for (var i=0; i<s.length; i++) view[i] = s.charCodeAt(i) & 0xFF; //convert to octet
-        return buf;    
+        for (var i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF; //convert to octet
+        return buf;
       }
 
-      saveAs(new Blob([s2ab(wbout)],{type:"application/octet-stream"}), 'Emissionen_' +this.responsedata.bezeichnung + '.xlsx');
+      saveAs(new Blob([s2ab(wbout)], { type: "application/octet-stream" }), 'Emissionen_' + this.responsedata.bezeichnung + '.xlsx');
+    },
+
+/**
+ * Fetches Get request to get survey data and evaluation.
+ */
+  getData: async function () {
+    await fetch(process.env.VUE_APP_BASEURL + "/auswertung", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        authToken: {
+          username: Cookies.getCookieAttribut("username"),
+          sessiontoken: Cookies.getCookieAttribut("sessiontoken")
+        },
+        umfrageID: this.$props.umfrageid,
+      }),
+    }).then((response) => response.json())
+      .then((body) => {
+        console.log(body)
+        if (body.status == "success") {
+          this.responsesuccessful = true
+          this.responsedata = body.data
+          this.responsedata.linkShare = (body.data.linkShare == 1) ? true : false
+
+          this.checkNegativValue();
+          this.roundResponseData();
+          this.setChartGesamt();
+          this.setChartEnergie();
+        }
+        else {  // Fehlerbehandlung
+          this.responseNotSuccessful = true
+          this.responseerror = body.error
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
     },
 
     /**
-     * Fetches Get request to get survey data and evaluation.
+     * updateFlipLinkShare sendet eine POST update Request ans Backend, wodurch das Link Sharing für diese Umfrage aktiviert wird, wenn es aktuell deaktiviert ist
+     * bzw. deaktiviert wenn es gerade aktiviert ist.
+     * Im Erfolgsfall wird eine Erfolgsnachricht angezeigt und sonst eine Fehlermeldung.
+     * Der lokal gespeicherte LinkShare Wert wird angepasst.
      */
-    getData: async function(){
-      await fetch(process.env.VUE_APP_BASEURL + "/auswertung?id=" + this.$props.umfrageid, {
-        method: "GET",
+    updateFlipLinkShare: async function() {
+      this.showLoading = true;
+      this.displaySuccess = false;
+
+      await fetch(process.env.VUE_APP_BASEURL + "/auswertung/updateSetLinkShare", {
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
+        body: JSON.stringify({
+          authToken: {
+            username: Cookies.getCookieAttribut("username"),
+            sessiontoken: Cookies.getCookieAttribut("sessiontoken")
+          },
+          umfrageID: this.$props.umfrageid,
+          // linkShareValue 0 ist teilen deaktiviert, 1 aktiviert und wir flippen hier
+          linkShareValue: ((this.responsedata.linkShare) ? 1 : 0),
+        }),
       }).then((response) => response.json())
         .then((body) => {
-          if (body.status == "success"){
-            this.responsesuccessful = true
-            this.responsedata = body.data
-
-            this.checkNegativValue();
-            this.roundResponseData();
-            this.setChartGesamt();
-            this.setChartEnergie();
-          }
-          else {  // Fehlerbehandlung
-            this.responseNotSuccessful = true
-            this.responseerror = body.error
-          }
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
+          this.showLoading = false
+          console.log(body)
+          if (body.status == "success") {
+            this.displaySuccess = true
+        }
+        else {  // Fehlerbehandlung
+          this.showLoading = false
+          this.responseNotSuccessful = true
+          this.responseerror = body.error
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
     },
 
     /**
      * Method checks for negativ values in energy emissions which indecated that the year of the survey has no data in the database.
      * If dedected sets the flag displayEnergieChart to false
      */
-    checkNegativValue: function(){
-      if(this.responsedata.emissionenWaerme < 0 || this.responsedata.emissionenKaelte < 0 || this.responsedata.emissionenStrom < 0){
+    checkNegativValue: function () {
+      if (this.responsedata.emissionenWaerme < 0 || this.responsedata.emissionenKaelte < 0 || this.responsedata.emissionenStrom < 0) {
         this.displayEnergieCharts = false;
       }
     },
@@ -407,7 +526,7 @@ export default{
     /**
      * Method rounds all emission values to unit t with 3 decimal places.
      */
-    roundResponseData: function(){
+    roundResponseData: function () {
       let roundFactor1 = 10000
       let roundFactor2 = 100
 
@@ -434,12 +553,12 @@ export default{
     /**
      * Method sets data and options for the Gesamt charts.
      */
-    setChartGesamt: function(){
+    setChartGesamt: function () {
       let data = [
-        {label: 'Energie', value: this.responsedata.emissionenEnergie},
-        {label: 'Dienstreisen', value: this.responsedata.emissionenDienstreisen},
-        {label: 'Pendelweg', value: this.responsedata.emissionenPendelwege},
-        {label: 'IT-Geräte', value: this.responsedata.emissionenITGeraete},
+        { label: 'Energie', value: this.responsedata.emissionenEnergie },
+        { label: 'Dienstreisen', value: this.responsedata.emissionenDienstreisen },
+        { label: 'Pendelweg', value: this.responsedata.emissionenPendelwege },
+        { label: 'IT-Geräte', value: this.responsedata.emissionenITGeraete },
       ];
 
       this.chartdataGesamtDoughnut = {
@@ -454,15 +573,19 @@ export default{
             'rgb(75, 192, 192)'
           ],
           hoverOffset: 4
-        }]}
+        }]
+      }
       this.optionsGesamtDoughnut = {
         responsive: false,
         maintainAspectRatio: false,
-        plugins:{
+        plugins: {
           datalabels: {
             display: true,
             // eslint-disable-next-line no-unused-vars
             formatter: (value, context) => {
+              if(this.responsedata.emissionenGesamt === 0){
+                return 0
+              }
               return (Math.round(value / this.responsedata.emissionenGesamt * 1000) / 10) + '%';
             },
             font: {
@@ -487,30 +610,18 @@ export default{
           order: 1,
           datalabels: {
             color: 'black',
-            align: 'start',
-            anchor: 'end',
+            align: 'end',
+            anchor: 'start',
           }
-        },{
-          type: 'line',
-          label: 'kumulierte Emissionen',
-          yAxisID: 'line',
-          data: data.map((sum => a => sum += a.value)(0)).map(a => Math.round(a / this.responsedata.emissionenGesamt * 1000) /1000),
-          fill: false,
-          borderColor: 'rgb(21, 134, 209)',
-          lineTension: 0,
-          order: 0,
-          datalabels: {
-            display: false,
-          },
         }]
       };
       this.optionsGesamtPareto = {
         responsive: false,
         maintainAspectRatio: false,
         legend: {
-            display: false
+          display: false
         },
-        scales:{
+        scales: {
           yAxes: [{
             id: 'bar',
             position: 'left',
@@ -521,16 +632,6 @@ export default{
               display: true,
               labelString: 't C02 eq.'
             }
-          },{
-            id: 'line',
-            position: 'right',
-            ticks: {
-              max: 1,
-              min: 0,
-            },
-            gridLines: {
-                display:false
-            }
           }]
         },
       };
@@ -539,11 +640,11 @@ export default{
     /**
      * Method sets data and options for the Energie charts.
      */
-    setChartEnergie: function(){
+    setChartEnergie: function () {
       let data = [
-        {label: 'Wärme', value: this.responsedata.emissionenWaerme},
-        {label: 'Kälte', value: this.responsedata.emissionenKaelte},
-        {label: 'Strom', value: this.responsedata.emissionenStrom},
+        { label: 'Wärme', value: this.responsedata.emissionenWaerme },
+        { label: 'Kälte', value: this.responsedata.emissionenKaelte },
+        { label: 'Strom', value: this.responsedata.emissionenStrom },
       ];
 
       this.chartdataEnergieDoughnut = {
@@ -557,15 +658,19 @@ export default{
             'rgb(255, 219, 77)',
           ],
           hoverOffset: 4
-        }]}
+        }]
+      }
       this.optionsEnergieDoughnut = {
         responsive: false,
         maintainAspectRatio: false,
-        plugins:{
+        plugins: {
           datalabels: {
             display: true,
             // eslint-disable-next-line no-unused-vars
             formatter: (value, context) => {
+              if(this.responsedata.emissionenEnergie === 0){
+                return 0
+              }
               return (Math.round(value / this.responsedata.emissionenEnergie * 1000) / 10) + '%';
             },
             font: {
@@ -590,20 +695,8 @@ export default{
           order: 1,
           datalabels: {
             color: 'black',
-            align: 'start',
-            anchor: 'end',
-          },
-        },{
-          type: 'line',
-          label: 'kumulierte Emissionen',
-          yAxisID: 'line',
-          data: data.map((sum => a => sum += a.value)(0)).map(a => Math.round(a / this.responsedata.emissionenEnergie* 1000) /1000),
-          fill: false,
-          borderColor: 'rgb(54, 162, 235)',
-          lineTension: 0,
-          order: 0,
-          datalabels: {
-            display: false,
+            align: 'end',
+            anchor: 'start',
           },
         }]
       }
@@ -611,9 +704,9 @@ export default{
         responsive: false,
         maintainAspectRatio: false,
         legend: {
-            display: false
+          display: false
         },
-        scales:{
+        scales: {
           yAxes: [{
             id: 'bar',
             position: 'left',
@@ -624,16 +717,6 @@ export default{
               display: true,
               labelString: 't C02 eq.'
             }
-          },{
-            id: 'line',
-            position: 'right',
-            ticks: {
-              max: 1,
-              min: 0,
-            },
-            gridLines: {
-                display:false
-            }
           }]
         },
       }
@@ -642,3 +725,11 @@ export default{
 }
 
 </script>
+
+<style>
+.p{
+  overflow: hidden; 
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+</style>

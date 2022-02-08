@@ -10,9 +10,11 @@
         <div class="text-center">
           <v-card-title class="justify-center">
             <h2>TU-Darmstadt CO2-Rechner</h2>
-          </v-card-title>
-          Willkommen bei dem TU-Darmstadt CO2-Rechner, mit diesem können Sie die CO2-Emissionen von TU Einheiten berechnen.
-          <v-card-title class="justify-center">
+          </v-card-title>Willkommen bei dem TU-Darmstadt CO2-Rechner, mit diesem können Sie die CO2-Emissionen von TU Einheiten berechnen.
+          <br> Erstellen Sie einfach einen Konto, um eine Umfrage für Ihre TU-Einheit zu erstellen.
+          <v-card-title
+            class="justify-center"
+          >
             {{ istRegistrierung ? "Registrierung" : "Anmeldung" }}
           </v-card-title>
         </div>
@@ -24,7 +26,7 @@
               <v-text-field
                 v-model="username"
                 :rules="requiredRule"
-                label="Nutzername"
+                label="E-Mail"
                 prepend-icon="mdi-account"
                 required
               />
@@ -53,28 +55,49 @@
             </p>
           </v-row>
           <v-row>
-            <v-col class="px-10">
+            <v-col class="text-center ma-0 pa-0">
               <v-btn
                 color="primary"
-                :style="{ left: '50%', transform: 'translateX(-50%)' }"
                 @click="postAnmeldung()"
               >
+                <v-icon left>
+                  mdi-account
+                </v-icon>
                 <span>Anmelden</span>
-                <v-icon>mdi-account</v-icon>
               </v-btn>
             </v-col>
           </v-row>
           <v-row>
-            <v-btn
-              color="blue"
-              :style="{ left: '50%', transform: 'translateX(-50%)' }"
-              @click="istRegistrierung = true"
-            >
-              <span class="white--text">Neues Konto erstellen</span>
-              <v-icon color="white">
-                mdi-account
-              </v-icon>
-            </v-btn>
+            <v-col class="text-center">
+              <v-tooltip
+                bottom
+              > 
+                <template v-slot:activator="{ on }">
+                  <a
+                    target="_blank"
+                    @click="$router.push('/passwortVergessen')"
+                    v-on="on"
+                  >Passwort vergessen?</a>
+                </template>
+                Öffnet die Passwort vergessen Seite.
+              </v-tooltip>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col class="text-center ma-0 pa-0">
+              <v-btn
+                color="blue"
+                @click="() => { istRegistrierung = true; errorMessage = '' }"
+              >
+                <v-icon
+                  color="white"
+                  left
+                >
+                  mdi-account-plus
+                </v-icon>
+                <span class="white--text">Neues Konto erstellen</span>
+              </v-btn>
+            </v-col>
           </v-row>
         </v-container>
         <!-- Register -->
@@ -86,7 +109,7 @@
                 v-model="username"
                 class="px-5"
                 :rules="requiredRule"
-                label="Nutzername"
+                label="E-Mail"
                 prepend-icon="mdi-account"
                 required
               />
@@ -122,44 +145,44 @@
             </v-col>
             <v-col />
           </v-row>
-          <v-row
-            class="px-5"
-          >
+          <v-row class="text-center">
+            <v-col />
+            <v-col
+              v-if="bestaetigungAnzeigen"
+              cols="7"
+            >
+              <v-alert
+                outlined
+                type="success"
+                text
+              >
+                Ihr Konto wurde erfolgreich erstellt. Damit Sie ihr Konto verwenden können, müssen Sie ihre E-Mail bestätigen.
+                <br> Unsere Bestätigungsmail ist schon auf dem Weg zu Ihnen und Sie können gleich loslegen!
+              </v-alert>
+            </v-col>
+            <v-col />
+          </v-row>
+
+          <v-row class="px-5">
             <v-col />
             <v-col
               cols="8"
               class="text-center"
             >
               <div>
-                Indem Sie auf „Konto erstellen“ klicken, stimmen Sie unseren Nutzungsbedingungen zu. <br> In unserer 
-                <!-- <v-tooltip bottom>
-                      <template v-slot:activator="{ on }">
-                        <a
-                          target="_blank"
-                          href="https://vuetifyjs.com"
-                          @click.stop
-                          v-on="on"
-                        >
-                          AGB
-                        </a>
-                      </template>
-                      Öffnet eine neue Seite mit der AGB
-                    </v-tooltip>
-                    und der -->
+                Indem Sie auf „Konto erstellen“ klicken, stimmen Sie unseren Datenschutzerklärung zu.
+                <br>In unserer
                 <v-tooltip bottom>
                   <template v-slot:activator="{ on }">
                     <a
                       target="_blank"
-                      href="https://www.tu-darmstadt.de/datenschutzerklaerung.de.jsp"
+                      :href="datenschutzlink"
                       @click.stop
                       v-on="on"
-                    >
-                      Datenschutzerklärung
-                    </a>
+                    >Datenschutzerklärung</a>
                   </template>
                   Öffnet eine neue Seite mit der Datenschutzerklärung
-                </v-tooltip>
-                erfahren Sie, welche Daten wir erfassen und verwenden.
+                </v-tooltip> erfahren Sie, welche Daten wir erfassen und verwenden.
               </div>
             </v-col>
             <v-col />
@@ -174,27 +197,64 @@
             </p>
           </v-row>
           <v-row>
-            <v-btn
-              color="blue"
-              :style="{ left: '50%', transform: 'translateX(-50%)' }"
-              @click="postRegistrierung()"
-            >
-              <span class="white--text">Konto erstellen</span>
-              <v-icon color="white">
-                mdi-account
-              </v-icon>
-            </v-btn>
+            <v-col class="text-center py-3">
+              <v-btn
+                color="blue"
+                @click="postRegistrierung()"
+              >
+                <v-icon
+                  color="white"
+                  left
+                >
+                  mdi-account-plus
+                </v-icon>
+                <span class="white--text">Konto erstellen</span>
+              </v-btn>
+            </v-col>
           </v-row>
           <v-row>
-            <v-col class="px-10">
+            <v-col class="ma-0 pa-0 text-center">
               <v-btn
                 color="primary"
-                :style="{ left: '50%', transform: 'translateX(-50%)' }"
-                @click="postAnmeldung()"
+                @click="() => { istRegistrierung = false; errorMessage = '' }"
               >
+                <v-icon left>
+                  mdi-account
+                </v-icon>
                 <span>Zurück zur Anmeldung</span>
-                <v-icon>mdi-account</v-icon>
               </v-btn>
+            </v-col>
+          </v-row>
+        </v-container>
+        <!-- Logos -->
+        <v-container class="d-flex justify-space-around mb-6 py-10">
+          <v-row>
+            <v-col>
+              <v-img
+                contain
+                class="mx-auto py-15"
+                max-height="177"
+                max-width="250"
+                src="../assets/logo_Maschinenbau.png"
+              />
+            </v-col>
+            <v-col>
+              <v-img
+                contain
+                class="mx-auto"
+                max-height="177"
+                max-width="250"
+                src="../assets/logo_Nachhaltigkeit.jpg"
+              />
+            </v-col>
+            <v-col>
+              <v-img
+                contain
+                class="mx-auto"
+                max-height="177"
+                max-width="250"
+                src="../assets/logo_tud.png"
+              />
             </v-col>
           </v-row>
         </v-container>
@@ -224,29 +284,31 @@ export default {
     password: null,
     rePassword: null,
     istRegistrierung: false,
+    bestaetigungAnzeigen: false,
     agbBestaetigt: false,
     dialog: false,
     //Für Fehlermeldung bei Response
     errorMessage: null,
+    datenschutzlink: process.env.VUE_APP_URL + "/datenschutz",
 
     requiredRule: [
       v => !!v || "Muss angegeben werden",
     ],
     passwordRule: [
-      v => (v && v.length >= 8) || 'Min 8 characters'
+      v => (v && v.length >= 8) || 'Mindestens 8 Zeichen'
     ]
   }),
 
   computed: {
     showAnmelden: function () {
-      return Cookies.checkIfCookieAttributExists("email")
+      return Cookies.checkIfCookieAttributExists("username")
     },
   },
 
   methods: {
-    passwordConfirmationRule() {
-      return () => (this.password === this.rePassword) || 'Passwörter sind nicht gleich'
-    },
+    // passwordConfirmationRule() {
+    //   return () => (this.password === this.rePassword) || 'Passwörter sind nicht gleich'
+    // },
 
     /**
      * Checks if the user input is valid and returns true if valid
@@ -262,7 +324,7 @@ export default {
         return false
       }
       if (this.username.length < 5) {
-        this.errorMessage = "Email Mindestlänge ist 5 Zeichen"
+        this.errorMessage = "E-Mail Mindestlänge ist 5 Zeichen"
         return false
       }
       if (this.password.length < 8) {
@@ -295,8 +357,8 @@ export default {
           //This is always the case when the backend returns a package
           if (data.status == "success") {
             Cookies.setCookie("sessiontoken", data.data.sessiontoken)
-            Cookies.setCookie("email", this.username)
-            this.$router.push('/admin').catch(() => { })
+            Cookies.setCookie("username", this.username)
+            this.$router.push('/survey').catch(() => { })
           }
           //Message on success or error send from Backend
           this.errorMessage = (data.status == "success") ? '' : data.error.message
@@ -329,12 +391,10 @@ export default {
         .then((data) => {
           //This is always the case when the backend returns a package
           if (data.status == "success") {
-            Cookies.setCookie("sessiontoken", data.data.sessiontoken)
-            Cookies.setCookie("email", this.username)
-            this.$router.push('/survey')
+            this.bestaetigungAnzeigen = true
           }
           //Message on success or error send from Backend 
-          this.message = (data.status == "success") ? data.data.message : data.error.message
+          this.errorMessage = (data.status == "success") ? '' : data.error.message
           console.log("Success:", data)
         })
         .catch((error) => {

@@ -9,13 +9,13 @@ export default new Vuetify({
           light: {
             primary: '#009d81',
             // TODO different colors for theme
-            secondary: '#b0bec5',
+            secondary: '#358576',
             accent: '#8c9eff',
             error: '#b71c1c',
             add: '#999999',
-            add_text: 'white',
+            add_text: '#FFFFFF',
             delete: '#ee6363',
-            delete_text: 'white',
+            delete_text: '#FFFFFF',
             blue: "#42A5F5"
           },
         },

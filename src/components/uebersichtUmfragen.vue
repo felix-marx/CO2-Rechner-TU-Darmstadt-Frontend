@@ -20,33 +20,34 @@
               Bilanzierungsjahr {{ umfrage.jahr }}
             </div> 
             <v-list-item-title class="text-h5 mb-4">
-              Umfrage: {{ umfrage.bezeichnung }}
+              {{ umfrage.bezeichnung }}
             </v-list-item-title>
             <v-row>
-              <v-col 
-                cols="8"
-                align-self="center"
-              >
-                <div>
-                  Link zur Mitarbeiterumfrage: {{ mitarbeiterumfrageBaseURL + umfrage._id }}
-                </div>
+              <v-col
+              cols="7">
+              <KopierenButton
+                :button-text="'Link zur Umfrage kopieren'"
+                :textToCopy="mitarbeiterumfrageBaseURL + umfrage._id"
+              />
               </v-col>
               <v-col 
-                align-self="center"
-                cols="3"
+                cols=""
                 class="text-right"
+                align-self="center"
               >
                 <div>
-                  {{ umfrage.mitarbeiterUmfrageRef.length }}/{{ umfrage.mitarbeiteranzahl }}:
+                  <b>{{ umfrage.mitarbeiterUmfrageRef.length }}/{{ umfrage.mitarbeiteranzahl }} </b> Mitarbeitende haben ausgefüllt
                 </div>
               </v-col>
-              <v-col>
+              <v-col
+                cols="1"
+                align-self="center"
+              >
                 <v-progress-circular 
+                  :color=" umfrage.mitarbeiterUmfrageRef.length == umfrage.mitarbeiteranzahl ? 'primary' : 'grey'"
                   :value="100*(umfrage.mitarbeiterUmfrageRef.length / umfrage.mitarbeiteranzahl)"
                   :size="35"
-                >
-                  {{ value }}
-                </v-progress-circular>
+                />
               </v-col>
             </v-row>
           </v-list-item-content>
@@ -98,13 +99,6 @@
                   :umfrageidprop="umfrage._id"
                 />
               </v-card>
-
-            <!--
-            <v-divider /> 
-            <div>
-              Aktuelle Auswertung
-            </div>
-            -->
             </v-card>
           </v-dialog>
 
@@ -146,7 +140,10 @@
               <v-card
                 v-if="dialogAuswertung[index]"
               >
-                <Nutzerauswertung :umfrageid="umfrage._id" />
+                <Nutzerauswertung
+                  :umfrageid="umfrage._id"
+                  :shared="false"
+                />
               </v-card>
             </v-card>
           </v-dialog>
@@ -218,11 +215,13 @@
 import UmfrageBearbeitenComponent from "./UmfrageBearbeitenComponent.vue";
 import Nutzerauswertung from "./nutzerauswertung.vue";
 import Cookies from "../Cookie";
+import KopierenButton from './componentParts/kopierenButton.vue';
 
 export default {
   components: {
     UmfrageBearbeitenComponent,
     Nutzerauswertung,
+    KopierenButton,
   },
 
     data: () => ({
@@ -239,8 +238,8 @@ export default {
       anteilMitarbeiterUmfrage: 40,
 
       // base url for Mitarbeiterumfragen
-      mitarbeiterumfrageBaseURL: process.env.VUE_APP_URL + '/survey/'
-    }),
+      mitarbeiterumfrageBaseURL: process.env.VUE_APP_URL + '/survey/',
+  }),
 
     created() {
       this.fetchUmfragenForUser();
@@ -262,22 +261,35 @@ export default {
         return
       },
 
-    /**
-     * Closes v-dialog with dialog as v-model
-     */
-    closeDialog(index) {
-      this.$set(this.dialog, index, false)
-    },
+      /**
+       * Closes v-dialog with dialog as v-model
+       */
+      closeDialog(index) {
+        this.fetchUmfragenForUser()
+        this.$set(this.dialog, index, false)
+      },
 
       /**
        * Closes v-dialog with dialogAuswertung as v-model
        */
       closeDialogAuswertung(index) {
+        this.fetchUmfragenForUser()
         this.$set(this.dialogAuswertung, index, false)
       },
 
       fetchUmfragenForUser: async function () {
-      await fetch(process.env.VUE_APP_BASEURL + "/umfrage/GetAllUmfragenForUser?user=" + Cookies.getCookieAttribut("email"))
+      await fetch(process.env.VUE_APP_BASEURL + "/umfrage/GetAllUmfragenForUser", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          authToken: {
+            username: Cookies.getCookieAttribut("username"),
+            sessiontoken: Cookies.getCookieAttribut("sessiontoken")
+          },
+        }),
+      })
         .then((response) => response.json())
         .then((data) => {
           console.log("Success:", data);
@@ -307,8 +319,8 @@ export default {
         },
         body: JSON.stringify({
           umfrageID: umfrageID,
-          hauptverantwortlicher: {
-            username: Cookies.getCookieAttribut("email"),
+          authToken: {
+            username: Cookies.getCookieAttribut("username"),
             sessiontoken: Cookies.getCookieAttribut("sessiontoken"),
           }
         }),
@@ -329,12 +341,10 @@ export default {
           console.error("Error:", error);
           return false
         });
-      }
-    }
+      },
+  }
+
+    
   }
   
 </script>
-
-<!-- Ich muss alle für den entsprechenden Nutzer in der Datenbank angelegten Umfragen empfangen, damit diese angezeigt werden können -->
-<!-- Ich möchte einzelne Umfrage Objekte einsehen können-->
-<!-- Ich möchte einzelne Umfragen löschen können, auch aus der Datenbank-->

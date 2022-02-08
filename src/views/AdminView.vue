@@ -22,7 +22,7 @@ import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import AdminEintraege from "@/components/AdminEintraege";
 import AdminAuswertung from "@/components/AdminAuswertung";
-import AdminUebersicht from "@/components/AdminUebersicht";
+import AccountSettings from '../components/AccountSettings.vue';
 
 export default {
   name: "App",
@@ -30,20 +30,20 @@ export default {
   components: {
     Footer,
     Header,
-    AdminUebersicht,
     AdminEintraege,
-    AdminAuswertung
+    AdminAuswertung,
+    AccountSettings
   },
 
   data: () => ({
     // standard tab selected is the first tab / Umfrage tab
     // could extend this to be persistent on site refresh, but this would require additional plugins, like e.g. Vuex.
     selectedTab: 0,
-    currentTabType: AdminUebersicht,
+    currentTabType: AdminAuswertung,
     tabList: [
-      { id: 0, title: "Übersicht", componentType: AdminUebersicht},
-      { id: 1, title: "Daten eintragen", componentType: AdminEintraege },
-      { id: 2, title: "Auswertung", componentType: AdminAuswertung},
+      { id: 2, title: "Accounteinstellungen", componentType: AccountSettings},
+      { id: 0, title: "Umfragenübersicht", componentType: AdminAuswertung},
+      { id: 1, title: "Datenbank", componentType: AdminEintraege},
     ],
   }),
 
