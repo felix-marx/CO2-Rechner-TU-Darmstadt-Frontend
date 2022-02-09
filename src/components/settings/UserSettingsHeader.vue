@@ -51,13 +51,7 @@ export default {
   components: [
     AccountSettings
   ],
-
-  props: {
-  },
-
-  data: () => ({
-
-  }),
+  
   computed: {
     cookieAttribut: function () {
       return Cookies.getCookieAttribut('username')

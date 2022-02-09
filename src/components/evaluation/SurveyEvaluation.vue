@@ -156,30 +156,24 @@
           </v-col>
         </v-row>
         <v-row>
-          <v-col
-            cols="2"
-            class="align-self-center"
+          <v-btn
+            class="ml-8 align-self-center"
+            color="primary"
+            @click="makeSpreadsheet"
           >
-            <v-btn
-              class="ml-8 "
-              color="primary"
-              @click="makeSpreadsheet"
-            >
-              <v-icon left>
-                mdi-file-chart-outline
-              </v-icon>Download als Excel
-            </v-btn>
-          </v-col>
-          <v-col cols="2">
-            <v-switch
-              v-if="!this.$props.shared"
-              v-model="responsedata.linkShare"
-              class="ml-8"
-              inset
-              :label="`Linksharing ${(responsedata.linkShare ? 'aktiviert' : 'deaktiviert')}`"
-              @click="updateFlipLinkShare"
-            />
-          </v-col>
+            <v-icon left>
+              mdi-file-chart-outline
+            </v-icon>Download als Excel
+          </v-btn>
+         
+          <v-switch
+            v-if="!this.$props.shared"
+            v-model="responsedata.linkShare"
+            class="ml-8"
+            inset
+            :label="`Linksharing ${(responsedata.linkShare ? 'aktiviert' : 'deaktiviert')}`"
+            @click="updateFlipLinkShare"
+          />
         </v-row>
       </v-container>
     </v-card>
