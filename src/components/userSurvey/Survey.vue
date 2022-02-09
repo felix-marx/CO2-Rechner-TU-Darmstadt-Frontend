@@ -83,7 +83,6 @@
                 :rules="absolutpositivRules"
                 :min="0"
                 label="Mitarbeitendenzahl"
-                type="number"
                 prepend-icon="mdi-account"
                 :disabled="blockInput"
               />
@@ -130,7 +129,6 @@
                   :min="0"
                   label="Nutzfläche des ausgewählten Gebäudes"
                   prepend-icon="mdi-domain"
-                  type="number"
                   suffix="qm"
                   :disabled="blockInput"
                 />
@@ -185,7 +183,6 @@
                 :disabled="!geraeteAnzahl[0][2] || blockInput"
                 :min="0"
                 label="Multifunktionsgeräte z.B. Netzwerkdrucker"
-                type="number"
                 class="pr-5"
                 suffix="Gerät/e"
               />
@@ -195,7 +192,6 @@
                 :disabled="!geraeteAnzahl[0][2] || blockInput"
                 :min="0"
                 label="verbrauchte Toner"
-                type="number"
                 suffix="Toner"
               />
             </v-row>
@@ -212,7 +208,6 @@
                 :disabled="!geraeteAnzahl[2][2] || blockInput"
                 :min="0"
                 label="Laser- &amp; Tintenstrahldrucker"
-                type="number"
                 suffix="Drucker"
                 class="pr-5"
               />
@@ -223,7 +218,6 @@
                 :min="0"
                 label="verbrauchte Toner"
                 suffix="Toner"
-                type="number"
               />
             </v-row>
             <!-- Beamer -->
@@ -239,7 +233,6 @@
                 :disabled="!geraeteAnzahl[4][2] || blockInput"
                 :min="0"
                 label="Beamer"
-                type="number"
                 suffix="Beamer"
               />
             </v-row>
@@ -256,7 +249,6 @@
                 :disabled="!geraeteAnzahl[5][2] || blockInput"
                 :min="0"
                 label="interne Server"
-                type="number"
                 suffix="Server"
               />
             </v-row>
@@ -822,18 +814,3 @@ function resolveITGeraetID(geraetID) {
 }
 
 </script>
-
-<!-- Removes the buttons in textfields to increase decrease number -->
-<style lang="scss">
-/* Chrome, Safari, Edge, Opera */
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-/* Firefox */
-input[type="number"] {
-  -moz-appearance: textfield;
-}
-</style>

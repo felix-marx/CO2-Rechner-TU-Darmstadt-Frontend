@@ -62,7 +62,6 @@
                 :disabled="medium[0] === null || submittedDataSuccessfully"
                 :min="0"
                 label="Einfacher Pendelweg"
-                type="number"
                 suffix="km"
               />
             </v-col>
@@ -119,8 +118,7 @@
                 :rules="mitfahrerRules"
                 :disabled="submittedDataSuccessfully"
                 :min="0"
-                label="Anzahl Mitfahrer"
-                type="number"
+                label="Anzahl Mitfahrende"
                 class="pr-5"
               />
             </v-col>
@@ -143,7 +141,6 @@
               :min="0"
               :max="7"
               label="Tage im Büro"
-              type="number"
             />
           </v-row>
         </v-container>
@@ -197,7 +194,6 @@
                 label="Einfache Distanz"
                 suffix="km"
                 class="pr-5"
-                type="number"
               />
             </v-col>
             <v-col>
@@ -250,7 +246,6 @@
               :disabled="!geraeteAnzahl[0][2] || submittedDataSuccessfully"
               :min="0"
               label="Notebooks"
-              type="number"
               class="pr-5"
               suffix="Gerät/e"
             />
@@ -268,7 +263,6 @@
               :disabled="!geraeteAnzahl[1][2] || submittedDataSuccessfully"
               :min="0"
               label="Desktop PCs"
-              type="number"
               class="pr-5"
               suffix="Gerät/e"
             />
@@ -286,7 +280,6 @@
               :disabled="!geraeteAnzahl[2][2] || submittedDataSuccessfully"
               :min="0"
               label="Bildschirme"
-              type="number"
               class="pr-5"
               suffix="Gerät/e"
             />
@@ -304,7 +297,6 @@
               :disabled="!geraeteAnzahl[3][2] || submittedDataSuccessfully"
               :min="0"
               label="Mobiltelefone"
-              type="number"
               class="pr-5"
               suffix="Gerät/e"
             />
@@ -727,18 +719,3 @@ export default {
   },
 };
 </script>
-
-<!-- Removes the buttons in textfields to increase decrease number -->
-<style lang="scss">
-/* Chrome, Safari, Edge, Opera */
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-/* Firefox */
-input[type="number"] {
-  -moz-appearance: textfield;
-}
-</style>
