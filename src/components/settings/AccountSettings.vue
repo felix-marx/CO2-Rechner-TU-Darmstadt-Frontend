@@ -17,7 +17,7 @@
             transition="dialog-bottom-transition"
           >
             <template v-slot:activator="{ on, attrs }">
-              <!-- Mit diesem Button sollen ausgewählte Umfragen gelöscht werden können. -->
+              <!-- Mit diesem Button soll der Account gelöscht werden. -->
               <v-col class="text-right">
                 <v-btn
                   class="ma2"
@@ -43,14 +43,14 @@
               <v-card-text>
                 <p class="pt-6">
                   Sind Sie sicher, dass Sie Ihren Account löschen möchten?
+                  <br/>
                   <b>Diese Aktion kann nicht zurückgenommen werden und alle Ihre Umfragen werden gelöscht! </b>
                 </p>
             
                 <div>
-                  Geben Sie zur Bestätigung bitte Ihren Nutzernamen in folgendes Feld ein:
+                  Geben Sie zur Bestätigung bitte Ihre Email-Adresse in folgendes Feld ein:
                 </div>
                 <v-text-field
-                  ref="mitarbeiterLinkTextfield"
                   v-model="usernameConfirmation"
                   outlined
                 />
@@ -291,7 +291,7 @@ export default {
      */
     async deleteAccount() {
       await fetch(process.env.VUE_APP_BASEURL + "/nutzerdaten/deleteNutzerdaten", {
-        method: "POST",
+        method: "DELETE",
         headers: {
           "Content-Type": "application/json",
         },
@@ -309,49 +309,51 @@ export default {
           this.responseData = data.data;
           if(data.status == "error") {
             this.errorMessage = data.error.message
+            this.displayLoadingAnimation = false;
             this.deleteRequestError = true;
           } else {
+            this.displayLoadingAnimation = false;
             this.accountDeleted = true;
           }
         })
         .catch((error) => {
           console.error("Error:", error);
           this.errorMessage = "Server nicht erreichbar."
+          this.displayLoadingAnimation = false;
           this.deleteRequestError = true;
         });
     },
  
-  async deleteAbmelden() {
-    await fetch(process.env.VUE_APP_BASEURL + "/auth/abmeldung", {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        username: Cookies.getCookieAttribut('username')
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        //This is always the case when the backend returns a package
-        //Delete cookie and log if not success
-        Cookies.deleteCookieAttribut("username")
-        Cookies.deleteCookieAttribut("sessiontoken")
-        if (data.status != "success") {
-          console.log("Server konnte nicht löschen")
-          this.deleteRequestError = true;
-        }else{
-          this.signedOut = true;
-          console.log("Success:", data)
-        }
-        this.displayLoadingAnimation = false;
+    async deleteAbmelden() {
+      await fetch(process.env.VUE_APP_BASEURL + "/auth/abmeldung", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: Cookies.getCookieAttribut('username')
+        }),
       })
-      .catch((error) => {
-        //This is always the case when the backend returns nothing -> Timeout
-        console.error("Error:", error)
-        this.deleteRequestError = true;
-        this.displayLoadingAnimation = false;
-      });
+        .then((response) => response.json())
+        .then((data) => {
+          //This is always the case when the backend returns a package
+          //Delete cookie and log if not success
+          Cookies.deleteCookieAttribut("username")
+          Cookies.deleteCookieAttribut("sessiontoken")
+          if (data.status != "success") {
+            console.log("Server konnte nicht löschen")
+            this.deleteRequestError = true;
+          }else{
+            this.signedOut = true;
+            console.log("Success:", data)
+          }
+        })
+        .catch((error) => {
+          //This is always the case when the backend returns nothing -> Timeout
+          console.error("Error:", error)
+          this.deleteRequestError = true;
+          
+      })
     },
 
     forwardToLoginPage() {

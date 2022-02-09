@@ -48,17 +48,8 @@ import AccountSettings from "./AccountSettings.vue"
 export default {
   name: "UserSettingsHeader",
 
-  components: [
-    AccountSettings
-  ],
-
-  props: {
-  },
-
-  data: () => ({
-
-  }),
   computed: {
+    // we need this for some reason, since a direct call to Cookies.getCookieAttribut() in the template does not evaluate.
     cookieAttribut: function () {
       return Cookies.getCookieAttribut('username')
     }
