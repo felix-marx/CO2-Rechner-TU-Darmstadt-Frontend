@@ -172,7 +172,10 @@
               <v-card
                 v-if="dialogAuswertung[index]"
               >
-                <Nutzerauswertung :umfrageid="umfrage._id" />
+                <Nutzerauswertung
+                  :umfrageid="umfrage._id"
+                  :shared="true"
+                />
               </v-card>
             </v-card>
           </v-dialog>
