@@ -20,53 +20,55 @@
         </div>
         <!-- Signin -->
         <v-container v-if="!istRegistrierung">
-          <v-row>
-            <v-col />
-            <v-col cols="8">
-              <v-text-field
-                v-model="username"
-                :rules="requiredRule"
-                label="E-Mail"
-                prepend-icon="mdi-account"
-                required
-              />
-            </v-col>
-            <v-col />
-          </v-row>
-          <v-row>
-            <v-col />
-            <v-col cols="8">
-              <v-text-field
-                v-model="password"
-                :rules="passwordRule.concat(requiredRule)"
-                label="Passwort"
-                type="password"
-                prepend-icon="mdi-key"
-              />
-            </v-col>
-            <v-col />
-          </v-row>
-          <v-row
-            v-if="errorMessage != null && errorMessage != ''"
-            justify="center"
-          >
-            <p class="error--text">
-              {{ errorMessage }}
-            </p>
-          </v-row>
-          <v-row>
-            <v-col class="text-center ma-0 pa-0">
-              <v-btn
-                color="primary"
-                @click="postAnmeldung()"
-              >
-                <v-icon left>
-                  mdi-account
-                </v-icon>
-                <span>Anmelden</span>
-              </v-btn>
-            </v-col>
-          </v-row>
+          <v-form @submit="postAnmeldung()">
+            <v-row>
+              <v-col />
+              <v-col cols="8">
+                <v-text-field
+                  v-model="username"
+                  :rules="requiredRule"
+                  label="E-Mail"
+                  prepend-icon="mdi-account"
+                  required
+                />
+              </v-col>
+              <v-col />
+            </v-row>
+            <v-row>
+              <v-col />
+              <v-col cols="8">
+                <v-text-field
+                  v-model="password"
+                  :rules="passwordRule.concat(requiredRule)"
+                  label="Passwort"
+                  type="password"
+                  prepend-icon="mdi-key"
+                />
+              </v-col>
+              <v-col />
+            </v-row>
+            <v-row
+              v-if="errorMessage != null && errorMessage != ''"
+              justify="center"
+            >
+              <p class="error--text">
+                {{ errorMessage }}
+              </p>
+            </v-row>
+            <v-row>
+              <v-col class="text-center ma-0 pa-0">
+                <v-btn
+                  color="primary"
+                  type="submit"
+                >
+                  <v-icon left>
+                    mdi-account
+                  </v-icon>
+                  <span>Anmelden</span>
+                </v-btn>
+              </v-col>
+            </v-row>
+          </v-form>
           <v-row>
             <v-col class="text-center">
               <v-tooltip
@@ -102,118 +104,121 @@
         </v-container>
         <!-- Register -->
         <v-container v-if="istRegistrierung">
-          <v-row>
-            <v-col />
-            <v-col cols="8">
-              <v-text-field
-                v-model="username"
-                class="px-5"
-                :rules="requiredRule"
-                label="E-Mail"
-                prepend-icon="mdi-account"
-                required
-              />
-            </v-col>
-            <v-col />
-          </v-row>
-          <v-row>
-            <v-col />
-            <v-col cols="8">
-              <v-text-field
-                v-model="password"
-                class="px-5"
-                :rules="passwordRule.concat(requiredRule)"
-                label="Passwort"
-                type="password"
-                prepend-icon="mdi-key"
-              />
-            </v-col>
-            <v-col />
-          </v-row>
-          <v-row>
-            <v-col />
-            <v-col cols="8">
-              <v-text-field
-                v-model="rePassword"
-                class="px-5"
-                :rules="passwordRule.concat(requiredRule)"
-                label="Passwort wiederholen"
-                type="password"
-                prepend-icon="mdi-key"
-                hint="Mindestens 8 Zeichen"
-              />
-            </v-col>
-            <v-col />
-          </v-row>
-          <v-row class="text-center">
-            <v-col />
-            <v-col
-              v-if="bestaetigungAnzeigen"
-              cols="7"
-            >
-              <v-alert
-                outlined
-                type="success"
-                text
+          <v-form @submit="postRegistrierung()">
+            <v-row>
+              <v-col />
+              <v-col cols="8">
+                <v-text-field
+                  v-model="username"
+                  class="px-5"
+                  :rules="requiredRule"
+                  label="E-Mail"
+                  prepend-icon="mdi-account"
+                  required
+                />
+              </v-col>
+              <v-col />
+            </v-row>
+            <v-row>
+              <v-col />
+              <v-col cols="8">
+                <v-text-field
+                  v-model="password"
+                  class="px-5"
+                  :rules="passwordRule.concat(requiredRule)"
+                  label="Passwort"
+                  type="password"
+                  prepend-icon="mdi-key"
+                />
+              </v-col>
+              <v-col />
+            </v-row>
+            <v-row>
+              <v-col />
+              <v-col cols="8">
+                <v-text-field
+                  v-model="rePassword"
+                  class="px-5"
+                  :rules="passwordRule.concat(requiredRule)"
+                  label="Passwort wiederholen"
+                  type="password"
+                  prepend-icon="mdi-key"
+                  hint="Mindestens 8 Zeichen"
+                />
+              </v-col>
+              <v-col />
+            </v-row>
+            <v-row class="text-center">
+              <v-col />
+              <v-col
+                v-if="bestaetigungAnzeigen"
+                cols="7"
               >
-                Ihr Konto wurde erfolgreich erstellt. Damit Sie ihr Konto verwenden können, müssen Sie ihre E-Mail bestätigen.
-                <br> Unsere Bestätigungsmail ist schon auf dem Weg zu Ihnen und Sie können gleich loslegen!
-              </v-alert>
-            </v-col>
-            <v-col />
-          </v-row>
-
-          <v-row class="px-5">
-            <v-col />
-            <v-col
-              cols="8"
-              class="text-center"
-            >
-              <div>
-                Indem Sie auf „Konto erstellen“ klicken, stimmen Sie unseren Datenschutzerklärung zu.
-                <br>In unserer
-                <v-tooltip bottom>
-                  <template v-slot:activator="{ on }">
-                    <a
-                      target="_blank"
-                      :href="datenschutzlink"
-                      @click.stop
-                      v-on="on"
-                    >Datenschutzerklärung</a>
-                  </template>
-                  Öffnet eine neue Seite mit der Datenschutzerklärung
-                </v-tooltip> erfahren Sie, welche Daten wir erfassen und verwenden.
-              </div>
-            </v-col>
-            <v-col />
-          </v-row>
-          <!-- Error Message on wrong user input and error in backend -->
-          <v-row
-            v-if="errorMessage != null && errorMessage != ''"
-            justify="center"
-          >
-            <p class="error--text">
-              {{ errorMessage }}
-            </p>
-          </v-row>
-          <v-row>
-            <v-col class="text-center py-3">
-              <v-btn
-                color="blue"
-                @click="postRegistrierung()"
-              >
-                <v-icon
-                  color="white"
-                  left
+                <v-alert
+                  outlined
+                  type="success"
+                  text
                 >
-                  mdi-account-plus
-                </v-icon>
-                <span class="white--text">Konto erstellen</span>
-              </v-btn>
-            </v-col>
-          </v-row>
+                  Ihr Konto wurde erfolgreich erstellt. Damit Sie ihr Konto verwenden können, müssen Sie ihre E-Mail bestätigen.
+                  <br> Unsere Bestätigungsmail ist schon auf dem Weg zu Ihnen und Sie können gleich loslegen!
+                </v-alert>
+              </v-col>
+              <v-col />
+            </v-row>
+
+            <v-row class="px-5">
+              <v-col />
+              <v-col
+                cols="8"
+                class="text-center"
+              >
+                <div>
+                  Indem Sie auf „Konto erstellen“ klicken, stimmen Sie unseren Datenschutzerklärung zu.
+                  <br>In unserer
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on }">
+                      <a
+                        target="_blank"
+                        :href="datenschutzlink"
+                        @click.stop
+                        v-on="on"
+                      >Datenschutzerklärung</a>
+                    </template>
+                    Öffnet eine neue Seite mit der Datenschutzerklärung
+                  </v-tooltip> erfahren Sie, welche Daten wir erfassen und verwenden.
+                </div>
+              </v-col>
+              <v-col />
+            </v-row>
+            <!-- Error Message on wrong user input and error in backend -->
+            <v-row
+              v-if="errorMessage != null && errorMessage != ''"
+              justify="center"
+            >
+              <p class="error--text">
+                {{ errorMessage }}
+              </p>
+            </v-row>
+            <v-row>
+              <v-col class="text-center py-3">
+                <v-btn
+                  color="blue"
+                  type="submit"
+                >
+                  <v-icon
+                    color="white"
+                    left
+                  >
+                    mdi-account-plus
+                  </v-icon>
+                  <span class="white--text">Konto erstellen</span>
+                </v-btn>
+              </v-col>
+            </v-row>
+          </v-form>
+          <v-spacer />
           <v-row>
-            <v-col class="ma-0 pa-0 text-center">
+            <v-col class="mt-3 pa-0 text-center">
               <v-btn
                 color="primary"
                 @click="() => { istRegistrierung = false; errorMessage = '' }"
