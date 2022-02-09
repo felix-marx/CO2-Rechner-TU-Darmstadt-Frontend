@@ -168,10 +168,10 @@
          
           <v-switch
             v-if="!this.$props.shared"
-            v-model="responsedata.linkShare"
+            v-model="responsedata.auswertungFreigegeben"
             class="ml-8"
             inset
-            :label="`Linksharing ${(responsedata.linkShare ? 'aktiviert' : 'deaktiviert')}`"
+            :label="`Linksharing ${(responsedata.auswertungFreigegeben ? 'aktiviert' : 'deaktiviert')}`"
             @click="updateFlipLinkShare"
           />
         </v-row>
@@ -179,11 +179,11 @@
     </v-card>
 
     <v-card
-      v-if="showLoading || responsedata.linkShare"
+      v-if="showLoading || responsedata.auswertungFreigegeben"
     >
       <LoadingAnimation v-if="showLoading" />
       <LinkSharingComponent
-        v-if="!this.$props.shared && responsedata.linkShare && !showLoading"
+        v-if="!this.$props.shared && responsedata.auswertungFreigegeben && !showLoading"
         :mitarbeiter-link="linkshareBaseURL + responsedata.id"
         :link-ziel="'Auswertung'"
       />
@@ -240,7 +240,7 @@ export default {
         mitarbeiteranzahl: null,
         umfragenanzahl: null,
         umfragenanteil: null,
-        linkShare: null,
+        auswertungFreigegeben: null,
 
         emissionenWaerme: null,
         emissionenStrom: null,
@@ -448,7 +448,7 @@ export default {
         if (body.status == "success") {
           this.responsesuccessful = true
           this.responsedata = body.data
-          this.responsedata.linkShare = (body.data.linkShare == 1) ? true : false
+          this.responsedata.auswertungFreigegeben = (body.data.auswertungFreigegeben == 1) ? true : false
 
           this.checkNegativValue();
           this.roundResponseData();
@@ -486,8 +486,8 @@ export default {
             sessiontoken: Cookies.getCookieAttribut("sessiontoken")
           },
           umfrageID: this.$props.umfrageid,
-          // linkShareValue 0 ist teilen deaktiviert, 1 aktiviert und wir flippen hier
-          linkShareValue: ((this.responsedata.linkShare) ? 1 : 0),
+          // freigabewert 0 ist teilen deaktiviert, 1 aktiviert und wir flippen hier
+          freigabewert: ((this.responsedata.auswertungFreigegeben) ? 1 : 0),
         }),
       }).then((response) => response.json())
         .then((body) => {
