@@ -384,6 +384,7 @@ export default {
       "E-Fahrrad",
       "Motorisiertes Zweirad",
       "Öffentliche",
+      "Zu Fuß"
     ],
     fahrtmediumÖPNVListe: [
       "Bahn",
@@ -527,6 +528,7 @@ export default {
         ["Straßenbahn", 9],
         ["Mix inkl. U-Bahn", 10],
         ["Mix exkl. U-Bahn", 11],
+        ["Zu Fuß", 12]
       ]);
       if (verkehrmittel1 != "Öffentliche") {
         return verkehrsmittelMap.get(verkehrmittel1);
