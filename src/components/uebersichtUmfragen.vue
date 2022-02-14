@@ -24,11 +24,12 @@
             </v-list-item-title>
             <v-row>
               <v-col
-              cols="7">
-              <KopierenButton
-                :button-text="'Link zur Mitarbeitendenumfrage kopieren'"
-                :textToCopy="mitarbeiterumfrageBaseURL + umfrage._id"
-              />
+                cols="7"
+              >
+                <KopierenButton
+                  :button-text="'Link zur Mitarbeitendenumfrage kopieren'"
+                  :text-to-copy="mitarbeiterumfrageBaseURL + umfrage._id"
+                />
               </v-col>
               <v-col 
                 cols=""
