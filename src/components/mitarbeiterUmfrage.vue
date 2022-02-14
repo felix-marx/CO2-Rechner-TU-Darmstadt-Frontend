@@ -3,7 +3,7 @@
     <v-card class="pa-7 mt-2">
       <!-- Introduction Text -->
       <p>Sehr geehrte Teilnehmer*Innen, </p>
-      <p>in der folgenden Umfrage sollen CO2-Emissionen, die während Ihrer Tätigkeit an der TU entstehen, ermittelt werden. Es werden Ihr Pendelweg, Ihre Dienstreisen und die von Ihnen verwendeten IT-Geräte abgefragt. Alle Angaben werden dabei anonymisiert verarbeitet und dargestellt, sodass ein Rückschluss auf einzelne Personen nicht möglich ist. Die Umfrage nimmt ungefähr 10 Minuten Ihrer Zeit in Anspruch. </p>
+      <p>in der folgenden Umfrage sollen CO<sub>2</sub>-Emissionen, die während Ihrer Tätigkeit an der TU entstehen, ermittelt werden. Es werden Ihr Pendelweg, Ihre Dienstreisen und die von Ihnen verwendeten IT-Geräte abgefragt. Alle Angaben werden dabei anonymisiert verarbeitet und dargestellt, sodass ein Rückschluss auf einzelne Personen nicht möglich ist. Die Umfrage nimmt ungefähr 10 Minuten Ihrer Zeit in Anspruch. </p>
       <p>Für die Umfrage wird das vollständige Kalenderjahr <b>{{ umfrageYear }}</b> betrachtet. </p>
       <p>Hinter einigen Fragen befindet sich ein Fragezeichensymbol. Dort finden Sie zusätzliche Hinweise und Informationen, die zur Beantwortung der Frage hilfreich sind. </p>  
 
