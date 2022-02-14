@@ -337,7 +337,7 @@
                     v-if="errorTextArray.required.length == 0 && errorTextArray.nonRequired.length == 0"
                     class="pt-6"
                   >
-                    Möchten Sie ihre Umfrage wirklich absenden?<br>
+                    Möchten Sie ihre Umfrage wirklich speichern?<br>
                     Sie können sie anschließend noch weiter in der Umfragenübersicht bearbeiten, auswerten und mit Mitarbeitenden teilen.
                   </div>
                 </v-card-text>
@@ -359,7 +359,7 @@
                     text
                     @click="sendData(), errorDialog = false"
                   >
-                    {{ (errorTextArray.nonRequired.length == 0) ? "Umfrage absenden" : "Umfrage trotzdem absenden" }}
+                    {{ (errorTextArray.nonRequired.length == 0) ? "Umfrage speichern" : "Umfrage trotzdem speichern" }}
                   </v-btn>
                 </v-card-actions>
               </v-card>
