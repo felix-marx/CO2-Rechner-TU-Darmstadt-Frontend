@@ -20,7 +20,7 @@
             <v-icon>
               mdi-account
             </v-icon>
-            Mitarbeiteranzahl: {{ responsedata.mitarbeiteranzahl }}
+            Mitarbeitendenanzahl: {{ responsedata.mitarbeiteranzahl }}
           </v-col>
         </v-row>
         <v-row>
@@ -28,7 +28,7 @@
             <v-icon>
               mdi-account-edit
             </v-icon>
-            Ausgefüllte Mitarbeiterumfragen: {{ responsedata.umfragenanzahl }}
+            Ausgefüllte Mitarbeitendenumfragen: {{ responsedata.umfragenanzahl }}
           </v-col>
           <v-col>
             <v-progress-linear
@@ -45,7 +45,7 @@
             <v-alert
               type="warning"
             >
-              Die Hochrechnung der Emissionsdaten ist ungenau, weil bisher nur {{ responsedata.umfragenanteil }}% der Mitarbeiter die Umfrage ausgefüllt haben.
+              Die Hochrechnung der Emissionsdaten ist ungenau, weil bisher nur {{ responsedata.umfragenanteil }}% der Mitarbeitenden die Umfrage ausgefüllt haben.
             </v-alert>
           </v-col>
         </v-row>
@@ -66,7 +66,7 @@
             <v-icon>
               mdi-human-male-board-poll
             </v-icon>
-            Emissionen pro Mitarbeiter: {{ responsedata.emissionenProMitarbeiter }} t CO<sub>2</sub> eq.
+            Emissionen pro Mitarbeitende: {{ responsedata.emissionenProMitarbeiter }} t CO<sub>2</sub> eq.
           </v-col>
         </v-row>
 

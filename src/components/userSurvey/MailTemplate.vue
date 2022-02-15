@@ -9,7 +9,7 @@
       <br>
       <!-- Mail Text -->
       <p>Liebe Kolleg*Innen,</p>
-      <p>unsere TU-Einheit führt eine Bilanzierung der CO2-Emissionen für das Kalenderjahr {{ umfrageJahr }}  durch. Hierfür werden einige Informationen bezüglich Ihrer Dienstreisen, Ihrer Pendelwege sowie den von Ihnen verwendeten IT-Geräte benötigt. Der folgende Link führt Sie zu einer Umfrage in der Ihre Daten abgefragt werden. Alle Angaben werden dabei anonymisiert verarbeitet und dargestellt: </p>
+      <p>unsere TU-Einheit führt eine Bilanzierung der CO<sub>2</sub>-Emissionen für das Kalenderjahr {{ umfrageJahr }}  durch. Hierfür werden einige Informationen bezüglich Ihrer Dienstreisen, Ihrer Pendelwege sowie den von Ihnen verwendeten IT-Geräte benötigt. Der folgende Link führt Sie zu einer Umfrage in der Ihre Daten abgefragt werden. Alle Angaben werden dabei anonymisiert verarbeitet und dargestellt: </p>
       <p>
         <a
           target="_blank"
