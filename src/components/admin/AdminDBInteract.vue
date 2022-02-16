@@ -11,7 +11,7 @@
             Datenbankversion:
           </v-col>
           <v-col>
-            MongoDB v4.4.11
+            MongoDB v5.0.6
           </v-col>
         </v-row>
         <v-row>
