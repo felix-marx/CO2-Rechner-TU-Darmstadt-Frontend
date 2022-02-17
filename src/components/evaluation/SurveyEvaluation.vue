@@ -316,11 +316,11 @@ export default {
           "col2": this.responsedata.jahr,
         },
         {
-          "col1": "Mitarbeiteranzahl",
+          "col1": "Mitarbeitendenanzahl",
           "col2": this.responsedata.mitarbeiteranzahl,
         },
         {
-          "col1": "ausgefüllte Mitarbeiterumfrage",
+          "col1": "ausgefüllte Mitarbeitendenumfragen",
           "col2": this.responsedata.umfragenanzahl,
         },
         {
@@ -337,7 +337,7 @@ export default {
           "col2": this.responsedata.emissionenGesamt,
         },
         {
-          "col1": "Emissionen pro Mitarbeiter",
+          "col1": "Emissionen pro Mitarbeitenden",
           "col2": this.responsedata.emissionenProMitarbeiter,
         },
         {},

@@ -27,7 +27,7 @@
                 cols="7"
               >
                 <CopyButton
-                  :button-text="'Link zur Umfrage kopieren'"
+                  :button-text="'Link zur Mitarbeitendenumfrage kopieren'"
                   :text-to-copy="mitarbeiterumfrageBaseURL + umfrage._id"
                 />
               </v-col>
