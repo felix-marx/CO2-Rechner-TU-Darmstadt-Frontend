@@ -28,6 +28,8 @@
 
             <!--- Contact Dialog --->
             <Contact />
+            <!-- Link to Github Repository -->
+            <OpenSource />
           </v-card-text>
         </v-row>
       </v-card>
@@ -37,12 +39,14 @@
 
 <script>
 import Contact from "../legal/Contact.vue";
+import OpenSource from "./OpenSource.vue";
 
 export default {
   name: "Footer",
   components: {
-      Contact
-  },
+    Contact,
+    OpenSource
+},
 
   data: () => ({
     padless: true,
