@@ -330,7 +330,7 @@ export default {
         this.errorMessage = "E-Mail Mindestlänge ist 5 Zeichen"
         return false
       }
-      var regex = /.+@.*\.tu-darmstadt\.de/
+      var regex = /.+@(.*\.)?tu-darmstadt\.de/
       if (registrierung && !regex.test(this.username)) {
         this.errorMessage = "Keine gültige TU E-Mail angegeben"
         return false
