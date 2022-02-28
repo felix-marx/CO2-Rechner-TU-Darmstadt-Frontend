@@ -20,7 +20,7 @@
         </div>
         <!-- Signin -->
         <v-container v-if="!istRegistrierung">
-          <v-form @submit="postAnmeldung()">
+          <v-form>
             <v-row>
               <v-col />
               <v-col cols="8">
@@ -59,7 +59,8 @@
               <v-col class="text-center ma-0 pa-0">
                 <v-btn
                   color="primary"
-                  type="submit"
+                  type="button"
+                  @click="postAnmeldung"
                 >
                   <v-icon left>
                     mdi-account
@@ -104,7 +105,7 @@
         </v-container>
         <!-- Register -->
         <v-container v-if="istRegistrierung">
-          <v-form @submit="postRegistrierung()">
+          <v-form>
             <v-row>
               <v-col />
               <v-col cols="8">
@@ -203,7 +204,8 @@
               <v-col class="text-center py-3">
                 <v-btn
                   color="blue"
-                  type="submit"
+                  type="button"
+                  @click="postRegistrierung"
                 >
                   <v-icon
                     color="white"
