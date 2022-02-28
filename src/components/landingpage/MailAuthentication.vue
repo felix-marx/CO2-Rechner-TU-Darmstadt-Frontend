@@ -16,6 +16,7 @@
           </h2>
           <v-btn
             color="primary"
+            class="mb-8"
             large
             @click="$router.push({ path: '/' })"
           >
@@ -32,7 +33,7 @@
         class="text-center"
       >
         <v-card class="pa-7 mt-2">
-          <h2>Leider ist ein Fehler aufgetreten. Bitte probiere Sie es erneut oder wenden sich an den Administrator.</h2>
+          <h2>Leider ist ein Fehler aufgetreten. Bitte probieren Sie es erneut oder wenden sich an den Administrator.</h2>
         </v-card>
       </v-container>
     </v-main>
