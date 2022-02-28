@@ -646,7 +646,6 @@ export default {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log("Success:", data);
           if(data.status == "success") {
             this.displaySuccess = true
             this.displayLoadingAnimation = false
@@ -682,7 +681,6 @@ export default {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log("Success:", data);
           this.gebaeudeIDs = data.data.gebaeude.map(gebInt => translateGebaeudeIDToSymbolic(gebInt));
         })
         .catch((error) => {
@@ -710,7 +708,6 @@ export default {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log("Success:", data);
           if(data.status == "error") {
             this.errorMessage = data.error.message
           }

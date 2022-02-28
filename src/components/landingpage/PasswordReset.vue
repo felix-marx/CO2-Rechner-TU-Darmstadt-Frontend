@@ -130,7 +130,6 @@ export default {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log(data)
           if(data.status === "success"){
               this.passwortZurueck = 1 //Hat korrekt funktioniert
           } else {

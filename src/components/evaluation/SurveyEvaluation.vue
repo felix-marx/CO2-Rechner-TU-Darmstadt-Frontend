@@ -444,7 +444,6 @@ export default {
       }),
     }).then((response) => response.json())
       .then((body) => {
-        console.log(body)
         if (body.status == "success") {
           this.responsesuccessful = true
           this.responsedata = body.data
@@ -492,7 +491,6 @@ export default {
       }).then((response) => response.json())
         .then((body) => {
           this.showLoading = false
-          console.log(body)
           if (body.status == "success") {
             this.displaySuccess = true
         }

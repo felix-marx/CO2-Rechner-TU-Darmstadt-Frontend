@@ -533,20 +533,6 @@ export default {
 
   methods: {
     /**
-     * Prints all variables to the console
-     */
-    logging: function () {
-      console.log(
-        "Mitarbeiter:",
-        this.anzahlMitarbeiter,
-        "\n Gebäude:",
-        this.gebaeude,
-        "\n geraeteAnzahl:",
-        this.geraeteAnzahl
-      );
-    },
-
-    /**
      * Returns an array containing a list with every required field missing
      */
     requiredFieldsMissingArray: function() {
@@ -721,7 +707,6 @@ export default {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log("Success:", data);
           this.responseData = data.data;
           if(data.status == "error") {
             this.errorMessage = data.error.message
@@ -753,7 +738,6 @@ export default {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log("Success:", data);
           this.gebaeudeIDs = data.data.gebaeude.map(gebInt => translateGebaeudeIDToSymbolic(gebInt));
         })
         .catch((error) => {

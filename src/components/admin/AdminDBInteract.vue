@@ -503,8 +503,6 @@ export default {
       this.$set(this.displayError, 0, false)
       this.$set(this.displayLoadingAnimation, 0, true)
 
-      console.log(this.co2_factor)
-
       if(!this.co2_factor.year || !this.co2_factor.energy_type || !this.co2_factor.value){
         this.$set(this.errorMessage, 0, "Alle Felder müssen ausgefüllt sein")
         this.$set(this.displayLoadingAnimation, 0, false)
@@ -530,7 +528,6 @@ export default {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log("Success:", data);
           if(data.status == "success"){
             this.$set(this.successMessage, 0, "Der CO2-Faktor wurde erfolgreich in der Datenbank gespeichert.")
             this.$set(this.displayLoadingAnimation, 0, false)
@@ -589,7 +586,6 @@ export default {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log("Success:", data);
           if(data.status == "success"){
             this.$set(this.successMessage, 1, "Das Gebäude wurde erfolgreich in der Datenbank gespeichert.")
             this.$set(this.displayLoadingAnimation, 1, false)
@@ -642,7 +638,6 @@ export default {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log("Success:", data);
           if(data.status == "success"){
             this.$set(this.successMessage, 2, "Der Zähler wurde erfolgreich in der Datenbank gespeichert.")
             this.$set(this.displayLoadingAnimation, 2, false)
@@ -693,7 +688,6 @@ export default {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log("Success:", data);
           if(data.status == "success"){
             this.$set(this.successMessage, 3, "Die Zählerdaten wurden erfolgreich in der Datenbank gespeichert.")
             this.$set(this.displayLoadingAnimation, 3, false)

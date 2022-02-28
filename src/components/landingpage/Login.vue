@@ -369,11 +369,11 @@ export default {
           }
           //Message on success or error send from Backend
           this.errorMessage = (data.status == "success") ? '' : data.error.message
-          console.log("Success:", data)
         })
         .catch((error) => {
           //This is always the case when the backend returns nothing -> Timeout
-          console.error("Error:", error)
+          // TODO Fehlermeldung an User bei Anmeldung
+          console.error(error)
         });
     },
 
@@ -402,10 +402,10 @@ export default {
           }
           //Message on success or error send from Backend 
           this.errorMessage = (data.status == "success") ? '' : data.error.message
-          console.log("Success:", data)
         })
         .catch((error) => {
           //This is always the case when the backend returns nothing -> Timeout
+          // TODO Fehlermeldung an User bei Registrierung
           console.error("Error:", error)
         });
     },

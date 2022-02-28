@@ -111,7 +111,6 @@ export default {
         })
         .then((response) => response.json())
         .then((data) => {
-          console.log("Success:", data);
           this.umfrageID = givenID;
           if (data.status == "success"){
             // Umfrage exists

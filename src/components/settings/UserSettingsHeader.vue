@@ -78,10 +78,10 @@ export default {
         Cookies.deleteCookieAttribut("username")
         Cookies.deleteCookieAttribut("sessiontoken")
         if (data.status != "success") {
+          // TODO Handling von Fehler
           console.log("Server konnte nicht löschen")
         }
         this.$router.push('/').catch(() => {})
-        console.log("Success:", data)
   
       })
       .catch((error) => {

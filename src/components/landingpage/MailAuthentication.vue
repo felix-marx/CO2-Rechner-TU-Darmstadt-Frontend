@@ -71,7 +71,6 @@ export default {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log(data)
           //This is always the case when the backend returns a package
           if (data.status == "success") {
             this.emailConfirmed = true

@@ -96,9 +96,9 @@
       </v-card>
       
       <v-card-title>
-          Kennwort Ändern  
-          <v-divider />
-        </v-card-title>
+        Kennwort Ändern  
+        <v-divider />
+      </v-card-title>
       <v-card
         class="pl-7 pr-7"
         elevation="0"
@@ -309,7 +309,6 @@ export default {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log("Success:", data);
           this.responseData = data.data;
           if(data.status == "error") {
             this.errorMessage = data.error.message
@@ -321,7 +320,7 @@ export default {
           }
         })
         .catch((error) => {
-          console.error("Error:", error);
+          console.error(error)
           this.errorMessage = "Server nicht erreichbar."
           this.displayLoadingAnimation = false;
           this.deleteRequestError = true;
@@ -345,11 +344,9 @@ export default {
           Cookies.deleteCookieAttribut("username")
           Cookies.deleteCookieAttribut("sessiontoken")
           if (data.status != "success") {
-            console.log("Server konnte nicht löschen")
             this.deleteRequestError = true;
           }else{
             this.signedOut = true;
-            console.log("Success:", data)
           }
         })
         .catch((error) => {

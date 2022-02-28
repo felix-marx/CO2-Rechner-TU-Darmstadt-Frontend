@@ -474,21 +474,6 @@ export default {
   },
 
   methods: {
-    /**
-     * Prints all variables to the console
-     */
-    logging: function () {
-      console.log(
-        "Arbeitstage:",
-        this.arbeitstageBuero,
-        "\n Verkehrsmittel:",
-        this.verkehrsmittel,
-        "\n Dienstreise:",
-        this.dienstreise,
-        "\n Geräte: ",
-        this.geraeteAnzahl
-      );
-    },
 
     /**
      * Adds a new Verkehrsmittel to select as the  Pendelmedium
@@ -680,7 +665,6 @@ export default {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log("Success:", data);
           if(data.status === "success"){
             this.submittedDataSuccessfully = true;
             this.errorMessage = null;
@@ -705,7 +689,6 @@ export default {
         })
         .then((response) => response.json())
         .then((data) => {
-          console.log("Success:", data);
           if (data.status == "success"){
             this.umfrageYear = String(data.data.jahr);
           }

@@ -369,7 +369,6 @@ export default {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log("Success:", data);
           if(data.data.umfragen !== null) {
             this.umfragen = data.data.umfragen;
           } else {
@@ -409,7 +408,6 @@ export default {
             this.message = data.error.message
             return false
           }
-          console.log("Success:", data);
           return true
         })
         .catch((error) => {
