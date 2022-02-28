@@ -9,7 +9,7 @@
       >
         <div class="text-center">
           <v-card-title class="justify-center">
-            <h2>TU-Darmstadt CO2-Rechner</h2>
+            <h2>TU-Darmstadt CO<sub>2</sub>-Rechner</h2>
           </v-card-title>Willkommen bei dem TU-Darmstadt CO<sub>2</sub>-Rechner, mit diesem können Sie die CO<sub>2</sub>-Emissionen von TU Einheiten berechnen.
           <br> Erstellen Sie einfach einen Konto, um eine Umfrage für Ihre TU-Einheit zu erstellen.
           <v-card-title
