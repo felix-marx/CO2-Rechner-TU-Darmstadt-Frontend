@@ -6,7 +6,7 @@
     >
       <v-card-title>
         Account Löschen
-        <v-divider />
+        <v-divider class="ml-2" />
       </v-card-title>
       <v-card
         class="pl-7 pr-7"
@@ -97,7 +97,7 @@
       
       <v-card-title>
         Kennwort Ändern  
-        <v-divider />
+        <v-divider class="ml-2" />
       </v-card-title>
       <v-card
         class="pl-7 pr-7"
