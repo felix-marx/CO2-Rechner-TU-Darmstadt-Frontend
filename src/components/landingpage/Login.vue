@@ -313,10 +313,6 @@ export default {
   },
 
   methods: {
-    // passwordConfirmationRule() {
-    //   return () => (this.password === this.rePassword) || 'Passwörter sind nicht gleich'
-    // },
-
     /**
      * Checks if the user input is valid and returns true if valid
      * Otherwise false and sets errorMessage to user fault
@@ -332,6 +328,11 @@ export default {
       }
       if (this.username.length < 5) {
         this.errorMessage = "E-Mail Mindestlänge ist 5 Zeichen"
+        return false
+      }
+      var regex = /.+@.*\.tu-darmstadt\.de/
+      if (registrierung && !regex.test(this.username)) {
+        this.errorMessage = "Keine gültige TU E-Mail angegeben"
         return false
       }
       if (this.password.length < 8) {
