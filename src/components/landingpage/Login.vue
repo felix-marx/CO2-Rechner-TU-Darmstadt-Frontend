@@ -27,7 +27,7 @@
                 <v-text-field
                   v-model="username"
                   :rules="requiredRule"
-                  label="E-Mail"
+                  label="TU E-Mail"
                   prepend-icon="mdi-account"
                   required
                 />
@@ -113,7 +113,7 @@
                   v-model="username"
                   class="px-5"
                   :rules="requiredRule"
-                  label="E-Mail"
+                  label="TU E-Mail"
                   prepend-icon="mdi-account"
                   required
                 />
