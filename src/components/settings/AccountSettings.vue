@@ -103,7 +103,7 @@
         class="pl-7 pr-7"
         elevation="0"
       >
-        Hier können sie Ihr Kennwort ändern.
+        Hier können Sie Ihr Kennwort ändern.
         <v-container>
           <v-row>
             <v-col />
