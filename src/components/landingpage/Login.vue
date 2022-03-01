@@ -373,7 +373,6 @@ export default {
         })
         .catch((error) => {
           //This is always the case when the backend returns nothing -> Timeout
-          // TODO Fehlermeldung an User bei Anmeldung
           console.error(error)
         });
     },
@@ -406,7 +405,6 @@ export default {
         })
         .catch((error) => {
           //This is always the case when the backend returns nothing -> Timeout
-          // TODO Fehlermeldung an User bei Registrierung
           console.error("Error:", error)
         });
     },

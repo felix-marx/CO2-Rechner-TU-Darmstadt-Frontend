@@ -72,15 +72,11 @@ export default {
       }),
     })
       .then((response) => response.json())
-      .then((data) => {
+      .then(() => {
         //This is always the case when the backend returns a package
         //Delete cookie and log if not success
         Cookies.deleteCookieAttribut("username")
         Cookies.deleteCookieAttribut("sessiontoken")
-        if (data.status != "success") {
-          // TODO Handling von Fehler
-          console.log("Server konnte nicht löschen")
-        }
         this.$router.push('/').catch(() => {})
   
       })
