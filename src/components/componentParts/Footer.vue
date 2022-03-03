@@ -14,13 +14,12 @@
       >
         <v-row justify="center">
           <v-card-text>
-            <!--- Footer Buttons (links are currently opened in new tab by 'target="_blank"')--->
             <v-btn
               v-for="(fElem, index) in footerButtons"
               :key="'footerButton-' + index"
               :href="fElem.href"
               class="mx-4"
-              target="_blank"
+              :target="fElem.target"
               text
             >
               <span class="mx-2">{{ fElem.text }}</span>
@@ -57,10 +56,12 @@ export default {
       {
         text: "Impressum",
         href: "https://www.tu-darmstadt.de/impressum/index.de.jsp", // TODO keep link to TU Darmstadt website or make own impressum? --> AG Meeting
+        target: "_blank",
       },
       {
         text: "Datenschutzerklärung",
         href: process.env.VUE_APP_URL + "/datenschutz", // Eigene Datenschutzerklaerung
+        target: "",
       },
     ],
   })
