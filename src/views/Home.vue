@@ -7,7 +7,7 @@
     />
 
     <!-- main body -->
-    <v-main>
+    <v-main style="height: 100%">
       <component :is="currentTabType" />
     </v-main>
 

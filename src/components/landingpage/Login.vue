@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <Header />
-    <v-main>
+    <v-main style="height: 100%">
       <v-card
         elevation="2"
         class="py-4"
