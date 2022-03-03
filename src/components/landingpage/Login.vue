@@ -185,7 +185,7 @@
                         v-on="on"
                       >Datenschutzerklärung</a>
                     </template>
-                    Öffnet eine neue Seite mit der Datenschutzerklärung
+                    Öffnet eine neue Seite mit der Datenschutzerklärung.
                   </v-tooltip> erfahren Sie, welche Daten wir erfassen und verwenden.
                 </div>
               </v-col>
@@ -237,31 +237,46 @@
         <v-container class="d-flex justify-space-around mb-6 py-10">
           <v-row>
             <v-col>
-              <v-img
-                contain
-                class="mx-auto py-6"
-                max-height="177"
-                max-width="250"
-                src="../../assets/logo_Maschinenbau.png"
-              />
+              <a
+                href="https://www.fst.tu-darmstadt.de/fachgebiet/index.de.jsp"
+                target="_blank"
+              >
+                <v-img
+                  contain
+                  class="mx-auto py-6"
+                  max-height="177"
+                  max-width="250"
+                  src="../../assets/logo_Maschinenbau.png"
+                />
+              </a>
             </v-col>
             <v-col>
-              <v-img
-                contain
-                class="mx-auto"
-                max-height="177"
-                max-width="250"
-                src="../../assets/logo_Nachhaltigkeit.jpg"
-              />
+              <a
+                href="https://www.tu-darmstadt.de/nachhaltigkeit/buero_fuer_nachhaltigkeit/index.de.jsp"
+                target="_blank"
+              >
+                <v-img
+                  contain
+                  class="mx-auto"
+                  max-height="177"
+                  max-width="250"
+                  src="../../assets/logo_Nachhaltigkeit.jpg"
+                />
+              </a>
             </v-col>
             <v-col>
-              <v-img
-                contain
-                class="mx-auto"
-                max-height="177"
-                max-width="250"
-                src="../../assets/logo_tud.png"
-              />
+              <a
+                href="https://www.tu-darmstadt.de/"
+                target="_blank"
+              >
+                <v-img
+                  contain
+                  class="mx-auto"
+                  max-height="177"
+                  max-width="250"
+                  src="../../assets/logo_tud.png"
+                />
+              </a>
             </v-col>
           </v-row>
         </v-container>
