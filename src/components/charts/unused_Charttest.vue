@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-main style="height: 100%">
+    <v-main>
       <v-container>
         <v-card
           v-if="true"

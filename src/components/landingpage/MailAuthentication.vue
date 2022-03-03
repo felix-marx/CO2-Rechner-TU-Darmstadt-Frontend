@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <Header />
-    <v-main style="height: 100%">
+    <v-main>
       <v-container v-if="displayLoadingAnimation">
         <LoadingAnimationVue />
       </v-container>
