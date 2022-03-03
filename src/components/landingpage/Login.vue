@@ -239,7 +239,7 @@
             <v-col>
               <v-img
                 contain
-                class="mx-auto py-5"
+                class="mx-auto py-6"
                 max-height="177"
                 max-width="250"
                 src="../../assets/logo_Maschinenbau.png"
