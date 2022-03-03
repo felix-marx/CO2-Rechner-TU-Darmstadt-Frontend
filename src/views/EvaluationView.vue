@@ -7,7 +7,7 @@
     />
 
     <!-- main body -->
-    <v-main>
+    <v-main class="mb-16">
       <component
         :is="bodyComponent"
         v-bind="properties"

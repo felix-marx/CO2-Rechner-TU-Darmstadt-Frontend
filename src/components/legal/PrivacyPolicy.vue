@@ -4,7 +4,7 @@
       :tabs="tabList"
       :anmelden-button="false"
     />
-    <v-main>
+    <v-main class="mb-16">
       <v-container>
         <v-card elevation="0">
           <p>

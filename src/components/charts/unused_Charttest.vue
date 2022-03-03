@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-main>
+    <v-main class="mb-16">
       <v-container>
         <v-card
           v-if="true"

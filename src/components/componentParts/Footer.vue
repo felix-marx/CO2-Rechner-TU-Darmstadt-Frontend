@@ -1,39 +1,38 @@
 <template>
-  <v-card>
-    <!--- Footer --->
-    <v-footer
-      :padless="padless"
-      fixed
-      bottom
+  <!--- Footer --->
+  <v-footer
+    
+    padless
+    fixed
+    bottom
+  >
+    <v-card
+      text
+      tile
+      width="100%"
+      class="primary text-center"
     >
-      <v-card
-        text
-        tile
-        width="100%"
-        class="primary text-center"
-      >
-        <v-row justify="center">
-          <v-card-text>
-            <v-btn
-              v-for="(fElem, index) in footerButtons"
-              :key="'footerButton-' + index"
-              :href="fElem.href"
-              class="mx-4"
-              :target="fElem.target"
-              text
-            >
-              <span class="mx-2">{{ fElem.text }}</span>
-            </v-btn>
+      <v-row justify="center">
+        <v-card-text>
+          <v-btn
+            v-for="(fElem, index) in footerButtons"
+            :key="'footerButton-' + index"
+            :href="fElem.href"
+            class="mx-4"
+            :target="fElem.target"
+            text
+          >
+            <span class="mx-2">{{ fElem.text }}</span>
+          </v-btn>
 
-            <!--- Contact Dialog --->
-            <Contact />
-            <!-- Link to Github Repository -->
-            <OpenSource />
-          </v-card-text>
-        </v-row>
-      </v-card>
-    </v-footer>
-  </v-card>
+          <!--- Contact Dialog --->
+          <Contact />
+          <!-- Link to Github Repository -->
+          <OpenSource />
+        </v-card-text>
+      </v-row>
+    </v-card>
+  </v-footer>
 </template>
 
 <script>
