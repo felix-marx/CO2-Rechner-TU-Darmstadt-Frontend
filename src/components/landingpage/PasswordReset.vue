@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <Header />
-    <v-main>
+    <v-main style="height: 100%">
       <v-card
         elevation="2"
         class="py-4"
@@ -78,18 +78,14 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col class="text-center">
+            <v-col class="text-center py-0">
               <v-btn
                 color="blue"
+                text
+                dense
                 @click="$router.push({path: '/'})"
               >
-                <v-icon
-                  left
-                  color="#ffffff"
-                >
-                  mdi-account
-                </v-icon>
-                <span class="white--text">Zurück zur Anmeldung</span>
+                Zurück zur Anmeldung
               </v-btn>
             </v-col>
           </v-row>
@@ -145,3 +141,11 @@ export default {
     }, 
 };
 </script>
+
+<style>
+
+#main{
+  height: 100%;
+}
+
+</style>
