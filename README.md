@@ -18,7 +18,7 @@ Dieses Projekt ermöglicht eine Erfassung von CO2 Emissionen von TU Einheiten un
 
 Das Frontend kann nicht unabhängig betrieben werden.
 
-Das Backend, welches als Controller und Schnittstelle zur Datenbank dient ist hier einsehbar: [Github](https://github.com/Anhilly/co2-rechner-TU-Darmstadt-backend)
+Das Backend, welches als Controller und Schnittstelle zur Datenbank dient ist hier einsehbar: [Github](https://github.com/Anhilly/co2-rechner-TU-Darmstadt-backend)  
 Die Interaktionen zwischen Frontend und Backend sind in einer REST artigen API definiert, welche hier eingesehen werden kann: [Github](https://github.com/Anhilly/CO2-Rechner-api)
 
 ## Abhängigkeiten
@@ -38,6 +38,7 @@ Der CO2 Rechner verwendet folgende Abhängigkeiten um die Funktionalität bereit
 
 
 ## Entwicklungssetup
+Das Projekt wurde mit der Vue CLI v4.5.15 erstellt.
 
 Installation von allen Abhängigkeiten über Paketverwaltung npm.
 
