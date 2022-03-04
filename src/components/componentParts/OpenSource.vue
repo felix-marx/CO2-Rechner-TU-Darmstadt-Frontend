@@ -10,13 +10,13 @@
         v-bind="attrs"
         v-on="on"
       >
-        <span class="mx-2">Open Source</span>
+        <span class="mx-2">Projektcode</span>
       </v-btn>
     </template>
 
     <v-card>
       <v-card-title class="text-h5 grey lighten-2">
-        Open Source
+        Projektcode
       </v-card-title>
       <v-list-item>
         <v-list-item-content>
@@ -37,7 +37,7 @@
               </v-list-item>
               <v-list-item>
                 <v-list-item-title>
-                  Server:
+                  Backend:
                 </v-list-item-title>
                 <v-list-item-subtitle>
                   <a
