@@ -118,7 +118,7 @@
           <h3>Erstellung einer Umfrage</h3>
           <p>
             Zum Erstellen einer Umfrage ist das Anlegen eines Nutzeraccounts notwendig.<br>
-            Für den Nutzeraccount müssen Sie keinen Klarnamen angeben.<br>
+            Für den Nutzeraccount müssen Sie eine gültige Email der Technischen Universität Darmstadt (z.B. max.mustermann@tu-darmstadt.de) angeben.<br>
             Die zum Erzeugen der der Umfrage eingegebenen Daten sind in einer Weise abstrahiert, dass Rückschlüsse auf individuelle Personen nicht möglich sind.<br>
             Die zum Erstellen einer Umfrage durch Sie eingegebenen Daten können Sie jederzeit löschen.<br>
             Sie entscheiden, wie lange die Daten in unserem System vorhanden sind.<br><br>
@@ -150,9 +150,16 @@
 
             Personenbezogene Daten werden bei der Beantwortung der Fragen nicht erhoben.<br>
 
-            Die Ergebnisse der werden im CO<sub>2</sub>-Rechner gespeichert und dort den Umfrage-Verantwortlichen zur Verfügung.<br>
+            Die Ergebnisse der Umfrage werden im CO<sub>2</sub>-Rechner gespeichert und dort den Umfrage-Verantwortlichen zur Verfügung gestellt.<br>
             Die Ergebnisse sind so weit anonymisiert, dass Rückschlüsse auf einzelne Personen nicht möglich sind.<br>
             Die Löschung der Ergebnisse erfolgt durch die Umfrage-Verantwortlichen.
+          </p>
+
+          <h3>Umfrageauswertung</h3>
+          <p>
+            Die Auswertung der Umfrageergebnisse ist durch Sie jederzeit möglich.<br>
+            Sie können die Auswertung mit Dritten teilen, indem Sie dies in der Auswertung aktivieren.<br>
+            Diese Freigabe kann durch Sie jederzeit widerrufen werden.
           </p>
         </v-card>
       </v-container>
