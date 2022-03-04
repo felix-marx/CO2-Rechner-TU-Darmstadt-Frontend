@@ -347,7 +347,7 @@ export default {
       }
       var regex = /.+@(.*\.)?tu-darmstadt\.de/
       if (registrierung && !regex.test(this.username)) {
-        this.errorMessage = "Keine gültige TU E-Mail angegeben"
+        this.errorMessage = "Bitte geben Sie eine gültige TU E-Mail an"
         return false
       }
       if (this.password.length < 8) {
