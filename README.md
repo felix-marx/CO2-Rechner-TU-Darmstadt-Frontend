@@ -1,6 +1,6 @@
 # Frontend des CO2 Rechners der TU Darmstadt
 
-Hierbei handelt es sich um das Frontend des CO2 Rechner, welcher im Rahmen des Bachelorpraktikums für das Büro für Nachhaltigkeit und das Institut für Fluidsystemtechnik entwickelt wurde.
+Hierbei handelt es sich um das Frontend des CO2 Rechners, welcher im Rahmen des Bachelorpraktikums für das Büro für Nachhaltigkeit und das Institut für Fluidsystemtechnik entwickelt wurde.
 
 Dieses Projekt ermöglicht eine Erfassung von CO2 Emissionen von TU Einheiten und die anschließende Auswertung.
 
