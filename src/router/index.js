@@ -108,9 +108,7 @@ router.beforeEach((to, from, next) => {
     Authentication.postCheckLogin().then((data) => {
       //   This is always the case when the backend returns a package
       if (data.status == "success") {
-        if(data.data.rolle === 1){
-          next({path: '/admin'})
-        } else if(data.data.rolle === 0){
+        if(data.data.rolle === 1 || data.data.rolle === 0){
           next()
         } else {
           next({path: '/'})

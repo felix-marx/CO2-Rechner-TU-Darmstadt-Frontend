@@ -381,7 +381,14 @@ export default {
           if (data.status == "success") {
             Cookies.setCookie("sessiontoken", data.data.sessiontoken)
             Cookies.setCookie("username", this.username)
-            this.$router.push('/survey').catch(() => { })
+
+            if(data.data.rolle == 1){
+              this.$router.push('/admin').catch(() => { })
+            } else if(data.data.rolle == 0){
+              this.$router.push('/survey').catch(() => { })
+            } else{
+              console.error("Unkown role: " + data.data.rolle)
+            }
           }
           //Message on success or error send from Backend
           this.errorMessage = (data.status == "success") ? '' : data.error.message
