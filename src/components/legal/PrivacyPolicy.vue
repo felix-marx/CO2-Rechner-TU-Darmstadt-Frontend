@@ -115,6 +115,19 @@
             Die Rechtsgrundlage ist hier EU DSGVO Artikel 6 Absatz 1a).
           </p>
 
+          <h3>Einbindung von Diensten Dritter</h3>
+          <p>
+            Zum Versenden von E-Mails verwendet diese Webseite die Dienste des <a
+              href="https://www.hrz.tu-darmstadt.de/hrz_aktuelles/index.de.jsp"
+              target="_blanck"
+            >Hochschulrechenzentrums Darmstadt</a> (kurz HRZ).<br>
+            E-Mails versenden wir nur zum Zweck der E-Mail-Validierung, und wenn Sie eine Zurücksetzung Ihres Passwortes anfordern. <br>
+            Zur Erfüllung dieser Aufgabe teilen wir Ihre gespeicherte E-Mail-Adresse mit dem Anbieter.<br>
+            Zur Passwortwiederherstellung, versenden wir ein neues Passwort an die in dem Konto hinterlegte E-Mail-Adresse.<br>
+            Da das HRZ die E-Mails versendet, wird deren Inhalt, d.h. in diesem Fall auch das neu gesetzte Passwort, mit dem Dienstleister geteilt.<br>
+            Deshalb sind Sie aufgefordert unverzüglich nach Ihrer Anmeldung Ihr Passwort zu ändern.
+          </p>
+
           <h3>Erstellung einer Umfrage</h3>
           <p>
             Zum Erstellen einer Umfrage ist das Anlegen eines Nutzeraccounts notwendig.<br>
@@ -129,13 +142,13 @@
             <v-list dense>
               <v-list-item-title>Frei wählbare Umfragebezeichnung</v-list-item-title>
               <v-list-item-title>Bilanzierungsjahr</v-list-item-title>
-              <v-list-item-title>Mitarbeiteranzahl</v-list-item-title>
+              <v-list-item-title>Mitarbeitendenanzahl</v-list-item-title>
               <v-list-item-title>angegebene Gebäude und deren Nutzfläche</v-list-item-title>
               <v-list-item-title>Anzahl der gewählten IT-Geräte </v-list-item-title>
             </v-list>	
             Wir ordnen diese Daten dem absendenden Nutzerkonto zu. Dazu speichern wir:
             <v-list dense>
-              <v-list-item-title>E-Mail Adresse</v-list-item-title>
+              <v-list-item-title>E-Mail Adresse als Nutzerkennung</v-list-item-title>
               <v-list-item-title>Unkenntliche Repräsentation des Passwortes (Hash)</v-list-item-title>
             </v-list>
 
