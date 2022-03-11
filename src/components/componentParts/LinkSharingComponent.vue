@@ -70,20 +70,21 @@ export default {
      * Copies the current value in mitarbeiterLinkTextfield to the clipboard.
      */
     copyLink: function () {
-      let textToCopy =
-        this.$refs.mitarbeiterLinkTextfield.$el.querySelector("input").value;
-
       // navigator.clipboard is not available in all browsers, therefore check for existence
       if (!navigator.clipboard) {
         // use deprecated methods if that is the case
-        textToCopy.select();
+        this.mitarbeiterLink.select();
         document.execCommand("copy");
       } else {
         // otherwise make use of the Clipboard API
 
         navigator.clipboard
-          .writeText(textToCopy)
-          .then(() => this.setCopySuccessful(true))
+          .writeText(this.mitarbeiterLink)
+          .then(() =>  {
+          if(this.mitarbeiterLink !== "UNDEFINED_CLIPBOARD_TEXT"){
+            this.setCopySuccessful(true);
+          }
+          })
           .catch(() => this.setCopySuccessful(false));
       }
       // this.copySuccessful = true;
