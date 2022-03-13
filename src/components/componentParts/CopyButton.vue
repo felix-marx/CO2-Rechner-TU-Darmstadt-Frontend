@@ -1,30 +1,32 @@
 <template>
-  <v-row>
-    <v-col
-      cols="4"
-    >
-      <v-btn
-        dark
-        outlined
-        color="primary"
-        @click="copyLink()"
+  <v-container class="py-0">
+    <v-row>
+      <v-col>
+        <v-btn
+          dark
+          outlined
+          color="primary"
+          @click="copyLink()"
+        >
+          {{ buttonText }}
+        </v-btn>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col
+        class="py-0"
       >
-        {{ buttonText }}
-      </v-btn>
-    </v-col>
-    <v-col
-      cols="7"
-    >
-      <v-alert
-        :value="copySuccessful"
-        dense
-        text
-        type="success"
-      >
-        Link erfolgreich in die Zwischenablage kopiert.
-      </v-alert>
-    </v-col>
-  </v-row>
+        <v-alert
+          :value="copySuccessful"
+          dense
+          text
+          type="success"
+        >
+          Link erfolgreich in die Zwischenablage kopiert.
+        </v-alert>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>

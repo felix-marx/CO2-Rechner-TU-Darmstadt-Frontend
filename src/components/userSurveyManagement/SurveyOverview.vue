@@ -34,15 +34,15 @@
               <v-col 
                 cols=""
                 class="text-right"
-                align-self="center"
+                align-self="start"
               >
-                <div>
+                <div class="py-2">
                   <b>{{ umfrage.mitarbeiterUmfrageRef.length }}/{{ umfrage.mitarbeiteranzahl }} </b> Mitarbeitende haben ausgefüllt
                 </div>
               </v-col>
               <v-col
                 cols="1"
-                align-self="center"
+                align-self="start"
               >
                 <v-progress-circular 
                   :color=" umfrage.mitarbeiterUmfrageRef.length == umfrage.mitarbeiteranzahl ? 'primary' : 'grey'"
