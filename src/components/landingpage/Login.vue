@@ -381,6 +381,7 @@ export default {
           if (data.status == "success") {
             Cookies.setCookie("sessiontoken", data.data.sessiontoken)
             Cookies.setCookie("username", this.username)
+            Cookies.setCookie("rolle", data.data.rolle)
 
             if(data.data.rolle == 1){
               this.$router.push('/admin').catch(() => { })

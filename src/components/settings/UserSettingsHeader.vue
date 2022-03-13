@@ -28,6 +28,14 @@
         >
           <v-list-item-title> Accountverwaltung </v-list-item-title>
         </v-list-item>
+
+        <v-list-item
+          v-show="isAdmin"
+          text
+          @click="switchAdminOrSurvey()"
+        >
+          <v-list-item-title> {{ this.$route.fullPath == "/admin" ? "Zur Umfrage" : "Zur Adminübersicht" }} </v-list-item-title>
+        </v-list-item>
         <v-list-item
           text
           @click="deleteAbmelden()"
@@ -52,6 +60,10 @@ export default {
     // we need this for some reason, since a direct call to Cookies.getCookieAttribut() in the template does not evaluate.
     cookieAttribut: function () {
       return Cookies.getCookieAttribut('username')
+    },
+
+    isAdmin: function() {
+      return Cookies.getCookieAttribut('rolle') == 1
     }
   },
 
@@ -59,6 +71,14 @@ export default {
     openAccountSettings: function() {
       let data = { id: 2, componentType: AccountSettings };
       this.$emit("openAccountSettings", data);
+    },
+
+    switchAdminOrSurvey: function() {
+      if(this.$route.fullPath == "/admin")  {
+        this.$router.push('/survey').catch(() => {})
+      } else {
+        this.$router.push('/admin').catch(() => {})
+      }
     },
 
     async deleteAbmelden() {
