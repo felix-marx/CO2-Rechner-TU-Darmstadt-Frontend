@@ -20,8 +20,8 @@
         <p>Falls Sie zu einem späteren Zeitpunkt nochmals Angaben ändern oder vervollständigen möchten, können Sie in der linken oberen Ecke „<i>Umfragenübersicht</i>“ auswählen, um auf den ersten Teil des CO<sub>2</sub>-Rechners wieder zuzugreifen. Bitte klicken Sie am Ende auf „<i>Speichern</i>“ um ihre Änderungen final einzutragen. </p>
         <p>
           Bei weiteren Nachfragen oder Anmerkungen wenden Sie sich gerne an <a
-            href="mailto:nachhaltigkeit@tu-darmstadt.de"
-          >nachhaltigkeit@tu-darmstadt.de</a>.
+            href="mailto:co2-rechner@zv.tu-darmstadt.de"
+          >co2-rechner@zv.tu-darmstadt.de</a>.
         </p>
         <p>Vielen Dank, dass Sie den CO<sub>2</sub>-Rechner verwenden und so einen Beitrag zur Nachhaltigkeit an der TU Darmstadt leisten. </p>
       </v-card>
