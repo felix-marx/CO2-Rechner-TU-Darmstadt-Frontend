@@ -2,7 +2,7 @@
   <v-app>
     <Header
       :tabs="tabList"
-      :anmelden-button="false"
+      :display-user-setting="false"
     />
     <v-main class="mb-16">
       <v-container>

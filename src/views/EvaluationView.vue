@@ -3,7 +3,7 @@
     <!-- Header -->
     <Header
       :tabs="tabList"
-      :anmelden-button="false"
+      :display-user-setting="false"
     />
 
     <!-- main body -->

@@ -1,6 +1,8 @@
 <template>
   <v-app>
-    <Header />
+    <Header 
+      :display-user-setting="false"
+    />
     <v-main class="mb-16">
       <v-card
         elevation="2"

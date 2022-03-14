@@ -26,7 +26,7 @@
 
     <span>
       <UserSettingsHeader
-        v-if="cookieAttribut != null"
+        v-if="cookieAttribut != null && displayUserSettings"
         @openAccountSettings="changeTab(2, accountSettings)"
       />
     </span>
@@ -52,6 +52,10 @@ export default {
       default: null,
       type: Array
     },
+    displayUserSetting: {
+      default: true,
+      type: Boolean
+    }
   },
   data: () => ({
     accountSettings: AccountSettings,

@@ -3,6 +3,7 @@
     <!-- Header -->
     <Header
       :tabs="tabList" 
+      :display-user-setting="true"
       @changeTab="changeTab($event)"
     />
 

@@ -2,7 +2,7 @@
   <v-app>
     <!-- Header -->
     <Header
-      :anmelden-button="false" 
+      :display-user-setting="true"
       :tabs="tabList"
       @changeTab="changeTab($event)" 
     />
