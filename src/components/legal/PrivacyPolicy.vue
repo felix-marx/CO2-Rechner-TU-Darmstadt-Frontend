@@ -131,7 +131,7 @@
           <h3>Erstellung einer Umfrage</h3>
           <p>
             Zum Erstellen einer Umfrage ist das Anlegen eines Nutzeraccounts notwendig.<br>
-            Für den Nutzeraccount müssen Sie eine gültige Email der Technischen Universität Darmstadt (z.B. max.mustermann@tu-darmstadt.de) angeben.<br>
+            Für den Nutzeraccount müssen Sie eine gültige E-Mail der Technischen Universität Darmstadt (z.B. max.mustermann@tu-darmstadt.de) angeben.<br>
             Die zum Erzeugen der der Umfrage eingegebenen Daten sind in einer Weise abstrahiert, dass Rückschlüsse auf individuelle Personen nicht möglich sind.<br>
             Die zum Erstellen einer Umfrage durch Sie eingegebenen Daten können Sie jederzeit löschen.<br>
             Sie entscheiden, wie lange die Daten in unserem System vorhanden sind.<br><br>

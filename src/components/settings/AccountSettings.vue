@@ -53,7 +53,7 @@
                   </p>
             
                   <div>
-                    Geben Sie zur Bestätigung bitte Ihre Email-Adresse in folgendes Feld ein:
+                    Geben Sie zur Bestätigung bitte Ihre E-Mail-Adresse in folgendes Feld ein:
                   </div>
                   <v-text-field
                     v-model="usernameConfirmation"
