@@ -26,7 +26,7 @@
 
     <span>
       <UserSettingsHeader
-        v-if="cookieAttribut != null && displayUserSettings"
+        v-if="displayUserSettings"
         @openAccountSettings="changeTab(2, accountSettings)"
       />
     </span>
@@ -34,7 +34,6 @@
 </template>
 <script>
 
-import Cookies from "../Cookie.js";
 import UserSettingsHeader from "../settings/UserSettingsHeader.vue";
 import AccountSettings from "../settings/AccountSettings.vue";
 
@@ -62,10 +61,6 @@ export default {
     selectedTab: 0,
   }),
   computed: {
-    cookieAttribut: function () {
-      return Cookies.getCookieAttribut('username')
-    },
-
     /**
      * Returns all tabs with id >= 0. Tab with index -1 is a placeholder for when settings are shown.
      */
