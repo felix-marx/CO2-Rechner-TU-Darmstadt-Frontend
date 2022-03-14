@@ -49,8 +49,8 @@
               mdi-email-outline
             </v-icon>
             <a
-              href="mailto:nachhaltigkeit@tu-darmstadt.de"
-            >nachhaltigkeit@tu-darmstadt.de</a>
+              href="mailto:co2-rechner@zv.tu-darmstadt.de"
+            >co2-rechner@zv.tu-darmstadt.de</a>
           </v-card>
           <!-- Phone -->
           <v-card elevation="0">
