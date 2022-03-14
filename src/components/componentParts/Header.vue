@@ -26,7 +26,7 @@
 
     <span>
       <UserSettingsHeader
-        v-if="displayUserSettings"
+        v-if="displayUserSetting"
         @openAccountSettings="changeTab(2, accountSettings)"
       />
     </span>
