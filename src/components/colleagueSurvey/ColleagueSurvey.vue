@@ -316,12 +316,84 @@
 
         <v-row>
           <v-col cols="2">
-            <v-btn
-              :disabled="submittedDataSuccessfully"
-              @click="sendData()"
+            <v-dialog
+              v-model="errorDialog"
+              transition="dialog-bottom-transition"
             >
-              Absenden
-            </v-btn>
+              <!-- Mit diesem Button soll die Umfrage abgesendet werden. -->
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn
+                  class="mr-4"
+                  color="primary"
+                  :disabled="submittedDataSuccessfully"
+                  v-bind="attrs"
+                  v-on="on"
+                  @click="checkValidInput()"
+                >
+                  Absenden
+                </v-btn>
+              </template>
+
+              <v-card>
+                <v-toolbar
+                  color="primary"
+                  dark
+                >
+                  {{ (errorsArray.length != 0) ? "Probleme mit Ihrer Eingabe!" : "Umfrage vollständig?" }}
+                </v-toolbar>
+                <v-card-text>
+                  <div
+                    v-if="errorsArray.length != 0"
+                    class="pt-6"
+                  >
+                    Ihre Umfrage enthält folgende kleinere Probleme: <br>
+                    <v-list
+                      flat
+                    >
+                      <v-list-item
+                        v-for="(problem, index) in errorsArray"
+                        :key="index"
+                      >
+                        <v-list-item-content>
+                          <v-list-item-title
+                            class="text-sm-body-2"
+                            v-text="problem"
+                          />
+                        </v-list-item-content>
+                      </v-list-item>
+                    </v-list>
+                  </div>
+                  <div 
+                    v-if="errorsArray.length == 0"
+                    class="pt-6"
+                  >
+                    Möchten Sie ihre Umfrage wirklich absenden?<br>
+                    Sie können sie anschließend nicht weiter bearbeiten.
+                  </div>
+                </v-card-text>
+
+                <v-divider />
+
+                <v-card-actions>
+                  <v-spacer />
+                  <v-btn
+                    color="primary"
+                    text
+                    @click="errorDialog = false"
+                  >
+                    Weiter bearbeiten
+                  </v-btn>
+                  <v-btn
+                    v-if="errorsArray.length == 0"
+                    color="primary"
+                    text
+                    @click="sendData(), errorDialog = false"
+                  >
+                    Umfrage absenden
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
           </v-col>
           <v-col cols="10">
             <LoadingAnimation v-if="displayLoadingAnimation" />
@@ -440,6 +512,10 @@ export default {
     //Papierverbrauch currently not used
     //papierverbrauch: null,
     //papierverbrauchListe: ['0', '1-20', '21 - 50', '51 - 70', '70+']
+
+    //Array containing found errors in form
+    errorsArray: [],
+    errorDialog: false,
 
     //Rules for input validation
     tageImBueroRules: [
@@ -643,6 +719,54 @@ export default {
         }
       }
       return buildDienstreisen;
+    },
+
+    /**
+     * Checks if input to form is valid i.e. has no logical errors
+     * and returns an List of found errors
+     */
+    checkValidInput: function() {
+      var errors = []
+      // Check for Pendelweg distance and valid öffentliche
+      for(const verkehr  of this.verkehrsmittel) {
+        var verkehrsmedium = (verkehr[0] != "Öffentliche") ? verkehr[0] : verkehr[1]
+        if(verkehr[0] != null && (verkehr[4] == null || verkehr[4] < 0)) {
+          if(verkehrsmedium == null) {
+            errors.push("Sie haben das öffentliche Verkehrsmedium nicht angegeben.")
+          } else {
+            errors.push("Sie haben für das Verkehrsmedium " + verkehrsmedium + " keinen gültigen Pendelweg angegeben.")
+          }
+        }
+        if(verkehr[0] != null && verkehr[2] && verkehr[3] == null) {
+          errors.push("Sie benutzen das Verkehrsmedium " + verkehrsmedium + " in einer Fahrgemeinschaft, haben aber keine Mitfahrendenanzahl angegeben.")
+        }
+      }
+      // Check number of days in office
+      if(this.arbeitstageBuero < 0 || this.arbeitstageBuero > 7) {
+        errors.push("Bitte geben Sie die Tage im Büro pro Woche an.")
+      }
+      // Check for Dienstreise
+      for(const dienst of this.dienstreise) {
+        if(dienst[0] != null && (dienst[2] == null || dienst[2] < 0)) {
+          var dienstmedium = (dienst[0] != "Flugzeug") ? dienst[0] : dienst[1]
+          if(dienstmedium == null) {
+            errors.push("Sie haben bei einer Dienstreise mit Flugzeug keinen Flugstreckentyp angegeben.")
+          } else {
+            errors.push("Sie haben für die Dienstreise mit " + dienst[0] + " keine gültige Distanz angegeben.")
+          }
+        }
+      }
+      // Check IT Geraete
+      for(const geraet of this.geraeteAnzahl) {
+        var geraeteName = (geraet[0] == 1) ? "Notebook" : (geraet[0] == 2) ? "Desktop PC" : (geraet[0] == 3) ? "Bildschirm" : "Mobiltelefon"
+        if(geraet[2] && geraet[1] == null) {
+          errors.push("Sie haben das IT-Gerät " + geraeteName + " ausgewählt, aber keine Anzahl angegeben.")
+        }
+        else if(geraet[2] && geraet[1] < 0) {
+          errors.push("Sie haben das IT-Gerät "+ geraeteName + " ausgewählt, aber keine gültige Anzahl angegeben.")
+        }
+      }
+      this.errorsArray = errors
     },
 
     /**
