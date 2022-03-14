@@ -97,6 +97,7 @@ export default {
         //Delete cookie and log if not success
         Cookies.deleteCookieAttribut("username")
         Cookies.deleteCookieAttribut("sessiontoken")
+        Cookies.deleteCookieAttribut("rolle")
         this.$router.push('/').catch(() => {})
   
       })

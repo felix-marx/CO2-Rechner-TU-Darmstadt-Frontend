@@ -97,6 +97,7 @@ router.beforeEach((to, from, next) => {
         else {
           Cookies.deleteCookieAttribut('username')
           Cookies.deleteCookieAttribut('sessiontoken')
+          Cookies.deleteCookieAttribut('rolle')
           next(true)
         }
       }).catch((error) => {
@@ -117,6 +118,7 @@ router.beforeEach((to, from, next) => {
       else {
         Cookies.deleteCookieAttribut('username')
         Cookies.deleteCookieAttribut('sessiontoken')
+        Cookies.deleteCookieAttribut('rolle')
         next({ path: '/' })
       }
     }).catch((error) => {
@@ -139,6 +141,7 @@ router.beforeEach((to, from, next) => {
       else {
         Cookies.deleteCookieAttribut('username')
         Cookies.deleteCookieAttribut('sessiontoken')
+        Cookies.deleteCookieAttribut('rolle')
         next({ path: '/' })
       }
     }).catch((error) => {
