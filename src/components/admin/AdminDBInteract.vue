@@ -41,7 +41,7 @@
         colored-border
         elevation="3"
       >
-        Bei Dezimalzahlen muss Punkt als Dezimaltrenner verwendet werden!
+        Bei Dezimalzahlen muss ein Punkt als Dezimaltrenner verwendet werden!
       </v-alert>
 
       <v-expansion-panels
