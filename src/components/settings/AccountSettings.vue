@@ -169,6 +169,14 @@
               >
                 Leider ist etwas schief gegangen, bitte wenden Sie sich an den Administrator oder probieren Sie es erneut.
               </v-alert>
+              <v-alert
+                v-if="changedPasswordStatus === 3"
+                outlined
+                type="error"
+                text
+              >
+                Das neue Passwort stimmt nicht überein.
+              </v-alert>
             </v-col>
             <v-col />
           </v-row>
@@ -214,7 +222,7 @@ export default {
     deleteRequestError: false,
     displayLoadingAnimation: false,
     signedOut: true,
-    changedPasswordStatus: 0, //default 0, success 1, error 2
+    changedPasswordStatus: 0, //default 0, success 1, error 2, passwort dont match 3
     password: null,
     newPassword: null,
     newPasswordRe: null,
@@ -253,6 +261,14 @@ export default {
   methods: {
 
     postPasswortAendern: async function () {
+      if(this.newPassword != this.newPasswordRe) {
+        this.changedPasswordStatus = 3
+        this.password = null
+        this.newPassword = null
+        this.newPasswordRe = null
+        return
+      }
+
       await fetch(process.env.VUE_APP_BASEURL + "/auth/passwortAendern", {
         method: "POST",
         headers: {
