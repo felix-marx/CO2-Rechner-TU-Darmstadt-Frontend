@@ -13,7 +13,7 @@
       <p>
         <a
           target="_blank"
-          :href="'//'+umfrageLink"
+          :href="umfrageLink"
         >{{ umfrageLink }}</a>
       </p>
       <p>Die Umfrage nimmt ungefähr 10 Minuten Ihrer Zeit in Anspruch. Für die Umfrage wird das vollständige Kalenderjahr {{ umfrageJahr }} betrachtet. </p>
@@ -22,7 +22,7 @@
         Bei weiteren Nachfragen oder Anmerkungen wenden Sie sich gerne an 
         <a
           target="_blank"
-          :href="'//'+cookieAttribut"
+          :href="'mailto:'+cookieAttribut"
         >{{ cookieAttribut }}</a>.
       </p>
       <p>Vielen Dank für Ihre Teilnahme. </p>
