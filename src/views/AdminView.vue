@@ -2,13 +2,13 @@
   <v-app>
     <!-- Header -->
     <Header
-      :anmelden-button="false" 
+      :display-user-setting="true"
       :tabs="tabList"
       @changeTab="changeTab($event)" 
     />
 
     <!-- main body -->
-    <v-main>
+    <v-main class="mb-16">
       <component :is="currentTabType" />
     </v-main>
 
@@ -18,11 +18,11 @@
 </template>
 
 <script>
-import Footer from "@/components/Footer";
-import Header from "@/components/Header";
-import AdminEintraege from "@/components/AdminEintraege";
-import AdminAuswertung from "@/components/AdminAuswertung";
-import AccountSettings from '../components/AccountSettings.vue';
+import Footer from "@/components/componentParts/Footer";
+import Header from "@/components/componentParts/Header";
+import AdminDBInteract from "@/components/admin/AdminDBInteract";
+import AdminViewSurveys from "@/components/admin/AdminViewSurveys";
+import AccountSettings from '../components/settings/AccountSettings.vue';
 
 export default {
   name: "App",
@@ -30,8 +30,8 @@ export default {
   components: {
     Footer,
     Header,
-    AdminEintraege,
-    AdminAuswertung,
+    AdminDBInteract,
+    AdminViewSurveys,
     AccountSettings
   },
 
@@ -39,11 +39,11 @@ export default {
     // standard tab selected is the first tab / Umfrage tab
     // could extend this to be persistent on site refresh, but this would require additional plugins, like e.g. Vuex.
     selectedTab: 0,
-    currentTabType: AdminAuswertung,
+    currentTabType: AdminViewSurveys,
     tabList: [
       { id: 2, title: "Accounteinstellungen", componentType: AccountSettings},
-      { id: 0, title: "Umfragenübersicht", componentType: AdminAuswertung},
-      { id: 1, title: "Datenbank", componentType: AdminEintraege},
+      { id: 0, title: "Umfragenübersicht", componentType: AdminViewSurveys},
+      { id: 1, title: "Datenbank", componentType: AdminDBInteract},
     ],
   }),
 
