@@ -686,8 +686,9 @@ export default {
     sendData: async function () {
       // Disable Inputfields
       this.blockInput = true
-
       this.displayLoadingAnimation = true;
+      this.errorMessage = null;
+
       await fetch(process.env.VUE_APP_BASEURL + "/umfrage/insertUmfrage", {
         method: "POST",
         headers: {
@@ -710,6 +711,7 @@ export default {
           this.responseData = data.data;
           if(data.status == "error") {
             this.errorMessage = data.error.message
+            this.blockInput = false
           }
         })
         .catch((error) => {

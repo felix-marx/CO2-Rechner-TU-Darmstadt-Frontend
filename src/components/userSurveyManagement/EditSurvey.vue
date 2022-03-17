@@ -625,6 +625,7 @@ export default {
     sendEdit: async function () {
       this.displayLoadingAnimation = true
       this.blockInput = true
+      this.displayError = false
 
       await fetch(process.env.VUE_APP_BASEURL + "/umfrage/updateUmfrage", {
         method: "POST",
@@ -654,6 +655,8 @@ export default {
             this.errorMessage = data.error.message
             this.displayError = true
             this.displayLoadingAnimation = false
+
+            this.blockInput = false
           }
         })
         .catch((error) => {
