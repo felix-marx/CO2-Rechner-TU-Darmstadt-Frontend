@@ -21,6 +21,8 @@
 
       <!-- Umfrage -->
       <v-form>
+        <!-- Pendelwege -->
+
         <h3>
           Wie kommen Sie ins Büro?
           <Tooltip
@@ -32,7 +34,7 @@
 
         <div
           v-for="(medium, index) in verkehrsmittel"
-          :key="'dienstreise-' + index"
+          :key="'pendelweg-' + index"
         >
           <v-row>
             <!-- The length of the column is calculated based on the selection, so that the button to add new elements in this line -->
@@ -59,7 +61,7 @@
               <v-text-field
                 v-model="medium[4]"
                 :rules="streckeRules"
-                :disabled="medium[0] === null || submittedDataSuccessfully"
+                :disabled="medium[0] === null || (medium[0] === 'Öffentliche' && medium[1] === null) || submittedDataSuccessfully"
                 :min="0"
                 label="Einfacher Pendelweg"
                 suffix="km"
@@ -159,7 +161,7 @@
 
         <div
           v-for="(reise, index) in dienstreise"
-          :key="'verkehrsmittel-' + index"
+          :key="'dienstreise-' + index"
         >
           <v-row>
             <v-col :cols="reise[0] === 'Flugzeug' ? 4 : 5">
@@ -189,7 +191,7 @@
               <v-text-field
                 v-model="reise[2]"
                 :rules="streckeRules"
-                :disabled="reise[0] === null || submittedDataSuccessfully"
+                :disabled="reise[0] === null || (reise[0] === 'Flugzeug' && reise[1] === null) || submittedDataSuccessfully"
                 :min="0"
                 label="Einfache Distanz"
                 suffix="km"
@@ -730,14 +732,14 @@ export default {
       // Check for Pendelweg distance and valid öffentliche
       for(const verkehr  of this.verkehrsmittel) {
         var verkehrsmedium = (verkehr[0] != "Öffentliche") ? verkehr[0] : verkehr[1]
-        if(verkehr[0] != null && (verkehr[4] == null || verkehr[4] < 0)) {
+        if(verkehr[0] != null && (!verkehr[4] || verkehr[4] < 0)) {
           if(verkehrsmedium == null) {
             errors.push("Sie haben das öffentliche Verkehrsmedium nicht angegeben.")
           } else {
             errors.push("Sie haben für das Verkehrsmedium " + verkehrsmedium + " keinen gültigen Pendelweg angegeben.")
           }
         }
-        if(verkehr[0] != null && verkehr[2] && verkehr[3] == null) {
+        if(verkehr[0] != null && verkehr[2] && !verkehr[3]) {
           errors.push("Sie benutzen das Verkehrsmedium " + verkehrsmedium + " in einer Fahrgemeinschaft, haben aber keine Mitfahrendenanzahl angegeben.")
         }
       }
@@ -747,7 +749,7 @@ export default {
       }
       // Check for Dienstreise
       for(const dienst of this.dienstreise) {
-        if(dienst[0] != null && (dienst[2] == null || dienst[2] < 0)) {
+        if(dienst[0] && (!dienst[2] || dienst[2] < 0)) {
           var dienstmedium = (dienst[0] != "Flugzeug") ? dienst[0] : dienst[1]
           if(dienstmedium == null) {
             errors.push("Sie haben bei einer Dienstreise mit Flugzeug keinen Flugstreckentyp angegeben.")
