@@ -182,25 +182,37 @@
         
           <v-spacer />
 
+          <!-- Mit diesem Button sollen ausgewählte Umfragen dupliziert werden können. -->
+          <v-btn
+            class="mx-2"
+            outlined
+            text
+            color="primary"
+            @click="duplicateSurvey(index, umfrage._id)"
+          >
+            <v-icon class="mr-1">
+              mdi-content-copy
+            </v-icon>
+            Duplizieren
+          </v-btn>
+
           <v-dialog
             v-model="deleteSurvey[index]"
             transition="dialog-bottom-transition"
           >
             <template v-slot:activator="{ on, attrs }">
               <!-- Mit diesem Button sollen ausgewählte Umfragen gelöscht werden können. -->
-              <v-col class="text-right">
-                <v-btn
-                  class="ma2"
-                  outlined
-                  text
-                  color="delete"
-                  v-bind="attrs"
-                  v-on="on"
-                >
-                  <v-icon>mdi-delete-outline</v-icon>
-                  Löschen
-                </v-btn>
-              </v-col>
+              <v-btn
+                class="mx-2 pl-1"
+                outlined
+                text
+                color="delete"
+                v-bind="attrs"
+                v-on="on"
+              >
+                <v-icon>mdi-delete-outline</v-icon>
+                Löschen
+              </v-btn>
             </template>
 
             <v-card>
@@ -232,8 +244,9 @@
             </v-card>
           </v-dialog>
         </v-card-actions>
+
         <v-alert
-          v-show="deleteError[index]"
+          v-show="errors[index]"
           type="error"
         >
           {{ message }}
@@ -261,7 +274,7 @@ export default {
       deleteSurvey: [],
       dialog: [], 
       dialogAuswertung: [], 
-      deleteError: [],
+      errors: [],
       message: "",
 
       notifications: false,
@@ -330,8 +343,21 @@ export default {
           this.deleteSurvey.splice(index, 1)
           this.dialog.splice(index, 1)
           this.dialogAuswertung.splice(index,1)
-          this.deleteError.splice(index, 1)
+          this.errors.splice(index, 1)
         }
+        return
+      },
+
+      /**
+       * Dupliziert eine Umfrage nach Nutzerbestaetigung
+       */
+       async duplicateSurvey(index, umfrageID) {
+        await this.duplicateUmfrage(index, umfrageID)
+      
+        if(!this.errors[index]){
+          this.fetchUmfragenForUser()
+        }
+
         return
       },
 
@@ -377,7 +403,7 @@ export default {
           
           this.dialog = new Array(this.umfragen.length).fill(false)
           this.dialogAuswertung = new Array(this.umfragen.length).fill(false)
-          this.deleteError = new Array(this.umfragen.length).fill(false)
+          this.errors = new Array(this.umfragen.length).fill(false)
         })
         .catch((error) => {
           console.error("Error:", error);
@@ -404,19 +430,53 @@ export default {
         .then((response) => response.json())
         .then((data) => {
           if(data.status === "error") {
-            this.deleteError[index] = true
+            this.errors[index] = true
             this.message = data.error.message
             return false
           }
           return true
         })
         .catch((error) => {
-          this.deleteError[index] = true
+          this.errors[index] = true
           this.message = "Server nicht erreichbar."
           console.error("Error:", error);
           return false
         });
-      }
+      },
+
+       /**
+       * Dupliziert die Umfrage mit der gegebenen ID, gibt false bei error, true bei success zurueck
+       */
+       duplicateUmfrage: async function (index, umfrageID) {
+        await fetch(process.env.VUE_APP_BASEURL + "/umfrage/duplicateUmfrage", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          umfrageID: umfrageID,
+          authToken: {
+            username: Cookies.getCookieAttribut("username"),
+            sessiontoken: Cookies.getCookieAttribut("sessiontoken"),
+          }
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if(data.status === "error") {
+            this.errors[index] = true
+            this.message = data.error.message
+            return false
+          }
+          return true
+        })
+        .catch((error) => {
+          this.errors[index] = true
+          this.message = "Server nicht erreichbar."
+          console.error("Error:", error);
+          return false
+        });
+      },
     }
   }
   
