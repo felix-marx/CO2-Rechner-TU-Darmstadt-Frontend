@@ -31,7 +31,7 @@
 
     <v-card class="px-4 pb-4 mt-2">
       <v-card-title>
-        Eintragen neuer Daten
+        Manuelles eintragen neuer Daten
       </v-card-title>
       <v-divider />
 
@@ -384,6 +384,58 @@
         </v-expansion-panel>
       </v-expansion-panels>
     </v-card>
+
+    <v-card class="px-4 pb-4 mt-2">
+      <v-card-title>
+        CSV Parser (Zählerstände)
+      </v-card-title>
+      <v-divider />
+
+      <v-container>
+        <v-row>
+          <v-col>
+            <v-autocomplete
+              v-model="csv_counter_data.year"
+              :items="possibleYears"
+              label="Bilanzierungsjahr"
+              prepend-icon="mdi-calendar-question"
+            />
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col>
+            <v-file-input
+              v-model="chosenFile"
+              accept=".csv"
+              label="Click here to select a .csv file"
+              chips
+            />
+          </v-col>
+          <v-col cols="2">
+            <v-btn
+              @click="parseFile"
+            >
+              Parse
+            </v-btn>
+          </v-col>
+        </v-row>
+        <v-row>
+          <LoadingAnimation v-if="parseLoading" />
+          <v-alert 
+            v-if="parseError"
+            type="error"
+          >
+            {{ parseErrorMessage }}
+          </v-alert>
+          <v-alert 
+            v-if="parseSuccess"
+            type="success"
+          >
+            {{ parseSuccessMessage }}
+          </v-alert>
+        </v-row>
+      </v-container>
+    </v-card>
   </v-container>
 </template>
 
@@ -440,6 +492,20 @@ export default {
     errorMessage: ["", "", "", ""],
     successMessage: ["", "", "", ""],
 
+    chosenFile: null,
+    parseError: false,
+    parseSuccess: false,
+    parseLoading: false,
+    parseErrorMessage: "",
+    parseSuccessMessage: "",
+
+    csv_counter_data: {
+      year: '',
+      primary_keys: null,
+      energy_type: null,
+      values: null
+    },
+    
     //Rules for input validation
     basicRule: [
       (v) => !!v || "Muss angegeben werden",
@@ -714,6 +780,119 @@ export default {
       }
       return buildingRefs
     },
+
+    parseFile: async function () {
+      this.parseLoading = true
+      this.parseError = false
+      this.parseSuccess = false
+
+      if(!this.chosenFile){
+        this.parseErrorMessage = "No File selected"
+        this.parseLoading = false
+        this.parseError = true
+        return
+      }
+      console.log("File: ", this.chosenFile)
+
+      /*{ Full config
+        delimiter: "",	// auto-detect
+        newline: "",	// auto-detect
+        quoteChar: '"',
+        escapeChar: '"',
+        header: false,
+        transformHeader: undefined,
+        dynamicTyping: false,
+        preview: 0,
+        encoding: "",
+        worker: false,
+        comments: false,
+        step: undefined,
+        complete: undefined,
+        error: undefined,
+        download: false,
+        downloadRequestHeaders: undefined,
+        downloadRequestBody: undefined,
+        skipEmptyLines: false,
+        chunk: undefined,
+        chunkSize: undefined,
+        fastMode: undefined,
+        beforeFirstChunk: undefined,
+        withCredentials: undefined,
+        transform: undefined,
+        delimitersToGuess: [',', '\t', '|', ';', this.$papa.RECORD_SEP, this.$papa.UNIT_SEP]
+      }*/
+
+      var parsedFile = await new Promise(
+        resolve => {
+          this.$papa.parse(
+            this.chosenFile, 
+            {
+              delimiter: ";",
+              complete: results => {resolve(results)},
+            }
+          )
+        }
+      )
+
+      console.log("Files Parsed")
+
+      parsedFile.data.forEach(
+        arr => {
+          if (arr[0] == "PrimaryKey"){
+            this.csv_counter_data.primary_keys = arr.slice(1).map(
+              (elem) => {return parseInt(elem)}
+            )
+          }
+          if (arr[0] == "DPName"){
+            this.csv_counter_data.energy_types = arr.slice(1).map(
+              (elem) => {
+                if (elem.indexOf('HE000') !== -1){
+                  return 1;
+                }
+                else if (elem.indexOf('NA000') !== -1){
+                  return 2;
+                }
+                else if (elem.indexOf('KA000') !== -1){
+                  return 3;
+                }
+                else{
+                  this.parseErrorMessage = "Zählertype des Zählers mit der Bezeichung " + elem + " ist nicht bekannt!!"
+                  this.parseLoading = false;
+                  this.parseError = true;
+                }
+              }
+            )
+          }
+          if (arr[0] == "01.01." + this.csv_counter_data.year + " 00:00:00"){
+            this.csv_counter_data.values = arr.slice(1).map(
+              (elem) => {return !elem ? 0 : parseFloat(elem.replace(",", "."))}
+            )
+          }
+        }
+      )
+
+      console.log("After Extracting Values")
+
+      if (this.parseError){
+        return
+      }
+      if (!this.csv_counter_data.year || !this.csv_counter_data.primary_keys || !this.csv_counter_data.energy_type || !this.csv_counter_data.values){
+        this.parseErrorMessage = "CSV Datei konnte nicht korrekt gelesen werde!!"
+        this.parseLoading = false;
+        this.parseError = true;
+      }
+
+      console.log("CSV_Counter_Data", this.csv_counter_data)
+      console.log("ParsedFile: ", parsedFile)
+
+      this.parseSuccessMessage = "Files Parsed Successfuly"
+      this.parseLoading = false
+      this.parseSuccess = true
+    },
+
+    sendCSVCounterData: async function(){
+
+    }
 
   },
 }
