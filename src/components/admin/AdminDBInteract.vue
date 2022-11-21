@@ -502,7 +502,7 @@ export default {
     csv_counter_data: {
       year: '',
       primary_keys: null,
-      energy_type: null,
+      energy_types: null,
       values: null
     },
     
@@ -873,10 +873,7 @@ export default {
 
       console.log("After Extracting Values")
 
-      if (this.parseError){
-        return
-      }
-      if (!this.csv_counter_data.year || !this.csv_counter_data.primary_keys || !this.csv_counter_data.energy_type || !this.csv_counter_data.values){
+      if (!this.csv_counter_data.year || !this.csv_counter_data.primary_keys || !this.csv_counter_data.energy_types || !this.csv_counter_data.values){
         this.parseErrorMessage = "CSV Datei konnte nicht korrekt gelesen werde!!"
         this.parseLoading = false;
         this.parseError = true;
@@ -884,14 +881,46 @@ export default {
 
       console.log("CSV_Counter_Data", this.csv_counter_data)
       console.log("ParsedFile: ", parsedFile)
-
-      this.parseSuccessMessage = "Files Parsed Successfuly"
-      this.parseLoading = false
-      this.parseSuccess = true
+      
+      if (!this.parseError){
+        // send request
+        this.sendCSVCounterData()
+      }
     },
 
     sendCSVCounterData: async function(){
-
+      await fetch(process.env.VUE_APP_BASEURL + "/db/addZaehlerdatenCSV", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          authToken: {
+            username: Cookies.getCookieAttribut('username'),
+            sessiontoken: Cookies.getCookieAttribut('sessiontoken'),
+          },
+          pkEnergie: this.csv_counter_data.primary_keys,
+          idEnergieversorgung: this.csv_counter_data.energy_types,
+          jahr: this.csv_counter_data.year,
+          wert: this.csv_counter_data.values,
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if(data.status == "success"){
+            this.parseSuccessMessage = "Die Zählerdaten wurden erfolgreich in der Datenbank gespeichert."
+            this.parseLoading = false
+            this.parseSuccess = true
+          }
+          else if(data.status == "error"){
+            this.parseErrorMessage = "Code " + data.error.code + ": " + data.error.message
+            this.parseLoading = false
+            this.parseError = true
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
     }
 
   },
