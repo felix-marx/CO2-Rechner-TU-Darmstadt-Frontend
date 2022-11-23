@@ -424,6 +424,7 @@
           <v-alert 
             v-if="parseError"
             type="error"
+            style="white-space: pre-wrap"
           >
             {{ parseErrorMessage }}
           </v-alert>
