@@ -509,7 +509,7 @@ export default {
 
     // arrays contain counters and buildings that are explicitly left out
     // reasons are given in BP_Berechnungsformeln.pdf
-    irrelevant_counters: [2014, 2015, 2016, 2256, 3613, 3614, 2102, 2377, 2378, 4193, 4194, 3576],
+    irrelevant_counters: [2104, 2105, 2106, 2256, 3613, 3614, 2102, 2377, 2378, 4193, 4194, 3576],
     irrelevant_buildings: [1473, 1475, 1476, 1477, 1479, 1480, 1481, 1213],
     
     //Rules for input validation
@@ -885,13 +885,33 @@ export default {
         }
       )
 
-      console.log("After Extracting Values")
-
-      if (!this.csv_counter_data.year || !this.csv_counter_data.primary_keys || !this.csv_counter_data.energy_types || !this.csv_counter_data.values){
-        this.parseErrorMessage = "CSV Datei konnte nicht korrekt gelesen werde!!"
+      if (!this.csv_counter_data.year || !this.csv_counter_data.primary_keys || !this.csv_counter_data.energy_types || !this.csv_counter_data.values
+          || this.csv_counter_data.primary_keys.length != this.csv_counter_data.energy_types.length || this.csv_counter_data.energy_types.length != this.csv_counter_data.values.length){
+        this.parseErrorMessage = "CSV Datei konnte nicht korrekt gelesen werden!"
         this.parseLoading = false;
         this.parseError = true;
+
+        return
       }
+
+      console.log("After Extracting Values")
+
+      var mask = this.csv_counter_data.primary_keys.map(x => !this.irrelevant_counters.includes(x))
+      console.log(this.csv_counter_data.primary_keys.filter((elem, index) => !mask[index]))
+
+      this.csv_counter_data.primary_keys = this.csv_counter_data.primary_keys.filter((elem, index) => mask[index])
+      this.csv_counter_data.energy_types = this.csv_counter_data.energy_types.filter((elem, index) => mask[index])
+      this.csv_counter_data.values = this.csv_counter_data.values.filter((elem, index) => mask[index])
+
+      if (this.csv_counter_data.primary_keys.length != this.csv_counter_data.energy_types.length || this.csv_counter_data.energy_types.length != this.csv_counter_data.values.length){
+        this.parseErrorMessage = "CSV Datei konnte nicht korrekt gelesen werden!"
+        this.parseLoading = false;
+        this.parseError = true;
+
+        return
+      }
+
+      console.log("After Filtering Values")
 
       console.log("CSV_Counter_Data", this.csv_counter_data)
       console.log("ParsedFile: ", parsedFile)
