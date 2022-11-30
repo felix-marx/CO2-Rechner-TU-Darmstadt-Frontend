@@ -628,6 +628,14 @@ export default {
         return
       }
 
+      if(this.irrelevant_buildings.includes(parseInt(this.building.number))){
+        this.$set(this.errorMessage, 1, "Das Gebäude " + this.building.number + " wurde explizit ausgeschlossen!")
+        this.$set(this.displayLoadingAnimation, 1, false)
+        this.$set(this.displayError, 1, true)
+
+        return
+      }
+
       await fetch(process.env.VUE_APP_BASEURL + "/db/insertGebaeude", {
         method: "POST",
         headers: {
