@@ -1,5 +1,5 @@
 <template>
-  <v-container class="py-0">
+  <v-container class="pa-0">
     <v-row>
       <v-col>
         <v-btn
