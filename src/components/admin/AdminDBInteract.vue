@@ -509,7 +509,7 @@ export default {
 
     // arrays contain counters and buildings that are explicitly left out
     // reasons are given in BP_Berechnungsformeln.pdf
-    irrelevant_counters: [2104, 2105, 2106, 2256, 3613, 3614, 2102, 2377, 2378, 4193, 4194, 3576],
+    irrelevant_counters: [2104, 2105, 2106, 2256, 3613, 3614, 2102, 2377, 2378, 4193, 4194, 3576, 3966, 3960, 6697],
     irrelevant_buildings: [1473, 1475, 1476, 1477, 1479, 1480, 1481, 1213],
     
     //Rules for input validation
