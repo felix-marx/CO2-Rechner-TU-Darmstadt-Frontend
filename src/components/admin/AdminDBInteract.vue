@@ -800,6 +800,11 @@ export default {
       this.parseError = false
       this.parseSuccess = false
 
+      // reset object for data
+      this.csv_counter_data.primary_keys = null
+      this.csv_counter_data.energy_types = null
+      this.csv_counter_data.values = null
+
       if(!this.chosenFile){
         this.parseErrorMessage = "No File selected"
         this.parseLoading = false
@@ -849,6 +854,7 @@ export default {
       )
 
       console.log("Files Parsed")
+      console.log(parsedFile)
 
       parsedFile.data.forEach(
         arr => {
