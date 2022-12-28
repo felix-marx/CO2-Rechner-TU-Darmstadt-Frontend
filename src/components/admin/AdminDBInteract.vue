@@ -47,8 +47,8 @@
       <v-expansion-panels
         focusable
       >
+        <!-- Past years' CO2 factors can be sent to the database-->
         <v-expansion-panel>
-          <!-- Past years' CO2 factors can be sent to the database-->
           <v-expansion-panel-header>CO2 Faktor</v-expansion-panel-header>
 
           <v-expansion-panel-content>
@@ -64,6 +64,13 @@
               :items="energy_types"
               flat
               label="Energieart"
+            />
+
+            <v-select
+              v-model="co2_factor.contract"
+              :items="contracts"
+              flat
+              label="Versorger"
             />
 
             <v-text-field
@@ -403,6 +410,7 @@ export default {
     co2_factor: {
       year: '',
       energy_type: '',
+      contract: '',
       value: null
     },
     building: {
@@ -429,6 +437,8 @@ export default {
       energy_type: '',
       value: null
     },
+    contracts: ['TU Darmstadt', 'Extern'],
+    contract_map: new Map([['TU Darmstadt', 1], ['Extern', 2]]),
     energy_types: ['Wärme', 'Strom', 'Kälte'],
     energy_map: new Map([['Wärme', 1], ['Strom', 2], ['Kälte', 3]]),
     units: ['kWh', 'MWh'],
@@ -498,7 +508,7 @@ export default {
       this.$set(this.displayError, 0, false)
       this.$set(this.displayLoadingAnimation, 0, true)
 
-      if(!this.co2_factor.year || !this.co2_factor.energy_type || !this.co2_factor.value){
+      if(!this.co2_factor.year || !this.co2_factor.energy_type || !this.co2_factor.value || !this.co2_factor.contract){
         this.$set(this.errorMessage, 0, "Alle Felder müssen ausgefüllt sein")
         this.$set(this.displayLoadingAnimation, 0, false)
         this.$set(this.displayError, 0, true)
@@ -517,6 +527,7 @@ export default {
             sessiontoken: Cookies.getCookieAttribut('sessiontoken'),
           },
           idEnergieversorgung: this.energy_map.get(this.co2_factor.energy_type),
+          idVertrag: this.contract_map.get(this.co2_factor.contract),
           jahr: parseInt(this.co2_factor.year),
           wert: parseInt(this.co2_factor.value),
         }),
