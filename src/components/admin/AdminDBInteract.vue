@@ -47,7 +47,11 @@
       <v-expansion-panels
         focusable
       >
-        <!-- Past years' CO2 factors can be sent to the database-->
+        <p class="px-4 mt-4">
+          CO2-FAKTOREN
+        </p>
+
+        <!-- Add CO2 factors to the database -->
         <v-expansion-panel>
           <v-expansion-panel-header>CO2 Faktor</v-expansion-panel-header>
 
@@ -111,7 +115,11 @@
           </v-expansion-panel-content>
         </v-expansion-panel>
 
-        <!-- New buildings can be sent to the database -->
+        <p class="px-4 mt-4">
+          GEBÄUDE
+        </p>
+
+        <!-- Add a new building to the database -->
         <v-expansion-panel>
           <v-expansion-panel-header>Gebäude Hinzufügen</v-expansion-panel-header>
           <v-expansion-panel-content>
@@ -272,7 +280,7 @@
           </v-expansion-panel-content>
         </v-expansion-panel>
 
-        <!-- Add external suppliers to buildings -->
+        <!-- Add external suppliers to a building -->
         <v-expansion-panel>
           <v-expansion-panel-header>Gebäude externe Versorger</v-expansion-panel-header>
           <v-expansion-panel-content>
@@ -346,7 +354,7 @@
           </v-expansion-panel-content>
         </v-expansion-panel>
 
-        <!-- Add external suppliers to buildings -->
+        <!-- Add default external suppliers to buildings that don't have a supplier for a specific year -->
         <v-expansion-panel>
           <v-expansion-panel-header>Gebäude externe Versorger (default)</v-expansion-panel-header>
           <v-expansion-panel-content>
@@ -393,7 +401,11 @@
           </v-expansion-panel-content>
         </v-expansion-panel>
 
-        <!-- Counters can be sent to the database as soon as the associated buildings exist (a hint is still missing here!) -->
+        <p class="px-4 mt-4">
+          ZÄHLER
+        </p>
+
+        <!-- Add a new counter to the database -->
         <v-expansion-panel>
           <v-expansion-panel-header>Zähler hinzufügen</v-expansion-panel-header>
           <v-expansion-panel-content>
@@ -488,7 +500,7 @@
           </v-expansion-panel-content>
         </v-expansion-panel>
 
-        <!-- Past years' counter data can be sent to the database -->
+        <!-- Set counter value for specific counter -->
         <v-expansion-panel>
           <v-expansion-panel-header>Zählerdaten eintragen</v-expansion-panel-header>
           <v-expansion-panel-content>
@@ -550,7 +562,7 @@
           </v-expansion-panel-content>
         </v-expansion-panel>
 
-        <!-- Set default counter values for all counters not having a value in a given year -->
+        <!-- Set default counter values for all counters that don't have a value in a given year -->
         <v-expansion-panel>
           <v-expansion-panel-header>Zählerdaten eintragen (default)</v-expansion-panel-header>
           <v-expansion-panel-content>
@@ -592,60 +604,57 @@
             </v-card>
           </v-expansion-panel-content>
         </v-expansion-panel>
+
+        <!-- CSV parser for sending a bunch of counter values -->
+        <v-expansion-panel>
+          <v-expansion-panel-header>CSV Parser</v-expansion-panel-header>
+          <v-expansion-panel-content>
+            <v-row>
+              <v-col>
+                <v-autocomplete
+                  v-model="csv_counter_data.year"
+                  :items="possibleYears"
+                  label="Bilanzierungsjahr"
+                  prepend-icon="mdi-calendar-question"
+                />
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col>
+                <v-file-input
+                  v-model="chosenFile"
+                  accept=".csv"
+                  label="Click here to select a .csv file"
+                  chips
+                />
+              </v-col>
+              <v-col cols="2">
+                <v-btn
+                  @click="parseFile"
+                >
+                  Parse
+                </v-btn>
+              </v-col>
+            </v-row>
+            <v-row>
+              <LoadingAnimation v-if="parseLoading" />
+              <v-alert 
+                v-if="parseError"
+                type="error"
+                style="white-space: pre-wrap"
+              >
+                {{ parseErrorMessage }}
+              </v-alert>
+              <v-alert 
+                v-if="parseSuccess"
+                type="success"
+              >
+                {{ parseSuccessMessage }}
+              </v-alert>
+            </v-row>
+          </v-expansion-panel-content>
+        </v-expansion-panel>
       </v-expansion-panels>
-    </v-card>
-
-    <v-card class="px-4 pb-4 mt-2">
-      <v-card-title>
-        CSV Parser (Zählerstände)
-      </v-card-title>
-      <v-divider />
-
-      <v-container>
-        <v-row>
-          <v-col>
-            <v-autocomplete
-              v-model="csv_counter_data.year"
-              :items="possibleYears"
-              label="Bilanzierungsjahr"
-              prepend-icon="mdi-calendar-question"
-            />
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col>
-            <v-file-input
-              v-model="chosenFile"
-              accept=".csv"
-              label="Click here to select a .csv file"
-              chips
-            />
-          </v-col>
-          <v-col cols="2">
-            <v-btn
-              @click="parseFile"
-            >
-              Parse
-            </v-btn>
-          </v-col>
-        </v-row>
-        <v-row>
-          <LoadingAnimation v-if="parseLoading" />
-          <v-alert 
-            v-if="parseError"
-            type="error"
-            style="white-space: pre-wrap"
-          >
-            {{ parseErrorMessage }}
-          </v-alert>
-          <v-alert 
-            v-if="parseSuccess"
-            type="success"
-          >
-            {{ parseSuccessMessage }}
-          </v-alert>
-        </v-row>
-      </v-container>
     </v-card>
   </v-container>
 </template>
@@ -893,11 +902,6 @@ export default {
         electricity_supplier = electricity_supplier.filter(numberfilter)
       }
 
-      console.log(warmth_supplier)
-      console.log(cold_supplier)
-      console.log(electricity_supplier)
-
-
       await fetch(process.env.VUE_APP_BASEURL + "/db/insertGebaeude", {
         method: "POST",
         headers: {
@@ -943,7 +947,7 @@ export default {
     },
 
     /**
-     * send supplier to backend
+     * send supplier to db
      */
     sendSupplier: async function () {
       this.$set(this.displaySuccess, 4, false)
@@ -993,7 +997,7 @@ export default {
     },
 
     /**
-     * send supplier to backend
+     * send default supplier to db
      */
      sendDefaultSupplier: async function () {
       this.$set(this.displaySuccess, 5, false)
@@ -1141,6 +1145,9 @@ export default {
         });
     },
 
+    /**
+     * send default counter data to db
+     */
     sendDefaultCounterData: async function () {
       this.$set(this.displaySuccess, 6, false)
       this.$set(this.displayError, 6, false)
@@ -1201,6 +1208,9 @@ export default {
       return buildingRefs
     },
 
+    /**
+     * parses a CSV file containing counter values
+     */
     parseFile: async function () {
       this.parseLoading = true
       this.parseError = false
@@ -1334,6 +1344,9 @@ export default {
       }
     },
 
+    /**
+     * send parsed CSV file to db
+     */
     sendCSVCounterData: async function(){
       await fetch(process.env.VUE_APP_BASEURL + "/db/addZaehlerdatenCSV", {
         method: "POST",
@@ -1368,7 +1381,6 @@ export default {
           console.error("Error:", error);
         });
     }
-
   },
 }
 </script>
