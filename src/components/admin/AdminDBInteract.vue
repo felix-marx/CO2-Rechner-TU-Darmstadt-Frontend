@@ -549,6 +549,49 @@
             </v-card>
           </v-expansion-panel-content>
         </v-expansion-panel>
+
+        <!-- Set default counter values for all counters not having a value in a given year -->
+        <v-expansion-panel>
+          <v-expansion-panel-header>Zählerdaten eintragen (default)</v-expansion-panel-header>
+          <v-expansion-panel-content>
+            <v-autocomplete
+              v-model="default_counter_data.year"
+              :items="possibleYears"
+              label="Jahr"
+              prepend-icon="mdi-calendar-question"
+            />
+
+            <v-card-actions>
+              <v-col class="text-left">
+                <v-btn
+                  color="primary"
+                  @click="sendDefaultCounterData"
+                >
+                  Absenden
+                </v-btn>
+              </v-col>
+            </v-card-actions>
+
+            <v-card
+              v-if="displaySuccess[6] || displayLoadingAnimation[6] || displayError[6]"
+              elevation="2"
+            >
+              <LoadingAnimation v-if="displayLoadingAnimation[6]" />
+              <v-alert
+                v-if="displaySuccess[6]"
+                type="success"
+              >
+                {{ successMessage[6] }}
+              </v-alert>
+              <v-alert
+                v-if="displayError[6]"
+                type="error"
+              >
+                {{ errorMessage[6] }}
+              </v-alert>
+            </v-card>
+          </v-expansion-panel-content>
+        </v-expansion-panel>
       </v-expansion-panels>
     </v-card>
   </v-container>
@@ -610,15 +653,18 @@ export default {
       energy_type: '',
       value: null
     },
+    default_counter_data: {
+      year: '',
+    },
     contracts: ['TU Darmstadt', 'Extern'],
     contract_map: new Map([['TU Darmstadt', 1], ['Extern', 2]]),
     energy_types: ['Wärme', 'Strom', 'Kälte'],
     energy_map: new Map([['Wärme', 1], ['Strom', 2], ['Kälte', 3]]),
     units: ['kWh', 'MWh'],
 
-    displaySuccess: [false, false, false, false, false, false],
-    displayError: [false, false, false, false, false, false],
-    displayLoadingAnimation: [false, false, false, false, false, false], 
+    displaySuccess: [false, false, false, false, false, false, false],
+    displayError: [false, false, false, false, false, false, false],
+    displayLoadingAnimation: [false, false, false, false, false, false, false], 
 
     errorMessage: ["", "", "", ""],
     successMessage: ["", "", "", ""],
@@ -1008,6 +1054,50 @@ export default {
             this.$set(this.errorMessage, 3, "Code " + data.error.code + ": " + data.error.message)
             this.$set(this.displayLoadingAnimation, 3, false)
             this.$set(this.displayError, 3, true)
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    },
+
+    sendDefaultCounterData: async function () {
+      this.$set(this.displaySuccess, 6, false)
+      this.$set(this.displayError, 6, false)
+      this.$set(this.displayLoadingAnimation, 6, true)
+
+      if(!this.default_counter_data.year){
+        this.$set(this.errorMessage, 6, "Alle Felder müssen ausgefüllt sein")
+        this.$set(this.displayLoadingAnimation, 6, false)
+        this.$set(this.displayError, 6, true)
+
+        return
+      }
+
+      await fetch(process.env.VUE_APP_BASEURL + "/db/addStandardZaehlerdaten", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          authToken: {
+            username: Cookies.getCookieAttribut('username'),
+            sessiontoken: Cookies.getCookieAttribut('sessiontoken'),
+          },
+          jahr: parseInt(this.default_counter_data.year),
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if(data.status == "success"){
+            this.$set(this.successMessage, 6, "Für alle Zähler von Wert für " + this.default_counter_data.year + " wurde 0 als Zählerwert eingetragen.")
+            this.$set(this.displayLoadingAnimation, 6, false)
+            this.$set(this.displaySuccess, 6, true)
+          }
+          else if(data.status == "error"){
+            this.$set(this.errorMessage, 6, "Code " + data.error.code + ": " + data.error.message)
+            this.$set(this.displayLoadingAnimation, 6, false)
+            this.$set(this.displayError, 6, true)
           }
         })
         .catch((error) => {
