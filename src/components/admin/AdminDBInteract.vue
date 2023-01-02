@@ -28,10 +28,9 @@
       </v-container>
     </v-card>
 
-
     <v-card class="px-4 pb-4 mt-2">
       <v-card-title>
-        Manuelles eintragen neuer Daten
+        Eintragen von Daten
       </v-card-title>
       <v-divider />
 
@@ -47,13 +46,13 @@
       <v-expansion-panels
         focusable
       >
-        <p class="px-4 mt-4">
+        <p class="px-4">
           CO2-FAKTOREN
         </p>
 
         <!-- Add CO2 factors to the database -->
         <v-expansion-panel>
-          <v-expansion-panel-header>CO2 Faktor</v-expansion-panel-header>
+          <v-expansion-panel-header>Neue CO2-Faktor hinzufügen</v-expansion-panel-header>
 
           <v-expansion-panel-content>
             <v-autocomplete
@@ -121,7 +120,7 @@
 
         <!-- Add a new building to the database -->
         <v-expansion-panel>
-          <v-expansion-panel-header>Gebäude Hinzufügen</v-expansion-panel-header>
+          <v-expansion-panel-header>Neues Gebäude hinzufügen</v-expansion-panel-header>
           <v-expansion-panel-content>
             <v-row>
               <v-col cols="11">
@@ -282,7 +281,7 @@
 
         <!-- Add external suppliers to a building -->
         <v-expansion-panel>
-          <v-expansion-panel-header>Gebäude externe Versorger</v-expansion-panel-header>
+          <v-expansion-panel-header>Versorger für Gebäude hinzufügen</v-expansion-panel-header>
           <v-expansion-panel-content>
             <v-row>
               <v-col cols="11">
@@ -356,7 +355,7 @@
 
         <!-- Add default external suppliers to buildings that don't have a supplier for a specific year -->
         <v-expansion-panel>
-          <v-expansion-panel-header>Gebäude externe Versorger (default)</v-expansion-panel-header>
+          <v-expansion-panel-header>Standard Versorger für alle Gebäude hinzufügen</v-expansion-panel-header>
           <v-expansion-panel-content>
             <v-row>
               <v-col>
@@ -407,7 +406,7 @@
 
         <!-- Add a new counter to the database -->
         <v-expansion-panel>
-          <v-expansion-panel-header>Zähler hinzufügen</v-expansion-panel-header>
+          <v-expansion-panel-header>Neuen Zähler hinzufügen</v-expansion-panel-header>
           <v-expansion-panel-content>
             <v-text-field
               v-model="counter.primary_key"
@@ -502,7 +501,7 @@
 
         <!-- Set counter value for specific counter -->
         <v-expansion-panel>
-          <v-expansion-panel-header>Zählerdaten eintragen</v-expansion-panel-header>
+          <v-expansion-panel-header>Zählerdaten für Zähler hinzufügen</v-expansion-panel-header>
           <v-expansion-panel-content>
             <v-autocomplete
               v-model="counter_data.year"
@@ -564,7 +563,7 @@
 
         <!-- Set default counter values for all counters that don't have a value in a given year -->
         <v-expansion-panel>
-          <v-expansion-panel-header>Zählerdaten eintragen (default)</v-expansion-panel-header>
+          <v-expansion-panel-header>Standard Zählerdaten für alle Zähler hinzufügen</v-expansion-panel-header>
           <v-expansion-panel-content>
             <v-autocomplete
               v-model="default_counter_data.year"
@@ -607,7 +606,7 @@
 
         <!-- CSV parser for sending a bunch of counter values -->
         <v-expansion-panel>
-          <v-expansion-panel-header>CSV Parser</v-expansion-panel-header>
+          <v-expansion-panel-header>Zählerdaten mittels CSV-Datei hinzufügen</v-expansion-panel-header>
           <v-expansion-panel-content>
             <v-row>
               <v-col>
