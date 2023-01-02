@@ -272,6 +272,127 @@
           </v-expansion-panel-content>
         </v-expansion-panel>
 
+        <!-- Add external suppliers to buildings -->
+        <v-expansion-panel>
+          <v-expansion-panel-header>Gebäude externe Versorger</v-expansion-panel-header>
+          <v-expansion-panel-content>
+            <v-row>
+              <v-col cols="11">
+                <v-text-field
+                  v-model="supplier.number"
+                  label="Gebäudenummer"
+                  :rules="basicRule"
+                />
+              </v-col>
+              <v-col align-self="center">
+                <Tooltip
+                  tooltip-text="4 Ziffern: Die 1. Ziffer für den Campus (1=Stadtmitte, 2=Botanischer Garten, 
+                3=Lichtwiese, 4=Hochschulstadion und 5=Windkanal/August-Euler-Flugplatz). Die Ziffer 2-4 für die 
+                Gebäudenummer. Zum Beispiel 1101 für das Universitätszentrum."
+                />
+              </v-col>
+            </v-row>
+
+            <v-autocomplete
+              v-model="supplier.year"
+              :items="possibleYears"
+              label="Jahr"
+              prepend-icon="mdi-calendar-question"
+            />
+
+            <v-select
+              v-model="supplier.energy_type"
+              :items="energy_types"
+              flat
+              label="Energieart"
+            />
+
+            <v-select
+              v-model="supplier.contract"
+              :items="contracts"
+              flat
+              label="Versorger"
+            />
+
+            <v-card-actions>
+              <v-col class="text-left">
+                <v-btn
+                  color="primary"
+                  @click="sendSupplier"
+                >
+                  Absenden
+                </v-btn>
+              </v-col>
+            </v-card-actions>
+
+            <v-card
+              v-if="displaySuccess[4] || displayLoadingAnimation[4] || displayError[4]"
+              elevation="2"
+            >
+              <LoadingAnimation v-if="displayLoadingAnimation[4]" />
+              <v-alert
+                v-if="displaySuccess[4]"
+                type="success"
+              >
+                {{ successMessage[4] }}
+              </v-alert>
+              <v-alert
+                v-if="displayError[4]"
+                type="error"
+              >
+                {{ errorMessage[4] }}
+              </v-alert>
+            </v-card>
+          </v-expansion-panel-content>
+        </v-expansion-panel>
+
+        <!-- Add external suppliers to buildings -->
+        <v-expansion-panel>
+          <v-expansion-panel-header>Gebäude externe Versorger (default)</v-expansion-panel-header>
+          <v-expansion-panel-content>
+            <v-row>
+              <v-col>
+                <v-autocomplete
+                  v-model="default_supplier.year"
+                  :items="possibleYears"
+                  label="Jahr"
+                  prepend-icon="mdi-calendar-question"
+                />
+              </v-col>
+            </v-row>
+
+            <v-card-actions>
+              <v-col class="text-left">
+                <v-btn
+                  color="primary"
+                  @click="sendDefaultSupplier"
+                >
+                  Absenden
+                </v-btn>
+              </v-col>
+            </v-card-actions>
+
+            <v-card
+              v-if="displaySuccess[5] || displayLoadingAnimation[5] || displayError[5]"
+              elevation="2"
+            >
+              <LoadingAnimation v-if="displayLoadingAnimation[5]" />
+              <v-alert
+                v-if="displaySuccess[5]"
+                type="success"
+              >
+                {{ successMessage[5] }}
+              </v-alert>
+              <v-alert
+                v-if="displayError[5]"
+                type="error"
+              >
+                {{ errorMessage[5] }}
+              </v-alert>
+            </v-card>
+          </v-expansion-panel-content>
+        </v-expansion-panel>
+
         <!-- Counters can be sent to the database as soon as the associated buildings exist (a hint is still missing here!) -->
         <v-expansion-panel>
           <v-expansion-panel-header>Zähler hinzufügen</v-expansion-panel-header>
@@ -467,6 +588,15 @@ export default {
       electricity: '',
     },
     external_supplier: false,
+    supplier: {
+      building_number: null,
+      year: '',
+      energy_type: '',
+      contract: '',
+    },
+    default_supplier: {
+      year: '',
+    },
     counter: {
       primary_key: null,
       unit: '',
@@ -486,9 +616,9 @@ export default {
     energy_map: new Map([['Wärme', 1], ['Strom', 2], ['Kälte', 3]]),
     units: ['kWh', 'MWh'],
 
-    displaySuccess: [false, false, false, false],
-    displayError: [false, false, false, false],
-    displayLoadingAnimation: [false, false, false, false], 
+    displaySuccess: [false, false, false, false, false, false],
+    displayError: [false, false, false, false, false, false],
+    displayLoadingAnimation: [false, false, false, false, false, false], 
 
     errorMessage: ["", "", "", ""],
     successMessage: ["", "", "", ""],
@@ -679,6 +809,103 @@ export default {
             this.$set(this.errorMessage, 1, "Code " + data.error.code + ": " + data.error.message)
             this.$set(this.displayLoadingAnimation, 1, false)
             this.$set(this.displayError, 1, true)
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    },
+
+    /**
+     * send supplier to backend
+     */
+    sendSupplier: async function () {
+      this.$set(this.displaySuccess, 4, false)
+      this.$set(this.displayError, 4, false)
+      this.$set(this.displayLoadingAnimation, 4, true)
+
+      if(!this.supplier.number || !this.supplier.year || !this.supplier.energy_type || !this.supplier.contract){
+        this.$set(this.errorMessage, 4, "Alle Felder müssen ausgefüllt sein")
+        this.$set(this.displayLoadingAnimation, 4, false)
+        this.$set(this.displayError, 4, true)
+
+        return
+      }
+
+      await fetch(process.env.VUE_APP_BASEURL + "/db/addVersorger", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          authToken: {
+            username: Cookies.getCookieAttribut('username'),
+            sessiontoken: Cookies.getCookieAttribut('sessiontoken'),
+          },
+          nr: parseInt(this.supplier.number),
+          idEnergieversorgung: this.energy_map.get(this.supplier.energy_type),
+          idVertrag: this.contract_map.get(this.supplier.contract),
+          jahr: parseInt(this.supplier.year),
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if(data.status == "success"){
+            this.$set(this.successMessage, 4, "Der Versorger wurde erfolgreich in der Datenbank gespeichert.")
+            this.$set(this.displayLoadingAnimation, 4, false)
+            this.$set(this.displaySuccess, 4, true)
+          }
+          else if(data.status == "error"){
+            this.$set(this.errorMessage, 4, "Code " + data.error.code + ": " + data.error.message)
+            this.$set(this.displayLoadingAnimation, 4, false)
+            this.$set(this.displayError, 4, true)
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    },
+
+    /**
+     * send supplier to backend
+     */
+     sendDefaultSupplier: async function () {
+      this.$set(this.displaySuccess, 5, false)
+      this.$set(this.displayError, 5, false)
+      this.$set(this.displayLoadingAnimation, 5, true)
+
+      if(!this.default_supplier.year){
+        this.$set(this.errorMessage, 5, "Alle Felder müssen ausgefüllt sein")
+        this.$set(this.displayLoadingAnimation, 5, false)
+        this.$set(this.displayError, 5, true)
+
+        return
+      }
+
+      await fetch(process.env.VUE_APP_BASEURL + "/db/addStandardVersorger", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          authToken: {
+            username: Cookies.getCookieAttribut('username'),
+            sessiontoken: Cookies.getCookieAttribut('sessiontoken'),
+          },
+          jahr: parseInt(this.default_supplier.year),
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if(data.status == "success"){
+            this.$set(this.successMessage, 5, "Für alle Gebäude ohne Versorger wurde die TU Darmstadt als Versorger eingetragen.")
+            this.$set(this.displayLoadingAnimation, 5, false)
+            this.$set(this.displaySuccess, 5, true)
+          }
+          else if(data.status == "error"){
+            this.$set(this.errorMessage, 5, "Code " + data.error.code + ": " + data.error.message)
+            this.$set(this.displayLoadingAnimation, 5, false)
+            this.$set(this.displayError, 5, true)
           }
         })
         .catch((error) => {
