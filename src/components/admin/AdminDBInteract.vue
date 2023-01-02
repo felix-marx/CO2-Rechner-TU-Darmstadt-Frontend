@@ -200,6 +200,45 @@
                 />
               </v-col>
             </v-row>
+            <v-row>
+              <v-col>
+                <v-checkbox
+                  v-model="external_supplier"
+                  label="Hat das Gebäude externe Versorger?"
+                />
+              </v-col>
+            </v-row>
+            <v-row v-if="external_supplier">
+              <v-col>
+                <p>
+                  Geben sie die Jahre seit 2018 an, für die das Gebäude einen externe Versorger hatte. Eingabe als komma-seperierte Liste and
+                </p>
+              </v-col>
+            </v-row>
+            <v-row v-if="external_supplier">
+              <v-col>
+                <v-text-field
+                  v-model="building.warmth"
+                  label="Externe Wärmeversorger"
+                />
+              </v-col>
+            </v-row>
+            <v-row v-if="external_supplier">
+              <v-col>
+                <v-text-field
+                  v-model="building.cold"
+                  label="Externe Kälteversorger"
+                />
+              </v-col>
+            </v-row>
+            <v-row v-if="external_supplier">
+              <v-col>
+                <v-text-field
+                  v-model="building.electricity"
+                  label="Externe Stromversorger"
+                />
+              </v-col>
+            </v-row>
 
             <v-card-actions>
               <v-col class="text-left">
@@ -422,8 +461,12 @@ export default {
       ff: null,
       vf: null,
       freif: null,
-      gesamtf: null
+      gesamtf: null,
+      warmth: '',
+      cold: '',
+      electricity: '',
     },
+    external_supplier: false,
     counter: {
       primary_key: null,
       unit: '',
@@ -560,12 +603,44 @@ export default {
 
       if(!this.building.number || !this.building.name || !this.building.hnf || !this.building.nnf  || !this.building.ngf || 
          !this.building.ff || !this.building.vf || !this.building.freif || !this.building.gesamtf){
-        this.$set(this.errorMessage, 1, "Alle Felder müssen ausgefüllt sein")
+        this.$set(this.errorMessage, 1, "Gebäudenummer, Gebäudebezeichnung und Flächen müssen ausgefüllt sein!")
         this.$set(this.displayLoadingAnimation, 1, false)
         this.$set(this.displayError, 1, true)
 
         return
       }
+
+      var warmth_supplier = []
+      var cold_supplier = []
+      var electricity_supplier = []
+
+      const beginningYear = 2018
+      let currentYear = new Date().getFullYear()
+
+      function numberfilter (num) {
+        return !!num && num >= beginningYear && num <= currentYear
+      }
+
+      if (this.external_supplier) {
+        if (this.building.warmth){
+          warmth_supplier = this.building.warmth.split(',').map((str) => {return parseInt(str, 10)})
+        }
+        if (this.building.cold){
+          cold_supplier = this.building.cold.split(',').map((str) => {return parseInt(str, 10)})
+        }
+        if (this.building.electricity){
+          electricity_supplier = this.building.electricity.split(',').map((str) => {return parseInt(str, 10)})
+        }
+
+        warmth_supplier = warmth_supplier.filter(numberfilter)
+        cold_supplier = cold_supplier.filter(numberfilter)
+        electricity_supplier = electricity_supplier.filter(numberfilter)
+      }
+
+      console.log(warmth_supplier)
+      console.log(cold_supplier)
+      console.log(electricity_supplier)
+
 
       await fetch(process.env.VUE_APP_BASEURL + "/db/insertGebaeude", {
         method: "POST",
@@ -588,6 +663,9 @@ export default {
             freif: parseFloat(this.building.freif),
             gesamtf: parseFloat(this.building.gesamtf),
           },
+          waerme_versorger_jahre: warmth_supplier,
+          kaelte_versorger_jahre: cold_supplier,
+          strom_versorger_jahre: electricity_supplier,
         }),
       })
         .then((response) => response.json())
