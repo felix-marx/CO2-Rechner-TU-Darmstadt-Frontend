@@ -1226,7 +1226,6 @@ export default {
         this.parseError = true
         return
       }
-      console.log("File: ", this.chosenFile)
 
       /*{ Full config
         delimiter: "",	// auto-detect
@@ -1267,9 +1266,6 @@ export default {
           )
         }
       )
-
-      console.log("Files Parsed")
-      console.log(parsedFile)
 
       parsedFile.data.forEach(
         arr => {
@@ -1315,8 +1311,6 @@ export default {
         return
       }
 
-      console.log("After Extracting Values")
-
       var mask = this.csv_counter_data.primary_keys.map(x => !this.irrelevant_counters.includes(x))
       console.log(this.csv_counter_data.primary_keys.filter((elem, index) => !mask[index]))
 
@@ -1331,11 +1325,6 @@ export default {
 
         return
       }
-
-      console.log("After Filtering Values")
-
-      console.log("CSV_Counter_Data", this.csv_counter_data)
-      console.log("ParsedFile: ", parsedFile)
       
       if (!this.parseError){
         // send request
