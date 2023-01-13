@@ -28,10 +28,9 @@
       </v-container>
     </v-card>
 
-
     <v-card class="px-4 pb-4 mt-2">
       <v-card-title>
-        Eintragen neuer Daten
+        Eintragen von Daten
       </v-card-title>
       <v-divider />
 
@@ -47,9 +46,13 @@
       <v-expansion-panels
         focusable
       >
+        <p class="px-4">
+          CO2-FAKTOREN
+        </p>
+
+        <!-- Add CO2 factors to the database -->
         <v-expansion-panel>
-          <!-- Past years' CO2 factors can be sent to the database-->
-          <v-expansion-panel-header>CO2 Faktor</v-expansion-panel-header>
+          <v-expansion-panel-header>Neue CO2-Faktor hinzufügen</v-expansion-panel-header>
 
           <v-expansion-panel-content>
             <v-autocomplete
@@ -64,6 +67,13 @@
               :items="energy_types"
               flat
               label="Energieart"
+            />
+
+            <v-select
+              v-model="co2_factor.contract"
+              :items="contracts"
+              flat
+              label="Versorger"
             />
 
             <v-text-field
@@ -104,9 +114,13 @@
           </v-expansion-panel-content>
         </v-expansion-panel>
 
-        <!-- New buildings can be sent to the database -->
+        <p class="px-4 mt-4">
+          GEBÄUDE
+        </p>
+
+        <!-- Add a new building to the database -->
         <v-expansion-panel>
-          <v-expansion-panel-header>Gebäude Hinzufügen</v-expansion-panel-header>
+          <v-expansion-panel-header>Neues Gebäude hinzufügen</v-expansion-panel-header>
           <v-expansion-panel-content>
             <v-row>
               <v-col cols="11">
@@ -193,6 +207,45 @@
                 />
               </v-col>
             </v-row>
+            <v-row>
+              <v-col>
+                <v-checkbox
+                  v-model="external_supplier"
+                  label="Hat das Gebäude externe Versorger?"
+                />
+              </v-col>
+            </v-row>
+            <v-row v-if="external_supplier">
+              <v-col>
+                <p>
+                  Geben sie die Jahre seit 2018 an, für die das Gebäude einen externe Versorger hatte. Eingabe als komma-seperierte Liste and
+                </p>
+              </v-col>
+            </v-row>
+            <v-row v-if="external_supplier">
+              <v-col>
+                <v-text-field
+                  v-model="building.warmth"
+                  label="Externe Wärmeversorger"
+                />
+              </v-col>
+            </v-row>
+            <v-row v-if="external_supplier">
+              <v-col>
+                <v-text-field
+                  v-model="building.cold"
+                  label="Externe Kälteversorger"
+                />
+              </v-col>
+            </v-row>
+            <v-row v-if="external_supplier">
+              <v-col>
+                <v-text-field
+                  v-model="building.electricity"
+                  label="Externe Stromversorger"
+                />
+              </v-col>
+            </v-row>
 
             <v-card-actions>
               <v-col class="text-left">
@@ -226,9 +279,134 @@
           </v-expansion-panel-content>
         </v-expansion-panel>
 
-        <!-- Counters can be sent to the database as soon as the associated buildings exist (a hint is still missing here!) -->
+        <!-- Add external suppliers to a building -->
         <v-expansion-panel>
-          <v-expansion-panel-header>Zähler hinzufügen</v-expansion-panel-header>
+          <v-expansion-panel-header>Versorger für Gebäude hinzufügen</v-expansion-panel-header>
+          <v-expansion-panel-content>
+            <v-row>
+              <v-col cols="11">
+                <v-text-field
+                  v-model="supplier.number"
+                  label="Gebäudenummer"
+                  :rules="basicRule"
+                />
+              </v-col>
+              <v-col align-self="center">
+                <Tooltip
+                  tooltip-text="4 Ziffern: Die 1. Ziffer für den Campus (1=Stadtmitte, 2=Botanischer Garten, 
+                3=Lichtwiese, 4=Hochschulstadion und 5=Windkanal/August-Euler-Flugplatz). Die Ziffer 2-4 für die 
+                Gebäudenummer. Zum Beispiel 1101 für das Universitätszentrum."
+                />
+              </v-col>
+            </v-row>
+
+            <v-autocomplete
+              v-model="supplier.year"
+              :items="possibleYears"
+              label="Jahr"
+              prepend-icon="mdi-calendar-question"
+            />
+
+            <v-select
+              v-model="supplier.energy_type"
+              :items="energy_types"
+              flat
+              label="Energieart"
+            />
+
+            <v-select
+              v-model="supplier.contract"
+              :items="contracts"
+              flat
+              label="Versorger"
+            />
+
+            <v-card-actions>
+              <v-col class="text-left">
+                <v-btn
+                  color="primary"
+                  @click="sendSupplier"
+                >
+                  Absenden
+                </v-btn>
+              </v-col>
+            </v-card-actions>
+
+            <v-card
+              v-if="displaySuccess[4] || displayLoadingAnimation[4] || displayError[4]"
+              elevation="2"
+            >
+              <LoadingAnimation v-if="displayLoadingAnimation[4]" />
+              <v-alert
+                v-if="displaySuccess[4]"
+                type="success"
+              >
+                {{ successMessage[4] }}
+              </v-alert>
+              <v-alert
+                v-if="displayError[4]"
+                type="error"
+              >
+                {{ errorMessage[4] }}
+              </v-alert>
+            </v-card>
+          </v-expansion-panel-content>
+        </v-expansion-panel>
+
+        <!-- Add default external suppliers to buildings that don't have a supplier for a specific year -->
+        <v-expansion-panel>
+          <v-expansion-panel-header>Standard Versorger für alle Gebäude hinzufügen</v-expansion-panel-header>
+          <v-expansion-panel-content>
+            <v-row>
+              <v-col>
+                <v-autocomplete
+                  v-model="default_supplier.year"
+                  :items="possibleYears"
+                  label="Jahr"
+                  prepend-icon="mdi-calendar-question"
+                />
+              </v-col>
+            </v-row>
+
+            <v-card-actions>
+              <v-col class="text-left">
+                <v-btn
+                  color="primary"
+                  @click="sendDefaultSupplier"
+                >
+                  Absenden
+                </v-btn>
+              </v-col>
+            </v-card-actions>
+
+            <v-card
+              v-if="displaySuccess[5] || displayLoadingAnimation[5] || displayError[5]"
+              elevation="2"
+            >
+              <LoadingAnimation v-if="displayLoadingAnimation[5]" />
+              <v-alert
+                v-if="displaySuccess[5]"
+                type="success"
+              >
+                {{ successMessage[5] }}
+              </v-alert>
+              <v-alert
+                v-if="displayError[5]"
+                type="error"
+              >
+                {{ errorMessage[5] }}
+              </v-alert>
+            </v-card>
+          </v-expansion-panel-content>
+        </v-expansion-panel>
+
+        <p class="px-4 mt-4">
+          ZÄHLER
+        </p>
+
+        <!-- Add a new counter to the database -->
+        <v-expansion-panel>
+          <v-expansion-panel-header>Neuen Zähler hinzufügen</v-expansion-panel-header>
           <v-expansion-panel-content>
             <v-text-field
               v-model="counter.primary_key"
@@ -321,9 +499,9 @@
           </v-expansion-panel-content>
         </v-expansion-panel>
 
-        <!-- Past years' counter data can be sent to the database -->
+        <!-- Set counter value for specific counter -->
         <v-expansion-panel>
-          <v-expansion-panel-header>Zählerdaten eintragen</v-expansion-panel-header>
+          <v-expansion-panel-header>Zählerdaten für Zähler hinzufügen</v-expansion-panel-header>
           <v-expansion-panel-content>
             <v-autocomplete
               v-model="counter_data.year"
@@ -382,6 +560,99 @@
             </v-card>
           </v-expansion-panel-content>
         </v-expansion-panel>
+
+        <!-- Set default counter values for all counters that don't have a value in a given year -->
+        <v-expansion-panel>
+          <v-expansion-panel-header>Standard Zählerdaten für alle Zähler hinzufügen</v-expansion-panel-header>
+          <v-expansion-panel-content>
+            <v-autocomplete
+              v-model="default_counter_data.year"
+              :items="possibleYears"
+              label="Jahr"
+              prepend-icon="mdi-calendar-question"
+            />
+
+            <v-card-actions>
+              <v-col class="text-left">
+                <v-btn
+                  color="primary"
+                  @click="sendDefaultCounterData"
+                >
+                  Absenden
+                </v-btn>
+              </v-col>
+            </v-card-actions>
+
+            <v-card
+              v-if="displaySuccess[6] || displayLoadingAnimation[6] || displayError[6]"
+              elevation="2"
+            >
+              <LoadingAnimation v-if="displayLoadingAnimation[6]" />
+              <v-alert
+                v-if="displaySuccess[6]"
+                type="success"
+              >
+                {{ successMessage[6] }}
+              </v-alert>
+              <v-alert
+                v-if="displayError[6]"
+                type="error"
+              >
+                {{ errorMessage[6] }}
+              </v-alert>
+            </v-card>
+          </v-expansion-panel-content>
+        </v-expansion-panel>
+
+        <!-- CSV parser for sending a bunch of counter values -->
+        <v-expansion-panel>
+          <v-expansion-panel-header>Zählerdaten mittels CSV-Datei hinzufügen</v-expansion-panel-header>
+          <v-expansion-panel-content>
+            <v-row>
+              <v-col>
+                <v-autocomplete
+                  v-model="csv_counter_data.year"
+                  :items="possibleYears"
+                  label="Bilanzierungsjahr"
+                  prepend-icon="mdi-calendar-question"
+                />
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col>
+                <v-file-input
+                  v-model="chosenFile"
+                  accept=".csv"
+                  label="Click here to select a .csv file"
+                  chips
+                />
+              </v-col>
+              <v-col cols="2">
+                <v-btn
+                  @click="parseFile"
+                >
+                  Parse
+                </v-btn>
+              </v-col>
+            </v-row>
+            <v-row>
+              <LoadingAnimation v-if="parseLoading" />
+              <v-alert 
+                v-if="parseError"
+                type="error"
+                style="white-space: pre-wrap"
+              >
+                {{ parseErrorMessage }}
+              </v-alert>
+              <v-alert 
+                v-if="parseSuccess"
+                type="success"
+              >
+                {{ parseSuccessMessage }}
+              </v-alert>
+            </v-row>
+          </v-expansion-panel-content>
+        </v-expansion-panel>
       </v-expansion-panels>
     </v-card>
   </v-container>
@@ -403,6 +674,7 @@ export default {
     co2_factor: {
       year: '',
       energy_type: '',
+      contract: '',
       value: null
     },
     building: {
@@ -414,7 +686,20 @@ export default {
       ff: null,
       vf: null,
       freif: null,
-      gesamtf: null
+      gesamtf: null,
+      warmth: '',
+      cold: '',
+      electricity: '',
+    },
+    external_supplier: false,
+    supplier: {
+      building_number: null,
+      year: '',
+      energy_type: '',
+      contract: '',
+    },
+    default_supplier: {
+      year: '',
     },
     counter: {
       primary_key: null,
@@ -429,17 +714,41 @@ export default {
       energy_type: '',
       value: null
     },
+    default_counter_data: {
+      year: '',
+    },
+    contracts: ['TU Darmstadt', 'Extern'],
+    contract_map: new Map([['TU Darmstadt', 1], ['Extern', 2]]),
     energy_types: ['Wärme', 'Strom', 'Kälte'],
     energy_map: new Map([['Wärme', 1], ['Strom', 2], ['Kälte', 3]]),
     units: ['kWh', 'MWh'],
 
-    displaySuccess: [false, false, false, false],
-    displayError: [false, false, false, false],
-    displayLoadingAnimation: [false, false, false, false], 
+    displaySuccess: [false, false, false, false, false, false, false],
+    displayError: [false, false, false, false, false, false, false],
+    displayLoadingAnimation: [false, false, false, false, false, false, false], 
 
     errorMessage: ["", "", "", ""],
     successMessage: ["", "", "", ""],
 
+    chosenFile: null,
+    parseError: false,
+    parseSuccess: false,
+    parseLoading: false,
+    parseErrorMessage: "",
+    parseSuccessMessage: "",
+
+    csv_counter_data: {
+      year: '',
+      primary_keys: null,
+      energy_types: null,
+      values: null
+    },
+
+    // arrays contain counters and buildings that are explicitly left out
+    // reasons are given in BP_Berechnungsformeln.pdf
+    irrelevant_counters: [2104, 2105, 2106, 2256, 3613, 3614, 2102, 2377, 2378, 4193, 4194, 3576, 3966, 3960, 6697, 3789, 2558, 2560],
+    irrelevant_buildings: [1473, 1475, 1476, 1477, 1479, 1480, 1481, 1213],
+    
     //Rules for input validation
     basicRule: [
       (v) => !!v || "Muss angegeben werden",
@@ -498,7 +807,7 @@ export default {
       this.$set(this.displayError, 0, false)
       this.$set(this.displayLoadingAnimation, 0, true)
 
-      if(!this.co2_factor.year || !this.co2_factor.energy_type || !this.co2_factor.value){
+      if(!this.co2_factor.year || !this.co2_factor.energy_type || !this.co2_factor.value || !this.co2_factor.contract){
         this.$set(this.errorMessage, 0, "Alle Felder müssen ausgefüllt sein")
         this.$set(this.displayLoadingAnimation, 0, false)
         this.$set(this.displayError, 0, true)
@@ -517,6 +826,7 @@ export default {
             sessiontoken: Cookies.getCookieAttribut('sessiontoken'),
           },
           idEnergieversorgung: this.energy_map.get(this.co2_factor.energy_type),
+          idVertrag: this.contract_map.get(this.co2_factor.contract),
           jahr: parseInt(this.co2_factor.year),
           wert: parseInt(this.co2_factor.value),
         }),
@@ -549,11 +859,46 @@ export default {
 
       if(!this.building.number || !this.building.name || !this.building.hnf || !this.building.nnf  || !this.building.ngf || 
          !this.building.ff || !this.building.vf || !this.building.freif || !this.building.gesamtf){
-        this.$set(this.errorMessage, 1, "Alle Felder müssen ausgefüllt sein")
+        this.$set(this.errorMessage, 1, "Gebäudenummer, Gebäudebezeichnung und Flächen müssen ausgefüllt sein!")
         this.$set(this.displayLoadingAnimation, 1, false)
         this.$set(this.displayError, 1, true)
 
         return
+      }
+
+      if(this.irrelevant_buildings.includes(parseInt(this.building.number))){
+        this.$set(this.errorMessage, 1, "Das Gebäude " + this.building.number + " wurde explizit ausgeschlossen!")
+        this.$set(this.displayLoadingAnimation, 1, false)
+        this.$set(this.displayError, 1, true)
+
+        return
+      }
+
+      var warmth_supplier = []
+      var cold_supplier = []
+      var electricity_supplier = []
+
+      const beginningYear = 2018
+      let currentYear = new Date().getFullYear()
+
+      function numberfilter (num) {
+        return !!num && num >= beginningYear && num <= currentYear
+      }
+
+      if (this.external_supplier) {
+        if (this.building.warmth){
+          warmth_supplier = this.building.warmth.split(',').map((str) => {return parseInt(str, 10)})
+        }
+        if (this.building.cold){
+          cold_supplier = this.building.cold.split(',').map((str) => {return parseInt(str, 10)})
+        }
+        if (this.building.electricity){
+          electricity_supplier = this.building.electricity.split(',').map((str) => {return parseInt(str, 10)})
+        }
+
+        warmth_supplier = warmth_supplier.filter(numberfilter)
+        cold_supplier = cold_supplier.filter(numberfilter)
+        electricity_supplier = electricity_supplier.filter(numberfilter)
       }
 
       await fetch(process.env.VUE_APP_BASEURL + "/db/insertGebaeude", {
@@ -577,6 +922,9 @@ export default {
             freif: parseFloat(this.building.freif),
             gesamtf: parseFloat(this.building.gesamtf),
           },
+          waerme_versorger_jahre: warmth_supplier,
+          kaelte_versorger_jahre: cold_supplier,
+          strom_versorger_jahre: electricity_supplier,
         }),
       })
         .then((response) => response.json())
@@ -590,6 +938,103 @@ export default {
             this.$set(this.errorMessage, 1, "Code " + data.error.code + ": " + data.error.message)
             this.$set(this.displayLoadingAnimation, 1, false)
             this.$set(this.displayError, 1, true)
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    },
+
+    /**
+     * send supplier to db
+     */
+    sendSupplier: async function () {
+      this.$set(this.displaySuccess, 4, false)
+      this.$set(this.displayError, 4, false)
+      this.$set(this.displayLoadingAnimation, 4, true)
+
+      if(!this.supplier.number || !this.supplier.year || !this.supplier.energy_type || !this.supplier.contract){
+        this.$set(this.errorMessage, 4, "Alle Felder müssen ausgefüllt sein")
+        this.$set(this.displayLoadingAnimation, 4, false)
+        this.$set(this.displayError, 4, true)
+
+        return
+      }
+
+      await fetch(process.env.VUE_APP_BASEURL + "/db/addVersorger", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          authToken: {
+            username: Cookies.getCookieAttribut('username'),
+            sessiontoken: Cookies.getCookieAttribut('sessiontoken'),
+          },
+          nr: parseInt(this.supplier.number),
+          idEnergieversorgung: this.energy_map.get(this.supplier.energy_type),
+          idVertrag: this.contract_map.get(this.supplier.contract),
+          jahr: parseInt(this.supplier.year),
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if(data.status == "success"){
+            this.$set(this.successMessage, 4, "Der Versorger wurde erfolgreich in der Datenbank gespeichert.")
+            this.$set(this.displayLoadingAnimation, 4, false)
+            this.$set(this.displaySuccess, 4, true)
+          }
+          else if(data.status == "error"){
+            this.$set(this.errorMessage, 4, "Code " + data.error.code + ": " + data.error.message)
+            this.$set(this.displayLoadingAnimation, 4, false)
+            this.$set(this.displayError, 4, true)
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    },
+
+    /**
+     * send default supplier to db
+     */
+     sendDefaultSupplier: async function () {
+      this.$set(this.displaySuccess, 5, false)
+      this.$set(this.displayError, 5, false)
+      this.$set(this.displayLoadingAnimation, 5, true)
+
+      if(!this.default_supplier.year){
+        this.$set(this.errorMessage, 5, "Alle Felder müssen ausgefüllt sein")
+        this.$set(this.displayLoadingAnimation, 5, false)
+        this.$set(this.displayError, 5, true)
+
+        return
+      }
+
+      await fetch(process.env.VUE_APP_BASEURL + "/db/addStandardVersorger", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          authToken: {
+            username: Cookies.getCookieAttribut('username'),
+            sessiontoken: Cookies.getCookieAttribut('sessiontoken'),
+          },
+          jahr: parseInt(this.default_supplier.year),
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if(data.status == "success"){
+            this.$set(this.successMessage, 5, "Für alle Gebäude ohne Versorger wurde die TU Darmstadt als Versorger eingetragen.")
+            this.$set(this.displayLoadingAnimation, 5, false)
+            this.$set(this.displaySuccess, 5, true)
+          }
+          else if(data.status == "error"){
+            this.$set(this.errorMessage, 5, "Code " + data.error.code + ": " + data.error.message)
+            this.$set(this.displayLoadingAnimation, 5, false)
+            this.$set(this.displayError, 5, true)
           }
         })
         .catch((error) => {
@@ -700,6 +1145,53 @@ export default {
     },
 
     /**
+     * send default counter data to db
+     */
+    sendDefaultCounterData: async function () {
+      this.$set(this.displaySuccess, 6, false)
+      this.$set(this.displayError, 6, false)
+      this.$set(this.displayLoadingAnimation, 6, true)
+
+      if(!this.default_counter_data.year){
+        this.$set(this.errorMessage, 6, "Alle Felder müssen ausgefüllt sein")
+        this.$set(this.displayLoadingAnimation, 6, false)
+        this.$set(this.displayError, 6, true)
+
+        return
+      }
+
+      await fetch(process.env.VUE_APP_BASEURL + "/db/addStandardZaehlerdaten", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          authToken: {
+            username: Cookies.getCookieAttribut('username'),
+            sessiontoken: Cookies.getCookieAttribut('sessiontoken'),
+          },
+          jahr: parseInt(this.default_counter_data.year),
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if(data.status == "success"){
+            this.$set(this.successMessage, 6, "Für alle Zähler von Wert für " + this.default_counter_data.year + " wurde 0 als Zählerwert eingetragen.")
+            this.$set(this.displayLoadingAnimation, 6, false)
+            this.$set(this.displaySuccess, 6, true)
+          }
+          else if(data.status == "error"){
+            this.$set(this.errorMessage, 6, "Code " + data.error.code + ": " + data.error.message)
+            this.$set(this.displayLoadingAnimation, 6, false)
+            this.$set(this.displayError, 6, true)
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    },
+
+    /**
      * parses the building references of a counter to integers
      */
     buildingRefJSON: function () {
@@ -715,6 +1207,168 @@ export default {
       return buildingRefs
     },
 
+    /**
+     * parses a CSV file containing counter values
+     */
+    parseFile: async function () {
+      this.parseLoading = true
+      this.parseError = false
+      this.parseSuccess = false
+
+      // reset object for data
+      this.csv_counter_data.primary_keys = null
+      this.csv_counter_data.energy_types = null
+      this.csv_counter_data.values = null
+
+      if(!this.chosenFile){
+        this.parseErrorMessage = "No File selected"
+        this.parseLoading = false
+        this.parseError = true
+        return
+      }
+
+      /*{ Full config
+        delimiter: "",	// auto-detect
+        newline: "",	// auto-detect
+        quoteChar: '"',
+        escapeChar: '"',
+        header: false,
+        transformHeader: undefined,
+        dynamicTyping: false,
+        preview: 0,
+        encoding: "",
+        worker: false,
+        comments: false,
+        step: undefined,
+        complete: undefined,
+        error: undefined,
+        download: false,
+        downloadRequestHeaders: undefined,
+        downloadRequestBody: undefined,
+        skipEmptyLines: false,
+        chunk: undefined,
+        chunkSize: undefined,
+        fastMode: undefined,
+        beforeFirstChunk: undefined,
+        withCredentials: undefined,
+        transform: undefined,
+        delimitersToGuess: [',', '\t', '|', ';', this.$papa.RECORD_SEP, this.$papa.UNIT_SEP]
+      }*/
+
+      var parsedFile = await new Promise(
+        resolve => {
+          this.$papa.parse(
+            this.chosenFile, 
+            {
+              delimiter: ";",
+              complete: results => {resolve(results)},
+            }
+          )
+        }
+      )
+
+      parsedFile.data.forEach(
+        arr => {
+          if (arr[0] == "PrimaryKey"){
+            this.csv_counter_data.primary_keys = arr.slice(1).map(
+              (elem) => {return parseInt(elem)}
+            )
+          }
+          if (arr[0] == "DPName"){
+            this.csv_counter_data.energy_types = arr.slice(1).map(
+              (elem) => {
+                if (elem.indexOf('HE000') !== -1){
+                  return 1;
+                }
+                else if (elem.indexOf('NA000') !== -1){
+                  return 2;
+                }
+                else if (elem.indexOf('KA000') !== -1){
+                  return 3;
+                }
+                else{
+                  this.parseErrorMessage = "Zählertype des Zählers mit der Bezeichung " + elem + " ist nicht bekannt!!"
+                  this.parseLoading = false;
+                  this.parseError = true;
+                }
+              }
+            )
+          }
+          if (arr[0] == "01.01." + this.csv_counter_data.year + " 00:00:00"){
+            this.csv_counter_data.values = arr.slice(1).map(
+              (elem) => {return !elem ? 0 : parseFloat(elem.replace(",", "."))}
+            )
+          }
+        }
+      )
+
+      if (!this.csv_counter_data.year || !this.csv_counter_data.primary_keys || !this.csv_counter_data.energy_types || !this.csv_counter_data.values
+          || this.csv_counter_data.primary_keys.length != this.csv_counter_data.energy_types.length || this.csv_counter_data.energy_types.length != this.csv_counter_data.values.length){
+        this.parseErrorMessage = "CSV Datei konnte nicht korrekt gelesen werden!"
+        this.parseLoading = false;
+        this.parseError = true;
+
+        return
+      }
+
+      var mask = this.csv_counter_data.primary_keys.map(x => !this.irrelevant_counters.includes(x))
+      console.log(this.csv_counter_data.primary_keys.filter((elem, index) => !mask[index]))
+
+      this.csv_counter_data.primary_keys = this.csv_counter_data.primary_keys.filter((elem, index) => mask[index])
+      this.csv_counter_data.energy_types = this.csv_counter_data.energy_types.filter((elem, index) => mask[index])
+      this.csv_counter_data.values = this.csv_counter_data.values.filter((elem, index) => mask[index])
+
+      if (this.csv_counter_data.primary_keys.length != this.csv_counter_data.energy_types.length || this.csv_counter_data.energy_types.length != this.csv_counter_data.values.length){
+        this.parseErrorMessage = "CSV Datei konnte nicht korrekt gelesen werden!"
+        this.parseLoading = false;
+        this.parseError = true;
+
+        return
+      }
+      
+      if (!this.parseError){
+        // send request
+        this.sendCSVCounterData()
+      }
+    },
+
+    /**
+     * send parsed CSV file to db
+     */
+    sendCSVCounterData: async function(){
+      await fetch(process.env.VUE_APP_BASEURL + "/db/addZaehlerdatenCSV", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          authToken: {
+            username: Cookies.getCookieAttribut('username'),
+            sessiontoken: Cookies.getCookieAttribut('sessiontoken'),
+          },
+          pkEnergie: this.csv_counter_data.primary_keys,
+          idEnergieversorgung: this.csv_counter_data.energy_types,
+          jahr: this.csv_counter_data.year,
+          wert: this.csv_counter_data.values,
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if(data.status == "success"){
+            this.parseSuccessMessage = "Die Zählerdaten wurden erfolgreich in der Datenbank gespeichert."
+            this.parseLoading = false
+            this.parseSuccess = true
+          }
+          else if(data.status == "error"){
+            this.parseErrorMessage = "Code " + data.error.code + ": " + data.error.message
+            this.parseLoading = false
+            this.parseError = true
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    }
   },
 }
 </script>
