@@ -11,6 +11,7 @@
         :key="'umfrage_'+index"
         elevation="2"
         outlined
+        class="pb-2"
       >
         <v-list-item
           three-line
