@@ -1,24 +1,32 @@
 <template>
   <v-container>
-    <v-card class="px-4 pb-4">
-      <v-card-title>
+    <v-card class="px-0 pb-2">
+      <v-card-title
+        class="mx-4"
+      >
         Datenbankinformationen
       </v-card-title>
       <v-divider />
       <v-container>
         <v-row>
-          <v-col cols="3">
+          <v-col
+            cols="3"
+            class="mx-4"
+          >
             Datenbankversion:
           </v-col>
-          <v-col>
+          <v-col class="mx-4">
             MongoDB v5.0.6
           </v-col>
         </v-row>
         <v-row>
-          <v-col cols="3">
+          <v-col
+            cols="3"
+            class="mx-4"
+          >
             Monitoring:
           </v-col>
-          <v-col>
+          <v-col class="mx-4">
             <a
               href="https://cloud.mongodb.com/freemonitoring/cluster/FJISZV76EW3BHYEPQZKEOLCQTMZ457BD"
               target="_blank"
@@ -28,13 +36,13 @@
       </v-container>
     </v-card>
 
-    <v-card class="px-4 pb-4 mt-2">
-      <v-card-title>
+    <v-card class="px-0 pb-4 mt-2">
+      <v-card-title class="mx-4">
         Eintragen von Daten
       </v-card-title>
-      <v-divider />
 
       <v-alert
+        class="mx-4"
         type="warning"
         border="bottom"
         colored-border
@@ -43,16 +51,22 @@
         Bei Dezimalzahlen muss ein Punkt als Dezimaltrenner verwendet werden!
       </v-alert>
 
+      <v-divider />
+
+      <p
+        class="px-4 mt-4 mx-4"
+        align="center"
+      >
+        <strong>CO2-Faktoren</strong>
+      </p>
+
       <v-expansion-panels
         focusable
+        class="px-4 pb-4 mt-2"
       >
-        <p class="px-4">
-          CO2-FAKTOREN
-        </p>
-
         <!-- Add CO2 factors to the database -->
         <v-expansion-panel>
-          <v-expansion-panel-header>Neue CO2-Faktor hinzufügen</v-expansion-panel-header>
+          <v-expansion-panel-header>Neuen CO2-Faktor für Energie hinzufügen</v-expansion-panel-header>
 
           <v-expansion-panel-content>
             <v-autocomplete
@@ -113,11 +127,21 @@
             </v-card>
           </v-expansion-panel-content>
         </v-expansion-panel>
+      </v-expansion-panels>
 
-        <p class="px-4 mt-4">
-          GEBÄUDE
-        </p>
+      <v-divider />
 
+      <p
+        class="px-4 mt-4"
+        align="center"
+      >
+        <strong>Gebäude</strong>
+      </p>
+
+      <v-expansion-panels
+        focusable
+        class="px-4 pb-4 mt-2"
+      >
         <!-- Add a new building to the database -->
         <v-expansion-panel>
           <v-expansion-panel-header>Neues Gebäude hinzufügen</v-expansion-panel-header>
@@ -399,11 +423,21 @@
             </v-card>
           </v-expansion-panel-content>
         </v-expansion-panel>
+      </v-expansion-panels>
 
-        <p class="px-4 mt-4">
-          ZÄHLER
-        </p>
+      <v-divider />
 
+      <p
+        class="px-4 mt-4"
+        align="center"
+      >
+        <strong>Zähler</strong>
+      </p>
+
+      <v-expansion-panels
+        focusable
+        class="px-4 mt-2"
+      >
         <!-- Add a new counter to the database -->
         <v-expansion-panel>
           <v-expansion-panel-header>Neuen Zähler hinzufügen</v-expansion-panel-header>
