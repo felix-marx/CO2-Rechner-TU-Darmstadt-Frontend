@@ -57,7 +57,7 @@
         class="px-4 mt-4 mx-4"
         align="center"
       >
-        <strong>CO2-Faktoren</strong>
+        <strong>CO<sub>2</sub>-Faktoren</strong>
       </p>
 
       <v-expansion-panels
@@ -66,7 +66,7 @@
       >
         <!-- Add CO2 factors to the database -->
         <v-expansion-panel>
-          <v-expansion-panel-header>Neuen CO2-Faktor für Energie hinzufügen</v-expansion-panel-header>
+          <v-expansion-panel-header><label>Neuen CO<sub>2</sub>-Faktor für Energie hinzufügen</label></v-expansion-panel-header>
 
           <v-expansion-panel-content>
             <v-autocomplete
@@ -93,8 +93,12 @@
             <v-text-field
               v-model="co2_factor.value"
               :rules="notNegativeRule"
-              label="Wert des CO2 Faktors in g/kWh"
-            />
+              label="Wert des CO2-Faktors in g/kWh"
+            >
+              <template #label>
+                <label>Wert des CO<sub>2</sub>-Faktors in g/kWh</label>
+              </template>
+            </v-text-field>
 
             <v-card-actions>
               <v-col class="text-left">
