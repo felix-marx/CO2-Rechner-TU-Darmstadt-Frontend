@@ -636,19 +636,19 @@
               </v-col>
             </v-row>
             <v-row>
-              <LoadingAnimation v-if="parseLoading" />
+              <LoadingAnimation v-if="displayLoadingAnimation[7]" />
               <v-alert 
-                v-if="parseError"
+                v-if="displayError[7]"
                 type="error"
                 style="white-space: pre-wrap"
               >
-                {{ parseErrorMessage }}
+                {{ errorMessage[7] }}
               </v-alert>
               <v-alert 
-                v-if="parseSuccess"
+                v-if="displaySuccess[7]"
                 type="success"
               >
-                {{ parseSuccessMessage }}
+                {{ successMessage[7] }}
               </v-alert>
             </v-row>
           </v-expansion-panel-content>
@@ -723,20 +723,14 @@ export default {
     energy_map: new Map([['Wärme', 1], ['Strom', 2], ['Kälte', 3]]),
     units: ['kWh', 'MWh'],
 
-    displaySuccess: [false, false, false, false, false, false, false],
-    displayError: [false, false, false, false, false, false, false],
-    displayLoadingAnimation: [false, false, false, false, false, false, false], 
+    displaySuccess: [false, false, false, false, false, false, false, false],
+    displayError: [false, false, false, false, false, false, false, false],
+    displayLoadingAnimation: [false, false, false, false, false, false, false, false], 
 
-    errorMessage: ["", "", "", ""],
-    successMessage: ["", "", "", ""],
+    errorMessage: ["", "", "", "", "", "", "", ""],
+    successMessage: ["", "", "", "", "", "", "", ""],
 
     chosenFile: null,
-    parseError: false,
-    parseSuccess: false,
-    parseLoading: false,
-    parseErrorMessage: "",
-    parseSuccessMessage: "",
-
     csv_counter_data: {
       year: '',
       primary_keys: null,
@@ -1211,9 +1205,9 @@ export default {
      * parses a CSV file containing counter values
      */
     parseFile: async function () {
-      this.parseLoading = true
-      this.parseError = false
-      this.parseSuccess = false
+      this.$set(this.displaySuccess, 7, false)
+      this.$set(this.displayError, 7, false)
+      this.$set(this.displayLoadingAnimation, 7, true)
 
       // reset object for data
       this.csv_counter_data.primary_keys = null
@@ -1221,9 +1215,10 @@ export default {
       this.csv_counter_data.values = null
 
       if(!this.chosenFile){
-        this.parseErrorMessage = "No File selected"
-        this.parseLoading = false
-        this.parseError = true
+        this.$set(this.errorMessage, 7, "No File selected")
+        this.$set(this.displayLoadingAnimation, 7, false)
+        this.$set(this.displayError, 7, true)
+
         return
       }
 
@@ -1287,9 +1282,9 @@ export default {
                   return 3;
                 }
                 else{
-                  this.parseErrorMessage = "Zählertype des Zählers mit der Bezeichung " + elem + " ist nicht bekannt!!"
-                  this.parseLoading = false;
-                  this.parseError = true;
+                  this.$set(this.errorMessage, 7, "Zählertype des Zählers mit der Bezeichung " + elem + " ist nicht bekannt!!")
+                  this.$set(this.displayLoadingAnimation, 7, false)
+                  this.$set(this.displayError, 7, true)
                 }
               }
             )
@@ -1304,9 +1299,9 @@ export default {
 
       if (!this.csv_counter_data.year || !this.csv_counter_data.primary_keys || !this.csv_counter_data.energy_types || !this.csv_counter_data.values
           || this.csv_counter_data.primary_keys.length != this.csv_counter_data.energy_types.length || this.csv_counter_data.energy_types.length != this.csv_counter_data.values.length){
-        this.parseErrorMessage = "CSV Datei konnte nicht korrekt gelesen werden!"
-        this.parseLoading = false;
-        this.parseError = true;
+        this.$set(this.errorMessage, 7, "CSV Datei konnte nicht korrekt gelesen werden!")
+        this.$set(this.displayLoadingAnimation, 7, false)
+        this.$set(this.displayError, 7, true)
 
         return
       }
@@ -1319,14 +1314,14 @@ export default {
       this.csv_counter_data.values = this.csv_counter_data.values.filter((elem, index) => mask[index])
 
       if (this.csv_counter_data.primary_keys.length != this.csv_counter_data.energy_types.length || this.csv_counter_data.energy_types.length != this.csv_counter_data.values.length){
-        this.parseErrorMessage = "CSV Datei konnte nicht korrekt gelesen werden!"
-        this.parseLoading = false;
-        this.parseError = true;
+        this.$set(this.errorMessage, 7, "CSV Datei konnte nicht korrekt gelesen werden!")
+        this.$set(this.displayLoadingAnimation, 7, false)
+        this.$set(this.displayError, 7, true)
 
         return
       }
       
-      if (!this.parseError){
+      if (!this.displayError[7]){
         // send request
         this.sendCSVCounterData()
       }
@@ -1355,14 +1350,14 @@ export default {
         .then((response) => response.json())
         .then((data) => {
           if(data.status == "success"){
-            this.parseSuccessMessage = "Die Zählerdaten wurden erfolgreich in der Datenbank gespeichert."
-            this.parseLoading = false
-            this.parseSuccess = true
+            this.$set(this.successMessage, 7, "Die Zählerdaten wurden erfolgreich in der Datenbank gespeichert.")
+            this.$set(this.displayLoadingAnimation, 7, false)
+            this.$set(this.displaySuccess, 7, true)
           }
           else if(data.status == "error"){
-            this.parseErrorMessage = "Code " + data.error.code + ": " + data.error.message
-            this.parseLoading = false
-            this.parseError = true
+            this.$set(this.errorMessage, 7, "Code " + data.error.code + ": " + data.error.message)
+            this.$set(this.displayLoadingAnimation, 7, false)
+            this.$set(this.displayError, 7, true)
           }
         })
         .catch((error) => {
