@@ -331,7 +331,7 @@
             <v-autocomplete
               v-model="supplier.year"
               :items="possibleYears"
-              label="Jahr"
+              label="Bilanzierungsjahr"
               prepend-icon="mdi-calendar-question"
             />
 
@@ -390,7 +390,7 @@
                 <v-autocomplete
                   v-model="default_supplier.year"
                   :items="possibleYears"
-                  label="Jahr"
+                  label="Bilanzierungsjahr"
                   prepend-icon="mdi-calendar-question"
                 />
               </v-col>
@@ -606,7 +606,7 @@
             <v-autocomplete
               v-model="default_counter_data.year"
               :items="possibleYears"
-              label="Jahr"
+              label="Bilanzierungsjahr"
               prepend-icon="mdi-calendar-question"
             />
 
@@ -798,12 +798,12 @@ export default {
 
   computed: {
     /**
-    * Returns a list beginning with the current year until 2018.
+    * Returns a list beginning with last year until 2018.
     */
     possibleYears: function () {
       const beginningYear = 2018;
-      let currentYear = new Date().getFullYear();
-      return Array.from(new Array(currentYear - beginningYear + 1), (x, i) => i + beginningYear).reverse();
+      let lastYear = new Date().getFullYear() - 1;
+      return Array.from(new Array(lastYear - beginningYear + 1), (x, i) => i + beginningYear).reverse();
     },
   },
 
