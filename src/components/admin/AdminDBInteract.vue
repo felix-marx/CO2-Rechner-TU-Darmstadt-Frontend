@@ -66,7 +66,12 @@
       >
         <!-- Add CO2 factors to the database -->
         <v-expansion-panel>
-          <v-expansion-panel-header><label>Neuen CO<sub>2</sub>-Faktor für Energie hinzufügen</label></v-expansion-panel-header>
+          <v-expansion-panel-header>
+            <label>
+              Neuen CO<sub>2</sub>-Faktor für Energie hinzufügen
+              <Tooltip tooltip-text="Hiermit can ein CO2-Faktor für Energie für ein bestimmtes Jahr eingetargen werden. Es sind alle Jahre von 2018 bis zum letzten Jahr möglich. Zusätzlich wird zwischen Faktoren für die Energiearten und der TU Darmstadt oder von extern ist." />
+            </label>
+          </v-expansion-panel-header>
 
           <v-expansion-panel-content>
             <v-autocomplete
@@ -148,7 +153,12 @@
       >
         <!-- Add a new building to the database -->
         <v-expansion-panel>
-          <v-expansion-panel-header>Neues Gebäude hinzufügen</v-expansion-panel-header>
+          <v-expansion-panel-header>
+            <label> 
+              Gebäude hinzufügen 
+              <Tooltip tooltip-text="Hiermit lässt sich ein neues Gebäude in die Datenbank einfügen. Es wird eine eindeutige Gebäudenummer sowie eine Gebäudebezeichnung benötigt. Zusätzlich muss die Fläche des Gebäudes angegebnen werden. Falls ein Wert nicht vorliegt, soll 0 als Wert eigentragen werden. Ist das Gebäude an einen externen Versorger angeschlossen, so können die entsprechenden Jahre angegeben werden. Dafür muss die Checkbox ausgewählt sein und die Jahre seit 2018 als komma-seperierte in das entsprechende Feld eingetragen werden.  " />
+            </label>
+          </v-expansion-panel-header>
           <v-expansion-panel-content>
             <v-row>
               <v-col cols="11">
@@ -309,7 +319,12 @@
 
         <!-- Add external suppliers to a building -->
         <v-expansion-panel>
-          <v-expansion-panel-header>Versorger für Gebäude hinzufügen</v-expansion-panel-header>
+          <v-expansion-panel-header>
+            <label>
+              Versorger für Gebäude hinzufügen
+              <Tooltip tooltip-text="Hiermit kann für ein bestehendes Gebäude der Versorger für ein Jahr zwischen 2018 und dem letzten Jahr festgelegt werden, solange noch kein Versorger angegebn ist. Bei Versorgern wird zwischen der TU Darmstadt und jeglichen anderen, externen Versorger unterschieden. Ebenso sind die Versorger von verschiedenen Energiearten getrennt voneinander aufgeführt. Um das Gebäude zu identifizieren, wird die eindeutige Gebäudenummer verwendet." />
+            </label>
+          </v-expansion-panel-header>
           <v-expansion-panel-content>
             <v-row>
               <v-col cols="11">
@@ -383,7 +398,12 @@
 
         <!-- Add default external suppliers to buildings that don't have a supplier for a specific year -->
         <v-expansion-panel>
-          <v-expansion-panel-header>Standard Versorger für alle Gebäude hinzufügen</v-expansion-panel-header>
+          <v-expansion-panel-header>
+            <label>
+              Standard Versorger für alle Gebäude hinzufügen
+              <Tooltip tooltip-text="Hiermit lässt sich für alle in der Datenbank vorhanden Gebäude der Standard-Versorger TU Darmstadt für ein bestimmtes Jahr eintragen. Der Wert wird bei allen Gebäuden und für alle Energiearten eingetragen, wenn noch kein Versorger für das spezifizierte Jahr angegeben wurde. Als Jahre stehen alle Jahre zwischen 2018 und dem letzten Jahr zur Verfügung." />
+            </label>
+          </v-expansion-panel-header>
           <v-expansion-panel-content>
             <v-row>
               <v-col>
@@ -444,7 +464,12 @@
       >
         <!-- Add a new counter to the database -->
         <v-expansion-panel>
-          <v-expansion-panel-header>Neuen Zähler hinzufügen</v-expansion-panel-header>
+          <v-expansion-panel-header>
+            <label>
+              Neuen Zähler hinzufügen
+              <Tooltip tooltip-text="Hiermit kan ein neuer Zähler in die Datenbank eingetragen werden. Dazu wird die eindeutige Nummer des Zählers benötigt. Weitere angaben sind die Zählereinheit, den Zählertyp, und die Bezeichnung. Referenzen zu Gebäude, zu denen der Zähler gehört, können durch die zusätzlichen Felder eingetragen werden. Standardmäßig wird einem Zähler für alle Jahre von 2018 bis zum letzten Jahr der Wert 0 als Zählerstand eingetragen." />
+            </label>
+          </v-expansion-panel-header>
           <v-expansion-panel-content>
             <v-text-field
               v-model="counter.primary_key"
@@ -539,7 +564,12 @@
 
         <!-- Set counter value for specific counter -->
         <v-expansion-panel>
-          <v-expansion-panel-header>Zählerdaten für Zähler hinzufügen</v-expansion-panel-header>
+          <v-expansion-panel-header>
+            <label>
+              Zählerdaten für Zähler hinzufügen
+              <Tooltip tooltip-text="Hiermit kann einem bestehenden Zähler ein Zählerstand stand für ein Jahr zwischen 2018 und dem letzten Jahr eingetragen werden. Dazu wird die eindeutige Zählernummer und der Zählertyp benötigt. Ist der Zähler nicht vorhanden oder ist für das angegeben Jahr schon ein Wert (außer 0) eingetragen, schlägt die Operation fehl." />
+            </label>
+          </v-expansion-panel-header>
           <v-expansion-panel-content>
             <v-autocomplete
               v-model="counter_data.year"
@@ -601,7 +631,12 @@
 
         <!-- Set default counter values for all counters that don't have a value in a given year -->
         <v-expansion-panel>
-          <v-expansion-panel-header>Standard Zählerdaten für alle Zähler hinzufügen</v-expansion-panel-header>
+          <v-expansion-panel-header>
+            <label>
+              Standard Zählerdaten für alle Zähler hinzufügen
+              <Tooltip tooltip-text="Hiermit kann allen Zähler in der Datenbank der Standardwert 0 für ein Jahr zwischen 2018 und dem letzten Jahr eingetragen werden. Dies funktioniert nur bei Zählern, die für das angegebene Jahr noch keine Zählerstand eingetragen haben." />
+            </label>
+          </v-expansion-panel-header>
           <v-expansion-panel-content>
             <v-autocomplete
               v-model="default_counter_data.year"
@@ -644,8 +679,55 @@
 
         <!-- CSV parser for sending a bunch of counter values -->
         <v-expansion-panel>
-          <v-expansion-panel-header>Zählerdaten mittels CSV-Datei hinzufügen</v-expansion-panel-header>
+          <v-expansion-panel-header>
+            <label>
+              Zählerdaten mittels CSV-Datei hinzufügen
+              <Tooltip tooltip-text="Hiermit lassen sich Zählerdaten mittels einer CSV-Datei direkt aus dem EMS in die Datenbank übertragen. Das Jahr von welchem die Daten kommen, muss angegeben werden, damit die richtigen Daten aus der CSV gelesen werden. Sollte ein Fehler bei einem Zähler auftreten, wird dieser angezeigt. Die anderen Zähler sind von diesem Fehler nicht behindert und deren Daten werden erfolgreich eingetragen. Eine Anleitung zu auslesen der Daten aus dem EMS ist über den Button im Extension Panel verfügbar." />
+            </label>
+          </v-expansion-panel-header>
           <v-expansion-panel-content>
+            <v-row>
+              <v-col>
+                <v-dialog
+                  v-model="dialog"
+                  width="500"
+                >
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-btn
+                      color="primary"
+                      dark
+                      v-bind="attrs"
+                      v-on="on"
+                    >
+                      EMS Anleitung
+                    </v-btn>
+                  </template>
+
+                  <v-card>
+                    <v-card-title class="text-h5 grey lighten-2">
+                      Daten aus dem EMS auslesen
+                    </v-card-title>
+
+                    <v-card-text style="white-space: pre-wrap">
+                      1. ganz oben auf "Auswertung", dann auf "Werte und Korrekturen" <br>
+                      2. links auf "Werte" <br>
+                      3. in der obersten Zeile der Tabelle folgendes auswählen <br>
+                      Quellklasse: csv <br>
+                      Einheit MWH <br>
+                      Name "HE" <br>
+                      4. Dann alle Zähler, die bei Beschreibung 4 Buchstaben eingetragen haben (Gebäudenummern) auswählen und "Werte anzeigen" klicken <br>
+                      5. über auswählen und dann unten in der Zeile "-" auswählen können noch weitere Zähler gelöscht werden <br>
+                      z.B. "Eigenverbrauch" muss raus raus <br>
+                      bis 200 <br>
+                      Insgesamt sollten es 114 Zähler sein (Stand 03.11.2022) <br>
+                      6. ganz oben "Aggregationsmodus und Zeitintervall" einstellen <br>
+                      7. unten in der zeile auf Export (als CSV Datei) <br>
+                      8. alle Werte aus der untersten Zeile aufsummieren <br>                   
+                    </v-card-text>
+                  </v-card>
+                </v-dialog>
+              </v-col>
+            </v-row>
             <v-row>
               <v-col>
                 <v-autocomplete
