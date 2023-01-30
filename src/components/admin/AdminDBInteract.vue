@@ -688,48 +688,6 @@
           <v-expansion-panel-content>
             <v-row>
               <v-col>
-                <v-dialog
-                  v-model="dialog"
-                  width="500"
-                >
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-btn
-                      color="primary"
-                      dark
-                      v-bind="attrs"
-                      v-on="on"
-                    >
-                      EMS Anleitung
-                    </v-btn>
-                  </template>
-
-                  <v-card>
-                    <v-card-title class="text-h5 grey lighten-2">
-                      Daten aus dem EMS auslesen
-                    </v-card-title>
-
-                    <v-card-text style="white-space: pre-wrap">
-                      1. ganz oben auf "Auswertung", dann auf "Werte und Korrekturen" <br>
-                      2. links auf "Werte" <br>
-                      3. in der obersten Zeile der Tabelle folgendes auswählen <br>
-                      Quellklasse: csv <br>
-                      Einheit MWH <br>
-                      Name "HE" <br>
-                      4. Dann alle Zähler, die bei Beschreibung 4 Buchstaben eingetragen haben (Gebäudenummern) auswählen und "Werte anzeigen" klicken <br>
-                      5. über auswählen und dann unten in der Zeile "-" auswählen können noch weitere Zähler gelöscht werden <br>
-                      z.B. "Eigenverbrauch" muss raus raus <br>
-                      bis 200 <br>
-                      Insgesamt sollten es 114 Zähler sein (Stand 03.11.2022) <br>
-                      6. ganz oben "Aggregationsmodus und Zeitintervall" einstellen <br>
-                      7. unten in der zeile auf Export (als CSV Datei) <br>
-                      8. alle Werte aus der untersten Zeile aufsummieren <br>                   
-                    </v-card-text>
-                  </v-card>
-                </v-dialog>
-              </v-col>
-            </v-row>
-            <v-row>
-              <v-col>
                 <v-autocomplete
                   v-model="csv_counter_data.year"
                   :items="possibleYears"
@@ -747,15 +705,65 @@
                   chips
                 />
               </v-col>
-              <v-col cols="2">
+            </v-row>
+
+            <v-card-actions>
+              <v-col class="text-left">
                 <v-btn
+                  color="primary"
                   @click="parseFile"
                 >
-                  Parse
+                  Absenden
                 </v-btn>
               </v-col>
-            </v-row>
-            <v-row>
+              <v-spacer />
+              <v-col class="text-right">
+                <v-dialog
+                  v-model="dialog"
+                >
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-btn
+                      v-bind="attrs"
+                      v-on="on"
+                    >
+                      EMS Anleitung
+                    </v-btn>
+                  </template>
+
+                  <v-card>
+                    <v-card-title class="text-h5 grey lighten-2">
+                      Daten aus dem EMS auslesen
+                    </v-card-title>
+
+                    <v-card-text style="white-space: pre-wrap">
+                      <p
+                        class="mb-0 mt-4" 
+                        style="color: black;font-size: medium;"
+                      >
+                        1. Ganz oben auf "Auswertung", dann auf "Werte und Korrekturen" <br>
+                        2. Links auf "Werte" <br>
+                        3. In der obersten Zeile der Tabelle folgendes auswählen: <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&#x2022; Quellklasse: csv <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&#x2022; Einheit: MWH <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&#x2022; Name: "HE" <br>
+                        4. Dann alle Zähler, die bei Beschreibung 4 Buchstaben eingetragen haben (Gebäudenummern) auswählen und "Werte anzeigen" klicken <br>
+                        5. Über auswählen und dann unten in der Zeile "-" auswählen können noch weitere Zähler gelöscht werden <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&#x2022; z.B. "Eigenverbrauch" muss raus raus <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&#x2022; Bis 200 <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&#x2022; Insgesamt sollten es 114 Zähler sein (Stand 03.11.2022) <br>
+                        6. Ganz oben "Aggregationsmodus und Zeitintervall" einstellen <br>
+                        7. Unten in der Zeile auf Export (als CSV Datei)
+                      </p>                   
+                    </v-card-text>
+                  </v-card>
+                </v-dialog>
+              </v-col>
+            </v-card-actions>
+
+            <v-card
+              v-if="displaySuccess[7] || displayLoadingAnimation[7] || displayError[7]"
+              elevation="2"
+            >
               <LoadingAnimation v-if="displayLoadingAnimation[7]" />
               <v-alert 
                 v-if="displayError[7]"
@@ -770,7 +778,7 @@
               >
                 {{ successMessage[7] }}
               </v-alert>
-            </v-row>
+            </v-card>
           </v-expansion-panel-content>
         </v-expansion-panel>
       </v-expansion-panels>
@@ -857,6 +865,8 @@ export default {
       energy_types: null,
       values: null
     },
+
+    dialog: false,
 
     // arrays contain counters and buildings that are explicitly left out
     // reasons are given in BP_Berechnungsformeln.pdf
