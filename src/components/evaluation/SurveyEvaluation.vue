@@ -547,26 +547,23 @@ export default {
      */
     setChartGesamt: function () {
       let data = [
-        { label: 'Energie', value: this.responsedata.emissionenEnergie },
-        { label: 'Dienstreisen', value: this.responsedata.emissionenDienstreisen },
-        { label: 'Pendelweg', value: this.responsedata.emissionenPendelwege },
-        { label: 'IT-Geräte', value: this.responsedata.emissionenITGeraete },
+        { label: 'Energie', value: this.responsedata.emissionenEnergie, color: 'rgb(255, 99, 132)'},
+        { label: 'Dienstreisen', value: this.responsedata.emissionenDienstreisen, color: 'rgb(54,162,235)'},
+        { label: 'Pendelweg', value: this.responsedata.emissionenPendelwege, color: 'rgb(255, 205, 86)' },
+        { label: 'IT-Geräte', value: this.responsedata.emissionenITGeraete, color: 'rgb(75, 192, 192)' },
       ];
+      data.sort((a, b) => b.value - a.value)
 
       this.chartdataGesamtDoughnut = {
         labels: data.map(a => a.label),
         datasets: [{
           label: 'Emissionen',
           data: data.map(a => a.value),
-          backgroundColor: [
-            'rgb(255, 99, 132)',
-            'rgb(54, 162, 235)',
-            'rgb(255, 205, 86)',
-            'rgb(75, 192, 192)'
-          ],
+          backgroundColor: data.map(a => a.color),
           hoverOffset: 4
         }]
       }
+
       this.optionsGesamtDoughnut = {
         responsive: false,
         maintainAspectRatio: false,
@@ -588,8 +585,6 @@ export default {
         },
       }
 
-      data.sort((a, b) => b.value - a.value)
-
       this.chartdataGesamtPareto = {
         labels: data.map(a => a.label),
         datasets: [{
@@ -597,7 +592,7 @@ export default {
           label: 'Emissionen',
           yAxisID: 'bar',
           data: data.map(a => a.value),
-          backgroundColor: 'rgb(53, 212, 212)',
+          backgroundColor: data.map(a => a.color),
           borderWidth: 1,
           order: 1,
           datalabels: {
@@ -639,6 +634,8 @@ export default {
         { label: 'Strom', value: this.responsedata.emissionenStrom },
       ];
 
+      data.sort((a, b) => b.value - a.value)
+
       this.chartdataEnergieDoughnut = {
         labels: data.map(a => a.label),
         datasets: [{
@@ -673,8 +670,6 @@ export default {
         },
       }
 
-      data.sort((a, b) => b.value - a.value)
-
       this.chartdataEnergiePareto = {
         labels: data.map(a => a.label),
         datasets: [{
@@ -682,7 +677,11 @@ export default {
           label: 'Emissionen',
           yAxisID: 'bar',
           data: data.map(a => a.value),
-          backgroundColor: 'rgb(0, 220, 220)',
+          backgroundColor: [
+            'rgb(240, 128, 128)',
+            'rgb(0, 204, 255)',
+            'rgb(255, 219, 77)',
+          ],
           borderWidth: 1,
           order: 1,
           datalabels: {
