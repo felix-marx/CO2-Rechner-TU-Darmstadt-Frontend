@@ -743,14 +743,14 @@
                         1. Ganz oben auf "Auswertung", dann auf "Werte und Korrekturen" <br>
                         2. Links auf "Werte" <br>
                         3. In der obersten Zeile der Tabelle folgendes auswählen: <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&#x2022; Name: "HE000" für Wärmezähler, "KA000" für Kältezähler, "NA000" für Stromzähler <br>
                         &nbsp;&nbsp;&nbsp;&nbsp;&#x2022; Quellklasse: csv <br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&#x2022; Einheit: MWH <br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&#x2022; Name: "HE" <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&#x2022; Einheit: MWh, kWh <br>
                         4. Dann alle Zähler, die bei Beschreibung 4 Buchstaben eingetragen haben (Gebäudenummern) auswählen und "Werte anzeigen" klicken <br>
                         5. Über auswählen und dann unten in der Zeile "-" auswählen können noch weitere Zähler gelöscht werden <br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&#x2022; z.B. "Eigenverbrauch" muss raus raus <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&#x2022; z.B. "Eigenverbrauch" muss raus <br>
                         &nbsp;&nbsp;&nbsp;&nbsp;&#x2022; Bis 200 <br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&#x2022; Insgesamt sollten es 114 Zähler sein (Stand 03.11.2022) <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&#x2022; Insgesamt sollten es 114 Wärmezähler, X Stromzähler und X Kältezähler sein (Stand 05.02.2023)  <br>
                         6. Ganz oben "Aggregationsmodus und Zeitintervall" einstellen <br>
                         7. Unten in der Zeile auf Export (als CSV Datei)
                       </p>                   
