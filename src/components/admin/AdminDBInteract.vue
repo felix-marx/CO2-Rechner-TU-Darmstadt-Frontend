@@ -741,18 +741,49 @@
                         style="color: black;font-size: medium;"
                       >
                         1. Ganz oben auf "Auswertung", dann auf "Werte und Korrekturen" <br>
-                        2. Links auf "Werte" <br>
+                        2. Links an der Seite auf "Werte", dann "Alle Zähler" und "Alle - Zähler" <br>
                         3. In der obersten Zeile der Tabelle folgendes auswählen: <br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&#x2022; Name: "HE000" für Wärmezähler, "KA000" für Kältezähler, "NA000" für Stromzähler <br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&#x2022; Quellklasse: csv <br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&#x2022; Einheit: MWh, kWh <br>
-                        4. Dann alle Zähler, die bei Beschreibung 4 Buchstaben eingetragen haben (Gebäudenummern) auswählen und "Werte anzeigen" klicken <br>
-                        5. Über auswählen und dann unten in der Zeile "-" auswählen können noch weitere Zähler gelöscht werden <br>
+                      </p>
+                      <table
+                        class="mx-6"
+                        style="color: black;font-size: medium;"
+                      >
+                        <tr>
+                          <th />
+                          <th>Wärmezähler</th>
+                          <th>Kältezähler</th>
+                          <th>Stromzähler</th>
+                        </tr>
+                        <tr>
+                          <td><b>Name</b></td>
+                          <td>*HE000*</td>
+                          <td>*KA000*</td>
+                          <td>*NA000*</td>
+                        </tr>
+                        <tr>
+                          <td><b>Quellklasse</b></td>
+                          <td>CSV, Formel</td>
+                          <td>CSV, EDLs</td>
+                          <td>verschiedene</td>
+                        </tr>
+                        <tr>
+                          <td><b>Einheit</b></td>
+                          <td>MWh, kWh</td>
+                          <td>MWh, kWh</td>
+                          <td>MWh, kWh</td>
+                        </tr>
+                      </table>
+                      <p
+                        class="mb-0 mt-0" 
+                        style="color: black;font-size: medium;"
+                      >
+                        4. Dann alle Zähler auswählen und "Datenpunkte selektieren" klicken. <br>
+                        5. In ausgewählte Datenpunkte können ungewollte Zähler über "-" wieder entfernt werden. <br>
                         &nbsp;&nbsp;&nbsp;&nbsp;&#x2022; z.B. "Eigenverbrauch" muss raus <br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&#x2022; Bis 200 <br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&#x2022; Insgesamt sollten es 114 Wärmezähler, X Stromzähler und X Kältezähler sein (Stand 05.02.2023)  <br>
-                        6. Ganz oben "Aggregationsmodus und Zeitintervall" einstellen <br>
-                        7. Unten in der Zeile auf Export (als CSV Datei)
+                        &nbsp;&nbsp;&nbsp;&nbsp;&#x2022; Insgesamt sollten es 114 Wärmezähler, (?) Stromzähler und 19 Kältezähler sein (Stand 05.02.2023)  <br>
+                        6. Sind alle ungewollten Zähler entfernt, dann auf "Werte anzeigen" klicken. <br>
+                        7. Ganz oben "Aggregationsmodus" und "Zeitintervall" einstellen. <br>
+                        8. Unten in der Zeile auf Export (CSV), um Zählerdaten in CSV herunterladen.
                       </p>                   
                     </v-card-text>
                   </v-card>
@@ -1497,3 +1528,15 @@ export default {
   },
 }
 </script>
+<style>
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+th, td {
+  padding-top: 2px;
+  padding-bottom: 2px;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+</style>
