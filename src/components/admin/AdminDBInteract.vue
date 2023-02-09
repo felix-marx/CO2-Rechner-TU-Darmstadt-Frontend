@@ -682,7 +682,7 @@
           <v-expansion-panel-header>
             <label>
               Zählerdaten mittels CSV-Datei hinzufügen
-              <Tooltip tooltip-text="Hiermit lassen sich Zählerdaten mittels einer CSV-Datei direkt aus dem EMS in die Datenbank übertragen. Das Jahr von welchem die Daten kommen, muss angegeben werden, damit die richtigen Daten aus der CSV gelesen werden. Sollte ein Fehler bei einem Zähler auftreten, wird dieser angezeigt. Die anderen Zähler sind von diesem Fehler nicht behindert und deren Daten werden erfolgreich eingetragen. Eine Anleitung zu auslesen der Daten aus dem EMS ist über den Button 'EMS Anleitung' verfügbar." />
+              <Tooltip tooltip-text="Hiermit lassen sich Zählerdaten mittels einer CSV-Datei direkt aus dem EMS in die Datenbank übertragen. Das Jahr von welchem die Daten kommen, muss angegeben werden, damit die richtigen Daten aus der CSV gelesen werden. Sollte ein Fehler bei einem Zähler auftreten, wird dieser angezeigt. Die anderen Zähler sind von diesem Fehler nicht behindert und deren Daten werden erfolgreich eingetragen. Eine Anleitung zu auslesen der Daten aus dem EMS ist über den Button 'EMS Anleitung' verfügbar. Unwichtige Zähler werden aus der CSV-Datei herausgefilter." />
             </label>
           </v-expansion-panel-header>
           <v-expansion-panel-content>
@@ -737,14 +737,13 @@
 
                     <v-card-text style="white-space: pre-wrap">
                       <p
-                        class="mb-0 mt-4" 
-                        style="color: black;font-size: medium;"
+                        class="mb-0 mt-4 text-body-2 black--text"
                       >
                         1. Ganz oben auf "Auswertung", dann auf "Werte und Korrekturen" <br>
                         2. Links an der Seite auf "Werte", dann "Alle Zähler" und "Alle - Zähler" <br>
                         3. In der obersten Zeile der Tabelle folgendes auswählen: <br>
                       </p>
-                      <table
+                      <!-- <table
                         class="mx-6"
                         style="color: black;font-size: medium;"
                       >
@@ -772,10 +771,43 @@
                           <td>MWh, kWh</td>
                           <td>MWh, kWh</td>
                         </tr>
-                      </table>
+                      </table> -->
+                      <v-simple-table 
+                        class="mt-0 mb-1"
+                      >
+                        <template v-slot:default>
+                          <thead>
+                            <tr>
+                              <th />
+                              <th>Wärmezähler</th>
+                              <th>Kältezähler</th>
+                              <th>Stromzähler</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>Name</td>
+                              <td>*HE000*</td>
+                              <td>*KA000*</td>
+                              <td>*NA000*</td>
+                            </tr>
+                            <tr>
+                              <td>Quellklasse</td>
+                              <td>CSV, Formel</td>
+                              <td>CSV, EDLs</td>
+                              <td>verschiedene</td>
+                            </tr>
+                            <tr>
+                              <td>Einheit</td>
+                              <td>MWh, kWh</td>
+                              <td>MWh, kWh</td>
+                              <td>MWh, kWh</td>
+                            </tr>
+                          </tbody>
+                        </template>
+                      </v-simple-table>
                       <p
-                        class="mb-0 mt-0" 
-                        style="color: black;font-size: medium;"
+                        class="mb-0 mt-0  text-body-2 black--text"
                       >
                         4. Dann alle Zähler auswählen und "Datenpunkte selektieren" klicken. <br>
                         5. In ausgewählte Datenpunkte können ungewollte Zähler über "-" wieder entfernt werden. <br>
@@ -1529,7 +1561,7 @@ export default {
 }
 </script>
 <style>
-table, th, td {
+/* table, th, td {
   border: 1px solid black;
   border-collapse: collapse;
 }
@@ -1538,5 +1570,8 @@ th, td {
   padding-bottom: 2px;
   padding-left: 4px;
   padding-right: 4px;
+} */
+tr:hover {
+  background-color: transparent !important;
 }
 </style>
