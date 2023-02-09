@@ -69,7 +69,7 @@
           <v-expansion-panel-header>
             <label>
               Neuen CO<sub>2</sub>-Faktor für Energie hinzufügen
-              <Tooltip tooltip-text="Hiermit can ein CO2-Faktor für Energie für ein bestimmtes Jahr eingetargen werden. Es sind alle Jahre von 2018 bis zum letzten Jahr möglich. Zusätzlich wird zwischen Faktoren für die Energiearten und der TU Darmstadt oder von extern ist." />
+              <Tooltip tooltip-text="Hiermit kann ein CO2-Faktor für Energie für ein bestimmtes Jahr eingetragen werden. Es sind alle Jahre von 2018 bis zum letzten Jahr möglich. Zusätzlich wird zwischen Faktoren den Energiearten und dem Versorger (TU Darmstadt oder extern) unterschieden." />
             </label>
           </v-expansion-panel-header>
 
@@ -322,7 +322,7 @@
           <v-expansion-panel-header>
             <label>
               Versorger für Gebäude hinzufügen
-              <Tooltip tooltip-text="Hiermit kann für ein bestehendes Gebäude der Versorger für ein Jahr zwischen 2018 und dem letzten Jahr festgelegt werden, solange noch kein Versorger angegebn ist. Bei Versorgern wird zwischen der TU Darmstadt und jeglichen anderen, externen Versorger unterschieden. Ebenso sind die Versorger von verschiedenen Energiearten getrennt voneinander aufgeführt. Um das Gebäude zu identifizieren, wird die eindeutige Gebäudenummer verwendet." />
+              <Tooltip tooltip-text="Hiermit kann für ein bestehendes Gebäude der Versorger für ein Jahr zwischen 2018 und dem letzten Jahr festgelegt werden, solange noch kein Versorger angegebrn ist. Bei Versorgern wird zwischen der TU Darmstadt und jeglichen anderen, externen Versorger unterschieden. Ebenso sind die Versorger von verschiedenen Energiearten getrennt voneinander aufgeführt. Um das Gebäude zu identifizieren, wird die eindeutige Gebäudenummer verwendet." />
             </label>
           </v-expansion-panel-header>
           <v-expansion-panel-content>
@@ -467,7 +467,7 @@
           <v-expansion-panel-header>
             <label>
               Neuen Zähler hinzufügen
-              <Tooltip tooltip-text="Hiermit kan ein neuer Zähler in die Datenbank eingetragen werden. Dazu wird die eindeutige Nummer des Zählers benötigt. Weitere angaben sind die Zählereinheit, den Zählertyp, und die Bezeichnung. Referenzen zu Gebäude, zu denen der Zähler gehört, können durch die zusätzlichen Felder eingetragen werden. Standardmäßig wird einem Zähler für alle Jahre von 2018 bis zum letzten Jahr der Wert 0 als Zählerstand eingetragen." />
+              <Tooltip tooltip-text="Hiermit kan ein neuer Zähler in die Datenbank eingetragen werden. Dazu wird die eindeutige Nummer des Zählers benötigt. Weitere Angaben sind die Zählereinheit, den Zählertyp, und die Bezeichnung. Referenzen zu Gebäude, zu denen der Zähler gehört, können durch die zusätzlichen Felder eingetragen werden. Standardmäßig wird einem Zähler für alle Jahre von 2018 bis zum letzten Jahr der Wert 0 als Zählerstand eingetragen." />
             </label>
           </v-expansion-panel-header>
           <v-expansion-panel-content>
@@ -567,7 +567,7 @@
           <v-expansion-panel-header>
             <label>
               Zählerdaten für Zähler hinzufügen
-              <Tooltip tooltip-text="Hiermit kann einem bestehenden Zähler ein Zählerstand stand für ein Jahr zwischen 2018 und dem letzten Jahr eingetragen werden. Dazu wird die eindeutige Zählernummer und der Zählertyp benötigt. Ist der Zähler nicht vorhanden oder ist für das angegeben Jahr schon ein Wert (außer 0) eingetragen, schlägt die Operation fehl." />
+              <Tooltip tooltip-text="Hiermit kann einem bestehenden Zähler ein Zählerstand für ein Jahr zwischen 2018 und dem letzten Jahr eingetragen werden. Dazu wird die eindeutige Zählernummer und der Zählertyp benötigt. Ist der Zähler nicht vorhanden oder ist für das angegeben Jahr schon ein Wert (außer 0) eingetragen, schlägt die Operation fehl." />
             </label>
           </v-expansion-panel-header>
           <v-expansion-panel-content>
@@ -682,7 +682,7 @@
           <v-expansion-panel-header>
             <label>
               Zählerdaten mittels CSV-Datei hinzufügen
-              <Tooltip tooltip-text="Hiermit lassen sich Zählerdaten mittels einer CSV-Datei direkt aus dem EMS in die Datenbank übertragen. Das Jahr von welchem die Daten kommen, muss angegeben werden, damit die richtigen Daten aus der CSV gelesen werden. Sollte ein Fehler bei einem Zähler auftreten, wird dieser angezeigt. Die anderen Zähler sind von diesem Fehler nicht behindert und deren Daten werden erfolgreich eingetragen. Eine Anleitung zu auslesen der Daten aus dem EMS ist über den Button im Extension Panel verfügbar." />
+              <Tooltip tooltip-text="Hiermit lassen sich Zählerdaten mittels einer CSV-Datei direkt aus dem EMS in die Datenbank übertragen. Das Jahr von welchem die Daten kommen, muss angegeben werden, damit die richtigen Daten aus der CSV gelesen werden. Sollte ein Fehler bei einem Zähler auftreten, wird dieser angezeigt. Die anderen Zähler sind von diesem Fehler nicht behindert und deren Daten werden erfolgreich eingetragen. Eine Anleitung zu auslesen der Daten aus dem EMS ist über den Button 'EMS Anleitung' verfügbar." />
             </label>
           </v-expansion-panel-header>
           <v-expansion-panel-content>
@@ -732,7 +732,7 @@
 
                   <v-card>
                     <v-card-title class="text-h5 grey lighten-2">
-                      Daten aus dem EMS auslesen
+                      Daten aus dem EMS auslesen (noch unvollständig)
                     </v-card-title>
 
                     <v-card-text style="white-space: pre-wrap">
