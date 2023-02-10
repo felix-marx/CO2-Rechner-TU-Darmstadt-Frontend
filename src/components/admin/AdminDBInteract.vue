@@ -743,37 +743,8 @@
                         2. Links an der Seite auf "Werte", dann "Alle Zähler" und "Alle - Zähler" <br>
                         3. In der obersten Zeile der Tabelle folgendes auswählen: <br>
                       </p>
-                      <!-- <table
-                        class="mx-6"
-                        style="color: black;font-size: medium;"
-                      >
-                        <tr>
-                          <th />
-                          <th>Wärmezähler</th>
-                          <th>Kältezähler</th>
-                          <th>Stromzähler</th>
-                        </tr>
-                        <tr>
-                          <td><b>Name</b></td>
-                          <td>*HE000*</td>
-                          <td>*KA000*</td>
-                          <td>*NA000*</td>
-                        </tr>
-                        <tr>
-                          <td><b>Quellklasse</b></td>
-                          <td>CSV, Formel</td>
-                          <td>CSV, EDLs</td>
-                          <td>verschiedene</td>
-                        </tr>
-                        <tr>
-                          <td><b>Einheit</b></td>
-                          <td>MWh, kWh</td>
-                          <td>MWh, kWh</td>
-                          <td>MWh, kWh</td>
-                        </tr>
-                      </table> -->
                       <v-simple-table 
-                        class="mt-0 mb-1"
+                        class="mt-0 mb-1 ml-4"
                       >
                         <template v-slot:default>
                           <thead>
@@ -786,19 +757,19 @@
                           </thead>
                           <tbody>
                             <tr>
-                              <td>Name</td>
+                              <th>Name</th>
                               <td>*HE000*</td>
                               <td>*KA000*</td>
                               <td>*NA000*</td>
                             </tr>
                             <tr>
-                              <td>Quellklasse</td>
+                              <th>Quellklasse</th>
                               <td>CSV, Formel</td>
                               <td>CSV, EDLs</td>
                               <td>verschiedene</td>
                             </tr>
                             <tr>
-                              <td>Einheit</td>
+                              <th>Einheit</th>
                               <td>MWh, kWh</td>
                               <td>MWh, kWh</td>
                               <td>MWh, kWh</td>
@@ -809,13 +780,13 @@
                       <p
                         class="mb-0 mt-0  text-body-2 black--text"
                       >
-                        4. Dann alle Zähler auswählen und "Datenpunkte selektieren" klicken. <br>
-                        5. In ausgewählte Datenpunkte können ungewollte Zähler über "-" wieder entfernt werden. <br>
+                        4. Dann alle Zähler auswählen und "Datenpunkte selektieren" klicken <br>
+                        5. In ausgewählte Datenpunkte können ungewollte Zähler über "&#x2014;" wieder entfernt werden <br>
                         &nbsp;&nbsp;&nbsp;&nbsp;&#x2022; z.B. "Eigenverbrauch" muss raus <br>
                         &nbsp;&nbsp;&nbsp;&nbsp;&#x2022; Insgesamt sollten es 114 Wärmezähler, (?) Stromzähler und 19 Kältezähler sein (Stand 05.02.2023)  <br>
-                        6. Sind alle ungewollten Zähler entfernt, dann auf "Werte anzeigen" klicken. <br>
-                        7. Ganz oben "Aggregationsmodus" und "Zeitintervall" einstellen. <br>
-                        8. Unten in der Zeile auf Export (CSV), um Zählerdaten in CSV herunterladen.
+                        6. Sind alle ungewollten Zähler entfernt, dann auf "Werte anzeigen" klicken <br>
+                        7. Ganz oben "Aggregationsmodus" und "Zeitintervall" einstellen <br>
+                        8. Unten in der Zeile auf Export (CSV), um Zählerdaten in CSV herunterladen
                       </p>                   
                     </v-card-text>
                   </v-card>
@@ -1561,17 +1532,10 @@ export default {
 }
 </script>
 <style>
-/* table, th, td {
-  border: 1px solid black;
-  border-collapse: collapse;
-}
-th, td {
-  padding-top: 2px;
-  padding-bottom: 2px;
-  padding-left: 4px;
-  padding-right: 4px;
-} */
 tr:hover {
   background-color: transparent !important;
+}
+th {
+  color: rgba(0, 0, 0, 0.6);
 }
 </style>
