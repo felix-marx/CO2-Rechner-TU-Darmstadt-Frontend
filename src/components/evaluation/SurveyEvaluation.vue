@@ -453,6 +453,27 @@ export default {
           "col2": this.responsedata.emissionenStrom,
           "col3": this.responsedata.emissionenEnergie === 0.0 ? 0 : Math.round(this.responsedata.emissionenStrom / this.responsedata.emissionenEnergie * 1000) / 10,
         },
+        {},
+        {
+          "col1": "Darstellung des Energieverbrauches",
+          "col2": "kWh",
+          "col3": "%",
+        },
+        {
+          "col1": "Wärme",
+          "col2": this.responsedata.verbrauchWaerme,
+          "col3": this.responsedata.verbrauchEnergie === 0.0 ? 0 : Math.round(this.responsedata.verbrauchWaerme / this.responsedata.verbrauchEnergie * 1000) / 10,
+        },
+        {
+          "col1": "Kälte",
+          "col2": this.responsedata.verbrauchKaelte,
+          "col3": this.responsedata.verbrauchEnergie === 0.0 ? 0 : Math.round(this.responsedata.verbrauchKaelte / this.responsedata.verbrauchEnergie * 1000) / 10,
+        },
+        {
+          "col1": "Strom",
+          "col2": this.responsedata.verbrauchStrom,
+          "col3": this.responsedata.verbrauchEnergie === 0.0 ? 0 : Math.round(this.responsedata.verbrauchStrom / this.responsedata.verbrauchEnergie * 1000) / 10,
+        },
       ];
       var options = {
         header: ["col1", "col2", "col3"],
@@ -809,7 +830,7 @@ export default {
         labels: data.map(a => a.label),
         datasets: [{
           type: 'bar',
-          label: 'Emissionen',
+          label: 'kWh',
           yAxisID: 'bar',
           data: data.map(a => a.value),
           backgroundColor: data.map(a => a.color),
