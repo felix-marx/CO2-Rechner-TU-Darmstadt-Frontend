@@ -110,7 +110,7 @@
                     mdi-alert-circle-outline
                   </v-icon>
                 </template>
-                Die angezeigten Emissionen für den Energieverbrauch können unvollständig sein. Der Grund dafür ist, dass nicht alle Gebäude der TU mit einem eingenen Zähler ausgestattet sind und keine Zählerdaten vorliegen.
+                Die angezeigten Emissionen für den Energieverbrauch können unvollständig sein. Der Grund dafür ist, dass nicht alle Gebäude der TU mit einem eigenen Zähler ausgestattet sind und keine Zählerdaten vorliegen.
               </v-tooltip>
             </h4>
           </v-col>
@@ -136,11 +136,55 @@
           </v-col>
           <v-col>
             <bar-chart
-              :chart-data="chartdataEnergiePareto"
-              :options="optionsEnergiePareto"
+              :chart-data="chartdataEnergieBar"
+              :options="optionsEnergieBar"
             />
           </v-col>
         </v-row>
+        <!-- Hier von mir  -->
+        <v-row>
+          <v-col class="d-flex justify-center">
+            <h4>
+              Darstellung des Energieverbrauches
+              <v-tooltip bottom>
+                <template v-slot:activator="{ on }">
+                  <v-icon v-on="on">
+                    mdi-alert-circle-outline
+                  </v-icon>
+                </template>
+                Die angezeigten Verbrauche für den Energieverbrauch können unvollständig sein.
+                Der Grund dafür ist, dass nicht alle Gebäude der TU mit einem eigenen Zähler ausgestattet sind und keine Zählerdaten vorliegen.
+              </v-tooltip>
+            </h4>
+          </v-col>
+        </v-row>
+        <v-row v-if="!displayEnergieCharts">
+          <v-col>
+            <v-alert
+              type="warning"
+            >
+              Es ist kein Auswertung der Emissionen durch den Energieverbrauch möglich.
+              Für das ausgewählte Bilanzierungsjahr fehlen Daten seitens der TU Darmstadt, um die Emissionen berechnen zu können.
+              Die Zählerinfrastruktur wird durch das Energiemanagment immer weiter ausgebaut.
+              Sie können leider nichts tun, um die Auswertung zu vervollständigen.
+            </v-alert>
+          </v-col>
+        </v-row>
+        <v-row v-if="displayEnergieCharts">
+          <v-col>
+            <doughnut-chart
+              :chart-data="chartdataVerbrauchDoughnut"
+              :options="optionsVerbrauchDoughnut"
+            />
+          </v-col>
+          <v-col>
+            <bar-chart
+              :chart-data="chartdataVerbrauchBar"
+              :options="optionsVerbrauchBar"
+            />
+          </v-col>
+        </v-row>
+        <!-- Bis hier von mir  -->
         <v-row>
           <v-col>
             <v-alert 
@@ -254,6 +298,11 @@ export default {
         emissionenGesamt: null,
         emissionenProMitarbeiter: null,
 
+        verbrauchWaerme: null,
+        verbrauchStrom: null,
+        verbrauchKaelte: null,
+        verbrauchEnergie: null,
+
         vergleich2PersonenHaushalt: null,
         vergleich4PersonenHaushalt: null,
       },
@@ -279,8 +328,16 @@ export default {
       chartdataEnergieDoughnut: null,
       optionsEnergieDoughnut: null,
 
-      chartdataEnergiePareto: null,
-      optionsEnergiePareto: null,
+      chartdataEnergieBar: null,
+      optionsEnergieBar: null,
+
+      chartdataVerbrauchDoughnut: null,
+      optionsVerbrauchDoughnut: null,
+
+      chartdataVerbrauchBar: null,
+      optionsVerbrauchBar: null,
+
+
     }
   },
 
@@ -396,6 +453,27 @@ export default {
           "col2": this.responsedata.emissionenStrom,
           "col3": this.responsedata.emissionenEnergie === 0.0 ? 0 : Math.round(this.responsedata.emissionenStrom / this.responsedata.emissionenEnergie * 1000) / 10,
         },
+        {},
+        {
+          "col1": "Darstellung des Energieverbrauches",
+          "col2": "kWh",
+          "col3": "%",
+        },
+        {
+          "col1": "Wärme",
+          "col2": this.responsedata.verbrauchWaerme,
+          "col3": this.responsedata.verbrauchEnergie === 0.0 ? 0 : Math.round(this.responsedata.verbrauchWaerme / this.responsedata.verbrauchEnergie * 1000) / 10,
+        },
+        {
+          "col1": "Kälte",
+          "col2": this.responsedata.verbrauchKaelte,
+          "col3": this.responsedata.verbrauchEnergie === 0.0 ? 0 : Math.round(this.responsedata.verbrauchKaelte / this.responsedata.verbrauchEnergie * 1000) / 10,
+        },
+        {
+          "col1": "Strom",
+          "col2": this.responsedata.verbrauchStrom,
+          "col3": this.responsedata.verbrauchEnergie === 0.0 ? 0 : Math.round(this.responsedata.verbrauchStrom / this.responsedata.verbrauchEnergie * 1000) / 10,
+        },
       ];
       var options = {
         header: ["col1", "col2", "col3"],
@@ -448,11 +526,11 @@ export default {
           this.responsesuccessful = true
           this.responsedata = body.data
           this.responsedata.auswertungFreigegeben = (body.data.auswertungFreigegeben == 1) ? true : false
-
           this.checkNegativValue();
           this.roundResponseData();
           this.setChartGesamt();
           this.setChartEnergie();
+          this.setChartVerbrauch();
         }
         else {  // Fehlerbehandlung
           this.responseNotSuccessful = true
@@ -511,6 +589,9 @@ export default {
      */
     checkNegativValue: function () {
       if (this.responsedata.emissionenWaerme < 0 || this.responsedata.emissionenKaelte < 0 || this.responsedata.emissionenStrom < 0) {
+        this.displayEnergieCharts = false;
+      }
+      if (this.responsedata.verbrauchWaerme < 0 || this.responsedata.verbrauchKaelte < 0 || this.responsedata.verbrauchStrom < 0) {
         this.displayEnergieCharts = false;
       }
     },
@@ -623,15 +704,14 @@ export default {
         },
       };
     },
-
     /**
      * Method sets data and options for the Energie charts.
      */
     setChartEnergie: function () {
       let data = [
-        { label: 'Wärme', value: this.responsedata.emissionenWaerme },
-        { label: 'Kälte', value: this.responsedata.emissionenKaelte },
-        { label: 'Strom', value: this.responsedata.emissionenStrom },
+        { label: 'Wärme', value: this.responsedata.emissionenWaerme, color: 'rgb(240, 128, 128)'},
+        { label: 'Kälte', value: this.responsedata.emissionenKaelte, color:  'rgb(0, 204, 255)'},
+        { label: 'Strom', value: this.responsedata.emissionenStrom, color: 'rgb(255, 219, 77)' },
       ];
 
       data.sort((a, b) => b.value - a.value)
@@ -641,11 +721,7 @@ export default {
         datasets: [{
           label: 'Emissionen',
           data: data.map(a => a.value),
-          backgroundColor: [
-            'rgb(240, 128, 128)',
-            'rgb(0, 204, 255)',
-            'rgb(255, 219, 77)',
-          ],
+          backgroundColor: data.map(a => a.color),
           hoverOffset: 4
         }]
       }
@@ -670,18 +746,14 @@ export default {
         },
       }
 
-      this.chartdataEnergiePareto = {
+      this.chartdataEnergieBar = {
         labels: data.map(a => a.label),
         datasets: [{
           type: 'bar',
           label: 'Emissionen',
           yAxisID: 'bar',
           data: data.map(a => a.value),
-          backgroundColor: [
-            'rgb(240, 128, 128)',
-            'rgb(0, 204, 255)',
-            'rgb(255, 219, 77)',
-          ],
+          backgroundColor: data.map(a => a.color),
           borderWidth: 1,
           order: 1,
           datalabels: {
@@ -691,7 +763,7 @@ export default {
           },
         }]
       }
-      this.optionsEnergiePareto = {
+      this.optionsEnergieBar = {
         responsive: false,
         maintainAspectRatio: false,
         legend: {
@@ -712,6 +784,87 @@ export default {
         },
       }
     },
+    /**
+     * Method sets data and options for the Energie charts.
+     */
+    setChartVerbrauch: function () {
+      let data = [
+        { label: 'Wärme', value: this.responsedata.verbrauchWaerme, color: 'rgb(240, 128, 128)'},
+        { label: 'Kälte', value: this.responsedata.verbrauchKaelte, color:  'rgb(0, 204, 255)'},
+        { label: 'Strom', value: this.responsedata.verbrauchStrom, color: 'rgb(255, 219, 77)' },
+      ];
+
+      data.sort((a, b) => b.value - a.value)
+
+      this.chartdataVerbrauchDoughnut = {
+        labels: data.map(a => a.label),
+        datasets: [{
+          label: 'Emissionen',
+          data: data.map(a => a.value),
+          backgroundColor: data.map(a => a.color),
+          hoverOffset: 4
+        }]
+      }
+      this.optionsVerbrauchDoughnut = {
+        responsive: false,
+        maintainAspectRatio: false,
+        plugins: {
+          datalabels: {
+            display: true,
+            // eslint-disable-next-line no-unused-vars
+            formatter: (value, context) => {
+              if(this.responsedata.emissionenEnergie === 0){
+                return 0
+              }
+              return (Math.round(value / this.responsedata.verbrauchEnergie * 1000) / 10) + '%';
+            },
+            font: {
+              weight: 'bold',
+              size: 14,
+            },
+          },
+        },
+      }
+
+      this.chartdataVerbrauchBar = {
+        labels: data.map(a => a.label),
+        datasets: [{
+          type: 'bar',
+          label: 'kWh',
+          yAxisID: 'bar',
+          data: data.map(a => a.value),
+          backgroundColor: data.map(a => a.color),
+          borderWidth: 1,
+          order: 1,
+          datalabels: {
+            color: 'black',
+            align: 'end',
+            anchor: 'start',
+          },
+        }]
+      }
+      this.optionsVerbrauchBar = {
+        responsive: false,
+        maintainAspectRatio: false,
+        legend: {
+          display: false
+        },
+        scales: {
+          yAxes: [{
+            id: 'bar',
+            position: 'left',
+            ticks: {
+              beginAtZero: true
+            },
+            scaleLabel: {
+              display: true,
+              labelString: 'kWh'
+            }
+          }]
+        },
+      }
+    },
+
   },
 }
 
