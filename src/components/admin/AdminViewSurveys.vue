@@ -1,11 +1,14 @@
 <template>
   <v-container>
     <v-card>
-      <v-card-title>
+      <v-card-title class="mx-2">
         Gespeicherte Umfragen:
       </v-card-title>
 
-      <v-row align="baseline">
+      <v-row
+        align="baseline" 
+        class="mx-2"
+      >
         <v-col
           cols="2"
           align="center"
@@ -42,6 +45,7 @@
         :key="'umfrage_'+index"
         elevation="2"
         outlined
+        class="pb-2"
       >
         <v-list-item
           three-line
