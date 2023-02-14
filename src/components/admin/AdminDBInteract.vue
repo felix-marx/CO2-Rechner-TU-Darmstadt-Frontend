@@ -156,7 +156,7 @@
           <v-expansion-panel-header>
             <label> 
               Gebäude hinzufügen 
-              <Tooltip tooltip-text="Hiermit lässt sich ein neues Gebäude in die Datenbank einfügen. Es wird eine eindeutige Gebäudenummer sowie eine Gebäudebezeichnung benötigt. Zusätzlich muss die Fläche des Gebäudes angegebnen werden. Falls ein Wert nicht vorliegt, soll 0 als Wert eigentragen werden. Ist das Gebäude an einen externen Versorger angeschlossen, so können die entsprechenden Jahre angegeben werden. Dafür muss die Checkbox ausgewählt sein und die Jahre seit 2018 als komma-seperierte in das entsprechende Feld eingetragen werden.  " />
+              <Tooltip tooltip-text="Hiermit lässt sich ein neues Gebäude in die Datenbank einfügen. Es wird eine eindeutige Gebäudenummer sowie eine Gebäudebezeichnung benötigt. Zusätzlich muss die Fläche des Gebäudes angegebnen werden. Falls ein Wert nicht vorliegt, soll 0 als Wert eigentragen werden. Ist das Gebäude an einen externen Versorger angeschlossen, so können die entsprechenden Jahre angegeben werden. Dafür muss die Checkbox ausgewählt sein und die Jahre seit 2018 als kommaseparierte in das entsprechende Feld eingetragen werden.  " />
             </label>
           </v-expansion-panel-header>
           <v-expansion-panel-content>
@@ -256,7 +256,7 @@
             <v-row v-if="external_supplier">
               <v-col>
                 <p>
-                  Geben sie die Jahre seit 2018 an, für die das Gebäude einen externe Versorger hatte. Eingabe als komma-seperierte Liste and
+                  Geben sie die Jahre seit 2018 an, für die das Gebäude einen externe Versorger hatte. Eingabe als kommaseparierte Liste.
                 </p>
               </v-col>
             </v-row>
@@ -732,7 +732,7 @@
 
                   <v-card>
                     <v-card-title class="text-h5 grey lighten-2">
-                      Daten aus dem EMS auslesen (noch unvollständig)
+                      Daten aus dem EMS auslesen
                     </v-card-title>
 
                     <v-card-text style="white-space: pre-wrap">
