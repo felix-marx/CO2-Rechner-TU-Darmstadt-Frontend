@@ -30,7 +30,7 @@
                 </v-list-item-title>
                 <v-list-item-subtitle>
                   <a
-                    href="https://github.com/Lithium-1Hauptgruppe/CO2-Rechner-TU-Darmstadt-Frontend"
+                    href="https://github.com/felix-marx/CO2-Rechner-TU-Darmstadt-Frontend"
                     target="_blank"
                   >Github Repository</a>
                 </v-list-item-subtitle>

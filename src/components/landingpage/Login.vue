@@ -32,6 +32,7 @@
                   label="TU E-Mail"
                   prepend-icon="mdi-account"
                   required
+                  @keyup.enter="postAnmeldung"
                 />
               </v-col>
               <v-col />
@@ -45,6 +46,7 @@
                   label="Passwort"
                   type="password"
                   prepend-icon="mdi-key"
+                  @keyup.enter="postAnmeldung"
                 />
               </v-col>
               <v-col />
@@ -118,6 +120,7 @@
                   label="TU E-Mail"
                   prepend-icon="mdi-account"
                   required
+                  @keyup.enter="postRegistrierung"
                 />
               </v-col>
               <v-col />
@@ -132,6 +135,7 @@
                   label="Passwort"
                   type="password"
                   prepend-icon="mdi-key"
+                  @keyup.enter="postRegistrierung"
                 />
               </v-col>
               <v-col />
@@ -147,6 +151,7 @@
                   type="password"
                   prepend-icon="mdi-key"
                   hint="Mindestens 8 Zeichen"
+                  @keyup.enter="postRegistrierung"
                 />
               </v-col>
               <v-col />
