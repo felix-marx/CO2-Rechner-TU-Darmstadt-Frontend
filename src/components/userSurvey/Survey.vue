@@ -434,6 +434,7 @@ export default {
 
     // mögliche gebäudeIDs
     gebaeudeIDs: [],
+    gebaeudeIDsUndZaehler: [],
 
     //IT Geräte
     /* Geraet an Array Position format [intern Geraete ID, Anzahl, enabled]
@@ -529,6 +530,7 @@ export default {
   created() {
     // get all possible gebaeude IDs on creation of the component
     this.fetchGebaeudeData();
+    this.fetchGebaeudeUndZaehlerData();
   },
 
   methods: {
@@ -741,6 +743,31 @@ export default {
         .then((response) => response.json())
         .then((data) => {
           this.gebaeudeIDs = data.data.gebaeude.map(gebInt => translateGebaeudeIDToSymbolic(gebInt));
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    },
+
+    /**
+     * Fetches all possible gebaeudeIDs and the Zaehler References from the database.
+     */
+     fetchGebaeudeUndZaehlerData: async function () {
+      await fetch(process.env.VUE_APP_BASEURL + "/umfrage/gebaeudeUndZaehler", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          authToken: {
+            username: Cookies.getCookieAttribut("username"),
+            sessiontoken: Cookies.getCookieAttribut("sessiontoken")
+          },
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          this.gebaeudeIDsUndZaehler = data.data.gebaeude
         })
         .catch((error) => {
           console.error("Error:", error);
