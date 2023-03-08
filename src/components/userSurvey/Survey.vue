@@ -165,7 +165,8 @@
 
           <v-alert
             v-if="dataGap"
-            type="warning"
+            type="info"
+            text
             dense
             style="white-space: pre-wrap"
           >
@@ -552,13 +553,13 @@ export default {
           console.log(zaehlerRefs)
 
           if (zaehlerRefs["kaelteRef"].length == 0){
-            msg = msg + "\n " + this.gebaeude[i][0] + " hat keine Kältezaehler"
+            msg = msg + "\n " + this.gebaeude[i][0] + " hat keine Kältezahler"
           }
           if (zaehlerRefs["stromRef"].length == 0){
-            msg = msg + "\n " + this.gebaeude[i][0] + " hat keine Stromzaehler"
+            msg = msg + "\n " + this.gebaeude[i][0] + " hat keine Stromzahler"
           }
           if (zaehlerRefs["waermeRef"].length == 0){
-            msg = msg + "\n " + this.gebaeude[i][0] + " hat keine Wärmezaehler"
+            msg = msg + "\n " + this.gebaeude[i][0] + " hat keine Wärmezahler"
           }
 
           if (this.bilanzierungsjahr) {
