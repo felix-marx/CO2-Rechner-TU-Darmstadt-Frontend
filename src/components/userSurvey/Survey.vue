@@ -456,8 +456,8 @@ export default {
      * [1] MultigeraetToner
      * [2] Laserdrucker
      * [3] LaserdruckerToner
-     * [4] beamer
-     * [5] server
+     * [4] Beamer
+     * [5] Server
      */
     geraeteAnzahl: [
       [7, null, false],
