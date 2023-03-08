@@ -162,6 +162,17 @@
           >
             Sie haben mehrmals das selbe Gebäude ausgewählt.
           </v-alert>
+
+          <v-alert
+            v-if="dataGap"
+            type="warning"
+            dense
+            style="white-space: pre-wrap"
+          >
+            {{ dataGapWarningMessage }}
+          </v-alert>
+
+
           <!-- Umfrage für IT Geräte: Multifunktionsgeräte + Toner, Drucker + Toner, Beamer, Server -->
 
           <br>
@@ -435,6 +446,9 @@ export default {
     // mögliche gebäudeIDs
     gebaeudeIDs: [],
     gebaeudeIDsUndZaehler: [],
+    zaehler: [],
+    mapGebauedeZaehlerRefs: null,
+    mapZaehlerWerte: null,
 
     //IT Geräte
     /* Geraet an Array Position format [intern Geraete ID, Anzahl, enabled]
@@ -524,12 +538,54 @@ export default {
         }
       }
       return false
-    }
+    },
+
+    dataGapWarningMessage: function() {
+      var msg = "Datenlücken:"
+
+      for(var i = 0; i < this.gebaeude.length; i++) {
+        console.log(this.gebaeude[i])
+
+        if (this.gebaeude[i][0]) {    // falls Gebäude ausgewählt
+          let zaehlerRefs = this.mapGebauedeZaehlerRefs.get(this.gebaeude[i][0])
+
+          console.log(zaehlerRefs)
+
+          if (zaehlerRefs["kaelteRef"].length == 0){
+            msg = msg + "\n " + this.gebaeude[i][0] + " hat keine Kältezaehler"
+          }
+          if (zaehlerRefs["stromRef"].length == 0){
+            msg = msg + "\n " + this.gebaeude[i][0] + " hat keine Stromzaehler"
+          }
+          if (zaehlerRefs["waermeRef"].length == 0){
+            msg = msg + "\n " + this.gebaeude[i][0] + " hat keine Wärmezaehler"
+          }
+
+          if (this.bilanzierungsjahr) {
+            var functCheck = (zaehler) => {
+              if (!this.mapZaehlerWerte.get(zaehler).get(this.bilanzierungsjahr)){
+                msg = msg + "\n " + zaehler + " von " + this.gebaeude[i][0] + " hat keine Wert für das Jahr " + this.bilanzierungsjahr
+              }
+            }
+
+            zaehlerRefs["kaelteRef"].forEach(functCheck);
+            zaehlerRefs["stromRef"].forEach(functCheck);
+            zaehlerRefs["waermeRef"].forEach(functCheck);
+          }
+        }
+      }
+
+      return msg
+    },
+
+    dataGap: function(){
+      return this.dataGapWarningMessage != "Datenlücken:"
+    },
   },
 
   created() {
     // get all possible gebaeude IDs on creation of the component
-    this.fetchGebaeudeData();
+    //this.fetchGebaeudeData();
     this.fetchGebaeudeUndZaehlerData();
   },
 
@@ -768,6 +824,21 @@ export default {
         .then((response) => response.json())
         .then((data) => {
           this.gebaeudeIDsUndZaehler = data.data.gebaeude
+          this.zaehler = data.data.zaehler
+
+          //console.log(data)
+        
+          this.gebaeudeIDs = data.data.gebaeude.map(obj => translateGebaeudeIDToSymbolic(obj.nr));
+
+          this.mapGebauedeZaehlerRefs = new Map(
+            data.data.gebaeude.map((obj) => [translateGebaeudeIDToSymbolic(obj.nr), {kaelteRef: obj.kaelteRef, stromRef: obj.stromRef, waermeRef: obj.waermeRef}])
+          )
+          //console.log(this.mapGebauedeZaehlerRefs)
+
+          this.mapZaehlerWerte = new Map(
+            data.data.zaehler.map((obj) => [obj.pkEnergie, new Map(obj.zaehlerdatenVorhanden.map((obj2) => [obj2.jahr, obj2.vorhanden]))])
+          )
+          //console.log(this.mapZaehlerWerte)
         })
         .catch((error) => {
           console.error("Error:", error);
