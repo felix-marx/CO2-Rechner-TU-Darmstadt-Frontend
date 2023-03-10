@@ -165,6 +165,7 @@
 
           <v-alert
             v-if="dataGap"
+            class="mt-3 mb-0"
             type="info"
             text
             dense
