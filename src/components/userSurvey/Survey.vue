@@ -174,6 +174,17 @@
             {{ dataGapWarningMessage }}
           </v-alert>
 
+          <v-alert
+            v-if="dataGap2"
+            class="mt-3 mb-0"
+            type="info"
+            text
+            dense
+            style="white-space: pre-wrap"
+          >
+            {{ dataGapWarningMessage2 }}
+          </v-alert>
+
 
           <!-- Umfrage für IT Geräte: Multifunktionsgeräte + Toner, Drucker + Toner, Beamer, Server -->
 
@@ -581,6 +592,63 @@ export default {
     },
 
     dataGap: function(){
+      return this.dataGapWarningMessage != "Datenlücken:"
+    },
+
+    dataGapWarningMessage2: function() {
+      var msg = "Datenlücken:"
+
+      for(var i = 0; i < this.gebaeude.length; i++) {
+        console.log(this.gebaeude[i])
+        var temp = [0, 0, 0]
+
+        if (this.gebaeude[i][0]) {    // falls Gebäude ausgewählt
+          let zaehlerRefs = this.mapGebauedeZaehlerRefs.get(this.gebaeude[i][0])
+
+          console.log(zaehlerRefs)
+
+          if (zaehlerRefs["kaelteRef"].length == 0){
+            temp[0] = 1
+          }
+          if (zaehlerRefs["stromRef"].length == 0){
+            temp[1] = 1
+          }
+          if (zaehlerRefs["waermeRef"].length == 0){
+            temp[2] = 1
+          }
+
+          if (this.bilanzierungsjahr) {
+            zaehlerRefs["kaelteRef"].forEach((zaehler) => {
+              if (!this.mapZaehlerWerte.get(zaehler).get(this.bilanzierungsjahr)){
+                temp[0] = 2
+              }
+            });
+            zaehlerRefs["stromRef"].forEach((zaehler) => {
+              if (!this.mapZaehlerWerte.get(zaehler).get(this.bilanzierungsjahr)){
+                temp[1] = 2
+              }
+            });
+            zaehlerRefs["waermeRef"].forEach((zaehler) => {
+              if (!this.mapZaehlerWerte.get(zaehler).get(this.bilanzierungsjahr)){
+                temp[2] = 2
+              }
+            });
+          }
+
+          if(temp[0] != 0 || temp[1] != 0 || temp[2] != 0){
+            msg = msg + "\n" + "Gebäude " + this.gebaeude[i][0] + ": "
+            msg = msg + (temp[0] == 0 ? "" : (temp[0] == 1 ? "keine Kältedaten, " : "unvollständige Kältedaten, "))
+            msg = msg + (temp[1] == 0 ? "" : (temp[1] == 1 ? "keine Stromdaten, " : "unvollständige Stromdaten, "))
+            msg = msg + (temp[2] == 0 ? "" : (temp[2] == 1 ? "keine Wärmedaten, " : "unvollständige Wärmedaten, "))
+            msg = msg.slice(0, -2)
+          }
+        }
+      }
+
+      return msg
+    },
+
+    dataGap2: function(){
       return this.dataGapWarningMessage != "Datenlücken:"
     },
   },
