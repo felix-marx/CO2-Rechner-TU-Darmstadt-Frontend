@@ -500,7 +500,7 @@ export default {
      */
     possibleYears: function () {
       const beginningYear = 2018;
-      let currentYear = new Date().getFullYear();
+      let currentYear = new Date().getFullYear() - 1;
       return Array.from(new Array(currentYear - beginningYear + 1), (x, i) => i + beginningYear).reverse();
     },
 
