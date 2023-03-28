@@ -163,6 +163,7 @@
             Sie haben mehrmals das selbe Gebäude ausgewählt.
           </v-alert>
 
+          <!-- Datenlücken Visualisierung - Proof of Concept -->
           <v-alert
             v-if="dataGap"
             class="mt-3 mb-0"
@@ -174,6 +175,7 @@
             {{ dataGapWarningMessage }}
           </v-alert>
 
+          <!-- Datenlücken Visualisierung - Benutzerfreundlicher -->
           <v-alert
             v-if="dataGap2"
             class="mt-3 mb-0"
@@ -183,6 +185,107 @@
             style="white-space: pre-wrap"
           >
             {{ dataGapWarningMessage2 }}
+          </v-alert>
+
+          <!-- Datenlücken Visualisierung - Simplifiziert -->
+          <v-alert
+            v-if="dataGap3"
+            class="mt-3 mb-0"
+            type="info"
+            text
+            dense
+            style="white-space: pre-wrap"
+          >
+            {{ dataGapWarningMessage3 }}
+          </v-alert>
+
+          <!-- Datenlücken Visualisierung - Tabelle -->
+          <v-alert
+            v-if="dataGapTable"
+            class="mt-3 mb-0"
+            type="info"
+            text
+            dense
+            style="white-space: pre-wrap"
+          >
+            <v-simple-table light>
+              <thead>
+                <tr>
+                  <th class="text-left">
+                    Gedäude
+                  </th>
+                  <th class="text-left">
+                    Kältedaten
+                  </th>
+                  <th class="text-left">
+                    Stromdaten
+                  </th>
+                  <th class="text-left">
+                    Wärmedaten
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  v-for="item in dataGapWarning"
+                  :key="item.name"
+                >
+                  <td>
+                    {{ item.name }}
+                  </td>
+                  <td>
+                    <div
+                      v-if="item.kaelte == 1"
+                      class="pa-2 mt-1 red text-no-wrap rounded-pill"
+                    >
+                      nicht vorhanden
+                    </div>
+                    <div
+                      v-if="item.kaelte == 2"
+                      class="pa-2 mt-1 yellow text-no-wrap rounded-pill"
+                    >
+                      unvollständig
+                    </div>
+                    <div
+                      v-if="item.kaelte == 0"
+                      class="pa-2 mt-1 green text-no-wrap rounded-pill"
+                    >
+                      vollständig
+                    </div>
+                  </td>
+                  <td>
+                    <div
+                      v-if="item.strom == 1"
+                      class="pa-4 red rounded-circle d-inline-block"
+                    />
+                    <div
+                      v-if="item.strom == 2"
+                      class="pa-4 yellow rounded-circle d-inline-block"
+                    />
+                    <div
+                      v-if="item.strom == 0"
+                      class="pa-4 green rounded-circle d-inline-block"
+                    />
+                    {{ item.strom }}
+                  </td>
+                  <td>
+                    <div
+                      v-if="item.waerme == 1"
+                      class="pa-4 mt-1 red rounded-circle d-inline-block"
+                    />
+                    <div
+                      v-if="item.waerme == 2"
+                      class="pa-4 mt-1  yellow rounded-circle d-inline-block"
+                    />
+                    <div
+                      v-if="item.waerme == 0"
+                      class="pa-4 mt-1 green rounded-circle d-inline-block"
+                    />
+                    {{ item.waerme }}
+                  </td>
+                </tr>
+              </tbody>
+            </v-simple-table>
           </v-alert>
 
 
@@ -557,12 +660,12 @@ export default {
       var msg = "Datenlücken:"
 
       for(var i = 0; i < this.gebaeude.length; i++) {
-        console.log(this.gebaeude[i])
+        //console.log(this.gebaeude[i])
 
         if (this.gebaeude[i][0]) {    // falls Gebäude ausgewählt
           let zaehlerRefs = this.mapGebauedeZaehlerRefs.get(this.gebaeude[i][0])
 
-          console.log(zaehlerRefs)
+          //console.log(zaehlerRefs)
 
           if (zaehlerRefs["kaelteRef"].length == 0){
             msg = msg + "\n " + this.gebaeude[i][0] + " hat keine Kältezahler"
@@ -599,13 +702,13 @@ export default {
       var msg = "Datenlücken:"
 
       for(var i = 0; i < this.gebaeude.length; i++) {
-        console.log(this.gebaeude[i])
+        //console.log(this.gebaeude[i])
         var temp = [0, 0, 0]
 
         if (this.gebaeude[i][0]) {    // falls Gebäude ausgewählt
           let zaehlerRefs = this.mapGebauedeZaehlerRefs.get(this.gebaeude[i][0])
 
-          console.log(zaehlerRefs)
+          //console.log(zaehlerRefs)
 
           if (zaehlerRefs["kaelteRef"].length == 0){
             temp[0] = 1
@@ -649,7 +752,117 @@ export default {
     },
 
     dataGap2: function(){
-      return this.dataGapWarningMessage != "Datenlücken:"
+      return this.dataGapWarningMessage2 != "Datenlücken:"
+    },
+
+    dataGapWarning: function() {
+      var arr = []
+
+      for(var i = 0; i < this.gebaeude.length; i++) {
+        //console.log(this.gebaeude[i])
+        var temp = [this.gebaeude[i][0], 0, 0, 0]
+
+        if (this.gebaeude[i][0]) {    // falls Gebäude ausgewählt
+          let zaehlerRefs = this.mapGebauedeZaehlerRefs.get(this.gebaeude[i][0])
+
+          //console.log(zaehlerRefs)
+
+          if (zaehlerRefs["kaelteRef"].length == 0){
+            temp[1] = 1
+          }
+          if (zaehlerRefs["stromRef"].length == 0){
+            temp[2] = 1
+          }
+          if (zaehlerRefs["waermeRef"].length == 0){
+            temp[3] = 1
+          }
+
+          if (this.bilanzierungsjahr) {
+            zaehlerRefs["kaelteRef"].forEach((zaehler) => {
+              if (!this.mapZaehlerWerte.get(zaehler).get(this.bilanzierungsjahr)){
+                temp[1] = 2
+              }
+            });
+            zaehlerRefs["stromRef"].forEach((zaehler) => {
+              if (!this.mapZaehlerWerte.get(zaehler).get(this.bilanzierungsjahr)){
+                temp[2] = 2
+              }
+            });
+            zaehlerRefs["waermeRef"].forEach((zaehler) => {
+              if (!this.mapZaehlerWerte.get(zaehler).get(this.bilanzierungsjahr)){
+                temp[3] = 2
+              }
+            });
+          }
+
+          arr.push({
+            name: temp[0],
+            kaelte: temp[1],
+            strom: temp[2],
+            waerme: temp[3],
+          })
+        }
+      }
+
+      //console.log("Arr", arr)
+
+      return arr
+    },
+
+    dataGapTable: function(){
+      return this.dataGapWarning.length != 0
+    },
+
+    dataGapWarningMessage3: function() {
+      var msg = "Für die folgenden Gebäude haben wir aktuell leider nur unvollständige Daten: "
+
+      for(var i = 0; i < this.gebaeude.length; i++) {
+        //console.log(this.gebaeude[i])
+
+        if (this.gebaeude[i][0]) {    // falls Gebäude ausgewählt
+          let zaehlerRefs = this.mapGebauedeZaehlerRefs.get(this.gebaeude[i][0])
+          let incomplete = false
+          //console.log(zaehlerRefs)
+
+          if (zaehlerRefs["kaelteRef"].length == 0){
+            incomplete = true
+          }
+          if (zaehlerRefs["stromRef"].length == 0){
+            incomplete = true
+          }
+          if (zaehlerRefs["waermeRef"].length == 0){
+            incomplete = true
+          }
+
+          if (this.bilanzierungsjahr) {
+            zaehlerRefs["kaelteRef"].forEach((zaehler) => {
+              if (!this.mapZaehlerWerte.get(zaehler).get(this.bilanzierungsjahr)){
+                incomplete = true
+              }
+            });
+            zaehlerRefs["stromRef"].forEach((zaehler) => {
+              if (!this.mapZaehlerWerte.get(zaehler).get(this.bilanzierungsjahr)){
+                incomplete = true
+              }
+            });
+            zaehlerRefs["waermeRef"].forEach((zaehler) => {
+              if (!this.mapZaehlerWerte.get(zaehler).get(this.bilanzierungsjahr)){
+                incomplete = true
+              }
+            });
+          }
+
+          if (incomplete){
+            msg = msg + this.gebaeude[i][0] + ", "
+          }
+        }
+      }
+
+      return msg.slice(0, -2)
+    },
+
+    dataGap3: function(){
+      return this.dataGapWarningMessage3 != "Für die folgenden Gebäude haben wir aktuell leider nur unvollständige Daten"
     },
   },
 
@@ -878,41 +1091,41 @@ export default {
     /**
      * Fetches all possible gebaeudeIDs and the Zaehler References from the database.
      */
-     fetchGebaeudeUndZaehlerData: async function () {
-      await fetch(process.env.VUE_APP_BASEURL + "/umfrage/gebaeudeUndZaehler", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+    fetchGebaeudeUndZaehlerData: async function () {
+    await fetch(process.env.VUE_APP_BASEURL + "/umfrage/gebaeudeUndZaehler", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        authToken: {
+          username: Cookies.getCookieAttribut("username"),
+          sessiontoken: Cookies.getCookieAttribut("sessiontoken")
         },
-        body: JSON.stringify({
-          authToken: {
-            username: Cookies.getCookieAttribut("username"),
-            sessiontoken: Cookies.getCookieAttribut("sessiontoken")
-          },
-        }),
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        this.gebaeudeIDsUndZaehler = data.data.gebaeude
+        this.zaehler = data.data.zaehler
+
+        //console.log(data)
+      
+        this.gebaeudeIDs = data.data.gebaeude.map(obj => translateGebaeudeIDToSymbolic(obj.nr));
+
+        this.mapGebauedeZaehlerRefs = new Map(
+          data.data.gebaeude.map((obj) => [translateGebaeudeIDToSymbolic(obj.nr), {kaelteRef: obj.kaelteRef, stromRef: obj.stromRef, waermeRef: obj.waermeRef}])
+        )
+        //console.log(this.mapGebauedeZaehlerRefs)
+
+        this.mapZaehlerWerte = new Map(
+          data.data.zaehler.map((obj) => [obj.pkEnergie, new Map(obj.zaehlerdatenVorhanden.map((obj2) => [obj2.jahr, obj2.vorhanden]))])
+        )
+        //console.log(this.mapZaehlerWerte)
       })
-        .then((response) => response.json())
-        .then((data) => {
-          this.gebaeudeIDsUndZaehler = data.data.gebaeude
-          this.zaehler = data.data.zaehler
-
-          //console.log(data)
-        
-          this.gebaeudeIDs = data.data.gebaeude.map(obj => translateGebaeudeIDToSymbolic(obj.nr));
-
-          this.mapGebauedeZaehlerRefs = new Map(
-            data.data.gebaeude.map((obj) => [translateGebaeudeIDToSymbolic(obj.nr), {kaelteRef: obj.kaelteRef, stromRef: obj.stromRef, waermeRef: obj.waermeRef}])
-          )
-          //console.log(this.mapGebauedeZaehlerRefs)
-
-          this.mapZaehlerWerte = new Map(
-            data.data.zaehler.map((obj) => [obj.pkEnergie, new Map(obj.zaehlerdatenVorhanden.map((obj2) => [obj2.jahr, obj2.vorhanden]))])
-          )
-          //console.log(this.mapZaehlerWerte)
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
+      .catch((error) => {
+        console.error("Error:", error);
+      });
     },
   },
 };
