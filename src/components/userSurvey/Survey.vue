@@ -196,7 +196,34 @@
             dense
             style="white-space: pre-wrap"
           >
-            {{ dataGapWarningMessage3 }}
+            <v-container>
+              <v-row>
+                {{ dataGapWarningMessage3 }}
+              </v-row>
+              <v-row>
+                <v-btn
+                  small
+                  plain
+                  light
+                  :ripple="false"
+                  @click="moreInfo = !moreInfo"
+                >
+                  <v-icon v-if="!moreInfo">
+                    mdi-menu-right
+                  </v-icon>
+                  <v-icon v-if="moreInfo">
+                    mdi-menu-down
+                  </v-icon>
+                  Weiter Informationen
+                </v-btn>
+              </v-row>
+              <v-row
+                v-if="moreInfo"
+                class="ml-2"
+              >
+                {{ dataGapWarningMessage2 }}
+              </v-row>
+            </v-container>
           </v-alert>
 
           <!-- Datenlücken Visualisierung - Tabelle -->
@@ -558,6 +585,7 @@ export default {
     // genutzte Gebäude
     // Format: [gebaeudeID, flaechenanteil]
     gebaeude: [[null, null]],
+    moreInfo: false,
 
     // mögliche gebäudeIDs
     gebaeudeIDs: [],
@@ -739,7 +767,7 @@ export default {
           }
 
           if(temp[0] != 0 || temp[1] != 0 || temp[2] != 0){
-            msg = msg + "\n" + "Gebäude " + this.gebaeude[i][0] + ": "
+            msg = msg + "\n " + "Gebäude " + this.gebaeude[i][0] + ": "
             msg = msg + (temp[0] == 0 ? "" : (temp[0] == 1 ? "keine Kältedaten, " : "unvollständige Kältedaten, "))
             msg = msg + (temp[1] == 0 ? "" : (temp[1] == 1 ? "keine Stromdaten, " : "unvollständige Stromdaten, "))
             msg = msg + (temp[2] == 0 ? "" : (temp[2] == 1 ? "keine Wärmedaten, " : "unvollständige Wärmedaten, "))
