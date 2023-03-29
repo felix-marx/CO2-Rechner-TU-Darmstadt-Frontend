@@ -295,6 +295,7 @@
 
 <script>
 import Footer from "../componentParts/Footer.vue";
+
 import Header from "../componentParts/Header.vue";
 import Cookies from "../Cookie.js"
 
@@ -304,7 +305,7 @@ export default {
 
   components: {
     Header,
-    Footer
+    Footer,
   }
   ,
 

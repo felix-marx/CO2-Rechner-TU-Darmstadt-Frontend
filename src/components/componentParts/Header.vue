@@ -23,25 +23,30 @@
         style="min-width:0px"
       />
     </v-tabs>
-
+    <span>
+      <LangSelection />
+    </span>
     <span>
       <UserSettingsHeader
         v-if="displayUserSetting"
         @openAccountSettings="changeTab(2, accountSettings)"
       />
     </span>
+
   </v-app-bar>
 </template>
 <script>
 
 import UserSettingsHeader from "../settings/UserSettingsHeader.vue";
 import AccountSettings from "../settings/AccountSettings.vue";
+import LangSelection from "@/components/componentParts/LangSelection.vue";
 
 export default {
   name: "Header",
 
   components: {
-    UserSettingsHeader
+    UserSettingsHeader,
+    LangSelection
   },
 
   props: {
