@@ -49,6 +49,12 @@
             </v-alert>
           </v-col>
         </v-row>
+
+        <DataGapVisualization 
+          :gebaeude-i-ds-und-zaehler="gebaeudeIDsUndZaehler"
+          :zaehler="zaehler"
+          :gebaeude="gebaeude"
+        />
       </v-container>
 
       <v-card-title>Emissionen</v-card-title>
@@ -251,6 +257,7 @@ import saveAs from 'file-saver';
 import Cookies from '../Cookie.js';
 import LoadingAnimation from "../componentParts/LoadingAnimation.vue";
 import LinkSharingComponent from "../componentParts/LinkSharingComponent.vue";
+import DataGapVisualization from '../componentParts/DataGapVisualization.vue';
 
 export default {
   name: "SurveyEvaluation",
@@ -259,7 +266,8 @@ export default {
     DoughnutChart,
     BarChart,
     LoadingAnimation,
-    LinkSharingComponent
+    LinkSharingComponent,
+    DataGapVisualization,
 },
 
   props: {
@@ -337,7 +345,10 @@ export default {
       chartdataVerbrauchBar: null,
       optionsVerbrauchBar: null,
 
-
+      // for data gap visualization
+      gebaeude: [[null, null]],
+      gebaeudeIDsUndZaehler: [],
+      zaehler: [],
     }
   },
 
@@ -531,6 +542,9 @@ export default {
           this.setChartGesamt();
           this.setChartEnergie();
           this.setChartVerbrauch();
+          this.gebaeudeIDsUndZaehler = this.responsedata.gebaeude
+          this.gebaeude = this.responsedata.gebaeude2.map(x => [translateGebaeudeIDToSymbolic(x["gebaeudeNr"]), x["nutzflaeche"]])
+          this.zaehler = this.responsedata.zaehler
         }
         else {  // Fehlerbehandlung
           this.responseNotSuccessful = true
@@ -866,6 +880,23 @@ export default {
     },
 
   },
+}
+
+/**
+ * Translates a given numeric gebaeudeID to its symbolic equivalent (string).
+ * E.g. 1101 is translated to S101, 3312 to L312 and so on.
+ */
+function translateGebaeudeIDToSymbolic(gebaeudeID) {
+  let gebaeudeDict = {
+      1: "S",
+      2: "B",
+      3: "L",
+      4: "H",
+      5: "W",
+  };
+  gebaeudeID = gebaeudeID.toString()
+  let translatedID = gebaeudeDict[gebaeudeID.substring(0, 1)] + gebaeudeID.substring(1);
+  return translatedID;
 }
 
 </script>

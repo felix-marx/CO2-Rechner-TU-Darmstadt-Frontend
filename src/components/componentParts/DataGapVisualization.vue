@@ -155,8 +155,6 @@
 </template>
   
 <script>
-import Cookies from '../Cookie.js'
-
 export default {
   props:{
     gebaeudeIDsUndZaehler: {
@@ -172,7 +170,7 @@ export default {
       default: () => [],
     },
   },
-  
+
   data: () => ({
     moreInfo: false,
   }),
@@ -399,48 +397,6 @@ export default {
       return this.dataGapWarningMessage3 != "Für die folgenden Gebäude haben wir aktuell leider nur unvollständige Daten"
     },
   },
-
-  methods: {
-    /**
-     * Fetches all possible gebaeudeIDs and the Zaehler References from the database.
-     */
-    fetchGebaeudeUndZaehlerData: async function () {
-    await fetch(process.env.VUE_APP_BASEURL + "/umfrage/gebaeudeUndZaehler", {
-    method: "POST",
-    headers: {
-        "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-        authToken: {
-        username: Cookies.getCookieAttribut("username"),
-        sessiontoken: Cookies.getCookieAttribut("sessiontoken")
-        },
-    }),
-    })
-    .then((response) => response.json())
-    .then((data) => {
-        this.gebaeudeIDsUndZaehler = data.data.gebaeude
-        this.zaehler = data.data.zaehler
-
-        //console.log(data)
-    
-        this.gebaeudeIDs = data.data.gebaeude.map(obj => translateGebaeudeIDToSymbolic(obj.nr));
-
-        this.mapGebauedeZaehlerRefs = new Map(
-        data.data.gebaeude.map((obj) => [translateGebaeudeIDToSymbolic(obj.nr), {kaelteRef: obj.kaelteRef, stromRef: obj.stromRef, waermeRef: obj.waermeRef}])
-        )
-        //console.log(this.mapGebauedeZaehlerRefs)
-
-        this.mapZaehlerWerte = new Map(
-        data.data.zaehler.map((obj) => [obj.pkEnergie, new Map(obj.zaehlerdatenVorhanden.map((obj2) => [obj2.jahr, obj2.vorhanden]))])
-        )
-        //console.log(this.mapZaehlerWerte)
-    })
-    .catch((error) => {
-        console.error("Error:", error);
-    });
-    },
-  },
 };
 
 /**
@@ -448,18 +404,16 @@ export default {
  * E.g. 1101 is translated to S101, 3312 to L312 and so on.
  */
 function translateGebaeudeIDToSymbolic(gebaeudeID) {
-let gebaeudeDict = {
-    1: "S",
-    2: "B",
-    3: "L",
-    4: "H",
-    5: "W",
-};
-
-gebaeudeID = gebaeudeID.toString()
-let translatedID =
-    gebaeudeDict[gebaeudeID.substring(0, 1)] + gebaeudeID.substring(1);
-return translatedID;
+  let gebaeudeDict = {
+      1: "S",
+      2: "B",
+      3: "L",
+      4: "H",
+      5: "W",
+  };
+  gebaeudeID = gebaeudeID.toString()
+  let translatedID = gebaeudeDict[gebaeudeID.substring(0, 1)] + gebaeudeID.substring(1);
+  return translatedID;
 }
 
 </script>

@@ -45,7 +45,6 @@ export default {
   }),
 
   computed: {
-
     /**
      * Returns the component to be shown in the body of the view. 
      * LoadingAnimation while the server is requested, SurveyNotFound if the survey does not exist 
@@ -106,27 +105,27 @@ export default {
      * Requests from the server whether a survey with the givenID has result sharing enabled.
      */
   fetchUmfrage: async function (givenID) {
-      await fetch(process.env.VUE_APP_BASEURL + "/umfrage/GetSharedResults?id=" + givenID, {
-        method: "GET",
-        })
-        .then((response) => response.json())
-        .then((data) => {
+    await fetch(process.env.VUE_APP_BASEURL + "/umfrage/GetSharedResults?id=" + givenID, {
+      method: "GET",
+      })
+      .then((response) => response.json())
+      .then((data) => {
+        this.umfrageID = givenID;
+        if (data.status == "success"){
+          // Umfrage exists
           this.umfrageID = givenID;
-          if (data.status == "success"){
-            // Umfrage exists
-            this.umfrageID = givenID;
-            this.freigegeben = data.data.freigegeben;
-          }
-          else{
-            // Umfrage doesn't exists
-            this.umfrageID = "";
-            this.freigegeben = 0;
-          }
-        }).catch((error) => {
-          console.error("Error:", error);
+          this.freigegeben = data.data.freigegeben;
+        }
+        else{
+          // Umfrage doesn't exists
           this.umfrageID = "";
           this.freigegeben = 0;
-        });
+        }
+      }).catch((error) => {
+        console.error("Error:", error);
+        this.umfrageID = "";
+        this.freigegeben = 0;
+      });
     },
   },
 
