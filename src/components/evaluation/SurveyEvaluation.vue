@@ -53,7 +53,7 @@
         <DataGapVisualization 
           :gebaeude-i-ds-und-zaehler="gebaeudeIDsUndZaehler"
           :zaehler="zaehler"
-          :gebaeude="gebaeude"
+          :gebaeude="umfrageGebaeude"
         />
       </v-container>
 
@@ -346,7 +346,7 @@ export default {
       optionsVerbrauchBar: null,
 
       // for data gap visualization
-      gebaeude: [[null, null]],
+      umfrageGebaeude: [],
       gebaeudeIDsUndZaehler: [],
       zaehler: [],
     }
@@ -542,8 +542,9 @@ export default {
           this.setChartGesamt();
           this.setChartEnergie();
           this.setChartVerbrauch();
-          this.gebaeudeIDsUndZaehler = this.responsedata.gebaeude
-          this.gebaeude = this.responsedata.gebaeude2.map(x => [translateGebaeudeIDToSymbolic(x["gebaeudeNr"]), x["nutzflaeche"]])
+
+          this.gebaeudeIDsUndZaehler = this.responsedata.gebaeudeIDsUndZaehler
+          this.umfrageGebaeude = this.responsedata.umfrageGebaeude.map(x => [translateGebaeudeIDToSymbolic(x["gebaeudeNr"]), x["nutzflaeche"]])
           this.zaehler = this.responsedata.zaehler
         }
         else {  // Fehlerbehandlung
