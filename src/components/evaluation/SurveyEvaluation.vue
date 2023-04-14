@@ -54,6 +54,7 @@
           :gebaeude-i-ds-und-zaehler="gebaeudeIDsUndZaehler"
           :zaehler="zaehler"
           :gebaeude="umfrageGebaeude"
+          :bilanzierungsjahr="responsedata.jahr"
         />
       </v-container>
 

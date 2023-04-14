@@ -167,6 +167,7 @@
             :gebaeude-i-ds-und-zaehler="gebaeudeIDsUndZaehler"
             :zaehler="zaehler"
             :gebaeude="gebaeude"
+            :bilanzierungsjahr="bilanzierungsjahr"
           />
 
           <!-- Umfrage für IT Geräte: Multifunktionsgeräte + Toner, Drucker + Toner, Beamer, Server -->
