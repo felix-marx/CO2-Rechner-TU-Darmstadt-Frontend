@@ -14,7 +14,7 @@
       >
         <v-card>
           <h2 class="pa-7 mt-2">
-            Ihre E-Mail Adresse wurde erfolgreich bestätigt.
+            {{ $t('MailAuthentication.MailBestaetigt') }}
           </h2>
           <v-btn
             color="primary"
@@ -25,7 +25,7 @@
             <v-icon left>
               mdi-account
             </v-icon>
-            <span>Zurück zur Anmeldung</span>
+            <span>{{ $t('common.ZurueckAnmeldung') }}</span>
           </v-btn>
         </v-card>
       </v-container>
@@ -35,7 +35,7 @@
         class="text-center"
       >
         <v-card class="pa-7 mt-2">
-          <h2>Leider ist ein Fehler aufgetreten. Bitte probieren Sie es erneut oder wenden sich an den Administrator.</h2>
+          <h2>{{ $t('MailAuthentication.MailBestaetigungFehlgeschlagen') }}</h2>
         </v-card>
       </v-container>
     </v-main>

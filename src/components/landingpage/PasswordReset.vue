@@ -14,9 +14,9 @@
             mdi-lock-outline
           </v-icon>
           <v-card-title class="justify-center">
-            <h2>Probleme beim Anmelden?</h2>
+            <h2>{{ $t('PasswortReset.ProblemeAnmeldung') }}</h2>
           </v-card-title>
-          <br>Geben Sie einfach Ihre E-Mail Adresse ein und wir schicken Ihnen ein neues Kennwort zu.
+          <br>{{ $t('PasswortReset.MailAngeben') }}
         </div>
         <v-container>
           <v-row>
@@ -24,7 +24,7 @@
             <v-col cols="16">
               <v-text-field
                 v-model="username"
-                label="E-Mail Adresse"
+                :label= "$t('PasswortReset.Mail')"
                 prepend-icon="mdi-account"
               />
             </v-col>
@@ -42,8 +42,7 @@
                 outlined
                 type="success"
                 text
-              >
-                Falls ein Konto mit dieser Mailadresse existiert, haben wir Ihnen ein neues Kennwort zugeschickt!
+              > {{ $t('PasswortReset.PasswortZugeschickt') }}
               </v-alert>
             </v-col>
             <v-col />
@@ -61,7 +60,7 @@
                 type="error"
                 text
               >
-                Leider ist etwas schief gegangen, bitte wenden Sie sich an den Administrator oder probieren Sie es erneut.
+                {{ $t('PasswortReset.SchiefGelaufen') }}
               </v-alert>
             </v-col>
             <v-col />
@@ -75,7 +74,7 @@
                 <v-icon left>
                   mdi-lock-open-outline
                 </v-icon>
-                <span>Kennwort zurücksetzen</span>
+                <span>{{ $t('PasswortReset.KennwortReset') }}</span>
               </v-btn>
             </v-col>
           </v-row>
@@ -87,7 +86,7 @@
                 dense
                 @click="$router.push({path: '/'})"
               >
-                Zurück zur Anmeldung
+                {{ $t('common.ZurueckAnmeldung') }}
               </v-btn>
             </v-col>
           </v-row>

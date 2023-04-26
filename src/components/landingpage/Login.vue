@@ -11,13 +11,12 @@
       >
         <div class="text-center">
           <v-card-title class="justify-center">
-            <h2>TU Darmstadt CO<sub>2</sub>-Rechner {{ $t('main.hello') }}</h2>
-          </v-card-title>Willkommen bei dem TU Darmstadt CO<sub>2</sub>-Rechner. Mit diesem können Sie die CO<sub>2</sub>-Emissionen von TU-Einheiten berechnen.
-          <br> Erstellen Sie einfach ein Konto, um eine Umfrage für Ihre TU-Einheit zu erstellen.
+            <h2>TU Darmstadt CO<sub>2</sub>-{{ $t('Login.Rechner') }}</h2>
+          </v-card-title>{{ $t('Login.Willkommen_1') }} <br /> {{ $t('Login.Willkommen_2') }}
           <v-card-title
             class="justify-center"
           >
-            {{ istRegistrierung ? "Registrierung" : "Anmeldung" }}
+            {{ istRegistrierung ? $t('Login.Registrierung') : $t('Login.Anmeldung') }}
           </v-card-title>
         </div>
         <!-- Signin -->
@@ -43,7 +42,7 @@
                 <v-text-field
                   v-model="password"
                   :rules="passwordRule.concat(requiredRule)"
-                  label="Passwort"
+                  :label="$t('Login.Passwort')"
                   type="password"
                   prepend-icon="mdi-key"
                   @keyup.enter="postAnmeldung"
@@ -69,7 +68,7 @@
                   <v-icon left>
                     mdi-account
                   </v-icon>
-                  <span>Anmelden</span>
+                  <span>{{ $t('Login.Anmelden') }}</span>
                 </v-btn>
               </v-col>
             </v-row>
@@ -84,9 +83,9 @@
                     target="_blank"
                     @click="$router.push('/passwortVergessen')"
                     v-on="on"
-                  >Passwort vergessen?</a>
+                  >{{ $t('Login.PasswortVergessen') }}</a>
                 </template>
-                Öffnet die Passwort vergessen Seite.
+                {{ $t('Login.PasswortVergessenTipp') }}
               </v-tooltip>
             </v-col>
           </v-row>
@@ -102,7 +101,7 @@
                 >
                   mdi-account-plus
                 </v-icon>
-                <span class="white--text">Neues Konto erstellen</span>
+                <span class="white--text">{{ $t('Login.NeuesKonto') }}</span>
               </v-btn>
             </v-col>
           </v-row>
@@ -132,7 +131,7 @@
                   v-model="password"
                   class="px-5"
                   :rules="passwordRule.concat(requiredRule)"
-                  label="Passwort"
+                  :label="$t('Login.Passwort')"
                   type="password"
                   prepend-icon="mdi-key"
                   @keyup.enter="postRegistrierung"
@@ -147,10 +146,10 @@
                   v-model="rePassword"
                   class="px-5"
                   :rules="passwordRule.concat(requiredRule)"
-                  label="Passwort wiederholen"
+                  :label="$t('Login.PasswortWiederholen')"
                   type="password"
                   prepend-icon="mdi-key"
-                  hint="Mindestens 8 Zeichen"
+                  hint="$t('Login.PasswortHint')"
                   @keyup.enter="postRegistrierung"
                 />
               </v-col>
@@ -167,8 +166,8 @@
                   type="success"
                   text
                 >
-                  Ihr Konto wurde erfolgreich erstellt. Damit Sie ihr Konto verwenden können, müssen Sie ihre E-Mail bestätigen.
-                  <br> Unsere Bestätigungsmail ist schon auf dem Weg zu Ihnen und Sie können gleich loslegen!
+                  {{ $t('Login.KontoErstellt_1') }}
+                  <br> {{ $t('Login.KontoErstellt_2') }}
                 </v-alert>
               </v-col>
               <v-col />
@@ -181,8 +180,8 @@
                 class="text-center"
               >
                 <div>
-                  Indem Sie auf „Konto erstellen“ klicken, stimmen Sie unseren Datenschutzerklärung zu.
-                  <br>In unserer
+                  {{ $t('Login.KontoErstellenDatenschutz') }}
+                  <br>{{ $t('Login.Datenschutz_1') }}
                   <v-tooltip bottom>
                     <template v-slot:activator="{ on }">
                       <a
@@ -190,10 +189,10 @@
                         :href="datenschutzlink"
                         @click.stop
                         v-on="on"
-                      >Datenschutzerklärung</a>
+                      >{{ $t('Login.Datenschutzerklearung') }}</a>
                     </template>
-                    Öffnet eine neue Seite mit der Datenschutzerklärung.
-                  </v-tooltip> erfahren Sie, welche Daten wir erfassen und verwenden.
+                    {{ $t('Login.DatenschutzNeueSeite') }}
+                  </v-tooltip> {{ $t('Login.Datenschutz_2') }}
                 </div>
               </v-col>
               <v-col />
@@ -220,7 +219,7 @@
                   >
                     mdi-account-plus
                   </v-icon>
-                  <span class="white--text">Konto erstellen</span>
+                  <span class="white--text">{{ $t('Login.KontoErstellen') }}</span>
                 </v-btn>
               </v-col>
             </v-row>
@@ -235,7 +234,7 @@
                 <v-icon left>
                   mdi-account
                 </v-icon>
-                <span>Zurück zur Anmeldung</span>
+                <span>{{ $t('Login.ZurückZurAnmeldung') }}</span>
               </v-btn>
             </v-col>
           </v-row>
@@ -322,10 +321,10 @@ export default {
     datenschutzlink: process.env.VUE_APP_URL + "/datenschutz",
 
     requiredRule: [
-      v => !!v || "Muss angegeben werden",
+      v => !!v || this.$t('Login.PasswortRegel_1'),
     ],
     passwordRule: [
-      v => (v && v.length >= 8) || 'Mindestens 8 Zeichen'
+      v => (v && v.length >= 8) || this.$t('Login.PasswortRegel_2')
     ]
   }),
 
@@ -342,24 +341,24 @@ export default {
      */
     checkValidInput: function (registrierung) {
       if (!this.username || !this.password) {
-        this.errorMessage = "Unvollständige Angabe"
+        this.errorMessage = this.$t('Login.UnvollstaendigeAngabe')
         return false
       }
       if (registrierung && this.password != this.rePassword) {
-        this.errorMessage = "Passwort stimmt nicht überein"
+        this.errorMessage = this.$t('Login.PasswortNichtUeberein')
         return false
       }
       if (this.username.length < 5) {
-        this.errorMessage = "E-Mail Mindestlänge ist 5 Zeichen"
+        this.errorMessage = this.$t('Login.MailMindestlaenge')
         return false
       }
       var regex = /.+@(.*\.)?tu-darmstadt\.de/
       if (registrierung && !regex.test(this.username)) {
-        this.errorMessage = "Bitte geben Sie eine gültige TU E-Mail an"
+        this.errorMessage = this.$t('Login.gueltigeTUMail')
         return false
       }
       if (this.password.length < 8) {
-        this.errorMessage = "Passwort Mindestlänge ist 8 Zeichen"
+        this.errorMessage = this.$t('Login.PWMindestLaenge')
         return false
       }
       this.errorMessage = null
