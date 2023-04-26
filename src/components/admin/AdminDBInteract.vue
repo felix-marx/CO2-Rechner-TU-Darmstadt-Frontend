@@ -4,7 +4,7 @@
       <v-card-title
         class="mx-4"
       >
-        Datenbankinformationen
+        {{ $t('AdminDBInteract.Datenbankinformationen')}}
       </v-card-title>
       <v-divider />
       <v-container>
@@ -13,10 +13,10 @@
             cols="3"
             class="mx-4"
           >
-            Datenbankversion:
+            {{ $t('AdminDBInteract.Datenbankversion')}}
           </v-col>
           <v-col class="mx-4">
-            MongoDB v5.0.6
+            {{ $t('AdminDBInteract.MongoDBVersion')}}
           </v-col>
         </v-row>
         <v-row>
@@ -38,7 +38,7 @@
 
     <v-card class="px-0 pb-4 mt-2">
       <v-card-title class="mx-4">
-        Eintragen von Daten
+        {{ $t('AdminDBInteract.EintragenDaten')}}
       </v-card-title>
 
       <v-alert
@@ -48,7 +48,7 @@
         colored-border
         elevation="3"
       >
-        Bei Dezimalzahlen muss ein Punkt als Dezimaltrenner verwendet werden!
+        {{ $t('AdminDBInteract.DezimalenzalenWarning')}}
       </v-alert>
 
       <v-divider />
@@ -57,7 +57,7 @@
         class="px-4 mt-4 mx-4"
         align="center"
       >
-        <strong>CO<sub>2</sub>-Faktoren</strong>
+        <strong>CO<sub>2</sub>-{{ $t('common.Faktoren')}} </strong>
       </p>
 
       <v-expansion-panels
@@ -68,8 +68,8 @@
         <v-expansion-panel>
           <v-expansion-panel-header>
             <label>
-              Neuen CO<sub>2</sub>-Faktor für Energie hinzufügen
-              <Tooltip tooltip-text="Hiermit kann ein CO2-Faktor für Energie für ein bestimmtes Jahr eingetragen werden. Es sind alle Jahre von 2018 bis zum letzten Jahr möglich. Zusätzlich wird zwischen Faktoren den Energiearten und dem Versorger (TU Darmstadt oder extern) unterschieden." />
+              {{ $t('AdminDBInteract.NeuenCO')}}<sub>2</sub>-{{ $t('AdminDBInteract.FaktorEnergie')}}
+              <Tooltip :tooltip-text="$t('AdminDBInteract.GebaeudebezeichnungTooltip')" />
             </label>
           </v-expansion-panel-header>
 
@@ -77,7 +77,7 @@
             <v-autocomplete
               v-model="co2_factor.year"
               :items="possibleYears"
-              label="Bilanzierungsjahr"
+              :label="$t('common.Bilanzierungsjahr')"
               prepend-icon="mdi-calendar-question"
             />
 
@@ -85,23 +85,23 @@
               v-model="co2_factor.energy_type"
               :items="energy_types"
               flat
-              label="Energieart"
+              :label="$t('common.Energieart')"
             />
 
             <v-select
               v-model="co2_factor.contract"
               :items="contracts"
               flat
-              label="Versorger"
+              :label="$t('common.Versorger')"
             />
 
             <v-text-field
               v-model="co2_factor.value"
               :rules="notNegativeRule"
-              label="Wert des CO2-Faktors in g/kWh"
+              :label="$t('common.co2Faktor')"
             >
               <template #label>
-                <label>Wert des CO<sub>2</sub>-Faktors in g/kWh</label>
+                <label>{{ $t('AdminDBInteract.WertCO')}}<sub>2</sub>{{ $t('common.FaktorgkWh')}}</label>
               </template>
             </v-text-field>
 
@@ -111,7 +111,7 @@
                   color="primary"
                   @click="sendFactor"
                 >
-                  Absenden
+                  {{ $t('common.Absenden')}}
                 </v-btn>
               </v-col>
             </v-card-actions>
@@ -144,7 +144,7 @@
         class="px-4 mt-4"
         align="center"
       >
-        <strong>Gebäude</strong>
+        <strong>{{ $t('common.Gebaeude')}}</strong>
       </p>
 
       <v-expansion-panels
@@ -154,9 +154,9 @@
         <!-- Add a new building to the database -->
         <v-expansion-panel>
           <v-expansion-panel-header>
-            <label> 
-              Gebäude hinzufügen 
-              <Tooltip tooltip-text="Hiermit lässt sich ein neues Gebäude in die Datenbank einfügen. Es wird eine eindeutige Gebäudenummer sowie eine Gebäudebezeichnung benötigt. Zusätzlich muss die Fläche des Gebäudes angegebnen werden. Falls ein Wert nicht vorliegt, soll 0 als Wert eigentragen werden. Ist das Gebäude an einen externen Versorger angeschlossen, so können die entsprechenden Jahre angegeben werden. Dafür muss die Checkbox ausgewählt sein und die Jahre seit 2018 als kommaseparierte in das entsprechende Feld eingetragen werden.  " />
+            <label>
+              {{ $t('AdminDBInteract.GebäudeHinzufügen')}}
+              <Tooltip :tooltip-text="$t('AdminDBInteract.FaktorHinzufuegenText')" />
             </label>
           </v-expansion-panel-header>
           <v-expansion-panel-content>
@@ -164,15 +164,13 @@
               <v-col cols="11">
                 <v-text-field
                   v-model="building.number"
-                  label="Gebäudenummer"
+                  label="$t('common.Gebäudenummer')"
                   :rules="basicRule"
                 />
               </v-col>
               <v-col align-self="center">
                 <Tooltip
-                  tooltip-text="4 Ziffern: Die 1. Ziffer für den Campus (1=Stadtmitte, 2=Botanischer Garten, 
-                3=Lichtwiese, 4=Hochschulstadion und 5=Windkanal/August-Euler-Flugplatz). Die Ziffer 2-4 für die 
-                Gebäudenummer. Zum Beispiel 1101 für das Universitätszentrum."
+                  tooltip-text="$t('common.GebaeudenummerTooltip')"
                 />
               </v-col>
             </v-row>
@@ -181,13 +179,13 @@
               <v-col cols="11">
                 <v-text-field
                   v-model="building.name"
-                  label="Gebäudebezeichnung"
+                  :label="$t('AdminDBInteract.Gebäudebezeichnung')"
                   :rules="basicRule"
                 />
               </v-col>
               <v-col align-self="center">
                 <Tooltip
-                  tooltip-text="Eindeutige Bezeichnung des Gebäudes. Zum Beispiel 'Maschinenhaus'."
+                  :tooltip-text="$t('AdminDBInteract.GebaeudebezeichnungTooltip')"
                 />
               </v-col>
             </v-row>
@@ -196,28 +194,28 @@
               <v-col>
                 <v-text-field
                   v-model="building.hnf"
-                  label="Hauptnutzungsfläche in qm"
+                  :label="$t('AdminDBInteract.HauptnutzungsflaecheQM')"
                   :rules="notNegativeRule"
                 />
               </v-col>
               <v-col>
                 <v-text-field
                   v-model="building.nnf"
-                  label="Nebennutzungsfläche in qm"
+                  label="$t('AdminDBInteract.NebennutzungsflaecheQM')"
                   :rules="notNegativeRule"
                 />
               </v-col>
               <v-col>
                 <v-text-field
                   v-model="building.ngf"
-                  label="Nettogrundfläche in qm"
+                  label="$t('AdminDBInteract.NettogrundflaecheQM')"
                   :rules="notNegativeRule"
                 />
               </v-col>
               <v-col>
                 <v-text-field
                   v-model="building.ff"
-                  label="Funktionsfläche in qm"
+                  :label="$t('AdminDBInteract.FunktionsflaecheQM')"
                   :rules="notNegativeRule"
                 />
               </v-col>
@@ -244,7 +242,7 @@
                   :rules="notNegativeRule"
                 />
               </v-col>
-            </v-row>
+            </v-row> // TODO: Hier übersetzung fertig machen
             <v-row>
               <v-col>
                 <v-checkbox
