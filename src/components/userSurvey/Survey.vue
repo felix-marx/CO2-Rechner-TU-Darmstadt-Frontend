@@ -8,22 +8,22 @@
       <!-- Introduction Text -->
       <v-card class="pa-7">
         <p>
-          Sehr geehrte Teilnehmer*Innen,
-        </p><p>
-          in diesem CO<sub>2</sub>-Rechner werden Daten zur Berechnung von CO<sub>2</sub>-Emissionen erfragt, die im Zusammenhang mit der Arbeit der Mitarbeitenden Ihrer TU-Einheit entstehen. Der Rechner besteht aus zwei Teilen: einem allgemeinen Teil, der zentral für alle Mitarbeitende der Einheit ausgefüllt wird und einen zweiten Teil, den alle Mitarbeitenden Ihrer TU-Einheit in einer Umfrage ausfüllen.
+          {{ $t('userSurvey.Survey.UmfrageErklaerung_0') }}
         </p>
+        <p v-html="$t('userSurvey.Survey.UmfrageErklaerung_1')"></p>
+
         <p>
-          Die gesamte Berechnung bezieht sich immer auf ein vollständig abgeschlossenes Kalenderjahr.
+          {{ $t('userSurvey.Survey.UmfrageErklaerung_2') }}
         </p>
-        <p>Der erste Teil des CO<sub>2</sub>-Rechner erfragt allgemeine Angaben über Ihre TU-Einheit, wie beispielsweise Anzahl der Mitarbeitenden, Standort Ihrer Einheit und gemeinschaftlich genutzte IT-Geräte. Sollten Sie keine genauen Angaben kennen, geben Sie bitte eine grobe Schätzung an. Wenn Sie diesen ersten Teil beantwortet haben, klicken Sie auf "<i>Speichern &amp; Link generieren</i>". Dadurch wird ein Link generiert, der zu der Umfrage für die Mitarbeitenden führt. Schicken Sie diesen Link an alle Mitarbeitende Ihrer TU-Einheit. Eine Mailvorlage finden Sie unter dem Link.</p>
-        <p>Hinter einigen Fragen befindet sich ein Fragezeichensymbol, dort finden Sie zusätzliche Hinweise und Informationen, die zur Beantwortung der Frage hilfreich sind.  </p>
-        <p>Falls Sie zu einem späteren Zeitpunkt nochmals Angaben ändern oder vervollständigen möchten, können Sie in der linken oberen Ecke „<i>Umfragenübersicht</i>“ auswählen, um auf den ersten Teil des CO<sub>2</sub>-Rechners wieder zuzugreifen. Bitte klicken Sie am Ende auf „<i>Speichern</i>“ um ihre Änderungen final einzutragen. </p>
+        <p v-html="$t('userSurvey.Survey.UmfrageErklaerung_3')"></p>
+        <p v-html="$t('userSurvey.Survey.UmfrageErklaerung_4')"></p>
+        <p v-html="$t('userSurvey.Survey.UmfrageErklaerung_5')"></p>
         <p>
-          Bei weiteren Nachfragen oder Anmerkungen wenden Sie sich gerne an <a
+          {{ $t('userSurvey.Survey.UmfrageErklaerung_6') }} <a
             href="mailto:co2-rechner@zv.tu-darmstadt.de"
           >co2-rechner@zv.tu-darmstadt.de</a>.
         </p>
-        <p>Vielen Dank, dass Sie den CO<sub>2</sub>-Rechner verwenden und so einen Beitrag zur Nachhaltigkeit an der TU Darmstadt leisten. </p>
+        <p v-html="$t('userSurvey.Survey.UmfrageErklaerung_7')"></p>
       </v-card>
 
       <v-card class="pa-7 mt-2">
@@ -32,7 +32,7 @@
           <!-- Bezeichnung -->
           <br>
           <h3>
-            Wie soll Ihre Umfrage bezeichnet werden?
+            {{ $t('userSurvey.Survey.UmfrageBezeichungUeberschrift') }}
           </h3>
           <v-divider />
           <br>
@@ -42,7 +42,7 @@
               <v-text-field
                 v-model="bezeichnung"
                 :min="0"
-                label="Bezeichnung"
+                :label="$t('common.Bezeichung')"
                 type="string"
                 prepend-icon="mdi-form-textbox"
                 :disabled="blockInput"
@@ -52,7 +52,7 @@
 
           <!-- Bilanzierungsjahr -->
           <br>
-          <h3>Auf welches Bilanzierungsjahr beziehen Sie sich in dieser Umfrage?</h3>
+          <h3>{{ $t('userSurvey.Survey.BilanzierungsUeberschrift') }}</h3>
           <v-divider />
           <br>
 
@@ -61,7 +61,7 @@
               <v-autocomplete
                 v-model="bilanzierungsjahr"
                 :items="possibleYears"
-                label="Bilanzierungsjahr"
+                :label="$t('common.Bilanzierungsjahr')"
                 prepend-icon="mdi-calendar-question"
                 class="pr-5"
                 :disabled="blockInput"
@@ -72,7 +72,7 @@
           <!-- Mitarbeitende in Abteilung -->
 
           <br>
-          <h3>Wie viele Mitarbeitende gibt es in Ihrer Abteilung?</h3>
+          <h3>{{ $t('userSurvey.Survey.MitarbeiterInAbteilung') }}</h3>
           <v-divider />
           <br>
 
@@ -82,7 +82,7 @@
                 v-model="anzahlMitarbeiter"
                 :rules="absolutpositivRules"
                 :min="0"
-                label="Mitarbeitendenzahl"
+                :label="$t('common.Mitarbeitendenzahl')"
                 prepend-icon="mdi-account"
                 :disabled="blockInput"
               />
@@ -92,14 +92,14 @@
           <!-- Genutzte Gebäude -->
 
           <br>
+
           <h3>
-            Welche Gebäude nutzt Ihre Abteilung (<a
+            {{ $t('userSurvey.Survey.GebaeudeAbteilung_0') }} (<a
               href="https://www.tu-darmstadt.de/universitaet/campus/index.de.jsp"
               target="_blank"
-            >Lageplan</a>)?
+            >{{ $t('userSurvey.Survey.GebaeudeAbteilung_1') }}</a>)?
             <Tooltip
-              tooltip-text="Alle Gebäude beginnen je nach Standort mit den Buchstaben S, B, L,
-              H oder W. Die Autovervollständigung sollte Ihnen dabei helfen."
+              :tooltip-text="$t('userSurvey.Survey.GebaeudeAbteilung_2')"
             />
           </h3>
 
@@ -116,7 +116,7 @@
                   v-if="gebaeudeIDs"
                   v-model="objekt[0]"
                   :items="gebaeudeIDs"
-                  label="Gebäudenummer"
+                  :label="$t('common.Gebäudenummer')"
                   prepend-icon="mdi-domain"
                   class="pr-5"
                   :disabled="blockInput"
@@ -127,7 +127,7 @@
                   v-model="objekt[1]"
                   :rules="absolutpositivRules"
                   :min="0"
-                  label="Nutzfläche des ausgewählten Gebäudes"
+                  :label="$t('userSurvey.Survey.GebaeudeAbteilung_3')"
                   prepend-icon="mdi-domain"
                   suffix="qm"
                   :disabled="blockInput"
@@ -140,7 +140,7 @@
                   :disabled="blockInput"
                   @click="newGebaeude()"
                 >
-                  Hinzufügen
+                  {{ $t('common.Hinzufuegen') }}
                 </v-btn>
               </v-col>
               <v-col>
@@ -150,7 +150,7 @@
                   :disabled="blockInput"
                   @click="removeGebaeude(index)"
                 >
-                  Löschen
+                  {{ $t('common.Loeschen') }}
                 </v-btn>
               </v-col>
             </v-row>
@@ -160,12 +160,12 @@
             type="warning"
             dense
           >
-            Sie haben mehrmals das selbe Gebäude ausgewählt.
+            {{ $t('userSurvey.Survey.GebaeudeWarnung') }}
           </v-alert>
           <!-- Umfrage für IT Geräte: Multifunktionsgeräte + Toner, Drucker + Toner, Beamer, Server -->
 
           <br>
-          <h3>Welche und wie viele IT-Geräte benutzen Sie in Ihrer Abteilung gemeinschaftlich in allen Gebäuden zusammen?</h3>
+          <h3>{{ $t('userSurvey.Survey.ITGeraete_0') }}</h3>
           <v-divider />
           <br>
 
@@ -182,17 +182,17 @@
                 :rules="geraeteRules"
                 :disabled="!geraeteAnzahl[0][2] || blockInput"
                 :min="0"
-                label="Multifunktionsgeräte z.B. Netzwerkdrucker"
+                :label="$t('userSurvey.Survey.ITGeraeteMFP')"
                 class="pr-5"
-                suffix="Gerät/e"
+                :suffix="$t('userSurvey.Survey.ITGeraeteMFP_Suffix')"
               />
               <v-text-field
                 v-model="geraeteAnzahl[1][1]"
                 :rules="nichtnegativRules"
                 :disabled="!geraeteAnzahl[0][2] || blockInput"
                 :min="0"
-                label="verbrauchte Toner"
-                suffix="Toner"
+                :label="$t('userSurvey.Survey.ITGeraeteBenutzteToner')"
+                :suffix="$t('userSurvey.Survey.ITGeraeteBenutzteToner_Suffix')"
               />
             </v-row>
             <!-- Drucker -->

@@ -192,15 +192,60 @@
       "Umfrageauswertung_3": "Diese Freigabe kann durch Sie jederzeit widerrufen werden."
     }
   },
+  "userSurvey": {
+    "MailTemplate": {
+      "MailVorlage_0": "Mail Vorlage an Ihre Mitarbeitenden",
+      "MailVorlage_1": "Liebe Kolleg*Innen,",
+      "MailVorlage_2": "unsere TU-Einheit führt eine Bilanzierung der CO",
+      "MailVorlage_3": "-Emissionen für das Kalenderjahr",
+      "MailVorlage_4": "durch. Hierfür werden einige Informationen bezüglich Ihrer Dienstreisen, Ihrer Pendelwege sowie den von Ihnen verwendeten IT-Geräte benötigt. Der folgende Link führt Sie zu einer Umfrage in der Ihre Daten abgefragt werden. Alle Angaben werden dabei anonymisiert verarbeitet und dargestellt: ",
+      "MailVorlage_5": "Die Umfrage nimmt ungefähr 10 Minuten Ihrer Zeit in Anspruch. Für die Umfrage wird das vollständige Kalenderjahr",
+      "MailVorlage_6": "betrachtet",
+      "MailVorlage_7": "Hinter einigen Fragen befindet sich ein Fragezeichensymbol. Dort finden Sie zusätzliche Hinweise und Informationen, die zur Beantwortung der Fragen hilfreich sind.",
+      "MailVorlage_8": "Bei weiteren Nachfragen oder Anmerkungen wenden Sie sich gerne an ",
+      "MailVorlage_9": "Vielen Dank für Ihre Teilnahme."
+    },
+    "Survey": {
+      "UmfrageErklaerung_0": "Sehr geehrte Teilnehmer*Innen,",
+      "UmfrageErklaerung_1": "in diesem CO<sub>2</sub>-Rechner werden Daten zur Berechnung von CO<sub>2</sub>-Emissionen erfragt, die im Zusammenhang mit der Arbeit der Mitarbeitenden Ihrer TU-Einheit entstehen. Der Rechner besteht aus zwei Teilen: einem allgemeinen Teil, der zentral für alle Mitarbeitende der Einheit ausgefüllt wird und einen zweiten Teil, den alle Mitarbeitenden Ihrer TU-Einheit in einer Umfrage ausfüllen.",
+      "UmfrageErklaerung_2": "Die gesamte Berechnung bezieht sich immer auf ein vollständig abgeschlossenes Kalenderjahr.",
+      "UmfrageErklaerung_3": "Der erste Teil des CO<sub>2</sub>-Rechner erfragt allgemeine Angaben über Ihre TU-Einheit, wie beispielsweise Anzahl der Mitarbeitenden, Standort Ihrer Einheit und gemeinschaftlich genutzte IT-Geräte. Sollten Sie keine genauen Angaben kennen, geben Sie bitte eine grobe Schätzung an. Wenn Sie diesen ersten Teil beantwortet haben, klicken Sie auf \"<i>Speichern &amp; Link generieren</i>\". Dadurch wird ein Link generiert, der zu der Umfrage für die Mitarbeitenden führt. Schicken Sie diesen Link an alle Mitarbeitende Ihrer TU-Einheit. Eine Mailvorlage finden Sie unter dem Link.",
+      "UmfrageErklaerung_4": "Hinter einigen Fragen befindet sich ein Fragezeichensymbol, dort finden Sie zusätzliche Hinweise und Informationen, die zur Beantwortung der Frage hilfreich sind.",
+      "UmfrageErklaerung_5": "Falls Sie zu einem späteren Zeitpunkt nochmals Angaben ändern oder vervollständigen möchten, können Sie in der linken oberen Ecke „<i>Umfragenübersicht</i>“ auswählen, um auf den ersten Teil des CO<sub>2</sub>-Rechners wieder zuzugreifen. Bitte klicken Sie am Ende auf „<i>Speichern</i>“ um ihre Änderungen final einzutragen. ",
+      "UmfrageErklaerung_6": "Bei weiteren Nachfragen oder Anmerkungen wenden Sie sich gerne an",
+      "UmfrageErklaerung_7": "Vielen Dank, dass Sie den CO<sub>2</sub>-Rechner verwenden und so einen Beitrag zur Nachhaltigkeit an der TU Darmstadt leisten.",
+
+      "UmfrageBezeichungUeberschrift": "Wie soll Ihre Umfrage bezeichnet werden?",
+
+      "BilanzierungsUeberschrift": "Auf welches Bilanzierungsjahr beziehen Sie sich in dieser Umfrage?",
+
+      "MitarbeiterInAbteilung": "Wie viele Mitarbeitende gibt es in Ihrer Abteilung?",
+
+      "GebaeudeAbteilung_0": "Welche Gebäude nutzt Ihre Abteilung",
+      "GebaeudeAbteilung_1": "Lageplan",
+      "GebaeudeAbteilung_2": "Alle Gebäude beginnen je nach Standort mit den Buchstaben S, B, L, H oder W. Die Autovervollständigung sollte Ihnen dabei helfen.",
+      "GebaeudeAbteilung_3": "Nutzfläche des ausgewählten Gebäudes",
+      "GebaeudeWarnung": "Sie haben mehrmals das selbe Gebäude ausgewählt.",
+
+      "ITGeraete_0": "Welche und wie viele IT-Geräte benutzen Sie in Ihrer Abteilung gemeinschaftlich in allen Gebäuden zusammen?",
+      "ITGeraeteBenutzteToner": "verbrauchte Toner",
+      "ITGeraeteBenutzteToner_Suffix": "Toner",
+      "ITGeraeteMFP": "Multifunktionsgeräte z.B. Netzwerkdrucker",
+      "ITGeraeteMFP_Suffix": "Gerät/e"
+    }
+  },
   "common": {
     "CO": "CO",
+    "Bezeichung": "Bezeichnung",
+    "Bilanzierungsjahr": "Bilanzierungsjahr",
+    "Mitarbeitendenzahl": "Mitarbeitendenzahl",
     "ZurueckAnmeldung": "Zurück zur Anmeldung",
     "Faktoren": "Faktoren",
-    "Bilanzierungsjahr": "Bilanzierungsjahr",
     "Energieart": "Energieart",
     "Versorger": "Versorger",
     "co2Faktor": "Wert des CO2-Faktors in g/kWh",
     "FaktorgkWh": "-Faktors in g/kWh",
+    "Hinzufuegen": "Hinzufügen",
     "Absenden": "Absenden",
     "Loeschen": "Löschen",
     "Gebäudenummer": "Gebäudenummer",
