@@ -79,7 +79,7 @@ export default {
       ) 
     },
 
-    dataGapWarningMessage: function() { // TODO: remove duplicates
+    dataGapWarningMessage: function() {
       var msgShort = ""
       var msgLong = ""
       var msgShortFragments = []
