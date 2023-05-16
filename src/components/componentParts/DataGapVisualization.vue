@@ -79,81 +79,86 @@ export default {
       ) 
     },
 
-    dataGapWarningMessage: function() {
+    dataGapWarningMessage: function() { // TODO: remove duplicates
       var msgShort = ""
       var msgLong = ""
       var msgShortFragments = []
 
-      for(var i = 0; i < this.gebaeude.length; i++) {
+      var selektierteGebaeude = [...new Set(this.gebaeude.map(x => x[0]).filter(x => x))]
+      console.log(selektierteGebaeude)
+
+
+      for(var i = 0; i < selektierteGebaeude.length; i++) {
         var zaehlerZustand = [0, 0, 0]    // [Kaelte, Strom, Waerme], 
                                           // 0 - Zaehler und Daten vorhaden, 1 - keine Zaehler, 2 - Zaehler aber ohne Daten fuer ausgewaehltes Jahr
 
-        if (this.gebaeude[i][0]) {    // falls Gebäude ausgewählt
-          let zaehlerRefs = this.mapGebauedeZaehlerRefs.get(this.gebaeude[i][0])
+        let zaehlerRefs = this.mapGebauedeZaehlerRefs.get(selektierteGebaeude[i])
 
-          // if (zaehlerRefs["kaelteRef"].length == 0){   // keine Ueberpruefung, ob Kaeltezaehler vorhanden sind, weil Kaeltezaehler nur sehr wenig Verwendung haben
-          //   zaehlerZustand[0] = 1
-          // }
-          if (zaehlerRefs["stromRef"].length == 0){
-            zaehlerZustand[1] = 1
-          }
-          if (zaehlerRefs["waermeRef"].length == 0){
-            zaehlerZustand[2] = 1
-          }
-
-          if (this.bilanzierungsjahr) {
-            zaehlerRefs["kaelteRef"].forEach((zaehler) => {
-              if (!this.mapZaehlerWerte.get(zaehler).get(this.bilanzierungsjahr)){
-                zaehlerZustand[0] = 2
-              }
-            });
-            zaehlerRefs["stromRef"].forEach((zaehler) => {
-              if (!this.mapZaehlerWerte.get(zaehler).get(this.bilanzierungsjahr)){
-                zaehlerZustand[1] = 2
-              }
-            });
-            zaehlerRefs["waermeRef"].forEach((zaehler) => {
-              if (!this.mapZaehlerWerte.get(zaehler).get(this.bilanzierungsjahr)){
-                zaehlerZustand[2] = 2
-              }
-            });
-          }
-
-          if(zaehlerZustand[0] != 0 || zaehlerZustand[1] != 0 || zaehlerZustand[2] != 0){
-            // generiere kurze Nachricht
-            msgShortFragments.push(this.gebaeude[i][0])
-
-            // generiere lange Nachricht
-            var msgLongFragments = []
-            if (zaehlerZustand[0] == 2){
-              msgLongFragments.push("keine Kältedaten für das Jahr " + this.bilanzierungsjahr)
-            }
-            if (zaehlerZustand[1] == 1){
-              msgLongFragments.push("keine Stromzähler")
-            }
-            else if (zaehlerZustand[1] == 2){
-              msgLongFragments.push("keine Stromdaten für das Jahr " + this.bilanzierungsjahr)
-            }
-            if (zaehlerZustand[2] == 1){
-              msgLongFragments.push("keine Wärmezähler")
-            }
-            else if (zaehlerZustand[2] == 2){
-              msgLongFragments.push("keine Wärmedaten für das Jahr " + this.bilanzierungsjahr)
-            }
-
-            msgLong = msgLong + "Für " + this.gebaeude[i][0] + " haben wir " + msgLongFragments.slice(0, -1).join(", ") + (msgLongFragments.length != 1 ? " und " : "") + msgLongFragments.slice(-1) + ".\n "
-          }
+        // if (zaehlerRefs["kaelteRef"].length == 0){   // keine Ueberpruefung, ob Kaeltezaehler vorhanden sind, weil Kaeltezaehler nur sehr wenig Verwendung haben
+        //   zaehlerZustand[0] = 1
+        // }
+        if (zaehlerRefs["stromRef"].length == 0){
+          zaehlerZustand[1] = 1
         }
+        if (zaehlerRefs["waermeRef"].length == 0){
+          zaehlerZustand[2] = 1
+        }
+
+        if (this.bilanzierungsjahr) {
+          zaehlerRefs["kaelteRef"].forEach((zaehler) => {
+            if (!this.mapZaehlerWerte.get(zaehler).get(this.bilanzierungsjahr)){
+              zaehlerZustand[0] = 2
+            }
+          });
+          zaehlerRefs["stromRef"].forEach((zaehler) => {
+            if (!this.mapZaehlerWerte.get(zaehler).get(this.bilanzierungsjahr)){
+              zaehlerZustand[1] = 2
+            }
+          });
+          zaehlerRefs["waermeRef"].forEach((zaehler) => {
+            if (!this.mapZaehlerWerte.get(zaehler).get(this.bilanzierungsjahr)){
+              zaehlerZustand[2] = 2
+            }
+          });
+        }
+
+        if(zaehlerZustand[0] != 0 || zaehlerZustand[1] != 0 || zaehlerZustand[2] != 0){
+          // generiere kurze Nachricht
+          msgShortFragments.push(selektierteGebaeude[i])
+
+          // generiere lange Nachricht
+          var msgLongFragments = []
+          if (zaehlerZustand[0] == 2){
+            msgLongFragments.push("keine Kältedaten für das Jahr " + this.bilanzierungsjahr)
+          }
+          if (zaehlerZustand[1] == 1){
+            msgLongFragments.push("keine Information zu Stromzähleren")
+          }
+          else if (zaehlerZustand[1] == 2){
+            msgLongFragments.push("keine Stromdaten für das Jahr " + this.bilanzierungsjahr)
+          }
+          if (zaehlerZustand[2] == 1){
+            msgLongFragments.push("keine Information zu Wärmezähleren")
+          }
+          else if (zaehlerZustand[2] == 2){
+            msgLongFragments.push("keine Wärmedaten für das Jahr " + this.bilanzierungsjahr)
+          }
+
+          msgLong = msgLong + "Für " + selektierteGebaeude[i] + " haben wir " + msgLongFragments.slice(0, -1).join(", ") + (msgLongFragments.length != 1 ? " und " : "") + msgLongFragments.slice(-1) + ".\n "
+        }
+        
       }
 
       // generiere kurze Nachricht
       msgShort = "Für die Gebäude " + msgShortFragments.slice(0, -1).join(", ") + (msgShortFragments.length > 1 ? " und " : "") + msgShortFragments.slice(-1) + " haben wir aktuell leider nur unvollständige Daten zum Energieverbrauch!"
 
-      return [msgShort, msgLong.slice(0, -2)]
+      msgLong = msgLong + "Sollten Sie Information zu den fehlenden Daten haben, kontaktieren Sie uns bitte, damit wir die Ergenbisse des CO2-Rechners verbessern können."
+
+      return [msgShort, msgLong]
     },
 
     dataGap: function(){
-      return this.dataGapWarningMessage[1] != ""
+      return this.dataGapWarningMessage[1] != "Sollten Sie Information zu den fehlenden Daten haben, kontaktieren Sie uns bitte, damit wir die Ergenbisse des CO2-Rechners verbessern können."
     },
   },
 };
