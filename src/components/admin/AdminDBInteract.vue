@@ -1439,7 +1439,7 @@ export default {
                 if (elem.indexOf('HE000') !== -1){
                   return 1;
                 }
-                else if (elem.indexOf('NA000') !== -1){
+                else if (elem.indexOf('NA00') !== -1){
                   return 2;
                 }
                 else if (elem.indexOf('KA000') !== -1){
@@ -1471,7 +1471,6 @@ export default {
       }
 
       var mask = this.csv_counter_data.primary_keys.map(x => !this.irrelevant_counters.includes(x))
-      //console.log(this.csv_counter_data.primary_keys.filter((elem, index) => !mask[index]))
 
       this.csv_counter_data.primary_keys = this.csv_counter_data.primary_keys.filter((elem, index) => mask[index])
       this.csv_counter_data.energy_types = this.csv_counter_data.energy_types.filter((elem, index) => mask[index])
@@ -1484,8 +1483,6 @@ export default {
 
         return
       }
-
-      //console.log(this.csv_counter_data)
       
       if (!this.displayError[7]){
         // send request
