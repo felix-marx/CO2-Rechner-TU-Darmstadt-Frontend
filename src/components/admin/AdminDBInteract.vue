@@ -1439,7 +1439,7 @@ export default {
                 if (elem.indexOf('HE000') !== -1){
                   return 1;
                 }
-                else if (elem.indexOf('NA000') !== -1){
+                else if (elem.indexOf('NA00') !== -1){
                   return 2;
                 }
                 else if (elem.indexOf('KA000') !== -1){
@@ -1455,7 +1455,7 @@ export default {
           }
           if (arr[0] == "01.01." + this.csv_counter_data.year + " 00:00:00"){
             this.csv_counter_data.values = arr.slice(1).map(
-              (elem) => {return !elem ? 0 : parseFloat(elem.replace(",", "."))}
+              (elem) => {return !elem ? 0 : parseFloat(elem.replace(".", "").replace(",", "."))}  // entfernt "." als Tausend-Trenner und setzt "." als Dezimal-Trenner
             )
           }
         }
@@ -1471,7 +1471,6 @@ export default {
       }
 
       var mask = this.csv_counter_data.primary_keys.map(x => !this.irrelevant_counters.includes(x))
-      console.log(this.csv_counter_data.primary_keys.filter((elem, index) => !mask[index]))
 
       this.csv_counter_data.primary_keys = this.csv_counter_data.primary_keys.filter((elem, index) => mask[index])
       this.csv_counter_data.energy_types = this.csv_counter_data.energy_types.filter((elem, index) => mask[index])
