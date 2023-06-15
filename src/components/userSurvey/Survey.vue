@@ -207,8 +207,8 @@
                 :rules="geraeteRules"
                 :disabled="!geraeteAnzahl[2][2] || blockInput"
                 :min="0"
-                label="Laser- &amp; Tintenstrahldrucker"
-                suffix="Drucker"
+                :label="$t('userSurvey.Survey.DruckerLabel')"
+                :suffix="$t('userSurvey.Survey.Drucker_Suffix')"
                 class="pr-5"
               />
               <v-text-field
@@ -216,8 +216,8 @@
                 :rules="nichtnegativRules"
                 :disabled="!geraeteAnzahl[2][2] || blockInput"
                 :min="0"
-                label="verbrauchte Toner"
-                suffix="Toner"
+                :label="$t('userSurvey.Survey.ITGeraeteBenutzteToner')"
+                :suffix="$t('userSurvey.Survey.ITGeraeteBenutzteToner_Suffix')"
               />
             </v-row>
             <!-- Beamer -->
@@ -232,8 +232,8 @@
                 :rules="geraeteRules"
                 :disabled="!geraeteAnzahl[4][2] || blockInput"
                 :min="0"
-                label="Beamer"
-                suffix="Beamer"
+                :label="$t('userSurvey.Survey.Beamer')"
+                :suffix="$t('userSurvey.Survey.Beamer')"
               />
             </v-row>
             <!-- Server -->
@@ -248,8 +248,8 @@
                 :rules="geraeteRules"
                 :disabled="!geraeteAnzahl[5][2] || blockInput"
                 :min="0"
-                label="interne Server"
-                suffix="Server"
+                :label="$t('userSurvey.Survey.interneServer')"
+                :suffix="$t('userSurvey.Survey.Server')"
               />
             </v-row>
           </v-container>
@@ -267,8 +267,7 @@
                   v-bind="attrs"
                   v-on="on"
                   @click="problemeInUmfrage()"
-                >
-                  Speichern &amp; Link generieren
+                >{{ $t('userSurvey.Survey.SpeicherButton') }}
                 </v-btn>
               </template>
 
@@ -277,7 +276,7 @@
                   color="primary"
                   dark
                 >
-                  {{ (errorTextArray.required.length != 0 || errorTextArray.nonRequired.length != 0) ? "Probleme mit Ihrer Eingabe!" : "Umfrage vollständig?" }}
+                  {{ (errorTextArray.required.length != 0 || errorTextArray.nonRequired.length != 0) ? $t('userSurvey.Survey.ProblemeEingabe') : $t('userSurvey.Survey.UmfrageVervollstaendigen') }}
                 </v-toolbar>
                 <v-card-text>
                   <div
@@ -287,7 +286,7 @@
                     <div
                       v-if="errorTextArray.required.length != 0"
                     >
-                      Sie haben folgende Pflichtfelder nicht angegeben: <br>
+                      {{ $t('userSurvey.Survey.FehlendePflichtfelder') }} <br>
                       <v-list
                         flat
                       >
@@ -307,7 +306,7 @@
                     <div
                       v-if="errorTextArray.nonRequired.length != 0"
                     >
-                      Ihre Umfrage enthält folgende kleinere Probleme: <br>
+                      {{ $t('userSurvey.Survey.UmfrageHatProbleme') }} <br>
                       <v-list
                         flat
                       >
@@ -329,8 +328,8 @@
                     v-if="errorTextArray.required.length == 0 && errorTextArray.nonRequired.length == 0"
                     class="pt-6"
                   >
-                    Möchten Sie ihre Umfrage wirklich speichern?<br>
-                    Sie können sie anschließend noch weiter in der Umfragenübersicht bearbeiten, auswerten und mit Mitarbeitenden teilen.
+                    {{ $t('userSurvey.Survey.UmfrageWirklichSpeichern_1') }}<br>
+                    {{ $t('userSurvey.Survey.UmfrageWirklichSpeichern_2') }}
                   </div>
                 </v-card-text>
 
@@ -343,7 +342,7 @@
                     text
                     @click="errorDialog = false"
                   >
-                    Weiter bearbeiten
+                    {{ $t('userSurvey.Survey.WeiterBearbeiten') }}
                   </v-btn>
                   <v-btn
                     v-if="errorTextArray.required.length == 0"
@@ -351,7 +350,7 @@
                     text
                     @click="sendData(), errorDialog = false"
                   >
-                    {{ (errorTextArray.nonRequired.length == 0) ? "Umfrage speichern" : "Umfrage trotzdem speichern" }}
+                    {{ (errorTextArray.nonRequired.length == 0) ? $t('userSurvey.Survey.UmfrageSpeichern') : $t('userSurvey.Survey.UmfrageTzdSpeichern') }}
                   </v-btn>
                 </v-card-actions>
               </v-card>
@@ -363,7 +362,7 @@
               color="primary"
               @click="resetPage()"
             >
-              Weitere Umfrage erstellen
+              {{ $t('userSurvey.Survey.WeitereUmfrageErstellen') }}
             </v-btn>
             <LoadingAnimation v-if="dataRequestSent" />
           </v-row>
@@ -382,7 +381,7 @@
       <LinkSharingComponent
         v-if="displaySurveyLink"
         :mitarbeiter-link="mitarbeiterumfrageBaseURL + responseData.umfrageID"
-        :link-ziel="'Umfrage'"
+        :link-ziel="$t('userSurvey.Survey.Umfrage')"
       />
     </v-card>
 
@@ -409,6 +408,7 @@ import Tooltip from "@/components/componentParts/Tooltip.vue";
 import LinkSharingComponent from "../componentParts/LinkSharingComponent";
 import MailTemplate from "./MailTemplate";
 import LoadingAnimation from "../componentParts/LoadingAnimation";
+import i18n from "@/i18n";
 
 export default {
   components: {
@@ -476,19 +476,19 @@ export default {
 
     geraeteRules: [
       (v) =>
-        !!v || "Wenn Sie das Gerät nicht benutzen, wählen Sie es bitte ab.",
+        !!v ||  i18n.t('userSurvey.Survey.geraeteRules_1'),
       (v) =>
         parseInt(v) != 0 ||
-        "Wenn Sie das Gerät nicht benutzen, wählen Sie es bitte ab.",
-      (v) => parseInt(v) > 0 || "Bitte geben Sie eine valide Menge an.",
+          i18n.t('userSurvey.Survey.geraeteRules_1'),
+      (v) => parseInt(v) > 0 ||  i18n.t('userSurvey.Survey.geraeteRules_3'),
     ],
     nichtnegativRules: [
-      (v) => !!v || "Muss angegeben werden.",
-      (v) => parseInt(v) >= 0 || "Bitte geben Sie einen positiven Wert an.",
+      (v) => !!v || i18n.t('userSurvey.Survey.nichtnegativRules_0'),
+      (v) => parseInt(v) >= 0 || i18n.t('userSurvey.Survey.nichtnegativRules_1'),
     ],
     absolutpositivRules: [
-      (v) => !!v || "Muss angegeben werden.",
-      (v) => parseInt(v) > 0 || "Bitte geben Sie einen Wert größer Null an.",
+      (v) => !!v || i18n.t('userSurvey.Survey.absolutpositivRules_0'),
+      (v) => parseInt(v) > 0 || i18n.t('userSurvey.Survey.absolutpositivRules_1'),
     ],
 
     // has Absenden Button been clicked
@@ -538,13 +538,13 @@ export default {
     requiredFieldsMissingArray: function() {
       var fieldsarray = []
       if(this.bezeichnung == "" || this.bezeichnung == null) {
-        fieldsarray.push("Bezeichnung")
+        fieldsarray.push(i18n.t('userSurvey.Survey.requiredFieldsMissing_0'))
       }
       if(!this.possibleYears.includes(parseInt(this.bilanzierungsjahr))) {
-        fieldsarray.push("Bilanzierungsjahr")
+        fieldsarray.push(i18n.t('userSurvey.Survey.requiredFieldsMissing_1'))
       }
       if(this.anzahlMitarbeiter == null || this.anzahlMitarbeiter <= 0) {
-        fieldsarray.push("Anzahl Mitarbeitenden")
+        fieldsarray.push(i18n.t('userSurvey.Survey.requiredFieldsMissing_2'))
       }
       return fieldsarray
     },
@@ -563,20 +563,20 @@ export default {
       
       // Gebaeude
       if(this.duplicateBuilding) {
-        nonRequiredArray.push("Sie haben das mehrmals das selbe Gebäude ausgewählt.")
+        nonRequiredArray.push(i18n.t('userSurvey.Survey.problemeInUmfrage_0'))
       } 
       for(const gebaeude of this.gebaeude) {
         if(gebaeude[0] != null && gebaeude[1] <=0) {
-          nonRequiredArray.push("Sie haben für das Gebäude " + gebaeude[0] + " keine gültige Nutzfläche angegeben.")
+          nonRequiredArray.push(i18n.t('userSurvey.Survey.problemeInUmfrage_1') + gebaeude[0] + i18n.t('userSurvey.Survey.problemeInUmfrage_2'))
         }
       }
       // IT Geraete
       for(const it of this.geraeteAnzahl) {
         if(it[2] && it[1] <= 0) { 
           if((it[0] != 8 && it[0] != 10)) {
-            nonRequiredArray.push("Sie haben das Gerät " + resolveITGeraetID(it[0]) + " angewählt, aber keine gültige Anzahl angegeben.")
+            nonRequiredArray.push(i18n.t("userSurvey.Survey.problemeInUmfrage_3") + resolveITGeraetID(it[0]) + i18n.t("userSurvey.Survey.problemeInUmfrage_4"))
           } else { // Toner
-            nonRequiredArray.push("Sie haben einem ausgewählten Gerät keine verwendeten Toner hinzugefügt. Wenn Sie das Gerät nicht in Benutzung haben, ignorieren Sie diese Nachricht.")
+            nonRequiredArray.push(i18n.t("userSurvey.Survey.problemeInUmfrage_5"))
           }
         }
       }

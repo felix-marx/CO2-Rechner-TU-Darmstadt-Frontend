@@ -231,7 +231,51 @@
       "ITGeraeteBenutzteToner": "verbrauchte Toner",
       "ITGeraeteBenutzteToner_Suffix": "Toner",
       "ITGeraeteMFP": "Multifunktionsgeräte z.B. Netzwerkdrucker",
-      "ITGeraeteMFP_Suffix": "Gerät/e"
+      "ITGeraeteMFP_Suffix": "Gerät/e",
+
+      "DruckerLabel": "Laser- &amp; Tintenstrahldrucker",
+      "Drucker_Suffix": "Drucker",
+
+      "Beamer": "Beamer",
+      "interneServer": "interne Server",
+      "Server": "Server",
+
+      "SpeicherButton": "Speichern & Link generieren",
+
+      "ProblemeEingabe": "Probleme mit Ihrer Eingabe!",
+      "UmfrageVervollstaendigen": "Umfrage vollständig?",
+      "FehlendePflichtfelder": "Sie haben folgende Pflichtfelder nicht angegeben:",
+      "UmfrageHatProbleme": "Ihre Umfrage enthält folgende kleinere Probleme:",
+      "UmfrageWirklichSpeichern_1": "Möchten Sie ihre Umfrage wirklich speichern?",
+      "UmfrageWirklichSpeichern_2": "Sie können sie anschließend noch weiter in der Umfragenübersicht bearbeiten, auswerten und mit Mitarbeitenden teilen.",
+      "WeiterBearbeiten": "Weiter bearbeiten",
+      "UmfrageSpeichern": "Umfrage speichern",
+      "UmfrageTzdSpeichern": "Umfrage trotzdem speichern",
+      "WeitereUmfrageErstellen": "Weitere Umfrage erstellen",
+      "Umfrage": "'Umfrage'",
+
+      "geraeteRules_1": "Wenn Sie das Gerät nicht benutzen, wählen Sie es bitte ab.",
+      "geraeteRules_2": "Wenn Sie das Gerät nicht benutzen, wählen Sie es bitte ab.",
+      "geraeteRules_3": "Bitte geben Sie eine valide Menge an.",
+
+      "nichtnegativRules_0": "Muss angegeben werden.",
+      "nichtnegativRules_1": "Bitte geben Sie einen positiven Wert an.",
+
+      "absolutpositivRules_0": "Muss angegeben werden.",
+        "absolutpositivRules_1": "Bitte geben Sie einen positiven Wert an.",
+
+      "requiredFieldsMissing_0": "Bezeichnung",
+        "requiredFieldsMissing_1": "Bilanzierungsjahr",
+        "requiredFieldsMissing_2": "Anzahl Mitarbeitenden",
+
+      "problemeInUmfrage_0": "Sie haben das mehrmals das selbe Gebäude ausgewählt.",
+      "problemeInUmfrage_1": "Sie haben für das Gebäude ",
+        "problemeInUmfrage_2": " keine gültige Nutzfläche angegeben.",
+        "problemeInUmfrage_3": "Sie haben das Gerät ",
+        "problemeInUmfrage_4": " angewählt, aber keine gültige Anzahl angegeben.",
+        "problemeInUmfrage_5": "Sie haben einem ausgewählten Gerät keine verwendeten Toner hinzugefügt. Wenn Sie das Gerät nicht in Benutzung haben, ignorieren Sie diese Nachricht."
+
+
     }
   },
   "common": {
