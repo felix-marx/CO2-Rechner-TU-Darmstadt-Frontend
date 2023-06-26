@@ -716,7 +716,7 @@ export default {
         })
         .catch((error) => {
           console.error("Error:", error);
-          this.errorMessage = "Server nicht erreichbar."
+          this.errorMessage = i18n.t("common.ServerNichtErreichbar");
         });
 
       this.displayLoadingAnimation = false;
@@ -789,12 +789,12 @@ function translateGebaeudeIDToSymbolic(gebaeudeID) {
 
 function resolveITGeraetID(geraetID) {
   let ITGeraetIDDict = {
-    7: "Multifunktionsgeräte",
-    8: "Multifunktionsgeräte Toner",
-    9: "Laser & Tintenstrahldrucker",
-    10: "Laser & Tintenstrahldrucker Toner",
-    4: "Beamer",
-    6: "interne Server"
+    7: i18n.t("usersurvey.survey.ITGeraetIDDic_7"),
+    8: i18n.t("usersurvey.survey.ITGeraetIDDic_8"),
+    9: i18n.t("usersurvey.survey.ITGeraetIDDic_9"),
+    10: i18n.t("usersurvey.survey.ITGeraetIDDic_10"),
+    4: i18n.t("usersurvey.survey.ITGeraetIDDic_4"),
+    6: i18n.t("usersurvey.survey.ITGeraetIDDic_6"),
   };
   return ITGeraetIDDict[geraetID]
 }

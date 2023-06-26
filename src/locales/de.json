@@ -96,7 +96,6 @@
     "EMSAnleitung_3": "3. In der obersten Zeile der Tabelle folgendes auswählen: ",
     "CO2FaktorGespeichert": "Der CO2-Faktor wurde erfolgreich in der Datenbank gespeichert.",
     "Errormessage_1": "Gebäudenummer, Gebäudebezeichnung und Flächen müssen ausgefüllt sein!"
-
   },
   "legal": {
     "PrivacyPolicy": {
@@ -262,25 +261,31 @@
       "nichtnegativRules_1": "Bitte geben Sie einen positiven Wert an.",
 
       "absolutpositivRules_0": "Muss angegeben werden.",
-        "absolutpositivRules_1": "Bitte geben Sie einen positiven Wert an.",
+      "absolutpositivRules_1": "Bitte geben Sie einen positiven Wert an.",
 
       "requiredFieldsMissing_0": "Bezeichnung",
-        "requiredFieldsMissing_1": "Bilanzierungsjahr",
-        "requiredFieldsMissing_2": "Anzahl Mitarbeitenden",
+      "requiredFieldsMissing_1": "Bilanzierungsjahr",
+      "requiredFieldsMissing_2": "Anzahl Mitarbeitenden",
 
       "problemeInUmfrage_0": "Sie haben das mehrmals das selbe Gebäude ausgewählt.",
       "problemeInUmfrage_1": "Sie haben für das Gebäude ",
-        "problemeInUmfrage_2": " keine gültige Nutzfläche angegeben.",
-        "problemeInUmfrage_3": "Sie haben das Gerät ",
-        "problemeInUmfrage_4": " angewählt, aber keine gültige Anzahl angegeben.",
-        "problemeInUmfrage_5": "Sie haben einem ausgewählten Gerät keine verwendeten Toner hinzugefügt. Wenn Sie das Gerät nicht in Benutzung haben, ignorieren Sie diese Nachricht."
+      "problemeInUmfrage_2": " keine gültige Nutzfläche angegeben.",
+      "problemeInUmfrage_3": "Sie haben das Gerät ",
+      "problemeInUmfrage_4": " angewählt, aber keine gültige Anzahl angegeben.",
+      "problemeInUmfrage_5": "Sie haben einem ausgewählten Gerät keine verwendeten Toner hinzugefügt. Wenn Sie das Gerät nicht in Benutzung haben, ignorieren Sie diese Nachricht.",
 
-
+      "ITGeraetIDDic_7": "Multifunktionsgeräte",
+      "ITGeraetIDDic_8": "Multifunktionsgeräte Toner",
+      "ITGeraetIDDic_9": "Laser- & Tintenstrahldrucker",
+      "ITGeraetIDDic_10": "Laser & Tintenstrahldrucker Toner",
+      "ITGeraetIDDic_4": "Beamer",
+      "ITGeraetIDDic_6": "interne Server"
     }
   },
   "common": {
     "CO": "CO",
     "Bezeichung": "Bezeichnung",
+    "ServerNichtErreichbar": "Server nicht erreichbar.",
     "Bilanzierungsjahr": "Bilanzierungsjahr",
     "Mitarbeitendenzahl": "Mitarbeitendenzahl",
     "ZurueckAnmeldung": "Zurück zur Anmeldung",
