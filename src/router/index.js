@@ -11,10 +11,8 @@ import Authentication from './Authentication.js'
 import PasswordReset from '../components/landingpage/PasswordReset.vue'
 import EvaluationView from '../views/EvaluationView.vue'
 import PrivacyPolicy from '../components/legal/PrivacyPolicy.vue'
-import VuePapaParse from 'vue-papa-parse'
 
 Vue.use(VueRouter)
-Vue.use(VuePapaParse)
 
 const routes = [
   {
