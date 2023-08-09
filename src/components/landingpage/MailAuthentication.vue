@@ -2,6 +2,7 @@
   <v-app>
     <Header 
       :display-user-setting="false"
+      :display-back-button="false"
     />
     <v-main class="mb-16">
       <v-container v-if="displayLoadingAnimation">

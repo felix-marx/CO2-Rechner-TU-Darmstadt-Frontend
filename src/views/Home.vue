@@ -4,6 +4,7 @@
     <Header
       :tabs="tabList" 
       :display-user-setting="true"
+      :display-back-button="false"
       @changeTab="changeTab($event)"
     />
 

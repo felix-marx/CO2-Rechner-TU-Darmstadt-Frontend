@@ -4,6 +4,7 @@
     <Header
       :tabs="tabList"
       :display-user-setting="false"
+      :display-back-button="false"
     />
 
     <!-- main body -->
