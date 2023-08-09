@@ -146,19 +146,17 @@ export default {
 
           msgLong = msgLong + "Für " + selektierteGebaeude[i] + " haben wir " + msgLongFragments.slice(0, -1).join(", ") + (msgLongFragments.length != 1 ? " und " : "") + msgLongFragments.slice(-1) + ".\n "
         }
-        
       }
+      msgLong = msgLong.slice(0, -2) // remove last \n and space
 
       // generiere kurze Nachricht
       msgShort = "Für die Gebäude " + msgShortFragments.slice(0, -1).join(", ") + (msgShortFragments.length > 1 ? " und " : "") + msgShortFragments.slice(-1) + " haben wir aktuell leider nur unvollständige Daten zum Energieverbrauch!"
-
-      msgLong = msgLong + "Sollten Sie Information zu den fehlenden Daten haben, kontaktieren Sie uns bitte, damit wir die Ergenbisse des CO2-Rechners verbessern können."
 
       return [msgShort, msgLong]
     },
 
     dataGap: function(){
-      return this.dataGapWarningMessage[1] != "Sollten Sie Information zu den fehlenden Daten haben, kontaktieren Sie uns bitte, damit wir die Ergenbisse des CO2-Rechners verbessern können."
+      return this.dataGapWarningMessage[1] != ""
     },
   },
 };
