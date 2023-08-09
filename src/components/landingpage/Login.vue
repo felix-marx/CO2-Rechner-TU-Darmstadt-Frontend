@@ -20,6 +20,33 @@
             {{ istRegistrierung ? "Registrierung" : "Anmeldung" }}
           </v-card-title>
         </div>
+        <v-container>
+          <v-row>
+            <v-col v-if="!$keycloak.authenticated">
+              <v-btn @click="login">
+                Login            
+              </v-btn>
+            </v-col>
+            <v-col v-if="$keycloak.authenticated">
+              <v-btn @click="logout">
+                Logout            
+              </v-btn>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col>
+              <v-btn @click="sendRequest2">
+                OK           
+              </v-btn>
+            </v-col>
+            <v-col>
+              <v-btn @click="sendRequest">
+                Hello           
+              </v-btn>
+            </v-col>
+          </v-row>
+        </v-container>
+
         <!-- Signin -->
         <v-container v-if="!istRegistrierung">
           <v-form>
@@ -305,8 +332,7 @@ export default {
   components: {
     Header,
     Footer
-  }
-  ,
+  },
 
   data: () => ({
     username: null,
@@ -335,6 +361,46 @@ export default {
   },
 
   methods: {
+    login: function() {
+      window.location.assign(this.$keycloak.createLoginUrl());
+    },
+
+    logout: function() {
+      this.$keycloak.logoutFn();
+    },
+
+    sendRequest: async function() {
+      await fetch(process.env.VUE_APP_BASEURL + "/hello", {
+        method: 'GET',
+        headers: {
+          "Authorization": "Bearer " + this.$keycloak.token,
+        }
+      }).then(response => {
+        if (response.status === 200) {
+          response.text().then(text => {
+            alert(text);
+          });
+        } else {
+          alert("Error");
+        }
+      });
+    },
+    sendRequest2: async function() {
+      await fetch(process.env.VUE_APP_BASEURL + "/", {
+        method: 'GET',
+        headers: {
+          "Authorization": "Bearer " + this.$keycloak.token,
+        }
+      }).then(response => {
+        if (response.status === 200) {
+          response.text().then(text => {
+            alert(text);
+          });
+        } else {
+          alert("Error");
+        }
+      });
+    },
     /**
      * Checks if the user input is valid and returns true if valid
      * Otherwise false and sets errorMessage to user fault

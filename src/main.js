@@ -14,7 +14,7 @@ Vue.use(VueKeyCloak, {
   },
   config: {
     realm: 'co2Rechner',
-    url: process.env.VUE_KEYCLOAK_URL,
+    url: process.env.VUE_APP_KEYCLOAK_URL,
     clientId: 'vue-frontend',
   },
 });
