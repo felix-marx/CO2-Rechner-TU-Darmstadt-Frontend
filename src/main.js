@@ -20,7 +20,24 @@ Vue.use(VueKeyCloak, {
   logout: {
     redirectUri: process.env.VUE_APP_KEYCLOAK_LOGOUT_URL,
   },
-  onReady: () => {
+  onReady: (keycloak) => {  // function is called after keycloak is initialized
+    if(keycloak.authenticated) {  // check if account exists once a user is logged in
+      fetch(process.env.VUE_APP_BASEURL + "/hello", {
+        method: 'GET',
+        headers: {
+          "Authorization": "Bearer " + keycloak.token,
+        }
+      }).then(response => {
+        if (response.status === 200) {
+          response.text().then(text => {
+            alert(text);
+          });
+        } else {
+          alert("Error");
+        }
+      });
+    }
+
     new Vue({
       vuetify,
       router,
@@ -28,9 +45,3 @@ Vue.use(VueKeyCloak, {
     }).$mount('#app')
   }
 });
-
-// new Vue({
-//   vuetify,
-//   router,
-//   render: h => h(App)
-// }).$mount('#app')
