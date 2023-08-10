@@ -31,7 +31,7 @@
       />
       <v-btn
         v-if="displayBackButton"
-        icon="$close"
+        :icon="true"
         @click="$router.back()"
       >
         <v-icon>mdi-close</v-icon>
