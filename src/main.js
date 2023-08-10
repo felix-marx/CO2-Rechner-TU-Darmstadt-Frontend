@@ -17,10 +17,17 @@ Vue.use(VueKeyCloak, {
     url: process.env.VUE_APP_KEYCLOAK_URL,
     clientId: 'vue-frontend',
   },
+  onReady: () => {
+    new Vue({
+      vuetify,
+      router,
+      render: h => h(App)
+    }).$mount('#app')
+  }
 });
 
-new Vue({
-  vuetify,
-  router,
-  render: h => h(App)
-}).$mount('#app')
+// new Vue({
+//   vuetify,
+//   router,
+//   render: h => h(App)
+// }).$mount('#app')
