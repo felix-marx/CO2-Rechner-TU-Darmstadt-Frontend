@@ -363,7 +363,8 @@ export default {
 
   methods: {
     login: function() {
-      window.location.assign(this.$keycloak.createLoginUrl());
+      //window.location.assign(this.$keycloak.createLoginUrl());
+      this.$keycloak.loginFn();
     },
 
     logout: function() {

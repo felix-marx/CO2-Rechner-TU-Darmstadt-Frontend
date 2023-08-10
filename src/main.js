@@ -17,6 +17,9 @@ Vue.use(VueKeyCloak, {
     url: process.env.VUE_APP_KEYCLOAK_URL,
     clientId: 'vue-frontend',
   },
+  logout: {
+    redirectUri: process.env.VUE_APP_KEYCLOAK_LOGOUT_URL,
+  },
   onReady: () => {
     new Vue({
       vuetify,
