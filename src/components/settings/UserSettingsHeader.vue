@@ -12,13 +12,13 @@
         >
           <v-icon> mdi-account-cog </v-icon>
           
-          {{ cookieAttribut }}
+          {{ $keycloak.tokenParsed.preferred_username }}
         </v-btn>
       </template>
       <v-list>
         <v-list-item>
           <v-list-item-title class="grey--text">
-            Angemeldet als: {{ cookieAttribut }}
+            Angemeldet als: {{ $keycloak.tokenParsed.preferred_username }}
           </v-list-item-title>
         </v-list-item>
         <v-divider />
@@ -57,11 +57,6 @@ export default {
   name: "UserSettingsHeader",
 
   computed: {
-    // we need this for some reason, since a direct call to Cookies.getCookieAttribut() in the template does not evaluate.
-    cookieAttribut: function () {
-      return Cookies.getCookieAttribut('username')
-    },
-
     isAdmin: function() {
       return Cookies.getCookieAttribut('rolle') == 1
     }
