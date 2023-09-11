@@ -103,15 +103,25 @@ router.beforeEach((to, from, next) => {
     }
 
   } else if(to.meta.requiresAdminAuth){
-
-    let isAdmin = false   // TODO: check if user is admin
-
     if(router.app.$keycloak.authenticated){
-      if(isAdmin){
-        next()
-      } else {
-        next({path: '/survey'})
-      }
+      fetch(process.env.VUE_APP_BASEURL + "/nutzerdaten/checkRolle", {
+        method: 'GET',
+        headers: {
+          "Authorization": "Bearer " + router.app.$keycloak.token,
+        }
+      }).then(response => response.json())
+        .then(data => {
+          if(data.data.rolle == 1) {
+            next()
+          } else if (data.data.rolle == 0){
+            next({path: '/survey'})
+          } else {
+            next({path: '/'})
+          }
+
+      }).catch((error) => {
+        console.error("Error:", error);
+      });
     } else {
       next({path: '/'})
     }

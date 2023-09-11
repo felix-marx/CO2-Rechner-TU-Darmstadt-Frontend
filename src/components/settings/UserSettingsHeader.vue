@@ -12,7 +12,7 @@
         >
           <v-icon> mdi-account-cog </v-icon>
           
-          {{ $keycloak.tokenParsed.preferred_username }}
+          {{ $keycloak.tokenParsed.preferred_username }}  <!--- TODO: maybe use first name instead --->
         </v-btn>
       </template>
       <v-list>
