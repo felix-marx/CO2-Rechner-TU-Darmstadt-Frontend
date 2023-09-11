@@ -38,7 +38,7 @@
         </v-list-item>
         <v-list-item
           text
-          @click="deleteAbmelden()"
+          @click="$keycloak.logoutFn()"
         >
           <v-list-item-title class="red--text">
             Abmelden
