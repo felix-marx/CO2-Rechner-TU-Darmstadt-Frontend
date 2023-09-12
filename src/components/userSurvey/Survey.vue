@@ -411,7 +411,6 @@
 </template>
 
 <script>
-import Cookies from '../Cookie.js'
 import Tooltip from "@/components/componentParts/Tooltip.vue";
 import LinkSharingComponent from "../componentParts/LinkSharingComponent";
 import MailTemplate from "./MailTemplate";
@@ -595,13 +594,6 @@ export default {
       }
       this.errorTextArray.nonRequired = nonRequiredArray
       this.errorTextArray.required = this.requiredFieldsMissingArray()
-    },
-
-    /**
-     * Returns the mail of the currently logged in user.
-     */
-    getUserMail: function() {
-      return Cookies.getCookieAttribut('username');
     },
 
     /**

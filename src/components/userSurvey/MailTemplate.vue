@@ -22,8 +22,8 @@
         Bei weiteren Nachfragen oder Anmerkungen wenden Sie sich gerne an 
         <a
           target="_blank"
-          :href="'mailto:'+cookieAttribut"
-        >{{ cookieAttribut }}</a>.
+          :href="'mailto:'+ this.$keycloak.idTokenParsed.email"
+        >{{ this.$keycloak.idTokenParsed.email }}</a>.
       </p>
       <p>Vielen Dank für Ihre Teilnahme. </p>
     </v-card>
@@ -31,7 +31,6 @@
 </template>
 
 <script>
-import Cookies from "../Cookie.js"
 
 export default {
   name: "MailTemplate",
@@ -46,13 +45,5 @@ export default {
       type: String
     },
   },
-
-  computed: {
-    // we need this for some reason, since a direct call to Cookies.getCookieAttribut() in the template does not evaluate.
-    cookieAttribut: function () {
-      return Cookies.getCookieAttribut('username')
-    }
-  },
-
 };
 </script>
