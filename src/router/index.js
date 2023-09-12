@@ -69,27 +69,16 @@ const routes = [
 ]
 
 const router = new VueRouter({
-  //mode: 'history',
   routes
 })
 
-// function sleep(ms) {
-//   return new Promise(resolve => setTimeout(resolve, ms))
-// }
 
 router.beforeEach((to, from, next) => {
-  // We wait for Keycloak init, then we can call all methods safely
-  // don't think is longer necessary but I leave it here just in case for now
-  // while (router.app.$keycloak.createLoginUrl === null) {
-  //   await sleep(100)
-  // }
-
   if(to.meta.loginPage) {
-
     if(!router.app.$keycloak.authenticated){  // let user to login if not authenticated
       next()
     } else {    // redirect user if already logged in
-      next({path: '/survey'})
+      next({path: '/admin'})
     }
 
   } else if(to.meta.requiresAuth) {
