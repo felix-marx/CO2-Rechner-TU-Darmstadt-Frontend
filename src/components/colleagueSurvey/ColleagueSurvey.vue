@@ -810,7 +810,7 @@ export default {
    * Requests from the server to which year the survey belongs.
    */
     fetchUmfrageYear: async function (givenID) {
-      await fetch(process.env.VUE_APP_BASEURL + "/umfrage/GetUmfrageYear?id=" + givenID, {
+      await fetch(process.env.VUE_APP_BASEURL + "/umfrage/umfrageYear?id=" + givenID, {
         method: "GET",
         })
         .then((response) => response.json())

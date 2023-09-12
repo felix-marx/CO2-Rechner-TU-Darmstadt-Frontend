@@ -705,6 +705,7 @@ export default {
       await fetch(process.env.VUE_APP_BASEURL + "/umfrage/insertUmfrage", {
         method: "POST",
         headers: {
+          "Authorization": "Bearer " + this.$keycloak.token,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
@@ -713,10 +714,6 @@ export default {
           gebaeude: this.gebaeudeJSON(),
           mitarbeiteranzahl: parseInt(this.anzahlMitarbeiter),
           itGeraete: this.itGeraeteJSON(),
-          authToken: {
-            username: Cookies.getCookieAttribut("username"),
-            sessiontoken: Cookies.getCookieAttribut("sessiontoken")
-          }
         }),
       })
         .then((response) => response.json())
@@ -739,17 +736,11 @@ export default {
      * Fetches all possible gebaeudeIDs from the server to display in the dropdown menu of the formular.
      */
     fetchGebaeudeData: async function () {
-      await fetch(process.env.VUE_APP_BASEURL + "/umfrage/gebaeude", {
-        method: "POST",
+      await fetch(process.env.VUE_APP_BASEURL + "/umfrage/gebaeude",{
+        method: "GET",
         headers: {
-          "Content-Type": "application/json",
+          "Authorization": "Bearer " + this.$keycloak.token,
         },
-        body: JSON.stringify({
-          authToken: {
-            username: Cookies.getCookieAttribut("username"),
-            sessiontoken: Cookies.getCookieAttribut("sessiontoken")
-          },
-        }),
       })
         .then((response) => response.json())
         .then((data) => {
@@ -765,16 +756,10 @@ export default {
      */
     fetchGebaeudeUndZaehlerData: async function () {
     await fetch(process.env.VUE_APP_BASEURL + "/umfrage/gebaeudeUndZaehler", {
-      method: "POST",
+      method: "GET",
       headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        authToken: {
-          username: Cookies.getCookieAttribut("username"),
-          sessiontoken: Cookies.getCookieAttribut("sessiontoken")
-        },
-      }),
+          "Authorization": "Bearer " + this.$keycloak.token,
+        }
     })
       .then((response) => response.json())
       .then((data) => {

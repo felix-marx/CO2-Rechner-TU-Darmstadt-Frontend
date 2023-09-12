@@ -389,7 +389,6 @@
 <script>
 import Tooltip from "@/components/componentParts/Tooltip.vue";
 import LoadingAnimation from "../componentParts/LoadingAnimation";
-import Cookies from "../Cookie"
 
 export default {
   name: "EditSurvey",
@@ -630,13 +629,10 @@ export default {
       await fetch(process.env.VUE_APP_BASEURL + "/umfrage/updateUmfrage", {
         method: "POST",
         headers: {
+          "Authorization": "Bearer " + this.$keycloak.token,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          authToken: {
-            username: Cookies.getCookieAttribut("username"),
-            sessiontoken: Cookies.getCookieAttribut("sessiontoken")
-          },
           umfrageID: this.umfrage.umfrageID,
           bezeichnung: this.umfrage.bezeichnung,
           jahr: parseInt(this.umfrage.jahr),
@@ -671,16 +667,10 @@ export default {
      */
     fetchGebaeudeData: async function () {
       await fetch(process.env.VUE_APP_BASEURL + "/umfrage/gebaeude",{
-        method: "POST",
+        method: "GET",
         headers: {
-          "Content-Type": "application/json",
+          "Authorization": "Bearer " + this.$keycloak.token,
         },
-        body: JSON.stringify({
-          authToken: {
-            username: Cookies.getCookieAttribut("username"),
-            sessiontoken: Cookies.getCookieAttribut("sessiontoken")
-          }
-        }),
       })
         .then((response) => response.json())
         .then((data) => {
@@ -696,18 +686,12 @@ export default {
      * Liefert die aktuell in der Datenbank liegenden Umfragewerte der Umfrage mit ID umfrageID zurueck.
      */
     fetchUmfrageData: async function() {
-       await fetch(process.env.VUE_APP_BASEURL + "/umfrage/getUmfrage", {
-        method: "POST",
+       await fetch(process.env.VUE_APP_BASEURL + "/umfrage/umfrage?id=" + this.umfrage.umfrageID, {
+        method: "GET",
         headers: {
+          "Authorization": "Bearer " + this.$keycloak.token,
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          authToken: {
-            username: Cookies.getCookieAttribut("username"),
-            sessiontoken: Cookies.getCookieAttribut("sessiontoken")
-          },
-          umfrageID: this.umfrage.umfrageID,
-        }),
       })
         .then((response) => response.json())
         .then((data) => {
