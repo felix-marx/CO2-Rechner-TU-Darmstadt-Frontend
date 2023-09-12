@@ -53,7 +53,7 @@ export default {
     footerButtons: [
       {
         text: "Impressum",
-        href: "https://www.tu-darmstadt.de/impressum/index.de.jsp", // TODO keep link to TU Darmstadt website or make own impressum? --> AG Meeting
+        href: "https://www.tu-darmstadt.de/impressum/index.de.jsp",
         target: "_blank",
       },
       {

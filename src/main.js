@@ -20,9 +20,9 @@ Vue.use(VueKeyCloak, {
   logout: {
     redirectUri: process.env.VUE_APP_KEYCLOAK_LOGOUT_URL,
   },
-  onReady: (keycloak) => {  // function is called after keycloak is initialized
+  onReady: async (keycloak) => {  // function is called after keycloak is initialized
     if(keycloak.authenticated) {  // check if account exists once a user is logged in
-      fetch(process.env.VUE_APP_BASEURL + "/nutzerdaten/checkUser", {
+      await fetch(process.env.VUE_APP_BASEURL + "/nutzerdaten/checkUser", {
         method: 'GET',
         headers: {
           "Authorization": "Bearer " + keycloak.token,

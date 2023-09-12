@@ -11,14 +11,13 @@
           v-on="on"
         >
           <v-icon> mdi-account-cog </v-icon>
-          
-          {{ $keycloak.tokenParsed.preferred_username }}  <!--- TODO: maybe use first name instead --->
+          {{ displayName }}
         </v-btn>
       </template>
       <v-list>
         <v-list-item>
           <v-list-item-title class="grey--text">
-            Angemeldet als: {{ $keycloak.tokenParsed.preferred_username }}
+            Angemeldet als: {{ displayName }}
           </v-list-item-title>
         </v-list-item>
         <v-divider />
