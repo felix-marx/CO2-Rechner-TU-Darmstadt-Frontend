@@ -76,32 +76,6 @@ export default {
       }
     },
 
-    async deleteAbmelden() {
-    await fetch(process.env.VUE_APP_BASEURL + "/auth/abmeldung", {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        username: Cookies.getCookieAttribut('username')
-      }),
-    })
-      .then((response) => response.json())
-      .then(() => {
-        //This is always the case when the backend returns a package
-        //Delete cookie and log if not success
-        Cookies.deleteCookieAttribut("username")
-        Cookies.deleteCookieAttribut("sessiontoken")
-        Cookies.deleteCookieAttribut("rolle")
-        this.$router.push('/').catch(() => {})
-  
-      })
-      .catch((error) => {
-        //This is always the case when the backend returns nothing -> Timeout
-        console.error("Error:", error)
-      });
-    }
-
   }
 };
 </script>

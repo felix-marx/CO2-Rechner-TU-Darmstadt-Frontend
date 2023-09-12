@@ -255,7 +255,6 @@ import DoughnutChart from "../charts/DoughnutChart.js";
 import BarChart from "../charts/BarChart.js";
 import XLSX from "xlsx";
 import saveAs from 'file-saver';
-import Cookies from '../Cookie.js';
 import LoadingAnimation from "../componentParts/LoadingAnimation.vue";
 import LinkSharingComponent from "../componentParts/LinkSharingComponent.vue";
 import DataGapVisualization from '../componentParts/DataGapVisualization.vue';
@@ -520,18 +519,11 @@ export default {
  * Fetches Get request to get survey data and evaluation.
  */
   getData: async function () {
-    await fetch(process.env.VUE_APP_BASEURL + "/auswertung", {
-      method: "POST",
+    await fetch(process.env.VUE_APP_BASEURL + "/auswertung?id=" + this.$props.umfrageid, {
+      method: "GET",
       headers: {
-        "Content-Type": "application/json",
+        "Authorization": "Bearer " + this.$keycloak.token,
       },
-      body: JSON.stringify({
-        authToken: {
-          username: Cookies.getCookieAttribut("username"),
-          sessiontoken: Cookies.getCookieAttribut("sessiontoken")
-        },
-        umfrageID: this.$props.umfrageid,
-      }),
     }).then((response) => response.json())
       .then((body) => {
         if (body.status == "success") {
@@ -571,13 +563,10 @@ export default {
       await fetch(process.env.VUE_APP_BASEURL + "/auswertung/updateSetLinkShare", {
         method: "POST",
         headers: {
+          "Authorization": "Bearer " + this.$keycloak.token,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          authToken: {
-            username: Cookies.getCookieAttribut("username"),
-            sessiontoken: Cookies.getCookieAttribut("sessiontoken")
-          },
           umfrageID: this.$props.umfrageid,
           // freigabewert 0 ist teilen deaktiviert, 1 aktiviert und wir flippen hier
           freigabewert: ((this.responsedata.auswertungFreigegeben) ? 1 : 0),

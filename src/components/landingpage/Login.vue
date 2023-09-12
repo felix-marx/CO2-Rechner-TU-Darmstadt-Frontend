@@ -140,7 +140,6 @@
 <script>
 import Footer from "../componentParts/Footer.vue";
 import Header from "../componentParts/Header.vue";
-import Cookies from "../Cookie.js"
 
 
 export default {
@@ -232,80 +231,6 @@ export default {
       }
       this.errorMessage = null
       return true
-    },
-
-    postAnmeldung: async function () {
-      //User input validation and set error message
-      this.istRegistrierung = false
-      if (!this.checkValidInput(this.istRegistrierung)) {
-        return
-      }
-
-      await fetch(process.env.VUE_APP_BASEURL + "/auth/anmeldung", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username: this.username,
-          password: this.password
-        }),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          //This is always the case when the backend returns a package
-          if (data.status == "success") {
-            Cookies.setCookie("sessiontoken", data.data.sessiontoken)
-            Cookies.setCookie("username", this.username)
-            Cookies.setCookie("rolle", data.data.rolle)
-
-            if(data.data.rolle == 1){
-              this.$router.push('/admin').catch(() => { })
-            } else if(data.data.rolle == 0){
-              this.$router.push('/survey').catch(() => { })
-            } else{
-              console.error("Unkown role: " + data.data.rolle)
-            }
-          }
-          //Message on success or error send from Backend
-          this.errorMessage = (data.status == "success") ? '' : data.error.message
-        })
-        .catch((error) => {
-          //This is always the case when the backend returns nothing -> Timeout
-          console.error(error)
-        });
-    },
-
-    postRegistrierung: async function () {
-      //User input validation and set error message
-      this.istRegistrierung = true
-      if (!this.checkValidInput(this.istRegistrierung)) {
-        return
-      }
-
-      await fetch(process.env.VUE_APP_BASEURL + "/auth/registrierung", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username: this.username,
-          password: this.password,
-        }),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          //This is always the case when the backend returns a package
-          if (data.status == "success") {
-            this.bestaetigungAnzeigen = true
-          }
-          //Message on success or error send from Backend 
-          this.errorMessage = (data.status == "success") ? '' : data.error.message
-        })
-        .catch((error) => {
-          //This is always the case when the backend returns nothing -> Timeout
-          console.error("Error:", error)
-        });
     },
   }
 };

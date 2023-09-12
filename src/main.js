@@ -28,9 +28,8 @@ Vue.use(VueKeyCloak, {
           "Authorization": "Bearer " + keycloak.token,
         }
       }).then(response => response.json())
-        .then(data => {
-          console.log(data.status)
-      }).catch((error) => {
+        //.then(data => {})
+        .catch((error) => {
         console.error("Error:", error);
       });
     }
