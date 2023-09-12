@@ -22,8 +22,8 @@
         Bei weiteren Nachfragen oder Anmerkungen wenden Sie sich gerne an 
         <a
           target="_blank"
-          :href="'mailto:'+ this.$keycloak.idTokenParsed.email"
-        >{{ this.$keycloak.idTokenParsed.email }}</a>.
+          :href="'mailto:'+ mail"
+        >{{ mail }}</a>.
       </p>
       <p>Vielen Dank für Ihre Teilnahme. </p>
     </v-card>
@@ -45,5 +45,11 @@ export default {
       type: String
     },
   },
+
+  computed: {
+    mail: function(){
+      return this.$keycloak.tokenParsed.email
+    }
+  }
 };
 </script>

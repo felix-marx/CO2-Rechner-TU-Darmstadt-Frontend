@@ -59,6 +59,18 @@ export default {
   computed: {
     isAdmin: function() {
       return Cookies.getCookieAttribut('rolle') == 1
+    },
+
+    displayName: function() {
+      if(this.$keycloak.tokenParsed.name != undefined) {
+        return this.$keycloak.tokenParsed.name
+      }
+      else if (this.$keycloak.tokenParsed.email != undefined) {
+        return this.$keycloak.tokenParsed.email
+      } 
+      else {
+        return this.$keycloak.tokenParsed.preferred_username
+      }
     }
   },
 
