@@ -15,11 +15,13 @@
             <h2>TU Darmstadt CO<sub>2</sub>-Rechner</h2>
           </v-card-title>Willkommen bei dem TU Darmstadt CO<sub>2</sub>-Rechner. Mit diesem können Sie die CO<sub>2</sub>-Emissionen von TU-Einheiten berechnen.
         </div>
+
+        <!-- Login Button -->
         <v-container>
           <v-row>
             <v-col
               v-if="!$keycloak.authenticated"
-              class="text-center ma-0 pa-0"
+              class="text-center mt-6"
             >
               <v-btn
                 color="primary"
@@ -29,29 +31,14 @@
                 <v-icon left>
                   mdi-account
                 </v-icon>
-                <span>Anmelden</span>
-              </v-btn>
-            </v-col>
-            <v-col
-              v-if="$keycloak.authenticated"
-              class="text-center ma-0 pa-0"
-            >
-              <v-btn
-                color="primary"
-                type="button"
-                @click="$keycloak.logoutFn()"
-              >
-                <v-icon left>
-                  mdi-account
-                </v-icon>
-                <span>Abmelden</span>
+                <span>Anmelden mit TU-ID</span>
               </v-btn>
             </v-col>
           </v-row>
         </v-container>
 
         <!-- Logos -->
-        <v-container class="d-flex justify-space-around mb-6 py-10">
+        <v-container class="d-flex justify-space-around mt-10 mb-6 py-10">
           <v-row>
             <v-col>
               <a
