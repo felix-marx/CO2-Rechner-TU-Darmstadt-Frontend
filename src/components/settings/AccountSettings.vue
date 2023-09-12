@@ -1,6 +1,7 @@
 <template>
   <v-container>
     <v-card
+      class="mb-5"
       elevation="2"
       outlined
     >
@@ -8,92 +9,87 @@
         Account Löschen
         <v-divider class="ml-2" />
       </v-card-title>
-      <v-card
-        class="pl-7 pr-7"
-        elevation="0"
-      >
-        <v-row>
-          <v-col cols="10">
-            <div class="mt-4">
-              Hier können Sie Ihren Account löschen. Wenn Sie sicher sind, dies tun zu wollen, drücken Sie bitte den folgenden Knopf.
-            </div>
-          </v-col>
-          <v-col cols="2">
-            <v-dialog
-              v-model="showDeleteDialog"
-              transition="dialog-bottom-transition"
-            >
-              <template v-slot:activator="{ on, attrs }">
-                <!-- Mit diesem Button soll der Account gelöscht werden. -->
-                <v-col class="text-right">
-                  <v-btn
-                    outlined
-                    text
-                    color="delete"
-                    v-bind="attrs"
-                    v-on="on"
-                  >
-                    <v-icon>mdi-delete-outline</v-icon>
-                    Löschen
-                  </v-btn>
-                </v-col>
-              </template>
-              <v-card>
-                <v-toolbar
-                  color="primary"
-                  dark
+      <v-row class="mb-2">
+        <v-col cols="10">
+          <div class="mt-4 pl-7 pr-7">
+            Hier können Sie Ihren Account löschen. Wenn Sie sicher sind, dies tun zu wollen, drücken Sie bitte den folgenden Knopf.
+          </div>
+        </v-col>
+        <v-col cols="2">
+          <v-dialog
+            v-model="showDeleteDialog"
+            transition="dialog-bottom-transition"
+          >
+            <template v-slot:activator="{ on, attrs }">
+              <!-- Mit diesem Button soll der Account gelöscht werden. -->
+              <v-col class="text-right">
+                <v-btn
+                  outlined
+                  text
+                  color="delete"
+                  v-bind="attrs"
+                  v-on="on"
                 >
-                  Löschen des Accounts
-                </v-toolbar>
-                <v-card-text>
-                  <p class="pt-6">
-                    Sind Sie sicher, dass Sie Ihren Account löschen möchten?
-                    <br>
-                    <b>Diese Aktion kann nicht zurückgenommen werden und alle Ihre Umfragen werden gelöscht! </b>
-                  </p>
+                  <v-icon>mdi-delete-outline</v-icon>
+                  Löschen
+                </v-btn>
+              </v-col>
+            </template>
+            <v-card>
+              <v-toolbar
+                color="primary"
+                dark
+              >
+                Löschen des Accounts
+              </v-toolbar>
+              <v-card-text>
+                <p class="pt-6">
+                  Sind Sie sicher, dass Sie Ihren Account löschen möchten?
+                  <br>
+                  <b>Diese Aktion kann nicht zurückgenommen werden und alle Ihre Umfragen werden gelöscht! </b>
+                </p>
             
-                  <div>
-                    Geben Sie zur Bestätigung bitte Ihre E-Mail-Adresse in folgendes Feld ein:
-                  </div>
-                  <v-text-field
-                    v-model="usernameConfirmation"
-                    outlined
-                  />
-                </v-card-text>
+                <div>
+                  Geben Sie zur Bestätigung bitte Ihre "delete" in folgendes Feld ein:
+                </div>
+                <v-text-field
+                  v-model="usernameConfirmation"
+                  outlined
+                />
+              </v-card-text>
 
-                <v-divider />
+              <v-divider />
 
-                <v-card-actions>
-                  <LoadingAnimation
-                    v-if="displayLoadingAnimation"
-                  />
-                  <v-alert
-                    v-if="accountDeleted && signedOut && !displayLoadingAnimation"
-                    type="success"
-                  >
-                    Ihr Account wurde erfolgreich gelöscht. Sie können dieses Fenster nun schließen.
-                  </v-alert>
-                  <v-alert
-                    v-if="deleteRequestError && !displayLoadingAnimation"
-                    type="error"
-                  >
-                    Ihr Account konnte nicht gelöscht werden. Bitte versuchen Sie es erneut.
-                  </v-alert>
-                  <v-spacer />
-                  <v-btn
-                    :disabled="!checkUsernameConfirmation || accountDeleted"
-                    color="delete"
-                    text
-                    @click="deleteAccountAndSignout()"
-                  >
-                    Ich bestätige
-                  </v-btn>
-                </v-card-actions>
-              </v-card>
-            </v-dialog>
-          </v-col>
-        </v-row>
-      </v-card>
+              <v-card-actions>
+                <LoadingAnimation
+                  v-if="displayLoadingAnimation"
+                />
+                <v-alert
+                  v-if="accountDeleted && signedOut && !displayLoadingAnimation"
+                  type="success"
+                >
+                  Ihr Account wurde erfolgreich gelöscht. Sie können dieses Fenster nun schließen.
+                </v-alert>
+                <v-alert
+                  v-if="deleteRequestError && !displayLoadingAnimation"
+                  type="error"
+                >
+                  Ihr Account konnte nicht gelöscht werden. Bitte versuchen Sie es erneut.
+                </v-alert>
+                <v-spacer />
+                <v-btn
+                  :disabled="!checkUsernameConfirmation || accountDeleted"
+                  color="delete"
+                  text
+                  @click="deleteAccountAndSignout()"
+                >
+                  Ich bestätige
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+        </v-col>
+      </v-row>
     </v-card>
   </v-container>
 </template>
@@ -102,7 +98,6 @@
 import LoadingAnimation from "../componentParts/LoadingAnimation"
 
 export default {
-
   name: "AccountSettings",
 
   components: {
@@ -116,24 +111,14 @@ export default {
     deleteRequestError: false,
     displayLoadingAnimation: false,
     signedOut: true,
-    changedPasswordStatus: 0, //default 0, success 1, error 2, passwort dont match 3
-    password: null,
-    newPassword: null,
-    newPasswordRe: null,
-    requiredRule: [
-      v => !!v || "Muss angegeben werden",
-    ],
-    passwordRule: [
-      v => (v && v.length >= 8) || 'Mindestens 8 Zeichen'
-    ]
   }),
   
-  computed: { // TODO: Fix delition process
+  computed: {
     /**
      * Checks whether the typed in username when deleting an account and the actual username match.
      */
     checkUsernameConfirmation: function () {
-      return this.$keycloak.tokenParsed.preferred_username === this.usernameConfirmation
+      return "delete" === this.usernameConfirmation
     },
   },
 
@@ -149,9 +134,10 @@ export default {
     async deleteAccountAndSignout(){
       this.displayLoadingAnimation = true;
       await this.deleteAccount();
-      // logout vie Keycloak
-      //this.$keycloak.logoutFn();
-      // delete Keycloak User
+
+      if (this.accountDeleted) {
+        this.$keycloak.logoutFn();
+      }
     },
 
     /**
