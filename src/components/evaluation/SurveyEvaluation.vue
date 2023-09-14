@@ -560,7 +560,7 @@ export default {
       this.showLoading = true;
       this.displaySuccess = false;
 
-      await fetch(process.env.VUE_APP_BASEURL + "/auswertung/updateSetLinkShare", {
+      await fetch(process.env.VUE_APP_BASEURL + "/auswertung/updateLinkShare", {
         method: "POST",
         headers: {
           "Authorization": "Bearer " + this.$keycloak.token,

@@ -694,7 +694,7 @@ export default {
       this.displayLoadingAnimation = true;
       this.errorMessage = null;
 
-      await fetch(process.env.VUE_APP_BASEURL + "/umfrage/insertUmfrage", {
+      await fetch(process.env.VUE_APP_BASEURL + "/umfrage/insert", {
         method: "POST",
         headers: {
           "Authorization": "Bearer " + this.$keycloak.token,

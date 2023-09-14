@@ -93,7 +93,7 @@ router.beforeEach((to, from, next) => {
 
   } else if(to.meta.requiresAdminAuth){
     if(router.app.$keycloak.authenticated){
-      fetch(process.env.VUE_APP_BASEURL + "/nutzerdaten/checkRolle", {
+      fetch(process.env.VUE_APP_BASEURL + "/nutzer/rolle", {
         method: 'GET',
         headers: {
           "Authorization": "Bearer " + router.app.$keycloak.token,

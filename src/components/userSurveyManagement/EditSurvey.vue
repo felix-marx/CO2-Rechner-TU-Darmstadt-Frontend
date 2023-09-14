@@ -638,7 +638,7 @@ export default {
       this.blockInput = true
       this.displayError = false
 
-      await fetch(process.env.VUE_APP_BASEURL + "/umfrage/updateUmfrage", {
+      await fetch(process.env.VUE_APP_BASEURL + "/umfrage/update", {
         method: "POST",
         headers: {
           "Authorization": "Bearer " + this.$keycloak.token,
@@ -732,7 +732,7 @@ export default {
      * Liefert die aktuell in der Datenbank liegenden Umfragewerte der Umfrage mit ID umfrageID zurueck.
      */
     fetchUmfrageData: async function() {
-       await fetch(process.env.VUE_APP_BASEURL + "/umfrage/umfrage?id=" + this.umfrage.umfrageID, {
+       await fetch(process.env.VUE_APP_BASEURL + "/umfrage?id=" + this.umfrage.umfrageID, {
         method: "GET",
         headers: {
           "Authorization": "Bearer " + this.$keycloak.token,

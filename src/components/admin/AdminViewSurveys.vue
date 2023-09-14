@@ -411,7 +411,7 @@ export default {
        * Loescht die Umfrage mit der gegebenen ID, gibt false bei error, true bei success zurueck
        */
       deleteUmfrage: async function (index, umfrageID) {
-        await fetch(process.env.VUE_APP_BASEURL + "/umfrage/deleteUmfrage", {
+        await fetch(process.env.VUE_APP_BASEURL + "/umfrage", {
         method: "DELETE",
         headers: {
           "Authorization": "Bearer " + this.$keycloak.token,
@@ -442,7 +442,7 @@ export default {
        * Dupliziert die Umfrage mit der gegebenen ID, gibt false bei error, true bei success zurueck
        */
       duplicateUmfrage: async function (index, umfrageID) {
-        await fetch(process.env.VUE_APP_BASEURL + "/umfrage/duplicateUmfrage?id=" + umfrageID, {
+        await fetch(process.env.VUE_APP_BASEURL + "/umfrage/duplicate?id=" + umfrageID, {
         method: "GET",
         headers: {
           "Authorization": "Bearer " + this.$keycloak.token,

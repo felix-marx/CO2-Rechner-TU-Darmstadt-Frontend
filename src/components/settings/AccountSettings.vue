@@ -144,7 +144,7 @@ export default {
      * Sends a Post-Request to the server for deleting the account.
      */
     async deleteAccount() {
-      await fetch(process.env.VUE_APP_BASEURL + "/nutzerdaten/deleteNutzerdaten", {
+      await fetch(process.env.VUE_APP_BASEURL + "/nutzer", {
         method: "DELETE",
         headers: {
           "Authorization": "Bearer " + this.$keycloak.token,

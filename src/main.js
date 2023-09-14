@@ -22,7 +22,7 @@ Vue.use(VueKeyCloak, {
   },
   onReady: async (keycloak) => {  // function is called after keycloak is initialized
     if(keycloak.authenticated) {  // check if account exists once a user is logged in
-      await fetch(process.env.VUE_APP_BASEURL + "/nutzerdaten/checkUser", {
+      await fetch(process.env.VUE_APP_BASEURL + "/nutzer/pruefeNutzer", {
         method: 'GET',
         headers: {
           "Authorization": "Bearer " + keycloak.token,
