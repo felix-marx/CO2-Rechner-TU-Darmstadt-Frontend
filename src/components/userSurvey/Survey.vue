@@ -724,24 +724,24 @@ export default {
       this.displayLoadingAnimation = false;
     },
 
-    /**
-     * Fetches all possible gebaeudeIDs from the server to display in the dropdown menu of the formular.
-     */
-    fetchGebaeudeData: async function () {
-      await fetch(process.env.VUE_APP_BASEURL + "/umfrage/gebaeude",{
-        method: "GET",
-        headers: {
-          "Authorization": "Bearer " + this.$keycloak.token,
-        },
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          this.gebaeudeIDs = data.data.gebaeude.map(gebInt => translateGebaeudeIDToSymbolic(gebInt));
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
-    },
+    // /**
+    //  * Fetches all possible gebaeudeIDs from the server to display in the dropdown menu of the formular.
+    //  */
+    // fetchGebaeudeData: async function () {
+    //   await fetch(process.env.VUE_APP_BASEURL + "/umfrage/gebaeude",{
+    //     method: "GET",
+    //     headers: {
+    //       "Authorization": "Bearer " + this.$keycloak.token,
+    //     },
+    //   })
+    //     .then((response) => response.json())
+    //     .then((data) => {
+    //       this.gebaeudeIDs = data.data.gebaeude.map(gebInt => translateGebaeudeIDToSymbolic(gebInt));
+    //     })
+    //     .catch((error) => {
+    //       console.error("Error:", error);
+    //     });
+    // },
 
     /**
      * Fetches all possible gebaeudeIDs and the Zaehler References from the database.
