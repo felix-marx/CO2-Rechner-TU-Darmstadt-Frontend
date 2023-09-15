@@ -4,6 +4,7 @@
     <Header
       :tabs="tabList"
       :display-user-setting="false"
+      :display-back-button="false"
     />
 
     <!-- main body -->
@@ -100,7 +101,7 @@ export default {
      * Requests from the server whether a survey with the givenID exists.
      */
   fetchUmfrageExists: async function (givenID) {
-      await fetch(process.env.VUE_APP_BASEURL + "/mitarbeiterUmfrage/exists?id=" + givenID, {
+      await fetch(process.env.VUE_APP_BASEURL + "/mitarbeiterumfrage/exists?id=" + givenID, {
         method: "GET",
         })
         .then((response) => response.json())

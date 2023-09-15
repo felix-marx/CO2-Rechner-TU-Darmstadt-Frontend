@@ -4,6 +4,7 @@
     <Header
       :tabs="tabList"
       :display-user-setting="false"
+      :display-back-button="false"
     />
 
     <!-- main body -->
@@ -105,7 +106,7 @@ export default {
      * Requests from the server whether a survey with the givenID has result sharing enabled.
      */
   fetchUmfrage: async function (givenID) {
-    await fetch(process.env.VUE_APP_BASEURL + "/umfrage/GetSharedResults?id=" + givenID, {
+    await fetch(process.env.VUE_APP_BASEURL + "/umfrage/sharedResults?id=" + givenID, {
       method: "GET",
       })
       .then((response) => response.json())

@@ -287,8 +287,15 @@
               Sie haben mehrmals das selbe Gebäude ausgewählt.
             </v-alert>
           </v-row>
-          <!-- Umfrage für IT Geräte: Multifunktionsgeräte + Toner, Drucker + Toner, Beamer, Server -->
 
+          <DataGapVisualization 
+            :gebaeude-i-ds-und-zaehler="gebaeudeIDsUndZaehler"
+            :zaehler="zaehler"
+            :gebaeude="umfrage.gebaeude"
+            :bilanzierungsjahr="umfrage.jahr"
+          />
+
+          <!-- Umfrage für IT Geräte: Multifunktionsgeräte + Toner, Drucker + Toner, Beamer, Server -->
           <br>
           <h3>
             Welche IT-Geräte benutzen Sie in Ihrer Abteilung gemeinschaftlich?
@@ -389,14 +396,15 @@
 <script>
 import Tooltip from "@/components/componentParts/Tooltip.vue";
 import LoadingAnimation from "../componentParts/LoadingAnimation";
-import Cookies from "../Cookie"
+import DataGapVisualization from "../componentParts/DataGapVisualization";
 
 export default {
   name: "EditSurvey",
   
   components: {
     LoadingAnimation,
-    Tooltip
+    Tooltip,
+    DataGapVisualization
   },
 
   props: {
@@ -422,6 +430,8 @@ export default {
 
     // mögliche gebäudeIDs
     gebaeudeIDs: [],
+    gebaeudeIDsUndZaehler: [],
+    zaehler: [],
 
     // Blockiere Inputfelder bevor bearbeiten geklickt
     blockInput: true,
@@ -485,7 +495,8 @@ export default {
   },
 
   created() {
-      this.fetchGebaeudeData();
+      //this.fetchGebaeudeData();
+      this.fetchGebaeudeUndZaehlerData();
       this.umfrage.umfrageID = JSON.parse(JSON.stringify(this.umfrageidprop));
       this.fetchUmfrageData();
   },
@@ -627,16 +638,13 @@ export default {
       this.blockInput = true
       this.displayError = false
 
-      await fetch(process.env.VUE_APP_BASEURL + "/umfrage/updateUmfrage", {
+      await fetch(process.env.VUE_APP_BASEURL + "/umfrage/update", {
         method: "POST",
         headers: {
+          "Authorization": "Bearer " + this.$keycloak.token,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          authToken: {
-            username: Cookies.getCookieAttribut("username"),
-            sessiontoken: Cookies.getCookieAttribut("sessiontoken")
-          },
           umfrageID: this.umfrage.umfrageID,
           bezeichnung: this.umfrage.bezeichnung,
           jahr: parseInt(this.umfrage.jahr),
@@ -666,29 +674,57 @@ export default {
       this.dataRequestSent = false;
     },
 
+    // /**
+    //  * fetchGebaeudeData sendet eine POST Request ans Backend welche alle gespeicherten Gebaeude fetched.
+    //  */
+    // fetchGebaeudeData: async function () {
+    //   await fetch(process.env.VUE_APP_BASEURL + "/umfrage/gebaeude",{
+    //     method: "GET",
+    //     headers: {
+    //       "Authorization": "Bearer " + this.$keycloak.token,
+    //     },
+    //   })
+    //     .then((response) => response.json())
+    //     .then((data) => {
+    //       this.gebaeudeIDs = data.data.gebaeude.map(gebInt => translateGebaeudeIDToSymbolic(gebInt));
+    //     })
+    //     .catch((error) => {
+    //       console.error("Error:", error);
+    //     });
+    // },
+
     /**
-     * fetchGebaeudeData sendet eine POST Request ans Backend welche alle gespeicherten Gebaeude fetched.
+     * Fetches all possible gebaeudeIDs and the Zaehler References from the database.
      */
-    fetchGebaeudeData: async function () {
-      await fetch(process.env.VUE_APP_BASEURL + "/umfrage/gebaeude",{
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          authToken: {
-            username: Cookies.getCookieAttribut("username"),
-            sessiontoken: Cookies.getCookieAttribut("sessiontoken")
-          }
-        }),
+     fetchGebaeudeUndZaehlerData: async function () {
+    await fetch(process.env.VUE_APP_BASEURL + "/umfrage/gebaeudeUndZaehler", {
+      method: "GET",
+      headers: {
+          "Authorization": "Bearer " + this.$keycloak.token,
+        }
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        this.gebaeudeIDsUndZaehler = data.data.gebaeude
+        this.zaehler = data.data.zaehler
+
+        //console.log(data)
+      
+        this.gebaeudeIDs = data.data.gebaeude.map(obj => translateGebaeudeIDToSymbolic(obj.nr));
+
+        this.mapGebauedeZaehlerRefs = new Map(
+          data.data.gebaeude.map((obj) => [translateGebaeudeIDToSymbolic(obj.nr), {kaelteRef: obj.kaelteRef, stromRef: obj.stromRef, waermeRef: obj.waermeRef}])
+        )
+        //console.log(this.mapGebauedeZaehlerRefs)
+
+        this.mapZaehlerWerte = new Map(
+          data.data.zaehler.map((obj) => [obj.pkEnergie, new Map(obj.zaehlerdatenVorhanden.map((obj2) => [obj2.jahr, obj2.vorhanden]))])
+        )
+        //console.log(this.mapZaehlerWerte)
       })
-        .then((response) => response.json())
-        .then((data) => {
-          this.gebaeudeIDs = data.data.gebaeude.map(gebInt => translateGebaeudeIDToSymbolic(gebInt));
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
+      .catch((error) => {
+        console.error("Error:", error);
+      });
     },
 
     /**
@@ -696,18 +732,12 @@ export default {
      * Liefert die aktuell in der Datenbank liegenden Umfragewerte der Umfrage mit ID umfrageID zurueck.
      */
     fetchUmfrageData: async function() {
-       await fetch(process.env.VUE_APP_BASEURL + "/umfrage/getUmfrage", {
-        method: "POST",
+       await fetch(process.env.VUE_APP_BASEURL + "/umfrage?id=" + this.umfrage.umfrageID, {
+        method: "GET",
         headers: {
+          "Authorization": "Bearer " + this.$keycloak.token,
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          authToken: {
-            username: Cookies.getCookieAttribut("username"),
-            sessiontoken: Cookies.getCookieAttribut("sessiontoken")
-          },
-          umfrageID: this.umfrage.umfrageID,
-        }),
       })
         .then((response) => response.json())
         .then((data) => {
