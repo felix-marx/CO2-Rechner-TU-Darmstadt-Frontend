@@ -29,6 +29,13 @@
         v-if="displayUserSetting"
         @openAccountSettings="changeTab(2, accountSettings)"
       />
+      <v-btn
+        v-if="displayBackButton"
+        :icon="true"
+        @click="$router.back()"
+      >
+        <v-icon>mdi-close</v-icon>
+      </v-btn>
     </span>
   </v-app-bar>
 </template>
@@ -53,6 +60,10 @@ export default {
     },
     displayUserSetting: {
       default: true,
+      type: Boolean
+    },
+    displayBackButton: {
+      default: false,
       type: Boolean
     }
   },

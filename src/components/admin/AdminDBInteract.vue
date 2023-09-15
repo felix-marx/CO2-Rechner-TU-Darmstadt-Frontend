@@ -823,7 +823,6 @@
 <script>
 import Tooltip from "@/components/componentParts/Tooltip.vue";
 import LoadingAnimation from "../componentParts/LoadingAnimation.vue";
-import Cookies from "../Cookie"
 
 export default {
   components: {
@@ -976,13 +975,10 @@ export default {
       await fetch(process.env.VUE_APP_BASEURL + "/db/addFaktor", {
         method: "POST",
         headers: {
+          "Authorization": "Bearer " + this.$keycloak.token,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          authToken: {
-            username: Cookies.getCookieAttribut('username'),
-            sessiontoken: Cookies.getCookieAttribut('sessiontoken'),
-          },
           idEnergieversorgung: this.energy_map.get(this.co2_factor.energy_type),
           idVertrag: this.contract_map.get(this.co2_factor.contract),
           jahr: parseInt(this.co2_factor.year),
@@ -1062,13 +1058,10 @@ export default {
       await fetch(process.env.VUE_APP_BASEURL + "/db/insertGebaeude", {
         method: "POST",
         headers: {
+          "Authorization": "Bearer " + this.$keycloak.token,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          authToken: {
-            username: Cookies.getCookieAttribut('username'),
-            sessiontoken: Cookies.getCookieAttribut('sessiontoken'),
-          },
           nr: parseInt(this.building.number),
           bezeichnung: this.building.name,
           flaeche: {
@@ -1122,13 +1115,10 @@ export default {
       await fetch(process.env.VUE_APP_BASEURL + "/db/addVersorger", {
         method: "POST",
         headers: {
+          "Authorization": "Bearer " + this.$keycloak.token,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          authToken: {
-            username: Cookies.getCookieAttribut('username'),
-            sessiontoken: Cookies.getCookieAttribut('sessiontoken'),
-          },
           nr: parseInt(this.supplier.number),
           idEnergieversorgung: this.energy_map.get(this.supplier.energy_type),
           idVertrag: this.contract_map.get(this.supplier.contract),
@@ -1172,13 +1162,10 @@ export default {
       await fetch(process.env.VUE_APP_BASEURL + "/db/addStandardVersorger", {
         method: "POST",
         headers: {
+          "Authorization": "Bearer " + this.$keycloak.token,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          authToken: {
-            username: Cookies.getCookieAttribut('username'),
-            sessiontoken: Cookies.getCookieAttribut('sessiontoken'),
-          },
           jahr: parseInt(this.default_supplier.year),
         }),
       })
@@ -1220,13 +1207,10 @@ export default {
       await fetch(process.env.VUE_APP_BASEURL + "/db/insertZaehler", {
         method: "POST",
         headers: {
+          "Authorization": "Bearer " + this.$keycloak.token,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          authToken: {
-            username: Cookies.getCookieAttribut('username'),
-            sessiontoken: Cookies.getCookieAttribut('sessiontoken'),
-          },
           pkEnergie: parseInt(this.counter.primary_key),
           idEnergieversorgung: this.energy_map.get(this.counter.energy_type),
           bezeichnung: this.counter.name,
@@ -1271,13 +1255,10 @@ export default {
       await fetch(process.env.VUE_APP_BASEURL + "/db/addZaehlerdaten", {
         method: "POST",
         headers: {
+          "Authorization": "Bearer " + this.$keycloak.token,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          authToken: {
-            username: Cookies.getCookieAttribut('username'),
-            sessiontoken: Cookies.getCookieAttribut('sessiontoken'),
-          },
           pkEnergie: parseInt(this.counter_data.primary_key),
           idEnergieversorgung: this.energy_map.get(this.counter_data.energy_type),
           jahr: parseInt(this.counter_data.year),
@@ -1321,13 +1302,10 @@ export default {
       await fetch(process.env.VUE_APP_BASEURL + "/db/addStandardZaehlerdaten", {
         method: "POST",
         headers: {
+          "Authorization": "Bearer " + this.$keycloak.token,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          authToken: {
-            username: Cookies.getCookieAttribut('username'),
-            sessiontoken: Cookies.getCookieAttribut('sessiontoken'),
-          },
           jahr: parseInt(this.default_counter_data.year),
         }),
       })
@@ -1497,13 +1475,10 @@ export default {
       await fetch(process.env.VUE_APP_BASEURL + "/db/addZaehlerdatenCSV", {
         method: "POST",
         headers: {
+          "Authorization": "Bearer " + this.$keycloak.token,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          authToken: {
-            username: Cookies.getCookieAttribut('username'),
-            sessiontoken: Cookies.getCookieAttribut('sessiontoken'),
-          },
           pkEnergie: this.csv_counter_data.primary_keys,
           idEnergieversorgung: this.csv_counter_data.energy_types,
           jahr: this.csv_counter_data.year,

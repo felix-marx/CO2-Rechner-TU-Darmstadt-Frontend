@@ -85,8 +85,6 @@ export default {
       var msgShortFragments = []
 
       var selektierteGebaeude = [...new Set(this.gebaeude.map(x => x[0]).filter(x => x))]
-      console.log(selektierteGebaeude)
-
 
       for(var i = 0; i < selektierteGebaeude.length; i++) {
         var zaehlerZustand = [0, 0, 0]    // [Kaelte, Strom, Waerme], 

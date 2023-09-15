@@ -411,7 +411,6 @@
 </template>
 
 <script>
-import Cookies from '../Cookie.js'
 import Tooltip from "@/components/componentParts/Tooltip.vue";
 import LinkSharingComponent from "../componentParts/LinkSharingComponent";
 import MailTemplate from "./MailTemplate";
@@ -598,13 +597,6 @@ export default {
     },
 
     /**
-     * Returns the mail of the currently logged in user.
-     */
-    getUserMail: function() {
-      return Cookies.getCookieAttribut('username');
-    },
-
-    /**
      * Adds a new Gebäude to the array, so that it can be selected
      */
     newGebaeude: function () {
@@ -702,9 +694,10 @@ export default {
       this.displayLoadingAnimation = true;
       this.errorMessage = null;
 
-      await fetch(process.env.VUE_APP_BASEURL + "/umfrage/insertUmfrage", {
+      await fetch(process.env.VUE_APP_BASEURL + "/umfrage/insert", {
         method: "POST",
         headers: {
+          "Authorization": "Bearer " + this.$keycloak.token,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
@@ -713,10 +706,6 @@ export default {
           gebaeude: this.gebaeudeJSON(),
           mitarbeiteranzahl: parseInt(this.anzahlMitarbeiter),
           itGeraete: this.itGeraeteJSON(),
-          authToken: {
-            username: Cookies.getCookieAttribut("username"),
-            sessiontoken: Cookies.getCookieAttribut("sessiontoken")
-          }
         }),
       })
         .then((response) => response.json())
@@ -735,46 +724,34 @@ export default {
       this.displayLoadingAnimation = false;
     },
 
-    /**
-     * Fetches all possible gebaeudeIDs from the server to display in the dropdown menu of the formular.
-     */
-    fetchGebaeudeData: async function () {
-      await fetch(process.env.VUE_APP_BASEURL + "/umfrage/gebaeude", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          authToken: {
-            username: Cookies.getCookieAttribut("username"),
-            sessiontoken: Cookies.getCookieAttribut("sessiontoken")
-          },
-        }),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          this.gebaeudeIDs = data.data.gebaeude.map(gebInt => translateGebaeudeIDToSymbolic(gebInt));
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
-    },
+    // /**
+    //  * Fetches all possible gebaeudeIDs from the server to display in the dropdown menu of the formular.
+    //  */
+    // fetchGebaeudeData: async function () {
+    //   await fetch(process.env.VUE_APP_BASEURL + "/umfrage/gebaeude",{
+    //     method: "GET",
+    //     headers: {
+    //       "Authorization": "Bearer " + this.$keycloak.token,
+    //     },
+    //   })
+    //     .then((response) => response.json())
+    //     .then((data) => {
+    //       this.gebaeudeIDs = data.data.gebaeude.map(gebInt => translateGebaeudeIDToSymbolic(gebInt));
+    //     })
+    //     .catch((error) => {
+    //       console.error("Error:", error);
+    //     });
+    // },
 
     /**
      * Fetches all possible gebaeudeIDs and the Zaehler References from the database.
      */
     fetchGebaeudeUndZaehlerData: async function () {
     await fetch(process.env.VUE_APP_BASEURL + "/umfrage/gebaeudeUndZaehler", {
-      method: "POST",
+      method: "GET",
       headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        authToken: {
-          username: Cookies.getCookieAttribut("username"),
-          sessiontoken: Cookies.getCookieAttribut("sessiontoken")
-        },
-      }),
+          "Authorization": "Bearer " + this.$keycloak.token,
+        }
     })
       .then((response) => response.json())
       .then((data) => {
