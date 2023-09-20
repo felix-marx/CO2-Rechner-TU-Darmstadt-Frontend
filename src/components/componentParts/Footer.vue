@@ -61,6 +61,11 @@ export default {
         href: process.env.VUE_APP_URL + "/datenschutz", // Eigene Datenschutzerklaerung
         target: "",
       },
+      {
+        text: "FAQ",
+        href: process.env.VUE_APP_URL + "/faq",
+        target: "",
+      },
     ],
   })
 };
