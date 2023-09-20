@@ -20,10 +20,10 @@
 
 <script>
 import Footer from "@/components/footer/Footer";
-import Header from "@/components/componentParts/Header";
+import Header from "@/components/header/Header";
 import AdminDBInteract from "@/components/admin/AdminDBInteract";
 import AdminViewSurveys from "@/components/admin/AdminViewSurveys";
-import AccountSettings from '../components/settings/AccountSettings.vue';
+import AccountSettings from '@/components/header/AccountSettings.vue';
 
 export default {
   name: "App",

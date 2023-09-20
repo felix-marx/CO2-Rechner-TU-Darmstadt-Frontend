@@ -43,9 +43,9 @@
 </template>
 <script>
 
-import UserSettingsHeader from "../settings/UserSettingsHeader.vue";
-import AccountSettings from "../settings/AccountSettings.vue";
-import LangSelection from "@/components/componentParts/LangSelection.vue";
+import UserSettingsHeader from "../header/UserSettingsHeader.vue";
+import AccountSettings from "../header/AccountSettings.vue";
+import LangSelection from "@/components/header/LangSelection.vue";
 
 export default {
   name: "Header",
