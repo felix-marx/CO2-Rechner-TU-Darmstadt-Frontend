@@ -30,7 +30,8 @@
     "PasswortNichtUeberein": "Passwort stimmt nicht überein",
     "MailMindestlaenge": "E-Mail Mindestlänge ist 5 Zeichen",
     "gueltigeTUMail": "Bitte geben Sie eine gültige TU E-Mail an",
-    "PWMindestLaenge": "Passwort Mindestlänge ist 8 Zeichen"
+    "PWMindestLaenge": "Passwort Mindestlänge ist 8 Zeichen",
+    "LoginButton": "Anmelden mit TU-ID"
   },
   "MailAuthentication": {
     "MailBestaetigt": "Ihre E-Mail Adresse wurde erfolgreich bestätigt.",

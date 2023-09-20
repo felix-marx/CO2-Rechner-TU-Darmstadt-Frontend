@@ -13,12 +13,8 @@
         <div class="text-center">
           <v-card-title class="justify-center">
             <h2>TU Darmstadt CO<sub>2</sub>-{{ $t('Login.Rechner') }}</h2>
-          </v-card-title>{{ $t('Login.Willkommen_1') }} <br> {{ $t('Login.Willkommen_2') }}
-          <v-card-title
-            class="justify-center"
-          >
-            {{ $t('Login.Anmeldung') }}
           </v-card-title>
+          {{ $t('Login.Willkommen_1') }}
         </div>
 
         <!-- Login Button -->
@@ -36,7 +32,7 @@
                 <v-icon left>
                   mdi-account
                 </v-icon>
-                <span>Anmelden mit TU-ID</span>
+                <span>{{ $t('Login.LoginButton') }}</span>
               </v-btn>
             </v-col>
           </v-row>
@@ -97,9 +93,7 @@
 
 <script>
 import Footer from "../componentParts/Footer.vue";
-
 import Header from "../componentParts/Header.vue";
-
 
 export default {
   name: "Login",
