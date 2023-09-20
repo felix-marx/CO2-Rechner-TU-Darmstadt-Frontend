@@ -18,7 +18,7 @@
       </p>
       <p>Die Umfrage nimmt ungefähr 10 Minuten Ihrer Zeit in Anspruch. Für die Umfrage wird das vollständige Kalenderjahr {{ umfrageJahr }} betrachtet. </p>
       <p>Hinter einigen Fragen befindet sich ein Fragezeichensymbol. Dort finden Sie zusätzliche Hinweise und Informationen, die zur Beantwortung der Fragen hilfreich sind. </p>
-      <p>
+      <p v-if="mail!='UNKNOWN_MAIL'">
         Bei weiteren Nachfragen oder Anmerkungen wenden Sie sich gerne an 
         <a
           target="_blank"
@@ -48,7 +48,12 @@ export default {
 
   computed: {
     mail: function(){
-      return this.$keycloak.tokenParsed.email
+      if (this.$keycloak.tokenParsed.email != undefined){
+        return this.$keycloak.tokenParsed.email
+      }
+      else {
+        return "UNKNOWN_MAIL"
+      }
     }
   }
 };
