@@ -39,7 +39,6 @@
         <v-icon>mdi-close</v-icon>
       </v-btn>
     </span>
-
   </v-app-bar>
 </template>
 <script>

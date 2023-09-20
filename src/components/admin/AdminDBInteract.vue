@@ -4,7 +4,7 @@
       <v-card-title
         class="mx-4"
       >
-        {{ $t('AdminDBInteract.Datenbankinformationen')}}
+        {{ $t('AdminDBInteract.Datenbankinformationen') }}
       </v-card-title>
       <v-divider />
       <v-container>
@@ -13,10 +13,10 @@
             cols="3"
             class="mx-4"
           >
-            {{ $t('AdminDBInteract.Datenbankversion')}}
+            {{ $t('AdminDBInteract.Datenbankversion') }}
           </v-col>
           <v-col class="mx-4">
-            {{ $t('AdminDBInteract.MongoDBVersion')}}
+            {{ $t('AdminDBInteract.MongoDBVersion') }}
           </v-col>
         </v-row>
         <v-row>
@@ -38,7 +38,7 @@
 
     <v-card class="px-0 pb-4 mt-2">
       <v-card-title class="mx-4">
-        {{ $t('AdminDBInteract.EintragenDaten')}}
+        {{ $t('AdminDBInteract.EintragenDaten') }}
       </v-card-title>
 
       <v-alert
@@ -48,7 +48,7 @@
         colored-border
         elevation="3"
       >
-        {{ $t('AdminDBInteract.DezimalenzalenWarning')}}
+        {{ $t('AdminDBInteract.DezimalenzalenWarning') }}
       </v-alert>
 
       <v-divider />
@@ -57,7 +57,7 @@
         class="px-4 mt-4 mx-4"
         align="center"
       >
-        <strong>CO<sub>2</sub>-{{ $t('common.Faktoren')}} </strong>
+        <strong>CO<sub>2</sub>-{{ $t('common.Faktoren') }} </strong>
       </p>
 
       <v-expansion-panels
@@ -68,7 +68,7 @@
         <v-expansion-panel>
           <v-expansion-panel-header>
             <label>
-              {{ $t('AdminDBInteract.NeuenCO')}}<sub>2</sub>-{{ $t('AdminDBInteract.FaktorEnergie')}}
+              {{ $t('AdminDBInteract.NeuenCO') }}<sub>2</sub>-{{ $t('AdminDBInteract.FaktorEnergie') }}
               <Tooltip :tooltip-text="$t('AdminDBInteract.GebaeudebezeichnungTooltip')" />
             </label>
           </v-expansion-panel-header>
@@ -101,7 +101,7 @@
               :label="$t('common.co2Faktor')"
             >
               <template #label>
-                <label>{{ $t('AdminDBInteract.WertCO')}}<sub>2</sub>{{ $t('common.FaktorgkWh')}}</label>
+                <label>{{ $t('AdminDBInteract.WertCO') }}<sub>2</sub>{{ $t('common.FaktorgkWh') }}</label>
               </template>
             </v-text-field>
 
@@ -111,7 +111,7 @@
                   color="primary"
                   @click="sendFactor"
                 >
-                  {{ $t('common.Absenden')}}
+                  {{ $t('common.Absenden') }}
                 </v-btn>
               </v-col>
             </v-card-actions>
@@ -144,7 +144,7 @@
         class="px-4 mt-4"
         align="center"
       >
-        <strong>{{ $t('common.Gebaeude')}}</strong>
+        <strong>{{ $t('common.Gebaeude') }}</strong>
       </p>
 
       <v-expansion-panels
@@ -155,7 +155,7 @@
         <v-expansion-panel>
           <v-expansion-panel-header>
             <label>
-              {{ $t('AdminDBInteract.GebäudeHinzufügen')}}
+              {{ $t('AdminDBInteract.GebäudeHinzufügen') }}
               <Tooltip :tooltip-text="$t('AdminDBInteract.FaktorHinzufuegenText')" />
             </label>
           </v-expansion-panel-header>

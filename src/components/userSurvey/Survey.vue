@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/no-v-html -->
 <template>
   <v-container>
     <!-- Umfrage Card -->
@@ -10,20 +11,20 @@
         <p>
           {{ $t('userSurvey.Survey.UmfrageErklaerung_0') }}
         </p>
-        <p v-html="$t('userSurvey.Survey.UmfrageErklaerung_1')"></p>
+        <p v-html="$t('userSurvey.Survey.UmfrageErklaerung_1')" />
 
         <p>
           {{ $t('userSurvey.Survey.UmfrageErklaerung_2') }}
         </p>
-        <p v-html="$t('userSurvey.Survey.UmfrageErklaerung_3')"></p>
-        <p v-html="$t('userSurvey.Survey.UmfrageErklaerung_4')"></p>
-        <p v-html="$t('userSurvey.Survey.UmfrageErklaerung_5')"></p>
+        <p v-html="$t('userSurvey.Survey.UmfrageErklaerung_3')" />
+        <p v-html="$t('userSurvey.Survey.UmfrageErklaerung_4')" />
+        <p v-html="$t('userSurvey.Survey.UmfrageErklaerung_5')" />
         <p>
           {{ $t('userSurvey.Survey.UmfrageErklaerung_6') }} <a
             href="mailto:co2-rechner@zv.tu-darmstadt.de"
           >co2-rechner@zv.tu-darmstadt.de</a>.
         </p>
-        <p v-html="$t('userSurvey.Survey.UmfrageErklaerung_7')"></p>
+        <p v-html="$t('userSurvey.Survey.UmfrageErklaerung_7')" />
       </v-card>
 
       <v-card class="pa-7 mt-2">
@@ -274,7 +275,8 @@
                   v-bind="attrs"
                   v-on="on"
                   @click="problemeInUmfrage()"
-                >{{ $t('userSurvey.Survey.SpeicherButton') }}
+                >
+                  {{ $t('userSurvey.Survey.SpeicherButton') }}
                 </v-btn>
               </template>
 

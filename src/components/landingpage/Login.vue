@@ -13,7 +13,7 @@
         <div class="text-center">
           <v-card-title class="justify-center">
             <h2>TU Darmstadt CO<sub>2</sub>-{{ $t('Login.Rechner') }}</h2>
-          </v-card-title>{{ $t('Login.Willkommen_1') }} <br /> {{ $t('Login.Willkommen_2') }}
+          </v-card-title>{{ $t('Login.Willkommen_1') }} <br> {{ $t('Login.Willkommen_2') }}
           <v-card-title
             class="justify-center"
           >
