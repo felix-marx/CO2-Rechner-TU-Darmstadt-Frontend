@@ -18,12 +18,12 @@
       </p>
       <p>{{ $t('userSurvey.MailTemplate.MailVorlage_5') }} {{ umfrageJahr }} {{ $t('userSurvey.MailTemplate.MailVorlage_6') }} </p>
       <p> {{ $t('userSurvey.MailTemplate.MailVorlage_7') }} </p>
-      <p>
+      <p v-if="mail!='UNKNOWN_MAIL'">
         {{ $t('userSurvey.MailTemplate.MailVorlage_8') }}
         <a
           target="_blank"
-          :href="'mailto:'+cookieAttribut"
-        >{{ cookieAttribut }}</a>.
+          :href="'mailto:'+ mail"
+        >{{ mail }}</a>.
       </p>
       <p> {{ $t('userSurvey.MailTemplate.MailVorlage_9') }} </p>
     </v-card>
@@ -31,7 +31,6 @@
 </template>
 
 <script>
-import Cookies from "../Cookie.js"
 
 export default {
   name: "MailTemplate",
@@ -48,11 +47,14 @@ export default {
   },
 
   computed: {
-    // we need this for some reason, since a direct call to Cookies.getCookieAttribut() in the template does not evaluate.
-    cookieAttribut: function () {
-      return Cookies.getCookieAttribut('username')
+    mail: function(){
+      if (this.$keycloak.tokenParsed.email != undefined){
+        return this.$keycloak.tokenParsed.email
+      }
+      else {
+        return "UNKNOWN_MAIL"
+      }
     }
-  },
-
+  }
 };
 </script>

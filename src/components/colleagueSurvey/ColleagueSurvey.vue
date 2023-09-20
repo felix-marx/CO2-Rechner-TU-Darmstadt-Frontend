@@ -776,7 +776,7 @@ export default {
      */
     sendData: async function () {
       this.displayLoadingAnimation = true;
-      await fetch(process.env.VUE_APP_BASEURL + "/mitarbeiterUmfrage/insertMitarbeiterUmfrage", {
+      await fetch(process.env.VUE_APP_BASEURL + "/mitarbeiterumfrage/insert", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -810,7 +810,7 @@ export default {
    * Requests from the server to which year the survey belongs.
    */
     fetchUmfrageYear: async function (givenID) {
-      await fetch(process.env.VUE_APP_BASEURL + "/umfrage/GetUmfrageYear?id=" + givenID, {
+      await fetch(process.env.VUE_APP_BASEURL + "/umfrage/jahr?id=" + givenID, {
         method: "GET",
         })
         .then((response) => response.json())

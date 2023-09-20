@@ -162,8 +162,15 @@
           >
             {{ $t('userSurvey.Survey.GebaeudeWarnung') }}
           </v-alert>
-          <!-- Umfrage für IT Geräte: Multifunktionsgeräte + Toner, Drucker + Toner, Beamer, Server -->
 
+          <DataGapVisualization 
+            :gebaeude-i-ds-und-zaehler="gebaeudeIDsUndZaehler"
+            :zaehler="zaehler"
+            :gebaeude="gebaeude"
+            :bilanzierungsjahr="bilanzierungsjahr"
+          />
+
+          <!-- Umfrage für IT Geräte: Multifunktionsgeräte + Toner, Drucker + Toner, Beamer, Server -->
           <br>
           <h3>{{ $t('userSurvey.Survey.ITGeraete_0') }}</h3>
           <v-divider />
@@ -403,12 +410,12 @@
 </template>
 
 <script>
-import Cookies from '../Cookie.js'
 import Tooltip from "@/components/componentParts/Tooltip.vue";
 import LinkSharingComponent from "../componentParts/LinkSharingComponent";
 import MailTemplate from "./MailTemplate";
 import LoadingAnimation from "../componentParts/LoadingAnimation";
 import i18n from "@/i18n";
+import DataGapVisualization from '../componentParts/DataGapVisualization.vue';
 
 export default {
   components: {
@@ -416,6 +423,7 @@ export default {
     MailTemplate,
     LoadingAnimation,
     Tooltip,
+    DataGapVisualization
   },
 
   data: () => ({
@@ -431,9 +439,12 @@ export default {
     // genutzte Gebäude
     // Format: [gebaeudeID, flaechenanteil]
     gebaeude: [[null, null]],
+    moreInfo: false,
 
     // mögliche gebäudeIDs
     gebaeudeIDs: [],
+    gebaeudeIDsUndZaehler: [],
+    zaehler: [],
 
     //IT Geräte
     /* Geraet an Array Position format [intern Geraete ID, Anzahl, enabled]
@@ -441,8 +452,8 @@ export default {
      * [1] MultigeraetToner
      * [2] Laserdrucker
      * [3] LaserdruckerToner
-     * [4] beamer
-     * [5] server
+     * [4] Beamer
+     * [5] Server
      */
     geraeteAnzahl: [
       [7, null, false],
@@ -523,12 +534,13 @@ export default {
         }
       }
       return false
-    }
+    },
   },
 
   created() {
     // get all possible gebaeude IDs on creation of the component
-    this.fetchGebaeudeData();
+    //this.fetchGebaeudeData();
+    this.fetchGebaeudeUndZaehlerData();
   },
 
   methods: {
@@ -582,13 +594,6 @@ export default {
       }
       this.errorTextArray.nonRequired = nonRequiredArray
       this.errorTextArray.required = this.requiredFieldsMissingArray()
-    },
-
-    /**
-     * Returns the mail of the currently logged in user.
-     */
-    getUserMail: function() {
-      return Cookies.getCookieAttribut('username');
     },
 
     /**
@@ -689,9 +694,10 @@ export default {
       this.displayLoadingAnimation = true;
       this.errorMessage = null;
 
-      await fetch(process.env.VUE_APP_BASEURL + "/umfrage/insertUmfrage", {
+      await fetch(process.env.VUE_APP_BASEURL + "/umfrage/insert", {
         method: "POST",
         headers: {
+          "Authorization": "Bearer " + this.$keycloak.token,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
@@ -700,10 +706,6 @@ export default {
           gebaeude: this.gebaeudeJSON(),
           mitarbeiteranzahl: parseInt(this.anzahlMitarbeiter),
           itGeraete: this.itGeraeteJSON(),
-          authToken: {
-            username: Cookies.getCookieAttribut("username"),
-            sessiontoken: Cookies.getCookieAttribut("sessiontoken")
-          }
         }),
       })
         .then((response) => response.json())
@@ -722,29 +724,57 @@ export default {
       this.displayLoadingAnimation = false;
     },
 
+    // /**
+    //  * Fetches all possible gebaeudeIDs from the server to display in the dropdown menu of the formular.
+    //  */
+    // fetchGebaeudeData: async function () {
+    //   await fetch(process.env.VUE_APP_BASEURL + "/umfrage/gebaeude",{
+    //     method: "GET",
+    //     headers: {
+    //       "Authorization": "Bearer " + this.$keycloak.token,
+    //     },
+    //   })
+    //     .then((response) => response.json())
+    //     .then((data) => {
+    //       this.gebaeudeIDs = data.data.gebaeude.map(gebInt => translateGebaeudeIDToSymbolic(gebInt));
+    //     })
+    //     .catch((error) => {
+    //       console.error("Error:", error);
+    //     });
+    // },
+
     /**
-     * Fetches all possible gebaeudeIDs from the server to display in the dropdown menu of the formular.
+     * Fetches all possible gebaeudeIDs and the Zaehler References from the database.
      */
-    fetchGebaeudeData: async function () {
-      await fetch(process.env.VUE_APP_BASEURL + "/umfrage/gebaeude", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          authToken: {
-            username: Cookies.getCookieAttribut("username"),
-            sessiontoken: Cookies.getCookieAttribut("sessiontoken")
-          },
-        }),
+    fetchGebaeudeUndZaehlerData: async function () {
+    await fetch(process.env.VUE_APP_BASEURL + "/umfrage/gebaeudeUndZaehler", {
+      method: "GET",
+      headers: {
+          "Authorization": "Bearer " + this.$keycloak.token,
+        }
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        this.gebaeudeIDsUndZaehler = data.data.gebaeude
+        this.zaehler = data.data.zaehler
+
+        //console.log(data)
+      
+        this.gebaeudeIDs = data.data.gebaeude.map(obj => translateGebaeudeIDToSymbolic(obj.nr));
+
+        this.mapGebauedeZaehlerRefs = new Map(
+          data.data.gebaeude.map((obj) => [translateGebaeudeIDToSymbolic(obj.nr), {kaelteRef: obj.kaelteRef, stromRef: obj.stromRef, waermeRef: obj.waermeRef}])
+        )
+        //console.log(this.mapGebauedeZaehlerRefs)
+
+        this.mapZaehlerWerte = new Map(
+          data.data.zaehler.map((obj) => [obj.pkEnergie, new Map(obj.zaehlerdatenVorhanden.map((obj2) => [obj2.jahr, obj2.vorhanden]))])
+        )
+        //console.log(this.mapZaehlerWerte)
       })
-        .then((response) => response.json())
-        .then((data) => {
-          this.gebaeudeIDs = data.data.gebaeude.map(gebInt => translateGebaeudeIDToSymbolic(gebInt));
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
+      .catch((error) => {
+        console.error("Error:", error);
+      });
     },
   },
 };

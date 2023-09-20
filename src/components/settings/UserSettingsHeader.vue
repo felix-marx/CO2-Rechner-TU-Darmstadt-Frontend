@@ -11,14 +11,13 @@
           v-on="on"
         >
           <v-icon> mdi-account-cog </v-icon>
-          
-          {{ cookieAttribut }}
+          {{ displayName }}
         </v-btn>
       </template>
       <v-list>
         <v-list-item>
           <v-list-item-title class="grey--text">
-            Angemeldet als: {{ cookieAttribut }}
+            Angemeldet als: {{ displayName }}
           </v-list-item-title>
         </v-list-item>
         <v-divider />
@@ -38,7 +37,7 @@
         </v-list-item>
         <v-list-item
           text
-          @click="deleteAbmelden()"
+          @click="$keycloak.logoutFn()"
         >
           <v-list-item-title class="red--text">
             Abmelden
@@ -50,21 +49,31 @@
 </template>
 
 <script>
-import Cookies from "../Cookie.js"
 import AccountSettings from "./AccountSettings.vue"
 
 export default {
   name: "UserSettingsHeader",
 
-  computed: {
-    // we need this for some reason, since a direct call to Cookies.getCookieAttribut() in the template does not evaluate.
-    cookieAttribut: function () {
-      return Cookies.getCookieAttribut('username')
-    },
+  data: () => ({
+    isAdmin: false,
+  }),
 
-    isAdmin: function() {
-      return Cookies.getCookieAttribut('rolle') == 1
+  computed: {
+    displayName: function() {
+      if(this.$keycloak.tokenParsed.name != undefined) {
+        return this.$keycloak.tokenParsed.name
+      }
+      else if (this.$keycloak.tokenParsed.email != undefined) {
+        return this.$keycloak.tokenParsed.email
+      } 
+      else {
+        return this.$keycloak.tokenParsed.preferred_username
+      }
     }
+  },
+
+  created() {
+    this.getRole();
   },
 
   methods: {
@@ -81,32 +90,21 @@ export default {
       }
     },
 
-    async deleteAbmelden() {
-    await fetch(process.env.VUE_APP_BASEURL + "/auth/abmeldung", {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        username: Cookies.getCookieAttribut('username')
-      }),
-    })
-      .then((response) => response.json())
-      .then(() => {
-        //This is always the case when the backend returns a package
-        //Delete cookie and log if not success
-        Cookies.deleteCookieAttribut("username")
-        Cookies.deleteCookieAttribut("sessiontoken")
-        Cookies.deleteCookieAttribut("rolle")
-        this.$router.push('/').catch(() => {})
-  
-      })
-      .catch((error) => {
-        //This is always the case when the backend returns nothing -> Timeout
-        console.error("Error:", error)
+    getRole: async function() {
+      await fetch(process.env.VUE_APP_BASEURL + "/nutzer/rolle", {
+        method: 'GET',
+        headers: {
+          "Authorization": "Bearer " + this.$keycloak.token,
+        }
+      }).then(response => response.json())
+        .then(data => {
+          if(data.data.rolle == 1){
+            this.isAdmin = true;
+          }
+      }).catch((error) => {
+        console.error("Error:", error);
       });
     }
-
   }
 };
 </script>

@@ -9,6 +9,7 @@
     "i18n:report": "vue-cli-service i18n:report --src \"./src/**/*.?(js|vue)\" --locales \"./src/undefined/**/*.json\""
   },
   "dependencies": {
+    "@dsb-norge/vue-keycloak-js": "^2.4.0",
     "chart.js": "^2.9.4",
     "chartjs-plugin-datalabels": "^1.0.0",
     "core-js": "^3.6.5",

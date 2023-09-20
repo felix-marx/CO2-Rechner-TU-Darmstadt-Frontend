@@ -2,6 +2,7 @@
   <v-app>
     <Header 
       :display-user-setting="false"
+      :display-back-button="false"
     />
     <v-main class="mb-16">
       <v-card
@@ -16,231 +17,33 @@
           <v-card-title
             class="justify-center"
           >
-            {{ istRegistrierung ? $t('Login.Registrierung') : $t('Login.Anmeldung') }}
+            {{ $t('Login.Anmeldung') }}
           </v-card-title>
         </div>
-        <!-- Signin -->
-        <v-container v-if="!istRegistrierung">
-          <v-form>
-            <v-row>
-              <v-col />
-              <v-col cols="8">
-                <v-text-field
-                  v-model="username"
-                  :rules="requiredRule"
-                  label="TU E-Mail"
-                  prepend-icon="mdi-account"
-                  required
-                  @keyup.enter="postAnmeldung"
-                />
-              </v-col>
-              <v-col />
-            </v-row>
-            <v-row>
-              <v-col />
-              <v-col cols="8">
-                <v-text-field
-                  v-model="password"
-                  :rules="passwordRule.concat(requiredRule)"
-                  :label="$t('Login.Passwort')"
-                  type="password"
-                  prepend-icon="mdi-key"
-                  @keyup.enter="postAnmeldung"
-                />
-              </v-col>
-              <v-col />
-            </v-row>
-            <v-row
-              v-if="errorMessage != null && errorMessage != ''"
-              justify="center"
-            >
-              <p class="error--text">
-                {{ errorMessage }}
-              </p>
-            </v-row>
-            <v-row>
-              <v-col class="text-center ma-0 pa-0">
-                <v-btn
-                  color="primary"
-                  type="button"
-                  @click="postAnmeldung"
-                >
-                  <v-icon left>
-                    mdi-account
-                  </v-icon>
-                  <span>{{ $t('Login.Anmelden') }}</span>
-                </v-btn>
-              </v-col>
-            </v-row>
-          </v-form>
-          <v-row>
-            <v-col class="text-center">
-              <v-tooltip
-                bottom
-              > 
-                <template v-slot:activator="{ on }">
-                  <a
-                    target="_blank"
-                    @click="$router.push('/passwortVergessen')"
-                    v-on="on"
-                  >{{ $t('Login.PasswortVergessen') }}</a>
-                </template>
-                {{ $t('Login.PasswortVergessenTipp') }}
-              </v-tooltip>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col class="text-center ma-0 pa-0">
-              <v-btn
-                color="blue"
-                @click="() => { istRegistrierung = true; errorMessage = '' }"
-              >
-                <v-icon
-                  color="white"
-                  left
-                >
-                  mdi-account-plus
-                </v-icon>
-                <span class="white--text">{{ $t('Login.NeuesKonto') }}</span>
-              </v-btn>
-            </v-col>
-          </v-row>
-        </v-container>
-        <!-- Register -->
-        <v-container v-if="istRegistrierung">
-          <v-form>
-            <v-row>
-              <v-col />
-              <v-col cols="8">
-                <v-text-field
-                  v-model="username"
-                  class="px-5"
-                  :rules="requiredRule"
-                  label="TU E-Mail"
-                  prepend-icon="mdi-account"
-                  required
-                  @keyup.enter="postRegistrierung"
-                />
-              </v-col>
-              <v-col />
-            </v-row>
-            <v-row>
-              <v-col />
-              <v-col cols="8">
-                <v-text-field
-                  v-model="password"
-                  class="px-5"
-                  :rules="passwordRule.concat(requiredRule)"
-                  :label="$t('Login.Passwort')"
-                  type="password"
-                  prepend-icon="mdi-key"
-                  @keyup.enter="postRegistrierung"
-                />
-              </v-col>
-              <v-col />
-            </v-row>
-            <v-row>
-              <v-col />
-              <v-col cols="8">
-                <v-text-field
-                  v-model="rePassword"
-                  class="px-5"
-                  :rules="passwordRule.concat(requiredRule)"
-                  :label="$t('Login.PasswortWiederholen')"
-                  type="password"
-                  prepend-icon="mdi-key"
-                  hint="$t('Login.PasswortHint')"
-                  @keyup.enter="postRegistrierung"
-                />
-              </v-col>
-              <v-col />
-            </v-row>
-            <v-row class="text-center">
-              <v-col />
-              <v-col
-                v-if="bestaetigungAnzeigen"
-                cols="7"
-              >
-                <v-alert
-                  outlined
-                  type="success"
-                  text
-                >
-                  {{ $t('Login.KontoErstellt_1') }}
-                  <br> {{ $t('Login.KontoErstellt_2') }}
-                </v-alert>
-              </v-col>
-              <v-col />
-            </v-row>
 
-            <v-row class="px-5">
-              <v-col />
-              <v-col
-                cols="8"
-                class="text-center"
-              >
-                <div>
-                  {{ $t('Login.KontoErstellenDatenschutz') }}
-                  <br>{{ $t('Login.Datenschutz_1') }}
-                  <v-tooltip bottom>
-                    <template v-slot:activator="{ on }">
-                      <a
-                        target="_blank"
-                        :href="datenschutzlink"
-                        @click.stop
-                        v-on="on"
-                      >{{ $t('Login.Datenschutzerklearung') }}</a>
-                    </template>
-                    {{ $t('Login.DatenschutzNeueSeite') }}
-                  </v-tooltip> {{ $t('Login.Datenschutz_2') }}
-                </div>
-              </v-col>
-              <v-col />
-            </v-row>
-            <!-- Error Message on wrong user input and error in backend -->
-            <v-row
-              v-if="errorMessage != null && errorMessage != ''"
-              justify="center"
-            >
-              <p class="error--text">
-                {{ errorMessage }}
-              </p>
-            </v-row>
-            <v-row>
-              <v-col class="text-center py-3">
-                <v-btn
-                  color="blue"
-                  type="button"
-                  @click="postRegistrierung"
-                >
-                  <v-icon
-                    color="white"
-                    left
-                  >
-                    mdi-account-plus
-                  </v-icon>
-                  <span class="white--text">{{ $t('Login.KontoErstellen') }}</span>
-                </v-btn>
-              </v-col>
-            </v-row>
-          </v-form>
-          <v-spacer />
+        <!-- Login Button -->
+        <v-container>
           <v-row>
-            <v-col class="mt-3 pa-0 text-center">
+            <v-col
+              v-if="!$keycloak.authenticated"
+              class="text-center mt-6"
+            >
               <v-btn
                 color="primary"
-                @click="() => { istRegistrierung = false; errorMessage = '' }"
+                type="button"
+                @click="$keycloak.loginFn()"
               >
                 <v-icon left>
                   mdi-account
                 </v-icon>
-                <span>{{ $t('Login.ZurückZurAnmeldung') }}</span>
+                <span>Anmelden mit TU-ID</span>
               </v-btn>
             </v-col>
           </v-row>
         </v-container>
+
         <!-- Logos -->
-        <v-container class="d-flex justify-space-around mb-6 py-10">
+        <v-container class="d-flex justify-space-around mt-10 mb-6 py-10">
           <v-row>
             <v-col>
               <a
@@ -296,7 +99,6 @@
 import Footer from "../componentParts/Footer.vue";
 
 import Header from "../componentParts/Header.vue";
-import Cookies from "../Cookie.js"
 
 
 export default {
@@ -304,140 +106,7 @@ export default {
 
   components: {
     Header,
-    Footer,
-  }
-  ,
-
-  data: () => ({
-    username: null,
-    password: null,
-    rePassword: null,
-    istRegistrierung: false,
-    bestaetigungAnzeigen: false,
-    agbBestaetigt: false,
-    dialog: false,
-    //Für Fehlermeldung bei Response
-    errorMessage: null,
-    datenschutzlink: process.env.VUE_APP_URL + "/datenschutz",
-
-    requiredRule: [
-      v => !!v || this.$t('Login.PasswortRegel_1'),
-    ],
-    passwordRule: [
-      v => (v && v.length >= 8) || this.$t('Login.PasswortRegel_2')
-    ]
-  }),
-
-  computed: {
-    showAnmelden: function () {
-      return Cookies.checkIfCookieAttributExists("username")
-    },
+    Footer
   },
-
-  methods: {
-    /**
-     * Checks if the user input is valid and returns true if valid
-     * Otherwise false and sets errorMessage to user fault
-     */
-    checkValidInput: function (registrierung) {
-      if (!this.username || !this.password) {
-        this.errorMessage = this.$t('Login.UnvollstaendigeAngabe')
-        return false
-      }
-      if (registrierung && this.password != this.rePassword) {
-        this.errorMessage = this.$t('Login.PasswortNichtUeberein')
-        return false
-      }
-      if (this.username.length < 5) {
-        this.errorMessage = this.$t('Login.MailMindestlaenge')
-        return false
-      }
-      var regex = /.+@(.*\.)?tu-darmstadt\.de/
-      if (registrierung && !regex.test(this.username)) {
-        this.errorMessage = this.$t('Login.gueltigeTUMail')
-        return false
-      }
-      if (this.password.length < 8) {
-        this.errorMessage = this.$t('Login.PWMindestLaenge')
-        return false
-      }
-      this.errorMessage = null
-      return true
-    },
-
-    postAnmeldung: async function () {
-      //User input validation and set error message
-      this.istRegistrierung = false
-      if (!this.checkValidInput(this.istRegistrierung)) {
-        return
-      }
-
-      await fetch(process.env.VUE_APP_BASEURL + "/auth/anmeldung", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username: this.username,
-          password: this.password
-        }),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          //This is always the case when the backend returns a package
-          if (data.status == "success") {
-            Cookies.setCookie("sessiontoken", data.data.sessiontoken)
-            Cookies.setCookie("username", this.username)
-            Cookies.setCookie("rolle", data.data.rolle)
-
-            if(data.data.rolle == 1){
-              this.$router.push('/admin').catch(() => { })
-            } else if(data.data.rolle == 0){
-              this.$router.push('/survey').catch(() => { })
-            } else{
-              console.error("Unkown role: " + data.data.rolle)
-            }
-          }
-          //Message on success or error send from Backend
-          this.errorMessage = (data.status == "success") ? '' : data.error.message
-        })
-        .catch((error) => {
-          //This is always the case when the backend returns nothing -> Timeout
-          console.error(error)
-        });
-    },
-
-    postRegistrierung: async function () {
-      //User input validation and set error message
-      this.istRegistrierung = true
-      if (!this.checkValidInput(this.istRegistrierung)) {
-        return
-      }
-
-      await fetch(process.env.VUE_APP_BASEURL + "/auth/registrierung", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username: this.username,
-          password: this.password,
-        }),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          //This is always the case when the backend returns a package
-          if (data.status == "success") {
-            this.bestaetigungAnzeigen = true
-          }
-          //Message on success or error send from Backend 
-          this.errorMessage = (data.status == "success") ? '' : data.error.message
-        })
-        .catch((error) => {
-          //This is always the case when the backend returns nothing -> Timeout
-          console.error("Error:", error)
-        });
-    },
-  }
 };
 </script>

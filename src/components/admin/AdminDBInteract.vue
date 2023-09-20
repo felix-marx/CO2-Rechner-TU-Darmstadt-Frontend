@@ -821,7 +821,6 @@
 <script>
 import Tooltip from "@/components/componentParts/Tooltip.vue";
 import LoadingAnimation from "../componentParts/LoadingAnimation.vue";
-import Cookies from "../Cookie"
 
 export default {
   components: {
@@ -974,13 +973,10 @@ export default {
       await fetch(process.env.VUE_APP_BASEURL + "/db/addFaktor", {
         method: "POST",
         headers: {
+          "Authorization": "Bearer " + this.$keycloak.token,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          authToken: {
-            username: Cookies.getCookieAttribut('username'),
-            sessiontoken: Cookies.getCookieAttribut('sessiontoken'),
-          },
           idEnergieversorgung: this.energy_map.get(this.co2_factor.energy_type),
           idVertrag: this.contract_map.get(this.co2_factor.contract),
           jahr: parseInt(this.co2_factor.year),
@@ -1060,13 +1056,10 @@ export default {
       await fetch(process.env.VUE_APP_BASEURL + "/db/insertGebaeude", {
         method: "POST",
         headers: {
+          "Authorization": "Bearer " + this.$keycloak.token,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          authToken: {
-            username: Cookies.getCookieAttribut('username'),
-            sessiontoken: Cookies.getCookieAttribut('sessiontoken'),
-          },
           nr: parseInt(this.building.number),
           bezeichnung: this.building.name,
           flaeche: {
@@ -1120,13 +1113,10 @@ export default {
       await fetch(process.env.VUE_APP_BASEURL + "/db/addVersorger", {
         method: "POST",
         headers: {
+          "Authorization": "Bearer " + this.$keycloak.token,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          authToken: {
-            username: Cookies.getCookieAttribut('username'),
-            sessiontoken: Cookies.getCookieAttribut('sessiontoken'),
-          },
           nr: parseInt(this.supplier.number),
           idEnergieversorgung: this.energy_map.get(this.supplier.energy_type),
           idVertrag: this.contract_map.get(this.supplier.contract),
@@ -1170,13 +1160,10 @@ export default {
       await fetch(process.env.VUE_APP_BASEURL + "/db/addStandardVersorger", {
         method: "POST",
         headers: {
+          "Authorization": "Bearer " + this.$keycloak.token,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          authToken: {
-            username: Cookies.getCookieAttribut('username'),
-            sessiontoken: Cookies.getCookieAttribut('sessiontoken'),
-          },
           jahr: parseInt(this.default_supplier.year),
         }),
       })
@@ -1218,13 +1205,10 @@ export default {
       await fetch(process.env.VUE_APP_BASEURL + "/db/insertZaehler", {
         method: "POST",
         headers: {
+          "Authorization": "Bearer " + this.$keycloak.token,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          authToken: {
-            username: Cookies.getCookieAttribut('username'),
-            sessiontoken: Cookies.getCookieAttribut('sessiontoken'),
-          },
           pkEnergie: parseInt(this.counter.primary_key),
           idEnergieversorgung: this.energy_map.get(this.counter.energy_type),
           bezeichnung: this.counter.name,
@@ -1269,13 +1253,10 @@ export default {
       await fetch(process.env.VUE_APP_BASEURL + "/db/addZaehlerdaten", {
         method: "POST",
         headers: {
+          "Authorization": "Bearer " + this.$keycloak.token,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          authToken: {
-            username: Cookies.getCookieAttribut('username'),
-            sessiontoken: Cookies.getCookieAttribut('sessiontoken'),
-          },
           pkEnergie: parseInt(this.counter_data.primary_key),
           idEnergieversorgung: this.energy_map.get(this.counter_data.energy_type),
           jahr: parseInt(this.counter_data.year),
@@ -1319,13 +1300,10 @@ export default {
       await fetch(process.env.VUE_APP_BASEURL + "/db/addStandardZaehlerdaten", {
         method: "POST",
         headers: {
+          "Authorization": "Bearer " + this.$keycloak.token,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          authToken: {
-            username: Cookies.getCookieAttribut('username'),
-            sessiontoken: Cookies.getCookieAttribut('sessiontoken'),
-          },
           jahr: parseInt(this.default_counter_data.year),
         }),
       })
@@ -1437,7 +1415,7 @@ export default {
                 if (elem.indexOf('HE000') !== -1){
                   return 1;
                 }
-                else if (elem.indexOf('NA000') !== -1){
+                else if (elem.indexOf('NA00') !== -1){
                   return 2;
                 }
                 else if (elem.indexOf('KA000') !== -1){
@@ -1453,7 +1431,7 @@ export default {
           }
           if (arr[0] == "01.01." + this.csv_counter_data.year + " 00:00:00"){
             this.csv_counter_data.values = arr.slice(1).map(
-              (elem) => {return !elem ? 0 : parseFloat(elem.replace(",", "."))}
+              (elem) => {return !elem ? 0 : parseFloat(elem.replace(".", "").replace(",", "."))}  // entfernt "." als Tausend-Trenner und setzt "." als Dezimal-Trenner
             )
           }
         }
@@ -1469,7 +1447,6 @@ export default {
       }
 
       var mask = this.csv_counter_data.primary_keys.map(x => !this.irrelevant_counters.includes(x))
-      console.log(this.csv_counter_data.primary_keys.filter((elem, index) => !mask[index]))
 
       this.csv_counter_data.primary_keys = this.csv_counter_data.primary_keys.filter((elem, index) => mask[index])
       this.csv_counter_data.energy_types = this.csv_counter_data.energy_types.filter((elem, index) => mask[index])
@@ -1496,13 +1473,10 @@ export default {
       await fetch(process.env.VUE_APP_BASEURL + "/db/addZaehlerdatenCSV", {
         method: "POST",
         headers: {
+          "Authorization": "Bearer " + this.$keycloak.token,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          authToken: {
-            username: Cookies.getCookieAttribut('username'),
-            sessiontoken: Cookies.getCookieAttribut('sessiontoken'),
-          },
           pkEnergie: this.csv_counter_data.primary_keys,
           idEnergieversorgung: this.csv_counter_data.energy_types,
           jahr: this.csv_counter_data.year,

@@ -231,7 +231,6 @@
 <script>
 import EditSurvey from "./EditSurvey.vue";
 import SurveyEvaluation from "../evaluation/SurveyEvaluation.vue";
-import Cookies from "../Cookie";
 import CopyButton from '../componentParts/CopyButton.vue';
 
 export default {
@@ -308,17 +307,11 @@ export default {
       },
 
       fetchUmfragenForUser: async function () {
-      await fetch(process.env.VUE_APP_BASEURL + "/umfrage/GetAllUmfragenForUser", {
-        method: "POST",
+      await fetch(process.env.VUE_APP_BASEURL + "/umfrage/alleUmfragenVonNutzer", {
+        method: "GET",
         headers: {
-          "Content-Type": "application/json",
+          "Authorization": "Bearer " + this.$keycloak.token,
         },
-        body: JSON.stringify({
-          authToken: {
-            username: Cookies.getCookieAttribut("username"),
-            sessiontoken: Cookies.getCookieAttribut("sessiontoken")
-          },
-        }),
       })
         .then((response) => response.json())
         .then((data) => {
@@ -341,17 +334,14 @@ export default {
        * Loescht die Umfrage mit der gegebenen ID, gibt false bei error, true bei success zurueck
        */
       deleteUmfrage: async function (index, umfrageID) {
-         await fetch(process.env.VUE_APP_BASEURL + "/umfrage/deleteUmfrage", {
+        await fetch(process.env.VUE_APP_BASEURL + "/umfrage", {
         method: "DELETE",
         headers: {
+          "Authorization": "Bearer " + this.$keycloak.token,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
           umfrageID: umfrageID,
-          authToken: {
-            username: Cookies.getCookieAttribut("username"),
-            sessiontoken: Cookies.getCookieAttribut("sessiontoken"),
-          }
         }),
       })
         .then((response) => response.json())
@@ -375,18 +365,11 @@ export default {
        * Dupliziert die Umfrage mit der gegebenen ID, gibt false bei error, true bei success zurueck
        */
       duplicateUmfrage: async function (index, umfrageID) {
-        await fetch(process.env.VUE_APP_BASEURL + "/umfrage/duplicateUmfrage", {
-        method: "POST",
+        await fetch(process.env.VUE_APP_BASEURL + "/umfrage/duplicate?id=" + umfrageID, {
+        method: "GET",
         headers: {
-          "Content-Type": "application/json",
+          "Authorization": "Bearer " + this.$keycloak.token,
         },
-        body: JSON.stringify({
-          umfrageID: umfrageID,
-          authToken: {
-            username: Cookies.getCookieAttribut("username"),
-            sessiontoken: Cookies.getCookieAttribut("sessiontoken"),
-          }
-        }),
       })
         .then((response) => response.json())
         .then((data) => {
