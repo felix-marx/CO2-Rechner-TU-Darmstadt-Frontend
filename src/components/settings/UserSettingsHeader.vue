@@ -49,17 +49,16 @@
 </template>
 
 <script>
-import Cookies from "../Cookie.js"
 import AccountSettings from "./AccountSettings.vue"
 
 export default {
   name: "UserSettingsHeader",
 
-  computed: {
-    isAdmin: function() {
-      return Cookies.getCookieAttribut('rolle') == 1
-    },
+  data: () => ({
+    isAdmin: false,
+  }),
 
+  computed: {
     displayName: function() {
       if(this.$keycloak.tokenParsed.name != undefined) {
         return this.$keycloak.tokenParsed.name
@@ -71,6 +70,10 @@ export default {
         return this.$keycloak.tokenParsed.preferred_username
       }
     }
+  },
+
+  created() {
+    this.getRole();
   },
 
   methods: {
@@ -87,6 +90,21 @@ export default {
       }
     },
 
+    getRole: async function() {
+      await fetch(process.env.VUE_APP_BASEURL + "/nutzer/rolle", {
+        method: 'GET',
+        headers: {
+          "Authorization": "Bearer " + this.$keycloak.token,
+        }
+      }).then(response => response.json())
+        .then(data => {
+          if(data.data.rolle == 1){
+            this.isAdmin = true;
+          }
+      }).catch((error) => {
+        console.error("Error:", error);
+      });
+    }
   }
 };
 </script>
