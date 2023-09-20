@@ -35,8 +35,8 @@
 </template>
 
 <script>
-import Contact from "../legal/Contact.vue";
-import OpenSource from "./OpenSource.vue";
+import Contact from "../footer/Contact.vue";
+import OpenSource from "../footer/OpenSource.vue";
 
 export default {
   name: "Footer",
@@ -49,7 +49,7 @@ export default {
     padless: true,
     dialog: false,
     
-    // Contact component not in footerButtons for it is as Dialog and not a Button
+    // Contact and OpenSource component not in footerButtons for it is as Dialog and not a Button
     footerButtons: [
       {
         text: "Impressum",

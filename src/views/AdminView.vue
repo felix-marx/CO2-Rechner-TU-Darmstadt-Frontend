@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import Footer from "@/components/componentParts/Footer";
+import Footer from "@/components/footer/Footer";
 import Header from "@/components/componentParts/Header";
 import AdminDBInteract from "@/components/admin/AdminDBInteract";
 import AdminViewSurveys from "@/components/admin/AdminViewSurveys";

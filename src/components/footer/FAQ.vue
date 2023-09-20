@@ -18,7 +18,7 @@
 
 <script>
 import Header from '../componentParts/Header.vue'
-import Footer from '../componentParts/Footer.vue'
+import Footer from '../footer/Footer.vue'
 import loadingAnimation from '../componentParts/LoadingAnimation.vue'
 
 export default {

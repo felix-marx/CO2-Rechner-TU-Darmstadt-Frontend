@@ -92,7 +92,7 @@
 </template>
 
 <script>
-import Footer from "../componentParts/Footer.vue";
+import Footer from "../footer/Footer.vue";
 import Header from "../componentParts/Header.vue";
 
 export default {

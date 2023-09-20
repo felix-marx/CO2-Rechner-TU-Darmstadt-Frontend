@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import Footer from "@/components/componentParts/Footer";
+import Footer from "@/components/footer/Footer";
 import Header from "@/components/componentParts/Header";
 import Survey from "@/components/userSurvey/Survey";
 import SurveyOverview from "@/components/userSurveyManagement/SurveyOverview";

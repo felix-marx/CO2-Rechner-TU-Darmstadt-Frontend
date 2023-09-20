@@ -6,8 +6,8 @@ import AdminView from '../views/AdminView.vue'
 import PageNotFound from '../views/PageNotFound.vue'
 import ColleagueSurveyView from '../views/ColleagueSurveyView.vue'
 import EvaluationView from '../views/EvaluationView.vue'
-import PrivacyPolicy from '../components/legal/PrivacyPolicy.vue'
-import FAQ from '../components/faq/FAQ.vue'
+import PrivacyPolicy from '../components/footer/PrivacyPolicy.vue'
+import FAQ from '../components/footer/FAQ.vue'
 
 Vue.use(VueRouter)
 
