@@ -85,7 +85,34 @@
                     <p> {{ $t('footer.FAQ.Antwort_1_4_5') }} </p>
                     <p> {{ $t('footer.FAQ.Antwort_1_4_6') }} </p>
                     <p> {{ $t('footer.FAQ.Antwort_1_4_7') }} </p>
-                    <p> Tabelle ? </p>
+                    <v-simple-table>
+                      <template v-slot:default>
+                        <thead>
+                          <tr>
+                            <th />
+                            <th> {{ $t('footer.FAQ.Antwort_1_4_Tabelle_1') }} </th>
+                            <th> {{ $t('footer.FAQ.Antwort_1_4_Tabelle_2') }} </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <th> Scope 1 </th>
+                            <td> {{ $t('footer.FAQ.Antwort_1_4_Tabelle_3') }} </td>
+                            <td> {{ $t('footer.FAQ.Antwort_1_4_Tabelle_4') }}  </td>
+                          </tr>
+                          <tr>
+                            <th> Scope 2 </th>
+                            <td> {{ $t('footer.FAQ.Antwort_1_4_Tabelle_5') }} </td>
+                            <td> {{ $t('footer.FAQ.Antwort_1_4_Tabelle_5') }} </td>
+                          </tr>
+                          <tr>
+                            <th> Scope 3 </th>
+                            <td> {{ $t('footer.FAQ.Antwort_1_4_Tabelle_6') }} </td>
+                            <td> {{ $t('footer.FAQ.Antwort_1_4_Tabelle_7') }} </td>
+                          </tr>
+                        </tbody>
+                      </template>
+                    </v-simple-table>
                   </v-card>
                 </v-expansion-panel-content>
               </v-expansion-panel>
