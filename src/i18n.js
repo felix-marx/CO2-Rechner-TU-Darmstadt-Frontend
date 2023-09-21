@@ -16,9 +16,35 @@ function loadLocaleMessages () {
   return messages
 }
 
+const numberFormats = {
+  'de': {
+    currency: {
+      style: 'currency', currency: 'EUR'
+    },
+    decimal: {
+      style: 'decimal'
+    },
+    integer: {
+      style: 'decimal', minimumFractionDigits: 0, maximumFractionDigits: 0
+    }
+  },
+  'en': {
+    currency: {
+      style: 'currency', currency: 'USD'
+    },
+    decimal: {
+      style: 'decimal'
+    },
+    integer: {
+      style: 'decimal', minimumFractionDigits: 0, maximumFractionDigits: 0
+    }
+  }
+}
+
 export default new VueI18n({
   locale: process.env.VUE_APP_I18N_LOCALE || 'en',
   fallbackLocale: process.env.VUE_APP_I18N_FALLBACK_LOCALE || 'en',
-  messages: loadLocaleMessages()
+  messages: loadLocaleMessages(),
+  numberFormats: numberFormats
 })
 

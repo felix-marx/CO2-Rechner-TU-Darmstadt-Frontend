@@ -116,7 +116,49 @@
                   >
                     <p> {{ $t('footer.FAQ.Antwort_1_6_1') }} </p>
                     <p> {{ $t('footer.FAQ.Antwort_1_6_2') }} </p>
-                    <p> Tabelle </p>
+                    <v-simple-table>
+                      <template v-slot:default>
+                        <thead>
+                          <tr>
+                            <th> {{ $t('footer.FAQ.Antwort_1_6_Tabelle_1') }} </th>
+                            <th> {{ $t('footer.FAQ.Antwort_1_6_Tabelle_2') }} </th>
+                            <th> {{ $t('footer.FAQ.Antwort_1_6_Tabelle_3') }} </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td> {{ $t('footer.FAQ.Antwort_1_6_Tabelle_4') }} </td>
+                            <td> 5 - 200 </td>
+                            <td> 1 </td>
+                          </tr>
+                          <tr>
+                            <td> {{ $t('footer.FAQ.Antwort_1_6_Tabelle_5') }} </td>
+                            <td> 12 </td>
+                            <td> 25 </td>
+                          </tr>
+                          <tr>
+                            <td> {{ $t('footer.FAQ.Antwort_1_6_Tabelle_6') }} </td>
+                            <td> 114 </td>
+                            <td> 298 </td>
+                          </tr>
+                          <tr>
+                            <td> {{ $t('footer.FAQ.Antwort_1_6_Tabelle_7') }} </td>
+                            <td> {{ $n(1.4, 'decimal') }} - 270 </td>
+                            <td> 124 - {{ $n(14800, 'integer') }} </td>
+                          </tr>
+                          <tr>
+                            <td> {{ $t('footer.FAQ.Antwort_1_6_Tabelle_8') }} </td>
+                            <td> 740 - {{ $n(50000, 'integer') }}</td>
+                            <td> {{ $n(7390, 'integer') }} - {{ $n(12000, 'integer') }}</td>
+                          </tr>
+                          <tr>
+                            <td> {{ $t('footer.FAQ.Antwort_1_6_Tabelle_9') }} </td>
+                            <td> {{ $n(3200, 'integer') }}</td>
+                            <td> {{ $n(22800, 'integer') }}</td>
+                          </tr>
+                        </tbody>
+                      </template>
+                    </v-simple-table>
                   </v-card>
                 </v-expansion-panel-content>
               </v-expansion-panel>
