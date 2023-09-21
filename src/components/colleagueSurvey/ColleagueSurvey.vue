@@ -2,13 +2,12 @@
   <v-container>
     <v-card class="pa-7 mt-2">
       <!-- Introduction Text -->
-      <p>Sehr geehrte Teilnehmer*Innen, </p>
-      <p>in der folgenden Umfrage sollen CO<sub>2</sub>-Emissionen, die während Ihrer Tätigkeit an der TU entstehen, ermittelt werden. Es werden Ihr Pendelweg, Ihre Dienstreisen und die von Ihnen verwendeten IT-Geräte abgefragt. Alle Angaben werden dabei anonymisiert verarbeitet und dargestellt, sodass ein Rückschluss auf einzelne Personen nicht möglich ist. Die Umfrage nimmt ungefähr 10 Minuten Ihrer Zeit in Anspruch. </p>
-      <p>Für die Umfrage wird das vollständige Kalenderjahr <b>{{ umfrageYear }}</b> betrachtet. </p>
-      <p>Hinter einigen Fragen befindet sich ein Fragezeichensymbol. Dort finden Sie zusätzliche Hinweise und Informationen, die zur Beantwortung der Frage hilfreich sind. </p>  
-
-      <p>Wenn Sie die Umfrage durchgeführt haben, klicken Sie auf „Absenden“. </p>
-      <p>Vielen Dank für Ihre Teilnahme an der Umfrage. </p>
+      <p> {{ ($t('colleagueSurvey.colleagueSurvey.UmfrageErklaerung_0')) }} </p>
+      <p v-html="$t('colleagueSurvey.colleagueSurvey.UmfrageErklaerung_1')"></p>
+      <p>{{ ($t('colleagueSurvey.colleagueSurvey.UmfrageErklaerung_2')) }} <b>{{ umfrageYear }}</b> {{ ($t('colleagueSurvey.colleagueSurvey.UmfrageErklaerung_3')) }} </p>
+      <p>{{ ($t('colleagueSurvey.colleagueSurvey.UmfrageErklaerung_4')) }}</p>
+      <p> {{ ($t('colleagueSurvey.colleagueSurvey.UmfrageErklaerung_5')) }}</p>
+      <p> {{ ($t('colleagueSurvey.colleagueSurvey.UmfrageErklaerung_6')) }}</p>
     </v-card>
     <v-card
       elevation="2"
@@ -24,9 +23,9 @@
         <!-- Pendelwege -->
 
         <h3>
-          Wie kommen Sie ins Büro?
+          {{ ($t('colleagueSurvey.colleagueSurvey.WieInsBuero')) }}
           <Tooltip
-            tooltip-text="Zur Berechnung können Sie z.B. Google Maps verwenden. Falls Sie eine Fahrgemeinschaft haben, berechnen Sie die mittlere Fahrstrecke (mit z.B. Google Maps)."
+            :tooltip-text="$t('colleagueSurvey.colleagueSurvey.WieInsBuero_tooltip')"
           />
         </h3>
         <v-divider />
@@ -43,18 +42,18 @@
                 v-model="medium[0]"
                 :items="fahrtmediumListe"
                 :disabled="submittedDataSuccessfully"
-                label="Verkehrsmedium"
+                :label="$t('colleagueSurvey.colleagueSurvey.WieInsBuero_verkehrsmedium')"
               />
             </v-col>
             <v-col
-              v-if="medium[0] === 'Öffentliche'"
-              :cols="medium[0] === 'Öffentliche' ? 3 : 0"
+              :v-if="medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_5')"
+              :cols="medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_5') ? 3 : 0"
             >
               <v-select
                 v-model="medium[1]"
                 :disabled="submittedDataSuccessfully"
                 :items="fahrtmediumÖPNVListe"
-                label="ÖPNV"
+                :label="$t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNV')"
               />
             </v-col>
             <v-col :cols="medium[0] === 'Öffentliche' ? 3 : 4">
@@ -425,9 +424,9 @@
 <script>
 import Tooltip from "@/components/componentParts/Tooltip.vue";
 import LoadingAnimation from '../componentParts/LoadingAnimation.vue';
+import i18n from "@/i18n";
 
-export default {
-  components: {
+export default {  components: {
     Tooltip,
     LoadingAnimation
   },
@@ -452,21 +451,21 @@ export default {
 
     //Pendelweg
     fahrtmediumListe: [
-      "PKW (Diesel)",
-      "PKW (Benzin)",
-      "Fahrrad",
-      "E-Fahrrad",
-      "Motorisiertes Zweirad",
-      "Öffentliche",
-      "Zu Fuß"
+      i18n.t("colleagueSurvey.colleagueSurvey.fahrmediumListe_0"),
+        i18n.t("colleagueSurvey.colleagueSurvey.fahrmediumListe_1"),
+        i18n.t("colleagueSurvey.colleagueSurvey.fahrmediumListe_2"),
+        i18n.t("colleagueSurvey.colleagueSurvey.fahrmediumListe_3"),
+        i18n.t("colleagueSurvey.colleagueSurvey.fahrmediumListe_4"),
+        i18n.t("colleagueSurvey.colleagueSurvey.fahrmediumListe_5"),
+        i18n.t("colleagueSurvey.colleagueSurvey.fahrmediumListe_6")
     ],
     fahrtmediumÖPNVListe: [
-      "Bahn",
-      "Bus",
-      "U-Bahn",
-      "Straßenbahn",
-      "Mix inkl. U-Bahn",
-      "Mix exkl. U-Bahn",
+        i18n.t("colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_0"),
+        i18n.t("colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_1"),
+        i18n.t("colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_2"),
+        i18n.t("colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_3"),
+        i18n.t("colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_4"),
+        i18n.t("colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_5"),
     ],
     /*
      * verkehrmittel Array format:
@@ -483,12 +482,15 @@ export default {
     //flugklasseListe: ['Economy', 'Business'],
     //flugklasse: null,
     dienstreiseMediumListe: [
-      "PKW (Diesel)",
-      "PKW (Benzin)",
-      "Bahn",
-      "Flugzeug",
+        i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_0"),
+        i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_1"),
+        i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_2"),
+        i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3"),
     ],
-    flugstreckeListe: ["Langstrecke", "Kurzstrecke"],
+    flugstreckeListe: [
+        i18n.t("colleagueSurvey.colleagueSurvey.flugstreckeListe_0"),
+        i18n.t("colleagueSurvey.colleagueSurvey.flugstreckeListe_1")
+    ],
     /*
      * dienstreise Array format:
      * [0]: dienstreiseMedium selected from List
@@ -580,20 +582,20 @@ export default {
      */
     mapPendelverkehrsmittel: function (verkehrmittel1, verkehrsmittel2) {
       const verkehrsmittelMap = new Map([
-        ["Fahrrad", 1],
-        ["E-Fahrrad", 2],
-        ["Motorisiertes Zweirad", 3],
-        ["PKW (Diesel)", 4],
-        ["PKW (Benzin)", 5],
-        ["Bus", 6],
-        ["Bahn", 7],
-        ["U-Bahn", 8],
-        ["Straßenbahn", 9],
-        ["Mix inkl. U-Bahn", 10],
-        ["Mix exkl. U-Bahn", 11],
-        ["Zu Fuß", 12]
+        [i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_2'), 1],
+        [i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_3'), 2],
+        [i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_4'), 3],
+        [i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_0'), 4],
+        [i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_1'), 5],
+        [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_1'), 6],
+        [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_0'), 7],
+        [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_2'), 8],
+        [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_3'), 9],
+        [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_4'), 10],
+        [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_5'), 11],
+        [i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_6'), 12]
       ]);
-      if (verkehrmittel1 != "Öffentliche") {
+      if (verkehrmittel1 !== i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_5')) {
         return verkehrsmittelMap.get(verkehrmittel1);
       } else {
         return verkehrsmittelMap.get(verkehrsmittel2);

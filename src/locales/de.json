@@ -283,6 +283,46 @@
       "ITGeraetIDDic_6": "interne Server"
     }
   },
+  "colleagueSurvey": {
+    "colleagueSurvey": {
+      "UmfrageErklaerung_0": "Sehr geehrte Teilnehmer*Innen,",
+      "UmfrageErklaerung_1": "in der folgenden Umfrage sollen CO<sub>2</sub>-Emissionen, die während Ihrer Tätigkeit an der TU entstehen, ermittelt werden. Es werden Ihr Pendelweg, Ihre Dienstreisen und die von Ihnen verwendeten IT-Geräte abgefragt. Alle Angaben werden dabei anonymisiert verarbeitet und dargestellt, sodass ein Rückschluss auf einzelne Personen nicht möglich ist. Die Umfrage nimmt ungefähr 10 Minuten Ihrer Zeit in Anspruch.",
+      "UmfrageErklaerung_2": "Für die Umfrage wird das vollständige Kalenderjahr ",
+      "UmfrageErklaerung_3": " betrachtet",
+      "UmfrageErklaerung_4": "Hinter einigen Fragen befindet sich ein Fragezeichensymbol, dort finden Sie zusätzliche Hinweise und Informationen, die zur Beantwortung der Frage hilfreich sind.",
+      "UmfrageErklaerung_5": "Wenn Sie die Umfrage durchgeführt haben, klicken Sie auf „Absenden“.",
+      "UmfrageErklaerung_6": "Vielen Dank für Ihre Teilnahme an der Umfrage.",
+
+      "WieInsBuero": "Wie kommen Sie ins Büro?",
+      "WieInsBuero_tooltip": "Zur Berechnung können Sie z.B. Google Maps verwenden. Falls Sie eine Fahrgemeinschaft haben, berechnen Sie die mittlere Fahrstrecke (mit z.B. Google Maps).",
+      "WieInsBuero_verkehrsmedium": "Verkehrsmedium",
+      "WieInsBuero_pendelweg": "Einfacher Pendelweg",
+
+      "fahrmediumListe_0": "PKW (Diesel)",
+      "fahrmediumListe_1": "PKW (Benzin)",
+      "fahrmediumListe_2": "Fahrrad",
+      "fahrmediumListe_3": "E-Fahrrad",
+      "fahrmediumListe_4": "Motorisiertes Zweirad",
+      "fahrmediumListe_5": "Öffentliche",
+      "fahrmediumListe_6": "Zu Fuß",
+
+      "fahrtmediumOEPNV": "ÖPNV",
+      "fahrtmediumOEPNVListe_0": "Bahn",
+      "fahrtmediumOEPNVListe_1": "Bus",
+      "fahrtmediumOEPNVListe_2": "U-Bahn",
+      "fahrtmediumOEPNVListe_3": "Straßenbahn",
+      "fahrtmediumOEPNVListe_4": "Mix inkl. U-Bahn",
+      "fahrtmediumOEPNVListe_5": "Mix exkl. U-Bahn",
+
+      "dienstreiseMediumListe_0": "PKW (Diesel)",
+      "dienstreiseMediumListe_1": "PKW (Benzin)",
+      "dienstreiseMediumListe_2": "Bahn",
+      "dienstreiseMediumListe_3": "Flugzeug",
+
+      "flugstreckeListe_0": "Langstrecke",
+      "flugstreckeListe_1": "Kurzstrecke"
+    }
+  },
   "common": {
     "CO": "CO",
     "Bezeichung": "Bezeichnung",
