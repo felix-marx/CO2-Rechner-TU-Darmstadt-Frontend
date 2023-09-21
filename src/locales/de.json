@@ -192,7 +192,7 @@
       "Umfrageauswertung_3": "Diese Freigabe kann durch Sie jederzeit widerrufen werden."
     },
     "FAQ" : {
-      "Title_1": "Allgemeine Informationen zur der Thematik CO<sub>2</sub>-Bilanzierung",
+      "Titel_1": "Allgemeine Informationen zur der Thematik CO<sub>2</sub>-Bilanzierung",
       
       "Frage_1_1": "Was ist eine CO<sub>2</sub>-Bilanzieurng?",
       "Antwort_1_1": "Eine CO<sub>2</sub>-Bilanz dient der Darstellung der Treibhausgasemissionen einer Organisation, eines Produktes, einer Dienstleistung oder einer Aktivität innerhalb einer definierten Betrachtungsgrenze. Die Bilanz umfasst alle klimaschädlichen Emissionen und drückt diese in CO<sub>2</sub>-Äquivalente aus.",
@@ -240,7 +240,7 @@
       "Antwort_1_7_2": "Ecoinvent gilt als weltweit konsistenteste und transparenteste Ökoinventardatenbank. Sie unterstützt die Umweltbewertung von Produkten und Prozessen und enthält derzeit mehr als 18.000 Datensätze. Ecoinvent beinhaltet nicht nur Informationen zu CO2-eq Faktoren, sondern allgemeine Informationen zu Umweltauswirkungen von beispielsweise Produkten, Materialien und Dienstleistungen. Die natürlichen Ressourcen, die von dem Produkt oder der Dienstleistung oder dem Abbau des Materials, der Umwelt entzogen werden, die freigesetzten Emissionen (in Wasser, Luft und Boden) und entstehende Nebenprodukte und Abfälle werden hierbei mitbetrachtet. (Quelle: ecoinvent Database - ecoinvent)",
       "Antwort_1_7_3": "GEMIS steht für „Globales Emissions Modell integrierter Systeme“. Es handelt sich dabei um eine Datenbank für Energie-, Stoff- und Verkehrssysteme und deren Umweltauswirkungen. ",
       
-      "Title_2": "Zu dem webbasierten Rechner der TU Darmstadt",
+      "Titel_2": "Zu dem webbasierten Rechner der TU Darmstadt",
 
       "Frage_2_1": "Was ist der primäre Zweck des Rechners?",
       "Antwort_2_1": "Der primäre Zweck des Rechners ist es TU Einheiten jährlich eine CO2-Bilanzieurng durchzuführen. Hierbei dient der Rechner als ein Monitoring - Tool für die Einheiten. Durch den Rechner sollen TU-Einheiten dafür sensibilisiert werden, wie hoch die von ihnen jährlich verursachten CO2-Emissionen sind und wie diese sich über die Jahre entwickeln. ",
@@ -291,7 +291,7 @@
       "Frage_2_13": "Werden Ergebnisse veröffentlicht?",
       "Antwort_2_13": "Ergebnisse von Einzelperson werden nicht veröffentlich und sind im Falle, dass der User keinen Account besitzt keiner Person zuordenbar. Es werden nur Ergebnisse von TU Einheiten veröffentlicht. ",
 
-      "Title_3": "Nutzen einer Bilanzierung",
+      "Titel_3": "Nutzen einer Bilanzierung",
       "Frage_3_1": "Wie groß ist der zeitliche Aufwand für jeden Mitarbeiter*Innen?",
       "Antwort_3_1_1": "Dies ist nicht einfach definierbar. Hierbei sollte zwischen der Hauptbeauftragten Person und den einzelnen Mitarbeitenden unterschieden werden. ",
       "Antwort_3_1_2": "Die hauptbeauftragte Person füllt die allgemeine Information für die Einheit aus: In welchem Gebäude sitzt die Einheit, Anzahl der Mitarbeitenden, gemeinschaftlich nutzbare IT-Geräte. Sind diese Angaben gespeichert, erhält die hauptbeauftragte Person eine vorformulierte Mail mit einem Link, den sie an alle Mitarbeitende versendet. Mit dem Link erhalten Mitarbeitenden einen Zugang zu ihrer Umfrage. ",
@@ -311,7 +311,7 @@
       "Antwort_3_3_2": "Falls Sie weitere Unterstützung bei der Erarbeitung von Reduktionsstrategien für Ihre Einheit benötigen, melden Sie sich gerne unter co2-rechner@zv.tu-darmstadt.de . ",
 
 
-      "Title_4": "Allgmeine Projektvorstellung",
+      "Titel_4": "Allgmeine Projektvorstellung",
       "Frage_4_1": "Historie des Projekts",
       "Antwort_4_1": "Bild",
 

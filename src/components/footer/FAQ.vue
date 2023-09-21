@@ -13,7 +13,7 @@
             outlined
           >
             <h2 class="display-1 font-weight-bold">
-              {{ $t('footer.FAQ.Title_1') }}
+              {{ $t('footer.FAQ.Titel_1') }}
             </h2>
           
             <v-expansion-panels
@@ -181,7 +181,7 @@
             </v-expansion-panels>
 
             <h2 class="display-1 font-weight-bold">
-              {{ $t('footer.FAQ.Title_2') }}
+              {{ $t('footer.FAQ.Titel_2') }}
             </h2>
 
             <v-expansion-panels
@@ -389,7 +389,7 @@
             </v-expansion-panels>
 
             <h2 class="display-1 font-weight-bold">
-              {{ $t('footer.FAQ.Title_3') }}
+              {{ $t('footer.FAQ.Titel_3') }}
             </h2>
 
             <v-expansion-panels
@@ -450,7 +450,7 @@
             </v-expansion-panels>
 
             <h2 class="display-1 font-weight-bold">
-              {{ $t('footer.FAQ.Title_4') }}
+              {{ $t('footer.FAQ.Titel_4') }}
             </h2>
 
             <v-expansion-panels
