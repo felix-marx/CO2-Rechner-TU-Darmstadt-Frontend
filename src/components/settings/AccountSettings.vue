@@ -6,13 +6,13 @@
       outlined
     >
       <v-card-title>
-        Account Löschen
+        {{ $t('settings.accountSettings.AccountLoeschen') }}
         <v-divider class="ml-2" />
       </v-card-title>
       <v-row class="mb-2">
         <v-col cols="10">
           <div class="mt-4 pl-7 pr-7">
-            Hier können Sie Ihren Account löschen. Wenn Sie sicher sind, dies tun zu wollen, drücken Sie bitte den folgenden Knopf.
+            {{ $t('settings.accountSettings.AccountLoeschen_text') }}
           </div>
         </v-col>
         <v-col cols="2">
@@ -31,7 +31,7 @@
                   v-on="on"
                 >
                   <v-icon>mdi-delete-outline</v-icon>
-                  Löschen
+                  {{ $t('common.Loeschen') }}
                 </v-btn>
               </v-col>
             </template>
@@ -40,17 +40,17 @@
                 color="primary"
                 dark
               >
-                Löschen des Accounts
+              {{ $t('settings.accountSettings.LoeschenDesAccounts') }}
               </v-toolbar>
               <v-card-text>
                 <p class="pt-6">
-                  Sind Sie sicher, dass Sie Ihren Account löschen möchten?
+                  {{ $t('settings.accountSettings.AccountLoeschen_bestaetigen_0') }}
                   <br>
-                  <b>Diese Aktion kann nicht zurückgenommen werden und alle Ihre Umfragen werden gelöscht! </b>
+                  <b>{{ $t('settings.accountSettings.AccountLoeschen_bestaetigen_1') }} </b>
                 </p>
             
                 <div>
-                  Geben Sie zur Bestätigung bitte Ihre "delete" in folgendes Feld ein:
+                  {{ $t('settings.accountSettings.AccountLoeschen_bestaetigen_2') }}
                 </div>
                 <v-text-field
                   v-model="usernameConfirmation"
@@ -68,13 +68,13 @@
                   v-if="accountDeleted && signedOut && !displayLoadingAnimation"
                   type="success"
                 >
-                  Ihr Account wurde erfolgreich gelöscht. Sie können dieses Fenster nun schließen.
+                {{ $t('settings.accountSettings.AccountGeloescht_0') }}
                 </v-alert>
                 <v-alert
                   v-if="deleteRequestError && !displayLoadingAnimation"
                   type="error"
                 >
-                  Ihr Account konnte nicht gelöscht werden. Bitte versuchen Sie es erneut.
+                {{ $t('settings.accountSettings.AccountNichtGeloescht') }}
                 </v-alert>
                 <v-spacer />
                 <v-btn
@@ -83,7 +83,7 @@
                   text
                   @click="deleteAccountAndSignout()"
                 >
-                  Ich bestätige
+                {{ $t('settings.accountSettings.Bestaetigung') }}
                 </v-btn>
               </v-card-actions>
             </v-card>

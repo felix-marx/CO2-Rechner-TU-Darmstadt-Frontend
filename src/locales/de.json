@@ -421,8 +421,28 @@
       "Github": "Github Repository",
       "Backend": "Backend"
     }
+  },
+  "settings": {
+    "accountSettings": {
+      "AccountLoeschen": "Account Löschen",
+      "AccountLoeschen_text": "Hier können Sie Ihren Account löschen. Wenn Sie sicher sind, dies tun zu wollen, drücken Sie bitte den folgenden Knopf.",
+      "LoeschenDesAccounts": "Löschen des Accounts",
+      "AccountLoeschen_bestaetigen_0": "Sind Sie sicher, dass Sie Ihren Account löschen möchten?",
+      "AccountLoeschen_bestaetigen_1": "Diese Aktion kann nicht zurückgenommen werden und alle Ihre Umfragen werden gelöscht!",
+      "AccountLoeschen_bestaetigen_2": "Geben Sie zur Bestätigung bitte Ihre \"delete\" in folgendes Feld ein:",
+      
+      "AccountGeloescht_0": "Ihr Account wurde erfolgreich gelöscht. Sie können dieses Fenster nun schließen.",
+      "AccountNichtGeloescht": "Ihr Account konnte nicht gelöscht werden. Bitte versuchen Sie es erneut.",
+      "Bestaetigung": "Ich bestätige"
+    },
+    "userSettingsHeader": {
+      "AngemeldetAls": "Angemeldet als: ",
+      "Accountverwaltung": "Accountverwaltung",
+      "Abmelden": "Abmelden",
+      "ZurUmfrage": "Zur Umfrage",
+      "ZurAdminuebersicht": "Zur Adminübersicht"
 
-
+    }
   },
   "common": {
     "Ja": "Ja",
