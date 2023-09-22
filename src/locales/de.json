@@ -297,6 +297,8 @@
       "WieInsBuero_tooltip": "Zur Berechnung können Sie z.B. Google Maps verwenden. Falls Sie eine Fahrgemeinschaft haben, berechnen Sie die mittlere Fahrstrecke (mit z.B. Google Maps).",
       "WieInsBuero_verkehrsmedium": "Verkehrsmedium",
       "WieInsBuero_pendelweg": "Einfacher Pendelweg",
+      "WieInsBuero_fahrgemeinschaft": "Fahren Sie in einer Fahrgemeinschaft?",
+      "WieInsBuero_anzahlMitfahrende": "Anzahl Mitfahrende",
 
       "fahrmediumListe_0": "PKW (Diesel)",
       "fahrmediumListe_1": "PKW (Benzin)",
@@ -318,12 +320,68 @@
       "dienstreiseMediumListe_1": "PKW (Benzin)",
       "dienstreiseMediumListe_2": "Bahn",
       "dienstreiseMediumListe_3": "Flugzeug",
+      "dienstreiseMedium_Benzin": "Benzin",
+      "dienstreiseMedium_Diesel": "Diesel",
 
+      "Flugstrecke": "Flugstrecke",
+      "EinfacheDistanz": "Einfache Distanz",
       "flugstreckeListe_0": "Langstrecke",
-      "flugstreckeListe_1": "Kurzstrecke"
+      "flugstreckeListe_1": "Kurzstrecke",
+      
+      "TageBuero": "Wie viele Tage in der Woche sind Sie im Büro?",
+      "TageBuero_label": "Tage im Büro",
+
+      "Dienstreise_0": "Welche Dienstreisen haben Sie ",
+      "Dienstreise_1": " unternommen?",
+      "Dienstreise_tooltip": "Zur Berechnung können Sie z.B. Google Maps verwenden. Bei Flugreisen können Sie als Distanz direkt die Summe aller Kurz- und Langstreckenflüge angeben.",
+      
+      "IT_Geraete": "Welche IT-Geräte benutzen Sie bei Ihrer Arbeit?",
+      "IT_Geraete_tooltip": "Gemeinschaftlich genutzte IT-Geräte wie z.B. Multifunktionsdrucker werden hier nicht betrachtet.",
+      "IT_Geraete_Notebooks": "Notebooks",
+      "IT_Geraete_Suffix": "Gerät/e",
+      "IT_Geraete_Desktops": "Desktop-PCs",
+      "IT_Geraete_Bildschirme": "Bildschirme",
+      "IT_Geraete_Mobiltelefone": "Mobiltelefone",
+      "IT_Gereate_Notebook": "Notebook",
+      "IT_Gereate_Desktop": "Desktop-PC",
+      "IT_Geraete_Bildschirm": "Bildschirm",
+      "IT_Geraete_Mobiltelefon": "Mobiltelefon",
+
+      "EingabeValidierung_Vollstaendig": "Umfrage vollständig?",
+      "EingabeValidierung_Problem": "Probleme mit Ihrer Eingabe!",
+      "EingabeValidierung_kleinereProbleme": "Ihre Eingabe enthält folgende kleinere Probleme:",
+      "EingabeValidierung_Absenden_0": "Möchten Sie ihre Umfrage wirklich absenden?",
+      "EingabeValidierung_Absenden_1": "Sie können sie anschließend nicht weiter bearbeiten.",
+      "EingabeValidierung_Bearbeiten": "Weiter bearbeiten",
+      "EingabeValidierung_Absenden": "Umfrage absenden",
+
+      "Absenden_Erfolgreich": "Die Daten wurden erfolgreich übermittelt. Vielen Dank für Ihre Teilnahme! Sie können dieses Fenster nun schließen.",
+
+      "Rules_MussAngegeben": "Muss angegeben werden.",
+
+      "TageBueroRules_0": "Bitte geben Sie die Tage pro Woche an",
+      "StreckeRules_0": "Bitte geben Sie eine valide Distanz an.",
+      "GeraeteRules_0": "Wenn Sie das Gerät nicht benutzen, wählen Sie es bitte ab.",
+      "GeraeteRules_1": "Bitte geben Sie eine valide Menge an.",
+      "MitfahrerRules_0": "Wenn Sie alleine fahren, wählen Sie bitte diese Option ab.",
+      "MitfahrerRules_1": "Bitte geben Sie eine positive Anzahl an Mitfahrenden an.",
+
+      "EingabeValidierung_Verkehrsmedium": "Sie haben das öffentliche Verkehrsmedium nicht angegeben.",
+      "EingabeValidierung_Pendelweg_0": "Sie haben für das Verkehrsmedium ",
+      "EingabeValidierung_Pendelweg_1": " keinen gültigen Pendelweg angegeben.",
+      "EingabeValidierung_Fahrgemeinschaft_0":"Sie benutzen das Verkehrsmedium ",
+      "EingabeValidierung_Fahrgemeinschaft_1": "in einer Fahrgemeinschaft, haben aber keine Mitfahrendenanzahl angegeben.",
+      "EingabeValidierung_TageBuero": "Bitte geben Sie die Tage im Büro pro Woche an.",
+      "EingabeValidierung_Dienstreise_0": "Sie haben bei einer Dienstreise mit Flugzeug keinen Flugstreckentyp angegeben.",
+      "EingabeValidierung_Dienstreise_1": "Sie haben für die Dienstreise mit ",
+      "EingabeValidierung_Dienstreise_2": " keine gültige Distanz angegeben.",
+      "EingabeValidierung_Gereate_0": "Sie haben das Gerät ",
+      "EingabeValidierung_Gereate_1": "  ausgewählt, aber keine Anzahl angegeben."
+
     }
   },
   "common": {
+    "Ja": "Ja",
     "CO": "CO",
     "Bezeichung": "Bezeichnung",
     "ServerNichtErreichbar": "Server nicht erreichbar.",

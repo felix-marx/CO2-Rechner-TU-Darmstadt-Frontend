@@ -56,13 +56,13 @@
                 :label="$t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNV')"
               />
             </v-col>
-            <v-col :cols="medium[0] === 'Öffentliche' ? 3 : 4">
+            <v-col :cols="medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_5') ? 3 : 4">
               <v-text-field
                 v-model="medium[4]"
                 :rules="streckeRules"
-                :disabled="medium[0] === null || (medium[0] === 'Öffentliche' && medium[1] === null) || submittedDataSuccessfully"
+                :disabled="medium[0] === null || (medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_5') && medium[1] === null) || submittedDataSuccessfully"
                 :min="0"
-                label="Einfacher Pendelweg"
+                :label="$t('colleagueSurvey.colleagueSurvey.WieInsBuero_pendelweg')"
                 suffix="km"
               />
             </v-col>
@@ -73,7 +73,7 @@
                 :disabled="submittedDataSuccessfully"
                 @click="newVerkehrsmittel()"
               >
-                Hinzufügen
+              {{ ($t('common.Hinzufuegen')) }}
               </v-btn>
             </v-col>
             <v-col>
@@ -83,28 +83,28 @@
                 :disabled="submittedDataSuccessfully"
                 @click="removeVerkehrsmittel(index)"
               >
-                Löschen
+              {{ ($t('common.Loeschen')) }}
               </v-btn>
             </v-col>
           </v-row>
           <!-- Weitere Reihe für PKWs mit Fahrgemeinschaft -->
           <h4
             v-show="
-              medium[0] === 'PKW (Diesel)' || medium[0] === 'PKW (Benzin)'
+              medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_0') || medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_1')
             "
             class="my-3"
           >
-            Fahren Sie in einer Fahrgemeinschaft?
+            {{ $t('colleagueSurvey.colleagueSurvey.WieInsBuero_fahrgemeinschaft') }}
           </h4>
           <v-row>
             <v-col :cols="1">
               <v-checkbox
                 v-show="
-                  medium[0] === 'PKW (Diesel)' || medium[0] === 'PKW (Benzin)'
+                  medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_0') || medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_1')
                 "
                 v-model="medium[2]"
                 :disabled="submittedDataSuccessfully"
-                label="Ja"
+                :label= "$t('common.Ja')"
                 class="pr-4"
               />
             </v-col>
@@ -112,14 +112,14 @@
               <v-text-field
                 v-show="
                   medium[2] &&
-                    (medium[0] === 'PKW (Diesel)' ||
-                      medium[0] === 'PKW (Benzin)')
+                    (medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_0') ||
+                      medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_1'))
                 "
                 v-model="medium[3]"
                 :rules="mitfahrerRules"
                 :disabled="submittedDataSuccessfully"
                 :min="0"
-                label="Anzahl Mitfahrende"
+                :label="$t('colleagueSurvey.colleagueSurvey.WieInsBuero_anzahlMitfahrende')"
                 class="pr-5"
               />
             </v-col>
@@ -129,7 +129,7 @@
         <!-- Arbeitstage im Büro -->
 
         <br>
-        <h3>Wie viele Tage in der Woche sind Sie im Büro?</h3>
+        <h3>{{ $t('colleagueSurvey.colleagueSurvey.TageBuero') }}</h3>
         <v-divider />
         <br>
 
@@ -141,7 +141,7 @@
               :disabled="submittedDataSuccessfully"
               :min="0"
               :max="7"
-              label="Tage im Büro"
+              :label="$t('colleagueSurvey.colleagueSurvey.TageBuero_label')"
             />
           </v-row>
         </v-container>
@@ -150,9 +150,10 @@
 
         <br>
         <h3>
-          Welche Dienstreisen haben Sie {{ umfrageYear }} unternommen?
+          {{ $t('colleagueSurvey.colleagueSurvey.Dienstreise_0') }} {{ umfrageYear }} 
+          {{ $t('colleagueSurvey.colleagueSurvey.Dienstreise_1') }}
           <Tooltip
-            tooltip-text="Zur Berechnung können Sie z.B. Google Maps verwenden. Bei Flugreisen können Sie als Distanz direkt die Summe aller Kurz- und Langstreckenflüge angeben."
+          :tooltip-text="$t('colleagueSurvey.colleagueSurvey.Dienstreise_tooltip')"
           />
         </h3>
         <v-divider />
@@ -163,36 +164,36 @@
           :key="'dienstreise-' + index"
         >
           <v-row>
-            <v-col :cols="reise[0] === 'Flugzeug' ? 4 : 5">
+            <v-col :cols="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3') ? 4 : 5">
               <v-select
                 v-model="reise[0]"
                 :disabled="submittedDataSuccessfully"
-                label="Verkehrsmittel"
+                :label="$t('colleagueSurvey.colleagueSurvey.WieInsBuero_verkehrsmedium')"
                 :items="dienstreiseMediumListe"
                 class="pr-5"
               />
             </v-col>
-            <!--<v-select v-model="flugklasse" label="Klasse" v-show="reise[0] === 'Flugzeug'" :items="flugklasseListe"></v-select>-->
+            <!--<v-select v-model="flugklasse" label="Klasse" v-show="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3')" :items="flugklasseListe"></v-select>-->
             <v-col
-              v-if="reise[0] === 'Flugzeug'"
-              :cols="reise[0] === 'Flugzeug' ? 3 : 0"
+              v-if="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3')"
+              :cols="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3') ? 3 : 0"
             >
               <v-select
-                v-show="reise[0] === 'Flugzeug'"
+                :v-show="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3')"
                 v-model="reise[1]"
-                label="Flugstrecke"
+                :label="$t('colleagueSurvey.colleagueSurvey.Flugstrecke')"
                 :items="flugstreckeListe"
                 :disabled="submittedDataSuccessfully"
                 class="pr-5"
               />
             </v-col>
-            <v-col :cols="reise[0] === 'Flugzeug' ? 3 : 5">
+            <v-col :cols="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3') ? 3 : 5">
               <v-text-field
                 v-model="reise[2]"
                 :rules="streckeRules"
-                :disabled="reise[0] === null || (reise[0] === 'Flugzeug' && reise[1] === null) || submittedDataSuccessfully"
+                :disabled="reise[0] === null || (reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3') && reise[1] === null) || submittedDataSuccessfully"
                 :min="0"
-                label="Einfache Distanz"
+                :label="$t('colleagueSurvey.colleagueSurvey.EinfacheDistanz')"
                 suffix="km"
                 class="pr-5"
               />
@@ -204,7 +205,7 @@
                 :disabled="submittedDataSuccessfully"
                 @click="newDienstreise()"
               >
-                Hinzufügen
+                {{ $t('common.Hinzufuegen') }}
               </v-btn>
             </v-col>
             <v-col>
@@ -214,7 +215,7 @@
                 :disabled="submittedDataSuccessfully"
                 @click="removeDienstreise(index)"
               >
-                Löschen
+                {{ $t('common.Loeschen') }}
               </v-btn>
             </v-col>
           </v-row>
@@ -224,9 +225,9 @@
 
         <br>
         <h3>
-          Welche IT-Geräte benutzen Sie bei Ihrer Arbeit?
+          {{ $t('colleagueSurvey.colleagueSurvey.IT_Geraete') }}
           <Tooltip
-            tooltip-text="Gemeinschaftlich genutzte IT-Geräte wie z.B. Multifunktionsdrucker werden hier nicht betrachtet."
+            :tooltip-text="$t('colleagueSurvey.colleagueSurvey.IT_Geraete_tooltip')"
           />
         </h3>
 
@@ -246,9 +247,9 @@
               :rules="geraeteRules"
               :disabled="!geraeteAnzahl[0][2] || submittedDataSuccessfully"
               :min="0"
-              label="Notebooks"
+              :label="$t('colleagueSurvey.colleagueSurvey.IT_Geraete_Notebooks')"
               class="pr-5"
-              suffix="Gerät/e"
+              :suffix="$t('colleagueSurvey.colleagueSurvey.IT_Geraete_Suffix')"
             />
           </v-row>
           <!-- Desktop PC -->
@@ -263,9 +264,9 @@
               :rules="geraeteRules"
               :disabled="!geraeteAnzahl[1][2] || submittedDataSuccessfully"
               :min="0"
-              label="Desktop PCs"
+              :label="$t('colleagueSurvey.colleagueSurvey.IT_Geraete_Desktops')"
               class="pr-5"
-              suffix="Gerät/e"
+              :suffix="$t('colleagueSurvey.colleagueSurvey.IT_Geraete_Suffix')"
             />
           </v-row>
           <!-- Bildschirm -->
@@ -280,9 +281,9 @@
               :rules="geraeteRules"
               :disabled="!geraeteAnzahl[2][2] || submittedDataSuccessfully"
               :min="0"
-              label="Bildschirme"
+              :label="$t('colleagueSurvey.colleagueSurvey.IT_Geraete_Bildschirme')"
               class="pr-5"
-              suffix="Gerät/e"
+              :suffix="$t('colleagueSurvey.colleagueSurvey.IT_Geraete_Suffix')"
             />
           </v-row>
           <!-- Mobiltelefon -->
@@ -297,9 +298,9 @@
               :rules="geraeteRules"
               :disabled="!geraeteAnzahl[3][2] || submittedDataSuccessfully"
               :min="0"
-              label="Mobiltelefone"
+              :label="$t('colleagueSurvey.colleagueSurvey.IT_Geraete_Mobiltelefone')"
               class="pr-5"
-              suffix="Gerät/e"
+              :suffix="$t('colleagueSurvey.colleagueSurvey.IT_Geraete_Suffix')"
             />
           </v-row>
         </v-container>
@@ -331,7 +332,7 @@
                   v-on="on"
                   @click="checkValidInput()"
                 >
-                  Absenden
+                  {{ ($t('common.Absenden')) }}
                 </v-btn>
               </template>
 
@@ -340,14 +341,14 @@
                   color="primary"
                   dark
                 >
-                  {{ (errorsArray.length != 0) ? "Probleme mit Ihrer Eingabe!" : "Umfrage vollständig?" }}
+                  {{ (errorsArray.length != 0) ? $t('colleagueSurvey.colleagueSurvey.EingabeValidierung_Problem') : $t('colleagueSurvey.colleagueSurvey.EingabeValidierung_Vollstaendig') }}
                 </v-toolbar>
                 <v-card-text>
                   <div
                     v-if="errorsArray.length != 0"
                     class="pt-6"
                   >
-                    Ihre Umfrage enthält folgende kleinere Probleme: <br>
+                    {{ $t('colleagueSurvey.colleagueSurvey.EingabeValidierung_kleinereProbleme') }} <br>
                     <v-list
                       flat
                     >
@@ -368,8 +369,8 @@
                     v-if="errorsArray.length == 0"
                     class="pt-6"
                   >
-                    Möchten Sie ihre Umfrage wirklich absenden?<br>
-                    Sie können sie anschließend nicht weiter bearbeiten.
+                    {{ $t('colleagueSurvey.colleagueSurvey.EingabeValidierung_Absenden_0') }}<br>
+                    {{ $t('colleagueSurvey.colleagueSurvey.EingabeValidierung_Absenden_1') }}
                   </div>
                 </v-card-text>
 
@@ -382,7 +383,7 @@
                     text
                     @click="errorDialog = false"
                   >
-                    Weiter bearbeiten
+                  {{ $t('colleagueSurvey.colleagueSurvey.EingabeValidierung_Bearbeiten') }}
                   </v-btn>
                   <v-btn
                     v-if="errorsArray.length == 0"
@@ -390,7 +391,7 @@
                     text
                     @click="sendData(), errorDialog = false"
                   >
-                    Umfrage absenden
+                  {{ $t('colleagueSurvey.colleagueSurvey.EingabeValidierung_Absenden') }}
                   </v-btn>
                 </v-card-actions>
               </v-card>
@@ -412,8 +413,8 @@
               text
               type="success"
             >
-              Die Daten wurden erfolgreich übermittelt. Vielen Dank für Ihre Teilnahme! Sie können dieses Fenster nun schließen.
-            </v-alert>
+              {{ $t('colleagueSurvey.colleagueSurvey.Absenden_Erfolgreich') }}
+              </v-alert>
           </v-col>
         </v-row>
       </v-form>
@@ -523,28 +524,28 @@ export default {  components: {
 
     //Rules for input validation
     tageImBueroRules: [
-      (v) => !!v || "Muss angegeben werden.",
+      (v) => !!v || i18n.t('colleagueSurvey.colleagueSurvey.Rules_MussAngegeben'),
       (v) =>
         (parseInt(v) < 8 && parseInt(v) >= 0) ||
-        "Bitte geben Sie die Tage pro Woche an.",
+        i18n.t('colleagueSurvey.colleagueSurvey.TageBueroRules_0'),
     ],
     streckeRules: [
-      (v) => !!v || "Muss angegeben werden.",
-      (v) => parseInt(v) > 0 || "Bitte geben Sie eine valide Distanz an.",
+      (v) => !!v || i18n.t('colleagueSurvey.colleagueSurvey.Rules_MussAngegeben'),
+      (v) => parseInt(v) > 0 || i18n.t('colleagueSurvey.colleagueSurvey.StreckeRules_0'),
     ],
     geraeteRules: [
       (v) =>
-        !!v || "Wenn Sie das Gerät nicht benutzen, wählen Sie es bitte ab.",
+        !!v || i18n.t('colleagueSurvey.colleagueSurvey.GeraeteRules_0'),
       (v) =>
         parseInt(v) != 0 ||
-        "Wenn Sie das Gerät nicht benutzen, wählen Sie es bitte ab.",
-      (v) => parseInt(v) > 0 || "Bitte geben Sie eine valide Menge an.",
+        i18n.t('colleagueSurvey.colleagueSurvey.GeraeteRules_0'),
+      (v) => parseInt(v) > 0 || i18n.t('colleagueSurvey.colleagueSurvey.GeraeteRules_1'),
     ],
     mitfahrerRules: [
-      (v) => !!v || "Wenn Sie alleine fahren, wählen Sie bitte diese Option ab.",
+      (v) => !!v || i18n.t('colleagueSurvey.colleagueSurvey.MitfahrerRules_0'),
       (v) =>
         parseInt(v) > 0 ||
-        "Bitte geben Sie eine positive Anzahl an Mitfahrenden an.",
+        i18n.t('colleagueSurvey.colleagueSurvey.MitfahrerRules_1'),
     ],
   }),
 
@@ -607,17 +608,17 @@ export default {  components: {
      */
     mapDienstreisemittel: function (verkehrsmittel) {
       const verkehrsmittelMap = new Map([
-        ["Bahn", 1],
-        ["PKW (Diesel)", 2],
-        ["PKW (Benzin)", 2],
-        ["Flugzeug", 3],
+        [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_0'), 1],
+        [i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_0'), 2],
+        [i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_1'), 2],
+        [i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3'), 3],
       ]);
       return [
         verkehrsmittelMap.get(verkehrsmittel),
         parseInt(verkehrsmittelMap.get(verkehrsmittel)) == 2
-          ? verkehrsmittel == "PKW (Benzin)"
-            ? "Benzin"
-            : "Diesel"
+          ? verkehrsmittel == i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_1')
+            ? i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMedium_Benzin')
+            : i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMedium_Diesel')
           : "",
       ];
     },
@@ -733,41 +734,41 @@ export default {  components: {
       var errors = []
       // Check for Pendelweg distance and valid öffentliche
       for(const verkehr  of this.verkehrsmittel) {
-        var verkehrsmedium = (verkehr[0] != "Öffentliche") ? verkehr[0] : verkehr[1]
+        var verkehrsmedium = (verkehr[0] != i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_5')) ? verkehr[0] : verkehr[1]
         if(verkehr[0] != null && (!verkehr[4] || verkehr[4] < 0)) {
           if(verkehrsmedium == null) {
-            errors.push("Sie haben das öffentliche Verkehrsmedium nicht angegeben.")
+            errors.push(i18n.t('colleagueSurvey.colleagueSurvey.EingabeValidierung_Verkehrsmedium'))
           } else {
-            errors.push("Sie haben für das Verkehrsmedium " + verkehrsmedium + " keinen gültigen Pendelweg angegeben.")
+            errors.push(i18n.t('colleagueSurvey.colleagueSurvey.EingabeValidierung_Pendelweg_0') + verkehrsmedium + i18n.t('colleagueSurvey.colleagueSurvey.EingabeValidierung_Pendelweg_1'))
           }
         }
         if(verkehr[0] != null && verkehr[2] && !verkehr[3]) {
-          errors.push("Sie benutzen das Verkehrsmedium " + verkehrsmedium + " in einer Fahrgemeinschaft, haben aber keine Mitfahrendenanzahl angegeben.")
+          errors.push(i18n.t('colleagueSurvey.colleagueSurvey.EingabeValidierung_Pendelweg_0') + verkehrsmedium + i18n.t('colleagueSurvey.colleagueSurvey.EingabeValidierung_Fahrgemeinschaft_0')+ verkehrsmedium + i18n.t('colleagueSurvey.colleagueSurvey.EingabeValidierung_Fahrgemeinschaft_1'))
         }
       }
       // Check number of days in office
       if(this.arbeitstageBuero < 0 || this.arbeitstageBuero > 7) {
-        errors.push("Bitte geben Sie die Tage im Büro pro Woche an.")
+        errors.push(i18n.t('colleagueSurvey.colleagueSurvey.EingabeValidierung_TageBuero'))
       }
       // Check for Dienstreise
       for(const dienst of this.dienstreise) {
         if(dienst[0] && (!dienst[2] || dienst[2] < 0)) {
-          var dienstmedium = (dienst[0] != "Flugzeug") ? dienst[0] : dienst[1]
+          var dienstmedium = (dienst[0] != i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3')) ? dienst[0] : dienst[1]
           if(dienstmedium == null) {
-            errors.push("Sie haben bei einer Dienstreise mit Flugzeug keinen Flugstreckentyp angegeben.")
+            errors.push(i18n.t('colleagueSurvey.colleagueSurvey.EingabeValidierung_Dienstreise_0')) 
           } else {
-            errors.push("Sie haben für die Dienstreise mit " + dienst[0] + " keine gültige Distanz angegeben.")
+            errors.push(i18n.t('colleagueSurvey.colleagueSurvey.EingabeValidierung_Dienstreise_1') + dienst[0] + i18n.t('colleagueSurvey.colleagueSurvey.EingabeValidierung_Dienstreise_2'))
           }
         }
       }
       // Check IT Geraete
       for(const geraet of this.geraeteAnzahl) {
-        var geraeteName = (geraet[0] == 1) ? "Notebook" : (geraet[0] == 2) ? "Desktop PC" : (geraet[0] == 3) ? "Bildschirm" : "Mobiltelefon"
+        var geraeteName = (geraet[0] == 1) ? i18n.t('colleagueSurvey.colleagueSurvey.IT_Gereate_Notebook') : (geraet[0] == 2) ? i18n.t('colleagueSurvey.colleagueSurvey.IT_Gereate_Desktop')  : (geraet[0] == 3) ? i18n.t('colleagueSurvey.colleagueSurvey.IT_Gereate_Bildschirm') : i18n.t('colleagueSurvey.colleagueSurvey.IT_Gereate_Mobiltelefon')
         if(geraet[2] && geraet[1] == null) {
-          errors.push("Sie haben das IT-Gerät " + geraeteName + " ausgewählt, aber keine Anzahl angegeben.")
+          errors.push(i18n.t('colleagueSurvey.colleagueSurvey.EingabeValidierung_Gereate_0') + geraeteName + i18n.t('colleagueSurvey.colleagueSurvey.EingabeValidierung_Gereate_1'))
         }
         else if(geraet[2] && geraet[1] < 0) {
-          errors.push("Sie haben das IT-Gerät "+ geraeteName + " ausgewählt, aber keine gültige Anzahl angegeben.")
+          errors.push(i18n.t('colleagueSurvey.colleagueSurvey.EingabeValidierung_Gereate_0') + geraeteName + i18n.t('colleagueSurvey.colleagueSurvey.EingabeValidierung_Gereate_1'))
         }
       }
       this.errorsArray = errors
