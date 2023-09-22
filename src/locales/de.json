@@ -422,6 +422,27 @@
       "Backend": "Backend"
     }
   },
+  "userSurveyManagement": {
+    "editSurvey": {
+      "ErfolgreichGeändert": "Die Umfrage wurde erfolgreich geändert.",
+      "AenderungSpeichern": "Änderungen speichern",
+      "PflichtFelderNichtAngegeben": "Sie haben folgende Pflichtfelder nicht angegeben:",
+      "UmfrageHatProbleme": "Ihre Umfrage enthält folgende kleinere Probleme:",
+      "UmfrageWirklichSpeichern_1": "Möchten Sie ihre Umfrage wirklich speichern?",
+      "WeiterBearbeiten": "Weiter bearbeiten",
+      "BearbeitenAktivieren": " Bearbeiten aktivieren",
+      "BearbeitenDeaktivieren": " Bearbeiten deaktivieren",
+
+      "UmfrageBezeichnung": "Wie soll Ihre Umfrage bezeichnet werden?",
+      "WelchesBilanzierungsjahr": "Auf welches Bilanzierungsjahr beziehen Sie sich in dieser Umfrage?",
+      "MitarbeiterInAbteilung": "Wie viele Mitarbeitende gibt es in Ihrer Abteilung?",
+      "WelcheGebaeude": "Welche Gebäude nutzt Ihre Abteilung",
+      "Lageplan": "Lageplan",
+      "Lageplan_tooltip": "Alle Gebäude beginnen je nach Standort mit den Buchstaben S, B, L, H oder W. Die Autovervollständigung sollte Ihnen dabei helfen.",
+      "gemeinschaftlicheITGeraete": "Welche IT-Geräte benutzen Sie in Ihrer Abteilung gemeinschaftlich?"
+
+    }
+  },
   "settings": {
     "accountSettings": {
       "AccountLoeschen": "Account Löschen",
