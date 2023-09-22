@@ -377,7 +377,10 @@
       "EingabeValidierung_Dienstreise_2": " keine gültige Distanz angegeben.",
       "EingabeValidierung_Gereate_0": "Sie haben das Gerät ",
       "EingabeValidierung_Gereate_1": "  ausgewählt, aber keine Anzahl angegeben."
-
+    },
+    "surveyCompleted": {
+      "UmfrageVollstaendig_0": "Diese Umfrage ist bereits vollständig ausgefüllt.",
+      "UmfrageVollstaendig_1": "Bitte wenden Sie sich an die Person, von der Sie den Link für die Umfrage erhalten haben."
     }
   },
   "common": {

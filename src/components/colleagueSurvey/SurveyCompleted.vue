@@ -1,10 +1,10 @@
 <template>
   <div class="text-center">
     <h3 class="text-center">
-      Diese Umfrage ist bereits vollständig ausgefüllt.
+      {{ $t('colleagueSurvey.surveyCompleted.UmfrageVollstaendig_0') }}
     </h3>
     <p>
-      Bitte wenden Sie sich an die Person, von der Sie den Link für die Umfrage erhalten haben.  
+      {{ $t('colleagueSurvey.surveyCompleted.UmfrageVollstaendig_1') }}
     </p>
   </div>
 </template>
