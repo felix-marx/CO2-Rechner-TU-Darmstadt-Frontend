@@ -2,8 +2,7 @@
   <v-container class="pa-7">
     <v-row>
       <h4>
-        Leiten Sie den folgenden Link an Ihre Mitarbeitenden weiter, um ihnen
-        Zugang zur {{ this.$props.linkZiel }} zu gewähren:
+        {{ $t('componentParts.LinkSharingComponent.Link_0') }} {{ this.$props.linkZiel }} {{ $t('componentParts.LinkSharingComponent.Link_1') }}
       </h4>
     </v-row>
     <v-row>
@@ -20,7 +19,7 @@
         color="primary"
         @click="copyLink()"
       >
-        Link kopieren
+      {{ $t('componentParts.LinkSharingComponent.Link_2') }}
       </v-btn>
     </v-row>
     <v-row>
@@ -30,7 +29,7 @@
         text
         type="success"
       >
-        Link erfolgreich in die Zwischenablage kopiert.
+      {{ $t('componentParts.copyButton.LinkInZwischenablage') }}
       </v-alert>
     </v-row>
   </v-container>

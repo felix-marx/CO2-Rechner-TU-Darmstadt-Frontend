@@ -22,7 +22,7 @@
           text
           type="success"
         >
-          Link erfolgreich in die Zwischenablage kopiert.
+          {{ $t('componentParts.copyButton.LinkInZwischenablage') }}
         </v-alert>
       </v-col>
     </v-row>

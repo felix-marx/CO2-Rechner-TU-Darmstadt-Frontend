@@ -1,11 +1,11 @@
 <template>
   <div class="text-center">
     <h3 class="text-center">
-      Es tut uns leid, aber die Umfrage mit ID
-      "{{ this.$route.params.umfrageID }}" konnte nicht gefunden werden.
+      {{ $t("colleagueSurvey.surveyNotFound.SurveyNotFound_0") }}
+      {{ this.$route.params.umfrageID }} {{ $t("colleagueSurvey.surveyNotFound.SurveyNotFound_1") }}
     </h3>
     <p>
-      Bitte wenden Sie sich an die Person, von der Sie den Link für die Umfrage erhalten haben.  
+      {{ $t("colleagueSurvey.surveyCompleted.UmfrageVollstaendig_1") }}
     </p>
   </div>
 </template>

@@ -10,40 +10,40 @@
         v-bind="attrs"
         v-on="on"
       >
-        <span class="mx-2">Projektcode</span>
+        <span class="mx-2">{{ $t('componentParts.OpenSource.Projektcode') }}</span>
       </v-btn>
     </template>
 
     <v-card>
       <v-card-title class="text-h5 grey lighten-2">
-        Projektcode
+        {{ $t('componentParts.OpenSource.Projektcode') }}
       </v-card-title>
       <v-list-item>
         <v-list-item-content>
           <v-card elevation="0">
-            Der CO<sub>2</sub>-Rechner wurde öffentlich unter der GNU AGPL-3.0 Open Source Lizenz entwickelt.<br>
-            Sie können die gesamte Code Basis auf Github einsehen:
+            {{ $t('componentParts.OpenSource.Text_0') }}<br>
+            {{ $t('componentParts.OpenSource.Text_1') }}
             <v-list>
               <v-list-item>
                 <v-list-item-title>
-                  Webseite:
+                  {{ $t('componentParts.OpenSource.Website') }}
                 </v-list-item-title>
                 <v-list-item-subtitle>
                   <a
                     href="https://github.com/felix-marx/CO2-Rechner-TU-Darmstadt-Frontend"
                     target="_blank"
-                  >Github Repository</a>
+                  >{{ $t('componentParts.OpenSource.Github') }}</a>
                 </v-list-item-subtitle>
               </v-list-item>
               <v-list-item>
                 <v-list-item-title>
-                  Backend:
+                  {{ $t('componentParts.OpenSource.Backend') }}
                 </v-list-item-title>
                 <v-list-item-subtitle>
                   <a
                     href="https://github.com/Anhilly/co2-rechner-TU-Darmstadt-backend"
                     target="_blank"
-                  >Github Repository</a>
+                  >{{ $t('componentParts.OpenSource.Github') }}</a>
                 </v-list-item-subtitle>
               </v-list-item>
             </v-list>
