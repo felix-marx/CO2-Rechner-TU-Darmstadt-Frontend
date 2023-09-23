@@ -440,8 +440,18 @@
       "Lageplan": "Lageplan",
       "Lageplan_tooltip": "Alle Gebäude beginnen je nach Standort mit den Buchstaben S, B, L, H oder W. Die Autovervollständigung sollte Ihnen dabei helfen.",
       "gemeinschaftlicheITGeraete": "Welche IT-Geräte benutzen Sie in Ihrer Abteilung gemeinschaftlich?"
-
+    },
+    "SurveyOverview": {
+      "GespeicherteUmfragen": "Gespeicherte Umfragen",
+      "LinkZurMitarbeiterumfrage": "'Link zur Mitarbeitendenumfrage kopieren'",
+      "Anzeigen": "anzeigen",
+      "LoeschenDerUmfrage_0": "Löschen der Umfrage",
+      "LoeschenDerUmfrage_1": "Sind Sie sicher, dass Sie die Umfrage ",
+      "LoeschenDerUmfrage_2": " löschen möchten? Diese Aktion kann nicht zurückgenommen werden.",
+      "LoeschenBestaetigen": "Ich bestätige",
+      "ServerNichtErreichbar": "Server nicht erreichbar."
     }
+
   },
   "settings": {
     "accountSettings": {
@@ -468,7 +478,10 @@
   "common": {
     "Ja": "Ja",
     "CO": "CO",
+    "Umfrage": "Umfrage",
+    "Auswertung": "Auswertung",
     "Bezeichung": "Bezeichnung",
+    "Duplizieren": "Duplizieren",
     "ServerNichtErreichbar": "Server nicht erreichbar.",
     "Bilanzierungsjahr": "Bilanzierungsjahr",
     "Mitarbeitendenzahl": "Mitarbeitendenzahl",

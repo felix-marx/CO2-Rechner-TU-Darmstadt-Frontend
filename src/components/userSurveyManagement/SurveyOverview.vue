@@ -2,7 +2,7 @@
   <v-container>
     <v-card>
       <v-card-title>
-        Gespeicherte Umfragen:
+        {{ $t('userSurveyManagement.editSurvey.GespeicherteUmfragen') }}
       </v-card-title>
 
       <!-- Die erstellte Umfrage soll eine Karte erhalten. -->
@@ -18,7 +18,7 @@
         >
           <v-list-item-content>
             <div class="text-overline mb-1">
-              Bilanzierungsjahr {{ umfrage.jahr }}
+              {{ $t('common.Bilanzierungsjahr') }} {{ umfrage.jahr }}
             </div> 
             <v-list-item-title class="text-h5 mb-4">
               {{ umfrage.bezeichnung }}
@@ -28,7 +28,7 @@
                 cols="7"
               >
                 <CopyButton
-                  :button-text="'Link zur Mitarbeitendenumfrage kopieren'"
+                  :button-text="$t('userSurveyManagement.SurveyOverview.LinkZurMitarbeiterumfrage')"
                   :text-to-copy="mitarbeiterumfrageBaseURL + umfrage._id"
                 />
               </v-col>
@@ -36,7 +36,7 @@
                 cols=""
                 class="text-right"
                 align-self="start"
-              >
+                >
                 <div class="py-2">
                   <b>{{ umfrage.mitarbeiterUmfrageRef.length }}/{{ umfrage.mitarbeiteranzahl }} </b> Mitarbeitende haben ausgefüllt
                 </div>
@@ -76,7 +76,7 @@
                 >
                   mdi-clipboard-edit
                 </v-icon>
-                <span>anzeigen</span>
+                <span>{{ $t('userSurveyManagement.SurveyOverview.Anzeigen') }}</span>
               </v-btn>
             </template>
             <v-card>
@@ -91,7 +91,7 @@
                 >
                   <v-icon>mdi-close</v-icon>
                 </v-btn>
-                <v-toolbar-title>Umfrage</v-toolbar-title>
+                <v-toolbar-title>{{ $t('common.Umfrage') }}</v-toolbar-title>
               </v-toolbar>
               <!-- Hier kommt der Inhalt der Umfrage hin -->
               <v-card
@@ -121,7 +121,7 @@
                 <v-icon left>
                   mdi-chart-bar
                 </v-icon>
-                Auswertung
+                {{ $t('common.Auswertung') }}
               </v-btn>
             </template>
             <v-card>
@@ -136,7 +136,7 @@
                 >
                   <v-icon>mdi-close</v-icon>
                 </v-btn>
-                <v-toolbar-title>Auswertung</v-toolbar-title>
+                <v-toolbar-title>{{ $t('common.Auswertung') }}</v-toolbar-title>
                 <v-spacer />
               </v-toolbar>
               <v-card
@@ -163,7 +163,7 @@
             <v-icon class="mr-1">
               mdi-content-copy
             </v-icon>
-            Duplizieren
+            {{ $t('common.Duplizieren') }}
           </v-btn>
 
           <v-dialog
@@ -183,7 +183,7 @@
                 <v-icon>
                   mdi-delete-outline
                 </v-icon>
-                Löschen
+                {{ $t('common.Loeschen') }}
               </v-btn>
             </template>
 
@@ -192,12 +192,11 @@
                 color="primary"
                 dark
               >
-                Löschen der Umfrage
+              {{ $t('userSurveyManagement.SurveyOverview.LoeschenDerUmfrage_0') }}
               </v-toolbar>
               <v-card-text>
                 <div class="pt-6">
-                  Sind Sie sicher, dass Sie die Umfrage {{ umfrage.bezeichnung }} löschen möchten?
-                  Diese Aktion kann nicht zurückgenommen werden.
+                  {{ $t('userSurveyManagement.SurveyOverview.LoeschenDerUmfrage_1') }} {{ umfrage.bezeichnung }} {{ $t('userSurveyManagement.SurveyOverview.LoeschenDerUmfrage_2') }}
                 </div>
               </v-card-text>
 
@@ -210,7 +209,7 @@
                   text
                   @click="removeSurvey(index, umfrage._id)"
                 >
-                  Ich bestätige
+                {{ $t('userSurveyManagement.SurveyOverview.LoeschenBestaetigen') }}
                 </v-btn>
               </v-card-actions>
             </v-card>
@@ -232,6 +231,7 @@
 import EditSurvey from "./EditSurvey.vue";
 import SurveyEvaluation from "../evaluation/SurveyEvaluation.vue";
 import CopyButton from '../componentParts/CopyButton.vue';
+import i18n from "../../i18n";
 
 export default {
   components: {
@@ -355,7 +355,7 @@ export default {
         })
         .catch((error) => {
           this.errors[index] = true
-          this.message = "Server nicht erreichbar."
+          this.message = i18n.t('SurveyOverview.ServerNichtErreichbar')
           console.error("Error:", error);
           return false
         });
@@ -382,7 +382,7 @@ export default {
         })
         .catch((error) => {
           this.errors[index] = true
-          this.message = "Server nicht erreichbar."
+          this.message = i18n.t('SurveyOverview.ServerNichtErreichbar')
           console.error("Error:", error);
           return false
         });
