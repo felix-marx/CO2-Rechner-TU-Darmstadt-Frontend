@@ -27,6 +27,7 @@ import SurveyNotFound from "@/components/colleagueSurvey/SurveyNotFound";
 import LoadingAnimation from "@/components/componentParts/LoadingAnimation";
 import SurveyEvaluation from "@/components/evaluation/SurveyEvaluation";
 import ResultSharingDisabled from "../components/evaluation/ResultSharingDisabled.vue";
+import i18n from "../i18n";
 
 export default {
   name: "AuswertungView",
@@ -40,7 +41,7 @@ export default {
   },
 
   data: () => ({
-      tabList: [{ id: 0, title: 'Auswertung', componentType: LoadingAnimation}],
+      tabList: [{ id: 0, title: i18n.t('common.Auswertung'), componentType: LoadingAnimation}],
       umfrageID: null,
       freigegeben: 0,
   }),

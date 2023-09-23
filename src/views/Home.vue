@@ -24,6 +24,7 @@ import Header from "@/components/componentParts/Header";
 import Survey from "@/components/userSurvey/Survey";
 import SurveyOverview from "@/components/userSurveyManagement/SurveyOverview";
 import AccountSettings from '../components/settings/AccountSettings.vue';
+import i18n from "../i18n";
 
 export default {
   name: "App",
@@ -40,9 +41,9 @@ export default {
     selectedTab: 0,
     currentTabType: Survey,
     tabList: [
-        { id: 2, title: "Accounteinstellungen", componentType: AccountSettings},
-        { id: 0, title: "CO2-Rechner", componentType: Survey },
-        { id: 1, title: "Umfragenübersicht", componentType: SurveyOverview },
+        { id: 2, title: i18n.t('common.Accounteinstellungen'), componentType: AccountSettings},
+        { id: 0, title: i18n.t('common.CO2_Rechner'), componentType: Survey },
+        { id: 1, title: i18n.t('common.UmfrageUebersicht'), componentType: SurveyOverview },
     ],
   }),
 

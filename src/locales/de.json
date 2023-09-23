@@ -478,8 +478,12 @@
   "common": {
     "Ja": "Ja",
     "CO": "CO",
+    "Accounteinstellungen": "Accounteinstellungen",
+    "UmfrageUebersicht": "Umfrageübersicht",
+    "CO2_Rechner": "CO₂-Rechner",
     "Umfrage": "Umfrage",
     "Auswertung": "Auswertung",
+    "Datenbank": "Datenbank",
     "Bezeichung": "Bezeichnung",
     "Duplizieren": "Duplizieren",
     "ServerNichtErreichbar": "Server nicht erreichbar.",

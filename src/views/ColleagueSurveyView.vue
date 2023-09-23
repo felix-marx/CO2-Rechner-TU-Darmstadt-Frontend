@@ -27,6 +27,7 @@ import ColleagueSurvey from "@/components/colleagueSurvey/ColleagueSurvey";
 import SurveyNotFound from "@/components/colleagueSurvey/SurveyNotFound";
 import LoadingAnimation from "@/components/componentParts/LoadingAnimation";
 import UmfrageCompleted from "@/components/colleagueSurvey/SurveyCompleted"
+import i18n from "../i18n";
 
 export default {
   name: "ColleagueSurveyView",
@@ -40,7 +41,7 @@ export default {
   },
 
   data: () => ({
-      tabList: [{ id: 0, title: 'Umfrage', componentType: LoadingAnimation}],
+      tabList: [{ id: 0, title: i18n.t('common.Umfrage'), componentType: LoadingAnimation}],
       umfrageID: null,
       bezeichnung: "",
       umfrageComplete: false

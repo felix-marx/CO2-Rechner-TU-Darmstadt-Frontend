@@ -2,7 +2,7 @@
   <v-container>
     <v-card>
       <v-card-title>
-        {{ $t('userSurveyManagement.editSurvey.GespeicherteUmfragen') }}
+        {{ $t('userSurveyManagement.SurveyOverview.GespeicherteUmfragen') }}
       </v-card-title>
 
       <!-- Die erstellte Umfrage soll eine Karte erhalten. -->

@@ -24,6 +24,7 @@ import Header from "@/components/componentParts/Header";
 import AdminDBInteract from "@/components/admin/AdminDBInteract";
 import AdminViewSurveys from "@/components/admin/AdminViewSurveys";
 import AccountSettings from '../components/settings/AccountSettings.vue';
+import i18n from "../i18n";
 
 export default {
   name: "App",
@@ -42,9 +43,9 @@ export default {
     selectedTab: 0,
     currentTabType: AdminViewSurveys,
     tabList: [
-      { id: 2, title: "Accounteinstellungen", componentType: AccountSettings},
-      { id: 0, title: "Umfragenübersicht", componentType: AdminViewSurveys},
-      { id: 1, title: "Datenbank", componentType: AdminDBInteract},
+      { id: 2, title: i18n.t('common.Accounteinstellungen'), componentType: AccountSettings},
+      { id: 0, title: i18n.t('common.UmfrageUebersicht'), componentType: AdminViewSurveys},
+      { id: 1, title: i18n.t('common.Datenbank'), componentType: AdminDBInteract},
     ],
   }),
 
