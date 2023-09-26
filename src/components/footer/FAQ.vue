@@ -23,8 +23,6 @@
                 v-html="$t('footer.FAQ.Titel_1')"
               />
 
-              <h1>Make CO2-eq Einheitlich</h1>
-
               <v-expansion-panels
                 focusable
                 multiple
@@ -256,49 +254,6 @@
 
                 <v-expansion-panel>
                   <v-expansion-panel-header>
-                    <b> {{ $t('footer.FAQ.Frage_2_2') }} </b> 
-                  </v-expansion-panel-header>
-                  <v-expansion-panel-content>
-                    <v-card
-                      class="mt-4"
-                      elevation="0"
-                    >
-                      <p> {{ $t('footer.FAQ.Antwort_2_2') }} </p>
-                    </v-card>
-                  </v-expansion-panel-content>
-                </v-expansion-panel>
-
-                <v-expansion-panel>
-                  <v-expansion-panel-header>
-                    <b> {{ $t('footer.FAQ.Frage_2_3') }} </b> 
-                  </v-expansion-panel-header>
-                  <v-expansion-panel-content>
-                    <v-card
-                      class="mt-4"
-                      elevation="0"
-                    >
-                      <p> {{ $t('footer.FAQ.Antwort_2_3_1') }} </p>
-                      <p> {{ $t('footer.FAQ.Antwort_2_3_2') }} </p>
-                    </v-card>
-                  </v-expansion-panel-content>
-                </v-expansion-panel>
-
-                <v-expansion-panel>
-                  <v-expansion-panel-header>
-                    <b> {{ $t('footer.FAQ.Frage_2_4') }} </b> 
-                  </v-expansion-panel-header>
-                  <v-expansion-panel-content>
-                    <v-card
-                      class="mt-4"
-                      elevation="0"
-                    >
-                      <p> {{ $t('footer.FAQ.Antwort_2_4') }} </p>
-                    </v-card>
-                  </v-expansion-panel-content>
-                </v-expansion-panel>
-
-                <v-expansion-panel>
-                  <v-expansion-panel-header>
                     <b> {{ $t('footer.FAQ.Frage_2_5') }} </b> 
                   </v-expansion-panel-header>
                   <v-expansion-panel-content>
@@ -349,9 +304,8 @@
                       class="mt-4"
                       elevation="0"
                     >
-                      <p> {{ $t('footer.FAQ.Antwort_2_8_1') }} </p>
-                      <p> {{ $t('footer.FAQ.Antwort_2_8_2') }} </p>
-
+                      <p v-html="$t('footer.FAQ.Antwort_2_8_1')" />
+                      <p v-html="$t('footer.FAQ.Antwort_2_8_2')" />
                       <div
                         :key="formel_1"
                         v-katex:auto
@@ -359,7 +313,7 @@
                       >
                         {{ formel_1 }}
                       </div>
-                      <p> {{ $t('footer.FAQ.Antwort_2_8_3') }} </p>
+                      <p v-html="$t('footer.FAQ.Antwort_2_8_3')" />
                       <div
                         :key="formel_2"
                         v-katex:auto
@@ -368,7 +322,8 @@
                         {{ formel_2 }}
                       </div>
 
-                      <p> {{ $t('footer.FAQ.Antwort_2_8_4') }} </p>
+                      <p v-html="$t('footer.FAQ.Antwort_2_8_4')" />
+                      {{ $t('footer.FAQ.Antwort_2_8_5') }}
                       <div
                         :key="formel_3"
                         v-katex:auto
@@ -376,9 +331,8 @@
                       >
                         {{ formel_3 }}
                       </div>
-                      {{ $t('footer.FAQ.Antwort_2_8_5') }}
 
-                      <p> {{ $t('footer.FAQ.Antwort_2_8_6') }} </p>
+                      <p v-html="$t('footer.FAQ.Antwort_2_8_6')" />
                       <div
                         :key="formel_4"
                         v-katex:auto
@@ -386,20 +340,6 @@
                       >
                         {{ formel_4 }}
                       </div>
-                    </v-card>
-                  </v-expansion-panel-content>
-                </v-expansion-panel>
-
-                <v-expansion-panel>
-                  <v-expansion-panel-header>
-                    <b> {{ $t('footer.FAQ.Frage_2_9') }} </b> 
-                  </v-expansion-panel-header>
-                  <v-expansion-panel-content>
-                    <v-card
-                      class="mt-4"
-                      elevation="0"
-                    >
-                      <p> {{ $t('footer.FAQ.Antwort_2_9') }} </p>
                     </v-card>
                   </v-expansion-panel-content>
                 </v-expansion-panel>
@@ -420,37 +360,6 @@
 
                 <v-expansion-panel>
                   <v-expansion-panel-header>
-                    <b> {{ $t('footer.FAQ.Frage_2_11') }} </b> 
-                  </v-expansion-panel-header>
-                  <v-expansion-panel-content>
-                    <v-card
-                      class="mt-4"
-                      elevation="0"
-                    >
-                      <p v-html="$t('footer.FAQ.Antwort_2_11_1')" />
-                      <p v-html="$t('footer.FAQ.Antwort_2_11_2')" />
-                    </v-card>
-                  </v-expansion-panel-content>
-                </v-expansion-panel>
-
-                <v-expansion-panel>
-                  <v-expansion-panel-header>
-                    <b> {{ $t('footer.FAQ.Frage_2_12') }} </b> 
-                  </v-expansion-panel-header>
-                  <v-expansion-panel-content>
-                    <v-card
-                      class="mt-4"
-                      elevation="0"
-                    >
-                      <p> {{ $t('footer.FAQ.Antwort_2_12_1') }} </p>
-                      <p> {{ $t('footer.FAQ.Antwort_2_12_2') }} </p>
-                      <p> {{ $t('footer.FAQ.Antwort_2_12_3') }} </p>
-                    </v-card>
-                  </v-expansion-panel-content>
-                </v-expansion-panel>
-
-                <v-expansion-panel>
-                  <v-expansion-panel-header>
                     <b> {{ $t('footer.FAQ.Frage_2_13') }} </b> 
                   </v-expansion-panel-header>
                   <v-expansion-panel-content>
@@ -462,6 +371,36 @@
                     </v-card>
                   </v-expansion-panel-content>
                 </v-expansion-panel>
+
+                <v-expansion-panel>
+                  <v-expansion-panel-header>
+                    <b> {{ $t('footer.FAQ.Frage_2_2') }} </b> 
+                  </v-expansion-panel-header>
+                  <v-expansion-panel-content>
+                    <v-card
+                      class="mt-4"
+                      elevation="0"
+                    >
+                      <p> {{ $t('footer.FAQ.Antwort_2_2') }} </p>
+                    </v-card>
+                  </v-expansion-panel-content>
+                </v-expansion-panel>
+
+                <v-expansion-panel>
+                  <v-expansion-panel-header>
+                    <b> {{ $t('footer.FAQ.Frage_2_3') }} </b> 
+                  </v-expansion-panel-header>
+                  <v-expansion-panel-content>
+                    <v-card
+                      class="mt-4"
+                      elevation="0"
+                    >
+                      <p> {{ $t('footer.FAQ.Antwort_2_3_1') }} </p>
+                      <p> {{ $t('footer.FAQ.Antwort_2_3_2') }} </p>
+                    </v-card>
+                  </v-expansion-panel-content>
+                </v-expansion-panel>
+
               </v-expansion-panels>
             </v-card>
 
@@ -481,23 +420,6 @@
                 multiple
                 class="px-4 pb-4 mt-2"
               >
-                <v-expansion-panel>
-                  <v-expansion-panel-header>
-                    <b> {{ $t('footer.FAQ.Frage_3_1') }} </b> 
-                  </v-expansion-panel-header>
-                  <v-expansion-panel-content>
-                    <v-card
-                      class="mt-4"
-                      elevation="0"
-                    >
-                      <p> {{ $t('footer.FAQ.Antwort_3_1_1') }} </p>
-                      <p> {{ $t('footer.FAQ.Antwort_3_1_2') }} </p>
-                      <p> {{ $t('footer.FAQ.Antwort_3_1_3') }} </p>
-                      <p> {{ $t('footer.FAQ.Antwort_3_1_4') }} </p>
-                    </v-card>
-                  </v-expansion-panel-content>
-                </v-expansion-panel>
-
                 <v-expansion-panel>
                   <v-expansion-panel-header>
                     <b v-html="$t('footer.FAQ.Frage_3_2')" />
@@ -529,11 +451,87 @@
                       <p v-html="$t('footer.FAQ.Antwort_3_3_1')" />
                       <p>
                         <label v-html="$t('footer.FAQ.Antwort_3_3_2')" />
-                        <a href="mailto:co2-rechner@zv.tu-darmstadt.de">co2-rechner@zv.tu-darmstadt.de</a>
+                        <a href="mailto:co2-rechner@zv.tu-darmstadt.de">co2-rechner@zv.tu-darmstadt.de</a>.
                       </p>
                     </v-card>
                   </v-expansion-panel-content>
                 </v-expansion-panel>
+
+                <v-expansion-panel>
+                  <v-expansion-panel-header>
+                    <b> {{ $t('footer.FAQ.Frage_3_1') }} </b> 
+                  </v-expansion-panel-header>
+                  <v-expansion-panel-content>
+                    <v-card
+                      class="mt-4"
+                      elevation="0"
+                    >
+                      <p> {{ $t('footer.FAQ.Antwort_3_1_1') }} </p>
+                      <p> {{ $t('footer.FAQ.Antwort_3_1_2') }} </p>
+                      <p> {{ $t('footer.FAQ.Antwort_3_1_3') }} </p>
+                      <p> {{ $t('footer.FAQ.Antwort_3_1_4') }} </p>
+                    </v-card>
+                  </v-expansion-panel-content>
+                </v-expansion-panel>
+
+                <v-expansion-panel>
+                  <v-expansion-panel-header>
+                    <b> {{ $t('footer.FAQ.Frage_2_9') }} </b> 
+                  </v-expansion-panel-header>
+                  <v-expansion-panel-content>
+                    <v-card
+                      class="mt-4"
+                      elevation="0"
+                    >
+                      <p> {{ $t('footer.FAQ.Antwort_2_9') }} </p>
+                    </v-card>
+                  </v-expansion-panel-content>
+                </v-expansion-panel>
+
+                <v-expansion-panel>
+                  <v-expansion-panel-header>
+                    <b> {{ $t('footer.FAQ.Frage_2_4') }} </b> 
+                  </v-expansion-panel-header>
+                  <v-expansion-panel-content>
+                    <v-card
+                      class="mt-4"
+                      elevation="0"
+                    >
+                      <p> {{ $t('footer.FAQ.Antwort_2_4') }} </p>
+                    </v-card>
+                  </v-expansion-panel-content>
+                </v-expansion-panel>
+
+                <v-expansion-panel>
+                  <v-expansion-panel-header>
+                    <b> {{ $t('footer.FAQ.Frage_2_11') }} </b> 
+                  </v-expansion-panel-header>
+                  <v-expansion-panel-content>
+                    <v-card
+                      class="mt-4"
+                      elevation="0"
+                    >
+                      <p v-html="$t('footer.FAQ.Antwort_2_11_1')" />
+                      <p v-html="$t('footer.FAQ.Antwort_2_11_2')" />
+                    </v-card>
+                  </v-expansion-panel-content>
+                </v-expansion-panel>
+
+                <v-expansion-panel>
+                  <v-expansion-panel-header>
+                    <b> {{ $t('footer.FAQ.Frage_2_12') }} </b> 
+                  </v-expansion-panel-header>
+                  <v-expansion-panel-content>
+                    <v-card
+                      class="mt-4"
+                      elevation="0"
+                    >
+                      <p> {{ $t('footer.FAQ.Antwort_2_12_1') }} </p>
+                      <p> {{ $t('footer.FAQ.Antwort_2_12_2') }} </p>
+                    </v-card>
+                  </v-expansion-panel-content>
+                </v-expansion-panel>
+
               </v-expansion-panels>
             </v-card>
 
@@ -623,7 +621,7 @@ export default {
     computed: {
         formel_1() {
           return "\\(\\begin{aligned} " + 
-                  "\\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_1_1')  + "} &= \\sum_{\\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_1_2')  + "}} \\left( \\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_1_3')  + "} \\cdot \\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_1_4')  + "} \\cdot \\frac{\\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_1_5')  + "}}{\\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_1_6')  + "}} \\right)" + 
+                  "\\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_1_1')  + "} &= \\sum_{\\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_1_7')  + "}} \\sum_{\\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_1_2')  + "}} \\left( \\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_1_3')  + "} \\cdot \\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_1_4')  + "} \\cdot \\frac{\\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_1_5')  + "}}{\\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_1_6')  + "}} \\right)" + 
                   " \\end{aligned} \\)"
         },
         formel_2() {
@@ -635,7 +633,7 @@ export default {
         },
         formel_3() {
           return  "\\(\\begin{aligned} " + 
-                  "\\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_3_1')  + "} &= \\sum_{" + this.$t('footer.FAQ.Antwort_2_8_Formel_3_2')  + "} \\left( \\frac{\\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_3_3')  + "} \\cdot \\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_3_4')  + "}}{\\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_3_5')  + "}} \\right) \\\\" +
+                  "\\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_3_1')  + "} &= \\sum_{\\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_3_2')  + "}} \\left( \\frac{\\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_3_3')  + "} \\cdot \\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_3_4')  + "}}{\\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_3_5')  + "}} \\right) \\\\" +
                   "\\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_3_3')  + "} &= 2 \\cdot \\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_3_6')  + "} \\cdot \\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_3_7')  + "} \\\\" +
                   " &= 2 \\cdot \\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_3_6')  + "} \\cdot \\frac{\\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_3_8')  + "}}{5} \\cdot \\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_3_9')  + "} \\\\" +
                   "\\end{aligned} \\)"
