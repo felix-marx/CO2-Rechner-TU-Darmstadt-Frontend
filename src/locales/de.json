@@ -5,8 +5,7 @@
   "landingpage": {
     "Login": {
       "Titel": "TU Darmstadt CO<sub>2</sub>-Rechner",
-      "Willkommen_1": "Willkommen bei dem TU Darmstadt CO<sub>2</sub>-Rechner. Mit diesem können Sie die CO<sub>2</sub>-Emissionen von TU-Einheiten berechnen.",
-      "LoginButton": "Anmelden mit TU-ID"
+      "Willkommen_1": "Willkommen bei dem TU Darmstadt CO<sub>2</sub>-Rechner. Mit diesem können Sie die CO<sub>2</sub>-Emissionen von TU-Einheiten berechnen."
     }
   },
   "admin": {
@@ -607,6 +606,9 @@
     }
   },
   "header": {
+    "Header": {
+      "LoginButton": "Anmelden mit TU-ID"
+    },
     "accountSettings": {
       "AccountLoeschen": "Account Löschen",
       "AccountLoeschen_text": "Hier können Sie Ihren Account löschen. Wenn Sie sicher sind, dies tun zu wollen, drücken Sie bitte den folgenden Knopf.",

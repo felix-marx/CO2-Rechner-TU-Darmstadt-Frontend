@@ -38,6 +38,17 @@
       >
         <v-icon>mdi-close</v-icon>
       </v-btn>
+      <v-btn
+        v-if="!$keycloak.authenticated"
+        color="primary"
+        elevation="0"
+        @click="$keycloak.loginFn()"
+      >
+        <v-icon left>
+          mdi-account
+        </v-icon>
+        {{ $t('header.Header.LoginButton') }}
+      </v-btn>
     </span>
   </v-app-bar>
 </template>

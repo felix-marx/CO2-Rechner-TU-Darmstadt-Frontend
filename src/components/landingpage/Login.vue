@@ -19,7 +19,7 @@
         </div>
 
         <!-- Login Button -->
-        <v-container>
+        <!-- <v-container>
           <v-row>
             <v-col
               v-if="!$keycloak.authenticated"
@@ -37,7 +37,7 @@
               </v-btn>
             </v-col>
           </v-row>
-        </v-container>
+        </v-container> -->
 
         <!-- Logos -->
         <v-container class="d-flex justify-space-around mt-10 mb-6 py-10">
