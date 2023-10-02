@@ -92,8 +92,8 @@
 </template>
 
 <script>
-import Footer from "../componentParts/Footer.vue";
-import Header from "../componentParts/Header.vue";
+import Footer from "../footer/Footer.vue";
+import Header from "../header/Header.vue";
 
 export default {
   name: "Login",

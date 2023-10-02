@@ -21,8 +21,8 @@
 </template>
 
 <script>
-import Footer from "@/components/componentParts/Footer";
-import Header from "@/components/componentParts/Header";
+import Footer from "@/components/footer/Footer";
+import Header from "@/components/header/Header";
 import ColleagueSurvey from "@/components/colleagueSurvey/ColleagueSurvey";
 import SurveyNotFound from "@/components/colleagueSurvey/SurveyNotFound";
 import LoadingAnimation from "@/components/componentParts/LoadingAnimation";

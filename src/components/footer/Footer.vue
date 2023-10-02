@@ -35,8 +35,8 @@
 </template>
 
 <script>
-import Contact from "../legal/Contact.vue";
-import OpenSource from "./OpenSource.vue";
+import Contact from "../footer/Contact.vue";
+import OpenSource from "../footer/OpenSource.vue";
 import i18n from "@/i18n";
 
 export default {
@@ -50,7 +50,7 @@ export default {
     padless: true,
     dialog: false,
     
-    // Contact component not in footerButtons for it is as Dialog and not a Button
+    // Contact and OpenSource component not in footerButtons for it is as Dialog and not a Button
     footerButtons: [
       {
         text: i18n.t('componentParts.footer.Impressum'),
@@ -60,6 +60,11 @@ export default {
       {
         text: i18n.t('componentParts.footer.Datenschutzerklearung'),
         href: process.env.VUE_APP_URL + "/datenschutz", // Eigene Datenschutzerklaerung
+        target: "",
+      },
+      {
+        text: "FAQ",
+        href: process.env.VUE_APP_URL + "/faq",
         target: "",
       },
     ],
