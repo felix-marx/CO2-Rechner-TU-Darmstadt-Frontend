@@ -53,17 +53,17 @@ export default {
     // Contact and OpenSource component not in footerButtons for it is as Dialog and not a Button
     footerButtons: [
       {
-        text: i18n.t('componentParts.footer.Impressum'),
+        text: i18n.t('footer.Footer.Impressum'),
         href: "https://www.tu-darmstadt.de/impressum/index.de.jsp",
         target: "_blank",
       },
       {
-        text: i18n.t('componentParts.footer.Datenschutzerklearung'),
+        text: i18n.t('footer.Footer.Datenschutzerklearung'),
         href: process.env.VUE_APP_URL + "/datenschutz", // Eigene Datenschutzerklaerung
         target: "",
       },
       {
-        text: "FAQ",
+        text: i18n.t('footer.Footer.FAQ'),
         href: process.env.VUE_APP_URL + "/faq",
         target: "",
       },

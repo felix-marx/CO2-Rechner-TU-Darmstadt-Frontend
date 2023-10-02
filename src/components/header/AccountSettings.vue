@@ -6,13 +6,13 @@
       outlined
     >
       <v-card-title>
-        {{ $t('settings.accountSettings.AccountLoeschen') }}
+        {{ $t('header.accountSettings.AccountLoeschen') }}
         <v-divider class="ml-2" />
       </v-card-title>
       <v-row class="mb-2">
         <v-col cols="10">
           <div class="mt-4 pl-7 pr-7">
-            {{ $t('settings.accountSettings.AccountLoeschen_text') }}
+            {{ $t('header.accountSettings.AccountLoeschen_text') }}
           </div>
         </v-col>
         <v-col cols="2">
@@ -40,17 +40,17 @@
                 color="primary"
                 dark
               >
-              {{ $t('settings.accountSettings.LoeschenDesAccounts') }}
+                {{ $t('header.accountSettings.LoeschenDesAccounts') }}
               </v-toolbar>
               <v-card-text>
                 <p class="pt-6">
-                  {{ $t('settings.accountSettings.AccountLoeschen_bestaetigen_0') }}
+                  {{ $t('header.accountSettings.AccountLoeschen_bestaetigen_0') }}
                   <br>
-                  <b>{{ $t('settings.accountSettings.AccountLoeschen_bestaetigen_1') }} </b>
+                  <b>{{ $t('header.accountSettings.AccountLoeschen_bestaetigen_1') }} </b>
                 </p>
             
                 <div>
-                  {{ $t('settings.accountSettings.AccountLoeschen_bestaetigen_2') }}
+                  {{ $t('header.accountSettings.AccountLoeschen_bestaetigen_2') }}
                 </div>
                 <v-text-field
                   v-model="usernameConfirmation"
@@ -68,13 +68,13 @@
                   v-if="accountDeleted && signedOut && !displayLoadingAnimation"
                   type="success"
                 >
-                {{ $t('settings.accountSettings.AccountGeloescht_0') }}
+                  {{ $t('header.accountSettings.AccountGeloescht_0') }}
                 </v-alert>
                 <v-alert
                   v-if="deleteRequestError && !displayLoadingAnimation"
                   type="error"
                 >
-                {{ $t('settings.accountSettings.AccountNichtGeloescht') }}
+                  {{ $t('header.accountSettings.AccountNichtGeloescht') }}
                 </v-alert>
                 <v-spacer />
                 <v-btn
@@ -83,7 +83,7 @@
                   text
                   @click="deleteAccountAndSignout()"
                 >
-                {{ $t('settings.accountSettings.Bestaetigung') }}
+                  {{ $t('header.accountSettings.Bestaetigung') }}
                 </v-btn>
               </v-card-actions>
             </v-card>

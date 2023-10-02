@@ -369,6 +369,19 @@
       "Frage_4_3": "Welche Ziele verfolgt die TU Darmstadt in Hinblick auf CO<sub>2</sub>-Emissionen?",
       "Antwort_4_3_1": "Das Projekt des Landes Hessen die Landesverwaltung bis 2030 CO<sub>2</sub>-neutral zu gestalten  (mehr Infos zu dem Projekt:  <a href=\"https://co2.hessen-nachhaltig.de/der-film.html\"  target=\"_blank\" rel=\"noopener noreferrer\">Der Film (hessen-nachhaltig.de)</a> und <a href=\"https://co2.hessen-nachhaltig.de/\"  target=\"_blank\" rel=\"noopener noreferrer\">CO<sub>2</sub>-neutrale Landesverwaltung - Lernen und Handeln für unsere Zukunft (hessen-nachhaltig.de)</a>).",
       "Antwort_4_3_2": "Aktuell hat die TU Darmstadt keine CO<sub>2</sub>-Gesamtbilanz veröffentlicht. Das Energiemanagement der TU Darmstadt erstellt im Rahmen des Zieles des Landes Hessen \"CO<sub>2</sub>-neutrale Landesverwaltung 2030\" für die Hochschul-Informations-System GmbH (HIS) seit 2008 eine Teil-Treibhausgasbilanz. Auf dem Weg zu einer klimaneutralen Hochschule ist eine jährliche, allumfassende CO<sub>2</sub> Bilanz ein wichtiger Schritt."
+    },
+    "Footer": {
+      "Impressum": "Impressum",
+      "Datenschutzerklearung": "Datenschutzerklärung",
+      "FAQ": "FAQ"
+    },
+    "OpenSource": {
+      "Text_0": "Der CO₂-Rechner wurde öffentlich unter der GNU AGPL-3.0 Open Source Lizenz entwickelt.",
+      "Text_1": "Sie können die gesamte Code Basis auf Github einsehen.",
+      "Website": "Webseite",
+      "Projektcode": "Projektcode",
+      "Github": "Github Repository",
+      "Backend": "Backend"
     }
   },
   "userSurvey": {
@@ -583,22 +596,10 @@
       "UnvollstaendigeEnergieverbrauch_1": " und ",
       "UnvollstaendigeEnergieverbrauch_2": " haben wir aktuell leider nur unvollständige Daten zum Energieverbrauch!"
     },
-    "footer": {
-      "Impressum": "Impressum",
-      "Datenschutzerklearung": "Datenschutzerklärung"
-    },
     "LinkSharingComponent": {
       "Link_0": "Leiten Sie den folgenden Link an Ihre Mitarbeitenden weiter, um ihnen Zugang zur ",
       "Link_1": " zu gewähren:",
       "Link_Button": "Link kopieren"
-    },
-    "OpenSource": {
-      "Text_0": "Der CO₂-Rechner wurde öffentlich unter der GNU AGPL-3.0 Open Source Lizenz entwickelt.",
-      "Text_1": "Sie können die gesamte Code Basis auf Github einsehen.",
-      "Website": "Webseite",
-      "Projektcode": "Projektcode",
-      "Github": "Github Repository",
-      "Backend": "Backend"
     }
   },
   "userSurveyManagement": {
@@ -630,9 +631,8 @@
       "LoeschenBestaetigen": "Ich bestätige",
       "ServerNichtErreichbar": "Server nicht erreichbar."
     }
-
   },
-  "settings": {
+  "header": {
     "accountSettings": {
       "AccountLoeschen": "Account Löschen",
       "AccountLoeschen_text": "Hier können Sie Ihren Account löschen. Wenn Sie sicher sind, dies tun zu wollen, drücken Sie bitte den folgenden Knopf.",
@@ -651,7 +651,6 @@
       "Abmelden": "Abmelden",
       "ZurUmfrage": "Zur Umfrage",
       "ZurAdminuebersicht": "Zur Adminübersicht"
-
     }
   },
   "common": {

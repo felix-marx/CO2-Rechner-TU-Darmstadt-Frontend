@@ -10,40 +10,40 @@
         v-bind="attrs"
         v-on="on"
       >
-        <span class="mx-2">{{ $t('componentParts.OpenSource.Projektcode') }}</span>
+        <span class="mx-2">{{ $t('footer.OpenSource.Projektcode') }}</span>
       </v-btn>
     </template>
 
     <v-card>
       <v-card-title class="text-h5 grey lighten-2">
-        {{ $t('componentParts.OpenSource.Projektcode') }}
+        {{ $t('footer.OpenSource.Projektcode') }}
       </v-card-title>
       <v-list-item>
         <v-list-item-content>
           <v-card elevation="0">
-            {{ $t('componentParts.OpenSource.Text_0') }}<br>
-            {{ $t('componentParts.OpenSource.Text_1') }}
+            {{ $t('footer.OpenSource.Text_0') }}<br>
+            {{ $t('footer.OpenSource.Text_1') }}
             <v-list>
               <v-list-item>
                 <v-list-item-title>
-                  {{ $t('componentParts.OpenSource.Website') }}
+                  {{ $t('footer.OpenSource.Website') }}
                 </v-list-item-title>
                 <v-list-item-subtitle>
                   <a
                     href="https://github.com/felix-marx/CO2-Rechner-TU-Darmstadt-Frontend"
                     target="_blank"
-                  >{{ $t('componentParts.OpenSource.Github') }}</a>
+                  >{{ $t('footer.OpenSource.Github') }}</a>
                 </v-list-item-subtitle>
               </v-list-item>
               <v-list-item>
                 <v-list-item-title>
-                  {{ $t('componentParts.OpenSource.Backend') }}
+                  {{ $t('footer.OpenSource.Backend') }}
                 </v-list-item-title>
                 <v-list-item-subtitle>
                   <a
                     href="https://github.com/Anhilly/co2-rechner-TU-Darmstadt-backend"
                     target="_blank"
-                  >{{ $t('componentParts.OpenSource.Github') }}</a>
+                  >{{ $t('footer.OpenSource.Github') }}</a>
                 </v-list-item-subtitle>
               </v-list-item>
             </v-list>

@@ -17,7 +17,7 @@
       <v-list>
         <v-list-item>
           <v-list-item-title class="grey--text">
-            {{ $t('settings.userSettingsHeader.AngemeldetAls') }} {{ displayName }}
+            {{ $t('header.userSettingsHeader.AngemeldetAls') }} {{ displayName }}
           </v-list-item-title>
         </v-list-item>
         <v-divider />
@@ -25,7 +25,7 @@
           text
           @click="openAccountSettings()"
         >
-          <v-list-item-title> {{ $t('settings.userSettingsHeader.Accountverwaltung') }} </v-list-item-title>
+          <v-list-item-title> {{ $t('header.userSettingsHeader.Accountverwaltung') }} </v-list-item-title>
         </v-list-item>
 
         <v-list-item
@@ -33,14 +33,14 @@
           text
           @click="switchAdminOrSurvey()"
         >
-          <v-list-item-title> {{ this.$route.fullPath == "/admin" ? $t('settings.userSettingsHeader.ZurUmfrage') : $t('settings.userSettingsHeader.ZurAdminuebersicht') }} </v-list-item-title>
+          <v-list-item-title> {{ this.$route.fullPath == "/admin" ? $t('header.userSettingsHeader.ZurUmfrage') : $t('header.userSettingsHeader.ZurAdminuebersicht') }} </v-list-item-title>
         </v-list-item>
         <v-list-item
           text
           @click="$keycloak.logoutFn()"
         >
           <v-list-item-title class="red--text">
-            {{ $t('settings.userSettingsHeader.Abmelden') }}
+            {{ $t('header.userSettingsHeader.Abmelden') }}
           </v-list-item-title>
         </v-list-item>
       </v-list>
