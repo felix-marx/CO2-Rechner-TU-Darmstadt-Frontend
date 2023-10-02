@@ -194,10 +194,10 @@
     "FAQ" : {
       "Titel_1": "Allgemeine Informationen zur der Thematik CO<sub>2</sub>-Bilanzierung",
       
-      "Frage_1_1": "Was ist eine CO<sub>2</sub>-Bilanzieurng?",
+      "Frage_1_1": "Was ist eine CO<sub>2</sub>-Bilanzierung?",
       "Antwort_1_1": "Eine CO<sub>2</sub>-Bilanz dient der Darstellung der Treibhausgasemissionen einer Organisation, eines Produktes, einer Dienstleistung oder einer Aktivität innerhalb einer definierten Betrachtungsgrenze. Die Bilanz umfasst alle klimaschädlichen Emissionen und drückt diese in CO<sub>2</sub>-Äquivalente aus.",
       
-      "Frage_1_2": "Welche Standards gibt es für eine CO<sub>2</sub>-Bilanzieurng? Was ist das Greenhouse Gas Protocol (GHG Protocol)?",
+      "Frage_1_2": "Welche Standards gibt es für eine CO<sub>2</sub>-Bilanzierung? Was ist das Greenhouse Gas Protocol (GHG Protocol)?",
       "Antwort_1_2_1": "Zur Bilanzierung von CO<sub>2</sub>-Emissionen stehen neben diversen nationalen Standards auch international anerkannte Standards zur Verfügung. Zu diese gehören das GHG Protocoll, die ISO-Norm 14067 für Produkte und die ISO 14064-1 für Unternehmen.",
       "Antwort_1_2_2": "Das <b>GHG-Protocol (\"A Corporate Accounting and Reporting Standard\")</b> ist eine Multi-Stakeholder-Arbeitsgemeinschaft aus Unternehmen, Nichtregierungsorganisationen und Regierungen unter der Leitung des World Resources Institute (WIR) und des World Business Council for Sustainable Development (WBCSD), welcher explizit an die Unternehmensebene adressiert ist. Dieser Standard wurde mit Zusammenarbeit der Industrie nach einem weltweiten Praxistest im Jahre 2011 veröffentlicht und ist seitdem öffentlich zugänglich. Durch seine Orientierung an der Praxis und einfache Handhabung ist dieser Standard ein internationaler anerkannter, in vielen Unternehmen und Organisationen verwendeter, Standard. ",
       "Antwort_1_2_3": "Ein internationaler verbindlicher Standard für die CO<sub>2</sub>-Bilanzierung wurde im August 2018 mit der <b>ISO 14067 (\"Treibhausgase – Carbon Footprint von Produkten – Anforderungen an und Leitlinien für Quantifizierung\")</b> veröffentlicht. Die wichtigsten Ziele waren die Harmonisierung der bereits vorhandenen Standards, GHG Protocol und dem PAS 2050 sowie die Erstellung von einer Spezifikation mit breiter Anwendbarkeit. Die ISO 14067 spezialisiert sich in der CO<sub>2</sub>-Bilanzierung von Produkten und Dienstleistungen. Hingegen beschreibt die <b>ISO 14064 Grundlagen und Anforderungen bezüglich Quantifizierung, Monitoring und Berichterstattung von Treibhausgasemissionen und Entzug auf Unternehmensebene</b>. Sie enthält Anforderungen an die Gestaltung, Entwicklung, Verwaltung, Berichterstattung und Überprüfung des Treibhausgasinventars einer Organisation.",
@@ -212,7 +212,7 @@
       "Antwort_1_4_2_1": "<b>Scope 1</b> sind alle <b>direkten</b>, d. h. aus Quellen innerhalb der Bilanzierungsgrenzen stammenden, Emissionen",
       "Antwort_1_4_2_2": "<b>Scope 2</b> sind die <b>indirekten Emissionen</b> aus außerhalb erzeugten und eingekauften Stroms, Dampf, Wärme und Kälte.",
       "Antwort_1_4_2_3": "<b>Scope 3</b> sind alle <b>sonstigen indirekten Emissionen</b>, darunter die aus der Herstellung, Transport eingekaufter Güter oder Verteilung und Nutzung der eigenen Produkte oder der Entsorgung von Abfällen; auch Emissionen aufgrund von Geschäftsreisen gehören hierzu.",
-      "Antwort_1_4_3": "Am Beispiel der TU Darmstadt",
+      "Antwort_1_4_3": "Die Scopes lassen sich am Beispiel der TU Darmstadt leichter erklären.",
       "Antwort_1_4_4": "<b>Scope 1</b> - Direkte Emissionen stammen aus Quellen, welche die bilanzierte Einheit bzw. die TU direkt besitzt oder kontrolliert. Diese können dabei in verschiedene Kategorien aufgeteilt werden. Dazu gehört u.a. die Erzeugung von Strom, Dampf und Wärme auf Seiten der TU.  Ein weiterer Punkt, bei dem direkte Emissionen generiert werden, ist die Herstellung und Verarbeitung von Chemikalien und Materialien und die Abfallverarbeitung. Auch die Emissionen, die beim Transport von Materialien, Produkten, Abfällen und Angestellten mit TU-eigenen Beförderungsmitteln entstehen, werden unter direkten Emissionen berechnet. Dazu zählen außerdem flüchtige Emissionen. Diese entstehen durch absichtliche oder unabsichtliche Freisetzung von Treibhausgasen, wie beispielsweise durch Gerätelecks oder defekte Dichtungen.",
       "Antwort_1_4_5": "<b>Scope 2</b> - Unter Scope 2 fallen indirekte Emissionen aus zugekauftem Strom, Fernwärme, Fernkälte und Dampf. Hierbei werden die Emissionen bei der Erzeugung der Energie, die von außerhalb bezogen wird, berechnet.",
       "Antwort_1_4_6": "<b>Scope 3</b> - Zu Scope 3 zählen sämtliche indirekte Emissionen, beispielsweise Emissionen durch Zuliefernde, Dienstleistende oder Mitarbeitende. Emissionen aus Scope 3 werden in vorgelagerten und nachgelagerten Aktivitäten in der Wertschöpfungskette untergliedert.",
@@ -226,7 +226,7 @@
       "Antwort_1_4_Tabelle_6": "Pendelweg der Mitarbeitende zur Arbeit und Dienstreisen",
       "Antwort_1_4_Tabelle_7": "Spezifische Entsorgung von Chemikalien, Materialien durch externe Unternehmen",
 
-      "Frage_1_5": "Was ist ecoinvent?  Was ist GEMIS?",
+      "Frage_1_5": "Was sind ecoinvent und GEMIS?",
       "Antwort_1_5_1": "Ecoinvent ist eine Datenbank und gilt als weltweit konsistenteste und transparenteste Ökoinventardatenbank. Sie unterstützt die Umweltbewertung von Produkten und Prozessen und enthält derzeit mehr al 18.000 Datensätze. Ecoinvent beinhaltet nicht nur Informationen zu CO<sub>2</sub>eq-Faktoren, sondern allgemeine Informationen zu Umweltauswirkungen von Produkten und Dienstleistungen. Das bedeutet, dass die enthalten Informationen über industrielle oder landwirtschaftliche Prozesse, die modelliert und gemessen werden. Die natürlichen Ressourcen, die von dem Produkt oder der Dienstleistung, der Umwelt entzogen werden, die freigesetzten Emissionen (in Wasser, Luft und Boden) und entstehende Nebenprodukte und Abfälle werden hierbei mitbetrachtet. (Quelle: <a href=\"https://ecoinvent.org/the-ecoinvent-database/\"  target=\"_blank\" rel=\"noopener noreferrer\"> ecoinvent Database - ecoinvent)</a>",
       "Antwort_1_5_2": "GEMIS steht für „Globales Emissions Modell integrierter Systeme“. Es handelt sich dabei um eine Datenbank für Energie-, Stoff- und Verkehrssysteme und deren Umweltauswirkungen.",
       
@@ -244,7 +244,7 @@
       "Antwort_1_6_Tabelle_9": "Schwefelhexafluorid (SF<sub>6</sub>)",
 
       "Frage_1_7": "Woher kommen die CO<sub>2</sub>eq-Faktoren, die bei der Bilanzierung verwendet werden?",
-      "Antwort_1_7_1": "Es gibt private und öffentliche Datenbanken, die CO<sub>2</sub>eq-Faktoren zur Verfügung stellen und regelmäßig auf Basis neuer Berechnungsmethoden und Erkenntnisse aktualisieren. Die für die Bilanzierung an der TU verwendeten Datenbanken sind Ecoinvent und GEMIS.",
+      "Antwort_1_7_1": "Es gibt private und öffentliche Datenbanken, die CO<sub>2</sub>eq-Faktoren zur Verfügung stellen und regelmäßig auf Basis neuer Berechnungsmethoden und Erkenntnisse aktualisieren. Die für die Bilanzierung an der TU verwendeten Datenbanken sind ecoinvent und GEMIS.",
       "Antwort_1_7_2": "Ecoinvent gilt als weltweit konsistenteste und transparenteste Ökoinventardatenbank. Sie unterstützt die Umweltbewertung von Produkten und Prozessen und enthält derzeit mehr als 18.000 Datensätze. Ecoinvent beinhaltet nicht nur Informationen zu CO<sub>2</sub>eq-Faktoren, sondern allgemeine Informationen zu Umweltauswirkungen von beispielsweise Produkten, Materialien und Dienstleistungen. Die natürlichen Ressourcen, die von dem Produkt oder der Dienstleistung oder dem Abbau des Materials, der Umwelt entzogen werden, die freigesetzten Emissionen (in Wasser, Luft und Boden) und entstehende Nebenprodukte und Abfälle werden hierbei mitbetrachtet. (Quelle: <a href=\"https://ecoinvent.org/the-ecoinvent-database/\" target=\"_blank\" rel=\"noopener noreferrer\"> ecoinvent Database - ecoinvent)</a>",
       "Antwort_1_7_3": "GEMIS steht für „Globales Emissions Modell integrierter Systeme“. Es handelt sich dabei um eine Datenbank für Energie-, Stoff- und Verkehrssysteme und deren Umweltauswirkungen. ",
       
@@ -270,8 +270,19 @@
       "Antwort_2_6_1": "Der Rechner bestimmt die Emissionen der Verbräuche (Strom, Wärme und Kälte) der Gebäude, der verwendeten IT-Geräte, der Pendelwege der Mitarbeitenden sowie deren Dienstreisen. ",
       "Antwort_2_6_2": "Im Rahmen einer Analyse von Hauptemittenten verschiedener Universitäten und Instituten (Alpen Adria Universität, Universität für Bodenkultur Wien (BOKU Wien), dem Dezernat V (Baumanagement und Technischer Betrieb) der TU Darmstadt sowie dem Institut für Fluidsystemtechnik (FST) der TU Darmstadt) wurde bestimmt, dass diese Emissionskategorien über 90% der entstehenden Emissionen erfassen und abdecken. Diese Ergebnisse dieser Arbeit sind der ULB konsultierbar unter <a href=\"https://tuprints.ulb.tu-darmstadt.de/18513/\"  target=\"_blank\" rel=\"noopener noreferrer\">CO<sub>2</sub>-Bilanzierung und Konzeptentwicklung zur CO<sub>2</sub>-Reduktion eines Dezernats der TU Darmstadt - TUprints (tu-darmstadt.de)</a>.",
 
-      "Frage_2_7": "Wo kommen die CO<sub>2</sub>eq-Faktoren her?",
-      "Antwort_2_7": "Die CO<sub>2</sub>eq-Faktoren für die Berechnungen kommen aus den Datenbanken ecoinvent und GEMIS. ",
+      "Frage_2_7": "Woher kommen die CO<sub>2</sub>eq-Faktoren, die bei der Bilanzierung verwendet werden?",
+      "Antwort_2_7": "Es gibt private (z.B ecoinvent) und öffentliche (z.B. GEMIS) Datenbanken, die CO<sub>2</sub>eq-Faktoren zur Verfügung stellen und regelmäßig auf Basis neuer Berechnungsmethoden und Erkenntnisse aktualisieren. Die für die Bilanzierung an der TU verwendeten CO<sub>2</sub>eq-Faktoren stammen aus den Datenbanken ecoinvent und GEMIS. Außerdem verwendet der webbasierte Rechner CO<sub>2</sub>eq-Faktoren für Strom, welche von dem Energiemanagement der TU Darmstadt berechnet werden bzw. aus externen Stromverträgen entnommen werden. Die CO<sub>2</sub>eq-Faktoren für Wärme werden von dem Energiemanagement geliefert.",
+      "Antwort_2_7_Tabelle_1": "Emissionskategorie",
+      "Antwort_2_7_Tabelle_2": "Verwendete Datenbank",
+      "Antwort_2_7_Tabelle_3": "Strom der Gebäude",
+      "Antwort_2_7_Tabelle_4": "Energiemanagement der TU",
+      "Antwort_2_7_Tabelle_5": "externe Stromverträge",
+      "Antwort_2_7_Tabelle_6": "Wärme der Gebäude",
+      "Antwort_2_7_Tabelle_7": "Verwendeten IT-Geräte",
+      "Antwort_2_7_Tabelle_8": "ecoinvent",
+      "Antwort_2_7_Tabelle_9": "Transportmedien für Pendelwege",
+      "Antwort_2_7_Tabelle_10": "GEMIS",
+      "Antwort_2_7_Tabelle_11": "Transportmedien bei Dienstreisen",
 
       "Frage_2_8": "Wie wird das finale Ergebnis berechnet?",
       "Antwort_2_8_1": "Die Bilanz umfasst aktuell Energieverbräuche, IT-Geräte, Pendelweg der Mitarbeitenden und Dienstreisen. Die folgenden Formell werden zur Berechnung der CO<sub>2</sub>-Emissionen verwendet:",
@@ -313,7 +324,9 @@
       "Antwort_2_9": "Im Falle, dass nicht alle Mitarbeitende der TU Einheit die Mitarbeitendenumfrage ausfüllen, wird eine Hochrechnung für ihrer Einheit durchgeführt. Aus den Informationen und Angaben der ausgefüllten Mitarbeitendenumfrage aus ihrer TU Einheit wird ein durchschnittlicher Wert an Emissionen für eine Person bestimmt. Dieser wird dann für die Mitarbeitende ihrer Einheit, welche die Umfrage nicht ausgefüllt haben, angenommen. ",
 
       "Frage_2_10": "Wie kommt es zu Unsicherheiten in einer Bestimmung der Emissionen und wo entstehen die Unsicherheiten?",
-      "Antwort_2_10": "Kommt noch",
+      "Antwort_2_10_1": "Unsicherheiten können verschiedene Quellen haben.",
+      "Antwort_2_10_2": "In den Berechnungen entstehen Ungenauigkeiten durch Hochrechnungen, wenn nicht alle Mitarbeitenden an der Umfrage teilnehmen. Die Emission durch Energieverbräuche können nur approximiert werden, weil der Energieverbrauch nicht für jede Einheit einzeln gemessen wird. Die Berechnung verwendet den durchschnittlichen Verbrauch des Gebäudes.",
+      "Antwort_2_10_3": "Des Weiteren entstehen Unsicherheiten bei den CO<sub>2</sub>eq-Faktoren. Am Beispiel einer Dienstreise mit dem Flugzeug kann dies verdeutlicht werden. Der Verbrauch eines Flugzeuges ist beispielsweise abhängig vom Flugzeugtyp. Eine Boeing 777 oder ein Airbus A320 haben unterschiedliche CO<sub>2</sub>eq-Faktoren, aufgrund des Leergewichtes, der Anzahl an Passagieren und vieles mehr. Die Datenbanken liefern allerdings Durchschnittswerte für ein Flugzeugtyp.",
 
       "Frage_2_11": "Was passiert mit den von mir eingegebenen Daten? Wo werden meine Daten gespeichert?",
       "Antwort_2_11_1": "Der Rechner folgt den Datenschutzrichtlinien der TU Darmstadt (genauere Information: <a href=\"https://www.co2-rechner.tu-darmstadt.de/#/datenschutz\" target=\"_blank\" rel=\"noopener noreferrer\">TU-Darmstadt CO<sub>2</sub>-Rechner)</a>.",
@@ -333,8 +346,8 @@
       "Antwort_3_1_3": "Hierbei werden Angaben zu dem Pendelweg, den getätigten Dienstreisen sowie den (im Rahmen ihrer Tätigkeit an der TU) genutzten IT-Geräten benötigt. ",
       "Antwort_3_1_4": "Im nachfolgenden Video wird eine Vorstellung des Rechners sowie die Durchführung einer Umfrage (sowohl die, der hauptbeauftragten Person, als auch die, der einzelnen Mitarbeitende) exemplarisch durchgeführt. ",
 
-      "Frage_3_2": "Wie kann ich eine CO2-Bilanzierung für meine Einheit durchführen?",
-      "Antwort_3_2_1": "1. Account erstellen / Log in über SSO",
+      "Frage_3_2": "Wie kann ich eine CO2-Bilanzierung für meine Einheit durchführen? (UNVOLLSTÄNDIG)",
+      "Antwort_3_2_1": "1. Log in über SSO",
       "Antwort_3_2_2": "2. Hauptbeauftragte Person",
       "Antwort_3_2_3": "3. Versandt der MA Umfrage",
       "Antwort_3_2_4": "4. Ausfüllen der MA Umfrage",

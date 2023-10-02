@@ -204,7 +204,7 @@
                   </v-expansion-panel-content>
                 </v-expansion-panel>
 
-                <v-expansion-panel>
+                <!-- <v-expansion-panel>
                   <v-expansion-panel-header>
                     <b v-html="$t('footer.FAQ.Frage_1_7')" />
                   </v-expansion-panel-header>
@@ -218,7 +218,7 @@
                       <p> {{ $t('footer.FAQ.Antwort_1_7_3') }} </p>
                     </v-card>
                   </v-expansion-panel-content>
-                </v-expansion-panel>
+                </v-expansion-panel> -->
               </v-expansion-panels>
             </v-card>
 
@@ -291,6 +291,38 @@
                       elevation="0"
                     >
                       <p v-html="$t('footer.FAQ.Antwort_2_7')" />
+                      <v-simple-table>
+                        <template v-slot:default>
+                          <thead>
+                            <tr>
+                              <th> {{ $t('footer.FAQ.Antwort_2_7_Tabelle_1') }} </th>
+                              <th> {{ $t('footer.FAQ.Antwort_2_7_Tabelle_2') }} </th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td> {{ $t('footer.FAQ.Antwort_2_7_Tabelle_3') }} </td>
+                              <td> {{ $t('footer.FAQ.Antwort_2_7_Tabelle_4') }} / {{ $t('footer.FAQ.Antwort_2_7_Tabelle_5') }} </td>
+                            </tr>
+                            <tr>
+                              <td> {{ $t('footer.FAQ.Antwort_2_7_Tabelle_6') }} </td>
+                              <td> {{ $t('footer.FAQ.Antwort_2_7_Tabelle_4') }} </td>
+                            </tr>
+                            <tr>
+                              <td> {{ $t('footer.FAQ.Antwort_2_7_Tabelle_7') }} </td>
+                              <td> {{ $t('footer.FAQ.Antwort_2_7_Tabelle_8') }} </td>
+                            </tr>
+                            <tr>
+                              <td> {{ $t('footer.FAQ.Antwort_2_7_Tabelle_9') }} </td>
+                              <td> {{ $t('footer.FAQ.Antwort_2_7_Tabelle_10') }} </td>
+                            </tr>
+                            <tr>
+                              <td> {{ $t('footer.FAQ.Antwort_2_7_Tabelle_11') }} </td>
+                              <td> {{ $t('footer.FAQ.Antwort_2_7_Tabelle_10') }} </td>
+                            </tr>
+                          </tbody>
+                        </template>
+                      </v-simple-table>
                     </v-card>
                   </v-expansion-panel-content>
                 </v-expansion-panel>
@@ -353,7 +385,9 @@
                       class="mt-4"
                       elevation="0"
                     >
-                      <p> {{ $t('footer.FAQ.Antwort_2_10') }} </p>
+                      <p> {{ $t('footer.FAQ.Antwort_2_10_1') }} </p>
+                      <p> {{ $t('footer.FAQ.Antwort_2_10_2') }} </p>
+                      <p v-html="$t('footer.FAQ.Antwort_2_10_3')" />
                     </v-card>
                   </v-expansion-panel-content>
                 </v-expansion-panel>
@@ -400,7 +434,6 @@
                     </v-card>
                   </v-expansion-panel-content>
                 </v-expansion-panel>
-
               </v-expansion-panels>
             </v-card>
 
@@ -531,7 +564,6 @@
                     </v-card>
                   </v-expansion-panel-content>
                 </v-expansion-panel>
-
               </v-expansion-panels>
             </v-card>
 
