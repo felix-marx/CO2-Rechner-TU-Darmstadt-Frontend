@@ -19,7 +19,7 @@
         color="primary"
         @click="copyLink()"
       >
-      {{ $t('componentParts.LinkSharingComponent.Link_2') }}
+        {{ $t('componentParts.LinkSharingComponent.Link_2') }}
       </v-btn>
     </v-row>
     <v-row>
@@ -29,7 +29,7 @@
         text
         type="success"
       >
-      {{ $t('componentParts.copyButton.LinkInZwischenablage') }}
+        {{ $t('componentParts.copyButton.LinkInZwischenablage') }}
       </v-alert>
     </v-row>
   </v-container>

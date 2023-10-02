@@ -20,7 +20,7 @@
               type="success"
               dense
             >
-              {{  $t('userSurveyManagement.editSurvey.ErfolgreichGeändert') }}
+              {{ $t('userSurveyManagement.editSurvey.ErfolgreichGeändert') }}
             </v-alert>
             <v-alert
               v-if="displayError"
@@ -50,7 +50,7 @@
                   <v-icon left>
                     mdi-content-save
                   </v-icon>
-                  {{  $t('userSurveyManagement.editSurvey.AenderungSpeichern') }}
+                  {{ $t('userSurveyManagement.editSurvey.AenderungSpeichern') }}
                 </v-btn>
               </template>
 
@@ -69,7 +69,7 @@
                     <div
                       v-if="errorTextArray.required.length != 0"
                     >
-                      {{  $t('userSurveyManagement.editSurvey.AenderungSpeichern') }} <br>
+                      {{ $t('userSurveyManagement.editSurvey.AenderungSpeichern') }} <br>
                       <v-list
                         flat
                       >
@@ -89,7 +89,7 @@
                     <div
                       v-if="errorTextArray.nonRequired.length != 0"
                     >
-                    {{  $t('userSurveyManagement.editSurvey.UmfrageHatProbleme') }}<br>
+                      {{ $t('userSurveyManagement.editSurvey.UmfrageHatProbleme') }}<br>
                       <v-list
                         flat
                       >
@@ -111,7 +111,7 @@
                     v-if="errorTextArray.required.length == 0 && errorTextArray.nonRequired.length == 0"
                     class="pt-6"
                   >
-                  {{  $t('userSurveyManagement.editSurvey.UmfrageWirklichSpeichern_1') }}
+                    {{ $t('userSurveyManagement.editSurvey.UmfrageWirklichSpeichern_1') }}
                   </div>
                 </v-card-text>
 
@@ -124,7 +124,7 @@
                     text
                     @click="errorDialog = false"
                   >
-                  {{  $t('userSurveyManagement.editSurvey.WeiterBearbeiten') }}
+                    {{ $t('userSurveyManagement.editSurvey.WeiterBearbeiten') }}
                   </v-btn>
                   <v-btn
                     v-if="errorTextArray.required.length == 0"
@@ -272,7 +272,7 @@
                   color="delete"
                   @click="removeGebaeude(index)"
                 >
-                {{ $t('common.Loeschen') }}
+                  {{ $t('common.Loeschen') }}
                 </v-btn>
               </v-col>
             </v-row>

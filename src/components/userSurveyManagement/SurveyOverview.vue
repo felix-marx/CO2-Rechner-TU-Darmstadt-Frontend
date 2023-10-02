@@ -36,7 +36,7 @@
                 cols=""
                 class="text-right"
                 align-self="start"
-                >
+              >
                 <div class="py-2">
                   <b>{{ umfrage.mitarbeiterUmfrageRef.length }}/{{ umfrage.mitarbeiteranzahl }} </b> Mitarbeitende haben ausgefüllt
                 </div>
@@ -192,7 +192,7 @@
                 color="primary"
                 dark
               >
-              {{ $t('userSurveyManagement.SurveyOverview.LoeschenDerUmfrage_0') }}
+                {{ $t('userSurveyManagement.SurveyOverview.LoeschenDerUmfrage_0') }}
               </v-toolbar>
               <v-card-text>
                 <div class="pt-6">
@@ -209,7 +209,7 @@
                   text
                   @click="removeSurvey(index, umfrage._id)"
                 >
-                {{ $t('userSurveyManagement.SurveyOverview.LoeschenBestaetigen') }}
+                  {{ $t('userSurveyManagement.SurveyOverview.LoeschenBestaetigen') }}
                 </v-btn>
               </v-card-actions>
             </v-card>

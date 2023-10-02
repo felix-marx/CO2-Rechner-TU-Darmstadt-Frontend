@@ -1,9 +1,10 @@
+<!-- eslint-disable vue/no-v-html -->
 <template>
   <v-container>
     <v-card class="pa-7 mt-2">
       <!-- Introduction Text -->
       <p> {{ ($t('colleagueSurvey.colleagueSurvey.UmfrageErklaerung_0')) }} </p>
-      <p v-html="$t('colleagueSurvey.colleagueSurvey.UmfrageErklaerung_1')"></p>
+      <p v-html="$t('colleagueSurvey.colleagueSurvey.UmfrageErklaerung_1')" />
       <p>{{ ($t('colleagueSurvey.colleagueSurvey.UmfrageErklaerung_2')) }} <b>{{ umfrageYear }}</b> {{ ($t('colleagueSurvey.colleagueSurvey.UmfrageErklaerung_3')) }} </p>
       <p>{{ ($t('colleagueSurvey.colleagueSurvey.UmfrageErklaerung_4')) }}</p>
       <p> {{ ($t('colleagueSurvey.colleagueSurvey.UmfrageErklaerung_5')) }}</p>
@@ -73,7 +74,7 @@
                 :disabled="submittedDataSuccessfully"
                 @click="newVerkehrsmittel()"
               >
-              {{ ($t('common.Hinzufuegen')) }}
+                {{ ($t('common.Hinzufuegen')) }}
               </v-btn>
             </v-col>
             <v-col>
@@ -83,7 +84,7 @@
                 :disabled="submittedDataSuccessfully"
                 @click="removeVerkehrsmittel(index)"
               >
-              {{ ($t('common.Loeschen')) }}
+                {{ ($t('common.Loeschen')) }}
               </v-btn>
             </v-col>
           </v-row>
@@ -104,7 +105,7 @@
                 "
                 v-model="medium[2]"
                 :disabled="submittedDataSuccessfully"
-                :label= "$t('common.Ja')"
+                :label="$t('common.Ja')"
                 class="pr-4"
               />
             </v-col>
@@ -153,7 +154,7 @@
           {{ $t('colleagueSurvey.colleagueSurvey.Dienstreise_0') }} {{ umfrageYear }} 
           {{ $t('colleagueSurvey.colleagueSurvey.Dienstreise_1') }}
           <Tooltip
-          :tooltip-text="$t('colleagueSurvey.colleagueSurvey.Dienstreise_tooltip')"
+            :tooltip-text="$t('colleagueSurvey.colleagueSurvey.Dienstreise_tooltip')"
           />
         </h3>
         <v-divider />
@@ -179,8 +180,8 @@
               :cols="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3') ? 3 : 0"
             >
               <v-select
-                :v-show="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3')"
                 v-model="reise[1]"
+                :v-show="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3')"
                 :label="$t('colleagueSurvey.colleagueSurvey.Flugstrecke')"
                 :items="flugstreckeListe"
                 :disabled="submittedDataSuccessfully"
@@ -383,7 +384,7 @@
                     text
                     @click="errorDialog = false"
                   >
-                  {{ $t('colleagueSurvey.colleagueSurvey.EingabeValidierung_Bearbeiten') }}
+                    {{ $t('colleagueSurvey.colleagueSurvey.EingabeValidierung_Bearbeiten') }}
                   </v-btn>
                   <v-btn
                     v-if="errorsArray.length == 0"
@@ -391,7 +392,7 @@
                     text
                     @click="sendData(), errorDialog = false"
                   >
-                  {{ $t('colleagueSurvey.colleagueSurvey.EingabeValidierung_Absenden') }}
+                    {{ $t('colleagueSurvey.colleagueSurvey.EingabeValidierung_Absenden') }}
                   </v-btn>
                 </v-card-actions>
               </v-card>
@@ -414,7 +415,7 @@
               type="success"
             >
               {{ $t('colleagueSurvey.colleagueSurvey.Absenden_Erfolgreich') }}
-              </v-alert>
+            </v-alert>
           </v-col>
         </v-row>
       </v-form>
