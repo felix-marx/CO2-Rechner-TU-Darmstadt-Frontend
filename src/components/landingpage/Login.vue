@@ -12,9 +12,9 @@
       >
         <div class="text-center">
           <v-card-title class="justify-center">
-            <h2>TU Darmstadt CO<sub>2</sub>-{{ $t('Login.Rechner') }}</h2>
+            <h2 v-html="$t('landingpage.Login.Titel')" />
           </v-card-title>
-          {{ $t('Login.Willkommen_1') }}
+          <label v-html="$t('landingpage.Login.Willkommen_1')" />
         </div>
 
         <!-- Login Button -->
@@ -32,7 +32,7 @@
                 <v-icon left>
                   mdi-account
                 </v-icon>
-                <span>{{ $t('Login.LoginButton') }}</span>
+                <span>{{ $t('landingpage.Login.LoginButton') }}</span>
               </v-btn>
             </v-col>
           </v-row>

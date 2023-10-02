@@ -4,7 +4,7 @@
       <v-card-title
         class="mx-4"
       >
-        {{ $t('AdminDBInteract.Datenbankinformationen') }}
+        {{ $t('admin.AdminDBInteract.Datenbankinformationen') }}
       </v-card-title>
       <v-divider />
       <v-container>
@@ -13,10 +13,10 @@
             cols="3"
             class="mx-4"
           >
-            {{ $t('AdminDBInteract.Datenbankversion') }}
+            {{ $t('admin.AdminDBInteract.Datenbankversion') }}
           </v-col>
           <v-col class="mx-4">
-            {{ $t('AdminDBInteract.MongoDBVersion') }}
+            {{ $t('admin.AdminDBInteract.MongoDBVersion') }}
           </v-col>
         </v-row>
         <v-row>
@@ -38,7 +38,7 @@
 
     <v-card class="px-0 pb-4 mt-2">
       <v-card-title class="mx-4">
-        {{ $t('AdminDBInteract.EintragenDaten') }}
+        {{ $t('admin.AdminDBInteract.EintragenDaten') }}
       </v-card-title>
 
       <v-alert
@@ -48,7 +48,7 @@
         colored-border
         elevation="3"
       >
-        {{ $t('AdminDBInteract.DezimalenzalenWarning') }}
+        {{ $t('admin.AdminDBInteract.DezimalenzalenWarning') }}
       </v-alert>
 
       <v-divider />
@@ -68,8 +68,8 @@
         <v-expansion-panel>
           <v-expansion-panel-header>
             <label>
-              {{ $t('AdminDBInteract.NeuenCO') }}<sub>2</sub>-{{ $t('AdminDBInteract.FaktorEnergie') }}
-              <Tooltip :tooltip-text="$t('AdminDBInteract.GebaeudebezeichnungTooltip')" />
+              {{ $t('admin.AdminDBInteract.NeuenCO') }}<sub>2</sub>-{{ $t('admin.AdminDBInteract.FaktorEnergie') }}
+              <Tooltip :tooltip-text="$t('admin.AdminDBInteract.GebaeudebezeichnungTooltip')" />
             </label>
           </v-expansion-panel-header>
 
@@ -101,7 +101,7 @@
               :label="$t('common.co2Faktor')"
             >
               <template #label>
-                <label>{{ $t('AdminDBInteract.WertCO') }}<sub>2</sub>{{ $t('common.FaktorgkWh') }}</label>
+                <label>{{ $t('admin.AdminDBInteract.WertCO') }}<sub>2</sub>{{ $t('common.FaktorgkWh') }}</label>
               </template>
             </v-text-field>
 
@@ -155,8 +155,8 @@
         <v-expansion-panel>
           <v-expansion-panel-header>
             <label>
-              {{ $t('AdminDBInteract.GebäudeHinzufügen') }}
-              <Tooltip :tooltip-text="$t('AdminDBInteract.FaktorHinzufuegenText')" />
+              {{ $t('admin.AdminDBInteract.GebäudeHinzufügen') }}
+              <Tooltip :tooltip-text="$t('admin.AdminDBInteract.FaktorHinzufuegenText')" />
             </label>
           </v-expansion-panel-header>
           <v-expansion-panel-content>
@@ -179,13 +179,13 @@
               <v-col cols="11">
                 <v-text-field
                   v-model="building.name"
-                  :label="$t('AdminDBInteract.Gebäudebezeichnung')"
+                  :label="$t('admin.AdminDBInteract.Gebäudebezeichnung')"
                   :rules="basicRule"
                 />
               </v-col>
               <v-col align-self="center">
                 <Tooltip
-                  :tooltip-text="$t('AdminDBInteract.GebaeudebezeichnungTooltip')"
+                  :tooltip-text="$t('admin.AdminDBInteract.GebaeudebezeichnungTooltip')"
                 />
               </v-col>
             </v-row>
@@ -194,28 +194,28 @@
               <v-col>
                 <v-text-field
                   v-model="building.hnf"
-                  :label="$t('AdminDBInteract.HauptnutzungsflaecheQM')"
+                  :label="$t('admin.AdminDBInteract.HauptnutzungsflaecheQM')"
                   :rules="notNegativeRule"
                 />
               </v-col>
               <v-col>
                 <v-text-field
                   v-model="building.nnf"
-                  label="$t('AdminDBInteract.NebennutzungsflaecheQM')"
+                  label="$t('admin.AdminDBInteract.NebennutzungsflaecheQM')"
                   :rules="notNegativeRule"
                 />
               </v-col>
               <v-col>
                 <v-text-field
                   v-model="building.ngf"
-                  label="$t('AdminDBInteract.NettogrundflaecheQM')"
+                  label="$t('admin.AdminDBInteract.NettogrundflaecheQM')"
                   :rules="notNegativeRule"
                 />
               </v-col>
               <v-col>
                 <v-text-field
                   v-model="building.ff"
-                  :label="$t('AdminDBInteract.FunktionsflaecheQM')"
+                  :label="$t('admin.AdminDBInteract.FunktionsflaecheQM')"
                   :rules="notNegativeRule"
                 />
               </v-col>
