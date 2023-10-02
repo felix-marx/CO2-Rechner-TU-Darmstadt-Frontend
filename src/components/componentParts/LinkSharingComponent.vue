@@ -73,7 +73,7 @@ export default {
       if (!navigator.clipboard) {
         // use deprecated methods if that is the case
         this.mitarbeiterLink.select();
-        document.execCommand("copy");
+        document.execCommand("copy");   // TODO: change deprecated method
       } else {
         // otherwise make use of the Clipboard API
 

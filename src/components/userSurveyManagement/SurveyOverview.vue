@@ -38,7 +38,7 @@
                 align-self="start"
               >
                 <div class="py-2">
-                  <b>{{ umfrage.mitarbeiterUmfrageRef.length }}/{{ umfrage.mitarbeiteranzahl }} </b> Mitarbeitende haben ausgefüllt
+                  <b>{{ umfrage.mitarbeiterUmfrageRef.length }}/{{ umfrage.mitarbeiteranzahl }} </b>  {{ $t('userSurveyManagement.SurveyOverview.MitarbeiterAnzahl') }}
                 </div>
               </v-col>
               <v-col

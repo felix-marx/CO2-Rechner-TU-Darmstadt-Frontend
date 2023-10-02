@@ -348,6 +348,13 @@
       "Projektcode": "Projektcode",
       "Github": "Github Repository",
       "Backend": "Backend"
+    },
+    "Contact": {
+      "Name": "Kontakt",
+      "Titel": "Büro für Nachhaltigkeit",
+      "Adresse_1": "L3|02 Solarhaus",
+      "Adresse_2": "El-Lissitzky-Straße 3",
+      "Adresse_3": "64287 Darmstadt"
     }
   },
   "userSurvey": {
@@ -590,12 +597,13 @@
     "SurveyOverview": {
       "GespeicherteUmfragen": "Gespeicherte Umfragen",
       "LinkZurMitarbeiterumfrage": "'Link zur Mitarbeitendenumfrage kopieren'",
-      "Anzeigen": "anzeigen",
+      "Anzeigen": "Anzeigen",
       "LoeschenDerUmfrage_0": "Löschen der Umfrage",
       "LoeschenDerUmfrage_1": "Sind Sie sicher, dass Sie die Umfrage ",
       "LoeschenDerUmfrage_2": " löschen möchten? Diese Aktion kann nicht zurückgenommen werden.",
       "LoeschenBestaetigen": "Ich bestätige",
-      "ServerNichtErreichbar": "Server nicht erreichbar."
+      "ServerNichtErreichbar": "Server nicht erreichbar.",
+      "MitarbeiterAnzahl": "Mitarbeitende haben ausgefüllt"
     }
   },
   "header": {
@@ -617,6 +625,14 @@
       "Abmelden": "Abmelden",
       "ZurUmfrage": "Zur Umfrage",
       "ZurAdminuebersicht": "Zur Adminübersicht"
+    }
+  },
+  "evaluation": {
+    "ResultSharingDisabled": {
+
+    },
+    "SurveyEvaluation": {
+      
     }
   },
   "common": {

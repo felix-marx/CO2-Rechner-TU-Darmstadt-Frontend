@@ -39,8 +39,8 @@ export default {
   name: 'SelectLocale',
   data() {
     return { langs : new Map( [
-        [ 'en', "English" ],
-        [ 'de', "Deutsch"]
+        ['de', "Deutsch"],
+        ['en', "English"]
       ])
     }
   }
