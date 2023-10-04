@@ -4,8 +4,8 @@
   },
   "landingpage": {
     "Login": {
-      "Titel": "TU Darmstadt CO<sub>2</sub>-Rechner",
-      "Willkommen_1": "Willkommen bei dem TU Darmstadt CO<sub>2</sub>-Rechner. Mit diesem können Sie die CO<sub>2</sub>-Emissionen von TU-Einheiten berechnen."
+      "Titel": "Willkommen beim CO<sub>2</sub>-Rechner der TU Darmstadt",
+      "Willkommen_1": "Der CO<sub>2</sub>-Rechner ermöglicht die selbständige Erstellung einer CO<sub>2</sub>-Bilanz einer TU Einheit."
     }
   },
   "admin": {

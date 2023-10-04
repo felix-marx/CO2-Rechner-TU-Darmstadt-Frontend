@@ -78,7 +78,15 @@ const routes = [
 ]
 
 const router = new VueRouter({
-  routes
+  routes,
+  scrollBehavior (to) {
+    if(!to.hash){
+      window.scrollTo({
+        top: 0, 
+        left: 0
+      })
+    }
+  }  
 })
 
 

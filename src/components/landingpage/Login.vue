@@ -6,39 +6,89 @@
       :display-back-button="false"
       :display-login-button="true"
     />
-    <v-main class="mb-16">
+    <v-main class="mb-8">
       <v-card
         elevation="2"
-        class="py-4"
+        class="pb-4"
         outlined
       >
         <div class="text-center">
-          <v-card-title class="justify-center">
-            <h2 v-html="$t('landingpage.Login.Titel')" />
-          </v-card-title>
+          <v-img
+            max-height="400"
+            src="../../assets/rhein.jpg" 
+          />
+          <h2
+            class="py-3" 
+            v-html="$t('landingpage.Login.Titel')"
+          />
           <label v-html="$t('landingpage.Login.Willkommen_1')" />
         </div>
 
-        <!-- Login Button -->
-        <!-- <v-container>
+        <v-container class="mt-4">
           <v-row>
-            <v-col
-              v-if="!$keycloak.authenticated"
-              class="text-center mt-6"
-            >
-              <v-btn
-                color="primary"
-                type="button"
-                @click="$keycloak.loginFn()"
-              >
-                <v-icon left>
-                  mdi-account
-                </v-icon>
-                <span>{{ $t('landingpage.Login.LoginButton') }}</span>
-              </v-btn>
+            <v-col>
+              <v-card>
+                <v-card-title>
+                  CO2-Bilanzierung
+                </v-card-title>
+                <v-divider />
+                <p class="ma-4 pb-4">
+                  Eine CO2-Bilanz dient der Darstellung der Treibhausgasemissionen einer Organisation, eines Produktes, einer Dienstleistung oder einer Aktivität innerhalb einer definierten Betrachtungsgrenze. Die Bilanz umfasst alle klimaschädlichen Emissionen und drückt diese in CO2-Äquivalente aus.
+                </p>
+              </v-card>
+            </v-col>
+
+            <v-col>
+              <v-card>
+                <v-card-title>
+                  Verwednung des CO<sub>2</sub>-Rechner
+                </v-card-title>
+                <v-divider />
+                <p class="ma-4 pb-4">
+                  > <a :href="faq_link">Anleitung zur Verwendung des CO2-Rechners</a>
+                </p>
+              </v-card>
+            </v-col>
+
+            <v-col>
+              <v-card>
+                <v-card-title>
+                  Video
+                </v-card-title>
+              </v-card>
             </v-col>
           </v-row>
-        </v-container> -->
+
+          <v-row>
+            <v-col cols="3">
+              <v-card>
+                <v-card-title>
+                  CO2-Bilanzierung
+                </v-card-title>
+              </v-card>
+            </v-col>
+
+            <v-spacer />
+
+            <v-col cols="3">
+              <v-card>
+                <v-card-title>
+                  Verwednung des CO<sub>2</sub>-Rechner
+                </v-card-title>
+              </v-card>
+            </v-col>
+
+            <v-spacer />
+
+            <v-col cols="3">
+              <v-card>
+                <v-card-title>
+                  Video
+                </v-card-title>
+              </v-card>
+            </v-col>
+          </v-row>
+        </v-container>
 
         <!-- Logos -->
         <v-container class="d-flex justify-space-around mt-10 mb-6 py-10">
@@ -104,5 +154,9 @@ export default {
     Header,
     Footer
   },
+
+  data: () => ({
+    faq_link: process.env.VUE_APP_URL + '/faq#nutzung',
+  }),
 };
 </script>

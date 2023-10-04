@@ -25,6 +25,7 @@
               />
 
               <v-expansion-panels
+                v-model="panel_1"
                 focusable
                 multiple
                 class="px-4 pb-4 mt-2"
@@ -235,6 +236,7 @@
               </v-card-title>
 
               <v-expansion-panels
+                v-model="panel_2"
                 focusable
                 multiple
                 class="px-4 pb-4 mt-2"
@@ -439,6 +441,7 @@
             </v-card>
 
             <v-card
+              ref="#nutzung"
               class="px-0 pb-2"
               elevation="0"
             >
@@ -450,6 +453,7 @@
 
 
               <v-expansion-panels
+                v-model="panel_3"
                 focusable
                 multiple
                 class="px-4 pb-4 mt-2"
@@ -579,6 +583,7 @@
               </v-card-title>
 
               <v-expansion-panels
+                v-model="panel_4"
                 focusable
                 multiple
                 class="px-4 pb-4 mt-2"
@@ -643,50 +648,76 @@ import loadingAnimation from '../componentParts/LoadingAnimation.vue'
 export default {
     name: "FAQ",
     components: {
-        Header,
-        Footer
+      Header,
+      Footer
     },
 
     data: () => ({
-        tabList: [{ id: 0, title: 'FAQ', componentType: loadingAnimation}],
+      tabList: [{ id: 0, title: 'FAQ', componentType: loadingAnimation}],
+      panel_1: [],
+      panel_2: [],
+      panel_3: [],
+      panel_4: [],
     }),
 
     computed: {
-        formel_1() {
-          return "\\(\\begin{aligned} " + 
-                  "\\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_1_1')  + "} &= \\sum_{\\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_1_7')  + "}} \\sum_{\\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_1_2')  + "}} \\left( \\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_1_3')  + "} \\cdot \\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_1_4')  + "} \\cdot \\frac{\\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_1_5')  + "}}{\\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_1_6')  + "}} \\right)" + 
-                  " \\end{aligned} \\)"
-        },
-        formel_2() {
-          return  "\\(\\begin{aligned} " + 
-                  "\\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_2_1')  + "} &= \\sum_{\\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_2_2')  + "}} \\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_2_3')  + "} \\\\ " + 
-                  " &= \\sum_{\\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_2_2')  + "}} \\left( \\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_2_4')  + "} \\cdot \\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_2_5')  + "} \\right) \\\\" + 
-                  " &= \\sum_{\\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_2_2')  + "}} \\left( \\frac{\\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_2_6')  + "}}{\\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_2_7')  + "}} \\cdot \\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_2_5')  + "} \\right) " +  
-                  " \\end{aligned} \\)"
-        },
-        formel_3() {
-          return  "\\(\\begin{aligned} " + 
-                  "\\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_3_1')  + "} &= \\sum_{\\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_3_2')  + "}} \\left( \\frac{\\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_3_3')  + "} \\cdot \\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_3_4')  + "}}{\\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_3_5')  + "}} \\right) \\\\" +
-                  "\\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_3_3')  + "} &= 2 \\cdot \\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_3_6')  + "} \\cdot \\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_3_7')  + "} \\\\" +
-                  " &= 2 \\cdot \\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_3_6')  + "} \\cdot \\frac{\\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_3_8')  + "}}{5} \\cdot \\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_3_9')  + "} \\\\" +
-                  "\\end{aligned} \\)"
-        },
-        formel_4() {
-          return  "\\(\\begin{aligned} " + 
-                  "\\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_4_1')  + "} &= \\sum_{\\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_4_2')  + "}} \\left( \\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_4_3')  + "} \\cdot \\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_4_4')  + "} \\right) \\\\" +
-                  "&= \\sum_{\\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_4_2')  + "}} \\left( 2 \\cdot \\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_4_5')  + "} \\cdot \\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_4_4')  + "} \\right)" +
-                  "\\end{aligned} \\)"
-        },
+      formel_1() {
+        return "\\(\\begin{aligned} " + 
+                "\\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_1_1')  + "} &= \\sum_{\\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_1_7')  + "}} \\sum_{\\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_1_2')  + "}} \\left( \\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_1_3')  + "} \\cdot \\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_1_4')  + "} \\cdot \\frac{\\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_1_5')  + "}}{\\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_1_6')  + "}} \\right)" + 
+                " \\end{aligned} \\)"
+      },
+      formel_2() {
+        return  "\\(\\begin{aligned} " + 
+                "\\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_2_1')  + "} &= \\sum_{\\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_2_2')  + "}} \\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_2_3')  + "} \\\\ " + 
+                " &= \\sum_{\\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_2_2')  + "}} \\left( \\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_2_4')  + "} \\cdot \\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_2_5')  + "} \\right) \\\\" + 
+                " &= \\sum_{\\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_2_2')  + "}} \\left( \\frac{\\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_2_6')  + "}}{\\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_2_7')  + "}} \\cdot \\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_2_5')  + "} \\right) " +  
+                " \\end{aligned} \\)"
+      },
+      formel_3() {
+        return  "\\(\\begin{aligned} " + 
+                "\\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_3_1')  + "} &= \\sum_{\\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_3_2')  + "}} \\left( \\frac{\\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_3_3')  + "} \\cdot \\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_3_4')  + "}}{\\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_3_5')  + "}} \\right) \\\\" +
+                "\\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_3_3')  + "} &= 2 \\cdot \\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_3_6')  + "} \\cdot \\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_3_7')  + "} \\\\" +
+                " &= 2 \\cdot \\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_3_6')  + "} \\cdot \\frac{\\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_3_8')  + "}}{5} \\cdot \\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_3_9')  + "} \\\\" +
+                "\\end{aligned} \\)"
+      },
+      formel_4() {
+        return  "\\(\\begin{aligned} " + 
+                "\\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_4_1')  + "} &= \\sum_{\\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_4_2')  + "}} \\left( \\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_4_3')  + "} \\cdot \\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_4_4')  + "} \\right) \\\\" +
+                "&= \\sum_{\\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_4_2')  + "}} \\left( 2 \\cdot \\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_4_5')  + "} \\cdot \\text{" + this.$t('footer.FAQ.Antwort_2_8_Formel_4_4')  + "} \\right)" +
+                "\\end{aligned} \\)"
+      },
+    },
+
+    created() {
+      if(this.$route.hash == "#nutzung"){
+        this.panel_3 = [0]
+      }
+    },
+
+    mounted() {
+      if(this.$route.hash){
+        // if(this.$route.hash == "#nutzung"){
+        //   this.panel_3 = [0]
+        // }
+
+        let top = this.$refs[this.$route.hash].$refs.link.offsetTop
+        console.log(top)
+
+        window.scrollTo({
+          top: top, 
+          left: 0
+        })
+      }
     },
 }
 
 </script>
 
 <style lang="scss">
-    span {
-        .mord.accent {
-            background-color: inherit !important;
-            border-color: inherit !important;
-        }
+  span {
+    .mord.accent {
+      background-color: inherit !important;
+      border-color: inherit !important;
     }
+  }
 </style>
