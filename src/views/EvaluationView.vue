@@ -5,6 +5,7 @@
       :tabs="tabList"
       :display-user-setting="false"
       :display-back-button="false"
+      :display-login-button="false"
     />
 
     <!-- main body -->

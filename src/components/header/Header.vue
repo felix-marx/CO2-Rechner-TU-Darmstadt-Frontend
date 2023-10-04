@@ -39,7 +39,7 @@
         <v-icon>mdi-close</v-icon>
       </v-btn>
       <v-btn
-        v-if="!$keycloak.authenticated"
+        v-if="displayLoginButton"
         color="primary"
         elevation="0"
         @click="$keycloak.loginFn()"
@@ -78,6 +78,10 @@ export default {
       type: Boolean
     },
     displayBackButton: {
+      default: false,
+      type: Boolean
+    },
+    displayLoginButton: {
       default: false,
       type: Boolean
     }

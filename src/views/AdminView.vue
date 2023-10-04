@@ -5,6 +5,7 @@
       :display-user-setting="true"
       :tabs="tabList"
       :display-back-button="false"
+      :display-login-button="false"
       @changeTab="changeTab($event)" 
     />
 

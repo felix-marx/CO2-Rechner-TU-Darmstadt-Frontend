@@ -4,6 +4,7 @@
     <Header 
       :display-user-setting="false"
       :display-back-button="false"
+      :display-login-button="true"
     />
     <v-main class="mb-16">
       <v-card

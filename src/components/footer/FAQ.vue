@@ -6,6 +6,7 @@
       :tabs="tabList"
       :display-user-setting="false"
       :display-back-button="true"
+      :display-login-button="false"
     />
     <v-main class="mb-16">
       <v-container>
