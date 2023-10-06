@@ -68,7 +68,7 @@ export default {
       if (!navigator.clipboard) {
         // use deprecated methods if that is the case
         this.textToCopy.select();
-        document.execCommand("copy");   // TODO: change deprecated method
+        document.execCommand("copy");
       } else {
         // otherwise make use of the Clipboard API
 

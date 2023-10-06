@@ -8,7 +8,6 @@ export default new Vuetify({
         themes: {
           light: {
             primary: '#009d81',
-            // TODO different colors for theme
             secondary: '#358576',
             accent: '#8c9eff',
             error: '#b71c1c',
