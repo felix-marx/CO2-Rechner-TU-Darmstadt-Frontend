@@ -4,7 +4,7 @@
       <v-card-title
         class="mx-4"
       >
-        {{ $t('admin.AdminDBInteract.Datenbankinformationen') }}
+        Datenbankinformationen
       </v-card-title>
       <v-divider />
       <v-container>
@@ -13,10 +13,10 @@
             cols="3"
             class="mx-4"
           >
-            {{ $t('admin.AdminDBInteract.Datenbankversion') }}
+            Datenbankversion:
           </v-col>
           <v-col class="mx-4">
-            {{ $t('admin.AdminDBInteract.MongoDBVersion') }}
+            MongoDB v5.0.6
           </v-col>
         </v-row>
         <v-row>
@@ -38,7 +38,7 @@
 
     <v-card class="px-0 pb-4 mt-2">
       <v-card-title class="mx-4">
-        {{ $t('admin.AdminDBInteract.EintragenDaten') }}
+        Eintragen von Daten
       </v-card-title>
 
       <v-alert
@@ -48,7 +48,7 @@
         colored-border
         elevation="3"
       >
-        {{ $t('admin.AdminDBInteract.DezimalenzalenWarning') }}
+        Bei Dezimalzahlen muss ein Punkt als Dezimaltrenner verwendet werden!
       </v-alert>
 
       <v-divider />
@@ -57,7 +57,7 @@
         class="px-4 mt-4 mx-4"
         align="center"
       >
-        <strong>CO<sub>2</sub>-{{ $t('common.Faktoren') }} </strong>
+        <strong>CO<sub>2</sub>-Faktoren</strong>
       </p>
 
       <v-expansion-panels
@@ -68,8 +68,8 @@
         <v-expansion-panel>
           <v-expansion-panel-header>
             <label>
-              {{ $t('admin.AdminDBInteract.NeuenCO') }}<sub>2</sub>-{{ $t('admin.AdminDBInteract.FaktorEnergie') }}
-              <Tooltip :tooltip-text="$t('admin.AdminDBInteract.GebaeudebezeichnungTooltip')" />
+              Neuen CO<sub>2</sub>-Faktor für Energie hinzufügen
+              <Tooltip tooltip-text="Hiermit kann ein CO2-Faktor für Energie für ein bestimmtes Jahr eingetragen werden. Es sind alle Jahre von 2018 bis zum letzten Jahr möglich. Zusätzlich wird zwischen Faktoren den Energiearten und dem Versorger (TU Darmstadt oder extern) unterschieden." />
             </label>
           </v-expansion-panel-header>
 
@@ -77,7 +77,7 @@
             <v-autocomplete
               v-model="co2_factor.year"
               :items="possibleYears"
-              :label="$t('common.Bilanzierungsjahr')"
+              label="Bilanzierungsjahr"
               prepend-icon="mdi-calendar-question"
             />
 
@@ -85,23 +85,23 @@
               v-model="co2_factor.energy_type"
               :items="energy_types"
               flat
-              :label="$t('common.Energieart')"
+              label="Energieart"
             />
 
             <v-select
               v-model="co2_factor.contract"
               :items="contracts"
               flat
-              :label="$t('common.Versorger')"
+              label="Versorger"
             />
 
             <v-text-field
               v-model="co2_factor.value"
               :rules="notNegativeRule"
-              :label="$t('common.co2Faktor')"
+              label="Wert des CO2-Faktors in g/kWh"
             >
               <template #label>
-                <label>{{ $t('admin.AdminDBInteract.WertCO') }}<sub>2</sub>{{ $t('common.FaktorgkWh') }}</label>
+                <label>Wert des CO<sub>2</sub>-Faktors in g/kWh</label>
               </template>
             </v-text-field>
 
@@ -111,7 +111,7 @@
                   color="primary"
                   @click="sendFactor"
                 >
-                  {{ $t('common.Absenden') }}
+                  Absenden
                 </v-btn>
               </v-col>
             </v-card-actions>
@@ -144,7 +144,7 @@
         class="px-4 mt-4"
         align="center"
       >
-        <strong>{{ $t('common.Gebaeude') }}</strong>
+        <strong>Gebäude</strong>
       </p>
 
       <v-expansion-panels
@@ -154,9 +154,9 @@
         <!-- Add a new building to the database -->
         <v-expansion-panel>
           <v-expansion-panel-header>
-            <label>
-              {{ $t('admin.AdminDBInteract.GebäudeHinzufügen') }}
-              <Tooltip :tooltip-text="$t('admin.AdminDBInteract.FaktorHinzufuegenText')" />
+            <label> 
+              Gebäude hinzufügen 
+              <Tooltip tooltip-text="Hiermit lässt sich ein neues Gebäude in die Datenbank einfügen. Es wird eine eindeutige Gebäudenummer sowie eine Gebäudebezeichnung benötigt. Zusätzlich muss die Fläche des Gebäudes angegebnen werden. Falls ein Wert nicht vorliegt, soll 0 als Wert eigentragen werden. Ist das Gebäude an einen externen Versorger angeschlossen, so können die entsprechenden Jahre angegeben werden. Dafür muss die Checkbox ausgewählt sein und die Jahre seit 2018 als kommaseparierte in das entsprechende Feld eingetragen werden.  " />
             </label>
           </v-expansion-panel-header>
           <v-expansion-panel-content>
@@ -164,13 +164,15 @@
               <v-col cols="11">
                 <v-text-field
                   v-model="building.number"
-                  label="$t('common.Gebäudenummer')"
+                  label="Gebäudenummer"
                   :rules="basicRule"
                 />
               </v-col>
               <v-col align-self="center">
                 <Tooltip
-                  tooltip-text="$t('common.GebaeudenummerTooltip')"
+                  tooltip-text="4 Ziffern: Die 1. Ziffer für den Campus (1=Stadtmitte, 2=Botanischer Garten, 
+                3=Lichtwiese, 4=Hochschulstadion und 5=Windkanal/August-Euler-Flugplatz). Die Ziffer 2-4 für die 
+                Gebäudenummer. Zum Beispiel 1101 für das Universitätszentrum."
                 />
               </v-col>
             </v-row>
@@ -179,13 +181,13 @@
               <v-col cols="11">
                 <v-text-field
                   v-model="building.name"
-                  :label="$t('admin.AdminDBInteract.Gebäudebezeichnung')"
+                  label="Gebäudebezeichnung"
                   :rules="basicRule"
                 />
               </v-col>
               <v-col align-self="center">
                 <Tooltip
-                  :tooltip-text="$t('admin.AdminDBInteract.GebaeudebezeichnungTooltip')"
+                  tooltip-text="Eindeutige Bezeichnung des Gebäudes. Zum Beispiel 'Maschinenhaus'."
                 />
               </v-col>
             </v-row>
@@ -194,28 +196,28 @@
               <v-col>
                 <v-text-field
                   v-model="building.hnf"
-                  :label="$t('admin.AdminDBInteract.HauptnutzungsflaecheQM')"
+                  label="Hauptnutzungsfläche in qm"
                   :rules="notNegativeRule"
                 />
               </v-col>
               <v-col>
                 <v-text-field
                   v-model="building.nnf"
-                  label="$t('admin.AdminDBInteract.NebennutzungsflaecheQM')"
+                  label="Nebennutzungsfläche in qm"
                   :rules="notNegativeRule"
                 />
               </v-col>
               <v-col>
                 <v-text-field
                   v-model="building.ngf"
-                  label="$t('admin.AdminDBInteract.NettogrundflaecheQM')"
+                  label="Nettogrundfläche in qm"
                   :rules="notNegativeRule"
                 />
               </v-col>
               <v-col>
                 <v-text-field
                   v-model="building.ff"
-                  :label="$t('admin.AdminDBInteract.FunktionsflaecheQM')"
+                  label="Funktionsfläche in qm"
                   :rules="notNegativeRule"
                 />
               </v-col>
@@ -242,7 +244,7 @@
                   :rules="notNegativeRule"
                 />
               </v-col>
-            </v-row> // TODO: Hier übersetzung fertig machen
+            </v-row>
             <v-row>
               <v-col>
                 <v-checkbox
