@@ -45,7 +45,7 @@
                 </v-card-title>
                 <v-divider />
                 <p class="ma-4 pb-4">
-                  > <a :href="faq_link">Anleitung zur Verwendung des CO2-Rechners</a>
+                  > <a :href="faq_nutzung">Anleitung zur Verwendung des CO2-Rechners</a>
                 </p>
               </v-card>
             </v-col>
@@ -53,8 +53,11 @@
             <v-col>
               <v-card>
                 <v-card-title>
-                  Video
+                  Hintergrund des CO<sub>2</sub>-Rechners
                 </v-card-title>
+                <p class="ma-4 pb-4">
+                  > <a href="https://www.tu-darmstadt.de/nachhaltigkeit/buero_fuer_nachhaltigkeit/projekte_buero/news_projekte_buero_details_374400.de.jsp">CO₂-Bilanzierung: webbasiertes Tool online</a>
+                </p>
               </v-card>
             </v-col>
           </v-row>
@@ -63,8 +66,11 @@
             <v-col cols="3">
               <v-card>
                 <v-card-title>
-                  CO2-Bilanzierung
+                  FAQ
                 </v-card-title>
+                <p class="ma-4 pb-4">
+                  Alles wissenwertes zum CO2-Rechner finden sie im <a :href="faq_link">FAQ</a>.
+                </p>
               </v-card>
             </v-col>
 
@@ -156,7 +162,8 @@ export default {
   },
 
   data: () => ({
-    faq_link: process.env.VUE_APP_URL + '/faq#nutzung',
+    faq_link: process.env.VUE_APP_URL + '/faq',
+    faq_nutzung: process.env.VUE_APP_URL + '/faq#nutzung',
   }),
 };
 </script>
