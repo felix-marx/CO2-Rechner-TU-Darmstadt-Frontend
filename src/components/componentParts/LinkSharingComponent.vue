@@ -19,7 +19,7 @@
         color="primary"
         @click="copyLink()"
       >
-        {{ $t('componentParts.LinkSharingComponent.Link_2') }}
+        {{ $t('componentParts.LinkSharingComponent.Link_Button') }}
       </v-btn>
     </v-row>
     <v-row>
