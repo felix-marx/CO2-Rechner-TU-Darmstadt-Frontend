@@ -6,7 +6,7 @@
       outlined
       class="pa-7"
     >
-      <v-card-title>Auswertung der Umfrage "{{ responsedata.bezeichnung }}"</v-card-title>
+      <v-card-title>{{ $t('evaluation.surveyEvaluation.AuswertungDerUmfrage') }} "{{ responsedata.bezeichnung }}"</v-card-title>
       <v-divider />
       <v-container>
         <v-row>
@@ -14,13 +14,13 @@
             <v-icon>
               mdi-calendar
             </v-icon>
-            Bilanzierungsjahr: {{ responsedata.jahr }}
+            {{ $t('common.Bilanzierungsjahr') }} {{ responsedata.jahr }}
           </v-col>
           <v-col>
             <v-icon>
               mdi-account
             </v-icon>
-            Mitarbeitendenanzahl: {{ responsedata.mitarbeiteranzahl }}
+            {{ $t('common.Mitarbeitendenzahl') }} {{ responsedata.mitarbeiteranzahl }}
           </v-col>
         </v-row>
         <v-row>
@@ -28,7 +28,7 @@
             <v-icon>
               mdi-account-edit
             </v-icon>
-            Ausgefüllte Mitarbeitendenumfragen: {{ responsedata.umfragenanzahl }}
+            {{ $t('evaluation.surveyEvaluation.AusgefuellteMitarbeiterumfragen') }} {{ responsedata.umfragenanzahl }}
           </v-col>
           <v-col>
             <v-progress-linear
@@ -45,7 +45,7 @@
             <v-alert
               type="warning"
             >
-              Die Hochrechnung der Emissionsdaten ist ungenau, weil bisher nur {{ responsedata.umfragenanteil }}% der Mitarbeitenden die Umfrage ausgefüllt haben.
+              {{ $t('evaluation.surveyEvaluation.HochrechnungUngenau_0') }} {{ responsedata.umfragenanteil }}{{ $t('evaluation.surveyEvaluation.HochrechnungUngenau_1') }}
             </v-alert>
           </v-col>
         </v-row>
@@ -58,7 +58,7 @@
         />
       </v-container>
 
-      <v-card-title>Emissionen</v-card-title>
+      <v-card-title>{{ $t('common.Emissionen') }}</v-card-title>
 
       <v-divider />
       <v-container>
@@ -67,13 +67,13 @@
             <v-icon>
               mdi-thought-bubble
             </v-icon>
-            Gesamtemissionen: {{ responsedata.emissionenGesamt }} t CO<sub>2</sub> eq.
+            {{ $t('evaluation.surveyEvaluation.Gesamtemissionen_0') }} {{ responsedata.emissionenGesamt }} {{ $t('evaluation.surveyEvaluation.tCO2eq') }}
           </v-col>
           <v-col>
             <v-icon>
               mdi-human-male-board-poll
             </v-icon>
-            Emissionen pro Mitarbeitende: {{ responsedata.emissionenProMitarbeiter }} t CO<sub>2</sub> eq.
+            {{ $t('evaluation.surveyEvaluation.Gesamtemissionen_0') }} {{ responsedata.emissionenProMitarbeiter }} {{ $t('evaluation.surveyEvaluation.tCO2eq') }}
           </v-col>
         </v-row>
 
@@ -84,13 +84,13 @@
             class="pa-7"
           >
             <v-icon>mdi-thought-bubble-outline</v-icon>
-            <b>Did you know?</b>
+            <b>{{ $t('evaluation.surveyEvaluation.DidYouKnow') }}</b>
             : {{ haushalteReferenzText }}
           </v-card>
         </v-row>
         <v-row>
           <v-col class="d-flex justify-center">
-            <h4>Aufteilung nach Hauptemissionsfaktoren</h4>
+            <h4>{{ $t('evaluation.surveyEvaluation.AufteilungHauptemissionsfaktoren') }}</h4>
           </v-col>
         </v-row>
         <v-row>
@@ -110,14 +110,14 @@
         <v-row>
           <v-col class="d-flex justify-center">
             <h4>
-              Aufteilung der Emissionen nach Energieart
+              {{ $t('evaluation.surveyEvaluation.AufteilungNachEnergieart') }}
               <v-tooltip bottom>
                 <template v-slot:activator="{ on }">
                   <v-icon v-on="on">
                     mdi-alert-circle-outline
                   </v-icon>
                 </template>
-                Die angezeigten Emissionen für den Energieverbrauch können unvollständig sein. Der Grund dafür ist, dass nicht alle Gebäude der TU mit einem eigenen Zähler ausgestattet sind und keine Zählerdaten vorliegen.
+                {{ $t('evaluation.surveyEvaluation.AufteilungNachEnergieart_tooltip') }}
               </v-tooltip>
             </h4>
           </v-col>
@@ -127,10 +127,7 @@
             <v-alert
               type="warning"
             >
-              Es ist kein Auswertung der Emissionen durch den Energieverbrauch möglich. 
-              Für das ausgewählte Bilanzierungsjahr fehlen Daten seitens der TU Darmstadt, um die Emissionen berechnen zu können. 
-              Die Zählerinfrastruktur wird durch das Energiemanagment immer weiter ausgebaut.
-              Sie können leider nichts tun, um die Auswertung zu vervollständigen.
+              {{ $t('evaluation.surveyEvaluation.KeineEmissionenAuswertung') }}
             </v-alert>
           </v-col>
         </v-row>
@@ -152,15 +149,14 @@
         <v-row>
           <v-col class="d-flex justify-center">
             <h4>
-              Darstellung des Energieverbrauches
+              {{ $t('evaluation.surveyEvaluation.DarstellungEnergieverbrauch') }}
               <v-tooltip bottom>
                 <template v-slot:activator="{ on }">
                   <v-icon v-on="on">
                     mdi-alert-circle-outline
                   </v-icon>
                 </template>
-                Die angezeigten Verbrauche für den Energieverbrauch können unvollständig sein.
-                Der Grund dafür ist, dass nicht alle Gebäude der TU mit einem eigenen Zähler ausgestattet sind und keine Zählerdaten vorliegen.
+                {{ $t('evaluation.surveyEvaluation.DarstellungEnergieverbrauch_tooltip') }}
               </v-tooltip>
             </h4>
           </v-col>
@@ -170,10 +166,7 @@
             <v-alert
               type="warning"
             >
-              Es ist kein Auswertung der Emissionen durch den Energieverbrauch möglich.
-              Für das ausgewählte Bilanzierungsjahr fehlen Daten seitens der TU Darmstadt, um die Emissionen berechnen zu können.
-              Die Zählerinfrastruktur wird durch das Energiemanagment immer weiter ausgebaut.
-              Sie können leider nichts tun, um die Auswertung zu vervollständigen.
+              {{ $t('evaluation.surveyEvaluation.DarstellungEnergieverbrauchWarning') }}
             </v-alert>
           </v-col>
         </v-row>
@@ -198,11 +191,11 @@
               text
               type="info"
             >
-              Das Büro für Nachhaltigkeit hat Tipps zum <a
+              {{ $t('evaluation.surveyEvaluation.NachhaltigkeitTipps_0') }} <a
                 href="https://www.tu-darmstadt.de/nachhaltigkeit/buero_fuer_nachhaltigkeit/projekte_buero/news_projekte_buero_details_348992.de.jsp"
                 target="_blank"
                 style="color:hsl(229, 100%, 50%);"
-              >Energiesparen am Arbeitsplatz</a> zusammengestellt.
+              >{{ $t('evaluation.surveyEvaluation.NachhaltigkeitTipps_1') }}</a> {{ $t('evaluation.surveyEvaluation.NachhaltigkeitTipps_2') }}
             </v-alert>
           </v-col>
         </v-row>
@@ -214,15 +207,15 @@
           >
             <v-icon left>
               mdi-file-chart-outline
-            </v-icon>Download als Excel
+            </v-icon>{{ $t('evaluation.surveyEvaluation.DownloadAlsExcel') }}
           </v-btn>
-         
+
           <v-switch
             v-if="!this.$props.shared"
             v-model="responsedata.auswertungFreigegeben"
             class="ml-8"
             inset
-            :label="`Linksharing ${(responsedata.auswertungFreigegeben ? 'aktiviert' : 'deaktiviert')}`"
+            :label="`Linksharing ${(responsedata.auswertungFreigegeben ? $t('evaluation.surveyEvaluation.aktivieren') : $t('evaluation.surveyEvaluation.deaktivieren'))}`"
             @click="updateFlipLinkShare"
           />
         </v-row>
@@ -236,7 +229,7 @@
       <LinkSharingComponent
         v-if="!this.$props.shared && responsedata.auswertungFreigegeben && !showLoading"
         :mitarbeiter-link="linkshareBaseURL + responsedata.id"
-        :link-ziel="'Auswertung'"
+        :link-ziel="$t('evaluation.surveyEvaluation.Auswertung')"
       />
     </v-card>
 
@@ -258,6 +251,7 @@ import saveAs from 'file-saver';
 import LoadingAnimation from "../componentParts/LoadingAnimation.vue";
 import LinkSharingComponent from "../componentParts/LinkSharingComponent.vue";
 import DataGapVisualization from '../componentParts/DataGapVisualization.vue';
+import i18n from "@/i18n";
 
 export default {
   name: "SurveyEvaluation",
@@ -354,11 +348,11 @@ export default {
 
   computed: {
     haushalteReferenzText: function () {
-      let base_text_beginning = "Ihr Gesamtverbrauch entspricht circa ";
-      let base_text_middle = " bzw. ";
+      let base_text_beginning = i18n.t('evaluation.surveyEvaluation.haushaltReferenzText_0');
+      let base_text_middle = i18n.t('evaluation.surveyEvaluation.haushaltReferenzText_1');
       let text_zweiPersonenHaushalt = this.responsedata.vergleich2PersonenHaushalt + " Zwei-Personen-Haushalten";
       let text_vierPersonenHaushalt = this.responsedata.vergleich4PersonenHaushalt + " Vier-Personen-Haushalten";
-      let base_text_ending = " in einem Jahr."
+      let base_text_ending = i18n.t('evaluation.surveyEvaluation.haushaltReferenzText_2')
       return base_text_beginning + text_vierPersonenHaushalt + base_text_middle + text_zweiPersonenHaushalt + base_text_ending;
     },
     displayExtrapolationWarning: function () {
@@ -377,111 +371,111 @@ export default {
     makeSpreadsheet: function () {
       var data = [
         {
-          "col1": "Auswertung der Umfrage",
+          "col1": i18n.t('evaluation.surveyEvaluation.MakeSpreadsheet_0'),
         },
         {
-          "col1": "Jahr",
+          "col1": i18n.t('common.Jahr'),
           "col2": this.responsedata.jahr,
         },
         {
-          "col1": "Mitarbeitendenanzahl",
+          "col1": i18n.t('common.Mitarbeitendenzahl'),
           "col2": this.responsedata.mitarbeiteranzahl,
         },
         {
-          "col1": "ausgefüllte Mitarbeitendenumfragen",
+          "col1":  i18n.t('evaluation.surveyEvaluation.AusgefuellteMitarbeiterumfragen'),
           "col2": this.responsedata.umfragenanzahl,
         },
         {
-          "col1": "Quote",
+          "col1": i18n.t('evaluation.surveyEvaluation.MakeSpreadsheet_1'),
           "col2": this.responsedata.umfragenanteil + "%",
         },
         {},
         {
-          "col1": "Emissionsüberblick",
+          "col1": i18n.t('evaluation.surveyEvaluation.MakeSpreadsheet_2'),
           "col2": "t CO2 eq.",
         },
         {
-          "col1": "Gesamtemissionen",
+          "col1": i18n.t('evaluation.surveyEvaluation.MakeSpreadsheet_3'),
           "col2": this.responsedata.emissionenGesamt,
         },
         {
-          "col1": "Emissionen pro Mitarbeitenden",
+          "col1": i18n.t('evaluation.surveyEvaluation.MakeSpreadsheet_4'),
           "col2": this.responsedata.emissionenProMitarbeiter,
         },
         {},
         {
-          "col1": "Vergleich 4-Personen Haushalt",
+          "col1": i18n.t('evaluation.surveyEvaluation.MakeSpreadsheet_5'),
           "col2": this.responsedata.vergleich4PersonenHaushalt,
         },
         {
-          "col1": "Vergleich 2-Personen Haushalt",
+          "col1": i18n.t('evaluation.surveyEvaluation.MakeSpreadsheet_6'),
           "col2": this.responsedata.vergleich2PersonenHaushalt,
         },
         {},
         {
-          "col1": "Aufteilung nach Hauptemissonsfaktoren",
+          "col1": i18n.t('evaluation.surveyEvaluation.MakeSpreadsheet_7'),
           "col2": "t CO2 eq.",
           "col3": "%",
         },
         {
-          "col1": "Energie",
+          "col1": i18n.t('common.Energie'),
           "col2": this.responsedata.emissionenEnergie,
           "col3": this.responsedata.emissionenGesamt === 0.0 ? 0 : Math.round(this.responsedata.emissionenEnergie / this.responsedata.emissionenGesamt * 1000) / 10,
         },
         {
-          "col1": "Pendelwege",
+          "col1": i18n.t('common.Pendelwege'),
           "col2": this.responsedata.emissionenPendelwege,
           "col3": this.responsedata.emissionenGesamt === 0.0 ? 0 : Math.round(this.responsedata.emissionenPendelwege / this.responsedata.emissionenGesamt * 1000) / 10,
         },
         {
-          "col1": "Dienstreisen",
+          "col1": i18n.t('common.Dienstreise'),
           "col2": this.responsedata.emissionenDienstreisen,
           "col3": this.responsedata.emissionenGesamt === 0.0 ? 0 : Math.round(this.responsedata.emissionenDienstreisen / this.responsedata.emissionenGesamt * 1000) / 10,
         },
         {
-          "col1": "IT-Geräte",
+          "col1": i18n.t('common.ITGeraete'),
           "col2": this.responsedata.emissionenITGeraete,
           "col3": this.responsedata.emissionenGesamt === 0.0 ? 0 : Math.round(this.responsedata.emissionenITGeraete / this.responsedata.emissionenGesamt * 1000) / 10
         },
         {},
         {
-          "col1": "Aufteilung nach Energieart",
+          "col1": i18n.t('evaluation.surveyEvaluation.MakeSpreadsheet_8'),
           "col2": "t CO2 eq.",
           "col3": "%",
         },
         {
-          "col1": "Wärme",
+          "col1": i18n.t('common.Waerme'),
           "col2": this.responsedata.emissionenWaerme,
           "col3": this.responsedata.emissionenEnergie === 0.0 ? 0 : Math.round(this.responsedata.emissionenWaerme / this.responsedata.emissionenEnergie * 1000) / 10,
         },
         {
-          "col1": "Kälte",
+          "col1": i18n.t('common.Kaelte'),
           "col2": this.responsedata.emissionenKaelte,
           "col3": this.responsedata.emissionenEnergie === 0.0 ? 0 : Math.round(this.responsedata.emissionenKaelte / this.responsedata.emissionenEnergie * 1000) / 10,
         },
         {
-          "col1": "Strom",
+          "col1": i18n.t('common.Strom'),
           "col2": this.responsedata.emissionenStrom,
           "col3": this.responsedata.emissionenEnergie === 0.0 ? 0 : Math.round(this.responsedata.emissionenStrom / this.responsedata.emissionenEnergie * 1000) / 10,
         },
         {},
         {
-          "col1": "Darstellung des Energieverbrauches",
+          "col1": i18n.t('evaluation.surveyEvaluation.MakeSpreadsheet_9'),
           "col2": "kWh",
           "col3": "%",
         },
         {
-          "col1": "Wärme",
+          "col1": i18n.t('common.Waerme'),
           "col2": this.responsedata.verbrauchWaerme,
           "col3": this.responsedata.verbrauchEnergie === 0.0 ? 0 : Math.round(this.responsedata.verbrauchWaerme / this.responsedata.verbrauchEnergie * 1000) / 10,
         },
         {
-          "col1": "Kälte",
+          "col1": i18n.t('common.Kaelte'),
           "col2": this.responsedata.verbrauchKaelte,
           "col3": this.responsedata.verbrauchEnergie === 0.0 ? 0 : Math.round(this.responsedata.verbrauchKaelte / this.responsedata.verbrauchEnergie * 1000) / 10,
         },
         {
-          "col1": "Strom",
+          "col1": i18n.t('common.Strom'),
           "col2": this.responsedata.verbrauchStrom,
           "col3": this.responsedata.verbrauchEnergie === 0.0 ? 0 : Math.round(this.responsedata.verbrauchStrom / this.responsedata.verbrauchEnergie * 1000) / 10,
         },
@@ -494,14 +488,14 @@ export default {
       // workbook
       var wb = XLSX.utils.book_new();
       wb.Props = {
-        Title: "CO2 Rechner",
+        Title: i18n.t('evaluation.surveyEvaluation.MakeSpreadsheet_10'),
         CreatedDate: new Date()
       };
-      wb.SheetNames.push("Emissionen");
+      wb.SheetNames.push(i18n.t('common.Emissionen'));
 
       // worksheet
       var ws = XLSX.utils.json_to_sheet(data, options);
-      wb.Sheets["Emissionen"] = ws;
+      wb.Sheets[i18n.t('common.Emissionen')] = ws;
 
       var wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
 
@@ -714,9 +708,9 @@ export default {
      */
     setChartEnergie: function () {
       let data = [
-        { label: 'Wärme', value: this.responsedata.emissionenWaerme, color: 'rgb(240, 128, 128)'},
-        { label: 'Kälte', value: this.responsedata.emissionenKaelte, color:  'rgb(0, 204, 255)'},
-        { label: 'Strom', value: this.responsedata.emissionenStrom, color: 'rgb(255, 219, 77)' },
+        { label: i18n.t('common.Waerme'), value: this.responsedata.emissionenWaerme, color: 'rgb(240, 128, 128)'},
+        { label: i18n.t('common.Kaelte'), value: this.responsedata.emissionenKaelte, color:  'rgb(0, 204, 255)'},
+        { label: i18n.t('common.Strom'), value: this.responsedata.emissionenStrom, color: 'rgb(255, 219, 77)' },
       ];
 
       data.sort((a, b) => b.value - a.value)
@@ -794,9 +788,9 @@ export default {
      */
     setChartVerbrauch: function () {
       let data = [
-        { label: 'Wärme', value: this.responsedata.verbrauchWaerme, color: 'rgb(240, 128, 128)'},
-        { label: 'Kälte', value: this.responsedata.verbrauchKaelte, color:  'rgb(0, 204, 255)'},
-        { label: 'Strom', value: this.responsedata.verbrauchStrom, color: 'rgb(255, 219, 77)' },
+        { label: i18n.t('common.Waerme'), value: this.responsedata.verbrauchWaerme, color: 'rgb(240, 128, 128)'},
+        { label: i18n.t('common.Kaelte'), value: this.responsedata.verbrauchKaelte, color:  'rgb(0, 204, 255)'},
+        { label: i18n.t('common.Strom'), value: this.responsedata.verbrauchStrom, color: 'rgb(255, 219, 77)' },
       ];
 
       data.sort((a, b) => b.value - a.value)
