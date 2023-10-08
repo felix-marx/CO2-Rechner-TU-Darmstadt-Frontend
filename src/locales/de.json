@@ -492,6 +492,16 @@
       "SurveyNotFound_1": " konnte nicht gefunden werden."
     }
   },
+  "evaluation": {
+    "surveyEvaluation": {
+
+    },
+    "ResultSharingDisabled": {
+      "ResultSharingDisabled_0": "Es tut uns leid, aber die Umfrage mit ID \"",
+      "ResultSharingDisabled_1": "\" hat das Teilen der Auswertung deaktiviert.",
+      "ResultSharingDisabled_2": "Bitte wenden Sie sich an die Person, von der Sie den Link für die Auswertung erhalten haben."
+    }
+  },
   "componentParts": {
     "copyButton": {
       "LinkInZwischenablage": "Link erfolgreich in die Zwischenablage kopiert."
@@ -568,14 +578,6 @@
       "Abmelden": "Abmelden",
       "ZurUmfrage": "Zur Umfrage",
       "ZurAdminuebersicht": "Zur Adminübersicht"
-    }
-  },
-  "evaluation": {
-    "ResultSharingDisabled": {
-
-    },
-    "SurveyEvaluation": {
-      
     }
   },
   "common": {
