@@ -67,13 +67,13 @@
             <v-icon>
               mdi-thought-bubble
             </v-icon>
-            {{ $t('evaluation.surveyEvaluation.Gesamtemissionen_0') }} {{ responsedata.emissionenGesamt }} {{ $t('evaluation.surveyEvaluation.tCO2eq') }}
+            {{ $t('evaluation.surveyEvaluation.Gesamtemissionen') }} {{ responsedata.emissionenGesamt }} {{ $t('evaluation.surveyEvaluation.tCO2eq') }}
           </v-col>
           <v-col>
             <v-icon>
               mdi-human-male-board-poll
             </v-icon>
-            {{ $t('evaluation.surveyEvaluation.Gesamtemissionen_0') }} {{ responsedata.emissionenProMitarbeiter }} {{ $t('evaluation.surveyEvaluation.tCO2eq') }}
+            {{ $t('evaluation.surveyEvaluation.EmissionProMitarbeitende') }} {{ responsedata.emissionenProMitarbeiter }} {{ $t('evaluation.surveyEvaluation.tCO2eq') }}
           </v-col>
         </v-row>
 
@@ -348,11 +348,11 @@ export default {
 
   computed: {
     haushalteReferenzText: function () {
-      let base_text_beginning = i18n.t('evaluation.surveyEvaluation.haushaltReferenzText_0');
-      let base_text_middle = i18n.t('evaluation.surveyEvaluation.haushaltReferenzText_1');
+      let base_text_beginning = i18n.t('evaluation.surveyEvaluation.HaushaltReferenzText_0');
+      let base_text_middle = i18n.t('evaluation.surveyEvaluation.HaushaltReferenzText_1');
       let text_zweiPersonenHaushalt = this.responsedata.vergleich2PersonenHaushalt + " Zwei-Personen-Haushalten";
       let text_vierPersonenHaushalt = this.responsedata.vergleich4PersonenHaushalt + " Vier-Personen-Haushalten";
-      let base_text_ending = i18n.t('evaluation.surveyEvaluation.haushaltReferenzText_2')
+      let base_text_ending = i18n.t('evaluation.surveyEvaluation.HaushaltReferenzText_2')
       return base_text_beginning + text_vierPersonenHaushalt + base_text_middle + text_zweiPersonenHaushalt + base_text_ending;
     },
     displayExtrapolationWarning: function () {
@@ -627,17 +627,17 @@ export default {
      */
     setChartGesamt: function () {
       let data = [
-        { label: 'Energie', value: this.responsedata.emissionenEnergie, color: 'rgb(255, 99, 132)'},
-        { label: 'Dienstreisen', value: this.responsedata.emissionenDienstreisen, color: 'rgb(54,162,235)'},
-        { label: 'Pendelweg', value: this.responsedata.emissionenPendelwege, color: 'rgb(255, 205, 86)' },
-        { label: 'IT-Geräte', value: this.responsedata.emissionenITGeraete, color: 'rgb(75, 192, 192)' },
+        { label: i18n.t('common.Energie'), value: this.responsedata.emissionenEnergie, color: 'rgb(255, 99, 132)'},
+        { label: i18n.t('common.Dienstreisen'), value: this.responsedata.emissionenDienstreisen, color: 'rgb(54,162,235)'},
+        { label: i18n.t('common.Pendelwege'), value: this.responsedata.emissionenPendelwege, color: 'rgb(255, 205, 86)' },
+        { label: i18n.t('common.ITGeraete'), value: this.responsedata.emissionenITGeraete, color: 'rgb(75, 192, 192)' },
       ];
       data.sort((a, b) => b.value - a.value)
 
       this.chartdataGesamtDoughnut = {
         labels: data.map(a => a.label),
         datasets: [{
-          label: 'Emissionen',
+          label: i18n.t('common.Emissionen'),
           data: data.map(a => a.value),
           backgroundColor: data.map(a => a.color),
           hoverOffset: 4
@@ -669,7 +669,7 @@ export default {
         labels: data.map(a => a.label),
         datasets: [{
           type: 'bar',
-          label: 'Emissionen',
+          label: i18n.t('common.Emissionen'),
           yAxisID: 'bar',
           data: data.map(a => a.value),
           backgroundColor: data.map(a => a.color),
@@ -718,7 +718,7 @@ export default {
       this.chartdataEnergieDoughnut = {
         labels: data.map(a => a.label),
         datasets: [{
-          label: 'Emissionen',
+          label: i18n.t('common.Emissionen'),
           data: data.map(a => a.value),
           backgroundColor: data.map(a => a.color),
           hoverOffset: 4
@@ -749,7 +749,7 @@ export default {
         labels: data.map(a => a.label),
         datasets: [{
           type: 'bar',
-          label: 'Emissionen',
+          label: i18n.t('common.Emissionen'),
           yAxisID: 'bar',
           data: data.map(a => a.value),
           backgroundColor: data.map(a => a.color),
@@ -798,7 +798,7 @@ export default {
       this.chartdataVerbrauchDoughnut = {
         labels: data.map(a => a.label),
         datasets: [{
-          label: 'Emissionen',
+          label: i18n.t('common.Emissionen'),
           data: data.map(a => a.value),
           backgroundColor: data.map(a => a.color),
           hoverOffset: 4
