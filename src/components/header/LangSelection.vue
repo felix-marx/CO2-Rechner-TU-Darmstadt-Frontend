@@ -26,7 +26,7 @@
         v-for="(lang, i) in Array.from(langs)"
         :key="`lang-${i}`"
         :value="lang"
-        @click="$i18n.locale = lang[0]"
+        @click="changeLanguage(lang[0])"
       >
         <v-list-item-title>{{ lang[1] }}</v-list-item-title>
       </v-list-item>
@@ -35,6 +35,8 @@
 </template>
 
 <script>
+import Cookie from '../../Cookie';
+
 export default {
   name: 'SelectLocale',
   data() {
@@ -42,6 +44,13 @@ export default {
         ['de', "Deutsch"],
         ['en', "English"]
       ])
+    }
+  },
+
+  methods:{
+    changeLanguage(lang){
+      this.$i18n.locale = lang;
+      Cookie.setCookie("language", lang, 7)
     }
   }
 }
