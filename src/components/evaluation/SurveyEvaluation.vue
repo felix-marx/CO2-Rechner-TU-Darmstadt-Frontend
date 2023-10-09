@@ -350,8 +350,8 @@ export default {
     haushalteReferenzText: function () {
       let base_text_beginning = i18n.t('evaluation.surveyEvaluation.HaushaltReferenzText_0');
       let base_text_middle = i18n.t('evaluation.surveyEvaluation.HaushaltReferenzText_1');
-      let text_zweiPersonenHaushalt = this.responsedata.vergleich2PersonenHaushalt + " Zwei-Personen-Haushalten";
-      let text_vierPersonenHaushalt = this.responsedata.vergleich4PersonenHaushalt + " Vier-Personen-Haushalten";
+      let text_zweiPersonenHaushalt = this.responsedata.vergleich2PersonenHaushalt + i18n.t('evaluation.surveyEvaluation.HaushaltReferenzText_3');
+      let text_vierPersonenHaushalt = this.responsedata.vergleich4PersonenHaushalt + i18n.t('evaluation.surveyEvaluation.HaushaltReferenzText_4');
       let base_text_ending = i18n.t('evaluation.surveyEvaluation.HaushaltReferenzText_2')
       return base_text_beginning + text_vierPersonenHaushalt + base_text_middle + text_zweiPersonenHaushalt + base_text_ending;
     },
