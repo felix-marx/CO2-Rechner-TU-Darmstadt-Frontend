@@ -656,6 +656,7 @@
     "AngefordertRegel": "Muss angegeben werden",
     "nichtNegativRegel": "Bitte geben Sie eine nicht-negative Zahl an",
     "jahrRegel": "Bitte geben Sie ein valides Jahr an",
-    "Gebaeude": "Gebäude"
+    "Gebaeude": "Gebäude",
+    "Verbrauch": "Verbrauch"
   }
 }

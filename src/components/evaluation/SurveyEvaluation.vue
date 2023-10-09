@@ -20,7 +20,7 @@
             <v-icon>
               mdi-account
             </v-icon>
-            {{ $t('common.Mitarbeitendenzahl') }} {{ responsedata.mitarbeiteranzahl }}
+            {{ $t('common.Mitarbeitendenzahl') }} {{ $n(responsedata.mitarbeiteranzahl, 'integer') }}
           </v-col>
         </v-row>
         <v-row>
@@ -28,7 +28,7 @@
             <v-icon>
               mdi-account-edit
             </v-icon>
-            {{ $t('evaluation.surveyEvaluation.AusgefuellteMitarbeiterumfragen') }} {{ responsedata.umfragenanzahl }}
+            {{ $t('evaluation.surveyEvaluation.AusgefuellteMitarbeiterumfragen') }} {{ $n(responsedata.umfragenanzahl, 'integer') }}
           </v-col>
           <v-col>
             <v-progress-linear
@@ -36,7 +36,7 @@
               color="cyan"
               :value="responsedata.umfragenanteil"
             >
-              <strong>{{ responsedata.umfragenanteil }}%</strong>
+              <strong>{{ $n(responsedata.umfragenanteil, 'decimal') }}%</strong>
             </v-progress-linear>
           </v-col>
         </v-row>
@@ -45,7 +45,7 @@
             <v-alert
               type="warning"
             >
-              {{ $t('evaluation.surveyEvaluation.HochrechnungUngenau_0') }} {{ responsedata.umfragenanteil }}{{ $t('evaluation.surveyEvaluation.HochrechnungUngenau_1') }}
+              {{ $t('evaluation.surveyEvaluation.HochrechnungUngenau_0') }} {{ $n(responsedata.umfragenanteil, 'decimal') }}{{ $t('evaluation.surveyEvaluation.HochrechnungUngenau_1') }}
             </v-alert>
           </v-col>
         </v-row>
@@ -67,13 +67,13 @@
             <v-icon>
               mdi-thought-bubble
             </v-icon>
-            {{ $t('evaluation.surveyEvaluation.Gesamtemissionen') }} {{ responsedata.emissionenGesamt }} {{ $t('evaluation.surveyEvaluation.tCO2eq') }}
+            {{ $t('evaluation.surveyEvaluation.Gesamtemissionen') }} {{ $n(responsedata.emissionenGesamt, 'decimal') }} {{ $t('evaluation.surveyEvaluation.tCO2eq') }}
           </v-col>
           <v-col>
             <v-icon>
               mdi-human-male-board-poll
             </v-icon>
-            {{ $t('evaluation.surveyEvaluation.EmissionProMitarbeitende') }} {{ responsedata.emissionenProMitarbeiter }} {{ $t('evaluation.surveyEvaluation.tCO2eq') }}
+            {{ $t('evaluation.surveyEvaluation.EmissionProMitarbeitende') }} {{ $n(responsedata.emissionenProMitarbeiter, 'decimal') }} {{ $t('evaluation.surveyEvaluation.tCO2eq') }}
           </v-col>
         </v-row>
 
@@ -350,13 +350,21 @@ export default {
     haushalteReferenzText: function () {
       let base_text_beginning = i18n.t('evaluation.surveyEvaluation.HaushaltReferenzText_0');
       let base_text_middle = i18n.t('evaluation.surveyEvaluation.HaushaltReferenzText_1');
-      let text_zweiPersonenHaushalt = this.responsedata.vergleich2PersonenHaushalt + i18n.t('evaluation.surveyEvaluation.HaushaltReferenzText_3');
-      let text_vierPersonenHaushalt = this.responsedata.vergleich4PersonenHaushalt + i18n.t('evaluation.surveyEvaluation.HaushaltReferenzText_4');
+      let text_zweiPersonenHaushalt = i18n.n(this.responsedata.vergleich2PersonenHaushalt, 'decimal') + i18n.t('evaluation.surveyEvaluation.HaushaltReferenzText_3');
+      let text_vierPersonenHaushalt = i18n.n(this.responsedata.vergleich4PersonenHaushalt, 'decimal') + i18n.t('evaluation.surveyEvaluation.HaushaltReferenzText_4');
       let base_text_ending = i18n.t('evaluation.surveyEvaluation.HaushaltReferenzText_2')
       return base_text_beginning + text_vierPersonenHaushalt + base_text_middle + text_zweiPersonenHaushalt + base_text_ending;
     },
     displayExtrapolationWarning: function () {
       return this.responsedata.umfragenanteil <= 50.0
+    },
+  },
+
+  watch: {
+    '$i18n.locale': function() {  // reload charts when language changes to update labels
+      this.setChartGesamt();
+      this.setChartEnergie();
+      this.setChartVerbrauch();
     }
   },
 
@@ -509,39 +517,40 @@ export default {
       saveAs(new Blob([s2ab(wbout)], { type: "application/octet-stream" }), 'Emissionen_' + this.responsedata.bezeichnung + '.xlsx');
     },
 
-/**
- * Fetches Get request to get survey data and evaluation.
- */
-  getData: async function () {
-    await fetch(process.env.VUE_APP_BASEURL + "/auswertung?id=" + this.$props.umfrageid, {
-      method: "GET",
-      headers: {
-        "Authorization": "Bearer " + this.$keycloak.token,
-      },
-    }).then((response) => response.json())
-      .then((body) => {
-        if (body.status == "success") {
-          this.responsesuccessful = true
-          this.responsedata = body.data
-          this.responsedata.auswertungFreigegeben = (body.data.auswertungFreigegeben == 1) ? true : false
-          this.checkNegativValue();
-          this.roundResponseData();
-          this.setChartGesamt();
-          this.setChartEnergie();
-          this.setChartVerbrauch();
+    /**
+     * Fetches Get request to get survey data and evaluation.
+     */
+    getData: async function () {
+      await fetch(process.env.VUE_APP_BASEURL + "/auswertung?id=" + this.$props.umfrageid, {
+        method: "GET",
+        headers: {
+          "Authorization": "Bearer " + this.$keycloak.token,
+        },
+      }).then((response) => response.json())
+        .then((body) => {
+          if (body.status == "success") {
+            this.responsesuccessful = true
+            this.responsedata = body.data
+            this.responsedata.auswertungFreigegeben = (body.data.auswertungFreigegeben == 1) ? true : false
+            this.checkNegativValue();
+            this.roundResponseData();
+            this.setChartGesamt();
+            this.setChartEnergie();
+            this.setChartVerbrauch();
 
-          this.gebaeudeIDsUndZaehler = this.responsedata.gebaeudeIDsUndZaehler
-          this.umfrageGebaeude = this.responsedata.umfrageGebaeude.map(x => [translateGebaeudeIDToSymbolic(x["gebaeudeNr"]), x["nutzflaeche"]])
-          this.zaehler = this.responsedata.zaehler
+            this.gebaeudeIDsUndZaehler = this.responsedata.gebaeudeIDsUndZaehler
+            this.umfrageGebaeude = this.responsedata.umfrageGebaeude.map(x => [translateGebaeudeIDToSymbolic(x["gebaeudeNr"]), x["nutzflaeche"]])
+            this.zaehler = this.responsedata.zaehler
+          }
+          else {  // Fehlerbehandlung
+            this.responseNotSuccessful = true
+            this.responseerror = body.error
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error);
         }
-        else {  // Fehlerbehandlung
-          this.responseNotSuccessful = true
-          this.responseerror = body.error
-        }
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+      );
     },
 
     /**
@@ -655,7 +664,7 @@ export default {
               if(this.responsedata.emissionenGesamt === 0){
                 return 0
               }
-              return (Math.round(value / this.responsedata.emissionenGesamt * 1000) / 10) + '%';
+              return i18n.n((Math.round(value / this.responsedata.emissionenGesamt * 1000) / 10), "decimal") + '%';
             },
             font: {
               weight: 'bold',
@@ -663,6 +672,14 @@ export default {
             },
           },
         },
+        tooltips: {
+          callbacks: {
+              label: function(tooltipItem, data) {
+                  let idx = tooltipItem.index;
+                  return data.labels[idx] + ": " + i18n.n(data.datasets[0].data[idx], "decimal")
+              }
+          }
+        }
       }
 
       this.chartdataGesamtPareto = {
@@ -688,6 +705,15 @@ export default {
         legend: {
           display: false
         },
+        plugins: {
+          datalabels: {
+            display: true,
+            // eslint-disable-next-line no-unused-vars
+            formatter: (value, context) => {
+              return i18n.n(value, "decimal");
+            },
+          },
+        },
         scales: {
           yAxes: [{
             id: 'bar',
@@ -701,6 +727,14 @@ export default {
             }
           }]
         },
+        tooltips: {
+          callbacks: {
+            label: function(tooltipItem, data) {
+              let idx = tooltipItem.index;
+              return i18n.t('common.Emissionen') + ": " + i18n.n(data.datasets[0].data[idx], "decimal")
+            }
+          }
+        }
       };
     },
     /**
@@ -735,7 +769,7 @@ export default {
               if(this.responsedata.emissionenEnergie === 0){
                 return 0
               }
-              return (Math.round(value / this.responsedata.emissionenEnergie * 1000) / 10) + '%';
+              return i18n.n((Math.round(value / this.responsedata.emissionenEnergie * 1000) / 10), "decimal") + '%';
             },
             font: {
               weight: 'bold',
@@ -743,6 +777,14 @@ export default {
             },
           },
         },
+        tooltips: {
+          callbacks: {
+            label: function(tooltipItem, data) {
+              let idx = tooltipItem.index;
+              return data.labels[idx] + ": " + i18n.n(data.datasets[0].data[idx], "decimal")
+            }
+          }
+        }
       }
 
       this.chartdataEnergieBar = {
@@ -768,6 +810,15 @@ export default {
         legend: {
           display: false
         },
+        plugins: {
+          datalabels: {
+            display: true,
+            // eslint-disable-next-line no-unused-vars
+            formatter: (value, context) => {
+              return i18n.n(value, "decimal");
+            },
+          },
+        },
         scales: {
           yAxes: [{
             id: 'bar',
@@ -781,6 +832,14 @@ export default {
             }
           }]
         },
+        tooltips: {
+          callbacks: {
+            label: function(tooltipItem, data) {
+              let idx = tooltipItem.index;
+              return i18n.t('common.Emissionen') + ": " + i18n.n(data.datasets[0].data[idx], "decimal")
+            }
+          }
+        }
       }
     },
     /**
@@ -815,7 +874,7 @@ export default {
               if(this.responsedata.emissionenEnergie === 0){
                 return 0
               }
-              return (Math.round(value / this.responsedata.verbrauchEnergie * 1000) / 10) + '%';
+              return i18n.n((Math.round(value / this.responsedata.verbrauchEnergie * 1000) / 10), "decimal") + '%';
             },
             font: {
               weight: 'bold',
@@ -823,6 +882,14 @@ export default {
             },
           },
         },
+        tooltips: {
+          callbacks: {
+            label: function(tooltipItem, data) {
+              let idx = tooltipItem.index;
+              return data.labels[idx] + ": " + i18n.n(data.datasets[0].data[idx], "decimal")
+            }
+          }
+        }
       }
 
       this.chartdataVerbrauchBar = {
@@ -848,6 +915,15 @@ export default {
         legend: {
           display: false
         },
+        plugins: {
+          datalabels: {
+            display: true,
+            // eslint-disable-next-line no-unused-vars
+            formatter: (value, context) => {
+              return i18n.n(value, "decimal");
+            },
+          },
+        },
         scales: {
           yAxes: [{
             id: 'bar',
@@ -861,9 +937,16 @@ export default {
             }
           }]
         },
+        tooltips: {
+          callbacks: {
+            label: function(tooltipItem, data) {
+              let idx = tooltipItem.index;
+              return i18n.t('common.Verbrauch') + ": " + i18n.n(data.datasets[0].data[idx], "decimal")
+            }
+          }
+        }
       }
     },
-
   },
 }
 
