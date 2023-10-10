@@ -26,8 +26,8 @@
 
         <v-container class="mt-4">
           <v-row>
-            <v-col>
-              <v-card>
+            <v-col class="d-flex flex-column">
+              <v-card class="flex d-flex flex-column">
                 <v-card-title>
                   CO2-Bilanzierung
                 </v-card-title>
@@ -38,59 +38,62 @@
               </v-card>
             </v-col>
 
-            <v-col>
-              <v-card>
+            <v-col class="d-flex flex-column">
+              <v-card class="flex d-flex flex-column">
                 <v-card-title>
                   Verwednung des CO<sub>2</sub>-Rechner
                 </v-card-title>
                 <v-divider />
-                <p class="ma-4 pb-4">
+                <p class="ma-4">
+                  > <a @click="$keycloak.loginFn()">Zum Login</a> <br>
                   > <a :href="faq_nutzung">Anleitung zur Verwendung des CO2-Rechners</a>
                 </p>
+                <v-spacer />
               </v-card>
             </v-col>
 
-            <v-col>
-              <v-card>
+            <v-col class="d-flex flex-column">
+              <v-card class="flex d-flex flex-column">
                 <v-card-title>
                   Hintergrund des CO<sub>2</sub>-Rechners
                 </v-card-title>
+                <v-divider />
                 <p class="ma-4 pb-4">
                   > <a href="https://www.tu-darmstadt.de/nachhaltigkeit/buero_fuer_nachhaltigkeit/projekte_buero/news_projekte_buero_details_374400.de.jsp">CO₂-Bilanzierung: webbasiertes Tool online</a>
                 </p>
+                <v-spacer />
               </v-card>
             </v-col>
           </v-row>
 
           <v-row>
-            <v-col cols="3">
-              <v-card>
+            <v-col class="d-flex flex-column">
+              <v-card class="flex d-flex flex-column">
                 <v-card-title>
                   FAQ
                 </v-card-title>
+                <v-divider />
                 <p class="ma-4 pb-4">
                   Alles wissenwertes zum CO2-Rechner finden sie im <a :href="faq_link">FAQ</a>.
                 </p>
               </v-card>
             </v-col>
 
-            <v-spacer />
-
-            <v-col cols="3">
-              <v-card>
+            <v-col class="d-flex flex-column">
+              <v-card class="flex d-flex flex-column">
                 <v-card-title>
                   Verwednung des CO<sub>2</sub>-Rechner
                 </v-card-title>
+                <v-divider />
               </v-card>
             </v-col>
 
-            <v-spacer />
-
-            <v-col cols="3">
-              <v-card>
+            <v-col class="d-flex flex-column">
+              <v-card class="flex d-flex flex-column">
                 <v-card-title>
                   Video
                 </v-card-title>
+                <v-divider />
               </v-card>
             </v-col>
           </v-row>
