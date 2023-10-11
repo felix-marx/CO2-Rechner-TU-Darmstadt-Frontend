@@ -495,12 +495,27 @@
                       class="mt-4"
                       elevation="0"
                     >
-                      <p> {{ $t('footer.FAQ.Antwort_3_1_1') }} </p>
-                      <p> {{ $t('footer.FAQ.Antwort_3_1_2') }} </p>
-                      <p> {{ $t('footer.FAQ.Antwort_3_1_3') }} </p>
-                      <p> {{ $t('footer.FAQ.Antwort_3_1_4') }} </p>
-                      <p> {{ $t('footer.FAQ.Antwort_3_1_5') }} </p>
-                      <p> {{ $t('footer.FAQ.Antwort_3_1_6') }} </p>
+                      <b> {{ $t('footer.FAQ.Antwort_3_1_1') }} </b>
+                      <p> 
+                        <label v-html="$t('footer.FAQ.Antwort_3_1_1_1')" />
+                      </p>
+                      <b> {{ $t('footer.FAQ.Antwort_3_1_2') }} </b>
+                      <p> 
+                        <label v-html="$t('footer.FAQ.Antwort_3_1_2_1')" /> <br>
+                        <label v-html="$t('footer.FAQ.Antwort_3_1_2_2')" />
+                      </p>
+                      <b> {{ $t('footer.FAQ.Antwort_3_1_3') }} </b>
+                      <p> 
+                        {{ $t('footer.FAQ.Antwort_3_1_3_1') }} <br>
+                        <label v-html="$t('footer.FAQ.Antwort_3_1_3_2')" />
+                      </p>
+                      <b> {{ $t('footer.FAQ.Antwort_3_1_4') }} </b>
+                      <p> 
+                        <label v-html="$t('footer.FAQ.Antwort_3_1_4_1')" /> <br>
+                        <label v-html="$t('footer.FAQ.Antwort_3_1_4_2')" /> 
+                      </p>
+                      <b> {{ $t('footer.FAQ.Antwort_3_1_5') }} </b>
+                      <p> {{ $t('footer.FAQ.Antwort_3_1_5_1') }} </p>
                     </v-card>
                   </v-expansion-panel-content>
                 </v-expansion-panel>
@@ -623,8 +638,7 @@ export default {
       tabList: [{ id: 0, title: 'FAQ', componentType: loadingAnimation}],
       panel_1: [],
       panel_2: [],
-      panel_3: [],
-      panel_4: [],
+      panel_3: [0],
     }),
 
     computed: {

@@ -244,13 +244,20 @@
 
       "Titel_3": "Nutzung des Rechners",
       
-      "Frage_3_1": "Wie kann ich eine CO2-Bilanzierung für meine Einheit durchführen? (UNVOLLSTÄNDIG)",
-      "Antwort_3_1_1": "1. Log in über SSO",
-      "Antwort_3_1_2": "2. Hauptbeauftragte Person",
-      "Antwort_3_1_3": "3. Versandt der MA Umfrage",
-      "Antwort_3_1_4": "4. Ausfüllen der MA Umfrage",
-      "Antwort_3_1_5": "5. Abruf der Ergebnisse",
-      "Antwort_3_1_6": "6. Besprechung/Verteilung der Ergebnisse",
+      "Frage_3_1": "Wie kann ich eine CO<sub>2</sub>-Bilanzierung für meine Einheit durchführen?",
+      "Antwort_3_1_1": "1. Anmeldung per SSO der TU Darmstadt",
+      "Antwort_3_1_1_1": "Um den CO<sub>2</sub>-Rechner zu nutzen, müssen Sie sich per SSO der TU Darmstadt anmelden.",
+      "Antwort_3_1_2": "2. Erstellung einer Umfrage",
+      "Antwort_3_1_2_1": "Nach Anmeldung werden Sie auf die Seite zur Erstellung einer Umfrage weitergeleitet (\"<i>CO<sub>2</sub>-Rechner</i>\" in der Tab-Leiste). Hier können Sie eine Umfrage für Ihre Einheit erstellen indem Sie die Eingabefelder ausfüllen. Hierbei handelt es sich um den ersten Teil der Umfrage auch Hauptumfrage genannt. Es werden allgemeine Information über TU-Einheit abgefragt wie Mitarbeitendenanzahl und die Gebäude der Einheit.",
+      "Antwort_3_1_2_2": "Nachdem sie die Hauptumfrage fertig ausgefüllt haben, klicken Sie auf den Knopf \"<i>Speichern und Link generieren</i>\". Die eingetragenen Informationen werden daraufhin abgespeichert und ein Link zum zweiten Teil der Umfrage die sogenannte Mitarbeitendenumfrage wird generiert.",
+      "Antwort_3_1_3": "3. Ausfüllen der Mitarbeitendenumfrage",
+      "Antwort_3_1_3_1": "Den Link zur Mitarbeitendenumfrage müssen Sie jetzt an alle Mitarbeitenden senden, damit dieser Teil der Umfrage von jedem individuell und anonym ausgefüllt werden kann. Es wird hierzu keine Anmeldung auf der Seite benötigt.",
+      "Antwort_3_1_3_2": "Die Mitarbeitendenumfrage beinhaltet Fragen zu Pendelwegen, Dienstreisen und individuell genutzten IT-Geräten. Nach Vervollständigung der Umfrage werden die Informationen über den Knopf \"<i>Absenden</i>\" gespeichert.",
+      "Antwort_3_1_4": "4. Abruf der Ergebnisse",
+      "Antwort_3_1_4_1": "Zum Abrufen der Ergebnisse müssen auf den Tab \"<i>Umfrageübersicht</i>\" gehen. Hier sehen sie alle von Ihnen erstellten Umfragen und können sehen, wie viele Mitarbeitende die Umfrage bereits ausgefüllt haben. Außerdem gibt es die Möglichkeit die Hauptumfrage sich anzusehen und zu bearbeiten, die Umfrage zu duplizieren (ohne Mitarbeitendenumfrage) und die komplette Umfrage zu löschen.",
+      "Antwort_3_1_4_2": "Die letzte Möglichkeit ist die Erstellung einer Auswertung der Umfrage. Die Auswertung berechnet die CO<sub>2</sub>-Emissionen der Auswertung und stellt die Ergebnisse graphisch da.",
+      "Antwort_3_1_5": "5. Besprechung/Verteilung der Ergebnisse",
+      "Antwort_3_1_5_1": "Die Auswertung der Umfrage kann per Link mit den Mitarbeitenden geteilt werden. Zusätzlich lassen sich die Ergebnisse als eine Excel-Datei herunterladen, um die genauen Ergebnisse weiterverwenden zu können.",
 
       "Frage_3_2": "Warum sollte sich Ihre Einheit bilanzieren und den webbasierten CO<sub>2</sub>-Rechner nutzen?",
       "Antwort_3_2_1": "Der webbasierte CO<sub>2</sub>-Rechner kann als ein Monitoring Tool genutzt werden. Mit den Ergebnissen kann Ihre Einheit sich einen Überblick verschaffen über die Menge an jährlichen Emissionen, sowie die Aufteilung in den verschiedenen Kategorien. Über mehrere Jahre können Sie so nachverfolgen, ob und um wie viel Ihre Einheit ihre Emissionen verringert hat. ",
@@ -316,7 +323,7 @@
       "UmfrageErklaerung_2": "Die gesamte Berechnung bezieht sich immer auf ein vollständig abgeschlossenes Kalenderjahr.",
       "UmfrageErklaerung_3": "Der erste Teil des CO<sub>2</sub>-Rechner erfragt allgemeine Angaben über Ihre TU-Einheit, wie beispielsweise Anzahl der Mitarbeitenden, Standort Ihrer Einheit und gemeinschaftlich genutzte IT-Geräte. Sollten Sie keine genauen Angaben kennen, geben Sie bitte eine grobe Schätzung an. Wenn Sie diesen ersten Teil beantwortet haben, klicken Sie auf \"<i>Speichern &amp; Link generieren</i>\". Dadurch wird ein Link generiert, der zu der Umfrage für die Mitarbeitenden führt. Schicken Sie diesen Link an alle Mitarbeitende Ihrer TU-Einheit. Eine Mailvorlage finden Sie unter dem Link.",
       "UmfrageErklaerung_4": "Hinter einigen Fragen befindet sich ein Fragezeichensymbol, dort finden Sie zusätzliche Hinweise und Informationen, die zur Beantwortung der Frage hilfreich sind.",
-      "UmfrageErklaerung_5": "Falls Sie zu einem späteren Zeitpunkt nochmals Angaben ändern oder vervollständigen möchten, können Sie in der linken oberen Ecke „<i>Umfragenübersicht</i>“ auswählen, um auf den ersten Teil des CO<sub>2</sub>-Rechners wieder zuzugreifen. Bitte klicken Sie am Ende auf „<i>Speichern</i>“ um ihre Änderungen final einzutragen. ",
+      "UmfrageErklaerung_5": "Falls Sie zu einem späteren Zeitpunkt nochmals Angaben ändern oder vervollständigen möchten, können Sie in der linken oberen Ecke \"<i>Umfragenübersicht</i>\" auswählen, um auf den ersten Teil des CO<sub>2</sub>-Rechners wieder zuzugreifen. Bitte klicken Sie am Ende auf \"<i>Speichern</i>\" um ihre Änderungen final einzutragen. ",
       "UmfrageErklaerung_6": "Bei weiteren Nachfragen oder Anmerkungen wenden Sie sich gerne an",
       "UmfrageErklaerung_7": "Vielen Dank, dass Sie den CO<sub>2</sub>-Rechner verwenden und so einen Beitrag zur Nachhaltigkeit an der TU Darmstadt leisten.",
 
@@ -338,7 +345,7 @@
       "ITGeraeteMFP": "Multifunktionsgeräte z.B. Netzwerkdrucker",
       "ITGeraeteMFP_Suffix": "Gerät/e",
 
-      "DruckerLabel": "Laser- &amp; Tintenstrahldrucker",
+      "DruckerLabel": "Laser- & Tintenstrahldrucker",
       "Drucker_Suffix": "Drucker",
 
       "Beamer": "Beamer",
