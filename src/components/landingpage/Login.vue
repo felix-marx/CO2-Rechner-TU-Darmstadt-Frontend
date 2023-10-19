@@ -29,11 +29,13 @@
             <v-col class="d-flex flex-column">
               <v-card class="flex d-flex flex-column">
                 <v-card-title>
-                  CO2-Bilanzierung
+                  Was ist eine CO<sub>2</sub>-Bilanzierung?
                 </v-card-title>
                 <v-divider />
                 <p class="ma-4 pb-4">
-                  Eine CO2-Bilanz dient der Darstellung der Treibhausgasemissionen einer Organisation, eines Produktes, einer Dienstleistung oder einer Aktivität innerhalb einer definierten Betrachtungsgrenze. Die Bilanz umfasst alle klimaschädlichen Emissionen und drückt diese in CO2-Äquivalente aus.
+                  Eine CO<sub>2</sub>-Bilanz dient der Darstellung der Treibhausgasemissionen einer Organisation, eines Produktes, einer Dienstleistung oder einer Aktivität innerhalb einer definierten Betrachtungsgrenze. Die Bilanz umfasst alle klimaschädlichen Emissionen und drückt diese in CO<sub>2</sub>-Äquivalente aus.
+                  <br>
+                  > <a :href="faq_bilazierung">Mehr zu CO<sub>2</sub>-Bilanzierungen</a>
                 </p>
               </v-card>
             </v-col>
@@ -41,12 +43,13 @@
             <v-col class="d-flex flex-column">
               <v-card class="flex d-flex flex-column">
                 <v-card-title>
-                  Verwednung des CO<sub>2</sub>-Rechner
+                  Nutzung des CO<sub>2</sub>-Rechner
                 </v-card-title>
                 <v-divider />
                 <p class="ma-4">
-                  > <a @click="$keycloak.loginFn()">Zum Login</a> <br>
-                  > <a :href="faq_nutzung">Anleitung zur Verwendung des CO2-Rechners</a>
+                  Melden Sie sich einfach mit Ihrer TU-ID an und fangen Sie an, Ihre CO<sub>2</sub>-Bilanz zu erstellen. Eine  detailierte <a :href="faq_nutzung">Anleitung zur Nutzung des CO<sub>2</sub>-Rechners</a> finden Sie im FAQ.
+                  <br>
+                  > <a @click="$keycloak.loginFn()">Zum Login</a> 
                 </p>
                 <v-spacer />
               </v-card>
@@ -59,41 +62,12 @@
                 </v-card-title>
                 <v-divider />
                 <p class="ma-4 pb-4">
-                  > <a href="https://www.tu-darmstadt.de/nachhaltigkeit/buero_fuer_nachhaltigkeit/projekte_buero/news_projekte_buero_details_374400.de.jsp">CO₂-Bilanzierung: webbasiertes Tool online</a>
+                  Sie möchten mehr über den Hintergrund des CO<sub>2</sub>-Rechners erfahren? 
+                  Dann lesen Sie den <a href="https://www.tu-darmstadt.de/nachhaltigkeit/buero_fuer_nachhaltigkeit/projekte_buero/news_projekte_buero_details_374400.de.jsp">Artikel</a> des Büros für Nachhaltigkeit oder schauen Sie in das <a :href="faq">FAQ</a>.
+                  <br>
+                  > <a :href="faq_allgemein">Allgemeine Information zum CO<sub>2</sub>-Rechners</a>
                 </p>
                 <v-spacer />
-              </v-card>
-            </v-col>
-          </v-row>
-
-          <v-row>
-            <v-col class="d-flex flex-column">
-              <v-card class="flex d-flex flex-column">
-                <v-card-title>
-                  FAQ
-                </v-card-title>
-                <v-divider />
-                <p class="ma-4 pb-4">
-                  Alles wissenwertes zum CO2-Rechner finden sie im <a :href="faq_link">FAQ</a>.
-                </p>
-              </v-card>
-            </v-col>
-
-            <v-col class="d-flex flex-column">
-              <v-card class="flex d-flex flex-column">
-                <v-card-title>
-                  Verwednung des CO<sub>2</sub>-Rechner
-                </v-card-title>
-                <v-divider />
-              </v-card>
-            </v-col>
-
-            <v-col class="d-flex flex-column">
-              <v-card class="flex d-flex flex-column">
-                <v-card-title>
-                  Video
-                </v-card-title>
-                <v-divider />
               </v-card>
             </v-col>
           </v-row>
@@ -165,8 +139,14 @@ export default {
   },
 
   data: () => ({
-    faq_link: process.env.VUE_APP_URL + '/faq',
+    faq: process.env.VUE_APP_URL + '/faq',
+    faq_bilazierung: process.env.VUE_APP_URL + '/faq#bilanzierung',
+    faq_allgemein: process.env.VUE_APP_URL + '/faq#allgemein',
     faq_nutzung: process.env.VUE_APP_URL + '/faq#nutzung',
   }),
 };
 </script>
+
+<style>
+  a { text-decoration: none; }
+</style>

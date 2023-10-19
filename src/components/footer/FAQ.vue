@@ -16,6 +16,7 @@
             outlined
           >
             <v-card
+              ref="#bilanzierung"
               class="px-0 pb-2"
               elevation="0"
             >
@@ -225,6 +226,7 @@
 
 
             <v-card
+              ref="#allgemein"
               class="px-0 pb-2"
               elevation="0"
             >
@@ -479,7 +481,6 @@
                 {{ $t('footer.FAQ.Titel_3') }}
               </v-card-title>
 
-
               <v-expansion-panels
                 v-model="panel_3"
                 focusable
@@ -638,7 +639,7 @@ export default {
       tabList: [{ id: 0, title: 'FAQ', componentType: loadingAnimation}],
       panel_1: [],
       panel_2: [],
-      panel_3: [0],
+      panel_3: [],
     }),
 
     computed: {
@@ -647,6 +648,9 @@ export default {
                 "\\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_1_1')  + "} &= \\sum_{\\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_1_7')  + "}} \\sum_{\\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_1_2')  + "}} \\left( \\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_1_3')  + "} \\cdot \\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_1_4')  + "} \\cdot \\frac{\\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_1_5')  + "}}{\\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_1_6')  + "}} \\right)" + 
                 " \\end{aligned} \\)"
       },
+      // formel_1() {
+      //   return "\\(\\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_1_1')  + "} = \\sum_{\\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_1_7')  + "}} \\sum_{\\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_1_2')  + "}} \\left( \\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_1_3')  + "} \\cdot \\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_1_4')  + "} \\cdot \\frac{\\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_1_5')  + "}}{\\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_1_6')  + "}} \\right) \\)"
+      // },
       formel_2() {
         return  "\\(\\begin{aligned} " + 
                 "\\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_2_1')  + "} &= \\sum_{\\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_2_2')  + "}} \\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_2_3')  + "} \\\\ " + 
@@ -672,17 +676,18 @@ export default {
     created() {
       if(this.$route.hash == "#nutzung"){
         this.panel_3 = [0]
+      } 
+      else if (this.$route.hash == "#bilanzierung"){
+        this.panel_1 = [0]
+      }
+      else if (this.$route.hash == "#allgemein"){
+        this.panel_2 = [0]
       }
     },
 
     mounted() {
       if(this.$route.hash){
-        // if(this.$route.hash == "#nutzung"){
-        //   this.panel_3 = [0]
-        // }
-
         let top = this.$refs[this.$route.hash].$refs.link.offsetTop
-        console.log(top)
 
         window.scrollTo({
           top: top, 
