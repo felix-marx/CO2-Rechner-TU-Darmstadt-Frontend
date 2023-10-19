@@ -345,7 +345,7 @@
                       <div
                         :key="formel_1"
                         v-katex:auto
-                        class="text-center pb-4"
+                        class="text-center pb-4 overflow-auto"
                       >
                         {{ formel_1 }}
                       </div>
@@ -353,7 +353,7 @@
                       <div
                         :key="formel_2"
                         v-katex:auto
-                        class="text-center pb-4"
+                        class="text-center pb-4 overflow-auto"
                       >
                         {{ formel_2 }}
                       </div>
@@ -363,7 +363,7 @@
                       <div
                         :key="formel_3"
                         v-katex:auto
-                        class="text-center pb-4"
+                        class="text-center pb-4 overflow-auto"
                       >
                         {{ formel_3 }}
                       </div>
@@ -372,7 +372,7 @@
                       <div
                         :key="formel_4"
                         v-katex:auto
-                        class="text-center pb-4"
+                        class="text-center pb-4 overflow-auto"
                       >
                         {{ formel_4 }}
                       </div>
@@ -648,9 +648,6 @@ export default {
                 "\\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_1_1')  + "} &= \\sum_{\\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_1_7')  + "}} \\sum_{\\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_1_2')  + "}} \\left( \\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_1_3')  + "} \\cdot \\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_1_4')  + "} \\cdot \\frac{\\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_1_5')  + "}}{\\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_1_6')  + "}} \\right)" + 
                 " \\end{aligned} \\)"
       },
-      // formel_1() {
-      //   return "\\(\\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_1_1')  + "} = \\sum_{\\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_1_7')  + "}} \\sum_{\\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_1_2')  + "}} \\left( \\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_1_3')  + "} \\cdot \\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_1_4')  + "} \\cdot \\frac{\\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_1_5')  + "}}{\\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_1_6')  + "}} \\right) \\)"
-      // },
       formel_2() {
         return  "\\(\\begin{aligned} " + 
                 "\\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_2_1')  + "} &= \\sum_{\\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_2_2')  + "}} \\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_2_3')  + "} \\\\ " + 
