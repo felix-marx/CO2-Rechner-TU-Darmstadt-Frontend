@@ -49,8 +49,15 @@
                 <p class="ma-4">
                   Melden Sie sich einfach mit Ihrer TU-ID an und fangen Sie an, Ihre CO<sub>2</sub>-Bilanz zu erstellen. Eine  detailierte <a :href="faq_nutzung">Anleitung zur Nutzung des CO<sub>2</sub>-Rechners</a> finden Sie im FAQ.
                   <br>
-                  > <a @click="$keycloak.loginFn()">Zum Login</a> 
                 </p>
+                <v-spacer class="flex d-flex flex-column" />
+                <v-btn
+                  class="ma-4"
+                  color="primary"
+                  @click="$keycloak.loginFn()"
+                >
+                  Anmelden mit TU-ID
+                </v-btn>
                 <v-spacer />
               </v-card>
             </v-col>
