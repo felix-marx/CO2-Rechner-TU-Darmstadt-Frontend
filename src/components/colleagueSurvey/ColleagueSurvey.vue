@@ -38,7 +38,7 @@
         >
           <v-row>
             <!-- The length of the column is calculated based on the selection, so that the button to add new elements in this line -->
-            <v-col :cols="medium[0] === 'Öffentliche' ? 4 : 6">
+            <v-col :cols="medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_5') ? 4 : 6">
               <v-select
                 v-model="medium[0]"
                 :items="fahrtmediumListe"
@@ -47,7 +47,7 @@
               />
             </v-col>
             <v-col
-              :v-if="medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_5')"
+              v-if="medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_5')"
               :cols="medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_5') ? 3 : 0"
             >
               <v-select
@@ -452,23 +452,8 @@ export default {  components: {
     arbeitstageBuero: null,
 
     //Pendelweg
-    fahrtmediumListe: [
-      i18n.t("colleagueSurvey.colleagueSurvey.fahrmediumListe_0"),
-        i18n.t("colleagueSurvey.colleagueSurvey.fahrmediumListe_1"),
-        i18n.t("colleagueSurvey.colleagueSurvey.fahrmediumListe_2"),
-        i18n.t("colleagueSurvey.colleagueSurvey.fahrmediumListe_3"),
-        i18n.t("colleagueSurvey.colleagueSurvey.fahrmediumListe_4"),
-        i18n.t("colleagueSurvey.colleagueSurvey.fahrmediumListe_5"),
-        i18n.t("colleagueSurvey.colleagueSurvey.fahrmediumListe_6")
-    ],
-    fahrtmediumÖPNVListe: [
-        i18n.t("colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_0"),
-        i18n.t("colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_1"),
-        i18n.t("colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_2"),
-        i18n.t("colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_3"),
-        i18n.t("colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_4"),
-        i18n.t("colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_5"),
-    ],
+    fahrtmediumListe: [],
+    fahrtmediumÖPNVListe: [],
     /*
      * verkehrmittel Array format:
      * [0]: fahrtmedium || Öffentliche
@@ -480,19 +465,8 @@ export default {  components: {
     verkehrsmittel: [[null, null, false, null, null]],
 
     //Dienstreisen
-    //Flugklasse is not needed for calculation
-    //flugklasseListe: ['Economy', 'Business'],
-    //flugklasse: null,
-    dienstreiseMediumListe: [
-        i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_0"),
-        i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_1"),
-        i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_2"),
-        i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3"),
-    ],
-    flugstreckeListe: [
-        i18n.t("colleagueSurvey.colleagueSurvey.flugstreckeListe_0"),
-        i18n.t("colleagueSurvey.colleagueSurvey.flugstreckeListe_1")
-    ],
+    dienstreiseMediumListe: [],
+    flugstreckeListe: [],
     /*
      * dienstreise Array format:
      * [0]: dienstreiseMedium selected from List
@@ -550,12 +524,51 @@ export default {  components: {
     ],
   }),
 
+  watch: {
+    '$i18n.locale': function() {
+      this.setListe();
+
+      // reset values for Pendelwege and Dienstreisen
+      this.verkehrsmittel = [[null, null, false, null, null]]
+      this.dienstreise = [[null, null, null]]
+    },
+  },
+
   created() {
-    // request the year of the umfrage
-    this.fetchUmfrageYear(this.$route.params.umfrageID);
+    this.fetchUmfrageYear(this.$route.params.umfrageID);  // request the year of the umfrage
+    this.setListe();
   },
 
   methods: {
+    setListe: function(){
+      this.fahrtmediumListe = [
+        i18n.t("colleagueSurvey.colleagueSurvey.fahrmediumListe_0"),
+        i18n.t("colleagueSurvey.colleagueSurvey.fahrmediumListe_1"),
+        i18n.t("colleagueSurvey.colleagueSurvey.fahrmediumListe_2"),
+        i18n.t("colleagueSurvey.colleagueSurvey.fahrmediumListe_3"),
+        i18n.t("colleagueSurvey.colleagueSurvey.fahrmediumListe_4"),
+        i18n.t("colleagueSurvey.colleagueSurvey.fahrmediumListe_5"),
+        i18n.t("colleagueSurvey.colleagueSurvey.fahrmediumListe_6")
+      ]
+      this.fahrtmediumÖPNVListe = [
+        i18n.t("colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_0"),
+        i18n.t("colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_1"),
+        i18n.t("colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_2"),
+        i18n.t("colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_3"),
+        i18n.t("colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_4"),
+        i18n.t("colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_5"),
+      ]
+      this.dienstreiseMediumListe = [
+        i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_0"),
+        i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_1"),
+        i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_2"),
+        i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3"),
+      ],
+      this.flugstreckeListe = [
+        i18n.t("colleagueSurvey.colleagueSurvey.flugstreckeListe_0"),
+        i18n.t("colleagueSurvey.colleagueSurvey.flugstreckeListe_1"),
+      ]
+    },
 
     /**
      * Adds a new Verkehrsmittel to select as the  Pendelmedium
