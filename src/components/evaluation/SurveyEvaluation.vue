@@ -108,6 +108,30 @@
           </v-col>
         </v-row>
         <v-row>
+          <v-col>
+            <bar-chart
+              :chart-data="chartdataDienstreisenBar"
+              :options="optionsDienstreisenBar"
+            />
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col>
+            <bar-chart
+              :chart-data="chartdataPendelwegeBar"
+              :options="optionsPendelwegeBar"
+            />
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col>
+            <bar-chart
+              :chart-data="chartdataITGeraeteBar"
+              :options="optionsITGeraeteBar"
+            />
+          </v-col>
+        </v-row>
+        <v-row>
           <v-col class="d-flex justify-center">
             <h4>
               {{ $t('evaluation.surveyEvaluation.AufteilungNachEnergieart') }}
@@ -299,6 +323,9 @@ export default {
         emissionenPendelwege: null,
         emissionenGesamt: null,
         emissionenProMitarbeiter: null,
+        emissionenDienstreisenAufgeteilt: null,
+        emissionenPendelwegeAufgeteilt: null,
+        emissionenITGeraeteAufgeteilt: null,
 
         verbrauchWaerme: null,
         verbrauchStrom: null,
@@ -339,6 +366,15 @@ export default {
       chartdataVerbrauchBar: null,
       optionsVerbrauchBar: null,
 
+      chartdataDienstreisenBar: null,
+      optionsDienstreisenBar: null,
+
+      chartdataPendelwegeBar: null,
+      optionsPendelwegeBar: null,
+
+      chartdataITGeraeteBar: null,
+      optionsITGeraeteBar: null,
+
       // for data gap visualization
       umfrageGebaeude: [],
       gebaeudeIDsUndZaehler: [],
@@ -365,6 +401,9 @@ export default {
       this.setChartGesamt();
       this.setChartEnergie();
       this.setChartVerbrauch();
+      this.setChartDienstreisen();
+      this.setChartPendelwege();
+      this.setChartITGeraete();
     }
   },
 
@@ -537,6 +576,9 @@ export default {
             this.setChartGesamt();
             this.setChartEnergie();
             this.setChartVerbrauch();
+            this.setChartDienstreisen();
+            this.setChartPendelwege();
+            this.setChartITGeraete();
 
             this.gebaeudeIDsUndZaehler = this.responsedata.gebaeudeIDsUndZaehler
             this.umfrageGebaeude = this.responsedata.umfrageGebaeude.map(x => [translateGebaeudeIDToSymbolic(x["gebaeudeNr"]), x["nutzflaeche"]])
@@ -654,7 +696,7 @@ export default {
       }
 
       this.optionsGesamtDoughnut = {
-        responsive: false,
+        responsive: true,
         maintainAspectRatio: false,
         plugins: {
           datalabels: {
@@ -700,7 +742,7 @@ export default {
         }]
       };
       this.optionsGesamtPareto = {
-        responsive: false,
+        responsive: true,
         maintainAspectRatio: false,
         legend: {
           display: false
@@ -759,7 +801,7 @@ export default {
         }]
       }
       this.optionsEnergieDoughnut = {
-        responsive: false,
+        responsive: true,
         maintainAspectRatio: false,
         plugins: {
           datalabels: {
@@ -805,7 +847,7 @@ export default {
         }]
       }
       this.optionsEnergieBar = {
-        responsive: false,
+        responsive: true,
         maintainAspectRatio: false,
         legend: {
           display: false
@@ -864,7 +906,7 @@ export default {
         }]
       }
       this.optionsVerbrauchDoughnut = {
-        responsive: false,
+        responsive: true,
         maintainAspectRatio: false,
         plugins: {
           datalabels: {
@@ -910,7 +952,7 @@ export default {
         }]
       }
       this.optionsVerbrauchBar = {
-        responsive: false,
+        responsive: true,
         maintainAspectRatio: false,
         legend: {
           display: false
@@ -942,6 +984,204 @@ export default {
             label: function(tooltipItem, data) {
               let idx = tooltipItem.index;
               return i18n.t('common.Verbrauch') + ": " + i18n.n(data.datasets[0].data[idx], "decimal")
+            }
+          }
+        }
+      }
+    },
+
+    setChartDienstreisen: function () {
+      let data = []
+
+      let dienstreisenAufgeteilt = this.responsedata.emissionenDienstreisenAufgeteilt
+      Object.keys(dienstreisenAufgeteilt).forEach(function(key) {
+        data.push({label: key, value: dienstreisenAufgeteilt[key], color: 'rgb(54,162,235)'})
+      })
+
+      data.sort((a, b) => b.value - a.value)
+
+      this.chartdataDienstreisenBar = {
+        labels: data.map(a => a.label),
+        datasets: [{
+          type: 'bar',
+          label: i18n.t('common.Emissionen'),
+          yAxisID: 'bar',
+          data: data.map(a => a.value),
+          backgroundColor: data.map(a => a.color),
+          borderWidth: 1,
+          order: 1,
+          datalabels: {
+            color: 'black',
+            align: 'end',
+            anchor: 'start',
+          },
+        }]
+      }
+      this.optionsDienstreisenBar = {
+        responsive: true,
+        maintainAspectRatio: false,
+        legend: {
+          display: false
+        },
+        plugins: {
+          datalabels: {
+            display: true,
+            // eslint-disable-next-line no-unused-vars
+            formatter: (value, context) => {
+              return i18n.n(value, "decimal");
+            },
+          },
+        },
+        scales: {
+          yAxes: [{
+            id: 'bar',
+            position: 'left',
+            ticks: {
+              beginAtZero: true
+            },
+            scaleLabel: {
+              display: true,
+              labelString: 't C02 eq.'
+            }
+          }]
+        },
+        tooltips: {
+          callbacks: {
+            label: function(tooltipItem, data) {
+              let idx = tooltipItem.index;
+              return i18n.t('common.Emissionen') + ": " + i18n.n(data.datasets[0].data[idx], "decimal")
+            }
+          }
+        }
+      }
+    },
+
+    setChartPendelwege: function () {
+      let data = []
+
+      let pendelwegeAufgeteilt = this.responsedata.emissionenPendelwegeAufgeteilt
+      Object.keys(pendelwegeAufgeteilt).forEach(function(key) {
+        data.push({label: key, value: pendelwegeAufgeteilt[key], color: 'rgb(255, 205, 86)'})
+      })
+
+      data.sort((a, b) => b.value - a.value)
+
+      this.chartdataPendelwegeBar= {
+        labels: data.map(a => a.label),
+        datasets: [{
+          type: 'bar',
+          label: i18n.t('common.Emissionen'),
+          yAxisID: 'bar',
+          data: data.map(a => a.value),
+          backgroundColor: data.map(a => a.color),
+          borderWidth: 1,
+          order: 1,
+          datalabels: {
+            color: 'black',
+            align: 'end',
+            anchor: 'start',
+          },
+        }]
+      }
+      this.optionsPendelwegeBar = {
+        responsive: true,
+        maintainAspectRatio: false,
+        legend: {
+          display: false
+        },
+        plugins: {
+          datalabels: {
+            display: true,
+            // eslint-disable-next-line no-unused-vars
+            formatter: (value, context) => {
+              return i18n.n(value, "decimal");
+            },
+          },
+        },
+        scales: {
+          yAxes: [{
+            id: 'bar',
+            position: 'left',
+            ticks: {
+              beginAtZero: true
+            },
+            scaleLabel: {
+              display: true,
+              labelString: 't C02 eq.'
+            }
+          }]
+        },
+        tooltips: {
+          callbacks: {
+            label: function(tooltipItem, data) {
+              let idx = tooltipItem.index;
+              return i18n.t('common.Emissionen') + ": " + i18n.n(data.datasets[0].data[idx], "decimal")
+            }
+          }
+        }
+      }
+    },
+
+    setChartITGeraete: function () {
+      let data = []
+
+      let itGeraeteAufgeteilt = this.responsedata.emissionenITGeraeteAufgeteilt
+      Object.keys(itGeraeteAufgeteilt).forEach(function(key) {
+        data.push({label: key, value: itGeraeteAufgeteilt[key], color: 'rgb(75, 192, 192)'})
+      })
+
+      data.sort((a, b) => b.value - a.value)
+
+      this.chartdataITGeraeteBar= {
+        labels: data.map(a => a.label),
+        datasets: [{
+          type: 'bar',
+          label: i18n.t('common.Emissionen'),
+          yAxisID: 'bar',
+          data: data.map(a => a.value),
+          backgroundColor: data.map(a => a.color),
+          borderWidth: 1,
+          order: 1,
+          datalabels: {
+            color: 'black',
+            align: 'end',
+            anchor: 'start',
+          },
+        }]
+      }
+      this.optionsITGeraeteBar = {
+        responsive: true,
+        maintainAspectRatio: false,
+        legend: {
+          display: false
+        },
+        plugins: {
+          datalabels: {
+            display: true,
+            // eslint-disable-next-line no-unused-vars
+            formatter: (value, context) => {
+              return i18n.n(value, "decimal");
+            },
+          },
+        },
+        scales: {
+          yAxes: [{
+            id: 'bar',
+            position: 'left',
+            ticks: {
+              beginAtZero: true
+            },
+            scaleLabel: {
+              display: true,
+              labelString: 't C02 eq.'
+            }
+          }]
+        },
+        tooltips: {
+          callbacks: {
+            label: function(tooltipItem, data) {
+              let idx = tooltipItem.index;
+              return i18n.t('common.Emissionen') + ": " + i18n.n(data.datasets[0].data[idx], "decimal")
             }
           }
         }
