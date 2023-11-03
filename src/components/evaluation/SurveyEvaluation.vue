@@ -394,6 +394,45 @@ export default {
     displayExtrapolationWarning: function () {
       return this.responsedata.umfragenanteil <= 50.0
     },
+    itGeraeteLabelMap: function(){
+      return {
+        "Notebooks": i18n.t('colleagueSurvey.colleagueSurvey.IT_Geraete_Notebooks'),
+        "Desktop PC": i18n.t('colleagueSurvey.colleagueSurvey.IT_Geraete_Desktops'),
+        "Bildschirme": i18n.t('colleagueSurvey.colleagueSurvey.IT_Geraete_Bildschirme'),
+        "Beamer": i18n.t('userSurvey.Survey.ITGeraetIDDic_4'),
+        "Mobiltelefone": i18n.t('colleagueSurvey.colleagueSurvey.IT_Geraete_Mobiltelefone'),
+        "interne Server": i18n.t('userSurvey.Survey.ITGeraetIDDic_6'),
+        "Multifunktionsdrucker": i18n.t('userSurvey.Survey.ITGeraetIDDic_7'),
+        "Druckerpatronen/Toner Multifunktionsgeraet": i18n.t('userSurvey.Survey.ITGeraetIDDic_8'),
+        "Laserdrucker/Tintenstrahldrucker": i18n.t('userSurvey.Survey.ITGeraetIDDic_9'),
+        "Duckepatronen/Toner Laserdrucker und Tintenstrahldrucker": i18n.t('userSurvey.Survey.ITGeraetIDDic_10'),
+      }
+    },
+    dienstreisenLabelMap: function(){
+      return {
+        "Bahn": i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_2"),
+        "Auto-Benzin": i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_1"),
+        "Auto-Diesel": i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_0"),
+        "Flugzeug-Kurzstrecke": i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3") + "-" + i18n.t("colleagueSurvey.colleagueSurvey.flugstreckeListe_1"),
+        "Flugzeug-Langstrecke": i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3") + "-" + i18n.t("colleagueSurvey.colleagueSurvey.flugstreckeListe_0"),
+      }
+    },
+    pendelwegeLabelMap: function(){
+      return {
+        "PKW (Diesel)": i18n.t("colleagueSurvey.colleagueSurvey.fahrmediumListe_0"),
+        "PKW (Benzin)": i18n.t("colleagueSurvey.colleagueSurvey.fahrmediumListe_1"),
+        "Fahrrad": i18n.t("colleagueSurvey.colleagueSurvey.fahrmediumListe_2"),
+        "E-Fahrrad": i18n.t("colleagueSurvey.colleagueSurvey.fahrmediumListe_3"),
+        "Motorisiertes Zweirad": i18n.t("colleagueSurvey.colleagueSurvey.fahrmediumListe_4"),
+        "Zu Fuß": i18n.t("colleagueSurvey.colleagueSurvey.fahrmediumListe_6"),
+        "Bahn": i18n.t("colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_0"),
+        "Bus": i18n.t("colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_1"),
+        "U-Bahn": i18n.t("colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_2"),
+        "Straßenbahn": i18n.t("colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_3"),
+        "Mix oeffentlichen Verkehrsmittel mit U-Bahn": i18n.t("colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_4"),
+        "Mix oeffentlichen Verkehrsmittel ohne U-Bahn": i18n.t("colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_5"),
+      }
+    }
   },
 
   watch: {
@@ -994,8 +1033,10 @@ export default {
       let data = []
 
       let dienstreisenAufgeteilt = this.responsedata.emissionenDienstreisenAufgeteilt
+      let labelMap = this.dienstreisenLabelMap
+
       Object.keys(dienstreisenAufgeteilt).forEach(function(key) {
-        data.push({label: key, value: dienstreisenAufgeteilt[key], color: 'rgb(54,162,235)'})
+        data.push({label: labelMap[key], value: dienstreisenAufgeteilt[key], color: 'rgb(54,162,235)'})
       })
 
       data.sort((a, b) => b.value - a.value)
@@ -1060,8 +1101,9 @@ export default {
       let data = []
 
       let pendelwegeAufgeteilt = this.responsedata.emissionenPendelwegeAufgeteilt
+      let labelMap = this.pendelwegeLabelMap
       Object.keys(pendelwegeAufgeteilt).forEach(function(key) {
-        data.push({label: key, value: pendelwegeAufgeteilt[key], color: 'rgb(255, 205, 86)'})
+        data.push({label: labelMap[key], value: pendelwegeAufgeteilt[key], color: 'rgb(255, 205, 86)'})
       })
 
       data.sort((a, b) => b.value - a.value)
@@ -1126,8 +1168,9 @@ export default {
       let data = []
 
       let itGeraeteAufgeteilt = this.responsedata.emissionenITGeraeteAufgeteilt
+      let labelMap = this.itGeraeteLabelMap
       Object.keys(itGeraeteAufgeteilt).forEach(function(key) {
-        data.push({label: key, value: itGeraeteAufgeteilt[key], color: 'rgb(75, 192, 192)'})
+        data.push({label: labelMap[key], value: itGeraeteAufgeteilt[key], color: 'rgb(75, 192, 192)'})
       })
 
       data.sort((a, b) => b.value - a.value)
