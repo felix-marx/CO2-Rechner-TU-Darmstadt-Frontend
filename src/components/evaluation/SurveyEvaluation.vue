@@ -395,43 +395,45 @@ export default {
       return this.responsedata.umfragenanteil <= 50.0
     },
     itGeraeteLabelMap: function(){
-      return {
-        "Notebooks": i18n.t('colleagueSurvey.colleagueSurvey.IT_Geraete_Notebooks'),
-        "Desktop PC": i18n.t('colleagueSurvey.colleagueSurvey.IT_Geraete_Desktops'),
-        "Bildschirme": i18n.t('colleagueSurvey.colleagueSurvey.IT_Geraete_Bildschirme'),
-        "Beamer": i18n.t('userSurvey.Survey.ITGeraetIDDic_4'),
-        "Mobiltelefone": i18n.t('colleagueSurvey.colleagueSurvey.IT_Geraete_Mobiltelefone'),
-        "interne Server": i18n.t('userSurvey.Survey.ITGeraetIDDic_6'),
-        "Multifunktionsdrucker": i18n.t('userSurvey.Survey.ITGeraetIDDic_7'),
-        "Druckerpatronen/Toner Multifunktionsgeraet": i18n.t('userSurvey.Survey.ITGeraetIDDic_8'),
-        "Laserdrucker/Tintenstrahldrucker": i18n.t('userSurvey.Survey.ITGeraetIDDic_9'),
-        "Duckepatronen/Toner Laserdrucker und Tintenstrahldrucker": i18n.t('userSurvey.Survey.ITGeraetIDDic_10'),
-      }
+      return  new Map([
+        ["1", i18n.t('colleagueSurvey.colleagueSurvey.IT_Geraete_Notebooks')],
+        ["2", i18n.t('colleagueSurvey.colleagueSurvey.IT_Geraete_Desktops')],
+        ["3", i18n.t('colleagueSurvey.colleagueSurvey.IT_Geraete_Bildschirme')],
+        ["4", i18n.t('userSurvey.Survey.ITGeraetIDDic_4')],
+        ["5", i18n.t('colleagueSurvey.colleagueSurvey.IT_Geraete_Mobiltelefone')],
+        ["6", i18n.t('userSurvey.Survey.ITGeraetIDDic_6')],
+        ["7", i18n.t('userSurvey.Survey.ITGeraetIDDic_7')],
+        ["8", i18n.t('userSurvey.Survey.ITGeraetIDDic_8')],
+        ["9", i18n.t('userSurvey.Survey.ITGeraetIDDic_9')],
+        ["10", i18n.t('userSurvey.Survey.ITGeraetIDDic_10')],
+      ]) 
     },
     dienstreisenLabelMap: function(){
-      return {
-        "Bahn": i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_2"),
-        "Auto-Benzin": i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_1"),
-        "Auto-Diesel": i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_0"),
-        "Flugzeug-Kurzstrecke": i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3") + "-" + i18n.t("colleagueSurvey.colleagueSurvey.flugstreckeListe_1"),
-        "Flugzeug-Langstrecke": i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3") + "-" + i18n.t("colleagueSurvey.colleagueSurvey.flugstreckeListe_0"),
-      }
+      return new Map([
+        ["1", i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_2")],
+        ["2", i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMedium_Auto")],
+        ["3", i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3")],
+        ["Benzin", i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMedium_Benzin")],
+        ["Diesel", i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMedium_Diesel")],
+        ["Kurzstrecke", i18n.t("colleagueSurvey.colleagueSurvey.flugstreckeListe_1")],
+        ["Langstrecke", i18n.t("colleagueSurvey.colleagueSurvey.flugstreckeListe_0")],
+      ])
     },
     pendelwegeLabelMap: function(){
-      return {
-        "PKW (Diesel)": i18n.t("colleagueSurvey.colleagueSurvey.fahrmediumListe_0"),
-        "PKW (Benzin)": i18n.t("colleagueSurvey.colleagueSurvey.fahrmediumListe_1"),
-        "Fahrrad": i18n.t("colleagueSurvey.colleagueSurvey.fahrmediumListe_2"),
-        "E-Fahrrad": i18n.t("colleagueSurvey.colleagueSurvey.fahrmediumListe_3"),
-        "Motorisiertes Zweirad": i18n.t("colleagueSurvey.colleagueSurvey.fahrmediumListe_4"),
-        "Zu Fuß": i18n.t("colleagueSurvey.colleagueSurvey.fahrmediumListe_6"),
-        "Bahn": i18n.t("colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_0"),
-        "Bus": i18n.t("colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_1"),
-        "U-Bahn": i18n.t("colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_2"),
-        "Straßenbahn": i18n.t("colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_3"),
-        "Mix oeffentlichen Verkehrsmittel mit U-Bahn": i18n.t("colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_4"),
-        "Mix oeffentlichen Verkehrsmittel ohne U-Bahn": i18n.t("colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_5"),
-      }
+      return new Map([
+        ["1", i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_2')],
+        ["2", i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_3')],
+        ["3", i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_4')],
+        ["4", i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_0')],
+        ["5", i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_1')],
+        ["6", i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_1')],
+        ["7", i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_0')],
+        ["8", i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_2')],
+        ["9", i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_3')],
+        ["10", i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_4')],
+        ["11", i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_5')],
+        ["12", i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_6')]
+      ]);
     }
   },
 
@@ -609,6 +611,9 @@ export default {
           if (body.status == "success") {
             this.responsesuccessful = true
             this.responsedata = body.data
+
+            console.log(this.responsedata)
+
             this.responsedata.auswertungFreigegeben = (body.data.auswertungFreigegeben == 1) ? true : false
             this.checkNegativValue();
             this.roundResponseData();
@@ -706,6 +711,17 @@ export default {
 
       this.responsedata.emissionenGesamt = Math.round(this.responsedata.emissionenGesamt / roundFactor1) / roundFactor2
       this.responsedata.emissionenProMitarbeiter = Math.round(this.responsedata.emissionenProMitarbeiter / roundFactor1) / roundFactor2
+
+      Object.keys(this.responsedata.emissionenDienstreisenAufgeteilt).forEach(key => {
+        this.responsedata.emissionenDienstreisenAufgeteilt[key] = Math.round(this.responsedata.emissionenDienstreisenAufgeteilt[key] / roundFactor1) / roundFactor2
+      })
+      Object.keys(this.responsedata.emissionenITGeraeteAufgeteilt).forEach(key => {
+        this.responsedata.emissionenITGeraeteAufgeteilt[key] = Math.round(this.responsedata.emissionenITGeraeteAufgeteilt[key] / roundFactor1) / roundFactor2
+      })
+      Object.keys(this.responsedata.emissionenPendelwegeAufgeteilt).forEach(key => {
+        this.responsedata.emissionenPendelwegeAufgeteilt[key] = Math.round(this.responsedata.emissionenPendelwegeAufgeteilt[key] / roundFactor1) / roundFactor2
+      })
+
 
       this.responsedata.umfragenanteil = Math.round(this.responsedata.umfragenanteil * 1000) / 10
       this.responsedata.vergleich2PersonenHaushalt = Math.round(this.responsedata.vergleich2PersonenHaushalt * 100) / 100
@@ -1036,7 +1052,9 @@ export default {
       let labelMap = this.dienstreisenLabelMap
 
       Object.keys(dienstreisenAufgeteilt).forEach(function(key) {
-        data.push({label: labelMap[key], value: dienstreisenAufgeteilt[key], color: 'rgb(54,162,235)'})
+        let labelParts = key.split("-")
+        let label = labelMap.get(labelParts[0]) + (labelParts[1] ? " - " + labelMap.get(labelParts[1]) : "")
+        data.push({label: label, value: dienstreisenAufgeteilt[key], color: 'rgb(54,162,235)'})
       })
 
       data.sort((a, b) => b.value - a.value)
@@ -1103,7 +1121,7 @@ export default {
       let pendelwegeAufgeteilt = this.responsedata.emissionenPendelwegeAufgeteilt
       let labelMap = this.pendelwegeLabelMap
       Object.keys(pendelwegeAufgeteilt).forEach(function(key) {
-        data.push({label: labelMap[key], value: pendelwegeAufgeteilt[key], color: 'rgb(255, 205, 86)'})
+        data.push({label: labelMap.get(key), value: pendelwegeAufgeteilt[key], color: 'rgb(255, 205, 86)'})
       })
 
       data.sort((a, b) => b.value - a.value)
@@ -1170,7 +1188,7 @@ export default {
       let itGeraeteAufgeteilt = this.responsedata.emissionenITGeraeteAufgeteilt
       let labelMap = this.itGeraeteLabelMap
       Object.keys(itGeraeteAufgeteilt).forEach(function(key) {
-        data.push({label: labelMap[key], value: itGeraeteAufgeteilt[key], color: 'rgb(75, 192, 192)'})
+        data.push({label: labelMap.get(key), value: itGeraeteAufgeteilt[key], color: 'rgb(75, 192, 192)'})
       })
 
       data.sort((a, b) => b.value - a.value)
