@@ -543,7 +543,10 @@
       "MakeSpreadsheet_10": "CO2-Rechner",
       "MakeSpreadsheet_11": "Aufteilung nach Dienstreisen",
       "MakeSpreadsheet_12": "Aufteilung nach Pendelwege",
-      "MakeSpreadsheet_13": "Aufteilung nach IT-Geraete"
+      "MakeSpreadsheet_13": "Aufteilung nach IT-Geraete",
+      "AufteilungDienstreisen": "Aufteilung nach Dienstreisen",
+      "AufteilungPendelwege": "Aufteilung nach Pendelwege",
+      "AufteilungITGeraete": "Aufteilung nach IT-Geraete"
     },
     "ResultSharingDisabled": {
       "ResultSharingDisabled_0": "Es tut uns leid, aber die Umfrage mit ID \"",

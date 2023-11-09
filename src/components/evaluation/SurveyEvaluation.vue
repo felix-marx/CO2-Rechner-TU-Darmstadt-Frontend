@@ -88,6 +88,8 @@
             : {{ haushalteReferenzText }}
           </v-card>
         </v-row>
+
+        <!-- Gesamt Charts -->
         <v-row>
           <v-col class="d-flex justify-center">
             <h4>{{ $t('evaluation.surveyEvaluation.AufteilungHauptemissionsfaktoren') }}</h4>
@@ -107,12 +109,26 @@
             />
           </v-col>
         </v-row>
+
+        <!-- Aufteilung Dienstreisen -->
+        <v-row>
+          <v-col class="d-flex justify-center">
+            <h4>{{ $t('evaluation.surveyEvaluation.AufteilungDienstreisen') }}</h4>
+          </v-col>
+        </v-row>
         <v-row>
           <v-col>
             <bar-chart
               :chart-data="chartdataDienstreisenBar"
               :options="optionsDienstreisenBar"
             />
+          </v-col>
+        </v-row>
+
+        <!-- Aufteilung Pendelwege -->
+        <v-row>
+          <v-col class="d-flex justify-center">
+            <h4>{{ $t('evaluation.surveyEvaluation.AufteilungPendelwege') }}</h4>
           </v-col>
         </v-row>
         <v-row>
@@ -123,6 +139,13 @@
             />
           </v-col>
         </v-row>
+
+        <!-- Aufteilung ITGeraete -->
+        <v-row>
+          <v-col class="d-flex justify-center">
+            <h4>{{ $t('evaluation.surveyEvaluation.AufteilungITGeraete') }}</h4>
+          </v-col>
+        </v-row>
         <v-row>
           <v-col>
             <bar-chart
@@ -131,6 +154,8 @@
             />
           </v-col>
         </v-row>
+
+        <!-- Aufteilung Energieart -->
         <v-row>
           <v-col class="d-flex justify-center">
             <h4>
@@ -169,7 +194,8 @@
             />
           </v-col>
         </v-row>
-        <!-- Hier von mir  -->
+
+        <!-- Aufteilung Energieverbrauch -->
         <v-row>
           <v-col class="d-flex justify-center">
             <h4>
@@ -208,7 +234,6 @@
             />
           </v-col>
         </v-row>
-        <!-- Bis hier von mir  -->
         <v-row>
           <v-col>
             <v-alert 
@@ -671,9 +696,6 @@ export default {
           if (body.status == "success") {
             this.responsesuccessful = true
             this.responsedata = body.data
-
-            console.log(this.responsedata)
-
             this.responsedata.auswertungFreigegeben = (body.data.auswertungFreigegeben == 1) ? true : false
             this.checkNegativValue();
             this.roundResponseData();
