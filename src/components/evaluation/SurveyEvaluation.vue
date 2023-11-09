@@ -568,6 +568,66 @@ export default {
           "col3": this.responsedata.verbrauchEnergie === 0.0 ? 0 : Math.round(this.responsedata.verbrauchStrom / this.responsedata.verbrauchEnergie * 1000) / 10,
         },
       ];
+
+      data = data.concat([
+        {},
+        {
+          "col1": i18n.t('evaluation.surveyEvaluation.MakeSpreadsheet_11'),
+          "col2": "t CO2 eq.",
+          "col3": "%",
+        },
+      ])
+      let dienstreisenAufgeteilt = this.responsedata.emissionenDienstreisenAufgeteilt
+      let labelMap = this.dienstreisenLabelMap
+      let emissionen = this.responsedata.emissionenDienstreisen
+      Object.keys(dienstreisenAufgeteilt).forEach(function(key) {
+        let labelParts = key.split("-")
+        let label = labelMap.get(labelParts[0]) + (labelParts[1] ? " - " + labelMap.get(labelParts[1]) : "")
+        data.push({
+          "col1": label, 
+          "col2": dienstreisenAufgeteilt[key],
+          "col3": emissionen === 0.0 ? 0 : Math.round(dienstreisenAufgeteilt[key] / emissionen * 1000) / 10
+        })
+      })
+
+      data = data.concat([
+        {},
+        {
+          "col1": i18n.t('evaluation.surveyEvaluation.MakeSpreadsheet_12'),
+          "col2": "t CO2 eq.",
+          "col3": "%",
+        },
+      ])
+      let pendelwegeAufgeteilt = this.responsedata.emissionenPendelwegeAufgeteilt
+      labelMap = this.pendelwegeLabelMap
+      emissionen = this.responsedata.emissionenPendelwege
+      Object.keys(pendelwegeAufgeteilt).forEach(function(key) {
+        data.push({
+          "col1": labelMap.get(key), 
+          "col2": pendelwegeAufgeteilt[key],
+          "col3": emissionen === 0.0 ? 0 : Math.round(pendelwegeAufgeteilt[key] / emissionen * 1000) / 10
+        })
+      })
+
+      data = data.concat([
+        {},
+        {
+          "col1": i18n.t('evaluation.surveyEvaluation.MakeSpreadsheet_13'),
+          "col2": "t CO2 eq.",
+          "col3": "%",
+        },
+      ])
+      let itGeraeteAufgeteilt = this.responsedata.emissionenITGeraeteAufgeteilt
+      labelMap = this.itGeraeteLabelMap
+      emissionen = this.responsedata.emissionenITGeraete
+      Object.keys(itGeraeteAufgeteilt).forEach(function(key) {
+        data.push({
+          "col1": labelMap.get(key), 
+          "col2": pendelwegeAufgeteilt[key],
+          "col3": emissionen === 0.0 ? 0 : Math.round(itGeraeteAufgeteilt[key] / emissionen * 1000) / 10
+        })
+      })
+
       var options = {
         header: ["col1", "col2", "col3"],
         skipHeader: true,
