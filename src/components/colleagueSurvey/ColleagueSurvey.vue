@@ -57,6 +57,19 @@
                 :label="$t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNV')"
               />
             </v-col>
+            <v-col
+              v-if="medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_0')"
+
+            >
+              <v-select
+                v-model="medium[1]"
+                :items="pkwListe"
+                :disabled="submittedDataSuccessfully"
+                :label="$t('colleagueSurvey.colleagueSurvey.Pkw_Motortyp')"
+              >
+
+              </v-select>
+            </v-col>
             <v-col :cols="medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_5') ? 3 : 4">
               <v-text-field
                 v-model="medium[4]"
@@ -91,7 +104,7 @@
           <!-- Weitere Reihe für PKWs mit Fahrgemeinschaft -->
           <h4
             v-show="
-              medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_0') || medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_1')
+              medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_0')
             "
             class="my-3"
           >
@@ -101,7 +114,7 @@
             <v-col :cols="1">
               <v-checkbox
                 v-show="
-                  medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_0') || medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_1')
+                  medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_0')
                 "
                 v-model="medium[2]"
                 :disabled="submittedDataSuccessfully"
@@ -113,8 +126,7 @@
               <v-text-field
                 v-show="
                   medium[2] &&
-                    (medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_0') ||
-                      medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_1'))
+                    (medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_0'))
                 "
                 v-model="medium[3]"
                 :rules="mitfahrerRules"
@@ -176,14 +188,14 @@
             </v-col>
             <!--<v-select v-model="flugklasse" label="Klasse" v-show="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3')" :items="flugklasseListe"></v-select>-->
             <v-col
-              v-if="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3')"
-              :cols="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3') ? 3 : 0"
+              v-if="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_0')"
+              :cols="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_0') ? 3 : 0"
             >
               <v-select
                 v-model="reise[1]"
-                :v-show="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3')"
-                :label="$t('colleagueSurvey.colleagueSurvey.Flugstrecke')"
-                :items="flugstreckeListe"
+                :v-show="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_0')"
+                :label="$t('colleagueSurvey.colleagueSurvey.Pkw_Motortyp')"
+                :items="pkwListe"
                 :disabled="submittedDataSuccessfully"
                 class="pr-5"
               />
@@ -543,7 +555,6 @@ export default {  components: {
     setListe: function(){
       this.fahrtmediumListe = [
         i18n.t("colleagueSurvey.colleagueSurvey.fahrmediumListe_0"),
-        i18n.t("colleagueSurvey.colleagueSurvey.fahrmediumListe_1"),
         i18n.t("colleagueSurvey.colleagueSurvey.fahrmediumListe_2"),
         i18n.t("colleagueSurvey.colleagueSurvey.fahrmediumListe_3"),
         i18n.t("colleagueSurvey.colleagueSurvey.fahrmediumListe_4"),
@@ -560,14 +571,18 @@ export default {  components: {
       ]
       this.dienstreiseMediumListe = [
         i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_0"),
-        i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_1"),
         i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_2"),
         i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3"),
       ],
       this.flugstreckeListe = [
         i18n.t("colleagueSurvey.colleagueSurvey.flugstreckeListe_0"),
         i18n.t("colleagueSurvey.colleagueSurvey.flugstreckeListe_1"),
+      ],
+      this.pkwListe = [
+        i18n.t("colleagueSurvey.colleagueSurvey.Pkw_diesel"),
+        i18n.t("colleagueSurvey.colleagueSurvey.Pkw_benzin"),
       ]
+      
     },
 
     /**
@@ -601,14 +616,13 @@ export default {  components: {
         [i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_3'), 2],
         [i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_4'), 3],
         [i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_0'), 4],
-        [i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_1'), 5],
-        [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_1'), 6],
-        [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_0'), 7],
-        [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_2'), 8],
-        [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_3'), 9],
-        [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_4'), 10],
-        [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_5'), 11],
-        [i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_6'), 12]
+        [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_1'), 5],
+        [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_0'), 6],
+        [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_2'), 7],
+        [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_3'), 8],
+        [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_4'), 9],
+        [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_5'), 10],
+        [i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_6'), 11]
       ]);
       if (verkehrmittel1 !== i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_5')) {
         return verkehrsmittelMap.get(verkehrmittel1);
@@ -624,7 +638,6 @@ export default {  components: {
       const verkehrsmittelMap = new Map([
         [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_0'), 1],
         [i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_0'), 2],
-        [i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_1'), 2],
         [i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3'), 3],
       ]);
       return [

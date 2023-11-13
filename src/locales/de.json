@@ -412,8 +412,7 @@
       "WieInsBuero_fahrgemeinschaft": "Fahren Sie in einer Fahrgemeinschaft?",
       "WieInsBuero_anzahlMitfahrende": "Anzahl Mitfahrende",
 
-      "fahrmediumListe_0": "PKW (Diesel)",
-      "fahrmediumListe_1": "PKW (Benzin)",
+      "fahrmediumListe_0": "PKW",
       "fahrmediumListe_2": "Fahrrad",
       "fahrmediumListe_3": "E-Fahrrad",
       "fahrmediumListe_4": "Motorisiertes Zweirad",
@@ -428,12 +427,15 @@
       "fahrtmediumOEPNVListe_4": "Mix inkl. U-Bahn",
       "fahrtmediumOEPNVListe_5": "Mix exkl. U-Bahn",
 
-      "dienstreiseMediumListe_0": "PKW (Diesel)",
-      "dienstreiseMediumListe_1": "PKW (Benzin)",
+      "dienstreiseMediumListe_0": "PKW",
       "dienstreiseMediumListe_2": "Bahn",
       "dienstreiseMediumListe_3": "Flugzeug",
       "dienstreiseMedium_Benzin": "Benzin",
       "dienstreiseMedium_Diesel": "Diesel",
+
+      "Pkw_Motortyp": "Motortyp",
+      "Pkw_diesel": "Diesel",
+      "Pkw_benzin": "Benzin",
 
       "Flugstrecke": "Flugstrecke",
       "EinfacheDistanz": "Einfache Distanz",
