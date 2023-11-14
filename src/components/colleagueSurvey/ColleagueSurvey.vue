@@ -215,13 +215,13 @@
               v-if="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3')"
               :cols="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3') ? 3 : 0"
             >
-              <!-- TODO: Funktion einführen für zuweisung auf lang / kurzstrecke -->
+              <!-- TODO: Funktion einführen für zuweisung auf lang / kurzstrecke ACHTUNG MEHRERE EINTRÄGE? -->
               <v-alert
                 icon="mdi-airplane-takeoff"
                 outlined
                 text
                 type="info"
-              > {{ reise[2] >  750 ? "Langstrecke" : "Kurzstrecke "}} </v-alert>
+              > {{ mapDienstreiseFlugkategorie(reise[2]) }} </v-alert>
             </v-col>
             <v-col>
               <v-btn
@@ -547,7 +547,6 @@ export default {  components: {
         i18n.t('colleagueSurvey.colleagueSurvey.MitfahrerRules_1'),
     ],
   }),
-
   watch: {
     '$i18n.locale': function() {
       this.setListe();
@@ -557,7 +556,6 @@ export default {  components: {
       this.dienstreise = [[null, null, null]]
     },
   },
-
   created() {
     this.fetchUmfrageYear(this.$route.params.umfrageID);  // request the year of the umfrage
     this.setListe();
@@ -594,7 +592,6 @@ export default {  components: {
         i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMedium_Diesel"),
         i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMedium_Benzin"),
       ]
-      
     },
 
     /**
@@ -660,6 +657,15 @@ export default {  components: {
             : i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMedium_Diesel')
           : "",
       ];
+    },
+
+    mapDienstreiseFlugkategorie: function (reisedistanz) {
+      //Langstrecke
+      if(reisedistanz > 750){
+        return i18n.t('colleagueSurvey.colleagueSurvey.flugstreckeListe_0')
+      }
+      //Kurzstrecke
+      return i18n.t('colleagueSurvey.colleagueSurvey.flugstreckeListe_1') 
     },
 
     /**
