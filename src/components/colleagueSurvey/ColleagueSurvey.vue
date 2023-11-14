@@ -59,7 +59,6 @@
             </v-col>
             <v-col
               v-if="medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_0')"
-
             >
               <v-select
                 v-model="medium[1]"
@@ -67,7 +66,6 @@
                 :disabled="submittedDataSuccessfully"
                 :label="$t('colleagueSurvey.colleagueSurvey.Pkw_Motortyp')"
               >
-
               </v-select>
             </v-col>
             <v-col :cols="medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_5') ? 3 : 4">
@@ -185,12 +183,14 @@
                 :items="dienstreiseMediumListe"
                 class="pr-5"
               />
+
             </v-col>
             <!--<v-select v-model="flugklasse" label="Klasse" v-show="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3')" :items="flugklasseListe"></v-select>-->
             <v-col
               v-if="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_0')"
               :cols="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_0') ? 3 : 0"
             >
+              <!-- PKW Diesel / Benzin auswahl -->
               <v-select
                 v-model="reise[1]"
                 :v-show="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_0')"
@@ -204,12 +204,24 @@
               <v-text-field
                 v-model="reise[2]"
                 :rules="streckeRules"
-                :disabled="reise[0] === null || (reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3') && reise[1] === null) || submittedDataSuccessfully"
+                :disabled="reise[0] === null || submittedDataSuccessfully"
                 :min="0"
                 :label="$t('colleagueSurvey.colleagueSurvey.EinfacheDistanz')"
                 suffix="km"
                 class="pr-5"
               />
+            </v-col>
+            <v-col
+              v-if="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3')"
+              :cols="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3') ? 3 : 0"
+            >
+              <!-- TODO: Funktion einführen für zuweisung auf lang / kurzstrecke -->
+              <v-alert
+                icon="mdi-airplane-takeoff"
+                outlined
+                text
+                type="info"
+              > {{ reise[2] >  750 ? "Langstrecke" : "Kurzstrecke "}} </v-alert>
             </v-col>
             <v-col>
               <v-btn
@@ -579,8 +591,8 @@ export default {  components: {
         i18n.t("colleagueSurvey.colleagueSurvey.flugstreckeListe_1"),
       ],
       this.pkwListe = [
-        i18n.t("colleagueSurvey.colleagueSurvey.Pkw_diesel"),
-        i18n.t("colleagueSurvey.colleagueSurvey.Pkw_benzin"),
+        i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMedium_Diesel"),
+        i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMedium_Benzin"),
       ]
       
     },
