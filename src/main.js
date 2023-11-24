@@ -13,9 +13,9 @@ Vue.use(VueKeyCloak, {
     onLoad: 'check-sso',
   },
   config: {
-    realm: 'co2Rechner',
+    realm: process.env.VUE_APP_KEYCLOAK_REALM,
     url: process.env.VUE_APP_KEYCLOAK_URL,
-    clientId: 'vue-frontend',
+    clientId: process.env.VUE_APP_KEYCLOAK_CLIENT_ID,
   },
   logout: {
     redirectUri: process.env.VUE_APP_KEYCLOAK_LOGOUT_URL,
