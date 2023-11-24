@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-card
-      v-if="responsesuccessful"
+      v-if="responseSuccessful"
       elevation="2"
       outlined
       class="pa-7"
@@ -104,6 +104,7 @@
           </v-col>
           <v-col>
             <bar-chart
+              ref="half-chart"
               :chart-data="chartdataGesamtPareto"
               :options="optionsGesamtPareto"
             />
@@ -119,6 +120,7 @@
         <v-row>
           <v-col>
             <bar-chart
+              ref="chart"
               :chart-data="chartdataDienstreisenBar"
               :options="optionsDienstreisenBar"
             />
@@ -326,7 +328,7 @@ export default {
 
   data() {
     return {
-      responsesuccessful: false,
+      responseSuccessful: false,
       responseNotSuccessful: false,
       responsedata: {
         id: null,
@@ -404,6 +406,12 @@ export default {
       umfrageGebaeude: [],
       gebaeudeIDsUndZaehler: [],
       zaehler: [],
+
+      // for dynamic calculation of bar width
+      maxBars: null,
+      chartWidth: null,
+      halfChartWidth: null,
+      barWidth: null,
     }
   },
 
@@ -464,20 +472,51 @@ export default {
 
   watch: {
     '$i18n.locale': function() {  // reload charts when language changes to update labels
-      this.setChartGesamt();
-      this.setChartEnergie();
-      this.setChartVerbrauch();
-      this.setChartDienstreisen();
-      this.setChartPendelwege();
-      this.setChartITGeraete();
-    }
+      this.barWidthComp();    // TODO: remove later // for now used to test resizing of bars
+      this.setChartData();
+    },
+  },
+
+  async mounted() { 
+    await this.getData();
+    this.barWidthComp();
+    this.setChartData();
   },
 
   created() {
-    this.getData();
+    //this.getData();
+    //this.responseSuccessful = true
   },
 
   methods: {
+    onResize: async function () {
+      await Sleep(500)
+      if(this.oldWindowWidth != window.innerWidth) {
+        this.oldWindowWidth = window.innerWidth
+        console.log(this.barWidth)
+
+        this.barWidth = window.innerWidth / this.maxBars * 0.4
+        this.resizeBars()
+      }
+    },
+
+    resizeBars: function () {
+      console.log(this.maxBars)
+      console.log(this.chartWidth)
+      console.log(this.barWidth)
+
+      this.chartdataDienstreisenBar.datasets[0].maxBarThickness = this.barWidth
+      this.chartdataPendelwegeBar.datasets[0].maxBarThickness = this.barWidth
+      this.chartdataITGeraeteBar.datasets[0].maxBarThickness = this.barWidth
+    },
+
+    barWidthComp: function() {
+      this.maxBars = Math.max(Object.keys(this.responsedata.emissionenDienstreisenAufgeteilt).length, Object.keys(this.responsedata.emissionenPendelwegeAufgeteilt).length, Object.keys(this.responsedata.emissionenITGeraeteAufgeteilt).length)
+      this.chartWidth = this.$refs["chart"].$refs.canvas.width
+      this.halfChartWidth = this.$refs["half-chart"].$refs.canvas.width
+      this.barWidth = Math.min(this.chartWidth / this.maxBars * 0.75, this.halfChartWidth / 4 * 0.75)
+    },
+
     /**
      * Creates XLSX file and makes it downloadable.
      */
@@ -694,17 +733,11 @@ export default {
       }).then((response) => response.json())
         .then((body) => {
           if (body.status == "success") {
-            this.responsesuccessful = true
+            this.responseSuccessful = true
             this.responsedata = body.data
             this.responsedata.auswertungFreigegeben = (body.data.auswertungFreigegeben == 1) ? true : false
             this.checkNegativValue();
             this.roundResponseData();
-            this.setChartGesamt();
-            this.setChartEnergie();
-            this.setChartVerbrauch();
-            this.setChartDienstreisen();
-            this.setChartPendelwege();
-            this.setChartITGeraete();
 
             this.gebaeudeIDsUndZaehler = this.responsedata.gebaeudeIDsUndZaehler
             this.umfrageGebaeude = this.responsedata.umfrageGebaeude.map(x => [translateGebaeudeIDToSymbolic(x["gebaeudeNr"]), x["nutzflaeche"]])
@@ -719,6 +752,15 @@ export default {
           console.error("Error:", error);
         }
       );
+    },
+
+    setChartData: function() {
+      this.setChartGesamt();
+      this.setChartEnergie();
+      this.setChartVerbrauch();
+      this.setChartDienstreisen();
+      this.setChartPendelwege();
+      this.setChartITGeraete();
     },
 
     /**
@@ -828,7 +870,7 @@ export default {
           label: i18n.t('common.Emissionen'),
           data: data.map(a => a.value),
           backgroundColor: data.map(a => a.color),
-          hoverOffset: 4
+          hoverOffset: 4,
         }]
       }
 
@@ -875,7 +917,9 @@ export default {
             color: 'black',
             align: 'end',
             anchor: 'start',
-          }
+          },
+          barTickness: "flex",
+          maxBarThickness: this.barWidth,
         }]
       };
       this.optionsGesamtPareto = {
@@ -934,7 +978,7 @@ export default {
           label: i18n.t('common.Emissionen'),
           data: data.map(a => a.value),
           backgroundColor: data.map(a => a.color),
-          hoverOffset: 4
+          hoverOffset: 4,
         }]
       }
       this.optionsEnergieDoughnut = {
@@ -981,6 +1025,8 @@ export default {
             align: 'end',
             anchor: 'start',
           },
+          barTickness: "flex",
+          maxBarThickness: this.barWidth,
         }]
       }
       this.optionsEnergieBar = {
@@ -1039,7 +1085,7 @@ export default {
           label: i18n.t('common.Emissionen'),
           data: data.map(a => a.value),
           backgroundColor: data.map(a => a.color),
-          hoverOffset: 4
+          hoverOffset: 4,
         }]
       }
       this.optionsVerbrauchDoughnut = {
@@ -1086,6 +1132,8 @@ export default {
             align: 'end',
             anchor: 'start',
           },
+          barTickness: "flex",
+          maxBarThickness: this.barWidth,
         }]
       }
       this.optionsVerbrauchBar = {
@@ -1156,11 +1204,15 @@ export default {
             align: 'end',
             anchor: 'start',
           },
+          barTickness: 'flex',
+          maxBarThickness: this.barWidth,
         }]
       }
       this.optionsDienstreisenBar = {
         responsive: true,
         maintainAspectRatio: false,
+        // responsive: false,
+        // maintainAspectRatio: false,
         legend: {
           display: false
         },
@@ -1223,6 +1275,8 @@ export default {
             align: 'end',
             anchor: 'start',
           },
+          barTickness: 80,
+          maxBarThickness: this.barWidth,
         }]
       }
       this.optionsPendelwegeBar = {
@@ -1290,6 +1344,8 @@ export default {
             align: 'end',
             anchor: 'start',
           },
+          barTickness: "flex",
+          maxBarThickness: this.barWidth,
         }]
       }
       this.optionsITGeraeteBar = {
@@ -1348,6 +1404,10 @@ function translateGebaeudeIDToSymbolic(gebaeudeID) {
   gebaeudeID = gebaeudeID.toString()
   let translatedID = gebaeudeDict[gebaeudeID.substring(0, 1)] + gebaeudeID.substring(1);
   return translatedID;
+}
+
+function Sleep(milliseconds) {
+  return new Promise(resolve => setTimeout(resolve, milliseconds));
 }
 
 </script>
