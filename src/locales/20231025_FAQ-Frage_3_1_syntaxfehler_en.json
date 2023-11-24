@@ -1,0 +1,20 @@
+{
+  "footer": {
+    "FAQ": {
+      "Frage_3_1": "How can I balance CO<sub>2</sub> for my organisational unit?",
+      "Antwort_3_1_1": "1. Logging in via SSO of TU Darmstadt",
+      "Antwort_3_1_1_1": "You must log in via SSO of TU Darmstadt to be able to use the CO<sub>2</sub> calculator.",
+      "Antwort_3_1_2": "2. Preparing a survey",
+      "Antwort_3_1_2_1": "After logging in, you will be forwarded to the page where you can prepare a survey (\"<i>CO<sub>2</sub> calculator</i>\" in the tab bar). Here you can create a survey for your organisational unit by completing the entry fields. This is the general part of the survey, also called the main survey. General information about the organisational unit of TU Darmstadt are being collected in the main survey, such as number of employees and buildings that the organisational unit uses.",
+      "Antwort_3_1_2_2": "After completing the main survey, click on the \"<i>Save survey & generate link</i>\" button. The information entered will be saved and a link for accessing the specific part of the survey, the so-called survey for employees, is being generated.",
+      "Antwort_3_1_3": "3. Completing the survey for employees",
+      "Antwort_3_1_3_1": "Now send the link to the specific part of the survey to all employees for completion. Each employee will then be able to individually complete this part of the survey and all entries will be anonymised. A log-in to this part of the survey will not be required.",
+      "Antwort_3_1_3_2": "The survey for employees asks for information on commuting, business trips and individually used IT devices. After completing the survey for employees, the information entered will be saved using the \"<i>Send</i>\" button.",
+      "Antwort_3_1_4": "4. Retrieving the results",
+      "Antwort_3_1_4_1": "The results of the survey can be retrieved by going to the \"<i>Survey overview</i>\" tab. Here you can see all surveys that you have created and you can see how many employees have already completed it. You can also view, edit and duplicate the main survey (without the specific part for employees) and delete the entire survey (general and specific part).",
+      "Antwort_3_1_4_2": "In addition, you can trigger an analysis of the survey. During the analysis, the CO<sub>2</sub> emissions will be calculated and displayed graphically.",
+      "Antwort_3_1_5": "5. Discussing/distributing the results",
+      "Antwort_3_1_5_1": "The analysis of the survey can be shared with the employees via a link. In addition, the results can be downloaded as an Excel file, to reuse the exact results as necessary."
+    }
+  }
+}
