@@ -363,7 +363,7 @@
       "UmfrageSpeichern": "Umfrage speichern",
       "UmfrageTzdSpeichern": "Umfrage trotzdem speichern",
       "WeitereUmfrageErstellen": "Weitere Umfragen erstellen",
-      "Umfrage": "'Umfrage'",
+      "Umfrage": "Umfrage",
 
       "geraeteRules_1": "Wenn Sie das Gerät nicht benutzen, wählen Sie es bitte ab.",
       "geraeteRules_2": "Wenn Sie das Gerät nicht benutzen, wählen Sie es bitte ab.",
@@ -522,7 +522,7 @@
       "Linksharing_0": "Linksharing ",
       "aktivieren": "aktivieren",
       "deaktivieren": "deaktivieren",
-      "Auswertung": "'Auswertung'",
+      "Auswertung": "Auswertung",
       "HaushaltReferenzText_0": "Ihr Gesamtverbrauch entspricht circa ",
       "HaushaltReferenzText_1": " bzw. ",
       "HaushaltReferenzText_2": " in einem Jahr.",
@@ -590,7 +590,7 @@
     },
     "SurveyOverview": {
       "GespeicherteUmfragen": "Gespeicherte Umfragen",
-      "LinkZurMitarbeiterumfrage": "'Link zur Mitarbeitendenumfrage kopieren'",
+      "LinkZurMitarbeiterumfrage": "Link zur Mitarbeitendenumfrage kopieren",
       "Anzeigen": "Anzeigen",
       "LoeschenDerUmfrage_0": "Löschen der Umfrage",
       "LoeschenDerUmfrage_1": "Sind Sie sicher, dass Sie die Umfrage ",

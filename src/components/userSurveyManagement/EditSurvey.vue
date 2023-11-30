@@ -834,12 +834,12 @@ function translateGebaeudeIDToSymbolic(gebaeudeID) {
 
 function resolveITGeraetID(geraetID) {
   let ITGeraetIDDict = {
-    7: "Multifunktionsgeräte",
-    8: "Multifunktionsgeräte Toner",
-    9: "Laser & Tintenstrahldrucker",
-    10: "Laser & Tintenstrahldrucker Toner",
-    4: "Beamer",
-    6: "interne Server"
+    7: i18n.t("userSurvey.Survey.ITGeraetIDDic_7"),
+    8: i18n.t("userSurvey.Survey.ITGeraetIDDic_8"),
+    9: i18n.t("userSurvey.Survey.ITGeraetIDDic_9"),
+    10: i18n.t("userSurvey.Survey.ITGeraetIDDic_10"),
+    4: i18n.t("userSurvey.Survey.ITGeraetIDDic_4"),
+    6: i18n.t("userSurvey.Survey.ITGeraetIDDic_6"),
   };
   return ITGeraetIDDict[geraetID]
 }

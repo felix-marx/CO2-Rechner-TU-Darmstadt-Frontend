@@ -354,7 +354,7 @@
       "UmfrageSpeichern": "Save survey",
       "UmfrageTzdSpeichern": "Save survey anyway",
       "WeitereUmfrageErstellen": "Create more surveys",
-      "Umfrage": "'Survey'",
+      "Umfrage": "survey",
       "geraeteRules_1": "Deselect the device if you do not use it.",
       "geraeteRules_2": "Deselect the device if you do not use it.",
       "geraeteRules_3": "Please enter a valid quantity.",
@@ -494,7 +494,7 @@
       "Linksharing_0": "Link sharing ",
       "aktivieren": "Activate",
       "deaktivieren": "Deactivate",
-      "Auswertung": "'Analysis'",
+      "Auswertung": "Analysis",
       "HaushaltReferenzText_0": "Your total consumption is equivalent to about ",
       "HaushaltReferenzText_1": " or ",
       "HaushaltReferenzText_2": " per year.",
@@ -536,8 +536,8 @@
       "UnvollstaendigeEnergieverbrauch_2": " , we unfortunately have incomplete data on energy consumption at the moment!"
     },
     "LinkSharingComponent": {
-      "Link_0": "Please forward the link below to your employees to give them access to ",
-      "Link_1": " :",
+      "Link_0": "Please forward the link below to your employees to give them access to the ",
+      "Link_1": ":",
       "Link_Button": "Copy link"
     }
   },
@@ -561,7 +561,7 @@
     },
     "SurveyOverview": {
       "GespeicherteUmfragen": "Saved surveys",
-      "LinkZurMitarbeiterumfrage": "'Copy link to access survey for employees'",
+      "LinkZurMitarbeiterumfrage": "Copy link to access survey for employees",
       "Anzeigen": "Display",
       "LoeschenDerUmfrage_0": "Delete survey",
       "LoeschenDerUmfrage_1": "Are you sure that you ",
@@ -608,8 +608,8 @@
     "Accounteinstellungen": "Account settings",
     "UmfrageUebersicht": "Survey overview",
     "CO2_Rechner": "CO₂ calculator",
-    "Umfrage": "Survey",
-    "Auswertung": "Analysis",
+    "Umfrage": "survey",
+    "Auswertung": "analysis",
     "Datenbank": "Database",
     "Bezeichung": "Term (name)",
     "Pendelwege": "Commuting distances",

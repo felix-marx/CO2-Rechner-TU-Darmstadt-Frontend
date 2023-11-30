@@ -781,6 +781,8 @@ export default {
   },
 };
 
+// TODO: move such functions to a helper file to avoid duplicate code
+
 /**
  * Translates a given gebaeudeID to its numerical equivalent.
  * E.g. S101 is translated to 1101, L312 to 3312 and so on.
@@ -819,14 +821,14 @@ function translateGebaeudeIDToSymbolic(gebaeudeID) {
   return translatedID;
 }
 
-function resolveITGeraetID(geraetID) {    // TODO: map does not work for some reason
+function resolveITGeraetID(geraetID) {
   let ITGeraetIDDict = {
-    7: i18n.t("usersurvey.survey.ITGeraetIDDic_7"),
-    8: i18n.t("usersurvey.survey.ITGeraetIDDic_8"),
-    9: i18n.t("usersurvey.survey.ITGeraetIDDic_9"),
-    10: i18n.t("usersurvey.survey.ITGeraetIDDic_10"),
-    4: i18n.t("usersurvey.survey.ITGeraetIDDic_4"),
-    6: i18n.t("usersurvey.survey.ITGeraetIDDic_6"),
+    7: i18n.t("userSurvey.Survey.ITGeraetIDDic_7"),
+    8: i18n.t("userSurvey.Survey.ITGeraetIDDic_8"),
+    9: i18n.t("userSurvey.Survey.ITGeraetIDDic_9"),
+    10: i18n.t("userSurvey.Survey.ITGeraetIDDic_10"),
+    4: i18n.t("userSurvey.Survey.ITGeraetIDDic_4"),
+    6: i18n.t("userSurvey.Survey.ITGeraetIDDic_6"),
   };
   return ITGeraetIDDict[geraetID]
 }
