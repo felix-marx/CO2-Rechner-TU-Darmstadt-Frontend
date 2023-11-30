@@ -29,7 +29,7 @@
             <v-col class="d-flex flex-column">
               <v-card class="flex d-flex flex-column">
                 <v-card-title>
-                  Was ist eine CO<sub>2</sub>-Bilanzierung?
+                  Was ist eine CO<sub>2</sub>-Bilanzierung? (Ändern!)
                 </v-card-title>
                 <v-divider />
                 <p class="ma-4 pb-4">
