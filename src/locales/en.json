@@ -25,11 +25,13 @@
       "RechtWiederruf": "Right to withdraw your consent,",
       "RechtWiderspruch": "Right to object to processing,",
       "RechtDatenuebertragbarkeit": "Right to data portability in a structured, commonly used and machine-readable format (as of 25 May 2018).",
+      
       "ZweckRechtsgrundlagenLoeschungsfrist": "Nature of the personal data collected, purpose and legal basis for the processing, deletion periods",
       "UmgangPersonDaten_0": "Handling personal data",
       "UmgangPersonDaten_1": "Personal data means any information relating to a natural person with which it can be identified directly or indirectly. In particular, this refers to a person’s name, email address, staff registration code, student registration number or telephone number.",
       "UmgangPersonDaten_2": "However, personal data also refers to data such as interests, hobbies, memberships or information regarding websites visited.",
       "UmgangPersonDaten_3": "We will only collect, use and transfer personal data if this is permitted by law or if the users have agreed to the collection of their data.",
+      
       "Logdateien_0": "Access data / server log files",
       "Logdateien_1": "When accessing pages of this webserver, the following data will generally be saved in server log files:",
       "Logdateien_2": "IP address",
@@ -41,9 +43,11 @@
       "Logdateien_8": "This data is only used to ensure functionality, security and error rectification.",
       "Logdateien_9": "This use is based on Art. 6 Sec. 1 c) EU GDPR.",
       "Logdateien_10": "All log files will be automatically deleted 10 days later at the very latest or will be anonymised.",
+      
       "Kontaktaufnahme_0": "Contacting",
       "Kontaktaufnahme_1": "When contacting members of Technical University of Darmstadt (by contact form or email), your contact data is saved to process your request and possible follow-up questions.",
       "Kontaktaufnahme_2": "Once your request has been processed and/or legal obligations have been met or the use of the service has been completed, the data will be deleted, unless retaining this data is required to realise legitimate interests of Technical University of Darmstadt or to meet a legal provision (such as a law, a statutory provision, the statutes of Technical University of Darmstadt etc.).",
+      
       "Cookies_0": "Cookies",
       "Cookies_1": "Cookies are small files which make it possible to save specific, device-related information on your access device (PC, smartphone etc.).",
       "Cookies_2": "They make websites more user-friendly (by saving log-in data etc.).",
@@ -52,8 +56,10 @@
       "Cookies_5": "However, the range of use and the comfort of use of webpages may be limited if cookies are not enabled.",
       "Cookies_6": "To use webpages that are secured by a login, cookies are imperative. ",
       "Cookies_7": "They determine access authorisation and will be deleted when the session is closed.",
+      
       "ZugriffsgeschuetzteWebsiten_0": "Access-protected websites and user-based services",
       "ZugriffsgeschuetzteWebsiten_1": "In addition to the data mentioned above, the user name or an identifier for controlling the authorisation of data access will be collected.\n            This data will either be deleted or anonymised 10 days later at the latest, unless retaining this data is required to realise legitimate interests of Technical University of Darmstadt or to meet a legal provision (such as a law, a statutory provision, the statutes of Technical University of Darmstadt etc.).\n            For all services not falling under these requirements, declarations of consent will be requested explicitly.\n            Deletion takes place according to the requirement of the service used.\n            The time limits for erasure is clearly defined in the records of processing activities.\n            The legal basis is Art. 6 Sec. 1a) EU GDPR.",
+      
       "EinbindungDienstenDritter_0": "Integrating third-party services",
       "EinbindungDienstenDritter_1": "To send emails, this webpage uses the services of",
       "EinbindungDienstenDritter_2": " Emails are send only for email validation purposes and in case you request a password reset. ",
@@ -61,6 +67,7 @@
       "EinbindungDienstenDritter_4": "To restore your password, we send a new password to the email address you stated in your account.",
       "EinbindungDienstenDritter_5": "Because the HRZ sends this email, its content, such as the newly configured password, will also be shared with the service provider.",
       "EinbindungDienstenDritter_6": "This is why you are requested to change your password immediately after logging in.",
+      
       "ErstellungUmfrage_0": "Preparing a survey",
       "ErstellungUmfrage_1": "To prepare a survey, you need to create a user account.",
       "ErstellungUmfrage_2": "This requires that you enter one of your valid TU Darmstadt email addresses (such as jane.anyone@tu-darmstadt.de).",
@@ -84,10 +91,10 @@
       "ErstellungUmfrage_9_4": "Business trips stated, incl. travel distance",
       "ErstellungUmfrage_9_5": "Number of selected IT devices",
       "ErstellungUmfrage_10": "No personal data are gathered during the survey.",
-      "ErstellungUmfrage_11": "The results of the survey will be saved on the CO",
-      "ErstellungUmfrage_12": " calculator and will be made available to the person responsible for the survey.",
-      "ErstellungUmfrage_13": "The results are anonymised to such an extent that no conclusion about individual persons can be drawn.",
-      "ErstellungUmfrage_14": "The results of the survey are to be deleted by the person responsible for the survey.",
+      "ErstellungUmfrage_11": "The results of the survey will be saved on the CO<sub>2</sub> calculator and will be made available to the person responsible for the survey.",
+      "ErstellungUmfrage_12": "The results are anonymised to such an extent that no conclusion about individual persons can be drawn.",
+      "ErstellungUmfrage_13": "The results of the survey are to be deleted by the person responsible for the survey.",
+      
       "Umfrageauswertung_0": "Analysing the survey",
       "Umfrageauswertung_1": "You can analyse the survey results anytime.",
       "Umfrageauswertung_2": "You can share this analysis with third parties by activating this analysis option.",
@@ -95,15 +102,19 @@
     },
     "FAQ": {
       "Titel_1": "General information on the topic of CO<sub>2</sub> balancing",
+      
       "Frage_1_1": "What is CO<sub>2</sub> balancing?",
       "Antwort_1_1": "A CO<sub>2</sub> balance or carbon footprint is used to plot the greenhouse gas emissions of an organisation, a product, a service or an activity within a defined assessment boundary. This balance includes all emissions harmful to the climate and expresses them as CO<sub>2</sub> equivalents.",
+      
       "Frage_1_2": "What kind of standards are there for CO<sub>2</sub> balancing? What is Greenhouse Gas Protocol (GHG Protocol)?",
       "Antwort_1_2_1": "To balance CO<sub>2</sub> emissions, there are various national standards and internationally recognised standards available. These are the GHG Protocol, the ISO standard 14067 for products and the ISO 14064-1 standard for organisations.",
       "Antwort_1_2_2": "The <b>GHG-Protocol (\"A Corporate Accounting and Reporting Standard\")</b> is a multi-stakeholder syndicate of companies, NGO’s and governments working together under the leadership of the World Resources Institute (WIR) and the World Business Council for Sustainable Development (WBCSD). The above initiative is explicitly addressing the organisation level. This Standard was published in collaboration with the industry following a worldwide practical test in 2011 and has been accessible to the public ever since. Because this Standard is practice-oriented and easy to use, it is an internationally recognised standard that is widely used in many companies and organisations. ",
       "Antwort_1_2_3": "A binding international standard for CO<sub>2</sub> balancing was published in August 2018 in the form of the <b>ISO 14067 (\"Greenhouse gases – Carbon footprint of products – Requirements and guidelines for quantification\")</b>. The most important goals had been to harmonise the already existing standards, that is the GHG Protocol and the PAS 2050, in addition to developing a specification that could be widely applied. The ISO 14067 standard focuses on balancing CO<sub>2</sub> of products and services. Whereas the <b>ISO 14064 specifies principles and requirements at the organisation level for quantification, monitoring and reporting of greenhouse gas (GHG) emissions and removals<b>. It includes requirements for the design, development, management, reporting and verification of an organisation's GHG inventory.",
+      
       "Frage_1_3": "What are greenhouse gas (GHG) emissions?",
       "Antwort_1_3_1": "Greenhouse gases are gases in the atmospheres that cause the so-called greenhouse effect. They absorb long-wave radiation (thermal radiation) emitted by the Earth’s surface, the clouds and the atmosphere itself. Usually this radiation would be released to outer space. However, greenhouse gases emit this thermal radiation both ways, that is toward outer space and toward the Earth’s surface, thus, heating up the lower atmosphere even more.",
       "Antwort_1_3_2": "Greenhouse gases are defined to include: carbon dioxide (CO<sub>2</sub>), methane (CH<sub>4</sub>), nitrous oxide (N<sub>2</sub>O, also known as dinitrogen oxide or laughing gas), hydrofluorocarbons (HFKW), perfluorocarbons (FKW), sulphur hexafluoride (SF<sub>6</sub>) and nitrogen trifluoride (NF<sub>3</sub>). They can be found naturally in lower concentrations in the atmosphere. Human activities (such as combustion of mineral oil, coal and gas) have increased the amount of greenhouse gases in the atmosphere considerably since the beginning of the last century and have been causing a steady increase of the human-induced greenhouse effect.",
+      
       "Frage_1_4": "What are scopes and what emissions do they include?",
       "Antwort_1_4_1": "Scopes are specific areas of emissions. All emissions occurring there are allocated to the respective scope. ",
       "Antwort_1_4_2": "Scope 1, 2 and 3 are defined in the GHG protocol as follows:",
@@ -123,9 +134,11 @@
       "Antwort_1_4_Tabelle_5": "Electricity purchased from third-party suppliers",
       "Antwort_1_4_Tabelle_6": "Commuting distance of employees to their workplace, and business trips",
       "Antwort_1_4_Tabelle_7": "Proper disposal of specific chemicals and materials by third-party owned and operated disposal facilities",
+      
       "Frage_1_5": "What is “ecoinvent” and “GEMIS”?",
       "Antwort_1_5_1": "“ecoinvent” is a database and is considered the most consistent and transparent life-cycle inventory database worldwide. It supports the environmental assessment of products and processes and currently includes more than 18,000 datasets. “ecoinvent” does not only include information on CO<sub>2</sub>eq factors, but also provides general information on the environmental impact of products and services. This means that the database contains measured and modelled information about industrial and agricultural processes. The natural resources extracted from the environment by the product or service, the emissions released (in water, air and soil) and the resulting by-products and wastes are being considered as well. (Source: <a href=\"https://ecoinvent.org/the-ecoinvent-database/\"  target=\"_blank\" rel=\"noopener noreferrer\"> ecoinvent Database - ecoinvent)</a>",
       "Antwort_1_5_2": "GEMIS is the acronym for “Globales Emissions Modell integrierter Systeme – Global Emissions Model for Integrated Systems”. GEMIS is a life-cycle analysis programme and database for energy, material and transport systems and their impact on the environment.",
+      
       "Frage_1_6": "What is a CO<sub>2</sub>eq factor and how is it composed?",
       "Antwort_1_6_1": "CO<sub>2</sub> equivalents, also called CO<sub>2</sub>e or CO<sub>2</sub>eq, refer to a unit of measurement used to compare the impact of various greenhouse gases (GHG) on the climate. To this end, the greenhouse gas impact of CO<sub>2</sub> is defined as one (1) against which all other substances are specified accordingly in an equivalent form. ",
       "Antwort_1_6_2": "The retention time of gases in the atmosphere must be considered, for instance, because it can be quite different depending on the substance. While CO<sub>2</sub> is retained in the atmosphere for several hundred years, methane has a half-life of 15 years, for instance. The concentration of the respective substances already in the atmosphere can have an impact on the determined value. Due to these complex interrelations, the value of many of these substances used in literature can vary.",
@@ -138,17 +151,24 @@
       "Antwort_1_6_Tabelle_7": "Hydrofluorocarbons (HFKW)",
       "Antwort_1_6_Tabelle_8": "Perfluorocarbons (FKW)",
       "Antwort_1_6_Tabelle_9": "Sulphur hexafluoride (SF<sub>6</sub>)",
+      
       "Frage_1_7": "What are TU Darmstadt’s goals regarding CO<sub>2</sub> emissions?",
       "Antwort_1_7_1": "The state of Hesse is currently running a project that will make its administration CO<sub>2</sub> neutral by 2030 (more information about this project:  <a href=\"https://co2.hessen-nachhaltig.de/der-film.html\"  target=\"_blank\" rel=\"noopener noreferrer\">Der Film (the film) (hessen-nachhaltig.de)</a> and <a href=\"https://co2.hessen-nachhaltig.de/\"  target=\"_blank\" rel=\"noopener noreferrer\">CO<sub>2</sub>-neutrale Landesverwaltung – Lernen und Handeln für unsere Zukunft (CO<sub>2</sub> neutrale state administration – learning and acting with our future in mind) (hessen-nachhaltig.de)</a>).",
       "Antwort_1_7_2": "To date, TU Darmstadt has not published an overall CO<sub>2</sub> balance. The Energy Management unit of TU Darmstadt has been generating GHG sub-balances for Hochschul-Informations-System GmbH (HIS) since 2008 to accommodate the state of Hesse’s aim to have a \"CO<sub>2</sub> neutral state administration by 2030\". Generating an annual, comprehensive CO<sub>2</sub> balance is an important step towards a climate-neutral higher education institution.",
+      
+      
       "Titel_2": "General information on the web-based calculator of TU Darmstadt",
+      
       "Frage_2_1": "What is the primary purpose of the calculator?",
       "Antwort_2_1": "The primary purpose of the calculator is to help organisational units of TU Darmstadt with the annual CO<sub>2</sub> balancing. The calculator serves as a monitoring tool for the organisational units. By using the calculator, the organisational units of TU Darmstadt not only become more aware of their yearly CO<sub>2</sub> emissions, but will also notice a trend of their development over time. ",
+      
       "Frage_2_2": "What standard is the calculator based on?",
       "Antwort_2_2": "The calculator is based on the greenhouse gas protocol (GHG protocol).",
+      
       "Frage_2_3": "What emissions are considered by the calculator and why?",
       "Antwort_2_3_1": "The calculator determines emissions based on consumption (electricity, heating and cooling) regarding buildings, IT devices, commuting distance of employees and their business trips. ",
       "Antwort_2_3_2": "As a result of an analysis of primary sources of emission at various universities and institutes (University of Klagenfurt, University of Natural Resources and Life Sciences, Vienna), Directorate V (Building Management & Technical Operations) of TU Darmstadt and the Institute for Fluid System Technology (FST)), it was determined that these emission categories capture and cover more than 90% of the generated emissions. The results of this analysis can be accessed at the ULB at <a href=\"https://tuprints.ulb.tu-darmstadt.de/18513/\"  target=\"_blank\" rel=\"noopener noreferrer\">CO<sub>2</sub>-Bilanzierung und Konzeptentwicklung zur CO<sub>2</sub>-Reduktion eines Dezernats der TU Darmstadt – TUprints (tu-darmstadt.de)</a> (German only – Balancing CO2 and developing a CO2 reduction concept for a directorate of TU Darmstadt).",
+      
       "Frage_2_4": "Where do the CO<sub>2</sub>eq factors come from that are used for balancing?",
       "Antwort_2_4": "There are private databases such as ecoinvent and public databases such as GEMIS that provide CO<sub>2</sub>eq factors and update their data regularly based on new calculating methods and knowledge. The CO<sub>2</sub>eq factors used for balancing at TU Darmstadt have all been taken from the ecoinvent and GEMIS databases. In addition, the web-based calculator uses CO<sub>2</sub>eq factors for electricity that are being calculated by the Energy Management unit of TU Darmstadt or originate from third-party electricity contracts. The CO<sub>2</sub>eq factors for heating are also made available by the Energy Management unit.",
       "Antwort_2_4_Tabelle_1": "Emission category",
@@ -162,6 +182,7 @@
       "Antwort_2_4_Tabelle_9": "Means of transport for commuting",
       "Antwort_2_4_Tabelle_10": "GEMIS",
       "Antwort_2_4_Tabelle_11": "Means of transport for business trips",
+      
       "Frage_2_5": "How is the final result being calculated?",
       "Antwort_2_5_1": "The calculated carbon footprint currently includes energy consumption, IT devices, commuting distance of employees and business trips. The following formulas are being used to calculate the CO<sub>2</sub> emissions:",
       "Antwort_2_5_2": "<u>Emissions from the consumption of electrical, heating and cooling energy (Scope 1 or 2 respectively)</u>",
@@ -197,15 +218,19 @@
       "Antwort_2_5_Formel_4_3": "Total distance",
       "Antwort_2_5_Formel_4_4": "CO$_2$eq factor of means of transport",
       "Antwort_2_5_Formel_4_5": "Travel distance of business trip",
+      
       "Frage_2_6": "How and where do uncertainties in specifying emissions occur?",
       "Antwort_2_6_1": "Uncertainties can have many sources.",
       "Antwort_2_6_2": "Uncertainties occur when projecting actual calculations based on the results of a survey that has not been taken by all employees. Emission generated by multiple organisational units consuming energy can only be approximated because energy consumption is not measured for each organisational unit individually. The calculations are based on the average energy consumption of the building.",
       "Antwort_2_6_3": "In addition, uncertainties occur when specifying the CO<sub>2</sub>eq factors. This can be illustrated using the example of a business trip by plane. The energy consumption of a plane depends on the type of plane. The CO<sub>2</sub>eq factors of a Boeing 777 or an Airbus A320 differ due to their unladen weight, the number of passengers etc. The databases, however, provide average values for the type of plane.",
+      
       "Frage_2_7": "Will these results be published?",
       "Antwort_2_7": "Results of a single person will not be published; and if the user does not have an account, they cannot be allocated to a specific person. Hence, only results of organisational units of TU Darmstadt will be published. ",
+      
       "Frage_2_8": "What ideas are there for further development?",
       "Antwort_2_8_1": "Ideas for further development with regard to content extend the range of emissions to include such as staying in a hotel overnight during business trips, duration of the business trip and the consumption of paper within the organisational units. A major extension is adding hangars, halls, shop floors and laboratories including the materials consumed and produced there by the organisational units. This way the organisational units can use the CO<sub>2</sub> calculator in future for balancing. ",
       "Antwort_2_8_2": "Regarding IT infrastructure, topics such as more powerful servers and introducing / upgrading interfaces to other systems to simplify data management will be developed further in future. ",
+      
       "Frage_2_9": "History of the project",
       "Antwort_2_9_Tabelle_1": "<b>Independent research assignment I</b>: Balancing CO<sub>2</sub> for the Institute FST at FB16 (Excel-based)",
       "Antwort_2_9_Tabelle_2": "<b>Independent research assignment II</b>: Balancing CO<sub>2</sub> at Directorate V (Excel-based)",
@@ -214,7 +239,10 @@
       "Antwort_2_9_Tabelle_5": "Technological upgrading of the CO<sub>2</sub> calculator",
       "Antwort_2_9_Tabelle_6": "Additional test runs of the CO<sub>2</sub> calculator",
       "Antwort_2_9_Tabelle_7": "Project planning: Overall CO<sub>2</sub> balance concept and roll-out of the CO<sub>2</sub> calculator",
+      
+      
       "Titel_3": "Using the calculator",
+      
       "Frage_3_1": "How can I balance CO<sub>2</sub> for my organisational unit?",
       "Antwort_3_1_1": "1. Logging in via SSO of TU Darmstadt",
       "Antwort_3_1_1_1": "You must log in via SSO of TU Darmstadt to be able to use the CO<sub>2</sub> calculator.",
@@ -229,21 +257,27 @@
       "Antwort_3_1_4_2": "In addition, you can trigger an analysis of the survey. During the analysis, the CO<sub>2</sub> emissions will be calculated and displayed graphically.",
       "Antwort_3_1_5": "5. Discussing/distributing the results",
       "Antwort_3_1_5_1": "The analysis of the survey can be shared with the employees via a link. In addition, the results can be downloaded as an Excel file, to reuse the exact results as necessary.",
+      
       "Frage_3_2": "Why should your organisational unit balance CO<sub>2</sub> and use the web-based CO<sub>2</sub> calculator to do it?",
       "Antwort_3_2_1": "The web-based CO<sub>2</sub> calculator can be used as a monitoring tool. Your organisational unit can use these results to gain a summarised view of the amount of annual emissions and their breakdown into various categories. Over time, you can monitor if and by how much the emissions of your organisational unit will have decreased. ",
       "Antwort_3_2_2": "Should you need additional help in developing reduction strategies for your organisational unit, please do not hesitate to contact us: ",
+      
       "Frage_3_3": "How much time does each employee have to spend on this?",
       "Antwort_3_3_1": "There is no simple answer to this question. You need to distinguish between the main person responsible for this and the individual employees. ",
       "Antwort_3_3_2": "The main person responsible enters the general information for the organisational unit: In which building does the organisational unit reside, how many employees and jointly usable IT devices does it have? Are these data saved, does the person responsible receive a pre-formulated email with a link to be sent to all employees? With the link, employees get access to the survey. ",
       "Antwort_3_3_3": "This survey asks for information regarding the commuting distance, the business trips taken and the IT devices used as part of the employee’s activity at TU Darmstadt). ",
       "Antwort_3_3_4": "The following video introduces the CO<sub>2</sub> calculator and demonstrates by example how to do the survey (both for the person responsible and for the respective employees). ",
+      
       "Frage_3_4": "What happens if some of the employees do not complete the survey?",
       "Antwort_3_4": "In case some employees of the organisational unit of TU Darmstadt do not complete the survey for employees, a projection is calculated for the organisational unit. From the information and data captured in the completed survey for employees of your organisational unit, an average value of emissions per person is determined. This average value is then used for the employees of your organisational unit who did not complete the survey. ",
+      
       "Frage_3_5": "Why are no emissions from energy consumption (electricity, heating, cooling) shown for the building where my organisational unit resides?",
       "Antwort_3_5": "The digital meters to measure electrical, heating and cooling energy consumed are (not) yet available across all of TU Darmstadt. This means that the meters either need to be read manually or simply do not exist. Therefore there is no precise consumption for individual buildings available that the calculator and the Energy Management unit of TU Darmstadt can use.  At Campus Lichtwiese, the meter infrastructure is already available. The Energy Management unit is currently expanding the meter infrastructure to make a digital capture of the energy consumption in all buildings of TU Darmstadt possible.",
+      
       "Frage_3_6": "What happens with the data that I entered? Where are my data saved?",
-      "Antwort_3_6_1": "The CO<sub>2</sub> calculator conforms to the data protection guidelines of TU Darmstadt (for more information, refer to: <a href=\"https://www.co2-rechner.tu-darmstadt.de/#/datenschutz\" target=\"_blank\" rel=\"noopener noreferrer\">TU-Darmstadt CO<sub>2</sub>-Rechner)</a>.",
+      "Antwort_3_6_1": "The CO<sub>2</sub> calculator conforms to the data protection guidelines of TU Darmstadt (for more information, refer to: <a href=\"https://www.co2-rechner.tu-darmstadt.de/#/datenschutz\" target=\"_blank\" rel=\"noopener noreferrer\">TU-Darmstadt CO<sub>2</sub>-Rechner</a>).",
       "Antwort_3_6_2": "The data are saved in a database located on a V server that is run and administrated by the University IT-Service and Computing Centre (HRZ). Information on V servers is provided here by the HRZ: <a href=\"https://www.hrz.tu-darmstadt.de/services/it_services/vm/index.de.jsp\"  target=\"_blank\" rel=\"noopener noreferrer\">V-Server</a>, <a href=\"https://www.hrz.tu-darmstadt.de/services/it_services/vm/vm_ausstattung/serverraum/index.de.jsp\" target=\"_blank\" rel=\"noopener noreferrer\">Serverraum</a>.",
+      
       "Frage_3_7": "Is it possible for employees who used the calculator to delete all their data from the calculator independently?",
       "Antwort_3_7_1": "Users with an account can delete surveys created by you individually. They can delete the entire user account with all surveys independently, too.",
       "Antwort_3_7_2": "Completed surveys for employees cannot be deleted individually because the data entered have been anonymised for retention and consequently cannot be allocated to a specific person. Completed surveys for employees are being deleted if the entire survey is being deleted."
@@ -286,7 +320,7 @@
       "UmfrageErklaerung_0": "Dear Participant",
       "UmfrageErklaerung_1": "This CO<sub>2</sub> calculator requests data used to calculate the CO<sub>2</sub> emissions generated by employees of your organisational unit at work. The calculator is composed of two parts: the general part to be completed centrally for all employees of the organisational unit and the specific part to be completed by each employee of your organisational unit of TU Darmstadt.",
       "UmfrageErklaerung_2": "The entire calculation refers always to a fully completed calendar year.",
-      "UmfrageErklaerung_3": "The general part of the CO<sub>2</sub> calculator asks for general information about your organisational unit of TU Darmstadt, such as the number of employees, the location of your organisational unit and the jointly used IT devices. Should you be unable to answer these questions exactly, please provide a rough estimate. Once you have completed the general part, click on \"<i>Save survey &amp; generate link</i>\". This will generate the link which will take you to the survey for employees. Send this link to all employees of your organisational unit. Below the link, you can find an email template.",
+      "UmfrageErklaerung_3": "The general part of the CO<sub>2</sub> calculator asks for general information about your organisational unit of TU Darmstadt, such as the number of employees, the location of your organisational unit and the jointly used IT devices. Should you be unable to answer these questions exactly, please provide a rough estimate. Once you have completed the general part, click on \"<i>Save survey & generate link</i>\". This will generate the link which will take you to the survey for employees. Send this link to all employees of your organisational unit. Below the link, you can find an email template.",
       "UmfrageErklaerung_4": "Some survey questions end with an additional question mark symbol. By clicking on this symbol, you will be given additional tips and information that will help you to answer the question.",
       "UmfrageErklaerung_5": "If you would like to make changes or additions to the information that you entered, please select “<i>Survey overview</i>” in the upper left corner to re-access the general part of the CO<sub>2</sub> calculator. When done, please click on “<i>Save</i>” to finalise your changes. ",
       "UmfrageErklaerung_6": "If you have additional questions or would like to give feedback, please contact",
@@ -455,7 +489,7 @@
       "DarstellungEnergieverbrauchWarning": "Emissions cannot be analysed by energy consumption.\n For the reporting year selected, emissions cannot be calculated because of missing data from TU Darmstadt.\n The meter infrastructure is continuously being expanded by the Energy Management unit.\n Unfortunately, you cannot do anything to complete the analysis.",
       "NachhaltigkeitTipps_0": "The Sustainable Development Office has collected tips on ",
       "NachhaltigkeitTipps_1": "saving energy at the workplace",
-      "NachhaltigkeitTipps_2": " .",
+      "NachhaltigkeitTipps_2": ".",
       "DownloadAlsExcel": "Download as Excel",
       "Linksharing_0": "Link sharing ",
       "aktivieren": "Activate",
@@ -479,8 +513,8 @@
       "MakeSpreadsheet_10": "CO2 calculator"
     },
     "ResultSharingDisabled": {
-      "ResultSharingDisabled_0": "Sorry, but the survey with the ID \"",
-      "ResultSharingDisabled_1": "\" has deactivated analysis sharing.",
+      "ResultSharingDisabled_0": "Sorry, but the survey with the ID ",
+      "ResultSharingDisabled_1": " has deactivated analysis sharing.",
       "ResultSharingDisabled_2": "Please contact the person who sent you the link for the analysis."
     }
   },

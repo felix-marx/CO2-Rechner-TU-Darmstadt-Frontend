@@ -819,7 +819,7 @@ function translateGebaeudeIDToSymbolic(gebaeudeID) {
   return translatedID;
 }
 
-function resolveITGeraetID(geraetID) {
+function resolveITGeraetID(geraetID) {    // TODO: map does not work for some reason
   let ITGeraetIDDict = {
     7: i18n.t("usersurvey.survey.ITGeraetIDDic_7"),
     8: i18n.t("usersurvey.survey.ITGeraetIDDic_8"),

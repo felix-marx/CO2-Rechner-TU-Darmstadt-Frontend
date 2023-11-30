@@ -191,11 +191,11 @@
               text
               type="info"
             >
-              {{ $t('evaluation.surveyEvaluation.NachhaltigkeitTipps_0') }} <a
+              {{ $t('evaluation.surveyEvaluation.NachhaltigkeitTipps_0') }}<a
                 href="https://www.tu-darmstadt.de/nachhaltigkeit/buero_fuer_nachhaltigkeit/projekte_buero/news_projekte_buero_details_348992.de.jsp"
                 target="_blank"
                 style="color:hsl(229, 100%, 50%);"
-              >{{ $t('evaluation.surveyEvaluation.NachhaltigkeitTipps_1') }}</a> {{ $t('evaluation.surveyEvaluation.NachhaltigkeitTipps_2') }}
+              >{{ $t('evaluation.surveyEvaluation.NachhaltigkeitTipps_1') }}</a>{{ $t('evaluation.surveyEvaluation.NachhaltigkeitTipps_2') }}
             </v-alert>
           </v-col>
         </v-row>

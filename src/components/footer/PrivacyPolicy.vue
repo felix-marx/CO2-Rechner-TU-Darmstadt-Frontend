@@ -160,9 +160,9 @@
             {{ $t('footer.PrivacyPolicy.ErstellungUmfrage_10') }}
             <br>
 
-            {{ $t('footer.PrivacyPolicy.ErstellungUmfrage_11') }}<sub>2</sub>{{ $t('footer.PrivacyPolicy.ErstellungUmfrage_12') }}<br>
+            <label v-html="$t('footer.PrivacyPolicy.ErstellungUmfrage_11')" /> <br>
+            {{ $t('footer.PrivacyPolicy.ErstellungUmfrage_12') }}
             {{ $t('footer.PrivacyPolicy.ErstellungUmfrage_13') }}
-            {{ $t('footer.PrivacyPolicy.ErstellungUmfrage_14') }}
 
             <br>
           </p>
