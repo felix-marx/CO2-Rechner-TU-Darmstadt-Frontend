@@ -9,7 +9,7 @@
       <br>
       <!-- Mail Text -->
       <p>{{ $t('userSurvey.MailTemplate.MailVorlage_1') }}</p>
-      <p>{{ $t('userSurvey.MailTemplate.MailVorlage_2') }}<sub>2</sub>{{ $t('userSurvey.MailTemplate.MailVorlage_3') }} {{ umfrageJahr }}  {{ $t('userSurvey.MailTemplate.MailVorlage_4') }}</p>
+      <p><label v-html="$t('userSurvey.MailTemplate.MailVorlage_2')" /> {{ umfrageJahr }}{{ $t('userSurvey.MailTemplate.MailVorlage_4') }}</p>
       <p>
         <a
           target="_blank"
