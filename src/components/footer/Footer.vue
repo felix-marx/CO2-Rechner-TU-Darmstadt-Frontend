@@ -41,33 +41,49 @@ import i18n from "@/i18n";
 
 export default {
   name: "Footer",
-  components: {
-    Contact,
-    OpenSource
-},
+    components: {
+      Contact,
+      OpenSource
+  },
 
   data: () => ({
     padless: true,
     dialog: false,
     
     // Contact and OpenSource component not in footerButtons for it is as Dialog and not a Button
-    footerButtons: [
-      {
-        text: i18n.t('footer.Footer.Impressum'),
-        href: "https://www.tu-darmstadt.de/impressum/index.de.jsp",
-        target: "_blank",
-      },
-      {
-        text: i18n.t('footer.Footer.Datenschutzerklearung'),
-        href: process.env.VUE_APP_URL + "/datenschutz", // Eigene Datenschutzerklaerung
-        target: "",
-      },
-      {
-        text: i18n.t('footer.Footer.FAQ'),
-        href: process.env.VUE_APP_URL + "/faq",
-        target: "",
-      },
-    ],
-  })
+    footerButtons: [],
+  }),
+
+  watch: {
+    '$i18n.locale': function() {
+      this.setFooterButtons();
+    }
+  },
+  
+  created() {
+    this.setFooterButtons();
+  },
+
+  methods: {
+    setFooterButtons() {
+      this.footerButtons = [
+        {
+          text: i18n.t('footer.Footer.Impressum'),
+          href: "https://www.tu-darmstadt.de/impressum/index.de.jsp",
+          target: "_blank",
+        },
+        {
+          text: i18n.t('footer.Footer.Datenschutzerklearung'),
+          href: process.env.VUE_APP_URL + "/datenschutz", // Eigene Datenschutzerklaerung
+          target: "",
+        },
+        {
+          text: i18n.t('footer.Footer.FAQ'),
+          href: process.env.VUE_APP_URL + "/faq",
+          target: "",
+        },
+      ]
+    }  
+  },
 };
 </script>

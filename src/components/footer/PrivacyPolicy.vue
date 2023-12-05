@@ -185,15 +185,37 @@
 import Header from '../header/Header.vue'
 import Footer from '../footer/Footer.vue'
 import loadingAnimation from '../componentParts/LoadingAnimation.vue'
+import i18n from '../../i18n'
+
 export default {
-    name: "PrivacyPolicy",
-    components: {
-        Header,
-        Footer
-    },
-    data: () => ({
-        tabList: [{ id: 0, title: 'Datenschutzerklärung', componentType: loadingAnimation}],
-    }),
+  name: "PrivacyPolicy",
+
+  components: {
+    Header,
+    Footer
+  },
+
+  data: () => ({
+    tabList: [],
+  }),
+
+  watch: {
+    '$i18n.locale': function() {
+      this.setTabList();
+    }
+  },
+  
+  created() {
+    this.setTabList();
+  },
+
+  methods: {
+    setTabList(){
+      this.tabList = [
+        { id: 0, title: i18n.t('footer.Footer.Datenschutzerklearung'), componentType: loadingAnimation},
+      ]
+    }
+  },
 }
 
 

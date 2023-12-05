@@ -43,12 +43,18 @@ export default {
     // could extend this to be persistent on site refresh, but this would require additional plugins, like e.g. Vuex.
     selectedTab: 0,
     currentTabType: AdminViewSurveys,
-    tabList: [
-      { id: 2, title: i18n.t('common.Accounteinstellungen'), componentType: AccountSettings},
-      { id: 0, title: i18n.t('common.UmfrageUebersicht'), componentType: AdminViewSurveys},
-      { id: 1, title: i18n.t('common.Datenbank'), componentType: AdminDBInteract},
-    ],
+    tabList: [],
   }),
+
+  watch: {
+    '$i18n.locale': function() {
+      this.setTabList();
+    }
+  },
+  
+  created() {
+    this.setTabList();
+  },
 
   methods: {
     /**
@@ -60,6 +66,14 @@ export default {
       this.selectedTab = tab.id;
       this.currentTabType = tab.componentType;
     },
+
+    setTabList(){
+      this.tabList = [
+        { id: 2, title: i18n.t('common.Accounteinstellungen'), componentType: AccountSettings},
+        { id: 0, title: i18n.t('common.UmfrageUebersicht'), componentType: AdminViewSurveys},
+        { id: 1, title: i18n.t('common.Datenbank'), componentType: AdminDBInteract},
+      ]
+    }
   },
 };
 </script>
