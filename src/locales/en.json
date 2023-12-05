@@ -306,7 +306,7 @@
   "userSurvey": {
     "MailTemplate": {
       "MailVorlage_0": "Email template addressed to your employees and staff",
-      "MailVorlage_1": "Dear Colleagues",
+      "MailVorlage_1": "Dear Colleagues,",
       "MailVorlage_2": "Our organisational unit of TU Darmstadt is balancing CO<sub>2</sub> emissions for the calendar year",
       "MailVorlage_4": ". To this end, some information regarding your business trips, your commuting distances and IT devices that you use is required. The following link takes you to a survey where you will be asked to fill in your data. The information that you will provide will be anonymised for processing and plotting: ",
       "MailVorlage_5": "The survey will take about 10 minutes to complete. In this survey, the entire calendar year",
