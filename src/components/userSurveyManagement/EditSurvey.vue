@@ -288,6 +288,7 @@
           </v-row>
 
           <DataGapVisualization 
+            v-if="displayDataGapVisualization"
             :gebaeude-i-ds-und-zaehler="gebaeudeIDsUndZaehler"
             :zaehler="zaehler"
             :gebaeude="umfrage.gebaeude"
@@ -443,6 +444,9 @@ export default {
     displayLoadingAnimation: false,
     displayError: false,
     displaySuccess: false,
+
+    // for DataGapVisualization
+    displayDataGapVisualization: false,
 
     // Dialogvariable + Array mit fehlerhaften Eingaben {fehler: "", pflicht: 0}
     errorDialog: false,
@@ -674,57 +678,36 @@ export default {
       this.dataRequestSent = false;
     },
 
-    // /**
-    //  * fetchGebaeudeData sendet eine POST Request ans Backend welche alle gespeicherten Gebaeude fetched.
-    //  */
-    // fetchGebaeudeData: async function () {
-    //   await fetch(process.env.VUE_APP_BASEURL + "/umfrage/gebaeude",{
-    //     method: "GET",
-    //     headers: {
-    //       "Authorization": "Bearer " + this.$keycloak.token,
-    //     },
-    //   })
-    //     .then((response) => response.json())
-    //     .then((data) => {
-    //       this.gebaeudeIDs = data.data.gebaeude.map(gebInt => translateGebaeudeIDToSymbolic(gebInt));
-    //     })
-    //     .catch((error) => {
-    //       console.error("Error:", error);
-    //     });
-    // },
-
     /**
      * Fetches all possible gebaeudeIDs and the Zaehler References from the database.
      */
-     fetchGebaeudeUndZaehlerData: async function () {
-    await fetch(process.env.VUE_APP_BASEURL + "/umfrage/gebaeudeUndZaehler", {
-      method: "GET",
-      headers: {
-          "Authorization": "Bearer " + this.$keycloak.token,
-        }
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        this.gebaeudeIDsUndZaehler = data.data.gebaeude
-        this.zaehler = data.data.zaehler
-
-        //console.log(data)
-      
-        this.gebaeudeIDs = data.data.gebaeude.map(obj => translateGebaeudeIDToSymbolic(obj.nr));
-
-        this.mapGebauedeZaehlerRefs = new Map(
-          data.data.gebaeude.map((obj) => [translateGebaeudeIDToSymbolic(obj.nr), {kaelteRef: obj.kaelteRef, stromRef: obj.stromRef, waermeRef: obj.waermeRef}])
-        )
-        //console.log(this.mapGebauedeZaehlerRefs)
-
-        this.mapZaehlerWerte = new Map(
-          data.data.zaehler.map((obj) => [obj.pkEnergie, new Map(obj.zaehlerdatenVorhanden.map((obj2) => [obj2.jahr, obj2.vorhanden]))])
-        )
-        //console.log(this.mapZaehlerWerte)
+    fetchGebaeudeUndZaehlerData: async function () {
+      await fetch(process.env.VUE_APP_BASEURL + "/umfrage/gebaeudeUndZaehler", {
+        method: "GET",
+        headers: {
+            "Authorization": "Bearer " + this.$keycloak.token,
+          }
       })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+        .then((response) => response.json())
+        .then((data) => {
+          this.gebaeudeIDsUndZaehler = data.data.gebaeude
+          this.zaehler = data.data.zaehler
+        
+          this.gebaeudeIDs = data.data.gebaeude.map(obj => translateGebaeudeIDToSymbolic(obj.nr));
+
+          this.mapGebauedeZaehlerRefs = new Map(
+            data.data.gebaeude.map((obj) => [translateGebaeudeIDToSymbolic(obj.nr), {kaelteRef: obj.kaelteRef, stromRef: obj.stromRef, waermeRef: obj.waermeRef}])
+          )
+
+          this.mapZaehlerWerte = new Map(
+            data.data.zaehler.map((obj) => [obj.pkEnergie, new Map(obj.zaehlerdatenVorhanden.map((obj2) => [obj2.jahr, obj2.vorhanden]))])
+          )
+
+          this.displayDataGapVisualization = true;
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
     },
 
     /**
