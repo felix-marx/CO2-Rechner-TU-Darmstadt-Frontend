@@ -324,25 +324,34 @@
       "UmfrageErklaerung_5": "If you would like to make changes or additions to the information that you entered, please select “<i>Survey overview</i>” in the upper left corner to re-access the general part of the CO<sub>2</sub> calculator. When done, please click on “<i>Save</i>” to finalise your changes. ",
       "UmfrageErklaerung_6": "If you have additional questions or would like to give feedback, please contact",
       "UmfrageErklaerung_7": "Thank you for using the CO<sub>2</sub> calculator and contributing to sustainability at TU Darmstadt by doing so.",
+      
       "UmfrageBezeichungUeberschrift": "How do you want to name your survey?",
+      
       "BilanzierungsUeberschrift": "What reporting year is being examined in your survey?",
+      
       "MitarbeiterInAbteilung": "How many employees are there in your unit?",
+      
       "GebaeudeAbteilung_0": "What buildings are used by your unit?",
       "GebaeudeAbteilung_1": "Site map",
       "GebaeudeAbteilung_2": "All buildings begin with the letters S, B, L, H or W depending on location. The Autocomplete feature should be of help.",
       "GebaeudeAbteilung_3": "Usable floor space of the building selected",
       "GebaeudeWarnung": "You have selected the same building multiple times.",
+      
       "ITGeraete_0": "What and how many IT devices does your unit use jointly in all buildings?",
       "ITGeraeteBenutzteToner": "Used toners",
       "ITGeraeteBenutzteToner_Suffix": "Toner(s)",
       "ITGeraeteMFP": "Multifunctional devices, such as network printers",
       "ITGeraeteMFP_Suffix": "Device(s)",
+      
       "DruckerLabel": "Laser and inkjet printer(s)",
       "Drucker_Suffix": "Printer(s)",
+      
       "Beamer": "Overhead projector(s)",
       "interneServer": "In-house servers",
       "Server": "Server(s)",
+      
       "SpeicherButton": "Save survey & generate link",
+      
       "ProblemeEingabe": "Your input has issues!",
       "UmfrageVervollstaendigen": "Survey complete?",
       "FehlendePflichtfelder": "You have not completed the following obligatory fields:",
@@ -354,22 +363,28 @@
       "UmfrageTzdSpeichern": "Save survey anyway",
       "WeitereUmfrageErstellen": "Create more surveys",
       "Umfrage": "survey",
+      
       "geraeteRules_1": "Deselect the device if you do not use it.",
       "geraeteRules_2": "Deselect the device if you do not use it.",
       "geraeteRules_3": "Please enter a valid quantity.",
+      
       "nichtnegativRules_0": "Must be entered.",
       "nichtnegativRules_1": "Please enter a positive (plus) value.",
+      
       "absolutpositivRules_0": "Must be entered.",
       "absolutpositivRules_1": "Please enter a positive (plus) value.",
+      
       "requiredFieldsMissing_0": "Term (name)",
       "requiredFieldsMissing_1": "Reporting year",
       "requiredFieldsMissing_2": "Number of employees",
+      
       "problemeInUmfrage_0": "You have selected the same building multiple times.",
-      "problemeInUmfrage_1": "For the building XYZ, ",
-      "problemeInUmfrage_2": " the usable floor space entered is not valid.",
-      "problemeInUmfrage_3": "For the device: XYZ ",
-      "problemeInUmfrage_4": " selected, the quantity entered is not valid.",
+      "problemeInUmfrage_1": "For the building ",
+      "problemeInUmfrage_2": ", the usable floor space entered is not valid.",
+      "problemeInUmfrage_3": "For the selected device: ",
+      "problemeInUmfrage_4": ", the quantity entered is not valid.",
       "problemeInUmfrage_5": "You have not entered the toners used for the device selected. If you are not using this device, please ignore this message.",
+      
       "ITGeraetIDDic_7": "Multifunctional devices",
       "ITGeraetIDDic_8": "Toner(s) for multifunctional devices",
       "ITGeraetIDDic_9": "Laser and inkjet printer(s)",
