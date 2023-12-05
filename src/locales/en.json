@@ -522,17 +522,18 @@
       "LinkInZwischenablage": "Link successfully copied to clipboard."
     },
     "dataGapVisualization": {
-      "KeineKaelteDaten": "No cooling data for the year ",
-      "KeineStromzaehler": "No information on electricity meters",
-      "KeineStromdaten": "No electricity data for the year ",
-      "KeineWaermezaehler": "No information on heating meters",
-      "KeineWaermedaten": "No information for the year ",
+      "weitereInformationen": "More information",
+      "KeineKaelteDaten": "no cooling data for the year ",
+      "KeineStromzaehler": "no information on electricity meters",
+      "KeineStromdaten": "no electricity data for the year ",
+      "KeineWaermezaehler": "no information on heating meters",
+      "KeineWaermedaten": "no thermal data for the year ",
       "FuerGebaeude_0": "For ",
-      "FuerGebaeude_1": " we have ",
+      "FuerGebaeude_1": ", we have ",
       "FuerGebaeude_2": " and ",
       "UnvollstaendigeEnergieverbrauch_0": "For the buildings ",
       "UnvollstaendigeEnergieverbrauch_1": " and ",
-      "UnvollstaendigeEnergieverbrauch_2": " , we unfortunately have incomplete data on energy consumption at the moment!"
+      "UnvollstaendigeEnergieverbrauch_2": ", we unfortunately have incomplete data on energy consumption at the moment!"
     },
     "LinkSharingComponent": {
       "Link_0": "Please forward the link below to your employees to give them access to the ",

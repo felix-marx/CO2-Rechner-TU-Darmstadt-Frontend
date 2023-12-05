@@ -27,7 +27,7 @@
             <v-icon v-if="moreInfo">
               mdi-menu-down
             </v-icon>
-            Weiter Informationen
+            {{ $t('componentParts.dataGapVisualization.weitereInformationen') }}
           </v-btn>
         </v-row>
         <v-row
