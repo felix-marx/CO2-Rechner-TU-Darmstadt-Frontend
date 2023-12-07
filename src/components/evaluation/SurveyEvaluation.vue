@@ -315,7 +315,7 @@ export default {
     LoadingAnimation,
     LinkSharingComponent,
     DataGapVisualization,
-},
+  },
 
   props: {
     umfrageid: {
@@ -414,6 +414,8 @@ export default {
       chartWidth: null,
       halfChartWidth: null,
       barWidth: null,
+
+      resizeTimout: null,
     }
   },
 
@@ -433,44 +435,39 @@ export default {
 
   watch: {
     '$i18n.locale': function() {  // reload charts when language changes to update labels
-      this.barWidthComp();    // TODO: remove later // for now used to test resizing of bars
       this.setChartData();
     },
   },
 
   async mounted() { 
     await this.getData();
-    this.barWidthComp();
     this.setChartData();
   },
 
   created() {
-    //this.getData();
-    //this.responseSuccessful = true
+    window.addEventListener("resize", this.resizeEventHandler);
+  },
+
+  destroyed() {
+    window.removeEventListener("resize", this.resizeEventHandler);
   },
 
   methods: {
-    onResize: async function () {
-      await Sleep(500)
-      if(this.oldWindowWidth != window.innerWidth) {
-        this.oldWindowWidth = window.innerWidth
-        console.log(this.barWidth)
-
-        this.barWidth = window.innerWidth / this.maxBars * 0.4
-        this.resizeBars()
+    /**
+     * Eventhandler for window resizing events
+     */
+    resizeEventHandler() {
+      if (this.resizeTimout != null) {  // uses timeouts for debouncing
+        clearTimeout(this.resizeTimout)
       }
+      this.resizeTimout = setTimeout(() => {
+        this.setChartData();
+      }, 250)
     },
 
-    resizeBars: function () {
-      console.log(this.maxBars)
-      console.log(this.chartWidth)
-      console.log(this.barWidth)
-
-      this.chartdataDienstreisenBar.datasets[0].maxBarThickness = this.barWidth
-      this.chartdataPendelwegeBar.datasets[0].maxBarThickness = this.barWidth
-      this.chartdataITGeraeteBar.datasets[0].maxBarThickness = this.barWidth
-    },
-
+    /**
+     * Computes the bar width for the bar charts based on the current canvas with and number of bars to display.
+     */
     barWidthComp: function() {
       this.maxBars = Math.max(Object.keys(this.responsedata.emissionenDienstreisenAufgeteilt).length, Object.keys(this.responsedata.emissionenPendelwegeAufgeteilt).length, Object.keys(this.responsedata.emissionenITGeraeteAufgeteilt).length)
       this.chartWidth = this.$refs["chart"].$refs.canvas.width
@@ -715,7 +712,11 @@ export default {
       );
     },
 
+    /**
+     * Helper function to call all setChart functions.
+     */
     setChartData: function() {
+      this.barWidthComp();
       this.setChartGesamt();
       this.setChartEnergie();
       this.setChartVerbrauch();
@@ -921,6 +922,7 @@ export default {
         }
       };
     },
+
     /**
      * Method sets data and options for the Energie charts.
      */
@@ -1028,6 +1030,7 @@ export default {
         }
       }
     },
+
     /**
      * Method sets data and options for the Energie charts.
      */
@@ -1136,6 +1139,9 @@ export default {
       }
     },
 
+    /**
+     * Method sets data and options for the Dienstreisen charts.
+     */
     setChartDienstreisen: function () {
       let data = []
 
@@ -1210,6 +1216,9 @@ export default {
       }
     },
 
+    /**
+     * Method sets data and options for the Pendelwege charts.
+     */
     setChartPendelwege: function () {
       let data = []
 
@@ -1279,6 +1288,9 @@ export default {
       }
     },
 
+    /**
+     * Method sets data and options for the ITGeraete charts.
+     */
     setChartITGeraete: function () {
       let data = []
 
@@ -1348,10 +1360,6 @@ export default {
       }
     },
   },
-}
-
-function Sleep(milliseconds) {
-  return new Promise(resolve => setTimeout(resolve, milliseconds));
 }
 
 </script>
