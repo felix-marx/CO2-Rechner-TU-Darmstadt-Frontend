@@ -303,7 +303,7 @@ import LoadingAnimation from "../componentParts/LoadingAnimation.vue";
 import LinkSharingComponent from "../componentParts/LinkSharingComponent.vue";
 import DataGapVisualization from '../componentParts/DataGapVisualization.vue';
 import i18n from "@/i18n";
-import { translateGebaeudeIDToSymbolic } from "../../utils";
+import { translateGebaeudeIDToSymbolic, getITGeraeteLabelMap, getDienstreisenLabelMap, getPendelwegeLabelMap } from "../../utils";
 
 
 export default {
@@ -429,47 +429,6 @@ export default {
     displayExtrapolationWarning: function () {
       return this.responsedata.umfragenanteil <= 50.0
     },
-    itGeraeteLabelMap: function(){
-      return  new Map([
-        ["1", i18n.t('colleagueSurvey.colleagueSurvey.IT_Geraete_Notebooks')],
-        ["2", i18n.t('colleagueSurvey.colleagueSurvey.IT_Geraete_Desktops')],
-        ["3", i18n.t('colleagueSurvey.colleagueSurvey.IT_Geraete_Bildschirme')],
-        ["4", i18n.t('userSurvey.Survey.ITGeraetIDDic_4')],
-        ["5", i18n.t('colleagueSurvey.colleagueSurvey.IT_Geraete_Mobiltelefone')],
-        ["6", i18n.t('userSurvey.Survey.ITGeraetIDDic_6')],
-        ["7", i18n.t('userSurvey.Survey.ITGeraetIDDic_7')],
-        ["8", i18n.t('userSurvey.Survey.ITGeraetIDDic_8')],
-        ["9", i18n.t('userSurvey.Survey.ITGeraetIDDic_9')],
-        ["10", i18n.t('userSurvey.Survey.ITGeraetIDDic_10')],
-      ]) 
-    },
-    dienstreisenLabelMap: function(){
-      return new Map([
-        ["1", i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_2")],
-        ["2", i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMedium_Auto")],
-        ["3", i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3")],
-        ["Benzin", i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMedium_Benzin")],
-        ["Diesel", i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMedium_Diesel")],
-        ["Kurzstrecke", i18n.t("colleagueSurvey.colleagueSurvey.flugstreckeListe_1")],
-        ["Langstrecke", i18n.t("colleagueSurvey.colleagueSurvey.flugstreckeListe_0")],
-      ])
-    },
-    pendelwegeLabelMap: function(){
-      return new Map([
-        ["1", i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_2')],
-        ["2", i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_3')],
-        ["3", i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_4')],
-        ["4", i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_0')],
-        ["5", i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_1')],
-        ["6", i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_1')],
-        ["7", i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_0')],
-        ["8", i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_2')],
-        ["9", i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_3')],
-        ["10", i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_4')],
-        ["11", i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_5')],
-        ["12", i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_6')]
-      ]);
-    }
   },
 
   watch: {
@@ -644,7 +603,7 @@ export default {
         },
       ])
       let dienstreisenAufgeteilt = this.responsedata.emissionenDienstreisenAufgeteilt
-      let labelMap = this.dienstreisenLabelMap
+      let labelMap = getDienstreisenLabelMap()
       let emissionen = this.responsedata.emissionenDienstreisen
       Object.keys(dienstreisenAufgeteilt).forEach(function(key) {
         let labelParts = key.split("-")
@@ -665,7 +624,7 @@ export default {
         },
       ])
       let pendelwegeAufgeteilt = this.responsedata.emissionenPendelwegeAufgeteilt
-      labelMap = this.pendelwegeLabelMap
+      labelMap = getPendelwegeLabelMap()
       emissionen = this.responsedata.emissionenPendelwege
       Object.keys(pendelwegeAufgeteilt).forEach(function(key) {
         data.push({
@@ -684,7 +643,7 @@ export default {
         },
       ])
       let itGeraeteAufgeteilt = this.responsedata.emissionenITGeraeteAufgeteilt
-      labelMap = this.itGeraeteLabelMap
+      labelMap = getITGeraeteLabelMap()
       emissionen = this.responsedata.emissionenITGeraete
       Object.keys(itGeraeteAufgeteilt).forEach(function(key) {
         data.push({
@@ -1181,7 +1140,7 @@ export default {
       let data = []
 
       let dienstreisenAufgeteilt = this.responsedata.emissionenDienstreisenAufgeteilt
-      let labelMap = this.dienstreisenLabelMap
+      let labelMap = getDienstreisenLabelMap()
 
       Object.keys(dienstreisenAufgeteilt).forEach(function(key) {
         let labelParts = key.split("-")
@@ -1255,7 +1214,7 @@ export default {
       let data = []
 
       let pendelwegeAufgeteilt = this.responsedata.emissionenPendelwegeAufgeteilt
-      let labelMap = this.pendelwegeLabelMap
+      let labelMap = getPendelwegeLabelMap()
       Object.keys(pendelwegeAufgeteilt).forEach(function(key) {
         data.push({label: labelMap.get(key), value: pendelwegeAufgeteilt[key], color: 'rgb(255, 205, 86)'})
       })
@@ -1324,7 +1283,7 @@ export default {
       let data = []
 
       let itGeraeteAufgeteilt = this.responsedata.emissionenITGeraeteAufgeteilt
-      let labelMap = this.itGeraeteLabelMap
+      let labelMap = getITGeraeteLabelMap()
       Object.keys(itGeraeteAufgeteilt).forEach(function(key) {
         data.push({label: labelMap.get(key), value: itGeraeteAufgeteilt[key], color: 'rgb(75, 192, 192)'})
       })
@@ -1389,6 +1348,10 @@ export default {
       }
     },
   },
+}
+
+function Sleep(milliseconds) {
+  return new Promise(resolve => setTimeout(resolve, milliseconds));
 }
 
 </script>
