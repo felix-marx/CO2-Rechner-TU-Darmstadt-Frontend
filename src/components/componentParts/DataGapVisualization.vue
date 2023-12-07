@@ -43,6 +43,8 @@
   
 <script>
 import i18n from "@/i18n";
+import { translateGebaeudeIDToSymbolic } from "../../utils";
+
 
 export default {
   props:{
@@ -160,23 +162,6 @@ export default {
     },
   },
 };
-
-/**
- * Translates a given numeric gebaeudeID to its symbolic equivalent (string).
- * E.g. 1101 is translated to S101, 3312 to L312 and so on.
- */
-function translateGebaeudeIDToSymbolic(gebaeudeID) {
-  let gebaeudeDict = {
-      1: "S",
-      2: "B",
-      3: "L",
-      4: "H",
-      5: "W",
-  };
-  gebaeudeID = gebaeudeID.toString()
-  let translatedID = gebaeudeDict[gebaeudeID.substring(0, 1)] + gebaeudeID.substring(1);
-  return translatedID;
-}
 
 </script>
   
