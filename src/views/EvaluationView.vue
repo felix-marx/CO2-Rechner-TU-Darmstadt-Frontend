@@ -98,7 +98,14 @@ export default {
     }
   },
 
+  watch: {
+    '$i18n.locale': function() {
+      this.setTabList();
+    }
+  },
+
   created() {
+    this.setTabList();
     // request if a survey has result sharing enabled with the corresponding ID from the URL
     this.fetchUmfrage(this.$route.params.umfrageID);
   },
@@ -107,29 +114,35 @@ export default {
     /**
      * Requests from the server whether a survey with the givenID has result sharing enabled.
      */
-  fetchUmfrage: async function (givenID) {
-    await fetch(process.env.VUE_APP_BASEURL + "/umfrage/sharedResults?id=" + givenID, {
-      method: "GET",
-      })
-      .then((response) => response.json())
-      .then((data) => {
-        this.umfrageID = givenID;
-        if (data.status == "success"){
-          // Umfrage exists
+    fetchUmfrage: async function (givenID) {
+      await fetch(process.env.VUE_APP_BASEURL + "/umfrage/sharedResults?id=" + givenID, {
+        method: "GET",
+        })
+        .then((response) => response.json())
+        .then((data) => {
           this.umfrageID = givenID;
-          this.freigegeben = data.data.freigegeben;
-        }
-        else{
-          // Umfrage doesn't exists
+          if (data.status == "success"){
+            // Umfrage exists
+            this.umfrageID = givenID;
+            this.freigegeben = data.data.freigegeben;
+          }
+          else{
+            // Umfrage doesn't exists
+            this.umfrageID = "";
+            this.freigegeben = 0;
+          }
+        }).catch((error) => {
+          console.error("Error:", error);
           this.umfrageID = "";
           this.freigegeben = 0;
-        }
-      }).catch((error) => {
-        console.error("Error:", error);
-        this.umfrageID = "";
-        this.freigegeben = 0;
-      });
-    },
+        });
+      },
+
+    setTabList(){
+      this.tabList = [
+        { id: 0, title: i18n.t('common.Auswertung'), componentType: LoadingAnimation},
+      ]
+    }
   },
 
 };

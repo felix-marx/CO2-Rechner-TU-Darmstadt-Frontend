@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/no-v-html -->
 <template>
   <v-card
     class="mt-2"
@@ -8,24 +9,46 @@
       <h2> {{ $t('userSurvey.MailTemplate.MailVorlage_0') }} </h2>
       <br>
       <!-- Mail Text -->
-      <p>{{ $t('userSurvey.MailTemplate.MailVorlage_1') }}</p>
-      <p>{{ $t('userSurvey.MailTemplate.MailVorlage_2') }}<sub>2</sub>{{ $t('userSurvey.MailTemplate.MailVorlage_3') }} {{ umfrageJahr }}  {{ $t('userSurvey.MailTemplate.MailVorlage_4') }}</p>
+      <p>**English version below**</p>
+      <p>---</p>
+      <p>{{ $t('userSurvey.MailTemplate.MailVorlage_1', 'de') }}</p>
+      <p><label v-html="$t('userSurvey.MailTemplate.MailVorlage_2', 'de')" /> {{ umfrageJahr }}{{ $t('userSurvey.MailTemplate.MailVorlage_4', 'de') }}</p>
       <p>
         <a
           target="_blank"
           :href="umfrageLink"
         >{{ umfrageLink }}</a>
       </p>
-      <p>{{ $t('userSurvey.MailTemplate.MailVorlage_5') }} {{ umfrageJahr }} {{ $t('userSurvey.MailTemplate.MailVorlage_6') }} </p>
-      <p> {{ $t('userSurvey.MailTemplate.MailVorlage_7') }} </p>
+      <p>{{ $t('userSurvey.MailTemplate.MailVorlage_5', 'de') }} {{ umfrageJahr }} {{ $t('userSurvey.MailTemplate.MailVorlage_6', 'de') }} </p>
+      <p> {{ $t('userSurvey.MailTemplate.MailVorlage_7', 'de') }} </p>
       <p v-if="mail!='UNKNOWN_MAIL'">
-        {{ $t('userSurvey.MailTemplate.MailVorlage_8') }}
+        {{ $t('userSurvey.MailTemplate.MailVorlage_8', 'de') }}
         <a
           target="_blank"
           :href="'mailto:'+ mail"
         >{{ mail }}</a>.
       </p>
-      <p> {{ $t('userSurvey.MailTemplate.MailVorlage_9') }} </p>
+      <p> {{ $t('userSurvey.MailTemplate.MailVorlage_9', 'de') }} </p>
+      <br>
+      <p>**English version**</p>
+      <p>{{ $t('userSurvey.MailTemplate.MailVorlage_1', 'en') }}</p>
+      <p><label v-html="$t('userSurvey.MailTemplate.MailVorlage_2', 'en')" /> {{ umfrageJahr }}{{ $t('userSurvey.MailTemplate.MailVorlage_4', 'en') }}</p>
+      <p>
+        <a
+          target="_blank"
+          :href="umfrageLink"
+        >{{ umfrageLink }}</a>
+      </p>
+      <p>{{ $t('userSurvey.MailTemplate.MailVorlage_5', 'en') }} {{ umfrageJahr }} {{ $t('userSurvey.MailTemplate.MailVorlage_6', 'en') }} </p>
+      <p> {{ $t('userSurvey.MailTemplate.MailVorlage_7', 'en') }} </p>
+      <p v-if="mail!='UNKNOWN_MAIL'">
+        {{ $t('userSurvey.MailTemplate.MailVorlage_8', 'en') }}
+        <a
+          target="_blank"
+          :href="'mailto:'+ mail"
+        >{{ mail }}</a>.
+      </p>
+      <p> {{ $t('userSurvey.MailTemplate.MailVorlage_9', 'en') }} </p>
     </v-card>
   </v-card>
 </template>

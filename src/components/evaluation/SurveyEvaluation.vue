@@ -242,11 +242,11 @@
               text
               type="info"
             >
-              {{ $t('evaluation.surveyEvaluation.NachhaltigkeitTipps_0') }} <a
+              {{ $t('evaluation.surveyEvaluation.NachhaltigkeitTipps_0') }}<a
                 href="https://www.tu-darmstadt.de/nachhaltigkeit/buero_fuer_nachhaltigkeit/projekte_buero/news_projekte_buero_details_348992.de.jsp"
                 target="_blank"
                 style="color:hsl(229, 100%, 50%);"
-              >{{ $t('evaluation.surveyEvaluation.NachhaltigkeitTipps_1') }}</a> {{ $t('evaluation.surveyEvaluation.NachhaltigkeitTipps_2') }}
+              >{{ $t('evaluation.surveyEvaluation.NachhaltigkeitTipps_1') }}</a>{{ $t('evaluation.surveyEvaluation.NachhaltigkeitTipps_2') }}
             </v-alert>
           </v-col>
         </v-row>
@@ -303,6 +303,8 @@ import LoadingAnimation from "../componentParts/LoadingAnimation.vue";
 import LinkSharingComponent from "../componentParts/LinkSharingComponent.vue";
 import DataGapVisualization from '../componentParts/DataGapVisualization.vue';
 import i18n from "@/i18n";
+import { translateGebaeudeIDToSymbolic } from "../../utils";
+
 
 export default {
   name: "SurveyEvaluation",
@@ -1387,27 +1389,6 @@ export default {
       }
     },
   },
-}
-
-/**
- * Translates a given numeric gebaeudeID to its symbolic equivalent (string).
- * E.g. 1101 is translated to S101, 3312 to L312 and so on.
- */
-function translateGebaeudeIDToSymbolic(gebaeudeID) {
-  let gebaeudeDict = {
-      1: "S",
-      2: "B",
-      3: "L",
-      4: "H",
-      5: "W",
-  };
-  gebaeudeID = gebaeudeID.toString()
-  let translatedID = gebaeudeDict[gebaeudeID.substring(0, 1)] + gebaeudeID.substring(1);
-  return translatedID;
-}
-
-function Sleep(milliseconds) {
-  return new Promise(resolve => setTimeout(resolve, milliseconds));
 }
 
 </script>
