@@ -908,7 +908,9 @@ export default {
       this.responsedata.vergleich4PersonenHaushalt = Math.round(this.responsedata.vergleich4PersonenHaushalt * 100) / 100
     },
 
-
+    /**
+     * Method initializes chartdata and options for all charts by deep copying the general chartdata and options.
+     */
     // initializeCharts: function () {
     //   this.chartdataGesamtDoughnut = JSON.parse(JSON.stringify(this.generalChartdataDoughnut));
     //   this.optionsGesamtDoughnut = JSON.parse(JSON.stringify(this.generalOptionsDoghnut));
@@ -1023,7 +1025,7 @@ export default {
     },
 
     /**
-     * Method sets data and options for the Energie charts.
+     * Method sets data and options for the Energieverbrauch charts.
      */
     setChartVerbrauch: function () {
       let data = [
