@@ -908,7 +908,7 @@ export default {
             },
             scaleLabel: {
               display: true,
-              labelString: 't C02 eq.'
+              labelString: i18n.t('evaluation.surveyEvaluation.tCO2eq')
             }
           }]
         },
@@ -1016,7 +1016,7 @@ export default {
             },
             scaleLabel: {
               display: true,
-              labelString: 't C02 eq.'
+              labelString: i18n.t('evaluation.surveyEvaluation.tCO2eq')
             }
           }]
         },
@@ -1124,7 +1124,7 @@ export default {
             },
             scaleLabel: {
               display: true,
-              labelString: 'kWh'
+              labelString: i18n.t('evaluation.surveyEvaluation.kwh')
             }
           }]
         },
@@ -1173,6 +1173,7 @@ export default {
           },
           barTickness: 'flex',
           maxBarThickness: this.barWidth,
+          fontStyle: "bold",
         }]
       }
       this.optionsDienstreisenBar = {
@@ -1184,25 +1185,40 @@ export default {
           display: false
         },
         plugins: {
-          datalabels: {
+          datalabels: {   // labels on bars
             display: true,
             // eslint-disable-next-line no-unused-vars
             formatter: (value, context) => {
               return i18n.n(value, "decimal");
             },
+            // font: {
+            //   weight: 'bold',
+            //   size: 14,
+            // },
           },
         },
         scales: {
-          yAxes: [{
+          yAxes: [{ // everything on y-axis
             id: 'bar',
             position: 'left',
             ticks: {
+              // fontColor: "black",
+              // fontSize: 18,
+              // fontStyle: "bold",
               beginAtZero: true
             },
             scaleLabel: {
               display: true,
-              labelString: 't C02 eq.'
+              labelString: i18n.t('evaluation.surveyEvaluation.tCO2eq'),
+              // fontSize: 18,
             }
+          }],
+          xAxes: [{ // everything on x-axis
+            ticks: {
+              fontColor: "black",
+              fontSize: 18,
+              fontStyle: "bold",
+            },
           }]
         },
         tooltips: {
@@ -1273,7 +1289,7 @@ export default {
             },
             scaleLabel: {
               display: true,
-              labelString: 't C02 eq.'
+              labelString: i18n.t('evaluation.surveyEvaluation.tCO2eq')
             }
           }]
         },
@@ -1345,7 +1361,7 @@ export default {
             },
             scaleLabel: {
               display: true,
-              labelString: 't C02 eq.'
+              labelString: i18n.t('evaluation.surveyEvaluation.tCO2eq')
             }
           }]
         },
