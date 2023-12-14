@@ -942,6 +942,9 @@ export default {
      */
     setChartData: function() {
       this.barWidthComp();
+      
+      this.generalChartdataBar.datasets[0].maxBarThickness = this.barWidth
+
       this.setChartGesamt();
       this.setChartEnergie();
       this.setChartVerbrauch();
