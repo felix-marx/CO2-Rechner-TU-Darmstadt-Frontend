@@ -446,7 +446,7 @@ export default {
             position: 'left',
             ticks: {          // font for numbers on y-axis
               fontColor: "black",
-              // fontSize: 12,   // default is 12
+              fontSize: 13,   // default is 12
               // fontStyle: "bold",
               beginAtZero: true
             },
@@ -454,6 +454,7 @@ export default {
               display: true,
               labelString: i18n.t('evaluation.surveyEvaluation.tCO2eq'),
               fontColor: "black",
+              fontSize: 13,
             }
           }],
           xAxes: [{ // font for labels on x-axis
@@ -487,7 +488,7 @@ export default {
         legend: {
           labels: {
             fontColor: 'black',
-            // fontSize: 12,
+            fontSize: 13,
           }
         },
         plugins: {
