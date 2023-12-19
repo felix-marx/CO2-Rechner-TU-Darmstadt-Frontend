@@ -98,13 +98,14 @@
         <v-row>
           <v-col>
             <doughnut-chart
+              ref="doughnut-gesamt"
               :chart-data="chartdataGesamtDoughnut"
               :options="optionsGesamtDoughnut"
             />
           </v-col>
           <v-col>
             <bar-chart
-              ref="half-chart"
+              ref="bar-gesamt"
               :chart-data="chartdataGesamtBar"
               :options="optionsGesamtBar"
             />
@@ -120,7 +121,7 @@
         <v-row v-if="displayAufteilungDienstreisen">
           <v-col>
             <bar-chart
-              ref="chart-dienstreisen"
+              ref="bar-dienstreisen"
               :chart-data="chartdataDienstreisenBar"
               :options="optionsDienstreisenBar"
             />
@@ -136,7 +137,7 @@
         <v-row v-if="displayAufteilungPendelwege">
           <v-col>
             <bar-chart
-              ref="chart-pendelwege"
+              ref="bar-pendelwege"
               :chart-data="chartdataPendelwegeBar"
               :options="optionsPendelwegeBar"
             />
@@ -152,7 +153,7 @@
         <v-row v-if="displayAufteilungITGeraete">
           <v-col>
             <bar-chart
-              ref="chart-itgeraete"
+              ref="bar-itgeraete"
               :chart-data="chartdataITGeraeteBar"
               :options="optionsITGeraeteBar"
             />
@@ -187,12 +188,14 @@
         <v-row v-if="displayEnergieCharts">
           <v-col>
             <doughnut-chart
+              ref="doughnut-energie"
               :chart-data="chartdataEnergieDoughnut"
               :options="optionsEnergieDoughnut"
             />
           </v-col>
           <v-col>
             <bar-chart
+              ref="bar-energie"
               :chart-data="chartdataEnergieBar"
               :options="optionsEnergieBar"
             />
@@ -227,12 +230,14 @@
         <v-row v-if="displayEnergieCharts">
           <v-col>
             <doughnut-chart
+              ref="doughnut-verbrauch"
               :chart-data="chartdataVerbrauchDoughnut"
               :options="optionsVerbrauchDoughnut"
             />
           </v-col>
           <v-col>
             <bar-chart
+              ref="bar-verbrauch"
               :chart-data="chartdataVerbrauchBar"
               :options="optionsVerbrauchBar"
             />
@@ -378,8 +383,8 @@ export default {
       linkshareBaseURL: process.env.VUE_APP_URL + '/survey/results/',
 
       displayEnergieCharts: true,
-      displayAufteilungDienstreisen: false,
-      displayAufteilungPendelwege: false,
+      displayAufteilungDienstreisen: true,
+      displayAufteilungPendelwege: true,
       displayAufteilungITGeraete: true,
 
       // specific chart options and data
@@ -549,7 +554,7 @@ export default {
 
   async mounted() { 
     await this.getData();
-    //this.initializeCharts();
+    this.initializeCharts();
     this.setChartData();
   },
 
@@ -580,10 +585,10 @@ export default {
     barWidthComp: function() {
       let maxBars = Math.max(Object.keys(this.responsedata.emissionenDienstreisenAufgeteilt).length, Object.keys(this.responsedata.emissionenPendelwegeAufgeteilt).length, Object.keys(this.responsedata.emissionenITGeraeteAufgeteilt).length)
 
-      let chartWidths = ["chart-dienstreisen", "chart-pendelwege", "chart-itgeraete"].map(x => this.$refs[x] ? this.$refs[x].$refs.canvas.width : 0)
+      let chartWidths = ["bar-dienstreisen", "bar-pendelwege", "bar-itgeraete"].map(x => this.$refs[x] ? this.$refs[x].$refs.canvas.width : 0)
       let chartWidth = Math.max(...chartWidths)
 
-      let halfChartWidth = this.$refs["half-chart"].$refs.canvas.width
+      let halfChartWidth = this.$refs["bar-gesamt"].$refs.canvas.width
 
       if (chartWidth == 0) {
         this.barWidth = halfChartWidth / 4 * 0.75
@@ -926,31 +931,31 @@ export default {
     /**
      * Method initializes chartdata and options for all charts by deep copying the general chartdata and options.
      */
-    // initializeCharts: function () {
-    //   this.chartdataGesamtDoughnut = JSON.parse(JSON.stringify(this.generalChartdataDoughnut));
-    //   this.optionsGesamtDoughnut = JSON.parse(JSON.stringify(this.generalOptionsDoghnut));
-    //   this.chartdataGesamtBar = JSON.parse(JSON.stringify(this.generalChartdataBar));
-    //   this.optionsGesamtBar = JSON.parse(JSON.stringify(this.generalOptionsBar));
+    initializeCharts: function () {
+      this.chartdataGesamtDoughnut = JSON.parse(JSON.stringify(this.generalChartdataDoughnut));
+      this.optionsGesamtDoughnut = JSON.parse(JSON.stringify(this.generalOptionsDoghnut));
+      this.chartdataGesamtBar = JSON.parse(JSON.stringify(this.generalChartdataBar));
+      this.optionsGesamtBar = JSON.parse(JSON.stringify(this.generalOptionsBar));
 
-    //   this.chartdataEnergieDoughnut = JSON.parse(JSON.stringify(this.generalChartdataDoughnut));    // deep copy
-    //   this.optionsEnergieDoughnut = JSON.parse(JSON.stringify(this.generalOptionsDoghnut));    // deep copy
-    //   this.chartdataEnergieBar = JSON.parse(JSON.stringify(this.generalChartdataBar));    // deep copy
-    //   this.optionsEnergieBar = JSON.parse(JSON.stringify(this.generalOptionsBar));      // deep copy
+      this.chartdataEnergieDoughnut = JSON.parse(JSON.stringify(this.generalChartdataDoughnut));    // deep copy
+      this.optionsEnergieDoughnut = JSON.parse(JSON.stringify(this.generalOptionsDoghnut));    // deep copy
+      this.chartdataEnergieBar = JSON.parse(JSON.stringify(this.generalChartdataBar));    // deep copy
+      this.optionsEnergieBar = JSON.parse(JSON.stringify(this.generalOptionsBar));      // deep copy
 
-    //   this.chartdataVerbrauchDoughnut = JSON.parse(JSON.stringify(this.generalChartdataDoughnut));    // deep copy
-    //   this.optionsVerbrauchDoughnut = JSON.parse(JSON.stringify(this.generalOptionsDoghnut));    // deep copy
-    //   this.chartdataVerbrauchBar = JSON.parse(JSON.stringify(this.generalChartdataBar));    // deep copy
-    //   this.optionsVerbrauchBar = JSON.parse(JSON.stringify(this.generalOptionsBar)); 
+      this.chartdataVerbrauchDoughnut = JSON.parse(JSON.stringify(this.generalChartdataDoughnut));    // deep copy
+      this.optionsVerbrauchDoughnut = JSON.parse(JSON.stringify(this.generalOptionsDoghnut));    // deep copy
+      this.chartdataVerbrauchBar = JSON.parse(JSON.stringify(this.generalChartdataBar));    // deep copy
+      this.optionsVerbrauchBar = JSON.parse(JSON.stringify(this.generalOptionsBar)); 
 
-    //   this.chartdataDienstreisenBar = JSON.parse(JSON.stringify(this.generalChartdataBar));    // deep copy
-    //   this.optionsDienstreisenBar = JSON.parse(JSON.stringify(this.generalOptionsBar));    // deep copy
+      this.chartdataDienstreisenBar = JSON.parse(JSON.stringify(this.generalChartdataBar));    // deep copy
+      this.optionsDienstreisenBar = JSON.parse(JSON.stringify(this.generalOptionsBar));    // deep copy
 
-    //   this.chartdataPendelwegeBar = JSON.parse(JSON.stringify(this.generalChartdataBar));    // deep copy
-    //   this.optionsPendelwegeBar = JSON.parse(JSON.stringify(this.generalOptionsBar));    // deep copy
+      this.chartdataPendelwegeBar = JSON.parse(JSON.stringify(this.generalChartdataBar));    // deep copy
+      this.optionsPendelwegeBar = JSON.parse(JSON.stringify(this.generalOptionsBar));    // deep copy
 
-    //   this.chartdataITGeraeteBar = JSON.parse(JSON.stringify(this.generalChartdataBar));    // deep copy
-    //   this.optionsITGeraeteBar = JSON.parse(JSON.stringify(this.generalOptionsBar));    // deep copy
-    // },
+      this.chartdataITGeraeteBar = JSON.parse(JSON.stringify(this.generalChartdataBar));    // deep copy
+      this.optionsITGeraeteBar = JSON.parse(JSON.stringify(this.generalOptionsBar));    // deep copy
+    },
 
     /**
      * Helper function to call all setChart functions.
@@ -959,13 +964,27 @@ export default {
       this.barWidthComp();
       
       this.generalChartdataBar.datasets[0].maxBarThickness = this.barWidth
+      this.chartdataDienstreisenBar.datasets[0].maxBarThickness = this.barWidth
+      this.chartdataPendelwegeBar.datasets[0].maxBarThickness = this.barWidth
+      this.chartdataITGeraeteBar.datasets[0].maxBarThickness = this.barWidth
+      this.chartdataEnergieBar.datasets[0].maxBarThickness = this.barWidth
+      this.chartdataVerbrauchBar.datasets[0].maxBarThickness = this.barWidth
+      this.chartdataGesamtBar.datasets[0].maxBarThickness = this.barWidth
 
       this.setChartGesamt();
-      this.setChartEnergie();
-      this.setChartVerbrauch();
-      this.setChartDienstreisen();
-      this.setChartPendelwege();
-      this.setChartITGeraete();
+      if (this.displayEnergieCharts){
+        this.setChartEnergie();
+        this.setChartVerbrauch();
+      }
+      if (this.displayAufteilungDienstreisen){
+        this.setChartDienstreisen();
+      }
+      if (this.displayAufteilungPendelwege){
+        this.setChartPendelwege();
+      }
+      if (this.displayAufteilungITGeraete){
+        this.setChartITGeraete();
+      }
     },
 
     /**
@@ -979,11 +998,6 @@ export default {
         { label: i18n.t('common.ITGeraete'), value: this.responsedata.emissionenITGeraete, color: 'rgb(75, 192, 192)' },
       ];
       data.sort((a, b) => b.value - a.value)
-
-      this.chartdataGesamtDoughnut = JSON.parse(JSON.stringify(this.generalChartdataDoughnut));
-      this.optionsGesamtDoughnut = JSON.parse(JSON.stringify(this.generalOptionsDoghnut));
-      this.chartdataGesamtBar = JSON.parse(JSON.stringify(this.generalChartdataBar));
-      this.optionsGesamtBar = JSON.parse(JSON.stringify(this.generalOptionsBar));
 
       this.chartdataGesamtDoughnut.labels = data.map(a => a.label);
       this.chartdataGesamtDoughnut.datasets[0].data = data.map(a => a.value);
@@ -1003,6 +1017,9 @@ export default {
       this.optionsGesamtBar.plugins.datalabels.formatter = (value) => {
         return i18n.n(value, "decimal");
       }
+
+      this.$refs["doughnut-gesamt"].updateChart()
+      this.$refs["bar-gesamt"].updateChart()
     },
 
     /**
@@ -1016,11 +1033,6 @@ export default {
       ];
 
       data.sort((a, b) => b.value - a.value)
-
-      this.chartdataEnergieDoughnut = JSON.parse(JSON.stringify(this.generalChartdataDoughnut));    // deep copy
-      this.optionsEnergieDoughnut = JSON.parse(JSON.stringify(this.generalOptionsDoghnut));    // deep copy
-      this.chartdataEnergieBar = JSON.parse(JSON.stringify(this.generalChartdataBar));    // deep copy
-      this.optionsEnergieBar = JSON.parse(JSON.stringify(this.generalOptionsBar));      // deep copy
 
       this.chartdataEnergieDoughnut.labels = data.map(a => a.label);
       this.chartdataEnergieDoughnut.datasets[0].data = data.map(a => a.value);
@@ -1040,6 +1052,9 @@ export default {
       this.optionsEnergieBar.plugins.datalabels.formatter = (value) => {
         return i18n.n(value, "decimal");
       }
+
+      this.$refs["doughnut-energie"].updateChart()
+      this.$refs["bar-energie"].updateChart()
     },
 
     /**
@@ -1053,11 +1068,6 @@ export default {
       ];
 
       data.sort((a, b) => b.value - a.value)
-
-      this.chartdataVerbrauchDoughnut = JSON.parse(JSON.stringify(this.generalChartdataDoughnut));    // deep copy
-      this.optionsVerbrauchDoughnut = JSON.parse(JSON.stringify(this.generalOptionsDoghnut));    // deep copy
-      this.chartdataVerbrauchBar = JSON.parse(JSON.stringify(this.generalChartdataBar));    // deep copy
-      this.optionsVerbrauchBar = JSON.parse(JSON.stringify(this.generalOptionsBar)); 
 
       this.chartdataVerbrauchDoughnut.labels = data.map(a => a.label);
       this.chartdataVerbrauchDoughnut.datasets[0].label = i18n.t('evaluation.surveyEvaluation.kWh')
@@ -1084,6 +1094,9 @@ export default {
       this.optionsVerbrauchBar.plugins.datalabels.formatter = (value) => {
         return i18n.n(value, "decimal");
       }
+
+      this.$refs["doughnut-verbrauch"].updateChart()
+      this.$refs["bar-verbrauch"].updateChart()
     },
 
     /**
@@ -1103,9 +1116,6 @@ export default {
 
       data.sort((a, b) => b.value - a.value)
 
-      this.chartdataDienstreisenBar = JSON.parse(JSON.stringify(this.generalChartdataBar));    // deep copy
-      this.optionsDienstreisenBar = JSON.parse(JSON.stringify(this.generalOptionsBar));    // deep copy
-
       this.chartdataDienstreisenBar.labels = data.map(a => a.label);
       this.chartdataDienstreisenBar.datasets[0].data = data.map(a => a.value);
       this.chartdataDienstreisenBar.datasets[0].backgroundColor = data.map(a => a.color);
@@ -1113,6 +1123,8 @@ export default {
       this.optionsDienstreisenBar.plugins.datalabels.formatter = (value) => {
         return i18n.n(value, "decimal");
       }
+
+      this.$refs["bar-dienstreisen"].updateChart()
     },
 
     /**
@@ -1129,9 +1141,6 @@ export default {
 
       data.sort((a, b) => b.value - a.value)
 
-      this.chartdataPendelwegeBar = JSON.parse(JSON.stringify(this.generalChartdataBar));    // deep copy
-      this.optionsPendelwegeBar = JSON.parse(JSON.stringify(this.generalOptionsBar));    // deep copy
-
       this.chartdataPendelwegeBar.labels = data.map(a => a.label);
       this.chartdataPendelwegeBar.datasets[0].data = data.map(a => a.value);
       this.chartdataPendelwegeBar.datasets[0].backgroundColor = data.map(a => a.color);
@@ -1139,6 +1148,8 @@ export default {
       this.optionsPendelwegeBar.plugins.datalabels.formatter = (value) => {
         return i18n.n(value, "decimal");
       }
+
+      this.$refs["bar-pendelwege"].updateChart()
     },
 
     /**
@@ -1155,9 +1166,6 @@ export default {
 
       data.sort((a, b) => b.value - a.value)
 
-      this.chartdataITGeraeteBar = JSON.parse(JSON.stringify(this.generalChartdataBar));    // deep copy
-      this.optionsITGeraeteBar = JSON.parse(JSON.stringify(this.generalOptionsBar));    // deep copy
-
       this.chartdataITGeraeteBar.labels = data.map(a => a.label);
       this.chartdataITGeraeteBar.datasets[0].data = data.map(a => a.value);
       this.chartdataITGeraeteBar.datasets[0].backgroundColor = data.map(a => a.color);
@@ -1165,6 +1173,8 @@ export default {
       this.optionsITGeraeteBar.plugins.datalabels.formatter = (value) => {
         return i18n.n(value, "decimal");
       }
+
+      this.$refs["bar-itgeraete"].updateChart()
     },
   },
 }
