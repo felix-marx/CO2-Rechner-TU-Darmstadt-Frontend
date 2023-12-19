@@ -272,224 +272,223 @@ export default {
     CopyButton
   },
 
-    data: () => ({
-      umfragen: [],
-      deleteSurvey: [],
-      dialog: [], 
-      dialogAuswertung: [], 
-      errors: [],
-      message: "",
+  data: () => ({
+    umfragen: [],
+    deleteSurvey: [],
+    dialog: [], 
+    dialogAuswertung: [], 
+    errors: [],
+    message: "",
 
-      notifications: false,
-      sound: true,
-      widgets: true,
-      anteilMitarbeiterUmfrage: 40,
+    notifications: false,
+    sound: true,
+    widgets: true,
+    anteilMitarbeiterUmfrage: 40,
 
-      displayLoadingAnimation: false,
+    displayLoadingAnimation: false,
 
-      // sorting variables
-      sortingOptionSelected: "jahr",
-      sortingOrderSelected: "descending",
-      sortingOptions: [
-        {
-          name: "Jahr",
-          key: "jahr"},
-        {
-          name: "Bezeichnung",
-          key: "bezeichnung",
-        }
-      ],
-      sortingOrders: [
-        {
-          name: "absteigend",
-          key: "descending",
-        },
-        {
-          name: "aufsteigend",
-          key: "ascending",
-        }
-      ],
+    // sorting variables
+    sortingOptionSelected: "jahr",
+    sortingOrderSelected: "descending",
+    sortingOptions: [
+      {
+        name: "Jahr",
+        key: "jahr"},
+      {
+        name: "Bezeichnung",
+        key: "bezeichnung",
+      }
+    ],
+    sortingOrders: [
+      {
+        name: "absteigend",
+        key: "descending",
+      },
+      {
+        name: "aufsteigend",
+        key: "ascending",
+      }
+    ],
 
-      // base url for Mitarbeiterumfragen
-      mitarbeiterumfrageBaseURL: process.env.VUE_APP_URL + '/survey/'
-    }),
+    // base url for Mitarbeiterumfragen
+    mitarbeiterumfrageBaseURL: process.env.VUE_APP_URL + '/survey/'
+  }),
 
-    created() {
-      this.displayLoadingAnimation = true;
-      this.fetchUmfragen().then(() => 
-      this.sortUmfragen());
-      this.displayLoadingAnimation = false;
+  created() {
+    this.displayLoadingAnimation = true;
+    this.fetchUmfragen().then(() => 
+    this.sortUmfragen());
+    this.displayLoadingAnimation = false;
+  },
+
+  methods: {
+    /**
+     * Sorts Umfragen by a given attribute and order
+     */
+    sortUmfragen() {
+      if(this.umfragen.length === 0) {
+        return;
+      }
+      this.umfragen.sort(GetSortOrder(this.sortingOptionSelected));
+      if (this.sortingOrderSelected === "descending") {
+        this.umfragen.reverse();
+      }
     },
 
-    methods: {
+    /**
+     * Loescht eine Umfrage nach Nutzerbestaetigung
+     */
+    async removeSurvey(index, umfrageID) {
+      var ret = this.deleteUmfrage(index, umfrageID)
+      if(ret) {
+        this.umfragen.splice(index, 1)
+        this.deleteSurvey.splice(index, 1)
+        this.dialog.splice(index, 1)
+        this.dialogAuswertung.splice(index,1)
+        this.errors.splice(index, 1)
+      }
+      return
+    },
 
-      /**
-       * Sorts Umfragen by a given attribute and order
-       */
-      sortUmfragen() {
-        if(this.umfragen.length === 0) {
-          return;
+    /**
+     * Dupliziert eine Umfrage nach Nutzerbestaetigung
+     */
+      async duplicateSurvey(index, umfrageID) {
+      await this.duplicateUmfrage(index, umfrageID)
+    
+      if(!this.errors[index]){
+        this.fetchUmfragen()
+      }
+
+      return
+    },
+
+    /**
+     * Closes v-dialog with dialog as v-model
+     */
+    closeDialog(index) {
+      this.fetchUmfragen().then(() => this.sortUmfragen());
+      this.$set(this.dialog, index, false)
+    },
+
+    /**
+     * Closes v-dialog with dialogAuswertung as v-model
+     */
+    closeDialogAuswertung(index) {
+      this.fetchUmfragen().then(() => this.sortUmfragen());
+      this.$set(this.dialogAuswertung, index, false)
+    },
+
+    /**
+     * Fetches all existent Umfragen from the Server.
+     */
+    fetchUmfragen: async function () {
+    await fetch(process.env.VUE_APP_BASEURL + "/umfrage/alleUmfragen", {
+      method: "GET",
+      headers: {
+        "Authorization": "Bearer " + this.$keycloak.token,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if(data.data.umfragen !== null) {
+          this.umfragen = data.data.umfragen;
+        } else {
+          this.umfragen = []
         }
-        this.umfragen.sort(GetSortOrder(this.sortingOptionSelected));
-        if (this.sortingOrderSelected === "descending") {
-          this.umfragen.reverse();
-        }
-      },
-
-      /**
-       * Loescht eine Umfrage nach Nutzerbestaetigung
-       */
-      async removeSurvey(index, umfrageID) {
-        var ret = this.deleteUmfrage(index, umfrageID)
-        if(ret) {
-          this.umfragen.splice(index, 1)
-          this.deleteSurvey.splice(index, 1)
-          this.dialog.splice(index, 1)
-          this.dialogAuswertung.splice(index,1)
-          this.errors.splice(index, 1)
-        }
-        return
-      },
-
-      /**
-       * Dupliziert eine Umfrage nach Nutzerbestaetigung
-       */
-       async duplicateSurvey(index, umfrageID) {
-        await this.duplicateUmfrage(index, umfrageID)
-      
-        if(!this.errors[index]){
-          this.fetchUmfragen()
-        }
-
-        return
-      },
-
-      /**
-       * Closes v-dialog with dialog as v-model
-       */
-      closeDialog(index) {
-        this.fetchUmfragen().then(() => this.sortUmfragen());
-        this.$set(this.dialog, index, false)
-      },
-
-      /**
-       * Closes v-dialog with dialogAuswertung as v-model
-       */
-      closeDialogAuswertung(index) {
-        this.fetchUmfragen().then(() => this.sortUmfragen());
-        this.$set(this.dialogAuswertung, index, false)
-      },
-
-      /**
-       * Fetches all existent Umfragen from the Server.
-       */
-      fetchUmfragen: async function () {
-      await fetch(process.env.VUE_APP_BASEURL + "/umfrage/alleUmfragen", {
-        method: "GET",
-        headers: {
-          "Authorization": "Bearer " + this.$keycloak.token,
-        },
+        
+        this.dialog = new Array(this.umfragen.length).fill(false)
+        this.dialogAuswertung = new Array(this.umfragen.length).fill(false)
+        this.errors = new Array(this.umfragen.length).fill(false)
       })
-        .then((response) => response.json())
-        .then((data) => {
-          if(data.data.umfragen !== null) {
-            this.umfragen = data.data.umfragen;
-          } else {
-            this.umfragen = []
-          }
-          
-          this.dialog = new Array(this.umfragen.length).fill(false)
-          this.dialogAuswertung = new Array(this.umfragen.length).fill(false)
-          this.errors = new Array(this.umfragen.length).fill(false)
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
-      },
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+    },
 
-      /**
-       * Loescht die Umfrage mit der gegebenen ID, gibt false bei error, true bei success zurueck
-       */
-      deleteUmfrage: async function (index, umfrageID) {
-        await fetch(process.env.VUE_APP_BASEURL + "/umfrage", {
-        method: "DELETE",
-        headers: {
-          "Authorization": "Bearer " + this.$keycloak.token,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          umfrageID: umfrageID,
-        }),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          if(data.status === "error") {
-            this.errors[index] = true
-            this.message = data.error.message
-            return false
-          }
-          return true
-        })
-        .catch((error) => {
+    /**
+     * Loescht die Umfrage mit der gegebenen ID, gibt false bei error, true bei success zurueck
+     */
+    deleteUmfrage: async function (index, umfrageID) {
+      await fetch(process.env.VUE_APP_BASEURL + "/umfrage", {
+      method: "DELETE",
+      headers: {
+        "Authorization": "Bearer " + this.$keycloak.token,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        umfrageID: umfrageID,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if(data.status === "error") {
           this.errors[index] = true
-          this.message = "Server nicht erreichbar."
-          console.error("Error:", error);
+          this.message = data.error.message
           return false
-        });
-      },
-
-       /**
-       * Dupliziert die Umfrage mit der gegebenen ID, gibt false bei error, true bei success zurueck
-       */
-      duplicateUmfrage: async function (index, umfrageID) {
-        await fetch(process.env.VUE_APP_BASEURL + "/umfrage/duplicate?id=" + umfrageID, {
-        method: "GET",
-        headers: {
-          "Authorization": "Bearer " + this.$keycloak.token,
-        },
+        }
+        return true
       })
-        .then((response) => response.json())
-        .then((data) => {
-          if(data.status === "error") {
-            this.errors[index] = true
-            this.message = data.error.message
-            return false
-          }
-          return true
-        })
-        .catch((error) => {
-          this.errors[index] = true
-          this.message = "Server nicht erreichbar."
-          console.error("Error:", error);
-          return false
-        });
+      .catch((error) => {
+        this.errors[index] = true
+        this.message = "Server nicht erreichbar."
+        console.error("Error:", error);
+        return false
+      });
+    },
+
+    /**
+    * Dupliziert die Umfrage mit der gegebenen ID, gibt false bei error, true bei success zurueck
+    */
+    duplicateUmfrage: async function (index, umfrageID) {
+      await fetch(process.env.VUE_APP_BASEURL + "/umfrage/duplicate?id=" + umfrageID, {
+      method: "GET",
+      headers: {
+        "Authorization": "Bearer " + this.$keycloak.token,
       },
-    }
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if(data.status === "error") {
+          this.errors[index] = true
+          this.message = data.error.message
+          return false
+        }
+        return true
+      })
+      .catch((error) => {
+        this.errors[index] = true
+        this.message = "Server nicht erreichbar."
+        console.error("Error:", error);
+        return false
+      });
+    },
   }
+}
   
-  //Comparer Function for sorting list of Umfragen    
-  function GetSortOrder(prop) {    
-      return function(a, b) {    
-          let aProp = a[prop];
-          let bProp = b[prop];
+//Comparer Function for sorting list of Umfragen    
+function GetSortOrder(prop) {    
+    return function(a, b) {    
+        let aProp = a[prop];
+        let bProp = b[prop];
 
-          // if one element is null
-          if (aProp !== null && bProp === null){
-              return 1;
-          }
-          if (aProp === null && bProp !== null){
-              return -1;
-          }
+        // if one element is null
+        if (aProp !== null && bProp === null){
+            return 1;
+        }
+        if (aProp === null && bProp !== null){
+            return -1;
+        }
 
-          // if both element are non-null
-          if (aProp > bProp) {    
-              return 1;    
-          } else if (aProp < bProp) {    
-              return -1;    
-          }    
+        // if both element are non-null
+        if (aProp > bProp) {    
+            return 1;    
+        } else if (aProp < bProp) {    
+            return -1;    
+        }    
 
-          // same value or both elements are null
-          return 0;    
-      }    
-  }    
+        // same value or both elements are null
+        return 0;    
+    }    
+}    
 </script>

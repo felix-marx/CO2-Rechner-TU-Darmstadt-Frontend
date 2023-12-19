@@ -5,6 +5,7 @@
       :tabs="tabList" 
       :display-user-setting="true"
       :display-back-button="false"
+      :display-login-button="false"
       @changeTab="changeTab($event)"
     />
 
@@ -19,11 +20,12 @@
 </template>
 
 <script>
-import Footer from "@/components/componentParts/Footer";
-import Header from "@/components/componentParts/Header";
+import Footer from "@/components/footer/Footer";
+import Header from "@/components/header/Header";
 import Survey from "@/components/userSurvey/Survey";
 import SurveyOverview from "@/components/userSurveyManagement/SurveyOverview";
-import AccountSettings from '../components/settings/AccountSettings.vue';
+import AccountSettings from '@/components/header/AccountSettings.vue';
+import i18n from "../i18n";
 
 export default {
   name: "App",
@@ -39,12 +41,18 @@ export default {
     // could extend this to be persistent on site refresh, but this would require additional plugins, like e.g. Vuex.
     selectedTab: 0,
     currentTabType: Survey,
-    tabList: [
-        { id: 2, title: "Accounteinstellungen", componentType: AccountSettings},
-        { id: 0, title: "CO2-Rechner", componentType: Survey },
-        { id: 1, title: "Umfragenübersicht", componentType: SurveyOverview },
-    ],
+    tabList: [],
   }),
+
+  watch: {
+    '$i18n.locale': function() {
+      this.setTabList();
+    }
+  },
+  
+  created() {
+    this.setTabList();
+  },
 
   methods: {
     /**
@@ -56,6 +64,14 @@ export default {
       this.selectedTab = tab.id;
       this.currentTabType = tab.componentType;
     },
+
+    setTabList(){
+      this.tabList = [
+        { id: 2, title: i18n.t('common.Accounteinstellungen'), componentType: AccountSettings},
+        { id: 0, title: i18n.t('common.CO2_Rechner'), componentType: Survey },
+        { id: 1, title: i18n.t('common.UmfrageUebersicht'), componentType: SurveyOverview },
+      ]
+    }
   },
 };
 </script>

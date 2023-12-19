@@ -5,6 +5,7 @@
       :tabs="tabList"
       :display-user-setting="false"
       :display-back-button="false"
+      :display-login-button="false"
     />
 
     <!-- main body -->
@@ -21,12 +22,13 @@
 </template>
 
 <script>
-import Footer from "@/components/componentParts/Footer";
-import Header from "@/components/componentParts/Header";
+import Footer from "@/components/footer/Footer";
+import Header from "@/components/header/Header";
 import ColleagueSurvey from "@/components/colleagueSurvey/ColleagueSurvey";
 import SurveyNotFound from "@/components/colleagueSurvey/SurveyNotFound";
 import LoadingAnimation from "@/components/componentParts/LoadingAnimation";
 import UmfrageCompleted from "@/components/colleagueSurvey/SurveyCompleted"
+import i18n from "../i18n";
 
 export default {
   name: "ColleagueSurveyView",
@@ -40,14 +42,13 @@ export default {
   },
 
   data: () => ({
-      tabList: [{ id: 0, title: 'Umfrage', componentType: LoadingAnimation}],
+      tabList: [{ id: 0, title: i18n.t('common.Umfrage'), componentType: LoadingAnimation}],
       umfrageID: null,
       bezeichnung: "",
       umfrageComplete: false
   }),
 
   computed: {
-
     /**
      * Returns the component to be shown in the body of the view. LoadingAnimation while the server is requested, SurveyNotFound if the survey does not exist or the survey
      * if the corresponding id exists.
@@ -91,7 +92,14 @@ export default {
     },
   },
 
+  watch: {
+    '$i18n.locale': function() {
+      this.setTabList();
+    }
+  },
+
   created() {
+    this.setTabList();
     // request if a survey exists with the corresponding ID from the URL
     this.fetchUmfrageExists(this.$route.params.umfrageID);
   },
@@ -100,7 +108,7 @@ export default {
     /**
      * Requests from the server whether a survey with the givenID exists.
      */
-  fetchUmfrageExists: async function (givenID) {
+    fetchUmfrageExists: async function (givenID) {
       await fetch(process.env.VUE_APP_BASEURL + "/mitarbeiterumfrage/exists?id=" + givenID, {
         method: "GET",
         })
@@ -120,7 +128,13 @@ export default {
           this.umfrageID = "";
           this.dataUmfrageComplete = false;
         });
-    },
+      },
+
+    setTabList(){
+      this.tabList = [
+        { id: 0, title: i18n.t('common.Umfrage'), componentType: LoadingAnimation},
+      ]
+    }
   },
 
 };

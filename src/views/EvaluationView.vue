@@ -5,6 +5,7 @@
       :tabs="tabList"
       :display-user-setting="false"
       :display-back-button="false"
+      :display-login-button="false"
     />
 
     <!-- main body -->
@@ -21,12 +22,13 @@
 </template>
 
 <script>
-import Footer from "@/components/componentParts/Footer";
-import Header from "@/components/componentParts/Header";
+import Footer from "@/components/footer/Footer";
+import Header from "@/components/header/Header";
 import SurveyNotFound from "@/components/colleagueSurvey/SurveyNotFound";
 import LoadingAnimation from "@/components/componentParts/LoadingAnimation";
 import SurveyEvaluation from "@/components/evaluation/SurveyEvaluation";
 import ResultSharingDisabled from "../components/evaluation/ResultSharingDisabled.vue";
+import i18n from "../i18n";
 
 export default {
   name: "AuswertungView",
@@ -40,7 +42,7 @@ export default {
   },
 
   data: () => ({
-      tabList: [{ id: 0, title: 'Auswertung', componentType: LoadingAnimation}],
+      tabList: [{ id: 0, title: i18n.t('common.Auswertung'), componentType: LoadingAnimation}],
       umfrageID: null,
       freigegeben: 0,
   }),
@@ -96,7 +98,14 @@ export default {
     }
   },
 
+  watch: {
+    '$i18n.locale': function() {
+      this.setTabList();
+    }
+  },
+
   created() {
+    this.setTabList();
     // request if a survey has result sharing enabled with the corresponding ID from the URL
     this.fetchUmfrage(this.$route.params.umfrageID);
   },
@@ -105,29 +114,35 @@ export default {
     /**
      * Requests from the server whether a survey with the givenID has result sharing enabled.
      */
-  fetchUmfrage: async function (givenID) {
-    await fetch(process.env.VUE_APP_BASEURL + "/umfrage/sharedResults?id=" + givenID, {
-      method: "GET",
-      })
-      .then((response) => response.json())
-      .then((data) => {
-        this.umfrageID = givenID;
-        if (data.status == "success"){
-          // Umfrage exists
+    fetchUmfrage: async function (givenID) {
+      await fetch(process.env.VUE_APP_BASEURL + "/umfrage/sharedResults?id=" + givenID, {
+        method: "GET",
+        })
+        .then((response) => response.json())
+        .then((data) => {
           this.umfrageID = givenID;
-          this.freigegeben = data.data.freigegeben;
-        }
-        else{
-          // Umfrage doesn't exists
+          if (data.status == "success"){
+            // Umfrage exists
+            this.umfrageID = givenID;
+            this.freigegeben = data.data.freigegeben;
+          }
+          else{
+            // Umfrage doesn't exists
+            this.umfrageID = "";
+            this.freigegeben = 0;
+          }
+        }).catch((error) => {
+          console.error("Error:", error);
           this.umfrageID = "";
           this.freigegeben = 0;
-        }
-      }).catch((error) => {
-        console.error("Error:", error);
-        this.umfrageID = "";
-        this.freigegeben = 0;
-      });
-    },
+        });
+      },
+
+    setTabList(){
+      this.tabList = [
+        { id: 0, title: i18n.t('common.Auswertung'), componentType: LoadingAnimation},
+      ]
+    }
   },
 
 };

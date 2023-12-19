@@ -6,7 +6,8 @@ import AdminView from '../views/AdminView.vue'
 import PageNotFound from '../views/PageNotFound.vue'
 import ColleagueSurveyView from '../views/ColleagueSurveyView.vue'
 import EvaluationView from '../views/EvaluationView.vue'
-import PrivacyPolicy from '../components/legal/PrivacyPolicy.vue'
+import PrivacyPolicy from '../components/footer/PrivacyPolicy.vue'
+import FAQ from '../components/footer/FAQ.vue'
 
 Vue.use(VueRouter)
 
@@ -60,6 +61,14 @@ const routes = [
     }
   },
   {
+    path: "/faq",
+    name: "FAQ",
+    component: FAQ,
+    meta: { 
+      noAuth: true 
+    }
+  },
+  {
     path: "*",
     component: PageNotFound,
     meta: { 
@@ -69,7 +78,15 @@ const routes = [
 ]
 
 const router = new VueRouter({
-  routes
+  routes,
+  scrollBehavior (to) {
+    if(!to.hash){
+      window.scrollTo({
+        top: 0, 
+        left: 0
+      })
+    }
+  }  
 })
 
 

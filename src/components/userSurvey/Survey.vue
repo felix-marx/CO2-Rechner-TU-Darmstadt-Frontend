@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/no-v-html -->
 <template>
   <v-container>
     <!-- Umfrage Card -->
@@ -8,22 +9,22 @@
       <!-- Introduction Text -->
       <v-card class="pa-7">
         <p>
-          Sehr geehrte Teilnehmer*Innen,
-        </p><p>
-          in diesem CO<sub>2</sub>-Rechner werden Daten zur Berechnung von CO<sub>2</sub>-Emissionen erfragt, die im Zusammenhang mit der Arbeit der Mitarbeitenden Ihrer TU-Einheit entstehen. Der Rechner besteht aus zwei Teilen: einem allgemeinen Teil, der zentral für alle Mitarbeitende der Einheit ausgefüllt wird und einen zweiten Teil, den alle Mitarbeitenden Ihrer TU-Einheit in einer Umfrage ausfüllen.
+          {{ $t('userSurvey.Survey.UmfrageErklaerung_0') }}
         </p>
+        <p v-html="$t('userSurvey.Survey.UmfrageErklaerung_1')" />
+
         <p>
-          Die gesamte Berechnung bezieht sich immer auf ein vollständig abgeschlossenes Kalenderjahr.
+          {{ $t('userSurvey.Survey.UmfrageErklaerung_2') }}
         </p>
-        <p>Der erste Teil des CO<sub>2</sub>-Rechner erfragt allgemeine Angaben über Ihre TU-Einheit, wie beispielsweise Anzahl der Mitarbeitenden, Standort Ihrer Einheit und gemeinschaftlich genutzte IT-Geräte. Sollten Sie keine genauen Angaben kennen, geben Sie bitte eine grobe Schätzung an. Wenn Sie diesen ersten Teil beantwortet haben, klicken Sie auf "<i>Speichern &amp; Link generieren</i>". Dadurch wird ein Link generiert, der zu der Umfrage für die Mitarbeitenden führt. Schicken Sie diesen Link an alle Mitarbeitende Ihrer TU-Einheit. Eine Mailvorlage finden Sie unter dem Link.</p>
-        <p>Hinter einigen Fragen befindet sich ein Fragezeichensymbol, dort finden Sie zusätzliche Hinweise und Informationen, die zur Beantwortung der Frage hilfreich sind.  </p>
-        <p>Falls Sie zu einem späteren Zeitpunkt nochmals Angaben ändern oder vervollständigen möchten, können Sie in der linken oberen Ecke „<i>Umfragenübersicht</i>“ auswählen, um auf den ersten Teil des CO<sub>2</sub>-Rechners wieder zuzugreifen. Bitte klicken Sie am Ende auf „<i>Speichern</i>“ um ihre Änderungen final einzutragen. </p>
+        <p v-html="$t('userSurvey.Survey.UmfrageErklaerung_3')" />
+        <p v-html="$t('userSurvey.Survey.UmfrageErklaerung_4')" />
+        <p v-html="$t('userSurvey.Survey.UmfrageErklaerung_5')" />
         <p>
-          Bei weiteren Nachfragen oder Anmerkungen wenden Sie sich gerne an <a
+          {{ $t('userSurvey.Survey.UmfrageErklaerung_6') }} <a
             href="mailto:co2-rechner@zv.tu-darmstadt.de"
           >co2-rechner@zv.tu-darmstadt.de</a>.
         </p>
-        <p>Vielen Dank, dass Sie den CO<sub>2</sub>-Rechner verwenden und so einen Beitrag zur Nachhaltigkeit an der TU Darmstadt leisten. </p>
+        <p v-html="$t('userSurvey.Survey.UmfrageErklaerung_7')" />
       </v-card>
 
       <v-card class="pa-7 mt-2">
@@ -32,7 +33,7 @@
           <!-- Bezeichnung -->
           <br>
           <h3>
-            Wie soll Ihre Umfrage bezeichnet werden?
+            {{ $t('userSurvey.Survey.UmfrageBezeichungUeberschrift') }}
           </h3>
           <v-divider />
           <br>
@@ -42,7 +43,7 @@
               <v-text-field
                 v-model="bezeichnung"
                 :min="0"
-                label="Bezeichnung"
+                :label="$t('common.Bezeichung')"
                 type="string"
                 prepend-icon="mdi-form-textbox"
                 :disabled="blockInput"
@@ -52,7 +53,7 @@
 
           <!-- Bilanzierungsjahr -->
           <br>
-          <h3>Auf welches Bilanzierungsjahr beziehen Sie sich in dieser Umfrage?</h3>
+          <h3>{{ $t('userSurvey.Survey.BilanzierungsUeberschrift') }}</h3>
           <v-divider />
           <br>
 
@@ -61,7 +62,7 @@
               <v-autocomplete
                 v-model="bilanzierungsjahr"
                 :items="possibleYears"
-                label="Bilanzierungsjahr"
+                :label="$t('common.Bilanzierungsjahr')"
                 prepend-icon="mdi-calendar-question"
                 class="pr-5"
                 :disabled="blockInput"
@@ -72,7 +73,7 @@
           <!-- Mitarbeitende in Abteilung -->
 
           <br>
-          <h3>Wie viele Mitarbeitende gibt es in Ihrer Abteilung?</h3>
+          <h3>{{ $t('userSurvey.Survey.MitarbeiterInAbteilung') }}</h3>
           <v-divider />
           <br>
 
@@ -82,7 +83,7 @@
                 v-model="anzahlMitarbeiter"
                 :rules="absolutpositivRules"
                 :min="0"
-                label="Mitarbeitendenzahl"
+                :label="$t('common.Mitarbeitendenzahl')"
                 prepend-icon="mdi-account"
                 :disabled="blockInput"
               />
@@ -92,14 +93,14 @@
           <!-- Genutzte Gebäude -->
 
           <br>
+
           <h3>
-            Welche Gebäude nutzt Ihre Abteilung (<a
+            {{ $t('userSurvey.Survey.GebaeudeAbteilung_0') }} (<a
               href="https://www.tu-darmstadt.de/universitaet/campus/index.de.jsp"
               target="_blank"
-            >Lageplan</a>)?
+            >{{ $t('userSurvey.Survey.GebaeudeAbteilung_1') }}</a>)?
             <Tooltip
-              tooltip-text="Alle Gebäude beginnen je nach Standort mit den Buchstaben S, B, L,
-              H oder W. Die Autovervollständigung sollte Ihnen dabei helfen."
+              :tooltip-text="$t('userSurvey.Survey.GebaeudeAbteilung_2')"
             />
           </h3>
 
@@ -116,7 +117,7 @@
                   v-if="gebaeudeIDs"
                   v-model="objekt[0]"
                   :items="gebaeudeIDs"
-                  label="Gebäudenummer"
+                  :label="$t('common.Gebäudenummer')"
                   prepend-icon="mdi-domain"
                   class="pr-5"
                   :disabled="blockInput"
@@ -127,7 +128,7 @@
                   v-model="objekt[1]"
                   :rules="absolutpositivRules"
                   :min="0"
-                  label="Nutzfläche des ausgewählten Gebäudes"
+                  :label="$t('userSurvey.Survey.GebaeudeAbteilung_3')"
                   prepend-icon="mdi-domain"
                   suffix="qm"
                   :disabled="blockInput"
@@ -140,7 +141,7 @@
                   :disabled="blockInput"
                   @click="newGebaeude()"
                 >
-                  Hinzufügen
+                  {{ $t('common.Hinzufuegen') }}
                 </v-btn>
               </v-col>
               <v-col>
@@ -150,7 +151,7 @@
                   :disabled="blockInput"
                   @click="removeGebaeude(index)"
                 >
-                  Löschen
+                  {{ $t('common.Loeschen') }}
                 </v-btn>
               </v-col>
             </v-row>
@@ -160,7 +161,7 @@
             type="warning"
             dense
           >
-            Sie haben mehrmals das selbe Gebäude ausgewählt.
+            {{ $t('userSurvey.Survey.GebaeudeWarnung') }}
           </v-alert>
 
           <DataGapVisualization 
@@ -172,7 +173,7 @@
 
           <!-- Umfrage für IT Geräte: Multifunktionsgeräte + Toner, Drucker + Toner, Beamer, Server -->
           <br>
-          <h3>Welche und wie viele IT-Geräte benutzen Sie in Ihrer Abteilung gemeinschaftlich in allen Gebäuden zusammen?</h3>
+          <h3>{{ $t('userSurvey.Survey.ITGeraete_0') }}</h3>
           <v-divider />
           <br>
 
@@ -189,17 +190,17 @@
                 :rules="geraeteRules"
                 :disabled="!geraeteAnzahl[0][2] || blockInput"
                 :min="0"
-                label="Multifunktionsgeräte z.B. Netzwerkdrucker"
+                :label="$t('userSurvey.Survey.ITGeraeteMFP')"
                 class="pr-5"
-                suffix="Gerät/e"
+                :suffix="$t('userSurvey.Survey.ITGeraeteMFP_Suffix')"
               />
               <v-text-field
                 v-model="geraeteAnzahl[1][1]"
                 :rules="nichtnegativRules"
                 :disabled="!geraeteAnzahl[0][2] || blockInput"
                 :min="0"
-                label="verbrauchte Toner"
-                suffix="Toner"
+                :label="$t('userSurvey.Survey.ITGeraeteBenutzteToner')"
+                :suffix="$t('userSurvey.Survey.ITGeraeteBenutzteToner_Suffix')"
               />
             </v-row>
             <!-- Drucker -->
@@ -214,8 +215,8 @@
                 :rules="geraeteRules"
                 :disabled="!geraeteAnzahl[2][2] || blockInput"
                 :min="0"
-                label="Laser- &amp; Tintenstrahldrucker"
-                suffix="Drucker"
+                :label="$t('userSurvey.Survey.DruckerLabel')"
+                :suffix="$t('userSurvey.Survey.Drucker_Suffix')"
                 class="pr-5"
               />
               <v-text-field
@@ -223,8 +224,8 @@
                 :rules="nichtnegativRules"
                 :disabled="!geraeteAnzahl[2][2] || blockInput"
                 :min="0"
-                label="verbrauchte Toner"
-                suffix="Toner"
+                :label="$t('userSurvey.Survey.ITGeraeteBenutzteToner')"
+                :suffix="$t('userSurvey.Survey.ITGeraeteBenutzteToner_Suffix')"
               />
             </v-row>
             <!-- Beamer -->
@@ -239,8 +240,8 @@
                 :rules="geraeteRules"
                 :disabled="!geraeteAnzahl[4][2] || blockInput"
                 :min="0"
-                label="Beamer"
-                suffix="Beamer"
+                :label="$t('userSurvey.Survey.Beamer')"
+                :suffix="$t('userSurvey.Survey.Beamer')"
               />
             </v-row>
             <!-- Server -->
@@ -255,8 +256,8 @@
                 :rules="geraeteRules"
                 :disabled="!geraeteAnzahl[5][2] || blockInput"
                 :min="0"
-                label="interne Server"
-                suffix="Server"
+                :label="$t('userSurvey.Survey.interneServer')"
+                :suffix="$t('userSurvey.Survey.Server')"
               />
             </v-row>
           </v-container>
@@ -275,7 +276,7 @@
                   v-on="on"
                   @click="problemeInUmfrage()"
                 >
-                  Speichern &amp; Link generieren
+                  {{ $t('userSurvey.Survey.SpeicherButton') }}
                 </v-btn>
               </template>
 
@@ -284,7 +285,7 @@
                   color="primary"
                   dark
                 >
-                  {{ (errorTextArray.required.length != 0 || errorTextArray.nonRequired.length != 0) ? "Probleme mit Ihrer Eingabe!" : "Umfrage vollständig?" }}
+                  {{ (errorTextArray.required.length != 0 || errorTextArray.nonRequired.length != 0) ? $t('userSurvey.Survey.ProblemeEingabe') : $t('userSurvey.Survey.UmfrageVervollstaendigen') }}
                 </v-toolbar>
                 <v-card-text>
                   <div
@@ -294,7 +295,7 @@
                     <div
                       v-if="errorTextArray.required.length != 0"
                     >
-                      Sie haben folgende Pflichtfelder nicht angegeben: <br>
+                      {{ $t('userSurvey.Survey.FehlendePflichtfelder') }} <br>
                       <v-list
                         flat
                       >
@@ -314,7 +315,7 @@
                     <div
                       v-if="errorTextArray.nonRequired.length != 0"
                     >
-                      Ihre Umfrage enthält folgende kleinere Probleme: <br>
+                      {{ $t('userSurvey.Survey.UmfrageHatProbleme') }} <br>
                       <v-list
                         flat
                       >
@@ -336,8 +337,8 @@
                     v-if="errorTextArray.required.length == 0 && errorTextArray.nonRequired.length == 0"
                     class="pt-6"
                   >
-                    Möchten Sie ihre Umfrage wirklich speichern?<br>
-                    Sie können sie anschließend noch weiter in der Umfragenübersicht bearbeiten, auswerten und mit Mitarbeitenden teilen.
+                    {{ $t('userSurvey.Survey.UmfrageWirklichSpeichern_1') }}<br>
+                    {{ $t('userSurvey.Survey.UmfrageWirklichSpeichern_2') }}
                   </div>
                 </v-card-text>
 
@@ -350,7 +351,7 @@
                     text
                     @click="errorDialog = false"
                   >
-                    Weiter bearbeiten
+                    {{ $t('userSurvey.Survey.WeiterBearbeiten') }}
                   </v-btn>
                   <v-btn
                     v-if="errorTextArray.required.length == 0"
@@ -358,7 +359,7 @@
                     text
                     @click="sendData(), errorDialog = false"
                   >
-                    {{ (errorTextArray.nonRequired.length == 0) ? "Umfrage speichern" : "Umfrage trotzdem speichern" }}
+                    {{ (errorTextArray.nonRequired.length == 0) ? $t('userSurvey.Survey.UmfrageSpeichern') : $t('userSurvey.Survey.UmfrageTzdSpeichern') }}
                   </v-btn>
                 </v-card-actions>
               </v-card>
@@ -370,7 +371,7 @@
               color="primary"
               @click="resetPage()"
             >
-              Weitere Umfrage erstellen
+              {{ $t('userSurvey.Survey.WeitereUmfrageErstellen') }}
             </v-btn>
             <LoadingAnimation v-if="dataRequestSent" />
           </v-row>
@@ -389,7 +390,7 @@
       <LinkSharingComponent
         v-if="displaySurveyLink"
         :mitarbeiter-link="mitarbeiterumfrageBaseURL + responseData.umfrageID"
-        :link-ziel="'Umfrage'"
+        :link-ziel="$t('userSurvey.Survey.Umfrage')"
       />
     </v-card>
 
@@ -415,7 +416,9 @@ import Tooltip from "@/components/componentParts/Tooltip.vue";
 import LinkSharingComponent from "../componentParts/LinkSharingComponent";
 import MailTemplate from "./MailTemplate";
 import LoadingAnimation from "../componentParts/LoadingAnimation";
+import i18n from "@/i18n";
 import DataGapVisualization from '../componentParts/DataGapVisualization.vue';
+import { translateGebaeudeIDToSymbolic, translateGebaeudeIDToNumeric, resolveITGeraetID } from "../../utils";
 
 export default {
   components: {
@@ -487,19 +490,19 @@ export default {
 
     geraeteRules: [
       (v) =>
-        !!v || "Wenn Sie das Gerät nicht benutzen, wählen Sie es bitte ab.",
+        !!v ||  i18n.t('userSurvey.Survey.geraeteRules_1'),
       (v) =>
         parseInt(v) != 0 ||
-        "Wenn Sie das Gerät nicht benutzen, wählen Sie es bitte ab.",
-      (v) => parseInt(v) > 0 || "Bitte geben Sie eine valide Menge an.",
+          i18n.t('userSurvey.Survey.geraeteRules_1'),
+      (v) => parseInt(v) > 0 ||  i18n.t('userSurvey.Survey.geraeteRules_3'),
     ],
     nichtnegativRules: [
-      (v) => !!v || "Muss angegeben werden.",
-      (v) => parseInt(v) >= 0 || "Bitte geben Sie einen positiven Wert an.",
+      (v) => !!v || i18n.t('userSurvey.Survey.nichtnegativRules_0'),
+      (v) => parseInt(v) >= 0 || i18n.t('userSurvey.Survey.nichtnegativRules_1'),
     ],
     absolutpositivRules: [
-      (v) => !!v || "Muss angegeben werden.",
-      (v) => parseInt(v) > 0 || "Bitte geben Sie einen Wert größer Null an.",
+      (v) => !!v || i18n.t('userSurvey.Survey.absolutpositivRules_0'),
+      (v) => parseInt(v) > 0 || i18n.t('userSurvey.Survey.absolutpositivRules_1'),
     ],
 
     // has Absenden Button been clicked
@@ -550,13 +553,13 @@ export default {
     requiredFieldsMissingArray: function() {
       var fieldsarray = []
       if(this.bezeichnung == "" || this.bezeichnung == null) {
-        fieldsarray.push("Bezeichnung")
+        fieldsarray.push(i18n.t('userSurvey.Survey.requiredFieldsMissing_0'))
       }
       if(!this.possibleYears.includes(parseInt(this.bilanzierungsjahr))) {
-        fieldsarray.push("Bilanzierungsjahr")
+        fieldsarray.push(i18n.t('userSurvey.Survey.requiredFieldsMissing_1'))
       }
       if(this.anzahlMitarbeiter == null || this.anzahlMitarbeiter <= 0) {
-        fieldsarray.push("Anzahl Mitarbeitenden")
+        fieldsarray.push(i18n.t('userSurvey.Survey.requiredFieldsMissing_2'))
       }
       return fieldsarray
     },
@@ -575,20 +578,20 @@ export default {
       
       // Gebaeude
       if(this.duplicateBuilding) {
-        nonRequiredArray.push("Sie haben das mehrmals das selbe Gebäude ausgewählt.")
+        nonRequiredArray.push(i18n.t('userSurvey.Survey.problemeInUmfrage_0'))
       } 
       for(const gebaeude of this.gebaeude) {
         if(gebaeude[0] != null && gebaeude[1] <=0) {
-          nonRequiredArray.push("Sie haben für das Gebäude " + gebaeude[0] + " keine gültige Nutzfläche angegeben.")
+          nonRequiredArray.push(i18n.t('userSurvey.Survey.problemeInUmfrage_1') + gebaeude[0] + i18n.t('userSurvey.Survey.problemeInUmfrage_2'))
         }
       }
       // IT Geraete
       for(const it of this.geraeteAnzahl) {
         if(it[2] && it[1] <= 0) { 
           if((it[0] != 8 && it[0] != 10)) {
-            nonRequiredArray.push("Sie haben das Gerät " + resolveITGeraetID(it[0]) + " angewählt, aber keine gültige Anzahl angegeben.")
+            nonRequiredArray.push(i18n.t("userSurvey.Survey.problemeInUmfrage_3") + resolveITGeraetID(it[0]) + i18n.t("userSurvey.Survey.problemeInUmfrage_4"))
           } else { // Toner
-            nonRequiredArray.push("Sie haben einem ausgewählten Gerät keine verwendeten Toner hinzugefügt. Wenn Sie das Gerät nicht in Benutzung haben, ignorieren Sie diese Nachricht.")
+            nonRequiredArray.push(i18n.t("userSurvey.Survey.problemeInUmfrage_5"))
           }
         }
       }
@@ -718,30 +721,11 @@ export default {
         })
         .catch((error) => {
           console.error("Error:", error);
-          this.errorMessage = "Server nicht erreichbar."
+          this.errorMessage = i18n.t("common.ServerNichtErreichbar");
         });
 
       this.displayLoadingAnimation = false;
     },
-
-    // /**
-    //  * Fetches all possible gebaeudeIDs from the server to display in the dropdown menu of the formular.
-    //  */
-    // fetchGebaeudeData: async function () {
-    //   await fetch(process.env.VUE_APP_BASEURL + "/umfrage/gebaeude",{
-    //     method: "GET",
-    //     headers: {
-    //       "Authorization": "Bearer " + this.$keycloak.token,
-    //     },
-    //   })
-    //     .then((response) => response.json())
-    //     .then((data) => {
-    //       this.gebaeudeIDs = data.data.gebaeude.map(gebInt => translateGebaeudeIDToSymbolic(gebInt));
-    //     })
-    //     .catch((error) => {
-    //       console.error("Error:", error);
-    //     });
-    // },
 
     /**
      * Fetches all possible gebaeudeIDs and the Zaehler References from the database.
@@ -778,55 +762,5 @@ export default {
     },
   },
 };
-
-/**
- * Translates a given gebaeudeID to its numerical equivalent.
- * E.g. S101 is translated to 1101, L312 to 3312 and so on.
- */
-function translateGebaeudeIDToNumeric(gebaeudeID) {
-  if (!gebaeudeID) return null;
-
-  let gebaeudeDict = {
-    "S": 1,
-    "B": 2,
-    "L": 3,
-    "H": 4,
-    "W": 5,
-  };
-  let translatedID =
-    gebaeudeDict[gebaeudeID.substring(0, 1)] + gebaeudeID.substring(1);
-  return parseInt(translatedID);
-}
-
-/**
- * Translates a given numeric gebaeudeID to its symbolic equivalent (string).
- * E.g. 1101 is translated to S101, 3312 to L312 and so on.
- */
-function translateGebaeudeIDToSymbolic(gebaeudeID) {
-  let gebaeudeDict = {
-    1: "S",
-    2: "B",
-    3: "L",
-    4: "H",
-    5: "W",
-  };
-
-  gebaeudeID = gebaeudeID.toString()
-  let translatedID =
-    gebaeudeDict[gebaeudeID.substring(0, 1)] + gebaeudeID.substring(1);
-  return translatedID;
-}
-
-function resolveITGeraetID(geraetID) {
-  let ITGeraetIDDict = {
-    7: "Multifunktionsgeräte",
-    8: "Multifunktionsgeräte Toner",
-    9: "Laser & Tintenstrahldrucker",
-    10: "Laser & Tintenstrahldrucker Toner",
-    4: "Beamer",
-    6: "interne Server"
-  };
-  return ITGeraetIDDict[geraetID]
-}
 
 </script>
