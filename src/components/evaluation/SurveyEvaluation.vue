@@ -1000,7 +1000,7 @@ export default {
         {},
         {
           "col1": i18n.t('evaluation.surveyEvaluation.MakeSpreadsheet_2'),
-          "col2": "t CO2 eq.",
+          "col2": i18n.t('evaluation.surveyEvaluation.tCO2eq'),
         },
         {
           "col1": i18n.t('evaluation.surveyEvaluation.MakeSpreadsheet_3'),
@@ -1022,7 +1022,7 @@ export default {
         {},
         {
           "col1": i18n.t('evaluation.surveyEvaluation.MakeSpreadsheet_7'),
-          "col2": "t CO2 eq.",
+          "col2": i18n.t('evaluation.surveyEvaluation.tCO2eq'),
           "col3": "%",
         },
         {
@@ -1048,7 +1048,7 @@ export default {
         {},
         {
           "col1": i18n.t('evaluation.surveyEvaluation.MakeSpreadsheet_8'),
-          "col2": "t CO2 eq.",
+          "col2": i18n.t('evaluation.surveyEvaluation.tCO2eq'),
           "col3": "%",
         },
         {
@@ -1069,7 +1069,7 @@ export default {
         {},
         {
           "col1": i18n.t('evaluation.surveyEvaluation.MakeSpreadsheet_9'),
-          "col2": "kWh",
+          "col2": i18n.t('evaluation.surveyEvaluation.kWh'),
           "col3": "%",
         },
         {
@@ -1093,7 +1093,7 @@ export default {
         {},
         {
           "col1": i18n.t('evaluation.surveyEvaluation.MakeSpreadsheet_11'),
-          "col2": "t CO2 eq.",
+          "col2": i18n.t('evaluation.surveyEvaluation.tCO2eq'),
           "col3": "%",
         },
       ])
@@ -1114,7 +1114,7 @@ export default {
         {},
         {
           "col1": i18n.t('evaluation.surveyEvaluation.MakeSpreadsheet_12'),
-          "col2": "t CO2 eq.",
+          "col2": i18n.t('evaluation.surveyEvaluation.tCO2eq'),
           "col3": "%",
         },
       ])
@@ -1133,7 +1133,7 @@ export default {
         {},
         {
           "col1": i18n.t('evaluation.surveyEvaluation.MakeSpreadsheet_13'),
-          "col2": "t CO2 eq.",
+          "col2": i18n.t('evaluation.surveyEvaluation.tCO2eq'),
           "col3": "%",
         },
       ])
