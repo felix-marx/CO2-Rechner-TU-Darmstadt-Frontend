@@ -1168,13 +1168,19 @@ export default {
       var wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
 
       function s2ab(s) {
-        var buf = new ArrayBuffer(s.length); //convert s to arrayBuffer
-        var view = new Uint8Array(buf);  //create uint8array as viewer
-        for (var i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF; //convert to octet
+        var buf = new ArrayBuffer(s.length);  //convert s to arrayBuffer
+        var view = new Uint8Array(buf);       //create uint8array as viewer
+        for (var i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;  //convert to octet
         return buf;
       }
 
-      saveAs(new Blob([s2ab(wbout)], { type: "application/octet-stream" }), 'Emissionen_' + this.responsedata.bezeichnung + '.xlsx');
+      saveAs(
+        new Blob(
+          [s2ab(wbout)], 
+          { type: "application/octet-stream" }
+        ), 
+        i18n.t('common.Emissionen') + '_' + this.responsedata.bezeichnung + '.xlsx'
+      );
     },
   },
 }
