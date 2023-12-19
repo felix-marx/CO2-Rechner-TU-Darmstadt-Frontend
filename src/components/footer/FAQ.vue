@@ -233,7 +233,7 @@
               <v-card-title
                 class="mx-4"
               >
-                {{ $t('footer.FAQ.Titel_2') }}
+                <label v-html="$t('footer.FAQ.Titel_2')" />
               </v-card-title>
 
               <v-expansion-panels
@@ -244,7 +244,7 @@
               >
                 <v-expansion-panel>
                   <v-expansion-panel-header>
-                    <b> {{ $t('footer.FAQ.Frage_2_1') }} </b> 
+                    <b v-html="$t('footer.FAQ.Frage_2_1')" />
                   </v-expansion-panel-header>
                   <v-expansion-panel-content>
                     <v-card
@@ -258,28 +258,28 @@
 
                 <v-expansion-panel>
                   <v-expansion-panel-header>
-                    <b> {{ $t('footer.FAQ.Frage_2_2') }} </b> 
+                    <b v-html="$t('footer.FAQ.Frage_2_2')" />
                   </v-expansion-panel-header>
                   <v-expansion-panel-content>
                     <v-card
                       class="mt-4"
                       elevation="0"
                     >
-                      <p> {{ $t('footer.FAQ.Antwort_2_2') }} </p>
+                      <p v-html="$t('footer.FAQ.Antwort_2_2')" />
                     </v-card>
                   </v-expansion-panel-content>
                 </v-expansion-panel>
 
                 <v-expansion-panel>
                   <v-expansion-panel-header>
-                    <b> {{ $t('footer.FAQ.Frage_2_3') }} </b> 
+                    <b v-html="$t('footer.FAQ.Frage_2_3')" />
                   </v-expansion-panel-header>
                   <v-expansion-panel-content>
                     <v-card
                       class="mt-4"
                       elevation="0"
                     >
-                      <p> {{ $t('footer.FAQ.Antwort_2_3_1') }} </p>
+                      <p v-html="$t('footer.FAQ.Antwort_2_3_1')" />
                       <p v-html="$t('footer.FAQ.Antwort_2_3_2')" />
                     </v-card>
                   </v-expansion-panel-content>
@@ -419,7 +419,7 @@
                       class="mt-4"
                       elevation="0"
                     >
-                      <p> {{ $t('footer.FAQ.Antwort_2_8_1') }} </p>
+                      <p v-html="$t('footer.FAQ.Antwort_2_8_1')" />
                       <p> {{ $t('footer.FAQ.Antwort_2_8_2') }} </p>
                     </v-card>
                   </v-expansion-panel-content>
@@ -478,7 +478,7 @@
               <v-card-title
                 class="mx-4"
               >
-                {{ $t('footer.FAQ.Titel_3') }}
+                <label v-html="$t('footer.FAQ.Titel_3')" />
               </v-card-title>
 
               <v-expansion-panels
@@ -551,7 +551,7 @@
                       <p> {{ $t('footer.FAQ.Antwort_3_3_1') }} </p>
                       <p> {{ $t('footer.FAQ.Antwort_3_3_2') }} </p>
                       <p> {{ $t('footer.FAQ.Antwort_3_3_3') }} </p>
-                      <p> {{ $t('footer.FAQ.Antwort_3_3_4') }} </p>
+                      <p v-html="$t('footer.FAQ.Antwort_3_3_4')" />
                     </v-card>
                   </v-expansion-panel-content>
                 </v-expansion-panel>
@@ -579,7 +579,7 @@
                       class="mt-4"
                       elevation="0"
                     >
-                      <p> {{ $t('footer.FAQ.Antwort_3_5') }} </p>
+                      <p v-html="$t('footer.FAQ.Antwort_3_5')" />
                     </v-card>
                   </v-expansion-panel-content>
                 </v-expansion-panel>
@@ -601,7 +601,7 @@
 
                 <v-expansion-panel>
                   <v-expansion-panel-header>
-                    <b> {{ $t('footer.FAQ.Frage_3_7') }} </b> 
+                    <b v-html="$t('footer.FAQ.Frage_3_7')" />
                   </v-expansion-panel-header>
                   <v-expansion-panel-content>
                     <v-card
@@ -629,69 +629,85 @@ import Footer from '../footer/Footer.vue'
 import loadingAnimation from '../componentParts/LoadingAnimation.vue'
 
 export default {
-    name: "FAQ",
-    components: {
-      Header,
-      Footer
+  name: "FAQ",
+  components: {
+    Header,
+    Footer
+  },
+
+  data: () => ({
+    tabList: [],
+    panel_1: [],
+    panel_2: [],
+    panel_3: [],
+  }),
+
+  computed: {
+    formel_1() {
+      return "\\(\\begin{aligned} " + 
+              "\\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_1_1')  + "} &= \\sum_{\\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_1_7')  + "}} \\sum_{\\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_1_2')  + "}} \\left( \\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_1_3')  + "} \\cdot \\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_1_4')  + "} \\cdot \\frac{\\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_1_5')  + "}}{\\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_1_6')  + "}} \\right)" + 
+              " \\end{aligned} \\)"
     },
-
-    data: () => ({
-      tabList: [{ id: 0, title: 'FAQ', componentType: loadingAnimation}],
-      panel_1: [],
-      panel_2: [],
-      panel_3: [],
-    }),
-
-    computed: {
-      formel_1() {
-        return "\\(\\begin{aligned} " + 
-                "\\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_1_1')  + "} &= \\sum_{\\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_1_7')  + "}} \\sum_{\\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_1_2')  + "}} \\left( \\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_1_3')  + "} \\cdot \\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_1_4')  + "} \\cdot \\frac{\\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_1_5')  + "}}{\\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_1_6')  + "}} \\right)" + 
-                " \\end{aligned} \\)"
-      },
-      formel_2() {
-        return  "\\(\\begin{aligned} " + 
-                "\\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_2_1')  + "} &= \\sum_{\\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_2_2')  + "}} \\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_2_3')  + "} \\\\ " + 
-                " &= \\sum_{\\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_2_2')  + "}} \\left( \\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_2_4')  + "} \\cdot \\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_2_5')  + "} \\right) \\\\" + 
-                " &= \\sum_{\\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_2_2')  + "}} \\left( \\frac{\\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_2_6')  + "}}{\\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_2_7')  + "}} \\cdot \\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_2_5')  + "} \\right) " +  
-                " \\end{aligned} \\)"
-      },
-      formel_3() {
-        return  "\\(\\begin{aligned} " + 
-                "\\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_3_1')  + "} &= \\sum_{\\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_3_2')  + "}} \\left( \\frac{\\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_3_3')  + "} \\cdot \\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_3_4')  + "}}{\\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_3_5')  + "}} \\right) \\\\" +
-                "\\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_3_3')  + "} &= 2 \\cdot \\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_3_6')  + "} \\cdot \\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_3_7')  + "} \\\\" +
-                " &= 2 \\cdot \\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_3_6')  + "} \\cdot \\frac{\\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_3_8')  + "}}{5} \\cdot \\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_3_9')  + "} \\\\" +
-                "\\end{aligned} \\)"
-      },
-      formel_4() {
-        return  "\\(\\begin{aligned} " + 
-                "\\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_4_1')  + "} &= \\sum_{\\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_4_2')  + "}} \\left( \\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_4_3')  + "} \\cdot \\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_4_4')  + "} \\right) \\\\" +
-                "&= \\sum_{\\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_4_2')  + "}} \\left( 2 \\cdot \\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_4_5')  + "} \\cdot \\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_4_4')  + "} \\right)" +
-                "\\end{aligned} \\)"
-      },
+    formel_2() {
+      return  "\\(\\begin{aligned} " + 
+              "\\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_2_1')  + "} &= \\sum_{\\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_2_2')  + "}} \\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_2_3')  + "} \\\\ " + 
+              " &= \\sum_{\\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_2_2')  + "}} \\left( \\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_2_4')  + "} \\cdot \\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_2_5')  + "} \\right) \\\\" + 
+              " &= \\sum_{\\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_2_2')  + "}} \\left( \\frac{\\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_2_6')  + "}}{\\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_2_7')  + "}} \\cdot \\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_2_5')  + "} \\right) " +  
+              " \\end{aligned} \\)"
     },
-
-    created() {
-      if(this.$route.hash == "#nutzung"){
-        this.panel_3 = [0]
-      } 
-      else if (this.$route.hash == "#bilanzierung"){
-        this.panel_1 = [0]
-      }
-      else if (this.$route.hash == "#allgemein"){
-        this.panel_2 = [0]
-      }
+    formel_3() {
+      return  "\\(\\begin{aligned} " + 
+              "\\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_3_1')  + "} &= \\sum_{\\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_3_2')  + "}} \\left( \\frac{\\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_3_3')  + "} \\cdot \\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_3_4')  + "}}{\\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_3_5')  + "}} \\right) \\\\" +
+              "\\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_3_3')  + "} &= 2 \\cdot \\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_3_6')  + "} \\cdot \\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_3_7')  + "} \\\\" +
+              " &= 2 \\cdot \\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_3_6')  + "} \\cdot \\frac{\\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_3_8')  + "}}{5} \\cdot \\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_3_9')  + "} \\\\" +
+              "\\end{aligned} \\)"
     },
-
-    mounted() {
-      if(this.$route.hash){
-        let top = this.$refs[this.$route.hash].$refs.link.offsetTop
-
-        window.scrollTo({
-          top: top, 
-          left: 0
-        })
-      }
+    formel_4() {
+      return  "\\(\\begin{aligned} " + 
+              "\\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_4_1')  + "} &= \\sum_{\\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_4_2')  + "}} \\left( \\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_4_3')  + "} \\cdot \\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_4_4')  + "} \\right) \\\\" +
+              "&= \\sum_{\\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_4_2')  + "}} \\left( 2 \\cdot \\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_4_5')  + "} \\cdot \\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_4_4')  + "} \\right)" +
+              "\\end{aligned} \\)"
     },
+  },
+
+  watch: {
+    '$i18n.locale': function() {
+      this.setTabList();
+    }
+  },
+
+  created() {
+    this.setTabList();
+
+    if(this.$route.hash == "#nutzung"){
+      this.panel_3 = [0]
+    } 
+    else if (this.$route.hash == "#bilanzierung"){
+      this.panel_1 = [0]
+    }
+    else if (this.$route.hash == "#allgemein"){
+      this.panel_2 = [0]
+    }
+  },
+
+  mounted() {
+    if(this.$route.hash){
+      let top = this.$refs[this.$route.hash].$refs.link.offsetTop
+
+      window.scrollTo({
+        top: top, 
+        left: 0
+      })
+    }
+  },
+
+  methods: {
+    setTabList(){
+      this.tabList = [
+        { id: 0, title: 'FAQ', componentType: loadingAnimation},
+      ]
+    }
+  }
 }
 
 </script>

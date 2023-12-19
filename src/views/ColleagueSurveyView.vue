@@ -49,7 +49,6 @@ export default {
   }),
 
   computed: {
-
     /**
      * Returns the component to be shown in the body of the view. LoadingAnimation while the server is requested, SurveyNotFound if the survey does not exist or the survey
      * if the corresponding id exists.
@@ -93,7 +92,14 @@ export default {
     },
   },
 
+  watch: {
+    '$i18n.locale': function() {
+      this.setTabList();
+    }
+  },
+
   created() {
+    this.setTabList();
     // request if a survey exists with the corresponding ID from the URL
     this.fetchUmfrageExists(this.$route.params.umfrageID);
   },
@@ -102,7 +108,7 @@ export default {
     /**
      * Requests from the server whether a survey with the givenID exists.
      */
-  fetchUmfrageExists: async function (givenID) {
+    fetchUmfrageExists: async function (givenID) {
       await fetch(process.env.VUE_APP_BASEURL + "/mitarbeiterumfrage/exists?id=" + givenID, {
         method: "GET",
         })
@@ -122,7 +128,13 @@ export default {
           this.umfrageID = "";
           this.dataUmfrageComplete = false;
         });
-    },
+      },
+
+    setTabList(){
+      this.tabList = [
+        { id: 0, title: i18n.t('common.Umfrage'), componentType: LoadingAnimation},
+      ]
+    }
   },
 
 };

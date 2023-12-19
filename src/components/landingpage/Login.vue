@@ -22,7 +22,7 @@
             v-html="$t('landingpage.Login.Titel')"
           />
           <label v-html="$t('landingpage.Login.Willkommen_1')" />
-        </div>
+        </div>      
 
         <v-container class="mt-4">
           <v-row>
@@ -77,7 +77,10 @@
               color="primary"
               @click="$keycloak.loginFn()"
             >
-              Anmelden mit TU-ID
+              <v-icon left>
+                mdi-account
+              </v-icon>
+              {{ $t('header.Header.LoginButton') }}
             </v-btn>
             <v-spacer />
           </v-row>
