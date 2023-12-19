@@ -375,13 +375,14 @@ export default {
         code: null,
         message: null,
       },
-      // Wenn Link Sharing korrekt geflipped wurde
+      // for link sharing
       displaySuccess: false,
       showLoading: false,
 
       // base url for Mitarbeiterumfragen
       linkshareBaseURL: process.env.VUE_APP_URL + '/survey/results/',
 
+      // display charts
       displayEnergieCharts: true,
       displayAufteilungDienstreisen: true,
       displayAufteilungPendelwege: true,
@@ -526,7 +527,7 @@ export default {
       gebaeudeIDsUndZaehler: [],
       zaehler: [],
 
-      // for dynamic calculation of bar width
+      // for dynamic bar resizing
       barWidth: null,
       resizeTimout: null,
     }
@@ -580,9 +581,156 @@ export default {
     },
 
     /**
+     * Fetches Get request to get survey data and evaluation.
+     */
+    getData: async function () {
+      await fetch(process.env.VUE_APP_BASEURL + "/auswertung?id=" + this.$props.umfrageid, {
+        method: "GET",
+        headers: {
+          "Authorization": "Bearer " + this.$keycloak.token,
+        },
+      }).then((response) => response.json())
+        .then((body) => {
+          if (body.status == "success") {
+            this.responseSuccessful = true
+            this.responsedata = body.data
+            this.responsedata.auswertungFreigegeben = (body.data.auswertungFreigegeben == 1) ? true : false
+            this.displayCharts();
+            this.roundResponseData();
+
+            this.gebaeudeIDsUndZaehler = this.responsedata.gebaeudeIDsUndZaehler
+            this.umfrageGebaeude = this.responsedata.umfrageGebaeude.map(x => [translateGebaeudeIDToSymbolic(x["gebaeudeNr"]), x["nutzflaeche"]])
+            this.zaehler = this.responsedata.zaehler
+          }
+          else {  // Fehlerbehandlung
+            this.responseNotSuccessful = true
+            this.responseerror = body.error
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        }
+      );
+    },
+
+    /**
+     * Method checks which charts should be displayed based on the response data.
+     */
+    displayCharts: function () {
+      // negative values indicate that no data is available
+      if (this.responsedata.emissionenWaerme < 0 || this.responsedata.emissionenKaelte < 0 || this.responsedata.emissionenStrom < 0) {
+        this.displayEnergieCharts = false;
+      }
+      if (this.responsedata.verbrauchWaerme < 0 || this.responsedata.verbrauchKaelte < 0 || this.responsedata.verbrauchStrom < 0) {
+        this.displayEnergieCharts = false;
+      }
+
+      // checks length of object to determine if there is data available
+      this.displayAufteilungDienstreisen = Object.keys(this.responsedata.emissionenDienstreisenAufgeteilt).length > 0
+      this.displayAufteilungPendelwege = Object.keys(this.responsedata.emissionenPendelwegeAufgeteilt).length > 0
+      this.displayAufteilungITGeraete = Object.keys(this.responsedata.emissionenITGeraeteAufgeteilt).length > 0
+    },
+
+    /**
+     * Method rounds all emission values to unit t with 3 decimal places.
+     */
+    roundResponseData: function () {
+      let roundFactor1 = 10000
+      let roundFactor2 = 100
+
+      this.responsedata.emissionenWaerme = Math.round(this.responsedata.emissionenWaerme / roundFactor1) / roundFactor2
+      this.responsedata.emissionenStrom = Math.round(this.responsedata.emissionenStrom / roundFactor1) / roundFactor2
+      this.responsedata.emissionenKaelte = Math.round(this.responsedata.emissionenKaelte / roundFactor1) / roundFactor2
+      this.responsedata.emissionenEnergie = Math.round(this.responsedata.emissionenEnergie / roundFactor1) / roundFactor2
+
+      this.responsedata.emissionenITGeraeteHauptverantwortlicher = Math.round(this.responsedata.emissionenITGeraeteHauptverantwortlicher / roundFactor1) / roundFactor2
+      this.responsedata.emissionenITGeraeteMitarbeiter = Math.round(this.responsedata.emissionenITGeraeteMitarbeiter / roundFactor1) / roundFactor2
+      this.responsedata.emissionenITGeraete = Math.round(this.responsedata.emissionenITGeraete / roundFactor1) / roundFactor2
+
+      this.responsedata.emissionenDienstreisen = Math.round(this.responsedata.emissionenDienstreisen / roundFactor1) / roundFactor2
+      this.responsedata.emissionenPendelwege = Math.round(this.responsedata.emissionenPendelwege / roundFactor1) / roundFactor2
+
+      this.responsedata.emissionenGesamt = Math.round(this.responsedata.emissionenGesamt / roundFactor1) / roundFactor2
+      this.responsedata.emissionenProMitarbeiter = Math.round(this.responsedata.emissionenProMitarbeiter / roundFactor1) / roundFactor2
+
+      Object.keys(this.responsedata.emissionenDienstreisenAufgeteilt).forEach(key => {
+        this.responsedata.emissionenDienstreisenAufgeteilt[key] = Math.round(this.responsedata.emissionenDienstreisenAufgeteilt[key] / roundFactor1) / roundFactor2
+      })
+      Object.keys(this.responsedata.emissionenITGeraeteAufgeteilt).forEach(key => {
+        this.responsedata.emissionenITGeraeteAufgeteilt[key] = Math.round(this.responsedata.emissionenITGeraeteAufgeteilt[key] / roundFactor1) / roundFactor2
+      })
+      Object.keys(this.responsedata.emissionenPendelwegeAufgeteilt).forEach(key => {
+        this.responsedata.emissionenPendelwegeAufgeteilt[key] = Math.round(this.responsedata.emissionenPendelwegeAufgeteilt[key] / roundFactor1) / roundFactor2
+      })
+
+      this.responsedata.umfragenanteil = Math.round(this.responsedata.umfragenanteil * 1000) / 10
+      this.responsedata.vergleich2PersonenHaushalt = Math.round(this.responsedata.vergleich2PersonenHaushalt * 100) / 100
+      this.responsedata.vergleich4PersonenHaushalt = Math.round(this.responsedata.vergleich4PersonenHaushalt * 100) / 100
+    },
+
+    /**
+     * Method initializes chartdata and options for all charts by deep copying the general chartdata and options.
+     */
+    initializeCharts: function () {
+      this.chartdataGesamtDoughnut = JSON.parse(JSON.stringify(this.generalChartdataDoughnut));
+      this.optionsGesamtDoughnut = JSON.parse(JSON.stringify(this.generalOptionsDoghnut));
+      this.chartdataGesamtBar = JSON.parse(JSON.stringify(this.generalChartdataBar));
+      this.optionsGesamtBar = JSON.parse(JSON.stringify(this.generalOptionsBar));
+
+      this.chartdataEnergieDoughnut = JSON.parse(JSON.stringify(this.generalChartdataDoughnut));
+      this.optionsEnergieDoughnut = JSON.parse(JSON.stringify(this.generalOptionsDoghnut));
+      this.chartdataEnergieBar = JSON.parse(JSON.stringify(this.generalChartdataBar));
+      this.optionsEnergieBar = JSON.parse(JSON.stringify(this.generalOptionsBar));
+
+      this.chartdataVerbrauchDoughnut = JSON.parse(JSON.stringify(this.generalChartdataDoughnut));
+      this.optionsVerbrauchDoughnut = JSON.parse(JSON.stringify(this.generalOptionsDoghnut));
+      this.chartdataVerbrauchBar = JSON.parse(JSON.stringify(this.generalChartdataBar));
+      this.optionsVerbrauchBar = JSON.parse(JSON.stringify(this.generalOptionsBar)); 
+
+      this.chartdataDienstreisenBar = JSON.parse(JSON.stringify(this.generalChartdataBar));
+      this.optionsDienstreisenBar = JSON.parse(JSON.stringify(this.generalOptionsBar));
+
+      this.chartdataPendelwegeBar = JSON.parse(JSON.stringify(this.generalChartdataBar));
+      this.optionsPendelwegeBar = JSON.parse(JSON.stringify(this.generalOptionsBar));
+
+      this.chartdataITGeraeteBar = JSON.parse(JSON.stringify(this.generalChartdataBar));
+      this.optionsITGeraeteBar = JSON.parse(JSON.stringify(this.generalOptionsBar));
+    },
+
+    /**
+     * Helper function to call all setChart functions and compute the current bar width.
+     */
+    setChartData: function() {
+      this.computeBarWidth();
+      
+      this.generalChartdataBar.datasets[0].maxBarThickness = this.barWidth
+      this.chartdataDienstreisenBar.datasets[0].maxBarThickness = this.barWidth
+      this.chartdataPendelwegeBar.datasets[0].maxBarThickness = this.barWidth
+      this.chartdataITGeraeteBar.datasets[0].maxBarThickness = this.barWidth
+      this.chartdataEnergieBar.datasets[0].maxBarThickness = this.barWidth
+      this.chartdataVerbrauchBar.datasets[0].maxBarThickness = this.barWidth
+      this.chartdataGesamtBar.datasets[0].maxBarThickness = this.barWidth
+
+      this.setChartGesamt();
+      if (this.displayEnergieCharts){
+        this.setChartEnergie();
+        this.setChartVerbrauch();
+      }
+      if (this.displayAufteilungDienstreisen){
+        this.setChartDienstreisen();
+      }
+      if (this.displayAufteilungPendelwege){
+        this.setChartPendelwege();
+      }
+      if (this.displayAufteilungITGeraete){
+        this.setChartITGeraete();
+      }
+    },
+
+    /**
      * Computes the bar width for the bar charts based on the current canvas with and number of bars to display.
      */
-    barWidthComp: function() {
+    computeBarWidth: function() {
       let maxBars = Math.max(Object.keys(this.responsedata.emissionenDienstreisenAufgeteilt).length, Object.keys(this.responsedata.emissionenPendelwegeAufgeteilt).length, Object.keys(this.responsedata.emissionenITGeraeteAufgeteilt).length)
 
       let chartWidths = ["bar-dienstreisen", "bar-pendelwege", "bar-itgeraete"].map(x => this.$refs[x] ? this.$refs[x].$refs.canvas.width : 0)
@@ -595,6 +743,234 @@ export default {
       } else {
         this.barWidth = Math.min(chartWidth / maxBars * 0.75, halfChartWidth / 4 * 0.75)
       }
+    },
+
+    /**
+     * Method sets data and options for the Gesamt charts.
+     */
+    setChartGesamt: function () {
+      let data = [
+        { label: i18n.t('common.Energie'), value: this.responsedata.emissionenEnergie, color: 'rgb(255, 99, 132)' },
+        { label: i18n.t('common.Dienstreisen'), value: this.responsedata.emissionenDienstreisen, color: 'rgb(54, 162, 235)' },
+        { label: i18n.t('common.Pendelwege'), value: this.responsedata.emissionenPendelwege, color: 'rgb(255, 205, 86)' },
+        { label: i18n.t('common.ITGeraete'), value: this.responsedata.emissionenITGeraete, color: 'rgb(75, 192, 192)' },
+      ];
+      data.sort((a, b) => b.value - a.value)
+
+      this.chartdataGesamtDoughnut.labels = data.map(a => a.label);
+      this.chartdataGesamtDoughnut.datasets[0].data = data.map(a => a.value);
+      this.chartdataGesamtDoughnut.datasets[0].backgroundColor = data.map(a => a.color);
+      
+      this.optionsGesamtDoughnut.plugins.datalabels.formatter = (value) => {
+        if(this.responsedata.emissionenGesamt === 0){
+          return 0
+        }
+        return i18n.n((Math.round(value / this.responsedata.emissionenGesamt * 1000) / 10), "decimal") + '%';
+      }
+
+      this.chartdataGesamtBar.labels = data.map(a => a.label);
+      this.chartdataGesamtBar.datasets[0].data = data.map(a => a.value);
+      this.chartdataGesamtBar.datasets[0].backgroundColor = data.map(a => a.color);
+
+      this.optionsGesamtBar.plugins.datalabels.formatter = (value) => {
+        return i18n.n(value, "decimal");
+      }
+
+      this.$refs["doughnut-gesamt"].updateChart()
+      this.$refs["bar-gesamt"].updateChart()
+    },
+
+    /**
+     * Method sets data and options for the Energie charts.
+     */
+    setChartEnergie: function () {
+      let data = [
+        { label: i18n.t('common.Waerme'), value: this.responsedata.emissionenWaerme, color: 'rgb(240, 128, 128)' },
+        { label: i18n.t('common.Kaelte'), value: this.responsedata.emissionenKaelte, color: 'rgb(0, 204, 255)' },
+        { label: i18n.t('common.Strom'), value: this.responsedata.emissionenStrom, color: 'rgb(255, 219, 77)' },
+      ];
+
+      data.sort((a, b) => b.value - a.value)
+
+      this.chartdataEnergieDoughnut.labels = data.map(a => a.label);
+      this.chartdataEnergieDoughnut.datasets[0].data = data.map(a => a.value);
+      this.chartdataEnergieDoughnut.datasets[0].backgroundColor = data.map(a => a.color);
+
+      this.optionsEnergieDoughnut.plugins.datalabels.formatter = (value) => {
+        if(this.responsedata.emissionenEnergie === 0){
+          return 0
+        }
+        return i18n.n((Math.round(value / this.responsedata.emissionenEnergie * 1000) / 10), "decimal") + '%';
+      }
+
+      this.chartdataEnergieBar.labels = data.map(a => a.label);
+      this.chartdataEnergieBar.datasets[0].data = data.map(a => a.value);
+      this.chartdataEnergieBar.datasets[0].backgroundColor = data.map(a => a.color);
+
+      this.optionsEnergieBar.plugins.datalabels.formatter = (value) => {
+        return i18n.n(value, "decimal");
+      }
+
+      this.$refs["doughnut-energie"].updateChart()
+      this.$refs["bar-energie"].updateChart()
+    },
+
+    /**
+     * Method sets data and options for the Energieverbrauch charts.
+     */
+    setChartVerbrauch: function () {
+      let data = [
+        { label: i18n.t('common.Waerme'), value: this.responsedata.verbrauchWaerme, color: 'rgb(240, 128, 128)'},
+        { label: i18n.t('common.Kaelte'), value: this.responsedata.verbrauchKaelte, color:  'rgb(0, 204, 255)'},
+        { label: i18n.t('common.Strom'), value: this.responsedata.verbrauchStrom, color: 'rgb(255, 219, 77)' },
+      ];
+
+      data.sort((a, b) => b.value - a.value)
+
+      this.chartdataVerbrauchDoughnut.labels = data.map(a => a.label);
+      this.chartdataVerbrauchDoughnut.datasets[0].label = i18n.t('evaluation.surveyEvaluation.kWh')
+      this.chartdataVerbrauchDoughnut.datasets[0].data = data.map(a => a.value);
+      this.chartdataVerbrauchDoughnut.datasets[0].backgroundColor = data.map(a => a.color);
+
+      this.optionsVerbrauchDoughnut.plugins.datalabels.formatter = (value) => {
+        if(this.responsedata.verbrauchEnergie === 0){
+          return 0
+        }
+        return i18n.n((Math.round(value / this.responsedata.verbrauchEnergie * 1000) / 10), "decimal") + '%';
+      }
+
+      this.chartdataVerbrauchBar.labels = data.map(a => a.label);
+      this.chartdataVerbrauchBar.datasets[0].label = i18n.t('evaluation.surveyEvaluation.kWh')
+      this.chartdataVerbrauchBar.datasets[0].data = data.map(a => a.value);
+      this.chartdataVerbrauchBar.datasets[0].backgroundColor = data.map(a => a.color);
+
+      this.optionsVerbrauchBar.scales.yAxes[0].scaleLabel.labelString = i18n.t('evaluation.surveyEvaluation.kWh')
+      this.optionsVerbrauchBar.tooltips.callbacks.label = function(tooltipItem, data) {
+        let idx = tooltipItem.index;
+        return i18n.t('common.Verbrauch') + ": " + i18n.n(data.datasets[0].data[idx], "decimal")
+      }
+      this.optionsVerbrauchBar.plugins.datalabels.formatter = (value) => {
+        return i18n.n(value, "decimal");
+      }
+
+      this.$refs["doughnut-verbrauch"].updateChart()
+      this.$refs["bar-verbrauch"].updateChart()
+    },
+
+    /**
+     * Method sets data and options for the Dienstreisen charts.
+     */
+    setChartDienstreisen: function () {
+      let data = []
+
+      let dienstreisenAufgeteilt = this.responsedata.emissionenDienstreisenAufgeteilt
+      let labelMap = getDienstreisenLabelMap()
+
+      Object.keys(dienstreisenAufgeteilt).forEach(function(key) {
+        let labelParts = key.split("-")
+        let label = labelMap.get(labelParts[0]) + (labelParts[1] ? " - " + labelMap.get(labelParts[1]) : "")
+        data.push({label: label, value: dienstreisenAufgeteilt[key], color: 'rgb(54,162,235)'})
+      })
+
+      data.sort((a, b) => b.value - a.value)
+
+      this.chartdataDienstreisenBar.labels = data.map(a => a.label);
+      this.chartdataDienstreisenBar.datasets[0].data = data.map(a => a.value);
+      this.chartdataDienstreisenBar.datasets[0].backgroundColor = data.map(a => a.color);
+
+      this.optionsDienstreisenBar.plugins.datalabels.formatter = (value) => {
+        return i18n.n(value, "decimal");
+      }
+
+      this.$refs["bar-dienstreisen"].updateChart()
+    },
+
+    /**
+     * Method sets data and options for the Pendelwege charts.
+     */
+    setChartPendelwege: function () {
+      let data = []
+
+      let pendelwegeAufgeteilt = this.responsedata.emissionenPendelwegeAufgeteilt
+      let labelMap = getPendelwegeLabelMap()
+      Object.keys(pendelwegeAufgeteilt).forEach(function(key) {
+        data.push({label: labelMap.get(key), value: pendelwegeAufgeteilt[key], color: 'rgb(255, 205, 86)'})
+      })
+
+      data.sort((a, b) => b.value - a.value)
+
+      this.chartdataPendelwegeBar.labels = data.map(a => a.label);
+      this.chartdataPendelwegeBar.datasets[0].data = data.map(a => a.value);
+      this.chartdataPendelwegeBar.datasets[0].backgroundColor = data.map(a => a.color);
+
+      this.optionsPendelwegeBar.plugins.datalabels.formatter = (value) => {
+        return i18n.n(value, "decimal");
+      }
+
+      this.$refs["bar-pendelwege"].updateChart()
+    },
+
+    /**
+     * Method sets data and options for the ITGeraete charts.
+     */
+    setChartITGeraete: function () {
+      let data = []
+
+      let itGeraeteAufgeteilt = this.responsedata.emissionenITGeraeteAufgeteilt
+      let labelMap = getITGeraeteLabelMap()
+      Object.keys(itGeraeteAufgeteilt).forEach(function(key) {
+        data.push({label: labelMap.get(key), value: itGeraeteAufgeteilt[key], color: 'rgb(75, 192, 192)'})
+      })
+
+      data.sort((a, b) => b.value - a.value)
+
+      this.chartdataITGeraeteBar.labels = data.map(a => a.label);
+      this.chartdataITGeraeteBar.datasets[0].data = data.map(a => a.value);
+      this.chartdataITGeraeteBar.datasets[0].backgroundColor = data.map(a => a.color);
+
+      this.optionsITGeraeteBar.plugins.datalabels.formatter = (value) => {
+        return i18n.n(value, "decimal");
+      }
+
+      this.$refs["bar-itgeraete"].updateChart()
+    },
+
+    /**
+     * updateFlipLinkShare sendet eine POST update Request ans Backend, wodurch das Link Sharing für diese Umfrage aktiviert wird, wenn es aktuell deaktiviert ist
+     * bzw. deaktiviert wenn es gerade aktiviert ist.
+     * Im Erfolgsfall wird eine Erfolgsnachricht angezeigt und sonst eine Fehlermeldung.
+     * Der lokal gespeicherte LinkShare Wert wird angepasst.
+     */
+    updateFlipLinkShare: async function() {
+      this.showLoading = true;
+      this.displaySuccess = false;
+
+      await fetch(process.env.VUE_APP_BASEURL + "/auswertung/updateLinkShare", {
+        method: "POST",
+        headers: {
+          "Authorization": "Bearer " + this.$keycloak.token,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          umfrageID: this.$props.umfrageid,
+          // freigabewert 0 ist teilen deaktiviert, 1 aktiviert und wir flippen hier
+          freigabewert: ((this.responsedata.auswertungFreigegeben) ? 1 : 0),
+        }),
+      }).then((response) => response.json())
+        .then((body) => {
+          this.showLoading = false
+          if (body.status == "success") {
+            this.displaySuccess = true
+        }
+        else {  // Fehlerbehandlung
+          this.showLoading = false
+          this.responseNotSuccessful = true
+          this.responseerror = body.error
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
     },
 
     /**
@@ -799,382 +1175,6 @@ export default {
       }
 
       saveAs(new Blob([s2ab(wbout)], { type: "application/octet-stream" }), 'Emissionen_' + this.responsedata.bezeichnung + '.xlsx');
-    },
-
-    /**
-     * Fetches Get request to get survey data and evaluation.
-     */
-    getData: async function () {
-      await fetch(process.env.VUE_APP_BASEURL + "/auswertung?id=" + this.$props.umfrageid, {
-        method: "GET",
-        headers: {
-          "Authorization": "Bearer " + this.$keycloak.token,
-        },
-      }).then((response) => response.json())
-        .then((body) => {
-          if (body.status == "success") {
-            this.responseSuccessful = true
-            this.responsedata = body.data
-            this.responsedata.auswertungFreigegeben = (body.data.auswertungFreigegeben == 1) ? true : false
-            this.displayCharts();
-            this.roundResponseData();
-
-            this.gebaeudeIDsUndZaehler = this.responsedata.gebaeudeIDsUndZaehler
-            this.umfrageGebaeude = this.responsedata.umfrageGebaeude.map(x => [translateGebaeudeIDToSymbolic(x["gebaeudeNr"]), x["nutzflaeche"]])
-            this.zaehler = this.responsedata.zaehler
-          }
-          else {  // Fehlerbehandlung
-            this.responseNotSuccessful = true
-            this.responseerror = body.error
-          }
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        }
-      );
-    },
-
-    /**
-     * updateFlipLinkShare sendet eine POST update Request ans Backend, wodurch das Link Sharing für diese Umfrage aktiviert wird, wenn es aktuell deaktiviert ist
-     * bzw. deaktiviert wenn es gerade aktiviert ist.
-     * Im Erfolgsfall wird eine Erfolgsnachricht angezeigt und sonst eine Fehlermeldung.
-     * Der lokal gespeicherte LinkShare Wert wird angepasst.
-     */
-    updateFlipLinkShare: async function() {
-      this.showLoading = true;
-      this.displaySuccess = false;
-
-      await fetch(process.env.VUE_APP_BASEURL + "/auswertung/updateLinkShare", {
-        method: "POST",
-        headers: {
-          "Authorization": "Bearer " + this.$keycloak.token,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          umfrageID: this.$props.umfrageid,
-          // freigabewert 0 ist teilen deaktiviert, 1 aktiviert und wir flippen hier
-          freigabewert: ((this.responsedata.auswertungFreigegeben) ? 1 : 0),
-        }),
-      }).then((response) => response.json())
-        .then((body) => {
-          this.showLoading = false
-          if (body.status == "success") {
-            this.displaySuccess = true
-        }
-        else {  // Fehlerbehandlung
-          this.showLoading = false
-          this.responseNotSuccessful = true
-          this.responseerror = body.error
-        }
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-    },
-
-    /**
-     * Method checks which charts should be displayed based on the response data.
-     */
-    displayCharts: function () {
-      // negative values indicate that no data is available
-      if (this.responsedata.emissionenWaerme < 0 || this.responsedata.emissionenKaelte < 0 || this.responsedata.emissionenStrom < 0) {
-        this.displayEnergieCharts = false;
-      }
-      if (this.responsedata.verbrauchWaerme < 0 || this.responsedata.verbrauchKaelte < 0 || this.responsedata.verbrauchStrom < 0) {
-        this.displayEnergieCharts = false;
-      }
-
-      // checks length of object to determine if there is data available
-      this.displayAufteilungDienstreisen = Object.keys(this.responsedata.emissionenDienstreisenAufgeteilt).length > 0
-      this.displayAufteilungPendelwege = Object.keys(this.responsedata.emissionenPendelwegeAufgeteilt).length > 0
-      this.displayAufteilungITGeraete = Object.keys(this.responsedata.emissionenITGeraeteAufgeteilt).length > 0
-    },
-
-    /**
-     * Method rounds all emission values to unit t with 3 decimal places.
-     */
-    roundResponseData: function () {
-      let roundFactor1 = 10000
-      let roundFactor2 = 100
-
-      this.responsedata.emissionenWaerme = Math.round(this.responsedata.emissionenWaerme / roundFactor1) / roundFactor2
-      this.responsedata.emissionenStrom = Math.round(this.responsedata.emissionenStrom / roundFactor1) / roundFactor2
-      this.responsedata.emissionenKaelte = Math.round(this.responsedata.emissionenKaelte / roundFactor1) / roundFactor2
-      this.responsedata.emissionenEnergie = Math.round(this.responsedata.emissionenEnergie / roundFactor1) / roundFactor2
-
-      this.responsedata.emissionenITGeraeteHauptverantwortlicher = Math.round(this.responsedata.emissionenITGeraeteHauptverantwortlicher / roundFactor1) / roundFactor2
-      this.responsedata.emissionenITGeraeteMitarbeiter = Math.round(this.responsedata.emissionenITGeraeteMitarbeiter / roundFactor1) / roundFactor2
-      this.responsedata.emissionenITGeraete = Math.round(this.responsedata.emissionenITGeraete / roundFactor1) / roundFactor2
-
-      this.responsedata.emissionenDienstreisen = Math.round(this.responsedata.emissionenDienstreisen / roundFactor1) / roundFactor2
-      this.responsedata.emissionenPendelwege = Math.round(this.responsedata.emissionenPendelwege / roundFactor1) / roundFactor2
-
-      this.responsedata.emissionenGesamt = Math.round(this.responsedata.emissionenGesamt / roundFactor1) / roundFactor2
-      this.responsedata.emissionenProMitarbeiter = Math.round(this.responsedata.emissionenProMitarbeiter / roundFactor1) / roundFactor2
-
-      Object.keys(this.responsedata.emissionenDienstreisenAufgeteilt).forEach(key => {
-        this.responsedata.emissionenDienstreisenAufgeteilt[key] = Math.round(this.responsedata.emissionenDienstreisenAufgeteilt[key] / roundFactor1) / roundFactor2
-      })
-      Object.keys(this.responsedata.emissionenITGeraeteAufgeteilt).forEach(key => {
-        this.responsedata.emissionenITGeraeteAufgeteilt[key] = Math.round(this.responsedata.emissionenITGeraeteAufgeteilt[key] / roundFactor1) / roundFactor2
-      })
-      Object.keys(this.responsedata.emissionenPendelwegeAufgeteilt).forEach(key => {
-        this.responsedata.emissionenPendelwegeAufgeteilt[key] = Math.round(this.responsedata.emissionenPendelwegeAufgeteilt[key] / roundFactor1) / roundFactor2
-      })
-
-
-      this.responsedata.umfragenanteil = Math.round(this.responsedata.umfragenanteil * 1000) / 10
-      this.responsedata.vergleich2PersonenHaushalt = Math.round(this.responsedata.vergleich2PersonenHaushalt * 100) / 100
-      this.responsedata.vergleich4PersonenHaushalt = Math.round(this.responsedata.vergleich4PersonenHaushalt * 100) / 100
-    },
-
-    /**
-     * Method initializes chartdata and options for all charts by deep copying the general chartdata and options.
-     */
-    initializeCharts: function () {
-      this.chartdataGesamtDoughnut = JSON.parse(JSON.stringify(this.generalChartdataDoughnut));
-      this.optionsGesamtDoughnut = JSON.parse(JSON.stringify(this.generalOptionsDoghnut));
-      this.chartdataGesamtBar = JSON.parse(JSON.stringify(this.generalChartdataBar));
-      this.optionsGesamtBar = JSON.parse(JSON.stringify(this.generalOptionsBar));
-
-      this.chartdataEnergieDoughnut = JSON.parse(JSON.stringify(this.generalChartdataDoughnut));    // deep copy
-      this.optionsEnergieDoughnut = JSON.parse(JSON.stringify(this.generalOptionsDoghnut));    // deep copy
-      this.chartdataEnergieBar = JSON.parse(JSON.stringify(this.generalChartdataBar));    // deep copy
-      this.optionsEnergieBar = JSON.parse(JSON.stringify(this.generalOptionsBar));      // deep copy
-
-      this.chartdataVerbrauchDoughnut = JSON.parse(JSON.stringify(this.generalChartdataDoughnut));    // deep copy
-      this.optionsVerbrauchDoughnut = JSON.parse(JSON.stringify(this.generalOptionsDoghnut));    // deep copy
-      this.chartdataVerbrauchBar = JSON.parse(JSON.stringify(this.generalChartdataBar));    // deep copy
-      this.optionsVerbrauchBar = JSON.parse(JSON.stringify(this.generalOptionsBar)); 
-
-      this.chartdataDienstreisenBar = JSON.parse(JSON.stringify(this.generalChartdataBar));    // deep copy
-      this.optionsDienstreisenBar = JSON.parse(JSON.stringify(this.generalOptionsBar));    // deep copy
-
-      this.chartdataPendelwegeBar = JSON.parse(JSON.stringify(this.generalChartdataBar));    // deep copy
-      this.optionsPendelwegeBar = JSON.parse(JSON.stringify(this.generalOptionsBar));    // deep copy
-
-      this.chartdataITGeraeteBar = JSON.parse(JSON.stringify(this.generalChartdataBar));    // deep copy
-      this.optionsITGeraeteBar = JSON.parse(JSON.stringify(this.generalOptionsBar));    // deep copy
-    },
-
-    /**
-     * Helper function to call all setChart functions.
-     */
-    setChartData: function() {
-      this.barWidthComp();
-      
-      this.generalChartdataBar.datasets[0].maxBarThickness = this.barWidth
-      this.chartdataDienstreisenBar.datasets[0].maxBarThickness = this.barWidth
-      this.chartdataPendelwegeBar.datasets[0].maxBarThickness = this.barWidth
-      this.chartdataITGeraeteBar.datasets[0].maxBarThickness = this.barWidth
-      this.chartdataEnergieBar.datasets[0].maxBarThickness = this.barWidth
-      this.chartdataVerbrauchBar.datasets[0].maxBarThickness = this.barWidth
-      this.chartdataGesamtBar.datasets[0].maxBarThickness = this.barWidth
-
-      this.setChartGesamt();
-      if (this.displayEnergieCharts){
-        this.setChartEnergie();
-        this.setChartVerbrauch();
-      }
-      if (this.displayAufteilungDienstreisen){
-        this.setChartDienstreisen();
-      }
-      if (this.displayAufteilungPendelwege){
-        this.setChartPendelwege();
-      }
-      if (this.displayAufteilungITGeraete){
-        this.setChartITGeraete();
-      }
-    },
-
-    /**
-     * Method sets data and options for the Gesamt charts.
-     */
-    setChartGesamt: function () {
-      let data = [
-        { label: i18n.t('common.Energie'), value: this.responsedata.emissionenEnergie, color: 'rgb(255, 99, 132)' },
-        { label: i18n.t('common.Dienstreisen'), value: this.responsedata.emissionenDienstreisen, color: 'rgb(54, 162, 235)' },
-        { label: i18n.t('common.Pendelwege'), value: this.responsedata.emissionenPendelwege, color: 'rgb(255, 205, 86)' },
-        { label: i18n.t('common.ITGeraete'), value: this.responsedata.emissionenITGeraete, color: 'rgb(75, 192, 192)' },
-      ];
-      data.sort((a, b) => b.value - a.value)
-
-      this.chartdataGesamtDoughnut.labels = data.map(a => a.label);
-      this.chartdataGesamtDoughnut.datasets[0].data = data.map(a => a.value);
-      this.chartdataGesamtDoughnut.datasets[0].backgroundColor = data.map(a => a.color);
-      
-      this.optionsGesamtDoughnut.plugins.datalabels.formatter = (value) => {
-        if(this.responsedata.emissionenGesamt === 0){
-          return 0
-        }
-        return i18n.n((Math.round(value / this.responsedata.emissionenGesamt * 1000) / 10), "decimal") + '%';
-      }
-
-      this.chartdataGesamtBar.labels = data.map(a => a.label);
-      this.chartdataGesamtBar.datasets[0].data = data.map(a => a.value);
-      this.chartdataGesamtBar.datasets[0].backgroundColor = data.map(a => a.color);
-
-      this.optionsGesamtBar.plugins.datalabels.formatter = (value) => {
-        return i18n.n(value, "decimal");
-      }
-
-      this.$refs["doughnut-gesamt"].updateChart()
-      this.$refs["bar-gesamt"].updateChart()
-    },
-
-    /**
-     * Method sets data and options for the Energie charts.
-     */
-    setChartEnergie: function () {
-      let data = [
-        { label: i18n.t('common.Waerme'), value: this.responsedata.emissionenWaerme, color: 'rgb(240, 128, 128)' },
-        { label: i18n.t('common.Kaelte'), value: this.responsedata.emissionenKaelte, color: 'rgb(0, 204, 255)' },
-        { label: i18n.t('common.Strom'), value: this.responsedata.emissionenStrom, color: 'rgb(255, 219, 77)' },
-      ];
-
-      data.sort((a, b) => b.value - a.value)
-
-      this.chartdataEnergieDoughnut.labels = data.map(a => a.label);
-      this.chartdataEnergieDoughnut.datasets[0].data = data.map(a => a.value);
-      this.chartdataEnergieDoughnut.datasets[0].backgroundColor = data.map(a => a.color);
-
-      this.optionsEnergieDoughnut.plugins.datalabels.formatter = (value) => {
-        if(this.responsedata.emissionenEnergie === 0){
-          return 0
-        }
-        return i18n.n((Math.round(value / this.responsedata.emissionenEnergie * 1000) / 10), "decimal") + '%';
-      }
-
-      this.chartdataEnergieBar.labels = data.map(a => a.label);
-      this.chartdataEnergieBar.datasets[0].data = data.map(a => a.value);
-      this.chartdataEnergieBar.datasets[0].backgroundColor = data.map(a => a.color);
-
-      this.optionsEnergieBar.plugins.datalabels.formatter = (value) => {
-        return i18n.n(value, "decimal");
-      }
-
-      this.$refs["doughnut-energie"].updateChart()
-      this.$refs["bar-energie"].updateChart()
-    },
-
-    /**
-     * Method sets data and options for the Energieverbrauch charts.
-     */
-    setChartVerbrauch: function () {
-      let data = [
-        { label: i18n.t('common.Waerme'), value: this.responsedata.verbrauchWaerme, color: 'rgb(240, 128, 128)'},
-        { label: i18n.t('common.Kaelte'), value: this.responsedata.verbrauchKaelte, color:  'rgb(0, 204, 255)'},
-        { label: i18n.t('common.Strom'), value: this.responsedata.verbrauchStrom, color: 'rgb(255, 219, 77)' },
-      ];
-
-      data.sort((a, b) => b.value - a.value)
-
-      this.chartdataVerbrauchDoughnut.labels = data.map(a => a.label);
-      this.chartdataVerbrauchDoughnut.datasets[0].label = i18n.t('evaluation.surveyEvaluation.kWh')
-      this.chartdataVerbrauchDoughnut.datasets[0].data = data.map(a => a.value);
-      this.chartdataVerbrauchDoughnut.datasets[0].backgroundColor = data.map(a => a.color);
-
-      this.optionsVerbrauchDoughnut.plugins.datalabels.formatter = (value) => {
-        if(this.responsedata.verbrauchEnergie === 0){
-          return 0
-        }
-        return i18n.n((Math.round(value / this.responsedata.verbrauchEnergie * 1000) / 10), "decimal") + '%';
-      }
-
-      this.chartdataVerbrauchBar.labels = data.map(a => a.label);
-      this.chartdataVerbrauchBar.datasets[0].label = i18n.t('evaluation.surveyEvaluation.kWh')
-      this.chartdataVerbrauchBar.datasets[0].data = data.map(a => a.value);
-      this.chartdataVerbrauchBar.datasets[0].backgroundColor = data.map(a => a.color);
-
-      this.optionsVerbrauchBar.scales.yAxes[0].scaleLabel.labelString = i18n.t('evaluation.surveyEvaluation.kWh')
-      this.optionsVerbrauchBar.tooltips.callbacks.label = function(tooltipItem, data) {
-        let idx = tooltipItem.index;
-        return i18n.t('common.Verbrauch') + ": " + i18n.n(data.datasets[0].data[idx], "decimal")
-      }
-      this.optionsVerbrauchBar.plugins.datalabels.formatter = (value) => {
-        return i18n.n(value, "decimal");
-      }
-
-      this.$refs["doughnut-verbrauch"].updateChart()
-      this.$refs["bar-verbrauch"].updateChart()
-    },
-
-    /**
-     * Method sets data and options for the Dienstreisen charts.
-     */
-    setChartDienstreisen: function () {
-      let data = []
-
-      let dienstreisenAufgeteilt = this.responsedata.emissionenDienstreisenAufgeteilt
-      let labelMap = getDienstreisenLabelMap()
-
-      Object.keys(dienstreisenAufgeteilt).forEach(function(key) {
-        let labelParts = key.split("-")
-        let label = labelMap.get(labelParts[0]) + (labelParts[1] ? " - " + labelMap.get(labelParts[1]) : "")
-        data.push({label: label, value: dienstreisenAufgeteilt[key], color: 'rgb(54,162,235)'})
-      })
-
-      data.sort((a, b) => b.value - a.value)
-
-      this.chartdataDienstreisenBar.labels = data.map(a => a.label);
-      this.chartdataDienstreisenBar.datasets[0].data = data.map(a => a.value);
-      this.chartdataDienstreisenBar.datasets[0].backgroundColor = data.map(a => a.color);
-
-      this.optionsDienstreisenBar.plugins.datalabels.formatter = (value) => {
-        return i18n.n(value, "decimal");
-      }
-
-      this.$refs["bar-dienstreisen"].updateChart()
-    },
-
-    /**
-     * Method sets data and options for the Pendelwege charts.
-     */
-    setChartPendelwege: function () {
-      let data = []
-
-      let pendelwegeAufgeteilt = this.responsedata.emissionenPendelwegeAufgeteilt
-      let labelMap = getPendelwegeLabelMap()
-      Object.keys(pendelwegeAufgeteilt).forEach(function(key) {
-        data.push({label: labelMap.get(key), value: pendelwegeAufgeteilt[key], color: 'rgb(255, 205, 86)'})
-      })
-
-      data.sort((a, b) => b.value - a.value)
-
-      this.chartdataPendelwegeBar.labels = data.map(a => a.label);
-      this.chartdataPendelwegeBar.datasets[0].data = data.map(a => a.value);
-      this.chartdataPendelwegeBar.datasets[0].backgroundColor = data.map(a => a.color);
-
-      this.optionsPendelwegeBar.plugins.datalabels.formatter = (value) => {
-        return i18n.n(value, "decimal");
-      }
-
-      this.$refs["bar-pendelwege"].updateChart()
-    },
-
-    /**
-     * Method sets data and options for the ITGeraete charts.
-     */
-    setChartITGeraete: function () {
-      let data = []
-
-      let itGeraeteAufgeteilt = this.responsedata.emissionenITGeraeteAufgeteilt
-      let labelMap = getITGeraeteLabelMap()
-      Object.keys(itGeraeteAufgeteilt).forEach(function(key) {
-        data.push({label: labelMap.get(key), value: itGeraeteAufgeteilt[key], color: 'rgb(75, 192, 192)'})
-      })
-
-      data.sort((a, b) => b.value - a.value)
-
-      this.chartdataITGeraeteBar.labels = data.map(a => a.label);
-      this.chartdataITGeraeteBar.datasets[0].data = data.map(a => a.value);
-      this.chartdataITGeraeteBar.datasets[0].backgroundColor = data.map(a => a.color);
-
-      this.optionsITGeraeteBar.plugins.datalabels.formatter = (value) => {
-        return i18n.n(value, "decimal");
-      }
-
-      this.$refs["bar-itgeraete"].updateChart()
     },
   },
 }
