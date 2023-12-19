@@ -112,15 +112,15 @@
         </v-row>
 
         <!-- Aufteilung Dienstreisen -->
-        <v-row>
+        <v-row v-if="displayAufteilungDienstreisen">
           <v-col class="d-flex justify-center">
             <h4>{{ $t('evaluation.surveyEvaluation.AufteilungDienstreisen') }}</h4>
           </v-col>
         </v-row>
-        <v-row>
+        <v-row v-if="displayAufteilungDienstreisen">
           <v-col>
             <bar-chart
-              ref="chart"
+              ref="chart-dienstreisen"
               :chart-data="chartdataDienstreisenBar"
               :options="optionsDienstreisenBar"
             />
@@ -128,14 +128,15 @@
         </v-row>
 
         <!-- Aufteilung Pendelwege -->
-        <v-row>
+        <v-row v-if="displayAufteilungPendelwege">
           <v-col class="d-flex justify-center">
             <h4>{{ $t('evaluation.surveyEvaluation.AufteilungPendelwege') }}</h4>
           </v-col>
         </v-row>
-        <v-row>
+        <v-row v-if="displayAufteilungPendelwege">
           <v-col>
             <bar-chart
+              ref="chart-pendelwege"
               :chart-data="chartdataPendelwegeBar"
               :options="optionsPendelwegeBar"
             />
@@ -143,14 +144,15 @@
         </v-row>
 
         <!-- Aufteilung ITGeraete -->
-        <v-row>
+        <v-row v-if="displayAufteilungITGeraete">
           <v-col class="d-flex justify-center">
             <h4>{{ $t('evaluation.surveyEvaluation.AufteilungITGeraete') }}</h4>
           </v-col>
         </v-row>
-        <v-row>
+        <v-row v-if="displayAufteilungITGeraete">
           <v-col>
             <bar-chart
+              ref="chart-itgeraete"
               :chart-data="chartdataITGeraeteBar"
               :options="optionsITGeraeteBar"
             />
@@ -376,6 +378,9 @@ export default {
       linkshareBaseURL: process.env.VUE_APP_URL + '/survey/results/',
 
       displayEnergieCharts: true,
+      displayAufteilungDienstreisen: false,
+      displayAufteilungPendelwege: false,
+      displayAufteilungITGeraete: true,
 
       // specific chart options and data
       chartdataGesamtDoughnut: null,
@@ -517,11 +522,7 @@ export default {
       zaehler: [],
 
       // for dynamic calculation of bar width
-      maxBars: null,
-      chartWidth: null,
-      halfChartWidth: null,
       barWidth: null,
-
       resizeTimout: null,
     }
   },
@@ -577,10 +578,18 @@ export default {
      * Computes the bar width for the bar charts based on the current canvas with and number of bars to display.
      */
     barWidthComp: function() {
-      this.maxBars = Math.max(Object.keys(this.responsedata.emissionenDienstreisenAufgeteilt).length, Object.keys(this.responsedata.emissionenPendelwegeAufgeteilt).length, Object.keys(this.responsedata.emissionenITGeraeteAufgeteilt).length)
-      this.chartWidth = this.$refs["chart"].$refs.canvas.width
-      this.halfChartWidth = this.$refs["half-chart"].$refs.canvas.width
-      this.barWidth = Math.min(this.chartWidth / this.maxBars * 0.75, this.halfChartWidth / 4 * 0.75)
+      let maxBars = Math.max(Object.keys(this.responsedata.emissionenDienstreisenAufgeteilt).length, Object.keys(this.responsedata.emissionenPendelwegeAufgeteilt).length, Object.keys(this.responsedata.emissionenITGeraeteAufgeteilt).length)
+
+      let chartWidths = ["chart-dienstreisen", "chart-pendelwege", "chart-itgeraete"].map(x => this.$refs[x] ? this.$refs[x].$refs.canvas.width : 0)
+      let chartWidth = Math.max(...chartWidths)
+
+      let halfChartWidth = this.$refs["half-chart"].$refs.canvas.width
+
+      if (chartWidth == 0) {
+        this.barWidth = halfChartWidth / 4 * 0.75
+      } else {
+        this.barWidth = Math.min(chartWidth / maxBars * 0.75, halfChartWidth / 4 * 0.75)
+      }
     },
 
     /**
@@ -802,7 +811,7 @@ export default {
             this.responseSuccessful = true
             this.responsedata = body.data
             this.responsedata.auswertungFreigegeben = (body.data.auswertungFreigegeben == 1) ? true : false
-            this.checkNegativValue();
+            this.displayCharts();
             this.roundResponseData();
 
             this.gebaeudeIDsUndZaehler = this.responsedata.gebaeudeIDsUndZaehler
@@ -859,16 +868,21 @@ export default {
     },
 
     /**
-     * Method checks for negativ values in energy emissions which indecated that the year of the survey has no data in the database.
-     * If dedected sets the flag displayEnergieChart to false
+     * Method checks which charts should be displayed based on the response data.
      */
-    checkNegativValue: function () {
+    displayCharts: function () {
+      // negative values indicate that no data is available
       if (this.responsedata.emissionenWaerme < 0 || this.responsedata.emissionenKaelte < 0 || this.responsedata.emissionenStrom < 0) {
         this.displayEnergieCharts = false;
       }
       if (this.responsedata.verbrauchWaerme < 0 || this.responsedata.verbrauchKaelte < 0 || this.responsedata.verbrauchStrom < 0) {
         this.displayEnergieCharts = false;
       }
+
+      // checks length of object to determine if there is data available
+      this.displayAufteilungDienstreisen = Object.keys(this.responsedata.emissionenDienstreisenAufgeteilt).length > 0
+      this.displayAufteilungPendelwege = Object.keys(this.responsedata.emissionenPendelwegeAufgeteilt).length > 0
+      this.displayAufteilungITGeraete = Object.keys(this.responsedata.emissionenITGeraeteAufgeteilt).length > 0
     },
 
     /**
