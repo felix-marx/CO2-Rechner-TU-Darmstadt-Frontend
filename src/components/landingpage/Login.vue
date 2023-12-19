@@ -1,39 +1,39 @@
+<!-- eslint-disable vue/no-v-html -->
 <template>
   <v-app>
     <Header 
       :display-user-setting="false"
       :display-back-button="false"
+      :display-login-button="true"
     />
-    <v-main class="mb-16">
+    <v-main class="mb-8">
       <v-card
         elevation="2"
-        class="py-4"
+        class="pb-4"
         outlined
       >
         <div class="text-center">
-          <v-card-title class="justify-center">
-            <h2>TU Darmstadt CO<sub>2</sub>-Rechner</h2>
-          </v-card-title>Willkommen bei dem TU Darmstadt CO<sub>2</sub>-Rechner. Mit diesem können Sie die CO<sub>2</sub>-Emissionen von TU-Einheiten berechnen.
+          <h2
+            class="py-3" 
+            v-html="$t('landingpage.Login.Titel')"
+          />
+          <label v-html="$t('landingpage.Login.Willkommen_1')" />
         </div>
 
-        <!-- Login Button -->
-        <v-container>
+        <v-container class="mt-4">
           <v-row>
-            <v-col
-              v-if="!$keycloak.authenticated"
-              class="text-center mt-6"
+            <v-spacer />
+            <v-btn
+              class="ma-4"
+              color="primary"
+              @click="$keycloak.loginFn()"
             >
-              <v-btn
-                color="primary"
-                type="button"
-                @click="$keycloak.loginFn()"
-              >
-                <v-icon left>
-                  mdi-account
-                </v-icon>
-                <span>Anmelden mit TU-ID</span>
-              </v-btn>
-            </v-col>
+              <v-icon left>
+                mdi-account
+              </v-icon>
+              {{ $t('header.Header.LoginButton') }}
+            </v-btn>
+            <v-spacer />
           </v-row>
         </v-container>
 
@@ -91,9 +91,8 @@
 </template>
 
 <script>
-import Footer from "../componentParts/Footer.vue";
-import Header from "../componentParts/Header.vue";
-
+import Footer from "../footer/Footer.vue";
+import Header from "../header/Header.vue";
 
 export default {
   name: "Login",
@@ -102,5 +101,16 @@ export default {
     Header,
     Footer
   },
+
+  data: () => ({
+    faq: process.env.VUE_APP_URL + '/faq',
+    faq_bilazierung: process.env.VUE_APP_URL + '/faq#bilanzierung',
+    faq_allgemein: process.env.VUE_APP_URL + '/faq#allgemein',
+    faq_nutzung: process.env.VUE_APP_URL + '/faq#nutzung',
+  }),
 };
 </script>
+
+<style>
+  a { text-decoration: none; }
+</style>

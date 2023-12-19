@@ -27,7 +27,7 @@
             <v-icon v-if="moreInfo">
               mdi-menu-down
             </v-icon>
-            Weiter Informationen
+            {{ $t('componentParts.dataGapVisualization.weitereInformationen') }}
           </v-btn>
         </v-row>
         <v-row
@@ -42,6 +42,10 @@
 </template>
   
 <script>
+import i18n from "@/i18n";
+import { translateGebaeudeIDToSymbolic } from "../../utils";
+
+
 export default {
   props:{
     gebaeudeIDsUndZaehler: {
@@ -127,28 +131,28 @@ export default {
           // generiere lange Nachricht
           var msgLongFragments = []
           if (zaehlerZustand[0] == 2){
-            msgLongFragments.push("keine Kältedaten für das Jahr " + this.bilanzierungsjahr)
+            msgLongFragments.push(i18n.t('componentParts.dataGapVisualization.KeineKaelteDaten') + this.bilanzierungsjahr)
           }
           if (zaehlerZustand[1] == 1){
-            msgLongFragments.push("keine Information zu Stromzähleren")
+            msgLongFragments.push(i18n.t('componentParts.dataGapVisualization.KeineStromzaehler') )
           }
           else if (zaehlerZustand[1] == 2){
-            msgLongFragments.push("keine Stromdaten für das Jahr " + this.bilanzierungsjahr)
+            msgLongFragments.push(i18n.t('componentParts.dataGapVisualization.KeineStromdaten') + this.bilanzierungsjahr)
           }
           if (zaehlerZustand[2] == 1){
-            msgLongFragments.push("keine Information zu Wärmezähleren")
+            msgLongFragments.push(i18n.t('componentParts.dataGapVisualization.KeineWaermezaehler') )
           }
           else if (zaehlerZustand[2] == 2){
-            msgLongFragments.push("keine Wärmedaten für das Jahr " + this.bilanzierungsjahr)
+            msgLongFragments.push(i18n.t('componentParts.dataGapVisualization.KeineWaermedaten') + this.bilanzierungsjahr)
           }
 
-          msgLong = msgLong + "Für " + selektierteGebaeude[i] + " haben wir " + msgLongFragments.slice(0, -1).join(", ") + (msgLongFragments.length != 1 ? " und " : "") + msgLongFragments.slice(-1) + ".\n "
+          msgLong = msgLong + i18n.t('componentParts.dataGapVisualization.FuerGebaeude_0') + selektierteGebaeude[i] + i18n.t('componentParts.dataGapVisualization.FuerGebaeude_1') + msgLongFragments.slice(0, -1).join(", ") + (msgLongFragments.length != 1 ? i18n.t('componentParts.dataGapVisualization.FuerGebaeude_2') : "") + msgLongFragments.slice(-1) + ".\n "
         }
       }
       msgLong = msgLong.slice(0, -2) // remove last \n and space
 
       // generiere kurze Nachricht
-      msgShort = "Für die Gebäude " + msgShortFragments.slice(0, -1).join(", ") + (msgShortFragments.length > 1 ? " und " : "") + msgShortFragments.slice(-1) + " haben wir aktuell leider nur unvollständige Daten zum Energieverbrauch!"
+      msgShort = i18n.t('componentParts.dataGapVisualization.UnvollstaendigeEnergieverbrauch_0') + msgShortFragments.slice(0, -1).join(", ") + (msgShortFragments.length > 1 ? i18n.t('componentParts.dataGapVisualization.UnvollstaendigeEnergieverbrauch_1') : "") + msgShortFragments.slice(-1) + i18n.t('componentParts.dataGapVisualization.UnvollstaendigeEnergieverbrauch_2')
 
       return [msgShort, msgLong]
     },
@@ -158,23 +162,6 @@ export default {
     },
   },
 };
-
-/**
- * Translates a given numeric gebaeudeID to its symbolic equivalent (string).
- * E.g. 1101 is translated to S101, 3312 to L312 and so on.
- */
-function translateGebaeudeIDToSymbolic(gebaeudeID) {
-  let gebaeudeDict = {
-      1: "S",
-      2: "B",
-      3: "L",
-      4: "H",
-      5: "W",
-  };
-  gebaeudeID = gebaeudeID.toString()
-  let translatedID = gebaeudeDict[gebaeudeID.substring(0, 1)] + gebaeudeID.substring(1);
-  return translatedID;
-}
 
 </script>
   

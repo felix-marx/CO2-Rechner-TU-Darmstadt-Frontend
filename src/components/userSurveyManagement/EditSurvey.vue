@@ -20,7 +20,7 @@
               type="success"
               dense
             >
-              Die Umfrage wurde erfolgreich geändert.
+              {{ $t('userSurveyManagement.editSurvey.ErfolgreichGeändert') }}
             </v-alert>
             <v-alert
               v-if="displayError"
@@ -50,7 +50,7 @@
                   <v-icon left>
                     mdi-content-save
                   </v-icon>
-                  Änderungen speichern
+                  {{ $t('userSurveyManagement.editSurvey.AenderungSpeichern') }}
                 </v-btn>
               </template>
 
@@ -69,7 +69,7 @@
                     <div
                       v-if="errorTextArray.required.length != 0"
                     >
-                      Sie haben folgende Pflichtfelder nicht angegeben: <br>
+                      {{ $t('userSurveyManagement.editSurvey.AenderungSpeichern') }} <br>
                       <v-list
                         flat
                       >
@@ -89,7 +89,7 @@
                     <div
                       v-if="errorTextArray.nonRequired.length != 0"
                     >
-                      Ihre Umfrage enthält folgende kleinere Probleme: <br>
+                      {{ $t('userSurveyManagement.editSurvey.UmfrageHatProbleme') }}<br>
                       <v-list
                         flat
                       >
@@ -111,7 +111,7 @@
                     v-if="errorTextArray.required.length == 0 && errorTextArray.nonRequired.length == 0"
                     class="pt-6"
                   >
-                    Möchten Sie ihre Änderungen wirklich speichern?
+                    {{ $t('userSurveyManagement.editSurvey.UmfrageWirklichSpeichern_1') }}
                   </div>
                 </v-card-text>
 
@@ -124,7 +124,7 @@
                     text
                     @click="errorDialog = false"
                   >
-                    Weiter bearbeiten
+                    {{ $t('userSurveyManagement.editSurvey.WeiterBearbeiten') }}
                   </v-btn>
                   <v-btn
                     v-if="errorTextArray.required.length == 0"
@@ -146,14 +146,14 @@
               <v-icon left>
                 mdi-pencil
               </v-icon>
-              {{ ( blockInput ? " Bearbeiten aktivieren" : " Bearbeiten deaktivieren") }}
+              {{ ( blockInput ? $t('userSurveyManagement.editSurvey.BearbeitenAktivieren') : $t('userSurveyManagement.editSurvey.BearbeitenDeaktivieren') ) }}
             </v-btn>
           </v-row>
           
           <!-- Bezeichnung -->
           <br>
           <h3>
-            Wie soll Ihre Umfrage bezeichnet werden?
+            {{ $t('userSurveyManagement.editSurvey.UmfrageBezeichnung') }}
           </h3>
           <v-divider />
           <br>
@@ -163,8 +163,8 @@
               <v-text-field
                 v-model="umfrage.bezeichnung"
                 :min="0"
-                label="Bezeichnung"
-                type="string"
+                :label="$t('common.Bezeichung')"
+                type="string" 
                 prepend-icon="mdi-form-textbox"
                 :disabled="blockInput"
               />
@@ -174,7 +174,7 @@
           <!-- Bilanzierungsjahr -->
           <br>
           <h3>
-            Auf welches Bilanzierungsjahr beziehen Sie sich in dieser Umfrage?
+            {{ $t('userSurveyManagement.editSurvey.WelchesBilanzierungsjahr') }}
           </h3>
           <v-divider />
           <br>
@@ -184,7 +184,7 @@
               <v-autocomplete
                 v-model="umfrage.jahr"
                 :items="possibleYears"
-                label="Bilanzierungsjahr"
+                :label="$t('common.Bilanzierungsjahr')"
                 prepend-icon="mdi-calendar-question"
                 class="pr-5"
                 :disabled="blockInput"
@@ -195,7 +195,7 @@
           <!-- Mitarbeitende in Abteilung -->
 
           <br>
-          <h3>Wie viele Mitarbeitende gibt es in Ihrer Abteilung?</h3>
+          <h3> {{ $t('userSurveyManagement.editSurvey.MitarbeiterInAbteilung') }}</h3>
           <v-divider />
           <br>
 
@@ -205,7 +205,7 @@
                 v-model="umfrage.mitarbeiteranzahl"
                 :rules="absolutpositivRules"
                 :min="0"
-                label="Mitarbeitendenzahl"
+                :label="$t('common.Mitarbeitendenzahl')"
                 prepend-icon="mdi-account"
                 :disabled="blockInput"
               />
@@ -216,13 +216,12 @@
 
           <br>
           <h3>
-            Welche Gebäude nutzt Ihre Abteilung (<a
+            {{ $t('userSurveyManagement.editSurvey.WelcheGebaeude') }} (<a
               href="https://www.tu-darmstadt.de/universitaet/campus/index.de.jsp"
               target="_blank"
-            >Lageplan</a>)?
+            > {{ $t('userSurveyManagement.editSurvey.Lageplan') }}</a>)?
             <Tooltip
-              tooltip-text="Alle Gebäude beginnen je nach Standort mit den Buchstaben S, B, L,
-              H oder W. Die Autovervollständigung sollte Ihnen dabei helfen."
+              :tooltip-text="$t('userSurveyManagement.editSurvey.Lageplan_tooltip')"
             />
           </h3>
 
@@ -239,7 +238,7 @@
                   v-if="gebaeudeIDs"
                   v-model="objekt[0]"
                   :items="gebaeudeIDs"
-                  label="Gebäudenummer"
+                  :label="$t('common.Gebäudenummer')"
                   prepend-icon="mdi-domain"
                   class="pr-5"
                   :disabled="blockInput"
@@ -250,7 +249,7 @@
                   v-model="objekt[1]"
                   :rules="absolutpositivRules"
                   :min="0"
-                  label="Nutzfläche des ausgewählten Gebäudes"
+                  :label="$t('userSurvey.Survey.GebaeudeAbteilung_3')"
                   prepend-icon="mdi-domain"
                   suffix="qm"
                   :disabled="blockInput"
@@ -263,7 +262,7 @@
                   color="add"
                   @click="newGebaeude()"
                 >
-                  Hinzufügen
+                  {{ $t('common.Hinzufuegen') }}
                 </v-btn>
               </v-col>
               <v-col>
@@ -273,7 +272,7 @@
                   color="delete"
                   @click="removeGebaeude(index)"
                 >
-                  Löschen
+                  {{ $t('common.Loeschen') }}
                 </v-btn>
               </v-col>
             </v-row>
@@ -284,11 +283,12 @@
             <v-alert
               type="warning"
             >
-              Sie haben mehrmals das selbe Gebäude ausgewählt.
+              {{ $t('userSurvey.Survey.GebaeudeWarnung') }}
             </v-alert>
           </v-row>
 
           <DataGapVisualization 
+            v-if="displayDataGapVisualization"
             :gebaeude-i-ds-und-zaehler="gebaeudeIDsUndZaehler"
             :zaehler="zaehler"
             :gebaeude="umfrage.gebaeude"
@@ -298,7 +298,7 @@
           <!-- Umfrage für IT Geräte: Multifunktionsgeräte + Toner, Drucker + Toner, Beamer, Server -->
           <br>
           <h3>
-            Welche IT-Geräte benutzen Sie in Ihrer Abteilung gemeinschaftlich?
+            {{ $t('userSurveyManagement.editSurvey.gemeinschaftlicheITGeraete') }}
           </h3>
           <v-divider />
           <br>
@@ -316,17 +316,17 @@
                 :rules="geraeteRules"
                 :disabled="!umfrage.geraeteanzahl[0][2] || blockInput"
                 :min="0"
-                label="Multifunktionsgeräte z.B. Netzwerkdrucker"
+                :label="$t('userSurvey.Survey.ITGeraeteMFP')"
                 class="pr-5"
-                suffix="Gerät/e"
+                :suffix="$t('userSurvey.Survey.ITGeraeteMFP_Suffix')"
               />
               <v-text-field
                 v-model="umfrage.geraeteanzahl[1][1]"
                 :rules="nichtnegativRules"
                 :disabled="!umfrage.geraeteanzahl[0][2] || blockInput"
                 :min="0"
-                label="verbrauchte Toner"
-                suffix="Toner"
+                :label="$t('userSurvey.Survey.ITGeraeteBenutzteToner')"
+                :suffix="$t('userSurvey.Survey.ITGeraeteBenutzteToner_Suffix')"
               />
             </v-row>
             <!-- Drucker -->
@@ -341,8 +341,8 @@
                 :rules="geraeteRules"
                 :disabled="!umfrage.geraeteanzahl[2][2] || blockInput"
                 :min="0"
-                label="Laser- &amp; Tintenstrahldrucker"
-                suffix="Drucker"
+                :label="$t('userSurvey.Survey.DruckerLabel')"
+                :suffix="$t('userSurvey.Survey.Drucker_Suffix')"
                 class="pr-5"
               />
               <v-text-field
@@ -350,8 +350,8 @@
                 :rules="nichtnegativRules"
                 :disabled="!umfrage.geraeteanzahl[2][2] || blockInput"
                 :min="0"
-                label="verbrauchte Toner"
-                suffix="Toner"
+                :label="$t('userSurvey.Survey.ITGeraeteBenutzteToner')"
+                :suffix="$t('userSurvey.Survey.ITGeraeteBenutzteToner_Suffix')"
               />
             </v-row>
             <!-- Beamer -->
@@ -366,8 +366,8 @@
                 :rules="geraeteRules"
                 :disabled="!umfrage.geraeteanzahl[4][2] || blockInput"
                 :min="0"
-                label="Beamer"
-                suffix="Beamer"
+                :label="$t('userSurvey.Survey.Beamer')"
+                :suffix="$t('userSurvey.Survey.Beamer')"
               />
             </v-row>
             <!-- Server -->
@@ -382,8 +382,8 @@
                 :rules="geraeteRules"
                 :disabled="!umfrage.geraeteanzahl[5][2] || blockInput"
                 :min="0"
-                label="interne Server"
-                suffix="Server"
+                :label="$t('userSurvey.Survey.interneServer')"
+                :suffix="$t('userSurvey.Survey.Server')"
               />
             </v-row>
           </v-container>
@@ -397,6 +397,9 @@
 import Tooltip from "@/components/componentParts/Tooltip.vue";
 import LoadingAnimation from "../componentParts/LoadingAnimation";
 import DataGapVisualization from "../componentParts/DataGapVisualization";
+import i18n from "@/i18n";
+import { translateGebaeudeIDToSymbolic, translateGebaeudeIDToNumeric, resolveITGeraetID } from "../../utils";
+
 
 export default {
   name: "EditSurvey",
@@ -444,6 +447,9 @@ export default {
     displayError: false,
     displaySuccess: false,
 
+    // for DataGapVisualization
+    displayDataGapVisualization: false,
+
     // Dialogvariable + Array mit fehlerhaften Eingaben {fehler: "", pflicht: 0}
     errorDialog: false,
     errorTextArray: {
@@ -454,19 +460,19 @@ export default {
     //Rules for input validation
     geraeteRules: [
       (v) =>
-        !!v || "Wenn Sie das Gerät nicht benutzen, wählen Sie es bitte ab.",
+        !!v || i18n.t('userSurvey.Survey.geraeteRules_1'),
       (v) =>
         parseInt(v) != 0 ||
-        "Wenn Sie das Gerät nicht benutzen, wählen Sie es bitte ab.",
-      (v) => parseInt(v) > 0 || "Bitte geben Sie eine valide Menge an.",
+        i18n.t('userSurvey.Survey.geraeteRules_1'),
+      (v) => parseInt(v) > 0 || i18n.t('userSurvey.Survey.geraeteRules_3'),
     ],
     nichtnegativRules: [
-      (v) => !!v || "Muss angegeben werden.",
-      (v) => parseInt(v) >= 0 || "Bitte geben Sie einen positiven Wert an.",
+      (v) => !!v || i18n.t('userSurvey.Survey.nichtnegativRules_0'),
+      (v) => parseInt(v) >= 0 || i18n.t('userSurvey.Survey.nichtnegativRules_1'),
     ],
     absolutpositivRules: [
-      (v) => !!v || "Muss angegeben werden.",
-      (v) => parseInt(v) > 0 || "Bitte geben Sie einen Wert größer Null an.",
+      (v) => !!v || i18n.t('userSurvey.Survey.absolutpositivRules_0'),
+      (v) => parseInt(v) > 0 || i18n.t('userSurvey.Survey.absolutpositivRules_1'),
     ],
   }),
   computed: {
@@ -515,13 +521,13 @@ export default {
     requiredFieldsMissingArray: function() {
       var fieldsarray = []
       if(this.umfrage.bezeichnung == "" || this.umfrage.bezeichnung == null) {
-        fieldsarray.push("Bezeichnung")
+        fieldsarray.push(i18n.t('userSurvey.Survey.requiredFieldsMissing_0'))
       }
       if(!this.possibleYears.includes(parseInt(this.umfrage.jahr))) {
-        fieldsarray.push("Bilanzierungsjahr")
+        fieldsarray.push(i18n.t('userSurvey.Survey.requiredFieldsMissing_1'))
       }
       if(this.umfrage.mitarbeiteranzahl == null || this.umfrage.mitarbeiteranzahl <= 0) {
-        fieldsarray.push("Anzahl Mitarbeitenden")
+        fieldsarray.push(i18n.t('userSurvey.Survey.requiredFieldsMissing_2'))
       }
       return fieldsarray
     },
@@ -540,20 +546,20 @@ export default {
       
       // Gebaeude
       if(this.duplicateBuilding) {
-        nonRequiredArray.push("Sie haben das mehrmals das selbe Gebäude ausgewählt.")
+        nonRequiredArray.push(i18n.t('userSurvey.Survey.problemeInUmfrage_0'))
       } 
       for(const gebaeude of this.umfrage.gebaeude) {
         if(gebaeude[0] != null && gebaeude[1] <=0) {
-          nonRequiredArray.push("Sie haben für das Gebäude " + gebaeude[0] + " keine gültige Nutzfläche angegeben.")
+          nonRequiredArray.push(i18n.t('userSurvey.Survey.problemeInUmfrage_1') + gebaeude[0] + i18n.t('userSurvey.Survey.problemeInUmfrage_2'))
         }
       }
       // IT Geraete
       for(const it of this.umfrage.geraeteanzahl) {
         if(it[2] && it[1] <= 0) { 
           if((it[0] != 8 && it[0] != 10)) {
-            nonRequiredArray.push("Sie haben das Gerät " + resolveITGeraetID(it[0]) + " angewählt, aber keine gültige Anzahl angegeben.")
+            nonRequiredArray.push(i18n.t('userSurvey.Survey.problemeInUmfrage_3') + resolveITGeraetID(it[0]) + i18n.t('userSurvey.Survey.problemeInUmfrage_4'))
           } else { // Toner
-            nonRequiredArray.push("Sie haben einem ausgewählten Gerät keine verwendeten Toner hinzugefügt. Wenn Sie das Gerät nicht in Benutzung haben, ignorieren Sie diese Nachricht.")
+            nonRequiredArray.push(i18n.t('userSurvey.Survey.problemeInUmfrage_5'))
           }
         }
       }
@@ -674,57 +680,36 @@ export default {
       this.dataRequestSent = false;
     },
 
-    // /**
-    //  * fetchGebaeudeData sendet eine POST Request ans Backend welche alle gespeicherten Gebaeude fetched.
-    //  */
-    // fetchGebaeudeData: async function () {
-    //   await fetch(process.env.VUE_APP_BASEURL + "/umfrage/gebaeude",{
-    //     method: "GET",
-    //     headers: {
-    //       "Authorization": "Bearer " + this.$keycloak.token,
-    //     },
-    //   })
-    //     .then((response) => response.json())
-    //     .then((data) => {
-    //       this.gebaeudeIDs = data.data.gebaeude.map(gebInt => translateGebaeudeIDToSymbolic(gebInt));
-    //     })
-    //     .catch((error) => {
-    //       console.error("Error:", error);
-    //     });
-    // },
-
     /**
      * Fetches all possible gebaeudeIDs and the Zaehler References from the database.
      */
-     fetchGebaeudeUndZaehlerData: async function () {
-    await fetch(process.env.VUE_APP_BASEURL + "/umfrage/gebaeudeUndZaehler", {
-      method: "GET",
-      headers: {
-          "Authorization": "Bearer " + this.$keycloak.token,
-        }
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        this.gebaeudeIDsUndZaehler = data.data.gebaeude
-        this.zaehler = data.data.zaehler
-
-        //console.log(data)
-      
-        this.gebaeudeIDs = data.data.gebaeude.map(obj => translateGebaeudeIDToSymbolic(obj.nr));
-
-        this.mapGebauedeZaehlerRefs = new Map(
-          data.data.gebaeude.map((obj) => [translateGebaeudeIDToSymbolic(obj.nr), {kaelteRef: obj.kaelteRef, stromRef: obj.stromRef, waermeRef: obj.waermeRef}])
-        )
-        //console.log(this.mapGebauedeZaehlerRefs)
-
-        this.mapZaehlerWerte = new Map(
-          data.data.zaehler.map((obj) => [obj.pkEnergie, new Map(obj.zaehlerdatenVorhanden.map((obj2) => [obj2.jahr, obj2.vorhanden]))])
-        )
-        //console.log(this.mapZaehlerWerte)
+    fetchGebaeudeUndZaehlerData: async function () {
+      await fetch(process.env.VUE_APP_BASEURL + "/umfrage/gebaeudeUndZaehler", {
+        method: "GET",
+        headers: {
+            "Authorization": "Bearer " + this.$keycloak.token,
+          }
       })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+        .then((response) => response.json())
+        .then((data) => {
+          this.gebaeudeIDsUndZaehler = data.data.gebaeude
+          this.zaehler = data.data.zaehler
+        
+          this.gebaeudeIDs = data.data.gebaeude.map(obj => translateGebaeudeIDToSymbolic(obj.nr));
+
+          this.mapGebauedeZaehlerRefs = new Map(
+            data.data.gebaeude.map((obj) => [translateGebaeudeIDToSymbolic(obj.nr), {kaelteRef: obj.kaelteRef, stromRef: obj.stromRef, waermeRef: obj.waermeRef}])
+          )
+
+          this.mapZaehlerWerte = new Map(
+            data.data.zaehler.map((obj) => [obj.pkEnergie, new Map(obj.zaehlerdatenVorhanden.map((obj2) => [obj2.jahr, obj2.vorhanden]))])
+          )
+
+          this.displayDataGapVisualization = true;
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
     },
 
     /**
@@ -793,55 +778,5 @@ export default {
   },
 
 };
-
-/**
- * Translates a given gebaeudeID to its numerical equivalent.
- * E.g. S101 is translated to 1101, L312 to 3312 and so on.
- */
-function translateGebaeudeIDToNumeric(gebaeudeID) {
-  if(!gebaeudeID) return null;
-
-  let gebaeudeDict = {
-    "S": 1,
-    "B": 2,
-    "L": 3,
-    "H": 4,
-    "W": 5,
-  };
-  let translatedID =
-    gebaeudeDict[gebaeudeID.substring(0, 1)] + gebaeudeID.substring(1);
-  return parseInt(translatedID);
-}
-
-/**
- * Translates a given numeric gebaeudeID to its symbolic equivalent (string).
- * E.g. 1101 is translated to S101, 3312 to L312 and so on.
- */
-function translateGebaeudeIDToSymbolic(gebaeudeID) {
-  let gebaeudeDict = {
-    1: "S",
-    2: "B",
-    3: "L",
-    4: "H",
-    5: "W",
-  };
-
-  gebaeudeID = gebaeudeID.toString()
-  let translatedID =
-    gebaeudeDict[gebaeudeID.substring(0, 1)] + gebaeudeID.substring(1);
-  return translatedID;
-}
-
-function resolveITGeraetID(geraetID) {
-  let ITGeraetIDDict = {
-    7: "Multifunktionsgeräte",
-    8: "Multifunktionsgeräte Toner",
-    9: "Laser & Tintenstrahldrucker",
-    10: "Laser & Tintenstrahldrucker Toner",
-    4: "Beamer",
-    6: "interne Server"
-  };
-  return ITGeraetIDDict[geraetID]
-}
 
 </script>

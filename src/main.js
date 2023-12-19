@@ -4,18 +4,28 @@ import vuetify from './plugins/vuetify'
 import router from './router'
 import VuePapaParse from 'vue-papa-parse'
 import VueKeyCloak from '@dsb-norge/vue-keycloak-js'
+import i18n from './i18n'
+import VueKatex from 'vue-katex';
+import 'katex/dist/katex.min.css';
 
 Vue.config.productionTip = false
 
 Vue.use(VuePapaParse)
+Vue.use(VueKatex, {
+  globalOptions: {
+    throwOnError: true,
+    displayMode: true,
+  }
+});
+
 Vue.use(VueKeyCloak, {
   init: {
     onLoad: 'check-sso',
   },
   config: {
-    realm: 'co2Rechner',
+    realm: process.env.VUE_APP_KEYCLOAK_REALM,
     url: process.env.VUE_APP_KEYCLOAK_URL,
-    clientId: 'vue-frontend',
+    clientId: process.env.VUE_APP_KEYCLOAK_CLIENT_ID,
   },
   logout: {
     redirectUri: process.env.VUE_APP_KEYCLOAK_LOGOUT_URL,
@@ -35,6 +45,7 @@ Vue.use(VueKeyCloak, {
     }
 
     new Vue({
+      i18n,
       vuetify,
       router,
       render: h => h(App)
