@@ -331,8 +331,8 @@
       
       "MitarbeiterInAbteilung": "How many employees are there in your unit?",
       
-      "GebaeudeAbteilung_0": "What buildings are used by your unit?",
-      "GebaeudeAbteilung_1": "Site map",
+      "GebaeudeAbteilung_0": "What buildings are used by your unit",
+      "GebaeudeAbteilung_1": "site map",
       "GebaeudeAbteilung_2": "All buildings begin with the letters S, B, L, H or W depending on location. The Autocomplete feature should be of help.",
       "GebaeudeAbteilung_3": "Usable floor space of the building selected",
       "GebaeudeWarnung": "You have selected the same building multiple times.",
