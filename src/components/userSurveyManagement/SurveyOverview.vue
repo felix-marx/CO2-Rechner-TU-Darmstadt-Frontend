@@ -55,8 +55,8 @@
           </v-list-item-content>
         </v-list-item>
 
-        <!-- Die erstellte Umfrage soll bearbeitet und ausgewählt werden können. -->
         <v-card-actions>
+          <!-- Umfragen bearbeiten -->
           <v-dialog
             v-model="dialog[index]"
             fullscreen
@@ -104,6 +104,7 @@
             </v-card>
           </v-dialog>
 
+          <!-- Auswertung anzeigen -->
           <v-dialog
             v-model="dialogAuswertung[index]"
             fullscreen

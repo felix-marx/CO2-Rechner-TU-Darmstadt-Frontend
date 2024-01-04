@@ -369,7 +369,7 @@
       "geraeteRules_3": "Bitte geben Sie eine valide Menge an.",
 
       "nichtnegativRules_0": "Muss angegeben werden.",
-      "nichtnegativRules_1": "Bitte geben Sie einen positiven Wert an.",
+      "nichtnegativRules_1": "Bitte geben Sie einen nicht negativen Wert an.",
 
       "absolutpositivRules_0": "Muss angegeben werden.",
       "absolutpositivRules_1": "Bitte geben Sie einen positiven Wert an.",
@@ -432,6 +432,7 @@
       "dienstreiseMediumListe_3": "Flugzeug",
       "dienstreiseMedium_Benzin": "Benzin",
       "dienstreiseMedium_Diesel": "Diesel",
+      "dienstreiseMedium_Auto": "PKW",
 
       "Flugstrecke": "Flugstrecke",
       "EinfacheDistanz": "Einfache Distanz",
@@ -504,29 +505,38 @@
       "HochrechnungUngenau_0": "Die Hochrechnung der Emissionsdaten ist ungenau, weil bisher nur ",
       "HochrechnungUngenau_1": "% der Mitarbeitenden die Umfrage ausgefüllt haben.",
       "Gesamtemissionen": "Gesamtemissionen:",
-      "tCO2eq": "t CO₂ eq.",
+      "tCO2eq": "t CO₂eq",
+      "kWh": "kWh",
       "EmissionProMitarbeitende": "Emissionen pro Mitarbeitende: ",
       "DidYouKnow": "Did you know?",
       "AufteilungHauptemissionsfaktoren": "Aufteilung nach Hauptemissionsfaktoren",
       "AufteilungNachEnergieart": "Aufteilung der Emissionen nach Energieart",
       "AufteilungNachEnergieart_tooltip": "Die angezeigten Emissionen für den Energieverbrauch können unvollständig sein. Der Grund dafür ist, dass nicht alle Gebäude der TU mit einem eigenen Zähler ausgestattet sind und keine Zählerdaten vorliegen.",
+      "AufteilungDienstreisen": "Aufteilung nach Dienstreisen",
+      "AufteilungPendelwege": "Aufteilung nach Pendelwege",
+      "AufteilungITGeraete": "Aufteilung nach IT-Geraete",
+      
       "KeineEmissionenAuswertung": "Es ist keine Auswertung der Emissionen nach Energieverbrauch möglich. \n Für das ausgewählte Bilanzierungsjahr fehlen Daten seitens der TU Darmstadt, um die Emissionen berechnen zu können. \n Die Zählerinfrastruktur wird durch das Energiemanagment immer weiter ausgebaut.\n Sie können leider nichts tun, um die Auswertung zu vervollständigen.Es ist kein Auswertung der Emissionen durch den Energieverbrauch möglich. \n Für das ausgewählte Bilanzierungsjahr fehlen Daten seitens der TU Darmstadt, um die Emissionen berechnen zu können. \n              Die Zählerinfrastruktur wird durch das Energiemanagment immer weiter ausgebaut.\n Sie können leider nichts tun, um die Auswertung zu vervollständigen.",
       "DarstellungEnergieverbrauch": "Darstellung des Energieverbrauches",
       "DarstellungEnergieverbrauch_tooltip": "Die angezeigten Verbrauche für den Energieverbrauch können unvollständig sein.\n Der Grund dafür ist, dass nicht alle Gebäude der TU mit einem eigenen Zähler ausgestattet sind und keine Zählerdaten vorliegen.",
       "DarstellungEnergieverbrauchWarning": "Es ist kein Auswertung der Emissionen durch den Energieverbrauch möglich.\n Für das ausgewählte Bilanzierungsjahr fehlen Daten seitens der TU Darmstadt, um die Emissionen berechnen zu können.\n Die Zählerinfrastruktur wird durch das Energiemanagment immer weiter ausgebaut.\n Sie können leider nichts tun, um die Auswertung zu vervollständigen.",
+      
       "NachhaltigkeitTipps_0": "Das Büro für Nachhaltigkeit hat Tipps zum ",
       "NachhaltigkeitTipps_1": "Energiesparen am Arbeitsplatz",
       "NachhaltigkeitTipps_2": " zusammengestellt.",
+      
       "DownloadAlsExcel": "Download als Excel",
       "Linksharing_0": "Linksharing ",
-      "aktivieren": "aktivieren",
-      "deaktivieren": "deaktivieren",
+      "aktiviert": "aktiviert",
+      "deaktiviert": "deaktiviert",
       "Auswertung": "Auswertung",
+      
       "HaushaltReferenzText_0": "Ihr Gesamtverbrauch entspricht circa ",
       "HaushaltReferenzText_1": " bzw. ",
       "HaushaltReferenzText_2": " in einem Jahr.",
       "HaushaltReferenzText_3": " Zwei-Personen-Haushalten",
       "HaushaltReferenzText_4": " Vier-Personen-Haushalten",
+      
       "MakeSpreadsheet_0": "Auswertung der Umfrage",
       "MakeSpreadsheet_1": "Quote",
       "MakeSpreadsheet_2": "Emissionsüberblick",
@@ -537,7 +547,10 @@
       "MakeSpreadsheet_7": "Aufteilung nach Hauptemissonsfaktoren",
       "MakeSpreadsheet_8": "Aufteilung nach Energieart",
       "MakeSpreadsheet_9": "Darstellung des Energieverbrauches",
-      "MakeSpreadsheet_10": "CO2-Rechner"
+      "MakeSpreadsheet_10": "CO2-Rechner",
+      "MakeSpreadsheet_11": "Aufteilung nach Dienstreisen",
+      "MakeSpreadsheet_12": "Aufteilung nach Pendelwege",
+      "MakeSpreadsheet_13": "Aufteilung nach IT-Geraete"
     },
     "ResultSharingDisabled": {
       "ResultSharingDisabled_0": "Es tut uns leid, aber die Umfrage mit ID ",
