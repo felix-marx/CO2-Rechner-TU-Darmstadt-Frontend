@@ -61,7 +61,7 @@
               v-if="medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_0')"
             >
               <v-select
-                v-model="medium[1]"
+                v-model="medium[5]"
                 :items="pkwListe"
                 :disabled="submittedDataSuccessfully"
                 :label="$t('colleagueSurvey.colleagueSurvey.Pkw_Motortyp')"
@@ -474,8 +474,10 @@ export default {  components: {
 
     //Arbeitstage
     arbeitstageBuero: null,
+    
+    //TODO: Referenzierung auf aktuell selektierten PKW Typ
 
-    //Pendelweg
+    //Pendelweg ------------------------------------------
     fahrtmediumListe: [],
     fahrtmediumÖPNVListe: [],
     /*
@@ -485,10 +487,11 @@ export default {  components: {
      * [2]: true if Fahrgemeinschaft and [0] is a PKW typ
      * [3]: number of fahrgemeinschaftsmitglieder
      * [4]: einfacher Pendelweg
+     * [5]: Tankart if [0] is PKW(Diesel or Benzin)
      */
-    verkehrsmittel: [[null, null, false, null, null]],
+    verkehrsmittel: [[null, null, false, null, null, null]],
 
-    //Dienstreisen
+    //Dienstreisen ---------------------------------------
     dienstreiseMediumListe: [],
     flugstreckeListe: [],
     /*
@@ -552,7 +555,7 @@ export default {  components: {
       this.setListe();
 
       // reset values for Pendelwege and Dienstreisen
-      this.verkehrsmittel = [[null, null, false, null, null]]
+      this.verkehrsmittel = [[null, null, false, null, null, null]]
       this.dienstreise = [[null, null, null]]
     },
   },
@@ -598,7 +601,7 @@ export default {  components: {
      * Adds a new Verkehrsmittel to select as the  Pendelmedium
      */
     newVerkehrsmittel: function () {
-      this.verkehrsmittel.push([null, null, false, null, null]);
+      this.verkehrsmittel.push([null, null, false, null, null, null]);
     },
 
     /**
@@ -619,44 +622,81 @@ export default {  components: {
     /**
      * Returns an Integer ID that resolves the Pendelmedium Name to its specified internal ID
      */
-    mapPendelverkehrsmittel: function (verkehrmittel1, verkehrsmittel2) {
+    mapPendelverkehrsmittel: function (verkehrsmitteltyp, oepnvspezifikation, tankspezifikation) {
+      console.log(verkehrsmitteltyp, oepnvspezifikation, tankspezifikation)
+      //Backend expects the following IDs for the following Verkehrsmittel
       const verkehrsmittelMap = new Map([
-        [i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_2'), 1],
-        [i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_3'), 2],
-        [i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_4'), 3],
-        [i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_0'), 4],
-        [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_1'), 5],
-        [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_0'), 6],
-        [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_2'), 7],
-        [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_3'), 8],
-        [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_4'), 9],
-        [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_5'), 10],
-        [i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_6'), 11]
+        [i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_2'), 1], //Fahrrad
+        [i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_3'), 2], //E-Bike
+        [i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_4'), 3], //Motorisiertes Zweirad"
+        [i18n.t('colleagueSurvey.colleagueSurvey.Pkw_diesel'), 4], // Diesel
+        [i18n.t('colleagueSurvey.colleagueSurvey.Pkw_benzin'), 5], // Benzin
+        [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_1'), 6], //Bus
+        [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_0'), 7], //Bahn
+        [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_2'), 8], //U-Bahn
+        [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_3'), 9], //Straßenbahn
+        [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_4'), 10], //Mix inkl. U-Bahn
+        [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_5'), 11], //Mix exkl. U-Bahn
+        [i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_6'), 12] // Zu Fuß 
       ]);
-      if (verkehrmittel1 !== i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_5')) {
-        return verkehrsmittelMap.get(verkehrmittel1);
+      //Check if Öffentliche is selected
+      if(verkehrsmitteltyp === i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_5')) {
+        return verkehrsmittelMap.get(oepnvspezifikation);
+        //Check if PKW is selected
+      } else if(verkehrsmitteltyp === i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_0')){
+        return verkehrsmittelMap.get(tankspezifikation);
       } else {
-        return verkehrsmittelMap.get(verkehrsmittel2);
+        return verkehrsmittelMap.get(verkehrsmitteltyp);
       }
     },
 
+    //TODO: Anpassen
     /**
      * Returns an array formatted [Medium ID, if PKW String of Tank else null]
      */
     mapDienstreisemittel: function (verkehrsmittel) {
       const verkehrsmittelMap = new Map([
-        [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_0'), 1],
-        [i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_0'), 2],
-        [i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3'), 3],
+        [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_0'), 1], //Bahn
+        [i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_0'), 2], //PKW
+        [i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3'), 3], //Flugzeug
       ]);
+      
+      //Tankart should be empty if not PKW
+      var tankart = "";
+
+
+      //Check if verkehrsmittel is PKW
+      if(parseInt(verkehrsmittelMap.get(verkehrsmittel)) == 2) {
+        //Check if Benzin or Diesel
+        if(this.verkehrmittel[5] == i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMedium_Benzin')) {
+          tankart = "Benzin"
+        } else if(this.verkehrmittel[5] == i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMedium_Diesel')) {
+          tankart = "Diesel"
+        } else {
+          console.error("No valid Tankart selected")
+          tankart = "";
+        }
+      }
+
+      // TODO: REMOVE
+      console.log([
+        verkehrsmittelMap.get(verkehrsmittel),
+        tankart
+      ])
+
       return [
         verkehrsmittelMap.get(verkehrsmittel),
-        parseInt(verkehrsmittelMap.get(verkehrsmittel)) == 2
-          ? verkehrsmittel == i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_1')
-            ? i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMedium_Benzin')
-            : i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMedium_Diesel')
-          : "",
+        tankart
       ];
+
+      // return [
+      //   verkehrsmittelMap.get(verkehrsmittel),
+      //   parseInt(verkehrsmittelMap.get(verkehrsmittel)) == 2
+      //     ? verkehrsmittel == i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_0')
+      //       ? i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMedium_Benzin')
+      //       : i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMedium_Diesel')
+      //     : "",
+      // ];
     },
 
     mapDienstreiseFlugkategorie: function (reisedistanz) {
@@ -708,7 +748,7 @@ export default {  components: {
           buildPendelweg.push({
             strecke: parseInt(pendel[4]),
             idPendelweg: parseInt(
-              this.mapPendelverkehrsmittel(pendel[0], pendel[1])
+              this.mapPendelverkehrsmittel(pendel[0], pendel[1], pendel[5])
             ),
             //return 1 for no fahrgemeinschaft. In Question we ask Anzahl Mitfahrer so pendel[3]+1 are all persons in the vehicle
             personenanzahl: parseInt(
@@ -761,13 +801,14 @@ export default {  components: {
           var dienstreisetyp = this.mapDienstreisemittel(reise[0]);
           buildDienstreisen.push({
             idDienstreise: parseInt(dienstreisetyp[0]),
-            //Catches spezial case were user selects Flugtyp but then changes to other Verkehrsmedium
+            //Catches spezial case where user selects Flugtyp but then changes to other Verkehrsmedium
             streckentyp: parseInt(dienstreisetyp[0]) == 3 ? reise[1] : "",
             strecke: parseInt(reise[2]),
             tankart: dienstreisetyp[1],
           });
         }
       }
+      console.log(buildDienstreisen);
       return buildDienstreisen;
     },
 
