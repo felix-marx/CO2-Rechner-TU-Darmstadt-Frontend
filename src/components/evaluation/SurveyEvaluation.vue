@@ -112,55 +112,66 @@
           </v-col>
         </v-row>
 
-        <!-- Aufteilung Dienstreisen -->
-        <v-row v-if="displayAufteilungDienstreisen">
-          <v-col class="d-flex justify-center">
-            <h4>{{ $t('evaluation.surveyEvaluation.AufteilungDienstreisen') }}</h4>
-          </v-col>
-        </v-row>
-        <v-row v-if="displayAufteilungDienstreisen">
-          <v-col>
-            <bar-chart
-              ref="bar-dienstreisen"
-              :chart-data="chartdataDienstreisenBar"
-              :options="optionsDienstreisenBar"
-            />
-          </v-col>
-        </v-row>
+        <div
+          v-for="chart in chartList"
+          :key="chart.ref"
+        >
+          <!-- Aufteilung Dienstreisen -->
+          <div v-if="chart.ref == 'bar-dienstreisen'">
+            <v-row v-if="displayAufteilungDienstreisen">
+              <v-col class="d-flex justify-center">
+                <h4>{{ $t('evaluation.surveyEvaluation.AufteilungDienstreisen') }}</h4>
+              </v-col>
+            </v-row>
+            <v-row v-if="displayAufteilungDienstreisen">
+              <v-col>
+                <bar-chart
+                  ref="bar-dienstreisen"
+                  :chart-data="chartdataDienstreisenBar"
+                  :options="optionsDienstreisenBar"
+                />
+              </v-col>
+            </v-row>
+          </div>
 
-        <!-- Aufteilung Pendelwege -->
-        <v-row v-if="displayAufteilungPendelwege">
-          <v-col class="d-flex justify-center">
-            <h4>{{ $t('evaluation.surveyEvaluation.AufteilungPendelwege') }}</h4>
-          </v-col>
-        </v-row>
-        <v-row v-if="displayAufteilungPendelwege">
-          <v-col>
-            <bar-chart
-              ref="bar-pendelwege"
-              :chart-data="chartdataPendelwegeBar"
-              :options="optionsPendelwegeBar"
-            />
-          </v-col>
-        </v-row>
+          <!-- Aufteilung Pendelwege -->
+          <div v-if="chart.ref == 'bar-pendelwege'">
+            <v-row v-if="displayAufteilungPendelwege">
+              <v-col class="d-flex justify-center">
+                <h4>{{ $t('evaluation.surveyEvaluation.AufteilungPendelwege') }}</h4>
+              </v-col>
+            </v-row>
+            <v-row v-if="displayAufteilungPendelwege">
+              <v-col>
+                <bar-chart
+                  ref="bar-pendelwege"
+                  :chart-data="chartdataPendelwegeBar"
+                  :options="optionsPendelwegeBar"
+                />
+              </v-col>
+            </v-row>
+          </div>
 
-        <!-- Aufteilung ITGeraete -->
-        <v-row v-if="displayAufteilungITGeraete">
-          <v-col class="d-flex justify-center">
-            <h4>{{ $t('evaluation.surveyEvaluation.AufteilungITGeraete') }}</h4>
-          </v-col>
-        </v-row>
-        <v-row v-if="displayAufteilungITGeraete">
-          <v-col>
-            <bar-chart
-              ref="bar-itgeraete"
-              :chart-data="chartdataITGeraeteBar"
-              :options="optionsITGeraeteBar"
-            />
-          </v-col>
-        </v-row>
+          <!-- Aufteilung ITGeraete -->
+          <div v-if="chart.ref == 'bar-itgeraete'">
+            <v-row v-if="displayAufteilungITGeraete">
+              <v-col class="d-flex justify-center">
+                <h4>{{ $t('evaluation.surveyEvaluation.AufteilungITGeraete') }}</h4>
+              </v-col>
+            </v-row>
+            <v-row v-if="displayAufteilungITGeraete">
+              <v-col>
+                <bar-chart
+                  ref="bar-itgeraete"
+                  :chart-data="chartdataITGeraeteBar"
+                  :options="optionsITGeraeteBar"
+                />
+              </v-col>
+            </v-row>
+          </div>
+        </div>
 
-        <!-- Aufteilung Energieart -->
+        <!-- Aufteilung Energie -->
         <v-row>
           <v-col class="d-flex justify-center">
             <h4>
@@ -202,7 +213,7 @@
           </v-col>
         </v-row>
 
-        <!-- Aufteilung Energieverbrauch -->
+        <!-- Aufteilung Verbrauch -->
         <v-row>
           <v-col class="d-flex justify-center">
             <h4>
@@ -243,6 +254,8 @@
             />
           </v-col>
         </v-row>
+
+        <!-- Nachhaltigkeitstipps -->
         <v-row>
           <v-col>
             <v-alert 
@@ -532,6 +545,21 @@ export default {
       // for dynamic bar resizing
       barWidth: null,
       resizeTimout: null,
+
+      chartList: [  // emission needs to be correct variable name
+        {
+          "emission": "this.responsedata.emissionenDienstreisen",
+          "ref": "bar-dienstreisen",
+        },
+        {
+          "emission": "this.responsedata.emissionenPendelwege",
+          "ref": "bar-pendelwege",
+        },
+        {
+          "emission": "this.responsedata.emissionenITGeraete",
+          "ref": "bar-itgeraete",
+        },
+      ]
     }
   },
 
@@ -583,6 +611,13 @@ export default {
     },
 
     /**
+     * Helper function to access a variable by its name.
+     */
+    accessVariable: function (variable) {
+      return eval(variable)
+    },
+
+    /**
      * Fetches Get request to get survey data and evaluation.
      */
     getData: async function () {
@@ -631,6 +666,11 @@ export default {
       this.displayAufteilungDienstreisen = Object.keys(this.responsedata.emissionenDienstreisenAufgeteilt).length > 0
       this.displayAufteilungPendelwege = Object.keys(this.responsedata.emissionenPendelwegeAufgeteilt).length > 0
       this.displayAufteilungITGeraete = Object.keys(this.responsedata.emissionenITGeraeteAufgeteilt).length > 0
+
+      // sort charts based on emission values
+      this.chartList.sort((a, b) => {
+        return eval(b.emission) - eval(a.emission)
+      })
     },
 
     /**
@@ -735,7 +775,7 @@ export default {
     computeBarWidth: function() {
       let maxBars = Math.max(Object.keys(this.responsedata.emissionenDienstreisenAufgeteilt).length, Object.keys(this.responsedata.emissionenPendelwegeAufgeteilt).length, Object.keys(this.responsedata.emissionenITGeraeteAufgeteilt).length)
 
-      let chartWidths = ["bar-dienstreisen", "bar-pendelwege", "bar-itgeraete"].map(x => this.$refs[x] ? this.$refs[x].$refs.canvas.width : 0)
+      let chartWidths = ["bar-dienstreisen", "bar-pendelwege", "bar-itgeraete"].map(x => this.$refs[x] ? this.$refs[x][0].$refs.canvas.width : 0)
       let chartWidth = Math.max(...chartWidths)
 
       let halfChartWidth = this.$refs["bar-gesamt"].$refs.canvas.width
@@ -884,7 +924,7 @@ export default {
         return i18n.n(value, "decimal");
       }
 
-      this.$refs["bar-dienstreisen"].updateChart()
+      this.$refs["bar-dienstreisen"][0].updateChart()
     },
 
     /**
@@ -909,7 +949,7 @@ export default {
         return i18n.n(value, "decimal");
       }
 
-      this.$refs["bar-pendelwege"].updateChart()
+      this.$refs["bar-pendelwege"][0].updateChart()
     },
 
     /**
@@ -934,7 +974,7 @@ export default {
         return i18n.n(value, "decimal");
       }
 
-      this.$refs["bar-itgeraete"].updateChart()
+      this.$refs["bar-itgeraete"][0].updateChart()
     },
 
     /**
