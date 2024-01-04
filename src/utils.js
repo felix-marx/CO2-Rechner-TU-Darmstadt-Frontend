@@ -103,3 +103,10 @@ export function getPendelwegeLabelMap(){
     ["12", i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_6')]
   ]);
 }
+
+/**
+ * Returns a string with the first letter capitalized.
+ */
+export function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}

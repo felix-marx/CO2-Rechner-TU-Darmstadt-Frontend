@@ -369,7 +369,7 @@
       "geraeteRules_3": "Bitte geben Sie eine valide Menge an.",
 
       "nichtnegativRules_0": "Muss angegeben werden.",
-      "nichtnegativRules_1": "Bitte geben Sie einen positiven Wert an.",
+      "nichtnegativRules_1": "Bitte geben Sie einen nicht negativen Wert an.",
 
       "absolutpositivRules_0": "Muss angegeben werden.",
       "absolutpositivRules_1": "Bitte geben Sie einen positiven Wert an.",

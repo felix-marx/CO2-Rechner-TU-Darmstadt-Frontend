@@ -369,7 +369,7 @@
       "geraeteRules_3": "Please enter a valid quantity.",
       
       "nichtnegativRules_0": "Must be entered.",
-      "nichtnegativRules_1": "Please enter a positive (plus) value.",
+      "nichtnegativRules_1": "Please enter a non-negative (plus) value.",
       
       "absolutpositivRules_0": "Must be entered.",
       "absolutpositivRules_1": "Please enter a positive (plus) value.",
