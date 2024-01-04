@@ -526,15 +526,15 @@
       
       "DownloadAlsExcel": "Download as Excel",
       "Linksharing_0": "Link sharing ",
-      "aktivieren": "Activate",
-      "deaktivieren": "Deactivate",
-      "Auswertung": "Analysis",
+      "aktiviert": "activated",
+      "deaktiviert": "deactivated",
+      "Auswertung": "analysis",
       
       "HaushaltReferenzText_0": "Your total consumption is equivalent to about ",
       "HaushaltReferenzText_1": " or ",
       "HaushaltReferenzText_2": " per year.",
-      "HaushaltReferenzText_3": " Two-person households",
-      "HaushaltReferenzText_4": " Four-person households",
+      "HaushaltReferenzText_3": " two-person households",
+      "HaushaltReferenzText_4": " four-person households",
       
       "MakeSpreadsheet_0": "Analysis of the survey",
       "MakeSpreadsheet_1": "Rate / proportion",

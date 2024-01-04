@@ -14,13 +14,13 @@
             <v-icon>
               mdi-calendar
             </v-icon>
-            {{ $t('common.Bilanzierungsjahr') }} {{ responsedata.jahr }}
+            {{ $t('common.Bilanzierungsjahr') }}: {{ responsedata.jahr }}
           </v-col>
           <v-col>
             <v-icon>
               mdi-account
             </v-icon>
-            {{ $t('common.Mitarbeitendenzahl') }} {{ $n(responsedata.mitarbeiteranzahl, 'integer') }}
+            {{ $t('common.Mitarbeitendenzahl') }}: {{ $n(responsedata.mitarbeiteranzahl, 'integer') }}
           </v-col>
         </v-row>
         <v-row>
@@ -85,7 +85,7 @@
           >
             <v-icon>mdi-thought-bubble-outline</v-icon>
             <b>{{ $t('evaluation.surveyEvaluation.DidYouKnow') }}</b>
-            : {{ haushalteReferenzText }}
+            {{ haushalteReferenzText }}
           </v-card>
         </v-row>
 
@@ -257,6 +257,8 @@
             </v-alert>
           </v-col>
         </v-row>
+
+        <!-- Spreadsheet and Link Sharing -->
         <v-row>
           <v-btn
             class="ml-8 align-self-center"
@@ -273,7 +275,7 @@
             v-model="responsedata.auswertungFreigegeben"
             class="ml-8"
             inset
-            :label="`Linksharing ${(responsedata.auswertungFreigegeben ? $t('evaluation.surveyEvaluation.aktivieren') : $t('evaluation.surveyEvaluation.deaktivieren'))}`"
+            :label="`${$t('evaluation.surveyEvaluation.Linksharing_0') + ' ' + (responsedata.auswertungFreigegeben ? $t('evaluation.surveyEvaluation.aktiviert') : $t('evaluation.surveyEvaluation.deaktiviert'))}`"
             @click="updateFlipLinkShare"
           />
         </v-row>
