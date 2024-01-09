@@ -15,7 +15,7 @@
         v-bind="properties"
       />
     </v-main>
-UmfrageCompleted
+
     <!-- Footer -->
     <Footer />
   </v-app>
@@ -27,7 +27,7 @@ import Header from "@/components/header/Header";
 import ColleagueSurvey from "@/components/colleagueSurvey/ColleagueSurvey";
 import SurveyNotFound from "@/components/colleagueSurvey/SurveyNotFound";
 import LoadingAnimation from "@/components/componentParts/LoadingAnimation";
-import UmfrageCompleted from "@/components/colleagueSurvey/SurveyCompleted"
+import SurveyCompleted from "@/components/colleagueSurvey/SurveyCompleted"
 import i18n from "../i18n";
 
 export default {
@@ -37,7 +37,7 @@ export default {
     Footer,
     ColleagueSurvey,
     SurveyNotFound,
-    UmfrageCompleted,
+    SurveyCompleted,
     LoadingAnimation
   },
 
@@ -69,7 +69,7 @@ export default {
 
       // show a message that the requested survey is already complete.
       if(this.umfrageComplete){
-        return UmfrageCompleted;
+        return SurveyCompleted;
       }
 
       // else show ColleagueSurvey
