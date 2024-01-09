@@ -1,11 +1,12 @@
 <!-- eslint-disable vue/no-v-html -->
 <template>
-  <v-app>
+  <v-app :style="{background: $vuetify.theme.themes[theme].background}">
     <Header 
       :display-user-setting="false"
       :display-back-button="false"
       :display-login-button="true"
     />
+
     <v-main class="mb-8">
       <v-card
         elevation="2"
@@ -15,7 +16,7 @@
         <div class="text-center">
           <v-img
             max-height="400"
-            src="../../assets/rhein.jpg" 
+            src="../assets/rhein.jpg" 
           />
           <h2
             class="py-3" 
@@ -99,7 +100,7 @@
                   class="mx-auto py-6"
                   max-height="177"
                   max-width="250"
-                  src="../../assets/logo_Maschinenbau.png"
+                  src="../assets/logo_Maschinenbau.png"
                 />
               </a>
             </v-col>
@@ -113,7 +114,7 @@
                   class="mx-auto"
                   max-height="177"
                   max-width="250"
-                  src="../../assets/logo_Nachhaltigkeit.jpg"
+                  src="../assets/logo_Nachhaltigkeit.jpg"
                 />
               </a>
             </v-col>
@@ -127,7 +128,7 @@
                   class="mx-auto"
                   max-height="177"
                   max-width="250"
-                  src="../../assets/logo_tud.png"
+                  src="../assets/logo_tud.png"
                 />
               </a>
             </v-col>
@@ -140,8 +141,8 @@
 </template>
 
 <script>
-import Footer from "../footer/Footer.vue";
-import Header from "../header/Header.vue";
+import Footer from "@/components/footer/Footer";
+import Header from "@/components/header/Header";
 
 export default {
   name: "Login",
@@ -157,6 +158,12 @@ export default {
     faq_allgemein: process.env.VUE_APP_URL + '/faq#allgemein',
     faq_nutzung: process.env.VUE_APP_URL + '/faq#nutzung',
   }),
+
+  computed:{
+    theme(){
+      return (this.$vuetify.theme.dark) ? 'dark' : 'light'
+    }
+  },
 };
 </script>
 

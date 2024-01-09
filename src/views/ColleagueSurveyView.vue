@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app :style="{background: $vuetify.theme.themes[theme].background}">
     <!-- Header -->
     <Header
       :tabs="tabList"
@@ -48,7 +48,10 @@ export default {
       umfrageComplete: false
   }),
 
-  computed: {
+  computed:{
+    theme(){
+      return (this.$vuetify.theme.dark) ? 'dark' : 'light'
+    },
     /**
      * Returns the component to be shown in the body of the view. LoadingAnimation while the server is requested, SurveyNotFound if the survey does not exist or the survey
      * if the corresponding id exists.

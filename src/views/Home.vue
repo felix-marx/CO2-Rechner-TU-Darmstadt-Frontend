@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app :style="{background: $vuetify.theme.themes[theme].background}">
     <!-- Header -->
     <Header
       :tabs="tabList" 
@@ -43,6 +43,12 @@ export default {
     currentTabType: Survey,
     tabList: [],
   }),
+
+  computed:{
+    theme(){
+      return (this.$vuetify.theme.dark) ? 'dark' : 'light'
+    }
+  },
 
   watch: {
     '$i18n.locale': function() {

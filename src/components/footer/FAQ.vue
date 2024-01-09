@@ -1,7 +1,7 @@
 <!-- eslint-disable vue/no-v-html -->
 
 <template>
-  <v-app>
+  <v-app :style="{background: $vuetify.theme.themes[theme].background}">
     <Header
       :tabs="tabList"
       :display-user-setting="false"
@@ -643,6 +643,9 @@ export default {
   }),
 
   computed: {
+    theme(){
+      return (this.$vuetify.theme.dark) ? 'dark' : 'light'
+    },
     formel_1() {
       return "\\(\\begin{aligned} " + 
               "\\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_1_1')  + "} &= \\sum_{\\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_1_7')  + "}} \\sum_{\\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_1_2')  + "}} \\left( \\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_1_3')  + "} \\cdot \\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_1_4')  + "} \\cdot \\frac{\\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_1_5')  + "}}{\\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_1_6')  + "}} \\right)" + 
