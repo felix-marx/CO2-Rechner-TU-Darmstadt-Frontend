@@ -9,42 +9,50 @@
 
     <v-main class="mb-8">
       <v-card
-        elevation="2"
+        elevation="0"
         class="pb-4"
-        outlined
+        height="100%"
       >
-        <div class="text-center">
-          <v-img
-            max-height="400"
-            src="../assets/rhein.jpg" 
-          />
-          <h2
-            class="py-3" 
-            v-html="$t('landingpage.Login.Titel')"
-          />
-          <label v-html="$t('landingpage.Login.Willkommen_1')" />
-        </div>      
+        <v-img
+          max-height="30vh"
+          src="../assets/rhein.jpg" 
+        />
 
-        <v-container class="mt-4">
+        <v-container>
           <v-row>
+            <v-col class="text-center">
+              <h1
+                v-html="$t('landingpage.Login.Titel')"
+              />
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col class="text-center">
+              <label v-html="$t('landingpage.Login.Willkommen_1')" />
+            </v-col>
+          </v-row>
+
+          <!-- Fields -->
+          <v-row class="mt-4">
             <v-col class="d-flex flex-column">
               <v-card class="flex d-flex flex-column">
-                <v-card-title>
-                  Was ist eine CO<sub>2</sub>-Bilanzierung? (Ändern!)
+                <v-card-title class="text-center justify-center">
+                  FAQ
                 </v-card-title>
                 <v-divider />
-                <p class="ma-4 pb-4">
-                  Eine CO<sub>2</sub>-Bilanz dient der Darstellung der Treibhausgasemissionen einer Organisation, eines Produktes, einer Dienstleistung oder einer Aktivität innerhalb einer definierten Betrachtungsgrenze. Die Bilanz umfasst alle klimaschädlichen Emissionen und drückt diese in CO<sub>2</sub>-Äquivalente aus.
-                  <br>
-                  > <a :href="faq_bilazierung">Mehr zu CO<sub>2</sub>-Bilanzierungen</a>
-                </p>
+                <v-img
+                  class="mx-auto"
+                  max-height="20vh"
+                  max-width="20vh"
+                  src="../assets/circle-info-solid.svg" 
+                />
               </v-card>
             </v-col>
 
             <v-col class="d-flex flex-column">
               <v-card class="flex d-flex flex-column">
-                <v-card-title>
-                  Nutzung des CO<sub>2</sub>-Rechner
+                <v-card-title class="text-center justify-center">
+                  Mach mit!
                 </v-card-title>
                 <v-divider />
                 <p class="ma-4">
@@ -56,8 +64,8 @@
 
             <v-col class="d-flex flex-column">
               <v-card class="flex d-flex flex-column">
-                <v-card-title>
-                  Hintergrund des CO<sub>2</sub>-Rechners
+                <v-card-title class="text-center justify-center">
+                  Was habt ich davon?
                 </v-card-title>
                 <v-divider />
                 <p class="ma-4 pb-4">
@@ -71,6 +79,7 @@
             </v-col>
           </v-row>
 
+          <!-- Login Button -->
           <v-row>
             <v-spacer />
             <v-btn
@@ -85,11 +94,11 @@
             </v-btn>
             <v-spacer />
           </v-row>
-        </v-container>
 
-        <!-- Logos -->
-        <v-container class="d-flex justify-space-around mt-10 mb-6 py-10">
-          <v-row>
+          <!-- Logos -->
+          <v-row
+            class="d-flex justify-space-around mt-10"
+          >
             <v-col>
               <a
                 href="https://www.fst.tu-darmstadt.de/fachgebiet/index.de.jsp"
@@ -136,6 +145,7 @@
         </v-container>
       </v-card>
     </v-main>
+
     <Footer />
   </v-app>
 </template>
