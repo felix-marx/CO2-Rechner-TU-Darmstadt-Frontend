@@ -471,7 +471,7 @@
             </v-card>
 
             <v-card
-              ref="#nutzung"
+              ref="#warum"
               class="px-0 pb-2"
               elevation="0"
             >
@@ -682,14 +682,14 @@ export default {
   created() {
     this.setTabList();
 
-    if(this.$route.hash == "#nutzung"){
-      this.panel_3 = [0]
-    } 
-    else if (this.$route.hash == "#bilanzierung"){
+    if (this.$route.hash == "#bilanzierung"){
       this.panel_1 = [0]
     }
     else if (this.$route.hash == "#allgemein"){
       this.panel_2 = [0]
+    }
+    else if (this.$route.hash == "#warum"){
+      this.panel_3 = [1]
     }
   },
 

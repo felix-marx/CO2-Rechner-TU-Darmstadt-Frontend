@@ -13,11 +13,13 @@
         class="pb-4"
         height="100%"
       >
+        <!-- Banner Image -->
         <v-img
           max-height="30vh"
           src="../assets/rhein.jpg" 
         />
 
+        <!-- Titel -->
         <v-container>
           <v-row>
             <v-col class="text-center">
@@ -28,7 +30,10 @@
           </v-row>
           <v-row>
             <v-col class="text-center">
-              <label v-html="$t('landingpage.Login.Willkommen_1')" />
+              <p
+                style="font-size: large"
+                v-html="$t('landingpage.Login.Willkommen_1')"
+              />
             </v-col>
           </v-row>
 
@@ -37,44 +42,63 @@
             <v-col class="d-flex flex-column">
               <v-card class="flex d-flex flex-column">
                 <v-card-title class="text-center justify-center">
-                  FAQ
+                  {{ $t('landingpage.Login.PanelTitel_1') }}
                 </v-card-title>
                 <v-divider />
-                <v-img
-                  class="mx-auto"
-                  max-height="20vh"
-                  max-width="20vh"
-                  src="../assets/circle-info-solid.svg" 
-                />
+                <a
+                  :href="faq"
+                >
+                  <v-img
+                    contain
+                    class="my-2"
+                    height="15vh"
+                    width="100%"
+                    max-height="200px"
+                    src="../assets/circle-question-solid.svg" 
+                  />
+                </a>
               </v-card>
             </v-col>
 
             <v-col class="d-flex flex-column">
               <v-card class="flex d-flex flex-column">
                 <v-card-title class="text-center justify-center">
-                  Mach mit!
+                  {{ $t('landingpage.Login.PanelTitel_2') }}
                 </v-card-title>
                 <v-divider />
-                <p class="ma-4">
-                  Melden Sie sich einfach mit Ihrer TU-ID an und fangen Sie an, Ihre CO<sub>2</sub>-Bilanz zu erstellen. Eine  detailierte <a :href="faq_nutzung">Anleitung zur Nutzung des CO<sub>2</sub>-Rechners</a> finden Sie im FAQ.
-                  <br>
-                </p>
+                <a
+                  :href="$keycloak.createLoginUrl()"
+                >
+                  <v-img
+                    contain
+                    class="my-2"
+                    height="15vh"
+                    width="100%"
+                    max-height="200px"
+                    src="../assets/exclamation-solid.svg" 
+                  />
+                </a>
               </v-card>
             </v-col>
 
             <v-col class="d-flex flex-column">
               <v-card class="flex d-flex flex-column">
                 <v-card-title class="text-center justify-center">
-                  Was habt ich davon?
+                  {{ $t('landingpage.Login.PanelTitel_3') }}
                 </v-card-title>
                 <v-divider />
-                <p class="ma-4 pb-4">
-                  Sie möchten mehr über den Hintergrund des CO<sub>2</sub>-Rechners erfahren? 
-                  Dann lesen Sie den <a href="https://www.tu-darmstadt.de/nachhaltigkeit/buero_fuer_nachhaltigkeit/projekte_buero/news_projekte_buero_details_374400.de.jsp">Artikel</a> des Büros für Nachhaltigkeit oder schauen Sie in das <a :href="faq">FAQ</a>.
-                  <br>
-                  > <a :href="faq_allgemein">Allgemeine Information zum CO<sub>2</sub>-Rechners</a>
-                </p>
-                <v-spacer />
+                <a
+                  :href="faq_warum"
+                >
+                  <v-img
+                    contain
+                    class="my-2"
+                    height="15vh"
+                    width="100%"
+                    max-height="200px"
+                    src="../assets/lightbulb-regular.svg" 
+                  />
+                </a>  
               </v-card>
             </v-col>
           </v-row>
@@ -166,7 +190,7 @@ export default {
     faq: process.env.VUE_APP_URL + '/faq',
     faq_bilazierung: process.env.VUE_APP_URL + '/faq#bilanzierung',
     faq_allgemein: process.env.VUE_APP_URL + '/faq#allgemein',
-    faq_nutzung: process.env.VUE_APP_URL + '/faq#nutzung',
+    faq_warum: process.env.VUE_APP_URL + '/faq#warum',
   }),
 
   computed:{
