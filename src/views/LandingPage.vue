@@ -37,26 +37,10 @@
               </v-col>
             </v-row> -->
             
-            <v-row>
-              <v-col class="text-left mb-0 pa-0">
-                <div
-                  style="background-color: #F5F5F5; display: inline-block;"
-                >
-                  <h1
-                    style="color: black;"
-                    class="px-4 py-2"
-                    v-html="$t('landingpage.Login.Titel')"
-                  />
-                </div>
-              </v-col>
-            </v-row>
-
             <!-- <v-row>
               <v-col class="text-left mb-0 pa-0">
                 <div
-                  style="background-color: #F5F5F5;"
-                  margin="mx-auto"
-                  width="200px"
+                  style="background-color: #F5F5F5; display: inline-block;"
                 >
                   <h1
                     style="color: black;"
@@ -82,7 +66,7 @@
           <v-row>
             <v-col class="text-center">
               <p
-                style="font-size: large"
+                style="font-size: x-large"
                 v-html="$t('landingpage.Login.Willkommen_1')"
               />
             </v-col>
