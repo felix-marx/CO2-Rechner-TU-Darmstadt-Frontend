@@ -7,7 +7,9 @@
       :display-login-button="true"
     />
 
-    <v-main class="mb-8">
+    <v-main
+      class="mb-8"
+    >
       <v-card
         elevation="0"
         class="pb-4"
@@ -20,25 +22,27 @@
           class="d-flex align-end"
         >
           <v-container>
-            <v-row>
-              <v-col class="text-left">
+            <!-- Title without box -->
+            <!-- <v-row>
+              <v-col class="text-left pb-0">
                 <h1
                   style="color: white;"
                   v-html="$t('landingpage.Login.Titel')"
                 />
               </v-col>
             </v-row>
-            <!-- <v-row>
-              <v-col class="text-center">
+            <v-row>
+              <v-col class="text-left pt-0">
                 <p
                   style="font-size: large; color: white;"
                   v-html="$t('landingpage.Login.Willkommen_1')"
                 />
               </v-col>
             </v-row> -->
-            
-            <!-- <v-row>
-              <v-col class="text-left mb-0 pa-0">
+
+            <!-- Title in grey box -->
+            <v-row>
+              <v-col class="text-left pb-0">
                 <div
                   style="background-color: #F5F5F5; display: inline-block;"
                 >
@@ -47,34 +51,25 @@
                     class="px-4 py-2"
                     v-html="$t('landingpage.Login.Titel')"
                   />
+                  <p
+                    style="font-size: large; color: black;"
+                    class="px-4 py-2"
+                    v-html="$t('landingpage.Login.Willkommen_1')"
+                  />
                 </div>
               </v-col>
-            </v-row> -->
+            </v-row>
           </v-container>
         </v-img>  
         
-
-        <!-- Titel -->
         <v-container>
-          <!-- <v-row>
-            <v-col class="text-center">
-              <h1
-                v-html="$t('landingpage.Login.Titel')"
-              />
-            </v-col>
-          </v-row> -->
-          <v-row>
-            <v-col class="text-center">
-              <p
-                style="font-size: x-large"
-                v-html="$t('landingpage.Login.Willkommen_1')"
-              />
-            </v-col>
-          </v-row>
-
-          <!-- Fields -->
+          <!-- Icon-Boxes -->
           <v-row class="mt-4">
-            <v-col class="d-flex flex-column">
+            <v-spacer />
+            <v-col
+              class="d-flex flex-column"
+              col="2"
+            >
               <v-card class="flex d-flex flex-column">
                 <v-card-title class="text-center justify-center">
                   {{ $t('landingpage.Login.PanelTitel_1') }}
@@ -82,20 +77,24 @@
                 <v-divider />
                 <a
                   :href="faq"
+                  class="py-4"
                 >
                   <v-img
                     contain
-                    class="my-2"
-                    height="15vh"
-                    width="100%"
+                    class="mx-auto"
+                    height="20vh"
                     max-height="200px"
-                    src="../assets/circle-question-solid.svg" 
+                    max-width="200px"
+                    src="../assets/icon_question_and_answer_small.svg" 
                   />
                 </a>
               </v-card>
             </v-col>
 
-            <v-col class="d-flex flex-column">
+            <v-col
+              class="d-flex flex-column"
+              col="2"
+            >
               <v-card class="flex d-flex flex-column">
                 <v-card-title class="text-center justify-center">
                   {{ $t('landingpage.Login.PanelTitel_2') }}
@@ -103,20 +102,24 @@
                 <v-divider />
                 <a
                   :href="$keycloak.createLoginUrl()"
+                  class="py-4"
                 >
                   <v-img
                     contain
-                    class="my-2"
-                    height="15vh"
-                    width="100%"
+                    class="mx-auto"
+                    height="20vh"
                     max-height="200px"
-                    src="../assets/exclamation-solid.svg" 
+                    max-width="200px"
+                    src="../assets/icon_broadcast_small.svg" 
                   />
                 </a>
               </v-card>
             </v-col>
 
-            <v-col class="d-flex flex-column">
+            <v-col
+              class="d-flex flex-column"
+              col="2"
+            >
               <v-card class="flex d-flex flex-column">
                 <v-card-title class="text-center justify-center">
                   {{ $t('landingpage.Login.PanelTitel_3') }}
@@ -124,18 +127,20 @@
                 <v-divider />
                 <a
                   :href="faq_warum"
+                  class="py-4"
                 >
                   <v-img
                     contain
-                    class="my-2"
-                    height="15vh"
-                    width="100%"
+                    class="mx-auto"
+                    height="20vh"
                     max-height="200px"
-                    src="../assets/lightbulb-regular.svg" 
+                    max-width="200px"
+                    src="../assets/icon_lightbulb_green.svg"
                   />
                 </a>  
               </v-card>
             </v-col>
+            <v-spacer />
           </v-row>
 
           <!-- Login Button -->
