@@ -71,13 +71,13 @@
               col="2"
             >
               <v-card class="flex d-flex flex-column">
-                <v-card-title class="text-center justify-center">
+                <v-card-title class="text-center justify-center flex d-flex flex-column">
                   {{ $t('landingpage.Login.PanelTitel_1') }}
                 </v-card-title>
                 <v-divider />
                 <a
                   :href="faq"
-                  class="py-4"
+                  class="py-4 px-3"
                 >
                   <v-img
                     contain
@@ -96,13 +96,13 @@
               col="2"
             >
               <v-card class="flex d-flex flex-column">
-                <v-card-title class="text-center justify-center">
+                <v-card-title class="text-center justify-center flex d-flex flex-column">
                   {{ $t('landingpage.Login.PanelTitel_2') }}
                 </v-card-title>
                 <v-divider />
                 <a
                   :href="$keycloak.createLoginUrl()"
-                  class="py-4"
+                  class="py-4 px-3"
                 >
                   <v-img
                     contain
@@ -121,13 +121,13 @@
               col="2"
             >
               <v-card class="flex d-flex flex-column">
-                <v-card-title class="text-center justify-center">
-                  {{ $t('landingpage.Login.PanelTitel_3') }}
+                <v-card-title class="text-center justify-center flex d-flex flex-column">
+                  <nobr>{{ $t('landingpage.Login.PanelTitel_3') }}</nobr>
                 </v-card-title>
                 <v-divider />
                 <a
                   :href="faq_warum"
-                  class="py-4"
+                  class="py-4 px-3"
                 >
                   <v-img
                     contain
