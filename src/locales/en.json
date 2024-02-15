@@ -393,7 +393,9 @@
       "ITGeraetIDDic_9": "Laser and inkjet printer(s)",
       "ITGeraetIDDic_10": "Toner(s) for laser and inkjet printer(s)",
       "ITGeraetIDDic_4": "Overhead projector(s)",
-      "ITGeraetIDDic_6": "In-house servers"
+      "ITGeraetIDDic_6": "In-house servers",
+
+      "gebaeudeHinzufuegen": "Building"
     }
   },
   "colleagueSurvey": {

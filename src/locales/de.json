@@ -393,7 +393,9 @@
       "ITGeraetIDDic_9": "Laser- & Tintenstrahldrucker",
       "ITGeraetIDDic_10": "Laser & Tintenstrahldrucker Toner",
       "ITGeraetIDDic_4": "Beamer",
-      "ITGeraetIDDic_6": "interne Server"
+      "ITGeraetIDDic_6": "interne Server",
+
+      "gebaeudeHinzufuegen": "Gebäude"
     }
   },
   "colleagueSurvey": {
