@@ -175,7 +175,7 @@
           :key="'dienstreise-' + index"
         >
           <v-row>
-            <v-col :cols="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3') ? 4 : 5">
+            <v-col :cols="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3') ? 2 : 5">
               <v-select
                 v-model="reise[0]"
                 :disabled="submittedDataSuccessfully"
@@ -185,7 +185,6 @@
               />
 
             </v-col>
-            <!--<v-select v-model="flugklasse" label="Klasse" v-show="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3')" :items="flugklasseListe"></v-select>-->
             <v-col
               v-if="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_0')"
               :cols="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_0') ? 3 : 0"
@@ -200,6 +199,31 @@
                 class="pr-5"
               />
             </v-col>
+            <!-- Flugstreckentyp auswahl-->
+            <v-col 
+              v-if="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3')"
+              :cols="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3') ? 2 : 0"
+            >
+              <v-select 
+                v-model="reise[1]" 
+                :label="$t('colleagueSurvey.colleagueSurvey.flugstreckentyp')" 
+                v-show="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3')" 
+                :items="flugstreckeListe"
+                class="pr-5"
+              />
+            </v-col>
+            <!-- Flugklasse auswahl-->
+            <v-col
+              v-if="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3')"
+              :cols="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3') ? 2 : 0"
+            >
+              <v-select
+                v-model="reise[3]"
+                :disabled="submittedDataSuccessfully"
+                :label="$t('colleagueSurvey.colleagueSurvey.Flugklasse')"
+                :items="mapDienstreiseFlugklasse(reise[1])"
+                class="pr-5"/>
+            </v-col>
             <v-col :cols="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3') ? 3 : 5">
               <v-text-field
                 v-model="reise[2]"
@@ -210,18 +234,6 @@
                 suffix="km"
                 class="pr-5"
               />
-            </v-col>
-            <v-col
-              v-if="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3')"
-              :cols="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3') ? 3 : 0"
-            >
-              <!-- TODO: Funktion einführen für zuweisung auf lang / kurzstrecke ACHTUNG MEHRERE EINTRÄGE? -->
-              <v-alert
-                icon="mdi-airplane-takeoff"
-                outlined
-                text
-                type="info"
-              > {{ mapDienstreiseFlugkategorie(reise[2]) }} </v-alert>
             </v-col>
             <v-col>
               <v-btn
@@ -474,8 +486,6 @@ export default {  components: {
 
     //Arbeitstage
     arbeitstageBuero: null,
-    
-    //TODO: Referenzierung auf aktuell selektierten PKW Typ
 
     //Pendelweg ------------------------------------------
     fahrtmediumListe: [],
@@ -494,11 +504,14 @@ export default {  components: {
     //Dienstreisen ---------------------------------------
     dienstreiseMediumListe: [],
     flugstreckeListe: [],
+    flugklassenListe: [],
+
     /*
      * dienstreise Array format:
      * [0]: dienstreiseMedium selected from List
      * [1]: flugstreckentTyp either Lang- or Kurzstrecke
      * [2]: dienstreiseDistanz accumulates all distances over multiple Dienstreisen of the last 12 months
+     * [3]: flugklasse
      */
     dienstreise: [[null, null, null]],
 
@@ -565,6 +578,8 @@ export default {  components: {
   },
 
   methods: {
+    // This Method is needed bc of i18n. 
+    // Otherwise after changing the language the dropdown menus would not change.
     setListe: function(){
       this.fahrtmediumListe = [
         i18n.t("colleagueSurvey.colleagueSurvey.fahrmediumListe_0"),
@@ -588,12 +603,21 @@ export default {  components: {
         i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3"),
       ],
       this.flugstreckeListe = [
-        i18n.t("colleagueSurvey.colleagueSurvey.flugstreckeListe_0"),
-        i18n.t("colleagueSurvey.colleagueSurvey.flugstreckeListe_1"),
+        i18n.t("colleagueSurvey.colleagueSurvey.flugstreckeListe_0"), //Langstrecke
+        i18n.t("colleagueSurvey.colleagueSurvey.flugstreckeListe_1"), //Kurzstrecke
+        i18n.t("colleagueSurvey.colleagueSurvey.flugstreckeListe_2"), //Inland
+        i18n.t("colleagueSurvey.colleagueSurvey.flugstreckeListe_3"), //International
       ],
       this.pkwListe = [
         i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMedium_Diesel"),
         i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMedium_Benzin"),
+      ],
+      this.flugklassenListe = [
+        i18n.t("colleagueSurvey.colleagueSurvey.flugklassenListe_0"), //average
+        i18n.t("colleagueSurvey.colleagueSurvey.flugklassenListe_1"), //economy
+        i18n.t("colleagueSurvey.colleagueSurvey.flugklassenListe_2"), //business
+        i18n.t("colleagueSurvey.colleagueSurvey.flugklassenListe_3"), //premium economy
+        i18n.t("colleagueSurvey.colleagueSurvey.flugklassenListe_4"), //first
       ]
     },
 
@@ -708,11 +732,42 @@ export default {  components: {
       return i18n.t('colleagueSurvey.colleagueSurvey.flugstreckeListe_1') 
     },
 
+    mapDienstreiseFlugklasse: function (flugstreckeart) {
+      if(flugstreckeart == i18n.t('colleagueSurvey.colleagueSurvey.flugstreckeListe_0')){ //Langstrecke
+        return [
+          i18n.t('colleagueSurvey.colleagueSurvey.flugklassenListe_0'),
+          i18n.t('colleagueSurvey.colleagueSurvey.flugklassenListe_1'),
+          i18n.t('colleagueSurvey.colleagueSurvey.flugklassenListe_2'),
+          i18n.t('colleagueSurvey.colleagueSurvey.flugklassenListe_3'),
+          i18n.t('colleagueSurvey.colleagueSurvey.flugklassenListe_4')
+        ]
+      } else if (flugstreckeart == i18n.t('colleagueSurvey.colleagueSurvey.flugstreckeListe_1')) { //Kurzstrecke
+        return [
+          i18n.t('colleagueSurvey.colleagueSurvey.flugklassenListe_0'),
+          i18n.t('colleagueSurvey.colleagueSurvey.flugklassenListe_1'),
+          i18n.t('colleagueSurvey.colleagueSurvey.flugklassenListe_2')
+        ]
+      } else if (flugstreckeart == i18n.t('colleagueSurvey.colleagueSurvey.flugstreckeListe_2')) { //Inland
+        return [
+          i18n.t('colleagueSurvey.colleagueSurvey.flugklassenListe_0'),
+        ]
+      } else if (flugstreckeart == i18n.t('colleagueSurvey.colleagueSurvey.flugstreckeListe_3')) { //International
+        return [
+          i18n.t('colleagueSurvey.colleagueSurvey.flugklassenListe_0'),
+          i18n.t('colleagueSurvey.colleagueSurvey.flugklassenListe_1'),
+          i18n.t('colleagueSurvey.colleagueSurvey.flugklassenListe_2'),
+          i18n.t('colleagueSurvey.colleagueSurvey.flugklassenListe_3'),
+          i18n.t('colleagueSurvey.colleagueSurvey.flugklassenListe_4')
+        ]
+      }
+    },
+
+
     /**
      * Adds a new Dienstreise to select as another Dienstreisemedium
      */
     newDienstreise: function () {
-      this.dienstreise.push([null, null, null]);
+      this.dienstreise.push([null, null, null, null]);
     },
 
     /**

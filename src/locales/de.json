@@ -439,8 +439,19 @@
 
       "Flugstrecke": "Flugstrecke",
       "EinfacheDistanz": "Einfache Distanz",
+
+      "flugstreckentyp": "Flugstreckentyp",
       "flugstreckeListe_0": "Langstrecke",
       "flugstreckeListe_1": "Kurzstrecke",
+      "flugstreckeListe_2": "Inland",
+      "flugstreckeListe_3": "International",
+      
+      "Flugklasse": "Klasse",
+      "flugklassenListe_0": "average",
+      "flugklassenListe_1": "economy",
+      "flugklassenListe_2": "business",
+      "flugklassenListe_3": "premium economy",
+      "flugklassenListe_4": "first",
       
       "TageBuero": "Wie viele Tage in der Woche sind Sie im Büro?",
       "TageBuero_label": "Tage im Büro",
