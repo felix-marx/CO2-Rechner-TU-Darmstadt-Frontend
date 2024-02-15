@@ -4,7 +4,8 @@
       v-if="responsesuccessful"
       elevation="2"
       outlined
-      class="pa-7"
+      class="pa-7 mx-auto"
+      :max-width="constants.v_card_max_width"
     >
       <v-card-title>{{ $t('evaluation.surveyEvaluation.AuswertungDerUmfrage') }} "{{ responsedata.bezeichnung }}"</v-card-title>
       <v-divider />
@@ -224,6 +225,8 @@
 
     <v-card
       v-if="showLoading || responsedata.auswertungFreigegeben"
+      class="mx-auto"
+      :max-width="constants.v_card_max_width"
     >
       <LoadingAnimation v-if="showLoading" />
       <LinkSharingComponent
@@ -237,6 +240,8 @@
       v-if="responseNotSuccessful"
       elevation="2"
       outlined
+      class="mx-auto"
+      :max-width="constants.v_card_max_width"
     >
       <v-card-title>Error {{ responseerror.code }}: {{ responseerror.message }}</v-card-title>
     </v-card>
@@ -253,6 +258,7 @@ import LinkSharingComponent from "../componentParts/LinkSharingComponent.vue";
 import DataGapVisualization from '../componentParts/DataGapVisualization.vue';
 import i18n from "@/i18n";
 import { translateGebaeudeIDToSymbolic } from "../../utils";
+import constants from "../../const.js";
 
 
 export default {
@@ -279,6 +285,7 @@ export default {
 
   data() {
     return {
+      constants: constants,
       responsesuccessful: false,
       responseNotSuccessful: false,
       responsedata: {

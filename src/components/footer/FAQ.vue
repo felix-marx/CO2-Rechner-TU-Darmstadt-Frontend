@@ -10,7 +10,11 @@
     />
     <v-main class="mb-16">
       <v-container>
-        <v-card elevation="0">
+        <v-card
+          elevation="0"
+          class="mx-auto"
+          :max-width="constants.v_card_max_width"
+        >
           <v-card
             elevation="2"
             outlined
@@ -627,6 +631,7 @@
 import Header from '../header/Header.vue'
 import Footer from '../footer/Footer.vue'
 import loadingAnimation from '../componentParts/LoadingAnimation.vue'
+import constants from '../../const'
 
 export default {
   name: "FAQ",
@@ -636,6 +641,7 @@ export default {
   },
 
   data: () => ({
+    constants: constants,
     tabList: [],
     panel_1: [],
     panel_2: [],

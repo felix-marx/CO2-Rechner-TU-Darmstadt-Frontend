@@ -2,7 +2,10 @@
 <template>
   <v-container>
     <!-- Introduction Text -->
-    <v-card class="pa-7">
+    <v-card
+      class="pa-7 mx-auto"
+      :max-width="constants.v_card_max_width"
+    >
       <p>
         {{ $t('userSurvey.Survey.UmfrageErklaerung_0') }}
       </p>
@@ -22,7 +25,10 @@
       <p v-html="$t('userSurvey.Survey.UmfrageErklaerung_7')" />
     </v-card>
 
-    <v-card class="pa-7 mt-2">
+    <v-card
+      class="pa-7 mt-2 mx-auto"
+      :max-width="constants.v_card_max_width"
+    >
       <!-- Umfrage -->
       <v-form lazy-validation>
         <!-- Bezeichnung -->
@@ -260,6 +266,7 @@
           <v-dialog
             v-model="errorDialog"
             transition="dialog-bottom-transition"
+            :max-width="constants.v_dialog_max_width"
           >
             <!-- Mit diesem Button soll die Umfrage abgesendet werden. -->
             <template v-slot:activator="{ on, attrs }">
@@ -376,9 +383,10 @@
     <!-- Component for showing Link for employees after sending formular data. -->
     <v-card
       v-if="displaySurveyLink || displayLoadingAnimation"
-      class="mt-2"
+      class="mt-2 mx-auto"
       elevation="2"
       outlined
+      :max-width="constants.v_card_max_width"
     >
       <LoadingAnimation v-if="displayLoadingAnimation" />
       <LinkSharingComponent
@@ -413,6 +421,7 @@ import LoadingAnimation from "../componentParts/LoadingAnimation";
 import i18n from "@/i18n";
 import DataGapVisualization from '../componentParts/DataGapVisualization.vue';
 import { translateGebaeudeIDToSymbolic, translateGebaeudeIDToNumeric, resolveITGeraetID } from "../../utils";
+import constants from "../../const.js";
 
 export default {
   components: {
@@ -424,6 +433,8 @@ export default {
   },
 
   data: () => ({
+    constants: constants,
+
     // Bezeichnung
     bezeichnung: null,
 

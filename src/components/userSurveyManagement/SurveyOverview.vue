@@ -1,6 +1,9 @@
 <template>
   <v-container>
-    <v-card>
+    <v-card
+      class="mx-auto"
+      :max-width="constants.v_card_max_width"
+    >
       <v-card-title>
         {{ $t('userSurveyManagement.SurveyOverview.GespeicherteUmfragen') }}
       </v-card-title>
@@ -171,6 +174,7 @@
           <v-dialog
             v-model="deleteSurvey[index]"
             transition="dialog-bottom-transition"
+            :max-width="constants.v_dialog_max_width"
           >
             <template v-slot:activator="{ on, attrs }">
               <!-- Mit diesem Button sollen ausgewählte Umfragen gelöscht werden können. -->
@@ -234,6 +238,7 @@ import EditSurvey from "./EditSurvey.vue";
 import SurveyEvaluation from "../evaluation/SurveyEvaluation.vue";
 import CopyButton from '../componentParts/CopyButton.vue';
 import i18n from "../../i18n";
+import constants from "../../const.js";
 
 export default {
   components: {
@@ -243,6 +248,7 @@ export default {
   },
 
   data: () => ({
+    constants: constants,
     umfragen: [],
     deleteSurvey: [],
     dialog: [], 

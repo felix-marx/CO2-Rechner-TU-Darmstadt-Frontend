@@ -1,9 +1,10 @@
 <!-- eslint-disable vue/no-v-html -->
 <template>
   <v-card
-    class="mt-2"
+    class="mt-2 mx-auto"
     elevation="2"
     outlined
+    :max-width="constants.v_card_max_width"
   >
     <v-card class="pa-7">
       <h2> {{ $t('userSurvey.MailTemplate.MailVorlage_0') }} </h2>
@@ -54,6 +55,7 @@
 </template>
 
 <script>
+import constants from "../../const.js";
 
 export default {
   name: "MailTemplate",
@@ -68,6 +70,10 @@ export default {
       type: String
     },
   },
+
+  data: () => ({
+    constants: constants,
+  }),
 
   computed: {
     mail: function(){

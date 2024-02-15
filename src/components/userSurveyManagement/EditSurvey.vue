@@ -3,9 +3,13 @@
     <v-card
       elevation="2"
       outlined
+      class="mx-auto"
+      :max-width="constants.v_card_max_width"
     >
       <v-form lazy-validation>
-        <v-card class="pa-7">
+        <v-card
+          class="pa-7"
+        >
           <v-row
             class="mt-1"
             dense
@@ -35,6 +39,7 @@
             <v-dialog
               v-if="!blockInput"
               v-model="errorDialog"
+              :max-width="constants.v_dialog_max_width"
               transition="dialog-bottom-transition"
             >
               <!-- Mit diesem Button soll die Umfrage abgesendet werden. -->
@@ -399,6 +404,7 @@ import LoadingAnimation from "../componentParts/LoadingAnimation";
 import DataGapVisualization from "../componentParts/DataGapVisualization";
 import i18n from "@/i18n";
 import { translateGebaeudeIDToSymbolic, translateGebaeudeIDToNumeric, resolveITGeraetID } from "../../utils";
+import constants from "../../const.js";
 
 
 export default {
@@ -419,6 +425,7 @@ export default {
   },
 
   data: () => ({
+    constants: constants,
     umfrage: {
       bezeichnung: null,
       mitarbeiteranzahl: null,

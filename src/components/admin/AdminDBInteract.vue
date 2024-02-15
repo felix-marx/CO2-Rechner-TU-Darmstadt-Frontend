@@ -1,6 +1,9 @@
 <template>
   <v-container>
-    <v-card class="px-0 pb-2">
+    <v-card
+      class="px-0 pb-2 mx-auto"
+      :max-width="constants.v_card_max_width"
+    >
       <v-card-title
         class="mx-4"
       >
@@ -36,7 +39,10 @@
       </v-container>
     </v-card>
 
-    <v-card class="px-0 pb-4 mt-2">
+    <v-card
+      class="px-0 pb-4 mt-2 mx-auto"
+      :max-width="constants.v_card_max_width"
+    >
       <v-card-title class="mx-4">
         Eintragen von Daten
       </v-card-title>
@@ -720,6 +726,7 @@
               <v-col class="text-right">
                 <v-dialog
                   v-model="dialog"
+                  :max-width="constants.v_dialog_max_width"
                 >
                   <template v-slot:activator="{ on, attrs }">
                     <v-btn
@@ -823,6 +830,7 @@
 <script>
 import Tooltip from "@/components/componentParts/Tooltip.vue";
 import LoadingAnimation from "../componentParts/LoadingAnimation.vue";
+import constants from "../../const";
 
 export default {
   components: {
@@ -831,6 +839,7 @@ export default {
   },
 
   data: () => ({
+    constants: constants,
     date: null,
     co2_factor: {
       year: '',
