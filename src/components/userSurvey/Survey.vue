@@ -166,7 +166,6 @@
                 class="delete_text--text mx-auto"
                 color="delete"
                 fab
-                dark
                 small
                 :disabled="blockInput"
                 @click="removeGebaeude(index)"

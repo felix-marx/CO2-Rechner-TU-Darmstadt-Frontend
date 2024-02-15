@@ -219,16 +219,40 @@
 
           <!-- Genutzte Gebäude -->
 
-          <br>
-          <h3>
-            {{ $t('userSurveyManagement.editSurvey.WelcheGebaeude') }} (<a
-              href="https://www.tu-darmstadt.de/universitaet/campus/index.de.jsp"
-              target="_blank"
-            > {{ $t('userSurveyManagement.editSurvey.Lageplan') }}</a>)?
-            <Tooltip
-              :tooltip-text="$t('userSurveyManagement.editSurvey.Lageplan_tooltip')"
-            />
-          </h3>
+          <v-container>
+            <v-row justify="space-between">
+              <v-col
+                align-self="end"
+                class="text-bottom pb-0 pl-0"
+              >
+                <h3 class="text-bottom">
+                  {{ $t('userSurvey.Survey.GebaeudeAbteilung_0') }} (<a
+                    href="https://www.tu-darmstadt.de/universitaet/campus/index.de.jsp"
+                    target="_blank"
+                  >{{ $t('userSurvey.Survey.GebaeudeAbteilung_1') }}</a>)?
+                  <Tooltip
+                    :tooltip-text="$t('userSurvey.Survey.GebaeudeAbteilung_2')"
+                  />
+                </h3>
+              </v-col>
+              <v-col
+                cols="3"
+                class="text-right pb-1 pr-0"
+              >
+                <v-btn
+                  class="add_text--text pl-2"
+                  color="add"
+                  :disabled="blockInput"
+                  @click="newGebaeude()"
+                >
+                  <v-icon>
+                    mdi-plus
+                  </v-icon>
+                  {{ $t('userSurvey.Survey.gebaeudeHinzufuegen') }}
+                </v-btn>
+              </v-col> 
+            </v-row>
+          </v-container>
 
           <v-divider />
           <br>
@@ -238,7 +262,7 @@
             :key="index"
           >
             <v-row>
-              <v-col cols="5">
+              <v-col cols="6">
                 <v-autocomplete
                   v-if="gebaeudeIDs"
                   v-model="objekt[0]"
@@ -260,24 +284,21 @@
                   :disabled="blockInput"
                 />
               </v-col>
-              <v-col>
+              <v-col
+                cols="1"
+                class="mt-3 text-center"
+              >
                 <v-btn
-                  v-if="!blockInput"
-                  class="add_text--text"
-                  color="add"
-                  @click="newGebaeude()"
-                >
-                  {{ $t('common.Hinzufuegen') }}
-                </v-btn>
-              </v-col>
-              <v-col>
-                <v-btn
-                  v-if="!blockInput"
-                  class="delete_text--text"
+                  class="delete_text--text mx-auto"
                   color="delete"
+                  fab
+                  small
+                  :disabled="blockInput"
                   @click="removeGebaeude(index)"
                 >
-                  {{ $t('common.Loeschen') }}
+                  <v-icon>
+                    mdi-delete-outline
+                  </v-icon>
                 </v-btn>
               </v-col>
             </v-row>
