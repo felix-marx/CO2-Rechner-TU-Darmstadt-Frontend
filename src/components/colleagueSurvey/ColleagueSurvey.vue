@@ -171,8 +171,8 @@
         <br>
 
         <div
-          v-for="(reise, index) in dienstreise"
-          :key="'dienstreise-' + index"
+          v-for="(reise, index) in dienstreisen"
+          :key="'dienstreisen-' + index"
         >
           <v-row>
             <v-col :cols="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3') ? 2 : 5">
@@ -507,13 +507,13 @@ export default {  components: {
     flugklassenListe: [],
 
     /*
-     * dienstreise Array format:
+     * dienstreisen Array format:
      * [0]: dienstreiseMedium selected from List
      * [1]: flugstreckentTyp either Lang- or Kurzstrecke
      * [2]: dienstreiseDistanz accumulates all distances over multiple Dienstreisen of the last 12 months
      * [3]: flugklasse
      */
-    dienstreise: [[null, null, null]],
+    dienstreisen: [[null, null, null, null]],
 
     //IT Geräte
     /* Geraet mit Array Position format [intern Geraete ID, Anzahl, enabled]
@@ -569,7 +569,7 @@ export default {  components: {
 
       // reset values for Pendelwege and Dienstreisen
       this.verkehrsmittel = [[null, null, false, null, null, null]]
-      this.dienstreise = [[null, null, null]]
+      this.dienstreisen = [[null, null, null, null]]
     },
   },
   created() {
@@ -674,7 +674,6 @@ export default {  components: {
       }
     },
 
-    //TODO: Anpassen
     /**
      * Returns an array formatted [Medium ID, if PKW String of Tank else null]
      */
@@ -688,7 +687,6 @@ export default {  components: {
       //Tankart should be empty if not PKW
       var tankart = "";
 
-
       //Check if verkehrsmittel is PKW
       if(parseInt(verkehrsmittelMap.get(verkehrsmittel)) == 2) {
         //Check if Benzin or Diesel
@@ -701,12 +699,6 @@ export default {  components: {
           tankart = "";
         }
       }
-
-      // TODO: REMOVE
-      console.log([
-        verkehrsmittelMap.get(verkehrsmittel),
-        tankart
-      ])
 
       return [
         verkehrsmittelMap.get(verkehrsmittel),
@@ -767,17 +759,17 @@ export default {  components: {
      * Adds a new Dienstreise to select as another Dienstreisemedium
      */
     newDienstreise: function () {
-      this.dienstreise.push([null, null, null, null]);
+      this.dienstreisen.push([null, null, null, null]);
     },
 
     /**
      * Removes a Dienstreise at the given index, therby deleting it from the webpage
      */
     removeDienstreise: function (index) {
-      if (index >= 0 && this.dienstreise.length > index) {
-        this.dienstreise.splice(index, 1);
+      if (index >= 0 && this.dienstreisen.length > index) {
+        this.dienstreisen.splice(index, 1);
         //When the only element is removed add a new, thereby clearing the values of the fields on the webpage
-        if (this.dienstreise.length === 0) {
+        if (this.dienstreisen.length === 0) {
           this.newDienstreise();
         }
       } else {
@@ -850,15 +842,16 @@ export default {  components: {
     dienstreisenJSON: function () {
       //Build Dienstreisen Array
       var buildDienstreisen = [];
-      for (var reise of this.dienstreise) {
+      for (var dienstreise of this.dienstreisen) {
         // eslint-disable-next-line no-extra-boolean-cast
-        if(!!reise[0]){
-          var dienstreisetyp = this.mapDienstreisemittel(reise[0]);
+        if(!!dienstreise[0]){
+          var dienstreisetyp = this.mapDienstreisemittel(dienstreise[0]);
+
           buildDienstreisen.push({
             idDienstreise: parseInt(dienstreisetyp[0]),
             //Catches spezial case where user selects Flugtyp but then changes to other Verkehrsmedium
-            streckentyp: parseInt(dienstreisetyp[0]) == 3 ? reise[1] : "",
-            strecke: parseInt(reise[2]),
+            streckentyp: parseInt(dienstreisetyp[0]) == 3 ? dienstreise[1] : "",
+            strecke: parseInt(dienstreise[2]),
             tankart: dienstreisetyp[1],
           });
         }
@@ -892,7 +885,7 @@ export default {  components: {
         errors.push(i18n.t('colleagueSurvey.colleagueSurvey.EingabeValidierung_TageBuero'))
       }
       // Check for Dienstreise
-      for(const dienst of this.dienstreise) {
+      for(const dienst of this.dienstreisen) {
         if(dienst[0] && (!dienst[2] || dienst[2] < 0)) {
           var dienstmedium = (dienst[0] != i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3')) ? dienst[0] : dienst[1]
           if(dienstmedium == null) {
@@ -928,7 +921,7 @@ export default {  components: {
         body: JSON.stringify({
           pendelweg: this.pendelwegJSON(),
           tageImBuero: parseInt(this.arbeitstageBuero),
-          dienstreise: this.dienstreisenJSON(),
+          dienstreisen: this.dienstreisenJSON(),
           itGeraete: this.itGeraeteJSON(),
           idUmfrage: this.$route.params.umfrageID,
         }),
