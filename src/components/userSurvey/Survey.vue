@@ -93,40 +93,17 @@
 
         <!-- Genutzte Gebäude -->
 
-        <v-container>
-          <v-row justify="space-between">
-            <v-col
-              align-self="end"
-              class="text-bottom pb-0 pl-0"
-            >
-              <h3 class="text-bottom">
-                {{ $t('userSurvey.Survey.GebaeudeAbteilung_0') }} (<a
-                  href="https://www.tu-darmstadt.de/universitaet/campus/index.de.jsp"
-                  target="_blank"
-                >{{ $t('userSurvey.Survey.GebaeudeAbteilung_1') }}</a>)?
-                <Tooltip
-                  :tooltip-text="$t('userSurvey.Survey.GebaeudeAbteilung_2')"
-                />
-              </h3>
-            </v-col>
-            <v-col
-              cols="3"
-              class="text-right pb-1 pr-0"
-            >
-              <v-btn
-                class="add_text--text pl-2"
-                color="add"
-                :disabled="blockInput"
-                @click="newGebaeude()"
-              >
-                <v-icon>
-                  mdi-plus
-                </v-icon>
-                {{ $t('userSurvey.Survey.gebaeudeHinzufuegen') }}
-              </v-btn>
-            </v-col> 
-          </v-row>
-        </v-container>
+        <br>
+
+        <h3>
+          {{ $t('userSurvey.Survey.GebaeudeAbteilung_0') }} (<a
+            href="https://www.tu-darmstadt.de/universitaet/campus/index.de.jsp"
+            target="_blank"
+          >{{ $t('userSurvey.Survey.GebaeudeAbteilung_1') }}</a>)?
+          <Tooltip
+            :tooltip-text="$t('userSurvey.Survey.GebaeudeAbteilung_2')"
+          />
+        </h3>
 
         <v-divider />
         <br>
@@ -177,6 +154,27 @@
             </v-col>
           </v-row>
         </div>
+
+        <v-container>
+          <v-row justify="start">
+            <v-col
+              class="pr-0"
+            >
+              <v-btn
+                class="add_text--text pl-2"
+                color="add"
+                :disabled="blockInput"
+                @click="newGebaeude()"
+              >
+                <v-icon>
+                  mdi-plus
+                </v-icon>
+                {{ $t('userSurvey.Survey.gebaeudeHinzufuegen') }}
+              </v-btn>
+            </v-col> 
+          </v-row>
+        </v-container>
+
         <v-alert
           v-if="duplicateBuilding"
           type="warning"
