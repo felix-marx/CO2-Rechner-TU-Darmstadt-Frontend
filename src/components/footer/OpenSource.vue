@@ -10,7 +10,7 @@
         v-bind="attrs"
         v-on="on"
       >
-        <span class="mx-2">{{ $t('footer.OpenSource.Projektcode') }}</span>
+        <span class="mx-2 white--text">{{ $t('footer.OpenSource.Projektcode') }}</span>
       </v-btn>
     </template>
 

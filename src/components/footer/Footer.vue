@@ -21,7 +21,7 @@
             :target="fElem.target"
             text
           >
-            <span class="mx-2">{{ fElem.text }}</span>
+            <span class="mx-2 white--text">{{ fElem.text }}</span>
           </v-btn>
 
           <!--- Contact Dialog --->

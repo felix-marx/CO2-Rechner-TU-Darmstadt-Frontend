@@ -10,7 +10,7 @@
         v-bind="attrs"
         v-on="on"
       >
-        <span class="mx-2"> {{ $t('footer.Contact.Name') }} </span>
+        <span class="mx-2 white--text"> {{ $t('footer.Contact.Name') }} </span>
       </v-btn>
     </template>
 
