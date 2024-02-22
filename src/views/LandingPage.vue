@@ -153,31 +153,6 @@
           <template v-else>
             <v-row class="mt-4">
               <v-col>
-                <v-spacer />
-                <v-card>
-                  <v-card-title class="text-center justify-center">
-                    {{ $t('landingpage.Login.PanelTitel_1') }}
-                  </v-card-title>
-                  <v-divider />
-                  <a
-                    :href="faq"
-                    class="py-4 px-3"
-                  >
-                    <v-img
-                      contain
-                      class="mx-auto"
-                      height="20vh"
-                      max-height="200px"
-                      max-width="200px"
-                      src="../assets/icon_question_and_answer.svg" 
-                    />
-                  </a>
-                </v-card>
-                <v-spacer />
-              </v-col>
-            </v-row>
-            <v-row>
-              <v-col>
                 <v-card class="flex d-flex flex-column">
                   <v-card-title class="text-center justify-center flex d-flex flex-column">
                     {{ $t('landingpage.Login.PanelTitel_2') }}
@@ -194,6 +169,29 @@
                       max-height="200px"
                       max-width="200px"
                       src="../assets/icon_broadcast.svg" 
+                    />
+                  </a>
+                </v-card>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col>
+                <v-card>
+                  <v-card-title class="text-center justify-center">
+                    {{ $t('landingpage.Login.PanelTitel_1') }}
+                  </v-card-title>
+                  <v-divider />
+                  <a
+                    :href="faq"
+                    class="py-4 px-3"
+                  >
+                    <v-img
+                      contain
+                      class="mx-auto"
+                      height="20vh"
+                      max-height="200px"
+                      max-width="200px"
+                      src="../assets/icon_question_and_answer.svg" 
                     />
                   </a>
                 </v-card>
@@ -297,22 +295,6 @@
             <v-row>
               <v-col>
                 <a
-                  href="https://www.fst.tu-darmstadt.de/fachgebiet/index.de.jsp"
-                  target="_blank"
-                >
-                  <v-img
-                    contain
-                    class="mx-auto py-6"
-                    max-height="177"
-                    max-width="250"
-                    src="../assets/logo_Maschinenbau.png"
-                  />
-                </a>
-              </v-col>
-            </v-row>
-            <v-row>
-              <v-col>
-                <a
                   href="https://www.tu-darmstadt.de/nachhaltigkeit/buero_fuer_nachhaltigkeit/index.de.jsp"
                   target="_blank"
                 >
@@ -322,6 +304,22 @@
                     max-height="177"
                     max-width="250"
                     src="../assets/logo_Nachhaltigkeit.jpg"
+                  />
+                </a>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col>
+                <a
+                  href="https://www.fst.tu-darmstadt.de/fachgebiet/index.de.jsp"
+                  target="_blank"
+                >
+                  <v-img
+                    contain
+                    class="mx-auto py-6"
+                    max-height="177"
+                    max-width="250"
+                    src="../assets/logo_Maschinenbau.png"
                   />
                 </a>
               </v-col>
