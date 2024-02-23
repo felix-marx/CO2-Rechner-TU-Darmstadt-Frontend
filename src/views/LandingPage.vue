@@ -8,20 +8,20 @@
     />
 
     <v-main
-      class="mb-8"
+      class="mb-16 mx-3"
     >
       <v-card
-        elevation="0"
-        class="pb-4"
+        class="mt-3 mx-auto"
+        :max-width="constants.v_card_max_width"
         height="100%"
       >
         <!-- Banner Image -->
         <v-img
           :max-height="imageHeight"
-          src="../assets/footprints-in-sand.jpg"
+          src="../assets/7.jpg"
           class="d-flex align-end"
         >
-          <v-container v-if="$vuetify.breakpoint.width >= min_width_title">
+          <v-container v-if="false">
             <!-- Title in grey box in image-->
             <v-row>
               <v-col class="text-left pb-0">
@@ -35,22 +35,37 @@
                   />
                   <p
                     style="font-size: large; color: black;"
-                    class="px-4 py-2"
+                    class="px-4 pt-2 pb-4"
                     v-html="$t('landingpage.Login.Willkommen_1')"
                   />
                 </div>
               </v-col>
             </v-row>
           </v-container>
-        </v-img>  
+        </v-img> 
+
+        <div
+          style="background-color: #F5F5F5;"
+        >
+          <h1
+            style="color: black;"
+            class="px-4 py-2"
+            v-html="$t('landingpage.Login.Titel')"
+          />
+          <p
+            style="font-size: large; color: black;"
+            class="px-4 py-2 pb-4 mb-0"
+            v-html="$t('landingpage.Login.Willkommen_1')"
+          />
+        </div>
         
         <v-container>
           <!-- Title in grey box below image-->
-          <template v-if="$vuetify.breakpoint.width < min_width_title">
+          <!-- <template>
             <v-row>
               <v-col class="text-left pa-0">
                 <div
-                  style="background-color: #F5F5F5; display: inline-block;"
+                  style="background-color: #F5F5F5;"
                 >
                   <h1
                     style="color: black;"
@@ -65,12 +80,12 @@
                 </div>
               </v-col>
             </v-row>
-          </template>
+          </template> -->
 
           <!-- Icon-Boxes -->
           <!-- all boxes in one row -->
           <template v-if="$vuetify.breakpoint.width >= min_width_icons">
-            <v-row class="mt-4">
+            <v-row>
               <v-spacer />
               <v-col
                 class="d-flex flex-column"
@@ -151,7 +166,7 @@
           </template>
           <!-- each box in a separate row -->
           <template v-else>
-            <v-row class="mt-4">
+            <v-row>
               <v-col>
                 <v-card class="flex d-flex flex-column">
                   <v-card-title class="text-center justify-center flex d-flex flex-column">
@@ -242,10 +257,10 @@
           <!-- all logos in one row -->
           <template v-if="$vuetify.breakpoint.width >= min_width_logos">
             <v-row
-              class="d-flex justify-space-around mt-10"
+              class="d-flex justify-center mt-10"
             >
               <v-spacer />
-              <v-col col="2">
+              <v-col class="pl-4 pr-0">
                 <a
                   href="https://www.fst.tu-darmstadt.de/fachgebiet/index.de.jsp"
                   target="_blank"
@@ -254,12 +269,12 @@
                     contain
                     class="mx-auto py-6"
                     max-height="177"
-                    max-width="250"
+                    max-width="230"
                     src="../assets/logo_Maschinenbau.png"
                   />
                 </a>
               </v-col>
-              <v-col col="2">
+              <v-col>
                 <a
                   href="https://www.tu-darmstadt.de/nachhaltigkeit/buero_fuer_nachhaltigkeit/index.de.jsp"
                   target="_blank"
@@ -268,12 +283,12 @@
                     contain
                     class="mx-auto"
                     max-height="177"
-                    max-width="250"
+                    max-width="230"
                     src="../assets/logo_Nachhaltigkeit.jpg"
                   />
                 </a>
               </v-col>
-              <v-col col="2">
+              <v-col class="px-2">
                 <a
                   href="https://www.tu-darmstadt.de/"
                   target="_blank"
@@ -282,7 +297,7 @@
                     contain
                     class="mx-auto"
                     max-height="177"
-                    max-width="250"
+                    max-width="230"
                     src="../assets/logo_tud.png"
                   />
                 </a>
@@ -352,6 +367,7 @@
 <script>
 import Footer from "@/components/footer/Footer";
 import Header from "@/components/header/Header";
+import constants from "../const.js";
 
 export default {
   name: "Login",
@@ -362,12 +378,13 @@ export default {
   },
 
   data: () => ({
+    constants: constants,
     faq: process.env.VUE_APP_URL + '/faq',
     faq_bilazierung: process.env.VUE_APP_URL + '/faq#bilanzierung',
     faq_allgemein: process.env.VUE_APP_URL + '/faq#allgemein',
     faq_warum: process.env.VUE_APP_URL + '/faq#warum',
-    min_width_logos: 830,   // minimum pixel width to display logos in one row
-    min_width_icons: 750,   // minimum pixel width to display icons in one row
+    min_width_logos: 770,   // minimum pixel width to display logos in one row
+    min_width_icons: 770,   // minimum pixel width to display icons in one row
     min_width_title: 600,   // minimum pixel width to display title in banner image
   }),
 
@@ -376,7 +393,8 @@ export default {
       return (this.$vuetify.theme.dark) ? 'dark' : 'light'
     },
     imageHeight(){
-      return (this.$vuetify.breakpoint.width >= this.min_width_title) ? "35vh" : "20vh"
+      //return (this.$vuetify.breakpoint.width >= this.min_width_title) ? "35vh" : "20vh"
+      return "500px"
     }
   },  
 };

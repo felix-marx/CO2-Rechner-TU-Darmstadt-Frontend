@@ -16,7 +16,7 @@ export default new Vuetify({
         delete: '#ee6363',
         delete_text: '#FFFFFF',
         blue: "#42A5F5",
-        background: "#F5F5F5",
+        background: "#F0F0F0",
       },
     },
   },
