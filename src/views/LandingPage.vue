@@ -339,7 +339,7 @@
                 </a>
               </v-col>
             </v-row>
-            <v-row class="mb-16">  
+            <v-row>  
               <v-col>
                 <a
                   href="https://www.tu-darmstadt.de/"

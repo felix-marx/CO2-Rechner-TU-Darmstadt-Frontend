@@ -13,6 +13,9 @@
     >
       <v-row justify="center">
         <v-card-text>
+          <!--- Contact Dialog --->
+          <Contact />
+
           <v-btn
             v-for="(fElem, index) in footerButtons"
             :key="'footerButton-' + index"
@@ -23,9 +26,6 @@
           >
             <span class="mx-2 white--text">{{ fElem.text }}</span>
           </v-btn>
-
-          <!--- Contact Dialog --->
-          <Contact />
         </v-card-text>
       </v-row>
     </v-card>
