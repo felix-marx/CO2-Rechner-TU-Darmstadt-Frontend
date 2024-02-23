@@ -243,6 +243,10 @@
       "Antwort_2_9_Tabelle_6": "Weitere Testläufe des CO<sub>2</sub>-Rechners",
       "Antwort_2_9_Tabelle_7": "Projektplanung: Gesamtkonzept CO<sub>2</sub>-Bilanz und Rollout des CO<sub>2</sub>-Rechners",
 
+      "Frage_2_10": "Ist der CO<sub>2</sub>-Rechner öffentlich zugänglich? Ist das Projekt Open Source?",
+      "Antwort_2_10_1": "Der CO<sub>2</sub>-Rechner wurde öffentlich unter der GNU AGPL-3.0 Open Source Lizenz entwickelt. Sie können die gesamte Code Basis auf Github einsehen.",
+      "Antwort_2_10_2": "Webseite / Frontend:",
+      "Antwort_2_10_3": "Backend:",
 
       "Titel_3": "Nutzung des CO<sub>2</sub>-Rechners",
       
@@ -289,14 +293,6 @@
       "Impressum": "Impressum",
       "Datenschutzerklearung": "Datenschutzerklärung",
       "FAQ": "FAQ"
-    },
-    "OpenSource": {
-      "Text_0": "Der CO₂-Rechner wurde öffentlich unter der GNU AGPL-3.0 Open Source Lizenz entwickelt.",
-      "Text_1": "Sie können die gesamte Code Basis auf Github einsehen.",
-      "Website": "Webseite",
-      "Projektcode": "Projektcode",
-      "Github": "Github Repository",
-      "Backend": "Backend"
     },
     "Contact": {
       "Name": "Kontakt",
@@ -668,6 +664,7 @@
     "nichtNegativRegel": "Bitte geben Sie eine nicht-negative Zahl an",
     "jahrRegel": "Bitte geben Sie ein valides Jahr an",
     "Gebaeude": "Gebäude",
-    "Verbrauch": "Verbrauch"
+    "Verbrauch": "Verbrauch",
+    "GithubRepo": "Github Repository"
   }
 }

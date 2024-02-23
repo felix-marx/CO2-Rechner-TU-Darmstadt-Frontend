@@ -471,6 +471,34 @@
                     </v-card>
                   </v-expansion-panel-content>
                 </v-expansion-panel>
+
+                <v-expansion-panel>
+                  <v-expansion-panel-header>
+                    <b v-html="$t('footer.FAQ.Frage_2_10')" />
+                  </v-expansion-panel-header>
+                  <v-expansion-panel-content>
+                    <v-card
+                      class="mt-4"
+                      elevation="0"
+                    >
+                      <p v-html="$t('footer.FAQ.Antwort_2_10_1')" />
+                      <p>
+                        {{ $t('footer.FAQ.Antwort_2_10_2') }}
+                        <a
+                          href="https://github.com/felix-marx/CO2-Rechner-TU-Darmstadt-Frontend"
+                          target="_blank"
+                        >{{ $t('common.GithubRepo') }}</a>
+                      </p>
+                      <p>
+                        {{ $t('footer.FAQ.Antwort_2_10_3') }} 
+                        <a
+                          href="https://github.com/felix-marx/CO2-Rechner-TU-Darmstadt-Frontend"
+                          target="_blank"
+                        >{{ $t('common.GithubRepo') }}</a>
+                      </p>
+                    </v-card>
+                  </v-expansion-panel-content>
+                </v-expansion-panel>  
               </v-expansion-panels>
             </v-card>
 

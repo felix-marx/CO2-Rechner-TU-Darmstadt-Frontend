@@ -26,8 +26,6 @@
 
           <!--- Contact Dialog --->
           <Contact />
-          <!-- Link to Github Repository -->
-          <OpenSource />
         </v-card-text>
       </v-row>
     </v-card>
@@ -36,14 +34,12 @@
 
 <script>
 import Contact from "../footer/Contact.vue";
-import OpenSource from "../footer/OpenSource.vue";
 import i18n from "@/i18n";
 
 export default {
   name: "Footer",
     components: {
       Contact,
-      OpenSource
   },
 
   data: () => ({
