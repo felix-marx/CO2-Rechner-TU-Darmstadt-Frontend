@@ -11,23 +11,19 @@
       width="100%"
       class="primary text-center"
     >
-      <v-row justify="center">
-        <v-card-text>
-          <!--- Contact Dialog --->
-          <Contact />
+      <!--- Contact Dialog --->
+      <Contact />
 
-          <v-btn
-            v-for="(fElem, index) in footerButtons"
-            :key="'footerButton-' + index"
-            :href="fElem.href"
-            class="mx-4"
-            :target="fElem.target"
-            text
-          >
-            <span class="mx-2 white--text">{{ fElem.text }}</span>
-          </v-btn>
-        </v-card-text>
-      </v-row>
+      <v-btn
+        v-for="(fElem, index) in footerButtons"
+        :key="'footerButton-' + index"
+        :href="fElem.href"
+        class="mx-4 my-1"
+        :target="fElem.target"
+        text
+      >
+        <span class="white--text">{{ fElem.text }}</span>
+      </v-btn>
     </v-card>
   </v-footer>
 </template>
@@ -43,9 +39,6 @@ export default {
   },
 
   data: () => ({
-    padless: true,
-    dialog: false,
-    
     // Contact and OpenSource component not in footerButtons for it is as Dialog and not a Button
     footerButtons: [],
   }),
