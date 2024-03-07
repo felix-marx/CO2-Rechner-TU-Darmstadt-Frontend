@@ -81,6 +81,13 @@ export function getDienstreisenLabelMap(){
     ["Diesel", i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMedium_Diesel")],
     ["Kurzstrecke", i18n.t("colleagueSurvey.colleagueSurvey.flugstreckeListe_1")],
     ["Langstrecke", i18n.t("colleagueSurvey.colleagueSurvey.flugstreckeListe_0")],
+    ["Inland", i18n.t("colleagueSurvey.colleagueSurvey.flugstreckeListe_2")],
+    ["International", i18n.t("colleagueSurvey.colleagueSurvey.flugstreckeListe_3")],
+    ["average", i18n.t("colleagueSurvey.colleagueSurvey.flugklasse_average")],
+    ["economy", i18n.t("colleagueSurvey.colleagueSurvey.flugklasse_economy")],
+    ["premium economy", i18n.t("colleagueSurvey.colleagueSurvey.flugklasse_premiumeconomy")],
+    ["business", i18n.t("colleagueSurvey.colleagueSurvey.flugklasse_business")],
+    ["first", i18n.t("colleagueSurvey.colleagueSurvey.flugklasse_first")],
   ])
 }
 
@@ -92,8 +99,8 @@ export function getPendelwegeLabelMap(){
     ["1", i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_2')],
     ["2", i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_3')],
     ["3", i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_4')],
-    ["4", i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_0')],
-    ["5", i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_1')],
+    ["4", i18n.t('colleagueSurvey.colleagueSurvey.Pkw_pendelweg_benzin')],
+    ["5", i18n.t('colleagueSurvey.colleagueSurvey.Pkw_pendelweg_diesel')],
     ["6", i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_1')],
     ["7", i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_0')],
     ["8", i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_2')],

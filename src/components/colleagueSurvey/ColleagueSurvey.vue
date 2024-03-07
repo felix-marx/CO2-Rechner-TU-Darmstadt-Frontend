@@ -613,11 +613,11 @@ export default {  components: {
         i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMedium_Benzin"),
       ],
       this.flugklassenListe = [
-        i18n.t("colleagueSurvey.colleagueSurvey.flugklassenListe_0"), //average
-        i18n.t("colleagueSurvey.colleagueSurvey.flugklassenListe_1"), //economy
-        i18n.t("colleagueSurvey.colleagueSurvey.flugklassenListe_2"), //business
-        i18n.t("colleagueSurvey.colleagueSurvey.flugklassenListe_3"), //premium economy
-        i18n.t("colleagueSurvey.colleagueSurvey.flugklassenListe_4"), //first
+        i18n.t("colleagueSurvey.colleagueSurvey.flugklasse_average"), //average
+        i18n.t("colleagueSurvey.colleagueSurvey.flugklasse_economy"), //economy
+        i18n.t("colleagueSurvey.colleagueSurvey.flugklasse_business"), //business
+        i18n.t("colleagueSurvey.colleagueSurvey.flugklasse_premiumeconomy"), //premium economy
+        i18n.t("colleagueSurvey.colleagueSurvey.flugklasse_first"), //first
       ]
     },
 
@@ -727,29 +727,29 @@ export default {  components: {
     mapDienstreiseFlugklasse: function (flugstreckeart) {
       if(flugstreckeart == i18n.t('colleagueSurvey.colleagueSurvey.flugstreckeListe_0')){ //Langstrecke
         return [
-          i18n.t('colleagueSurvey.colleagueSurvey.flugklassenListe_0'),
-          i18n.t('colleagueSurvey.colleagueSurvey.flugklassenListe_1'),
-          i18n.t('colleagueSurvey.colleagueSurvey.flugklassenListe_2'),
-          i18n.t('colleagueSurvey.colleagueSurvey.flugklassenListe_3'),
-          i18n.t('colleagueSurvey.colleagueSurvey.flugklassenListe_4')
+          i18n.t('colleagueSurvey.colleagueSurvey.flugklasse_average'),
+          i18n.t('colleagueSurvey.colleagueSurvey.flugklasse_economy'),
+          i18n.t('colleagueSurvey.colleagueSurvey.flugklasse_business'),
+          i18n.t('colleagueSurvey.colleagueSurvey.flugklasse_premiumeconomy'),
+          i18n.t('colleagueSurvey.colleagueSurvey.flugklasse_first')
         ]
       } else if (flugstreckeart == i18n.t('colleagueSurvey.colleagueSurvey.flugstreckeListe_1')) { //Kurzstrecke
         return [
-          i18n.t('colleagueSurvey.colleagueSurvey.flugklassenListe_0'),
-          i18n.t('colleagueSurvey.colleagueSurvey.flugklassenListe_1'),
-          i18n.t('colleagueSurvey.colleagueSurvey.flugklassenListe_2')
+          i18n.t('colleagueSurvey.colleagueSurvey.flugklasse_average'),
+          i18n.t('colleagueSurvey.colleagueSurvey.flugklasse_economy'),
+          i18n.t('colleagueSurvey.colleagueSurvey.flugklasse_business')
         ]
       } else if (flugstreckeart == i18n.t('colleagueSurvey.colleagueSurvey.flugstreckeListe_2')) { //Inland
         return [
-          i18n.t('colleagueSurvey.colleagueSurvey.flugklassenListe_0'),
+          i18n.t('colleagueSurvey.colleagueSurvey.flugklasse_average'),
         ]
       } else if (flugstreckeart == i18n.t('colleagueSurvey.colleagueSurvey.flugstreckeListe_3')) { //International
         return [
-          i18n.t('colleagueSurvey.colleagueSurvey.flugklassenListe_0'),
-          i18n.t('colleagueSurvey.colleagueSurvey.flugklassenListe_1'),
-          i18n.t('colleagueSurvey.colleagueSurvey.flugklassenListe_2'),
-          i18n.t('colleagueSurvey.colleagueSurvey.flugklassenListe_3'),
-          i18n.t('colleagueSurvey.colleagueSurvey.flugklassenListe_4')
+          i18n.t('colleagueSurvey.colleagueSurvey.flugklasse_average'),
+          i18n.t('colleagueSurvey.colleagueSurvey.flugklasse_economy'),
+          i18n.t('colleagueSurvey.colleagueSurvey.flugklasse_business'),
+          i18n.t('colleagueSurvey.colleagueSurvey.flugklasse_premiumeconomy'),
+          i18n.t('colleagueSurvey.colleagueSurvey.flugklasse_first')
         ]
       }
     },
@@ -913,14 +913,6 @@ export default {  components: {
      * Sends a JSON POST request to the backend to insert the data into the database and start the calculation
      */
     sendData: async function () {
-      console.log(JSON.stringify({
-          pendelweg: this.pendelwegJSON(),
-          tageImBuero: parseInt(this.arbeitstageBuero),
-          dienstreisen: this.dienstreisenJSON(),
-          itGeraete: this.itGeraeteJSON(),
-          idUmfrage: this.$route.params.umfrageID,
-        }))
-        
       this.displayLoadingAnimation = true;
       await fetch(process.env.VUE_APP_BASEURL + "/mitarbeiterumfrage/insert", {
         method: "POST",

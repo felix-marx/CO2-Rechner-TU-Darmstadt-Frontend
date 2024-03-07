@@ -426,18 +426,31 @@
       "fahrtmediumOEPNVListe_4": "Mix incl. underground",
       "fahrtmediumOEPNVListe_5": "Mix excl. underground",
       
-      "dienstreiseMediumListe_0": "Passenger car (Diesel)",
-      "dienstreiseMediumListe_1": "Passenger car (petrol / gasoline)",
+      "dienstreiseMediumListe_0": "Passenger car",
       "dienstreiseMediumListe_2": "Train",
       "dienstreiseMediumListe_3": "Plane",
       "dienstreiseMedium_Benzin": "Petrol / gasoline",
       "dienstreiseMedium_Diesel": "Diesel",
       "dienstreiseMedium_Auto": "Passenger car",
       
+      "Pkw_Motortyp": "Motortype",
+      "Pkw_diesel": "diesel",
+      "Pkw_benzin": "petrol / gasoline",
+      "Pkw_pendelweg_benzin": "Passenger car - petrol / gasoline",
+      "Pkw_pendelweg_diesel": "Passenger car - diesel",
+
       "Flugstrecke": "Flying distance",
       "EinfacheDistanz": "One-way distance",
       "flugstreckeListe_0": "Long distance",
       "flugstreckeListe_1": "Short distance",
+      "flugstreckeListe_2": "Domestic",
+      "flugstreckeListe_3": "International",
+
+      "flugklasse_average": "average",
+      "flugklasse_economy": "economy",
+      "flugklasse_premiumeconomy": "premium economy",
+      "flugklasse_business": "business",
+      "flugklasse_first": "first",
       
       "TageBuero": "How many days per week are you at the office?",
       "TageBuero_label": "Days in the office",
