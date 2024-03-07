@@ -852,7 +852,8 @@ export default {  components: {
             //Catches spezial case where user selects Flugtyp but then changes to other Verkehrsmedium
             streckentyp: parseInt(dienstreisetyp[0]) == 3 ? dienstreise[1] : "",
             strecke: parseInt(dienstreise[2]),
-            tankart: dienstreisetyp[1],
+            tankart: dienstreisetyp[1], //Empty if not PKW
+            klasse: dienstreise[3], //Empty if not Flugzeug
           });
         }
       }
@@ -912,6 +913,14 @@ export default {  components: {
      * Sends a JSON POST request to the backend to insert the data into the database and start the calculation
      */
     sendData: async function () {
+      console.log(JSON.stringify({
+          pendelweg: this.pendelwegJSON(),
+          tageImBuero: parseInt(this.arbeitstageBuero),
+          dienstreisen: this.dienstreisenJSON(),
+          itGeraete: this.itGeraeteJSON(),
+          idUmfrage: this.$route.params.umfrageID,
+        }))
+        
       this.displayLoadingAnimation = true;
       await fetch(process.env.VUE_APP_BASEURL + "/mitarbeiterumfrage/insert", {
         method: "POST",
