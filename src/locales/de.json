@@ -91,10 +91,9 @@
       "ErstellungUmfrage_9_4": "Angegebene Dienstreisen mit Reisestrecke",
       "ErstellungUmfrage_9_5": "Anzahl der gewählten IT-Geräte",
       "ErstellungUmfrage_10": "Personenbezogene Daten werden bei der Beantwortung der Fragen nicht erhoben.",
-      "ErstellungUmfrage_11": "Die Ergebnisse der Umfrage werden im CO",
-      "ErstellungUmfrage_12": "-Rechner gespeichert und dort den Umfrage-Verantwortlichen zur Verfügung gestellt.",
-      "ErstellungUmfrage_13": "Die Ergebnisse sind so weit anonymisiert, dass Rückschlüsse auf einzelne Personen nicht möglich sind.",
-      "ErstellungUmfrage_14": "Die Löschung der Ergebnisse erfolgt durch die Umfrage-Verantwortlichen.",
+      "ErstellungUmfrage_11": "Die Ergebnisse der Umfrage werden im CO<sub>2</sub>-Rechner gespeichert und dort den Umfrage-Verantwortlichen zur Verfügung gestellt.",
+      "ErstellungUmfrage_12": "Die Ergebnisse sind so weit anonymisiert, dass Rückschlüsse auf einzelne Personen nicht möglich sind.",
+      "ErstellungUmfrage_13": "Die Löschung der Ergebnisse erfolgt durch die Umfrage-Verantwortlichen.",
 
       "Umfrageauswertung_0": "Umfrageauswertung",
       "Umfrageauswertung_1": "Die Auswertung der Umfrageergebnisse ist durch Sie jederzeit möglich.",
@@ -114,7 +113,7 @@
       
       "Frage_1_3": "Was sind Treibhausgase (THG)?",
       "Antwort_1_3_1": "Treibhausgase sind Gase in der Atmosphäre, die den sogenannten Treibhauseffekt verursachen. Dabei absorbieren sie langwellige Strahlung (Wärmestrahlung), die von der Erdoberfläche, den Wolken und der Atmosphäre selbst abgestrahlt wird. Normalerweise würde diese Strahlung wieder an den Weltraum abgegeben werden. Die Treibhausgase strahlen die Wärme nun jedoch sowohl Richtung Weltall als auch Richtung Erdoberfläche ab, sodass die untere Atmosphäre zusätzlich erwärmt wird.",
-      "Antwort_1_3_2": "Dazu zählen: Kohlenstoffdioxid (CO<sub>2</sub>), Methan (CH<sub>4</sub>), Distickstoffmonoxid (N<sub>2</sub>O auch Lachgas genannt) Fluorkohlenwasserstoffe (HFKW), perfluorierte Fluorkohlenwasserstoffe (FKW), Schwefelhexafluorid (SF<sub>6</sub>) und Stickstofftrifluorid (NF<sub>3</sub>). Sie sind natürlicherweise in geringen Konzentrationen in der Atmosphäre zu finden. Durch menschliche Aktivitäten (z.B. Verbrennen von Öl, Kohle und Gas) hat sich der Anteil der Treibhausgase seit Beginn des letzten Jahrhunderts  deutlich erhöht und sorgt für eine stetige Verstärkung des menschengemachten Treibhauseffekts.",
+      "Antwort_1_3_2": "Dazu zählen: Kohlenstoffdioxid (CO<sub>2</sub>), Methan (CH<sub>4</sub>), Distickstoffmonoxid (N<sub>2</sub>O auch Lachgas genannt), Fluorkohlenwasserstoffe (HFKW), perfluorierte Fluorkohlenwasserstoffe (FKW), Schwefelhexafluorid (SF<sub>6</sub>), und Stickstofftrifluorid (NF<sub>3</sub>). Sie sind natürlicherweise in geringen Konzentrationen in der Atmosphäre zu finden. Durch menschliche Aktivitäten (z.B. Verbrennen von Öl, Kohle und Gas) hat sich der Anteil der Treibhausgase seit Beginn des letzten Jahrhunderts  deutlich erhöht und sorgt für eine stetige Verstärkung des menschengemachten Treibhauseffekts.",
       
       "Frage_1_4": "Was sind Scopes und welche Emissionen beinhalten sie?",
       "Antwort_1_4_1": "Als Scope wird ein bestimmter Bereich definiert. Diesem werden alle dort entstehenden Emissionen zugeordnet. ",
@@ -137,7 +136,7 @@
       "Antwort_1_4_Tabelle_7": "Spezifische Entsorgung von Chemikalien, Materialien durch externe Unternehmen",
 
       "Frage_1_5": "Was sind ecoinvent und GEMIS?",
-      "Antwort_1_5_1": "Ecoinvent ist eine Datenbank und gilt als weltweit konsistenteste und transparenteste Ökoinventardatenbank. Sie unterstützt die Umweltbewertung von Produkten und Prozessen und enthält derzeit mehr al 18.000 Datensätze. Ecoinvent beinhaltet nicht nur Informationen zu CO<sub>2</sub>eq-Faktoren, sondern allgemeine Informationen zu Umweltauswirkungen von Produkten und Dienstleistungen. Das bedeutet, dass die enthalten Informationen über industrielle oder landwirtschaftliche Prozesse, die modelliert und gemessen werden. Die natürlichen Ressourcen, die von dem Produkt oder der Dienstleistung, der Umwelt entzogen werden, die freigesetzten Emissionen (in Wasser, Luft und Boden) und entstehende Nebenprodukte und Abfälle werden hierbei mitbetrachtet. (Quelle: <a href=\"https://ecoinvent.org/the-ecoinvent-database/\"  target=\"_blank\" rel=\"noopener noreferrer\"> ecoinvent Database - ecoinvent)</a>",
+      "Antwort_1_5_1": "Ecoinvent ist eine Datenbank und gilt als weltweit konsistenteste und transparenteste Ökoinventardatenbank. Sie unterstützt die Umweltbewertung von Produkten und Prozessen und enthält derzeit mehr als 18.000 Datensätze. Ecoinvent beinhaltet nicht nur Informationen zu CO<sub>2</sub>eq-Faktoren, sondern allgemeine Informationen zu Umweltauswirkungen von Produkten und Dienstleistungen. Das bedeutet, dass die enthalten Informationen über industrielle oder landwirtschaftliche Prozesse, die modelliert und gemessen werden. Die natürlichen Ressourcen, die von dem Produkt oder der Dienstleistung, der Umwelt entzogen werden, die freigesetzten Emissionen (in Wasser, Luft und Boden) und entstehende Nebenprodukte und Abfälle werden hierbei mitbetrachtet. (Quelle: <a href=\"https://ecoinvent.org/the-ecoinvent-database/\"  target=\"_blank\" rel=\"noopener noreferrer\"> ecoinvent Database - ecoinvent</a>)",
       "Antwort_1_5_2": "GEMIS steht für „Globales Emissions Modell integrierter Systeme“. Es handelt sich dabei um eine Datenbank für Energie-, Stoff- und Verkehrssysteme und deren Umweltauswirkungen.",
       
       "Frage_1_6": "Was ist ein CO<sub>2</sub>eq-Faktor und wie setzt sich dieser zusammen?",
@@ -158,20 +157,20 @@
       "Antwort_1_7_2": "Aktuell hat die TU Darmstadt keine CO<sub>2</sub>-Gesamtbilanz veröffentlicht. Das Energiemanagement der TU Darmstadt erstellt im Rahmen des Zieles des Landes Hessen \"CO<sub>2</sub>-neutrale Landesverwaltung 2030\" für die Hochschul-Informations-System GmbH (HIS) seit 2008 eine Teil-Treibhausgasbilanz. Auf dem Weg zu einer klimaneutralen Hochschule ist eine jährliche, allumfassende CO<sub>2</sub> Bilanz ein wichtiger Schritt.",
 
 
-      "Titel_2": "Allgemeine Informationen zum webbasierten Rechner der TU Darmstadt",
+      "Titel_2": "Allgemeine Informationen zum webbasierten CO<sub>2</sub>-Rechner der TU Darmstadt",
 
-      "Frage_2_1": "Was ist der primäre Zweck des Rechners?",
-      "Antwort_2_1": "Der primäre Zweck des Rechners ist es TU Einheiten jährlich eine CO<sub>2</sub>-Bilanzierung durchzuführen. Hierbei dient der Rechner als ein Monitoring - Tool für die Einheiten. Durch den Rechner sollen TU-Einheiten dafür sensibilisiert werden, wie hoch die von ihnen jährlich verursachten CO<sub>2</sub>-Emissionen sind und wie diese sich über die Jahre entwickeln. ",
+      "Frage_2_1": "Was ist der primäre Zweck des CO<sub>2</sub>-Rechners?",
+      "Antwort_2_1": "Der primäre Zweck des CO<sub>2</sub>-Rechners ist es TU Einheiten jährlich eine CO<sub>2</sub>-Bilanzierung durchzuführen. Hierbei dient der CO<sub>2</sub>-Rechner als ein Monitoring - Tool für die Einheiten. Durch den CO<sub>2</sub>-Rechner sollen TU-Einheiten dafür sensibilisiert werden, wie hoch die von ihnen jährlich verursachten CO<sub>2</sub>-Emissionen sind und wie diese sich über die Jahre entwickeln. ",
 
-      "Frage_2_2": "Auf welchem Standard basiert der Rechner?",
-      "Antwort_2_2": "Der Rechner basiert auf dem Greenhouse Gas Protocol (GHG Protocol).",
+      "Frage_2_2": "Auf welchem Standard basiert der CO<sub>2</sub>-Rechner?",
+      "Antwort_2_2": "Der CO<sub>2</sub>-Rechner basiert auf dem Greenhouse Gas Protocol (GHG Protocol).",
       
-      "Frage_2_3": "Welche Emissionen werden durch den Rechner erfasst und warum?",
-      "Antwort_2_3_1": "Der Rechner bestimmt die Emissionen der Verbräuche (Strom, Wärme und Kälte) der Gebäude, der verwendeten IT-Geräte, der Pendelwege der Mitarbeitenden sowie deren Dienstreisen. ",
-      "Antwort_2_3_2": "Im Rahmen einer Analyse von Hauptemittenten verschiedener Universitäten und Instituten (Alpen Adria Universität, Universität für Bodenkultur Wien (BOKU Wien), dem Dezernat V (Baumanagement und Technischer Betrieb) der TU Darmstadt sowie dem Institut für Fluidsystemtechnik (FST) der TU Darmstadt) wurde bestimmt, dass diese Emissionskategorien über 90% der entstehenden Emissionen erfassen und abdecken. Diese Ergebnisse dieser Arbeit sind der ULB konsultierbar unter <a href=\"https://tuprints.ulb.tu-darmstadt.de/18513/\"  target=\"_blank\" rel=\"noopener noreferrer\">CO<sub>2</sub>-Bilanzierung und Konzeptentwicklung zur CO<sub>2</sub>-Reduktion eines Dezernats der TU Darmstadt - TUprints (tu-darmstadt.de)</a>.",
+      "Frage_2_3": "Welche Emissionen werden durch den CO<sub>2</sub>-Rechner erfasst und warum?",
+      "Antwort_2_3_1": "Der CO<sub>2</sub>-Rechner bestimmt die Emissionen der Verbräuche (Strom, Wärme und Kälte) der Gebäude, der verwendeten IT-Geräte, der Pendelwege der Mitarbeitenden sowie deren Dienstreisen. ",
+      "Antwort_2_3_2": "Im Rahmen einer Analyse von Hauptemittenten verschiedener Universitäten und Instituten (Alpen Adria Universität, Universität für Bodenkultur Wien (BOKU Wien), dem Dezernat V (Baumanagement und Technischer Betrieb) der TU Darmstadt sowie dem Institut für Fluidsystemtechnik (FST) der TU Darmstadt) wurde bestimmt, dass diese Emissionskategorien über 90% der entstehenden Emissionen erfassen und abdecken. Diese Ergebnisse dieser Arbeit sind der in ULB konsultierbar unter <a href=\"https://tuprints.ulb.tu-darmstadt.de/18513/\"  target=\"_blank\" rel=\"noopener noreferrer\">CO<sub>2</sub>-Bilanzierung und Konzeptentwicklung zur CO<sub>2</sub>-Reduktion eines Dezernats der TU Darmstadt - TUprints (tu-darmstadt.de)</a>.",
 
       "Frage_2_4": "Woher kommen die CO<sub>2</sub>eq-Faktoren, die bei der Bilanzierung verwendet werden?",
-      "Antwort_2_4": "Es gibt private (z.B ecoinvent) und öffentliche (z.B. GEMIS) Datenbanken, die CO<sub>2</sub>eq-Faktoren zur Verfügung stellen und regelmäßig auf Basis neuer Berechnungsmethoden und Erkenntnisse aktualisieren. Die für die Bilanzierung an der TU verwendeten CO<sub>2</sub>eq-Faktoren stammen aus den Datenbanken ecoinvent und GEMIS. Außerdem verwendet der webbasierte Rechner CO<sub>2</sub>eq-Faktoren für Strom, welche von dem Energiemanagement der TU Darmstadt berechnet werden bzw. aus externen Stromverträgen entnommen werden. Die CO<sub>2</sub>eq-Faktoren für Wärme werden von dem Energiemanagement geliefert.",
+      "Antwort_2_4": "Es gibt private (z.B ecoinvent) und öffentliche (z.B. GEMIS) Datenbanken, die CO<sub>2</sub>eq-Faktoren zur Verfügung stellen und regelmäßig auf Basis neuer Berechnungsmethoden und Erkenntnisse aktualisieren. Die für die Bilanzierung an der TU verwendeten CO<sub>2</sub>eq-Faktoren stammen aus den Datenbanken ecoinvent und GEMIS. Außerdem verwendet der webbasierte CO<sub>2</sub>-Rechner CO<sub>2</sub>eq-Faktoren für Strom, welche von dem Energiemanagement der TU Darmstadt berechnet werden bzw. aus externen Stromverträgen entnommen werden. Die CO<sub>2</sub>eq-Faktoren für Wärme werden von dem Energiemanagement geliefert.",
       "Antwort_2_4_Tabelle_1": "Emissionskategorie",
       "Antwort_2_4_Tabelle_2": "Verwendete Datenbank",
       "Antwort_2_4_Tabelle_3": "Strom der Gebäude",
@@ -185,7 +184,7 @@
       "Antwort_2_4_Tabelle_11": "Transportmedien bei Dienstreisen",
 
       "Frage_2_5": "Wie wird das finale Ergebnis berechnet?",
-      "Antwort_2_5_1": "Die Bilanz umfasst aktuell Energieverbräuche, IT-Geräte, Pendelweg der Mitarbeitenden und Dienstreisen. Die folgenden Formell werden zur Berechnung der CO<sub>2</sub>-Emissionen verwendet:",
+      "Antwort_2_5_1": "Die Bilanz umfasst aktuell Energieverbräuche, IT-Geräte, Pendelweg der Mitarbeitenden und Dienstreisen. Die folgenden Formeln werden zur Berechnung der CO<sub>2</sub>-Emissionen verwendet:",
       "Antwort_2_5_2": "<u>Emissionen durch Energieverbräuche von Strom, Wärme und Kälte (Scope 1 bzw. Scope 2)</u>",
       "Antwort_2_5_Formel_1_1": "CO$_2$-Emissionen durch Energieverbräuche",
       "Antwort_2_5_Formel_1_2": "Gebäude der TU Einheit",
@@ -223,14 +222,14 @@
       "Frage_2_6": "Wie kommt es zu Unsicherheiten in einer Bestimmung der Emissionen und wo entstehen die Unsicherheiten?",
       "Antwort_2_6_1": "Unsicherheiten können verschiedene Quellen haben.",
       "Antwort_2_6_2": "In den Berechnungen entstehen Ungenauigkeiten durch Hochrechnungen, wenn nicht alle Mitarbeitenden an der Umfrage teilnehmen. Die Emission durch Energieverbräuche können nur approximiert werden, weil der Energieverbrauch nicht für jede Einheit einzeln gemessen wird. Die Berechnung verwendet den durchschnittlichen Verbrauch des Gebäudes.",
-      "Antwort_2_6_3": "Des Weiteren entstehen Unsicherheiten bei den CO<sub>2</sub>eq-Faktoren. Am Beispiel einer Dienstreise mit dem Flugzeug kann dies verdeutlicht werden. Der Verbrauch eines Flugzeuges ist beispielsweise abhängig vom Flugzeugtyp. Eine Boeing 777 oder ein Airbus A320 haben unterschiedliche CO<sub>2</sub>eq-Faktoren, aufgrund des Leergewichtes, der Anzahl an Passagieren und vieles mehr. Die Datenbanken liefern allerdings Durchschnittswerte für ein Flugzeugtyp.",
+      "Antwort_2_6_3": "Des Weiteren entstehen Unsicherheiten bei den CO<sub>2</sub>eq-Faktoren. Am Beispiel einer Dienstreise mit dem Flugzeug kann dies verdeutlicht werden. Der Verbrauch eines Flugzeuges ist beispielsweise abhängig vom Flugzeugtyp. Die CO<sub>2</sub>eq-Faktoren einer Boeing 777 oder eines Airbus A320 sind unterschiedliche aufgrund des Leergewichtes, der Anzahl an Passagieren und vieles mehr. Die Datenbanken liefern allerdings Durchschnittswerte für ein Flugzeugtyp.",
 
       "Frage_2_7": "Werden Ergebnisse veröffentlicht?",
       "Antwort_2_7": "Ergebnisse von Einzelperson werden nicht veröffentlich und sind im Falle, dass der User keinen Account besitzt keiner Person zuordenbar. Es werden nur Ergebnisse von TU Einheiten veröffentlicht. ",
 
       "Frage_2_8": "Was sind Weiterentwicklungsideen?",
-      "Antwort_2_8_1": "Zu den inhaltlichen Weiterentwicklungsideen zählen eine Erweiterung und Aufnahme weiterer Emissionen, wie beispielsweise Hotelüberachtung während Dienstreisen, die Dauer der Dienstreise und Papierverbräuche in Einheiten. Eine zentrale Erweiterung ist es zukünftig Hallen, Werkstätten, Labore inklusive der dort verbrauchten und produzierten Materialien von TU Einheiten mit Hilfe des Rechners bilanzieren zu können. ",
-      "Antwort_2_8_2": "Bei der IT-Infrastruktur werden in Zukunft Themen wie beispielsweise ein stärkerer Server und die Einführung / Erweiterung von Schnittstellen zu anderen System um die Datenpflege zu vereinfachen in Zukunft weiterentwickelt. ",
+      "Antwort_2_8_1": "Zu den inhaltlichen Weiterentwicklungsideen zählen eine Erweiterung und Aufnahme weiterer Emissionen, wie beispielsweise Hotelübernachtung während Dienstreisen, die Dauer der Dienstreise und Papierverbräuche in Einheiten. Eine zentrale Erweiterung ist es zukünftig Hallen, Werkstätten, Labore inklusive der dort verbrauchten und produzierten Materialien von TU Einheiten mit Hilfe des CO<sub>2</sub>-Rechners bilanzieren zu können. ",
+      "Antwort_2_8_2": "Bei der IT-Infrastruktur werden in der Zukunft Themen wie beispielsweise ein stärkerer Server und die Einführung / Erweiterung von Schnittstellen zu anderen System um die Datenpflege zu vereinfachen in der Zukunft weiterentwickelt. ",
       
       "Frage_2_9": "Historie des Projekts",
       "Antwort_2_9_Tabelle_1": "<b>Studienarbeit I</b>: CO<sub>2</sub>-Bilanzierung Institut FST am FB16 (Excel basiert)",
@@ -242,19 +241,19 @@
       "Antwort_2_9_Tabelle_7": "Projektplanung: Gesamtkonzept CO<sub>2</sub>-Bilanz und Rollout des CO<sub>2</sub>-Rechners",
 
 
-      "Titel_3": "Nutzung des Rechners",
+      "Titel_3": "Nutzung des CO<sub>2</sub>-Rechners",
       
       "Frage_3_1": "Wie kann ich eine CO<sub>2</sub>-Bilanzierung für meine Einheit durchführen?",
       "Antwort_3_1_1": "1. Anmeldung per SSO der TU Darmstadt",
       "Antwort_3_1_1_1": "Um den CO<sub>2</sub>-Rechner zu nutzen, müssen Sie sich per SSO der TU Darmstadt anmelden.",
       "Antwort_3_1_2": "2. Erstellung einer Umfrage",
       "Antwort_3_1_2_1": "Nach Anmeldung werden Sie auf die Seite zur Erstellung einer Umfrage weitergeleitet (\"<i>CO<sub>2</sub>-Rechner</i>\" in der Tab-Leiste). Hier können Sie eine Umfrage für Ihre Einheit erstellen indem Sie die Eingabefelder ausfüllen. Hierbei handelt es sich um den ersten Teil der Umfrage auch Hauptumfrage genannt. Es werden allgemeine Information über TU-Einheit abgefragt wie Mitarbeitendenanzahl und die Gebäude der Einheit.",
-      "Antwort_3_1_2_2": "Nachdem sie die Hauptumfrage fertig ausgefüllt haben, klicken Sie auf den Knopf \"<i>Speichern und Link generieren</i>\". Die eingetragenen Informationen werden daraufhin abgespeichert und ein Link zum zweiten Teil der Umfrage die sogenannte Mitarbeitendenumfrage wird generiert.",
+      "Antwort_3_1_2_2": "Nachdem sie die Hauptumfrage fertig ausgefüllt haben, klicken Sie auf den Knopf \"<i>Umfrage speichern und Link generieren</i>\". Die eingetragenen Informationen werden daraufhin abgespeichert und ein Link zum zweiten Teil der Umfrage die sogenannte Mitarbeitendenumfrage wird generiert.",
       "Antwort_3_1_3": "3. Ausfüllen der Mitarbeitendenumfrage",
       "Antwort_3_1_3_1": "Den Link zur Mitarbeitendenumfrage müssen Sie jetzt an alle Mitarbeitenden senden, damit dieser Teil der Umfrage von jedem individuell und anonym ausgefüllt werden kann. Es wird hierzu keine Anmeldung auf der Seite benötigt.",
       "Antwort_3_1_3_2": "Die Mitarbeitendenumfrage beinhaltet Fragen zu Pendelwegen, Dienstreisen und individuell genutzten IT-Geräten. Nach Vervollständigung der Umfrage werden die Informationen über den Knopf \"<i>Absenden</i>\" gespeichert.",
       "Antwort_3_1_4": "4. Abruf der Ergebnisse",
-      "Antwort_3_1_4_1": "Zum Abrufen der Ergebnisse müssen auf den Tab \"<i>Umfrageübersicht</i>\" gehen. Hier sehen sie alle von Ihnen erstellten Umfragen und können sehen, wie viele Mitarbeitende die Umfrage bereits ausgefüllt haben. Außerdem gibt es die Möglichkeit die Hauptumfrage sich anzusehen und zu bearbeiten, die Umfrage zu duplizieren (ohne Mitarbeitendenumfrage) und die komplette Umfrage zu löschen.",
+      "Antwort_3_1_4_1": "Zum Abrufen der Ergebnisse müssen Sie auf den Tab \"<i>Umfrageübersicht</i>\" gehen. Hier sehen Sie alle von Ihnen erstellten Umfragen und können sehen, wie viele Mitarbeitende die Umfrage bereits ausgefüllt haben. Außerdem gibt es die Möglichkeit die Hauptumfrage sich anzusehen und zu bearbeiten, die Umfrage zu duplizieren (ohne Mitarbeitendenumfrage) und die komplette Umfrage zu löschen.",
       "Antwort_3_1_4_2": "Die letzte Möglichkeit ist die Erstellung einer Auswertung der Umfrage. Die Auswertung berechnet die CO<sub>2</sub>-Emissionen der Auswertung und stellt die Ergebnisse graphisch da.",
       "Antwort_3_1_5": "5. Besprechung/Verteilung der Ergebnisse",
       "Antwort_3_1_5_1": "Die Auswertung der Umfrage kann per Link mit den Mitarbeitenden geteilt werden. Zusätzlich lassen sich die Ergebnisse als eine Excel-Datei herunterladen, um die genauen Ergebnisse weiterverwenden zu können.",
@@ -265,23 +264,23 @@
    
       "Frage_3_3": "Wie groß ist der zeitliche Aufwand für jeden Mitarbeitenden?",
       "Antwort_3_3_1": "Dies ist nicht einfach definierbar. Hierbei sollte zwischen der Hauptbeauftragten Person und den einzelnen Mitarbeitenden unterschieden werden. ",
-      "Antwort_3_3_2": "Die hauptbeauftragte Person füllt die allgemeine Information für die Einheit aus: In welchem Gebäude sitzt die Einheit, Anzahl der Mitarbeitenden, gemeinschaftlich nutzbare IT-Geräte. Sind diese Angaben gespeichert, erhält die hauptbeauftragte Person eine vorformulierte Mail mit einem Link, den sie an alle Mitarbeitende versendet. Mit dem Link erhalten Mitarbeitenden einen Zugang zu ihrer Umfrage. ",
+      "Antwort_3_3_2": "Die hauptbeauftragte Person füllt die allgemeine Information für die Einheit aus: In welchem Gebäude sitzt die Einheit, wie hoch ist die Anzahl der Mitarbeitenden und Anzahl der gemeinschaftlich genutzte IT-Geräte? Sind diese Angaben gespeichert, erhält die hauptbeauftragte Person eine vorformulierte Mail mit einem Link, den sie an alle Mitarbeitende versendet. Mit dem Link erhalten Mitarbeitenden einen Zugang zu ihrer Umfrage. ",
       "Antwort_3_3_3": "Hierbei werden Angaben zu dem Pendelweg, den getätigten Dienstreisen sowie den (im Rahmen ihrer Tätigkeit an der TU) genutzten IT-Geräten benötigt. ",
-      "Antwort_3_3_4": "Im nachfolgenden Video wird eine Vorstellung des Rechners sowie die Durchführung einer Umfrage (sowohl die, der hauptbeauftragten Person, als auch die, der einzelnen Mitarbeitende) exemplarisch durchgeführt. ",
+      "Antwort_3_3_4": "Im nachfolgenden Video wird eine Vorstellung des CO<sub>2</sub>-Rechners sowie die Durchführung einer Umfrage (sowohl die, der hauptbeauftragten Person, als auch die, der einzelnen Mitarbeitende) exemplarisch durchgeführt. ",
 
       "Frage_3_4": "Was passiert, wenn nicht alle Mitarbeitende die Umfrage ausfüllen?",
       "Antwort_3_4": "Im Falle, dass nicht alle Mitarbeitende der TU Einheit die Mitarbeitendenumfrage ausfüllen, wird eine Hochrechnung für ihrer Einheit durchgeführt. Aus den Informationen und Angaben der ausgefüllten Mitarbeitendenumfrage aus ihrer TU Einheit wird ein durchschnittlicher Wert an Emissionen für eine Person bestimmt. Dieser wird dann für die Mitarbeitende ihrer Einheit, welche die Umfrage nicht ausgefüllt haben, angenommen. ",
 
       "Frage_3_5": "Warum werden mir für das Gebäude, in dem meine Einheit sitzt, keine Emissionen von Energieverbräuche (Strom, Wärme, Kälte) angezeigt?",
-      "Antwort_3_5": "In Teil der TU ist die digitale Zählerstruktur zur Messung von Strom, Wärme und Kälte (noch) nicht ausgebaut. Das bedeutet zum einen, dass entweder Zähler händisch abgelesen werden müssen oder zum anderen, dass keine Zähler vorhanden sind. Somit liegen dem Rechner und dem Energiemanagement der TU keine genauen Verbräuche für Gebäude zur Verfügung.  Am Campus Lichtwiese ist die Zählerinfrastruktur bereits vollständig vorhanden. Das Energiemanagement arbeitet daran die Zählerstruktur auszubauen und eine digitale Erfassung der Verbräuche in allen Gebäuden der TU zu ermöglichen.",
+      "Antwort_3_5": "In Teil der TU ist die digitale Zählerstruktur zur Messung von Strom, Wärme und Kälte (noch) nicht ausgebaut. Das bedeutet zum einen, dass entweder Zähler händisch abgelesen werden müssen oder zum anderen, dass keine Zähler vorhanden sind. Somit liegen dem CO<sub>2</sub>-Rechner und dem Energiemanagement der TU keine genauen Verbräuche für Gebäude zur Verfügung.  Am Campus Lichtwiese ist die Zählerinfrastruktur bereits vollständig vorhanden. Das Energiemanagement arbeitet daran die Zählerstruktur auszubauen und eine digitale Erfassung der Verbräuche in allen Gebäuden der TU zu ermöglichen.",
       
       "Frage_3_6": "Was passiert mit den von mir eingegebenen Daten? Wo werden meine Daten gespeichert?",
-      "Antwort_3_6_1": "Der Rechner folgt den Datenschutzrichtlinien der TU Darmstadt (genauere Information: <a href=\"https://www.co2-rechner.tu-darmstadt.de/#/datenschutz\" target=\"_blank\" rel=\"noopener noreferrer\">TU-Darmstadt CO<sub>2</sub>-Rechner)</a>.",
+      "Antwort_3_6_1": "Der CO<sub>2</sub>-Rechner folgt den Datenschutzrichtlinien der TU Darmstadt (genauere Information: <a href=\"https://www.co2-rechner.tu-darmstadt.de/#/datenschutz\" target=\"_blank\" rel=\"noopener noreferrer\">TU-Darmstadt CO<sub>2</sub>-Rechner</a>).",
       "Antwort_3_6_2": "Die Daten werden in einer Datenbank auf einem V-Server, welcher vom HZR administriert wird, gespeichert. Informationen zu den V-Servern wird vom HRZ hier bereitgestellt: <a href=\"https://www.hrz.tu-darmstadt.de/services/it_services/vm/index.de.jsp\"  target=\"_blank\" rel=\"noopener noreferrer\">V-Server</a>, <a href=\"https://www.hrz.tu-darmstadt.de/services/it_services/vm/vm_ausstattung/serverraum/index.de.jsp\" target=\"_blank\" rel=\"noopener noreferrer\">Serverraum</a>.",
 
-      "Frage_3_7": "Können Mitarbeitenden, die den Rechner genutzt haben, selbstständig all ihre Daten aus dem Rechner löschen können?",
+      "Frage_3_7": "Können Mitarbeitenden, die den CO<sub>2</sub>-Rechner genutzt haben, selbstständig all ihre Daten aus dem CO<sub>2</sub>-Rechner löschen können?",
       "Antwort_3_7_1": "User mit Account können einzelne, von Ihnen angelegte Umfragen oder den gesamten User-Account mitsamt aller Umfragen eigenständig löschen.",
-      "Antwort_3_7_2": "Einzelne, ausgefüllte Mitarbeitendenumfragen können nicht gelöscht werden, weil die Daten anonymisiert gespeichert werden und dementsprechend keiner Person zugeordnet werden kann. Ausgefüllte Mitarbeitendenumfrage werden gelöscht, wenn die gesamte Umfrage gelöscht wird."
+      "Antwort_3_7_2": "Einzelne, ausgefüllte Mitarbeitendenumfragen können nicht gelöscht werden, weil die Daten anonymisiert gespeichert werden und dementsprechend keiner Person zugeordnet werden kann. Ausgefüllte Mitarbeitendenumfragen werden gelöscht, wenn die gesamte Umfrage gelöscht wird."
     },
     "Footer": {
       "Impressum": "Impressum",
@@ -308,20 +307,19 @@
     "MailTemplate": {
       "MailVorlage_0": "Mail Vorlage an Ihre Mitarbeitenden",
       "MailVorlage_1": "Liebe Kolleg*Innen,",
-      "MailVorlage_2": "unsere TU-Einheit führt eine Bilanzierung der CO",
-      "MailVorlage_3": "-Emissionen für das Kalenderjahr",
-      "MailVorlage_4": "durch. Hierfür werden einige Informationen bezüglich Ihrer Dienstreisen, Ihrer Pendelwege sowie den von Ihnen verwendeten IT-Geräte benötigt. Der folgende Link führt Sie zu einer Umfrage in der Ihre Daten abgefragt werden. Alle Angaben werden dabei anonymisiert verarbeitet und dargestellt: ",
+      "MailVorlage_2": "unsere TU-Einheit führt eine Bilanzierung der CO<sub>2</sub>-Emissionen für das Kalenderjahr",
+      "MailVorlage_4": " durch. Hierfür werden einige Informationen bezüglich Ihrer Dienstreisen, Ihrer Pendelwege sowie den von Ihnen verwendeten IT-Geräte benötigt. Der folgende Link führt Sie zu einer Umfrage in der Ihre Daten abgefragt werden. Alle Angaben werden dabei anonymisiert verarbeitet und dargestellt: ",
       "MailVorlage_5": "Die Umfrage nimmt ungefähr 10 Minuten Ihrer Zeit in Anspruch. Für die Umfrage wird das vollständige Kalenderjahr",
-      "MailVorlage_6": "betrachtet",
+      "MailVorlage_6": "betrachtet.",
       "MailVorlage_7": "Hinter einigen Fragen befindet sich ein Fragezeichensymbol. Dort finden Sie zusätzliche Hinweise und Informationen, die zur Beantwortung der Fragen hilfreich sind.",
       "MailVorlage_8": "Bei weiteren Nachfragen oder Anmerkungen wenden Sie sich gerne an ",
       "MailVorlage_9": "Vielen Dank für Ihre Teilnahme."
     },
     "Survey": {
       "UmfrageErklaerung_0": "Sehr geehrte Teilnehmer*Innen,",
-      "UmfrageErklaerung_1": "in diesem CO<sub>2</sub>-Rechner werden Daten zur Berechnung von CO<sub>2</sub>-Emissionen erfragt, die im Zusammenhang mit der Arbeit der Mitarbeitenden Ihrer TU-Einheit entstehen. Der Rechner besteht aus zwei Teilen: einem allgemeinen Teil, der zentral für alle Mitarbeitende der Einheit ausgefüllt wird und einen zweiten Teil, den alle Mitarbeitenden Ihrer TU-Einheit in einer Umfrage ausfüllen.",
+      "UmfrageErklaerung_1": "in diesem CO<sub>2</sub>-Rechner werden Daten zur Berechnung von CO<sub>2</sub>-Emissionen erfragt, die im Zusammenhang mit der Arbeit der Mitarbeitenden Ihrer TU-Einheit entstehen. Der CO<sub>2</sub>-Rechner besteht aus zwei Teilen: einem allgemeinen Teil, der zentral für alle Mitarbeitende der Einheit ausgefüllt wird und einen zweiten Teil, den alle Mitarbeitenden Ihrer TU-Einheit in einer Umfrage ausfüllen.",
       "UmfrageErklaerung_2": "Die gesamte Berechnung bezieht sich immer auf ein vollständig abgeschlossenes Kalenderjahr.",
-      "UmfrageErklaerung_3": "Der erste Teil des CO<sub>2</sub>-Rechner erfragt allgemeine Angaben über Ihre TU-Einheit, wie beispielsweise Anzahl der Mitarbeitenden, Standort Ihrer Einheit und gemeinschaftlich genutzte IT-Geräte. Sollten Sie keine genauen Angaben kennen, geben Sie bitte eine grobe Schätzung an. Wenn Sie diesen ersten Teil beantwortet haben, klicken Sie auf \"<i>Speichern &amp; Link generieren</i>\". Dadurch wird ein Link generiert, der zu der Umfrage für die Mitarbeitenden führt. Schicken Sie diesen Link an alle Mitarbeitende Ihrer TU-Einheit. Eine Mailvorlage finden Sie unter dem Link.",
+      "UmfrageErklaerung_3": "Der erste Teil des CO<sub>2</sub>-Rechner erfragt allgemeine Angaben über Ihre TU-Einheit, wie beispielsweise Anzahl der Mitarbeitenden, Standort Ihrer Einheit und gemeinschaftlich genutzte IT-Geräte. Sollten Sie keine genauen Angaben kennen, geben Sie bitte eine grobe Schätzung an. Wenn Sie diesen ersten Teil beantwortet haben, klicken Sie auf \"<i>Umfrage speichern & Link generieren</i>\". Dadurch wird ein Link generiert, der zu der Umfrage für die Mitarbeitenden führt. Schicken Sie diesen Link an alle Mitarbeitende Ihrer TU-Einheit. Eine Mailvorlage finden Sie unter dem Link.",
       "UmfrageErklaerung_4": "Hinter einigen Fragen befindet sich ein Fragezeichensymbol, dort finden Sie zusätzliche Hinweise und Informationen, die zur Beantwortung der Frage hilfreich sind.",
       "UmfrageErklaerung_5": "Falls Sie zu einem späteren Zeitpunkt nochmals Angaben ändern oder vervollständigen möchten, können Sie in der linken oberen Ecke \"<i>Umfragenübersicht</i>\" auswählen, um auf den ersten Teil des CO<sub>2</sub>-Rechners wieder zuzugreifen. Bitte klicken Sie am Ende auf \"<i>Speichern</i>\" um ihre Änderungen final einzutragen. ",
       "UmfrageErklaerung_6": "Bei weiteren Nachfragen oder Anmerkungen wenden Sie sich gerne an",
@@ -337,7 +335,7 @@
       "GebaeudeAbteilung_1": "Lageplan",
       "GebaeudeAbteilung_2": "Alle Gebäude beginnen je nach Standort mit den Buchstaben S, B, L, H oder W. Die Autovervollständigung sollte Ihnen dabei helfen.",
       "GebaeudeAbteilung_3": "Nutzfläche des ausgewählten Gebäudes",
-      "GebaeudeWarnung": "Sie haben mehrmals das selbe Gebäude ausgewählt.",
+      "GebaeudeWarnung": "Sie haben mehrmals dasselbe Gebäude ausgewählt.",
 
       "ITGeraete_0": "Welche und wie viele IT-Geräte benutzen Sie in Ihrer Abteilung gemeinschaftlich in allen Gebäuden zusammen?",
       "ITGeraeteBenutzteToner": "verbrauchte Toner",
@@ -352,7 +350,7 @@
       "interneServer": "interne Server",
       "Server": "Server",
 
-      "SpeicherButton": "Speichern & Link generieren",
+      "SpeicherButton": "Umfrage speichern & Link generieren",
 
       "ProblemeEingabe": "Probleme mit Ihrer Eingabe!",
       "UmfrageVervollstaendigen": "Umfrage vollständig?",
@@ -363,15 +361,15 @@
       "WeiterBearbeiten": "Weiter bearbeiten",
       "UmfrageSpeichern": "Umfrage speichern",
       "UmfrageTzdSpeichern": "Umfrage trotzdem speichern",
-      "WeitereUmfrageErstellen": "Weitere Umfrage erstellen",
-      "Umfrage": "'Umfrage'",
+      "WeitereUmfrageErstellen": "Weitere Umfragen erstellen",
+      "Umfrage": "Umfrage",
 
       "geraeteRules_1": "Wenn Sie das Gerät nicht benutzen, wählen Sie es bitte ab.",
       "geraeteRules_2": "Wenn Sie das Gerät nicht benutzen, wählen Sie es bitte ab.",
       "geraeteRules_3": "Bitte geben Sie eine valide Menge an.",
 
       "nichtnegativRules_0": "Muss angegeben werden.",
-      "nichtnegativRules_1": "Bitte geben Sie einen positiven Wert an.",
+      "nichtnegativRules_1": "Bitte geben Sie einen nicht negativen Wert an.",
 
       "absolutpositivRules_0": "Muss angegeben werden.",
       "absolutpositivRules_1": "Bitte geben Sie einen positiven Wert an.",
@@ -380,11 +378,11 @@
       "requiredFieldsMissing_1": "Bilanzierungsjahr",
       "requiredFieldsMissing_2": "Anzahl Mitarbeitenden",
 
-      "problemeInUmfrage_0": "Sie haben das mehrmals das selbe Gebäude ausgewählt.",
+      "problemeInUmfrage_0": "Sie haben mehrmals dasselbe Gebäude ausgewählt.",
       "problemeInUmfrage_1": "Sie haben für das Gebäude ",
       "problemeInUmfrage_2": " keine gültige Nutzfläche angegeben.",
       "problemeInUmfrage_3": "Sie haben das Gerät ",
-      "problemeInUmfrage_4": " angewählt, aber keine gültige Anzahl angegeben.",
+      "problemeInUmfrage_4": " ausgewählt, aber keine gültige Anzahl angegeben.",
       "problemeInUmfrage_5": "Sie haben einem ausgewählten Gerät keine verwendeten Toner hinzugefügt. Wenn Sie das Gerät nicht in Benutzung haben, ignorieren Sie diese Nachricht.",
 
       "ITGeraetIDDic_7": "Multifunktionsgeräte",
@@ -432,6 +430,7 @@
       "dienstreiseMediumListe_3": "Flugzeug",
       "dienstreiseMedium_Benzin": "Benzin",
       "dienstreiseMedium_Diesel": "Diesel",
+      "dienstreiseMedium_Auto": "PKW",
 
       "Pkw_Motortyp": "Motortyp",
       "Pkw_diesel": "Diesel",
@@ -475,7 +474,7 @@
       "EingabeValidierung_Vollstaendig": "Umfrage vollständig?",
       "EingabeValidierung_Problem": "Probleme mit Ihrer Eingabe!",
       "EingabeValidierung_kleinereProbleme": "Ihre Eingabe enthält folgende kleinere Probleme:",
-      "EingabeValidierung_Absenden_0": "Möchten Sie ihre Umfrage wirklich absenden?",
+      "EingabeValidierung_Absenden_0": "Möchten Sie Ihre Umfrage wirklich absenden?",
       "EingabeValidierung_Absenden_1": "Sie können sie anschließend nicht weiter bearbeiten.",
       "EingabeValidierung_Bearbeiten": "Weiter bearbeiten",
       "EingabeValidierung_Absenden": "Umfrage absenden",
@@ -519,29 +518,38 @@
       "HochrechnungUngenau_0": "Die Hochrechnung der Emissionsdaten ist ungenau, weil bisher nur ",
       "HochrechnungUngenau_1": "% der Mitarbeitenden die Umfrage ausgefüllt haben.",
       "Gesamtemissionen": "Gesamtemissionen:",
-      "tCO2eq": "t CO₂ eq.",
+      "tCO2eq": "t CO₂eq",
+      "kWh": "kWh",
       "EmissionProMitarbeitende": "Emissionen pro Mitarbeitende: ",
       "DidYouKnow": "Did you know?",
       "AufteilungHauptemissionsfaktoren": "Aufteilung nach Hauptemissionsfaktoren",
       "AufteilungNachEnergieart": "Aufteilung der Emissionen nach Energieart",
       "AufteilungNachEnergieart_tooltip": "Die angezeigten Emissionen für den Energieverbrauch können unvollständig sein. Der Grund dafür ist, dass nicht alle Gebäude der TU mit einem eigenen Zähler ausgestattet sind und keine Zählerdaten vorliegen.",
-      "KeineEmissionenAuswertung": "Es ist kein Auswertung der Emissionen durch den Energieverbrauch möglich. \n Für das ausgewählte Bilanzierungsjahr fehlen Daten seitens der TU Darmstadt, um die Emissionen berechnen zu können. \n Die Zählerinfrastruktur wird durch das Energiemanagment immer weiter ausgebaut.\n Sie können leider nichts tun, um die Auswertung zu vervollständigen.Es ist kein Auswertung der Emissionen durch den Energieverbrauch möglich. \n Für das ausgewählte Bilanzierungsjahr fehlen Daten seitens der TU Darmstadt, um die Emissionen berechnen zu können. \n              Die Zählerinfrastruktur wird durch das Energiemanagment immer weiter ausgebaut.\n Sie können leider nichts tun, um die Auswertung zu vervollständigen.",
+      "AufteilungDienstreisen": "Aufteilung nach Dienstreisen",
+      "AufteilungPendelwege": "Aufteilung nach Pendelwege",
+      "AufteilungITGeraete": "Aufteilung nach IT-Geraete",
+      
+      "KeineEmissionenAuswertung": "Es ist keine Auswertung der Emissionen nach Energieverbrauch möglich. \n Für das ausgewählte Bilanzierungsjahr fehlen Daten seitens der TU Darmstadt, um die Emissionen berechnen zu können. \n Die Zählerinfrastruktur wird durch das Energiemanagment immer weiter ausgebaut.\n Sie können leider nichts tun, um die Auswertung zu vervollständigen.Es ist kein Auswertung der Emissionen durch den Energieverbrauch möglich. \n Für das ausgewählte Bilanzierungsjahr fehlen Daten seitens der TU Darmstadt, um die Emissionen berechnen zu können. \n              Die Zählerinfrastruktur wird durch das Energiemanagment immer weiter ausgebaut.\n Sie können leider nichts tun, um die Auswertung zu vervollständigen.",
       "DarstellungEnergieverbrauch": "Darstellung des Energieverbrauches",
       "DarstellungEnergieverbrauch_tooltip": "Die angezeigten Verbrauche für den Energieverbrauch können unvollständig sein.\n Der Grund dafür ist, dass nicht alle Gebäude der TU mit einem eigenen Zähler ausgestattet sind und keine Zählerdaten vorliegen.",
       "DarstellungEnergieverbrauchWarning": "Es ist kein Auswertung der Emissionen durch den Energieverbrauch möglich.\n Für das ausgewählte Bilanzierungsjahr fehlen Daten seitens der TU Darmstadt, um die Emissionen berechnen zu können.\n Die Zählerinfrastruktur wird durch das Energiemanagment immer weiter ausgebaut.\n Sie können leider nichts tun, um die Auswertung zu vervollständigen.",
+      
       "NachhaltigkeitTipps_0": "Das Büro für Nachhaltigkeit hat Tipps zum ",
       "NachhaltigkeitTipps_1": "Energiesparen am Arbeitsplatz",
       "NachhaltigkeitTipps_2": " zusammengestellt.",
+      
       "DownloadAlsExcel": "Download als Excel",
       "Linksharing_0": "Linksharing ",
-      "aktivieren": "aktivieren",
-      "deaktivieren": "deaktivieren",
-      "Auswertung": "'Auswertung'",
+      "aktiviert": "aktiviert",
+      "deaktiviert": "deaktiviert",
+      "Auswertung": "Auswertung",
+      
       "HaushaltReferenzText_0": "Ihr Gesamtverbrauch entspricht circa ",
       "HaushaltReferenzText_1": " bzw. ",
       "HaushaltReferenzText_2": " in einem Jahr.",
       "HaushaltReferenzText_3": " Zwei-Personen-Haushalten",
       "HaushaltReferenzText_4": " Vier-Personen-Haushalten",
+      
       "MakeSpreadsheet_0": "Auswertung der Umfrage",
       "MakeSpreadsheet_1": "Quote",
       "MakeSpreadsheet_2": "Emissionsüberblick",
@@ -552,11 +560,14 @@
       "MakeSpreadsheet_7": "Aufteilung nach Hauptemissonsfaktoren",
       "MakeSpreadsheet_8": "Aufteilung nach Energieart",
       "MakeSpreadsheet_9": "Darstellung des Energieverbrauches",
-      "MakeSpreadsheet_10": "CO2-Rechner"
+      "MakeSpreadsheet_10": "CO2-Rechner",
+      "MakeSpreadsheet_11": "Aufteilung nach Dienstreisen",
+      "MakeSpreadsheet_12": "Aufteilung nach Pendelwege",
+      "MakeSpreadsheet_13": "Aufteilung nach IT-Geraete"
     },
     "ResultSharingDisabled": {
-      "ResultSharingDisabled_0": "Es tut uns leid, aber die Umfrage mit ID \"",
-      "ResultSharingDisabled_1": "\" hat das Teilen der Auswertung deaktiviert.",
+      "ResultSharingDisabled_0": "Es tut uns leid, aber die Umfrage mit ID ",
+      "ResultSharingDisabled_1": " hat das Teilen der Auswertung deaktiviert.",
       "ResultSharingDisabled_2": "Bitte wenden Sie sich an die Person, von der Sie den Link für die Auswertung erhalten haben."
     }
   },
@@ -565,6 +576,7 @@
       "LinkInZwischenablage": "Link erfolgreich in die Zwischenablage kopiert."
     },
     "dataGapVisualization": {
+      "weitereInformationen": "Weitere Informationen",
       "KeineKaelteDaten": "keine Kältedaten für das Jahr ",
       "KeineStromzaehler": "keine Information zu Stromzählern",
       "KeineStromdaten": "keine Stromdaten für das Jahr ",
@@ -604,7 +616,7 @@
     },
     "SurveyOverview": {
       "GespeicherteUmfragen": "Gespeicherte Umfragen",
-      "LinkZurMitarbeiterumfrage": "'Link zur Mitarbeitendenumfrage kopieren'",
+      "LinkZurMitarbeiterumfrage": "Link zur Mitarbeitendenumfrage kopieren",
       "Anzeigen": "Anzeigen",
       "LoeschenDerUmfrage_0": "Löschen der Umfrage",
       "LoeschenDerUmfrage_1": "Sind Sie sicher, dass Sie die Umfrage ",
@@ -619,7 +631,7 @@
       "LoginButton": "Anmelden mit TU-ID"
     },
     "accountSettings": {
-      "AccountLoeschen": "Account Löschen",
+      "AccountLoeschen": "Account löschen",
       "AccountLoeschen_text": "Hier können Sie Ihren Account löschen. Wenn Sie sicher sind, dies tun zu wollen, drücken Sie bitte den folgenden Knopf.",
       "LoeschenDesAccounts": "Löschen des Accounts",
       "AccountLoeschen_bestaetigen_0": "Sind Sie sicher, dass Sie Ihren Account löschen möchten?",

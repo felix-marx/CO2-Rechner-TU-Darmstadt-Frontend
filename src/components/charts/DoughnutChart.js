@@ -21,4 +21,10 @@ export default {
     this.addPlugin(ChartJsPluginDataLabels)
     this.renderChart(this.chartData, this.options)
   },
+
+  methods: {
+    updateChart() {
+      this.$data._chart.update()
+    }
+  }
 }
