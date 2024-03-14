@@ -17,32 +17,10 @@
       >
         <!-- Banner Image -->
         <v-img
-          :max-height="imageHeight"
-          src="../assets/7.jpg"
+          max-height="500px"
+          src="../assets/landingpage.png"
           class="d-flex align-end"
-        >
-          <v-container v-if="false">
-            <!-- Title in grey box in image-->
-            <v-row>
-              <v-col class="text-left pb-0">
-                <div
-                  style="background-color: #F5F5F5; display: inline-block;"
-                >
-                  <h1
-                    style="color: black;"
-                    class="px-4 py-2"
-                    v-html="$t('landingpage.Login.Titel')"
-                  />
-                  <p
-                    style="font-size: large; color: black;"
-                    class="px-4 pt-2 pb-4"
-                    v-html="$t('landingpage.Login.Willkommen_1')"
-                  />
-                </div>
-              </v-col>
-            </v-row>
-          </v-container>
-        </v-img> 
+        /> 
 
         <div
           style="background-color: #F5F5F5;"
@@ -60,28 +38,6 @@
         </div>
         
         <v-container>
-          <!-- Title in grey box below image-->
-          <!-- <template>
-            <v-row>
-              <v-col class="text-left pa-0">
-                <div
-                  style="background-color: #F5F5F5;"
-                >
-                  <h1
-                    style="color: black;"
-                    class="px-4 py-2"
-                    v-html="$t('landingpage.Login.Titel')"
-                  />
-                  <p
-                    style="font-size: large; color: black;"
-                    class="px-4 py-2"
-                    v-html="$t('landingpage.Login.Willkommen_1')"
-                  />
-                </div>
-              </v-col>
-            </v-row>
-          </template> -->
-
           <!-- Icon-Boxes -->
           <!-- all boxes in one row -->
           <template v-if="$vuetify.breakpoint.width >= min_width_icons">
@@ -385,17 +341,12 @@ export default {
     faq_warum: process.env.VUE_APP_URL + '/faq#warum',
     min_width_logos: 770,   // minimum pixel width to display logos in one row
     min_width_icons: 770,   // minimum pixel width to display icons in one row
-    min_width_title: 600,   // minimum pixel width to display title in banner image
   }),
 
   computed:{
     theme(){
       return (this.$vuetify.theme.dark) ? 'dark' : 'light'
     },
-    imageHeight(){
-      //return (this.$vuetify.breakpoint.width >= this.min_width_title) ? "35vh" : "20vh"
-      return "500px"
-    }
   },  
 };
 </script>
