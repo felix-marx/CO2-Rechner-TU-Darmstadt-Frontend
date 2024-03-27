@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app :style="{background: $vuetify.theme.themes[theme].background}">
     <!-- Header -->
     <Header
       :tabs="tabList"
@@ -27,7 +27,7 @@ import Header from "@/components/header/Header";
 import ColleagueSurvey from "@/components/colleagueSurvey/ColleagueSurvey";
 import SurveyNotFound from "@/components/colleagueSurvey/SurveyNotFound";
 import LoadingAnimation from "@/components/componentParts/LoadingAnimation";
-import UmfrageCompleted from "@/components/colleagueSurvey/SurveyCompleted"
+import SurveyCompleted from "@/components/colleagueSurvey/SurveyCompleted"
 import i18n from "../i18n";
 
 export default {
@@ -37,7 +37,7 @@ export default {
     Footer,
     ColleagueSurvey,
     SurveyNotFound,
-    UmfrageCompleted,
+    SurveyCompleted,
     LoadingAnimation
   },
 
@@ -48,7 +48,10 @@ export default {
       umfrageComplete: false
   }),
 
-  computed: {
+  computed:{
+    theme(){
+      return (this.$vuetify.theme.dark) ? 'dark' : 'light'
+    },
     /**
      * Returns the component to be shown in the body of the view. LoadingAnimation while the server is requested, SurveyNotFound if the survey does not exist or the survey
      * if the corresponding id exists.
@@ -66,7 +69,7 @@ export default {
 
       // show a message that the requested survey is already complete.
       if(this.umfrageComplete){
-        return UmfrageCompleted;
+        return SurveyCompleted;
       }
 
       // else show ColleagueSurvey

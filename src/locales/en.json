@@ -5,7 +5,10 @@
   "landingpage": {
     "Login": {
       "Titel": "Welcome to the CO<sub>2</sub> calculator of TU Darmstadt",
-      "Willkommen_1": "The CO<sub>2</sub> calculator enables organisational units of TU Darmstadt to prepare their CO<sub>2</sub> balance or carbon footprint independently."
+      "Willkommen_1": "Create your own CO<sub>2</sub> balance for your TU organisational unit independently.",
+      "PanelTitel_1": "FAQ",
+      "PanelTitel_2": "Get involved!",
+      "PanelTitel_3": "What's in it for me?"
     }
   },
   "footer": {
@@ -240,6 +243,10 @@
       "Antwort_2_9_Tabelle_6": "Additional test runs of the CO<sub>2</sub> calculator",
       "Antwort_2_9_Tabelle_7": "Project planning: Overall CO<sub>2</sub> balance concept and roll-out of the CO<sub>2</sub> calculator",
       
+      "Frage_2_10": "Is the CO<sub>2</sub> calculator publicly accessible? Is the project open source?",
+      "Antwort_2_10_1": "The CO<sub>2</sub> calculator was publicly developed based on the GNU AGPL-3.0 Open Source licence. You can access the entire code basis on Github.",
+      "Antwort_2_10_2": "Webpage / Frontend:",
+      "Antwort_2_10_3": "Backend:",
       
       "Titel_3": "Using the calculator",
       
@@ -286,14 +293,6 @@
       "Impressum": "Legal note",
       "Datenschutzerklearung": "Privacy policy",
       "FAQ": "FAQ"
-    },
-    "OpenSource": {
-      "Text_0": "The CO₂ calculator was publicly developed based on the GNU AGPL-3.0 Open Source licence.",
-      "Text_1": "You can access the entire code basis on Github.",
-      "Website": "Webpage",
-      "Projektcode": "Project code",
-      "Github": "Github repository",
-      "Backend": "Backend"
     },
     "Contact": {
       "Name": "Contact",
@@ -390,7 +389,9 @@
       "ITGeraetIDDic_9": "Laser and inkjet printer(s)",
       "ITGeraetIDDic_10": "Toner(s) for laser and inkjet printer(s)",
       "ITGeraetIDDic_4": "Overhead projector(s)",
-      "ITGeraetIDDic_6": "In-house servers"
+      "ITGeraetIDDic_6": "In-house servers",
+
+      "gebaeudeHinzufuegen": "Building"
     }
   },
   "colleagueSurvey": {
@@ -674,6 +675,7 @@
     "nichtNegativRegel": "Please do NOT enter a number that is less than zero",
     "jahrRegel": "Please enter a valid year",
     "Gebaeude": "Buildings",
+    "GithubRepo": "Github repository",
     "Verbrauch": "Consumption"
   }
 }

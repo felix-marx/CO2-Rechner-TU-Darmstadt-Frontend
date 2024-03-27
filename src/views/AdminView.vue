@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app :style="{background: $vuetify.theme.themes[theme].background}">
     <!-- Header -->
     <Header
       :display-user-setting="true"
@@ -45,6 +45,12 @@ export default {
     currentTabType: AdminViewSurveys,
     tabList: [],
   }),
+
+  computed:{
+    theme(){
+      return (this.$vuetify.theme.dark) ? 'dark' : 'light'
+    }
+  },
 
   watch: {
     '$i18n.locale': function() {

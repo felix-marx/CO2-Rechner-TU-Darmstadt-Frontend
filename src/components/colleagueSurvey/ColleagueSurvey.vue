@@ -1,7 +1,10 @@
 <!-- eslint-disable vue/no-v-html -->
 <template>
   <v-container>
-    <v-card class="pa-7 mt-2">
+    <v-card 
+      class="pa-7 mt-2 mx-auto"
+      :max-width="constants.v_card_max_width"
+    >
       <!-- Introduction Text -->
       <p> {{ ($t('colleagueSurvey.colleagueSurvey.UmfrageErklaerung_0')) }} </p>
       <p v-html="$t('colleagueSurvey.colleagueSurvey.UmfrageErklaerung_1')" />
@@ -12,8 +15,9 @@
     </v-card>
     <v-card
       elevation="2"
-      class="pa-7 mt-2"
+      class="pa-7 mt-2 mx-auto"
       outlined
+      :max-width="constants.v_card_max_width"
     >
       <v-card-title>
         {{ bezeichnung }}
@@ -322,6 +326,7 @@
             <v-dialog
               v-model="errorDialog"
               transition="dialog-bottom-transition"
+              :max-width="constants.v_dialog_max_width"
             >
               <!-- Mit diesem Button soll die Umfrage abgesendet werden. -->
               <template v-slot:activator="{ on, attrs }">
@@ -427,6 +432,7 @@
 import Tooltip from "@/components/componentParts/Tooltip.vue";
 import LoadingAnimation from '../componentParts/LoadingAnimation.vue';
 import i18n from "@/i18n";
+import constants from "../../const";
 
 export default {  components: {
     Tooltip,
@@ -441,6 +447,7 @@ export default {  components: {
   },
 
   data: () => ({
+    constants: constants,
     umfrageYear: "UnknownYear",
 
     // display of alerts
