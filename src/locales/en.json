@@ -410,8 +410,7 @@
       "WieInsBuero_fahrgemeinschaft": "Are you travelling as a member of a privately organised carpool?",
       
       "WieInsBuero_anzahlMitfahrende": "Number of co-travellers",
-      "fahrmediumListe_0": "Passenger car (Diesel)",
-      "fahrmediumListe_1": "Passenger car (petrol / gasoline)",
+      "fahrmediumListe_0": "Passenger car",
       "fahrmediumListe_2": "Bicycle",
       "fahrmediumListe_3": "Electric bicycle",
       "fahrmediumListe_4": "Motorised bicycle",
@@ -431,11 +430,15 @@
       "dienstreiseMediumListe_3": "Plane",
       "dienstreiseMedium_Benzin": "Petrol / gasoline",
       "dienstreiseMedium_Diesel": "Diesel",
+      "dienstreiseMedium_Hybrid": "Plug-in hybrid",
+      "dienstreiseMedium_Elektro": "Electric",
       "dienstreiseMedium_Auto": "Passenger car",
       
       "Pkw_Motortyp": "Motortype",
       "Pkw_diesel": "diesel",
       "Pkw_benzin": "petrol / gasoline",
+      "Pkw_Hybrid": "plug-in hybrid",
+      "Pkw_Elektro": "electric",
       "Pkw_pendelweg_benzin": "Passenger car - petrol / gasoline",
       "Pkw_pendelweg_diesel": "Passenger car - diesel",
 

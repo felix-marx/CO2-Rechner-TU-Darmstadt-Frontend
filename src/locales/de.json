@@ -430,11 +430,15 @@
       "dienstreiseMediumListe_3": "Flugzeug",
       "dienstreiseMedium_Benzin": "Benzin",
       "dienstreiseMedium_Diesel": "Diesel",
+      "dienstreiseMedium_Hybrid": "Plug-In-Hybrid",
+      "dienstreiseMedium_Elektro": "Elektro",
       "dienstreiseMedium_Auto": "PKW",
 
       "Pkw_Motortyp": "Motortyp",
       "Pkw_diesel": "Diesel",
       "Pkw_benzin": "Benzin",
+      "Pkw_Hybrid": "Plug-In-Hybrid",
+      "Pkw_Elektro": "Elektro",
       "Pkw_pendelweg_benzin": "PKW - Benzin",
       "Pkw_pendelweg_diesel": "PKW - Diesel",
 

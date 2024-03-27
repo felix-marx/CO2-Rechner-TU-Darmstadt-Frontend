@@ -611,6 +611,8 @@ export default {  components: {
       this.pkwListe = [
         i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMedium_Diesel"),
         i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMedium_Benzin"),
+        i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMedium_Hybrid"),
+        i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMedium_Elektro"),
       ],
       this.flugklassenListe = [
         i18n.t("colleagueSurvey.colleagueSurvey.flugklasse_average"), //average
@@ -661,8 +663,11 @@ export default {  components: {
         [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_3'), 9], //Straßenbahn
         [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_4'), 10], //Mix inkl. U-Bahn
         [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_5'), 11], //Mix exkl. U-Bahn
-        [i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_6'), 12] // Zu Fuß 
+        [i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_6'), 12], // Zu Fuß 
+        [i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMedium_Hybrid'), 13], // Plug-in-Hybrid
+        [i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMedium_Elektro'), 14] // Elektro
       ]);
+
       //Check if Öffentliche is selected
       if(verkehrsmitteltyp === i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_5')) {
         return verkehrsmittelMap.get(oepnvspezifikation);
@@ -688,40 +693,26 @@ export default {  components: {
       var tankart = "";
 
       //Check if verkehrsmittel is PKW
-      if(parseInt(verkehrsmittelMap.get(verkehrsmittel)) == 2) {
+      if(parseInt(verkehrsmittelMap.get(verkehrsmittel[0])) == 2) {
         //Check if Benzin or Diesel
-        if(this.verkehrmittel[5] == i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMedium_Benzin')) {
+        if(verkehrsmittel[1] == i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMedium_Benzin')) {
           tankart = "Benzin"
-        } else if(this.verkehrmittel[5] == i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMedium_Diesel')) {
+        } else if(verkehrsmittel[1] == i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMedium_Diesel')) {
           tankart = "Diesel"
-        } else {
+        } else if(verkehrsmittel[1] == i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMedium_Hybrid')) {
+          tankart = "Plug-In-Hybrid"
+        } else if(verkehrsmittel[1] == i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMedium_Elektro')) {
+          tankart = "Elektro"
+        } else { 
           console.error("No valid Tankart selected")
           tankart = "";
         }
       }
 
       return [
-        verkehrsmittelMap.get(verkehrsmittel),
+        verkehrsmittelMap.get(verkehrsmittel[0]),
         tankart
       ];
-
-      // return [
-      //   verkehrsmittelMap.get(verkehrsmittel),
-      //   parseInt(verkehrsmittelMap.get(verkehrsmittel)) == 2
-      //     ? verkehrsmittel == i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_0')
-      //       ? i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMedium_Benzin')
-      //       : i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMedium_Diesel')
-      //     : "",
-      // ];
-    },
-
-    mapDienstreiseFlugkategorie: function (reisedistanz) {
-      //Langstrecke
-      if(reisedistanz > 750){
-        return i18n.t('colleagueSurvey.colleagueSurvey.flugstreckeListe_0')
-      }
-      //Kurzstrecke
-      return i18n.t('colleagueSurvey.colleagueSurvey.flugstreckeListe_1') 
     },
 
     mapDienstreiseFlugklasse: function (flugstreckeart) {
@@ -845,7 +836,9 @@ export default {  components: {
       for (var dienstreise of this.dienstreisen) {
         // eslint-disable-next-line no-extra-boolean-cast
         if(!!dienstreise[0]){
-          var dienstreisetyp = this.mapDienstreisemittel(dienstreise[0]);
+          console.log("-----");
+          console.log(dienstreise);
+          var dienstreisetyp = this.mapDienstreisemittel(dienstreise);
 
           buildDienstreisen.push({
             idDienstreise: parseInt(dienstreisetyp[0]),
@@ -914,6 +907,15 @@ export default {  components: {
      */
     sendData: async function () {
       this.displayLoadingAnimation = true;
+
+      console.log(JSON.stringify({
+          pendelweg: this.pendelwegJSON(),
+          tageImBuero: parseInt(this.arbeitstageBuero == null || this.arbeitstageBuero == "" ? "0" : this.arbeitstageBuero),
+          dienstreisen: this.dienstreisenJSON(),
+          itGeraete: this.itGeraeteJSON(),
+          idUmfrage: this.$route.params.umfrageID,
+        }))
+
       await fetch(process.env.VUE_APP_BASEURL + "/mitarbeiterumfrage/insert", {
         method: "POST",
         headers: {
