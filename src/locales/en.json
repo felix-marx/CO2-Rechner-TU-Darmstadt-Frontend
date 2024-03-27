@@ -441,6 +441,8 @@
       "Pkw_Elektro": "electric",
       "Pkw_pendelweg_benzin": "Passenger car - petrol / gasoline",
       "Pkw_pendelweg_diesel": "Passenger car - diesel",
+      "Pkw_pendelweg_hybrid": "Passenger car - plug-in hybrid",
+      "Pkw_pendelweg_elektro": "Passenger car - electric",
 
       "Flugstrecke": "Flying distance",
       "EinfacheDistanz": "One-way distance",

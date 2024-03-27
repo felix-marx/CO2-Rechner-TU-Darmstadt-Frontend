@@ -909,7 +909,8 @@ export default {
       let labelMap = getDienstreisenLabelMap()
 
       Object.keys(dienstreisenAufgeteilt).forEach(function(key) {
-        let labelParts = key.split("-")
+        console.log(key)
+        let labelParts = key.split("_")
         let label = labelMap.get(labelParts[0]) + (labelParts[1] ? " - " + labelMap.get(labelParts[1]) : "") + (labelParts[2] ? " - " + labelMap.get(labelParts[2]) : "")
         data.push({label: label, value: dienstreisenAufgeteilt[key], color: 'rgb(54,162,235)'})
       })
