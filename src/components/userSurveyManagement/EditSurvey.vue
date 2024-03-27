@@ -3,9 +3,13 @@
     <v-card
       elevation="2"
       outlined
+      class="mx-auto"
+      :max-width="constants.v_card_max_width"
     >
       <v-form lazy-validation>
-        <v-card class="pa-7">
+        <v-card
+          class="pa-7"
+        >
           <v-row
             class="mt-1"
             dense
@@ -35,6 +39,7 @@
             <v-dialog
               v-if="!blockInput"
               v-model="errorDialog"
+              :max-width="constants.v_dialog_max_width"
               transition="dialog-bottom-transition"
             >
               <!-- Mit diesem Button soll die Umfrage abgesendet werden. -->
@@ -215,13 +220,14 @@
           <!-- Genutzte Gebäude -->
 
           <br>
+
           <h3>
-            {{ $t('userSurveyManagement.editSurvey.WelcheGebaeude') }} (<a
+            {{ $t('userSurvey.Survey.GebaeudeAbteilung_0') }} (<a
               href="https://www.tu-darmstadt.de/universitaet/campus/index.de.jsp"
               target="_blank"
-            > {{ $t('userSurveyManagement.editSurvey.Lageplan') }}</a>)?
+            >{{ $t('userSurvey.Survey.GebaeudeAbteilung_1') }}</a>)?
             <Tooltip
-              :tooltip-text="$t('userSurveyManagement.editSurvey.Lageplan_tooltip')"
+              :tooltip-text="$t('userSurvey.Survey.GebaeudeAbteilung_2')"
             />
           </h3>
 
@@ -233,7 +239,7 @@
             :key="index"
           >
             <v-row>
-              <v-col cols="5">
+              <v-col cols="6">
                 <v-autocomplete
                   v-if="gebaeudeIDs"
                   v-model="objekt[0]"
@@ -255,37 +261,53 @@
                   :disabled="blockInput"
                 />
               </v-col>
-              <v-col>
+              <v-col
+                cols="1"
+                class="mt-3 text-center"
+              >
                 <v-btn
-                  v-if="!blockInput"
-                  class="add_text--text"
-                  color="add"
-                  @click="newGebaeude()"
-                >
-                  {{ $t('common.Hinzufuegen') }}
-                </v-btn>
-              </v-col>
-              <v-col>
-                <v-btn
-                  v-if="!blockInput"
-                  class="delete_text--text"
+                  class="delete_text--text mx-auto"
                   color="delete"
+                  fab
+                  small
+                  :disabled="blockInput"
                   @click="removeGebaeude(index)"
                 >
-                  {{ $t('common.Loeschen') }}
+                  <v-icon>
+                    mdi-delete-outline
+                  </v-icon>
                 </v-btn>
               </v-col>
             </v-row>
           </div>
-          <v-row
+          
+          <v-container>
+            <v-row justify="start">
+              <v-col
+                class="pr-0"
+              >
+                <v-btn
+                  class="add_text--text pl-2"
+                  color="add"
+                  :disabled="blockInput"
+                  @click="newGebaeude()"
+                >
+                  <v-icon>
+                    mdi-plus
+                  </v-icon>
+                  {{ $t('userSurvey.Survey.gebaeudeHinzufuegen') }}
+                </v-btn>
+              </v-col> 
+            </v-row>
+          </v-container>
+
+          <v-alert
             v-if="duplicateBuilding"
+            type="warning"
+            dense
           >
-            <v-alert
-              type="warning"
-            >
-              {{ $t('userSurvey.Survey.GebaeudeWarnung') }}
-            </v-alert>
-          </v-row>
+            {{ $t('userSurvey.Survey.GebaeudeWarnung') }}
+          </v-alert>
 
           <DataGapVisualization 
             v-if="displayDataGapVisualization"
@@ -399,6 +421,7 @@ import LoadingAnimation from "../componentParts/LoadingAnimation";
 import DataGapVisualization from "../componentParts/DataGapVisualization";
 import i18n from "@/i18n";
 import { translateGebaeudeIDToSymbolic, translateGebaeudeIDToNumeric, resolveITGeraetID } from "../../utils";
+import constants from "../../const.js";
 
 
 export default {
@@ -419,6 +442,7 @@ export default {
   },
 
   data: () => ({
+    constants: constants,
     umfrage: {
       bezeichnung: null,
       mitarbeiteranzahl: null,

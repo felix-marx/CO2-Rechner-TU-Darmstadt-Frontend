@@ -1,6 +1,9 @@
 <template>
   <v-container>
-    <v-card>
+    <v-card
+      class="mx-auto"
+      :max-width="constants.v_card_max_width"
+    >
       <v-card-title>
         {{ $t('userSurveyManagement.SurveyOverview.GespeicherteUmfragen') }}
       </v-card-title>
@@ -55,8 +58,8 @@
           </v-list-item-content>
         </v-list-item>
 
-        <!-- Die erstellte Umfrage soll bearbeitet und ausgewählt werden können. -->
         <v-card-actions>
+          <!-- Umfragen bearbeiten -->
           <v-dialog
             v-model="dialog[index]"
             fullscreen
@@ -96,6 +99,7 @@
               <!-- Hier kommt der Inhalt der Umfrage hin -->
               <v-card
                 v-if="dialog[index]"
+                :style="{background: $vuetify.theme.themes[theme].background}"
               >
                 <EditSurvey 
                   :umfrageidprop="umfrage._id"
@@ -104,6 +108,7 @@
             </v-card>
           </v-dialog>
 
+          <!-- Auswertung anzeigen -->
           <v-dialog
             v-model="dialogAuswertung[index]"
             fullscreen
@@ -141,6 +146,7 @@
               </v-toolbar>
               <v-card
                 v-if="dialogAuswertung[index]"
+                :style="{background: $vuetify.theme.themes[theme].background}"
               >
                 <SurveyEvaluation
                   :umfrageid="umfrage._id"
@@ -169,6 +175,7 @@
           <v-dialog
             v-model="deleteSurvey[index]"
             transition="dialog-bottom-transition"
+            :max-width="constants.v_dialog_max_width"
           >
             <template v-slot:activator="{ on, attrs }">
               <!-- Mit diesem Button sollen ausgewählte Umfragen gelöscht werden können. -->
@@ -232,6 +239,7 @@ import EditSurvey from "./EditSurvey.vue";
 import SurveyEvaluation from "../evaluation/SurveyEvaluation.vue";
 import CopyButton from '../componentParts/CopyButton.vue';
 import i18n from "../../i18n";
+import constants from "../../const.js";
 
 export default {
   components: {
@@ -240,154 +248,161 @@ export default {
     CopyButton,
   },
 
-    data: () => ({
-      umfragen: [],
-      deleteSurvey: [],
-      dialog: [], 
-      dialogAuswertung: [],
-      errors: [],
-      message: "",
+  data: () => ({
+    constants: constants,
+    umfragen: [],
+    deleteSurvey: [],
+    dialog: [], 
+    dialogAuswertung: [],
+    errors: [],
+    message: "",
 
-      notifications: false,
-      sound: true,
-      widgets: true,
-      anteilMitarbeiterUmfrage: 40,
+    notifications: false,
+    sound: true,
+    widgets: true,
+    anteilMitarbeiterUmfrage: 40,
 
-      // base url for Mitarbeiterumfragen
-      mitarbeiterumfrageBaseURL: process.env.VUE_APP_URL + '/survey/',
+    // base url for Mitarbeiterumfragen
+    mitarbeiterumfrageBaseURL: process.env.VUE_APP_URL + '/survey/',
   }),
 
-    created() {
-      this.fetchUmfragenForUser();
-    },
-
-    methods: {
-      /**
-       * Loescht eine Umfrage nach Nutzerbestaetigung
-       */
-      async removeSurvey(index, umfrageID) {
-        var ret = this.deleteUmfrage(index, umfrageID)
-        if(ret) {
-          this.umfragen.splice(index, 1)
-          this.deleteSurvey.splice(index, 1)
-          this.dialog.splice(index, 1)
-          this.dialogAuswertung.splice(index,1)
-          this.errors.splice(index, 1)
-        }
-        return
-      },
-
-      /**
-       * Dupliziert eine Umfrage nach Nutzerbestaetigung
-       */
-       async duplicateSurvey(index, umfrageID) {
-        await this.duplicateUmfrage(index, umfrageID)
-      
-        if(!this.errors[index]){
-          this.fetchUmfragenForUser()
-        }
-
-        return
-      },
-
-      /**
-       * Closes v-dialog with dialog as v-model
-       */
-      closeDialog(index) {
-        this.fetchUmfragenForUser()
-        this.$set(this.dialog, index, false)
-      },
-
-      /**
-       * Closes v-dialog with dialogAuswertung as v-model
-       */
-      closeDialogAuswertung(index) {
-        this.fetchUmfragenForUser()
-        this.$set(this.dialogAuswertung, index, false)
-      },
-
-      fetchUmfragenForUser: async function () {
-      await fetch(process.env.VUE_APP_BASEURL + "/umfrage/alleUmfragenVonNutzer", {
-        method: "GET",
-        headers: {
-          "Authorization": "Bearer " + this.$keycloak.token,
-        },
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          if(data.data.umfragen !== null) {
-            this.umfragen = data.data.umfragen;
-          } else {
-            this.umfragen = []
-          }
-          
-          this.dialog = new Array(this.umfragen.length).fill(false)
-          this.dialogAuswertung = new Array(this.umfragen.length).fill(false)
-          this.errors = new Array(this.umfragen.length).fill(false)
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
-    },
-
-      /**
-       * Loescht die Umfrage mit der gegebenen ID, gibt false bei error, true bei success zurueck
-       */
-      deleteUmfrage: async function (index, umfrageID) {
-        await fetch(process.env.VUE_APP_BASEURL + "/umfrage", {
-        method: "DELETE",
-        headers: {
-          "Authorization": "Bearer " + this.$keycloak.token,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          umfrageID: umfrageID,
-        }),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          if(data.status === "error") {
-            this.errors[index] = true
-            this.message = data.error.message
-            return false
-          }
-          return true
-        })
-        .catch((error) => {
-          this.errors[index] = true
-          this.message = i18n.t('SurveyOverview.ServerNichtErreichbar')
-          console.error("Error:", error);
-          return false
-        });
-      },
-
-      /**
-       * Dupliziert die Umfrage mit der gegebenen ID, gibt false bei error, true bei success zurueck
-       */
-      duplicateUmfrage: async function (index, umfrageID) {
-        await fetch(process.env.VUE_APP_BASEURL + "/umfrage/duplicate?id=" + umfrageID, {
-        method: "GET",
-        headers: {
-          "Authorization": "Bearer " + this.$keycloak.token,
-        },
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          if(data.status === "error") {
-            this.errors[index] = true
-            this.message = data.error.message
-            return false
-          }
-          return true
-        })
-        .catch((error) => {
-          this.errors[index] = true
-          this.message = i18n.t('SurveyOverview.ServerNichtErreichbar')
-          console.error("Error:", error);
-          return false
-        });
-      },
+  computed:{
+    theme(){
+      return (this.$vuetify.theme.dark) ? 'dark' : 'light'
     }
+  },
+
+  created() {
+    this.fetchUmfragenForUser();
+  },
+
+  methods: {
+    /**
+     * Loescht eine Umfrage nach Nutzerbestaetigung
+     */
+    async removeSurvey(index, umfrageID) {
+      var ret = this.deleteUmfrage(index, umfrageID)
+      if(ret) {
+        this.umfragen.splice(index, 1)
+        this.deleteSurvey.splice(index, 1)
+        this.dialog.splice(index, 1)
+        this.dialogAuswertung.splice(index,1)
+        this.errors.splice(index, 1)
+      }
+      return
+    },
+
+    /**
+     * Dupliziert eine Umfrage nach Nutzerbestaetigung
+     */
+      async duplicateSurvey(index, umfrageID) {
+      await this.duplicateUmfrage(index, umfrageID)
+    
+      if(!this.errors[index]){
+        this.fetchUmfragenForUser()
+      }
+
+      return
+    },
+
+    /**
+     * Closes v-dialog with dialog as v-model
+     */
+    closeDialog(index) {
+      this.fetchUmfragenForUser()
+      this.$set(this.dialog, index, false)
+    },
+
+    /**
+     * Closes v-dialog with dialogAuswertung as v-model
+     */
+    closeDialogAuswertung(index) {
+      this.fetchUmfragenForUser()
+      this.$set(this.dialogAuswertung, index, false)
+    },
+
+    fetchUmfragenForUser: async function () {
+    await fetch(process.env.VUE_APP_BASEURL + "/umfrage/alleUmfragenVonNutzer", {
+      method: "GET",
+      headers: {
+        "Authorization": "Bearer " + this.$keycloak.token,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if(data.data.umfragen !== null) {
+          this.umfragen = data.data.umfragen;
+        } else {
+          this.umfragen = []
+        }
+        
+        this.dialog = new Array(this.umfragen.length).fill(false)
+        this.dialogAuswertung = new Array(this.umfragen.length).fill(false)
+        this.errors = new Array(this.umfragen.length).fill(false)
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+    },
+
+    /**
+     * Loescht die Umfrage mit der gegebenen ID, gibt false bei error, true bei success zurueck
+     */
+    deleteUmfrage: async function (index, umfrageID) {
+      await fetch(process.env.VUE_APP_BASEURL + "/umfrage", {
+      method: "DELETE",
+      headers: {
+        "Authorization": "Bearer " + this.$keycloak.token,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        umfrageID: umfrageID,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if(data.status === "error") {
+          this.errors[index] = true
+          this.message = data.error.message
+          return false
+        }
+        return true
+      })
+      .catch((error) => {
+        this.errors[index] = true
+        this.message = i18n.t('SurveyOverview.ServerNichtErreichbar')
+        console.error("Error:", error);
+        return false
+      });
+    },
+
+    /**
+     * Dupliziert die Umfrage mit der gegebenen ID, gibt false bei error, true bei success zurueck
+     */
+    duplicateUmfrage: async function (index, umfrageID) {
+      await fetch(process.env.VUE_APP_BASEURL + "/umfrage/duplicate?id=" + umfrageID, {
+      method: "GET",
+      headers: {
+        "Authorization": "Bearer " + this.$keycloak.token,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if(data.status === "error") {
+          this.errors[index] = true
+          this.message = data.error.message
+          return false
+        }
+        return true
+      })
+      .catch((error) => {
+        this.errors[index] = true
+        this.message = i18n.t('SurveyOverview.ServerNichtErreichbar')
+        console.error("Error:", error);
+        return false
+      });
+    },
   }
+}
   
 </script>

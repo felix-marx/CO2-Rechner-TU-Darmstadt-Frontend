@@ -1,9 +1,10 @@
 <template>
   <v-container>
     <v-card
-      class="mb-5"
+      class="mb-5 mx-auto"
       elevation="2"
       outlined
+      :max-width="constants.v_card_max_width"
     >
       <v-card-title>
         {{ $t('header.accountSettings.AccountLoeschen') }}
@@ -19,6 +20,7 @@
           <v-dialog
             v-model="showDeleteDialog"
             transition="dialog-bottom-transition"
+            :max-width="constants.v_dialog_max_width"
           >
             <template v-slot:activator="{ on, attrs }">
               <!-- Mit diesem Button soll der Account gelöscht werden. -->
@@ -96,6 +98,7 @@
 
 <script>
 import LoadingAnimation from "../componentParts/LoadingAnimation"
+import constants from "../../const";
 
 export default {
   name: "AccountSettings",
@@ -105,6 +108,7 @@ export default {
   },
 
   data: () => ({
+    constants: constants,
     usernameConfirmation: "",
     accountDeleted: false,
     showDeleteDialog: false,

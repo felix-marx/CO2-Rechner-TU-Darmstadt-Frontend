@@ -1,7 +1,7 @@
 <!-- eslint-disable vue/no-v-html -->
 
 <template>
-  <v-app>
+  <v-app :style="{background: $vuetify.theme.themes[theme].background}">
     <Header
       :tabs="tabList"
       :display-user-setting="false"
@@ -10,7 +10,11 @@
     />
     <v-main class="mb-16">
       <v-container>
-        <v-card elevation="0">
+        <v-card
+          elevation="0"
+          class="mx-auto"
+          :max-width="constants.v_card_max_width"
+        >
           <v-card
             elevation="2"
             outlined
@@ -467,11 +471,39 @@
                     </v-card>
                   </v-expansion-panel-content>
                 </v-expansion-panel>
+
+                <v-expansion-panel>
+                  <v-expansion-panel-header>
+                    <b v-html="$t('footer.FAQ.Frage_2_10')" />
+                  </v-expansion-panel-header>
+                  <v-expansion-panel-content>
+                    <v-card
+                      class="mt-4"
+                      elevation="0"
+                    >
+                      <p v-html="$t('footer.FAQ.Antwort_2_10_1')" />
+                      <p>
+                        {{ $t('footer.FAQ.Antwort_2_10_2') }}
+                        <a
+                          href="https://github.com/felix-marx/CO2-Rechner-TU-Darmstadt-Frontend"
+                          target="_blank"
+                        >{{ $t('common.GithubRepo') }}</a>
+                      </p>
+                      <p>
+                        {{ $t('footer.FAQ.Antwort_2_10_3') }} 
+                        <a
+                          href="https://github.com/felix-marx/CO2-Rechner-TU-Darmstadt-Frontend"
+                          target="_blank"
+                        >{{ $t('common.GithubRepo') }}</a>
+                      </p>
+                    </v-card>
+                  </v-expansion-panel-content>
+                </v-expansion-panel>  
               </v-expansion-panels>
             </v-card>
 
             <v-card
-              ref="#nutzung"
+              ref="#warum"
               class="px-0 pb-2"
               elevation="0"
             >
@@ -627,6 +659,7 @@
 import Header from '../header/Header.vue'
 import Footer from '../footer/Footer.vue'
 import loadingAnimation from '../componentParts/LoadingAnimation.vue'
+import constants from '../../const'
 
 export default {
   name: "FAQ",
@@ -636,6 +669,7 @@ export default {
   },
 
   data: () => ({
+    constants: constants,
     tabList: [],
     panel_1: [],
     panel_2: [],
@@ -643,6 +677,9 @@ export default {
   }),
 
   computed: {
+    theme(){
+      return (this.$vuetify.theme.dark) ? 'dark' : 'light'
+    },
     formel_1() {
       return "\\(\\begin{aligned} " + 
               "\\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_1_1')  + "} &= \\sum_{\\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_1_7')  + "}} \\sum_{\\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_1_2')  + "}} \\left( \\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_1_3')  + "} \\cdot \\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_1_4')  + "} \\cdot \\frac{\\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_1_5')  + "}}{\\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_1_6')  + "}} \\right)" + 
@@ -679,14 +716,14 @@ export default {
   created() {
     this.setTabList();
 
-    if(this.$route.hash == "#nutzung"){
-      this.panel_3 = [0]
-    } 
-    else if (this.$route.hash == "#bilanzierung"){
+    if (this.$route.hash == "#bilanzierung"){
       this.panel_1 = [0]
     }
     else if (this.$route.hash == "#allgemein"){
       this.panel_2 = [0]
+    }
+    else if (this.$route.hash == "#warum"){
+      this.panel_3 = [1]
     }
   },
 

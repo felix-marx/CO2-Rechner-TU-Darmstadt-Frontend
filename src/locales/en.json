@@ -5,7 +5,10 @@
   "landingpage": {
     "Login": {
       "Titel": "Welcome to the CO<sub>2</sub> calculator of TU Darmstadt",
-      "Willkommen_1": "The CO<sub>2</sub> calculator enables organisational units of TU Darmstadt to prepare their CO<sub>2</sub> balance or carbon footprint independently."
+      "Willkommen_1": "Create your own CO<sub>2</sub> balance for your TU organisational unit independently.",
+      "PanelTitel_1": "FAQ",
+      "PanelTitel_2": "Get involved!",
+      "PanelTitel_3": "What's in it for me?"
     }
   },
   "footer": {
@@ -240,6 +243,10 @@
       "Antwort_2_9_Tabelle_6": "Additional test runs of the CO<sub>2</sub> calculator",
       "Antwort_2_9_Tabelle_7": "Project planning: Overall CO<sub>2</sub> balance concept and roll-out of the CO<sub>2</sub> calculator",
       
+      "Frage_2_10": "Is the CO<sub>2</sub> calculator publicly accessible? Is the project open source?",
+      "Antwort_2_10_1": "The CO<sub>2</sub> calculator was publicly developed based on the GNU AGPL-3.0 Open Source licence. You can access the entire code basis on Github.",
+      "Antwort_2_10_2": "Webpage / Frontend:",
+      "Antwort_2_10_3": "Backend:",
       
       "Titel_3": "Using the calculator",
       
@@ -287,14 +294,6 @@
       "Datenschutzerklearung": "Privacy policy",
       "FAQ": "FAQ"
     },
-    "OpenSource": {
-      "Text_0": "The CO₂ calculator was publicly developed based on the GNU AGPL-3.0 Open Source licence.",
-      "Text_1": "You can access the entire code basis on Github.",
-      "Website": "Webpage",
-      "Projektcode": "Project code",
-      "Github": "Github repository",
-      "Backend": "Backend"
-    },
     "Contact": {
       "Name": "Contact",
       "Titel": "Sustainable Development Office",
@@ -331,8 +330,8 @@
       
       "MitarbeiterInAbteilung": "How many employees are there in your unit?",
       
-      "GebaeudeAbteilung_0": "What buildings are used by your unit?",
-      "GebaeudeAbteilung_1": "Site map",
+      "GebaeudeAbteilung_0": "What buildings are used by your unit",
+      "GebaeudeAbteilung_1": "site map",
       "GebaeudeAbteilung_2": "All buildings begin with the letters S, B, L, H or W depending on location. The Autocomplete feature should be of help.",
       "GebaeudeAbteilung_3": "Usable floor space of the building selected",
       "GebaeudeWarnung": "You have selected the same building multiple times.",
@@ -369,7 +368,7 @@
       "geraeteRules_3": "Please enter a valid quantity.",
       
       "nichtnegativRules_0": "Must be entered.",
-      "nichtnegativRules_1": "Please enter a positive (plus) value.",
+      "nichtnegativRules_1": "Please enter a non-negative (plus) value.",
       
       "absolutpositivRules_0": "Must be entered.",
       "absolutpositivRules_1": "Please enter a positive (plus) value.",
@@ -390,7 +389,9 @@
       "ITGeraetIDDic_9": "Laser and inkjet printer(s)",
       "ITGeraetIDDic_10": "Toner(s) for laser and inkjet printer(s)",
       "ITGeraetIDDic_4": "Overhead projector(s)",
-      "ITGeraetIDDic_6": "In-house servers"
+      "ITGeraetIDDic_6": "In-house servers",
+
+      "gebaeudeHinzufuegen": "Building"
     }
   },
   "colleagueSurvey": {
@@ -402,11 +403,13 @@
       "UmfrageErklaerung_4": "Some survey questions end with an additional question mark symbol. By clicking on this symbol, you will be given additional tips and information that will help you to answer the question.",
       "UmfrageErklaerung_5": "Click on “Send” after completing the survey.",
       "UmfrageErklaerung_6": "Thank you for completing this survey.",
+      
       "WieInsBuero": "How do you get to the office?",
       "WieInsBuero_tooltip": "You can use Google Maps etc. to calculate the distance. If you are a member of a privately organised carpool, please calculate the average travel distance (using Google Maps etc.)",
       "WieInsBuero_verkehrsmedium": "Means of transport",
       "WieInsBuero_pendelweg": "One-way commuting distance",
       "WieInsBuero_fahrgemeinschaft": "Are you travelling as a member of a privately organised carpool?",
+      
       "WieInsBuero_anzahlMitfahrende": "Number of co-travellers",
       "fahrmediumListe_0": "Passenger car (Diesel)",
       "fahrmediumListe_1": "Passenger car (petrol / gasoline)",
@@ -415,6 +418,7 @@
       "fahrmediumListe_4": "Motorised bicycle",
       "fahrmediumListe_5": "Public transport",
       "fahrmediumListe_6": "On foot",
+      
       "fahrtmediumOEPNV": "Local public transport",
       "fahrtmediumOEPNVListe_0": "Train",
       "fahrtmediumOEPNVListe_1": "Bus",
@@ -422,21 +426,27 @@
       "fahrtmediumOEPNVListe_3": "Tram",
       "fahrtmediumOEPNVListe_4": "Mix incl. underground",
       "fahrtmediumOEPNVListe_5": "Mix excl. underground",
+      
       "dienstreiseMediumListe_0": "Passenger car (Diesel)",
       "dienstreiseMediumListe_1": "Passenger car (petrol / gasoline)",
       "dienstreiseMediumListe_2": "Train",
       "dienstreiseMediumListe_3": "Plane",
       "dienstreiseMedium_Benzin": "Petrol / gasoline",
       "dienstreiseMedium_Diesel": "Diesel",
+      "dienstreiseMedium_Auto": "Passenger car",
+      
       "Flugstrecke": "Flying distance",
       "EinfacheDistanz": "One-way distance",
       "flugstreckeListe_0": "Long distance",
       "flugstreckeListe_1": "Short distance",
+      
       "TageBuero": "How many days per week are you at the office?",
       "TageBuero_label": "Days in the office",
+      
       "Dienstreise_0": "What business trips have you ",
       "Dienstreise_1": " taken?",
       "Dienstreise_tooltip": "You can use Google Maps etc. to calculate the distance. In case of travel by air, you can enter the total of all your short and long-distance flights.",
+      
       "IT_Geraete": "Which IT devices do you use at work?",
       "IT_Geraete_tooltip": "Jointly used IT devices such as multifunctional printers are not included here.",
       "IT_Geraete_Notebooks": "Notebooks",
@@ -448,6 +458,7 @@
       "IT_Gereate_Desktop": "Desktop PC",
       "IT_Geraete_Bildschirm": "Monitor",
       "IT_Geraete_Mobiltelefon": "Mobile phone",
+      
       "EingabeValidierung_Vollstaendig": "Survey complete?",
       "EingabeValidierung_Problem": "Your input has issues!",
       "EingabeValidierung_kleinereProbleme": "Your input shows the following minor issues:",
@@ -455,14 +466,18 @@
       "EingabeValidierung_Absenden_1": "You cannot resume editing your survey at a later time.",
       "EingabeValidierung_Bearbeiten": "Resume editing",
       "EingabeValidierung_Absenden": "Send survey",
+      
       "Absenden_Erfolgreich": "Your data have been submitted successfully. Thank you very much for taking part in this project! You can now close this window.",
+      
       "Rules_MussAngegeben": "Must be entered.",
+      
       "TageBueroRules_0": "Please enter the days per week.",
       "StreckeRules_0": "Please enter a valid distance.",
       "GeraeteRules_0": "Deselect the device if you do not use it.",
       "GeraeteRules_1": "Please enter a valid quantity.",
       "MitfahrerRules_0": "When travelling alone, please select this option.",
       "MitfahrerRules_1": "Please enter a positive number of co-travellers.",
+      
       "EingabeValidierung_Verkehrsmedium": "The means of public transport has not been entered.",
       "EingabeValidierung_Pendelweg_0": "For the means of transport: XYZ, ",
       "EingabeValidierung_Pendelweg_1": " the commuting distance entered is not valid.",
@@ -491,40 +506,52 @@
       "HochrechnungUngenau_0": "The projection of emission data is inaccurate because only ",
       "HochrechnungUngenau_1": "% of employees have completed the survey so far.",
       "Gesamtemissionen": "Overall emissions:",
-      "tCO2eq": "t CO₂ eq.",
+      "tCO2eq": "t CO₂eq",
+      "kWh": "kWh",
       "EmissionProMitarbeitende": "Emissions per employee: ",
       "DidYouKnow": "Did you know?",
       "AufteilungHauptemissionsfaktoren": "Distribution based on main emission factors",
       "AufteilungNachEnergieart": "Distribution of emissions based on energy type",
-      "AufteilungNachEnergieart_tooltip": "The emissions displayed for the energy consumed can be incomplete. This is due to the fact that not all buildings of TU Darmstadt are equipped with their own meters and no meter data are available.",
+      "AufteilungNachEnergieart_tooltip": "The emissions displayed for the energy consumed can be incomplete. This is due to the fact that not all buildings of TU Darmstadt are equipped with their own meters and no meter data are available.", 
+      "AufteilungDienstreisen": "Distribution based on business trips",
+      "AufteilungPendelwege": "Distribution based on commuting distances",
+      "AufteilungITGeraete": "Distribution based on IT devices",
       "KeineEmissionenAuswertung": "Emissions cannot be analysed by energy consumption. \n For the reporting year selected, emissions cannot be calculated because of missing data from TU Darmstadt. \n The meter infrastructure is continuously being expanded by the Energy Management unit.\n Unfortunately, you cannot do anything to complete the analysis. Emissions cannot be analysed by energy consumption. \n For the reporting year selected, emissions cannot be calculated because of missing data from TU Darmstadt. \n              The meter infrastructure is continuously being expanded by the Energy Management unit.\n Unfortunately, you cannot do anything to complete the analysis.",
       "DarstellungEnergieverbrauch": "Plotting the energy consumed",
       "DarstellungEnergieverbrauch_tooltip": "The respective consumption displayed for the energy consumed by individual organisational units can be incomplete.\n This is due to the fact that not all buildings of TU Darmstadt are equipped with their own meters and no meter data are available.",
       "DarstellungEnergieverbrauchWarning": "Emissions cannot be analysed by energy consumption.\n For the reporting year selected, emissions cannot be calculated because of missing data from TU Darmstadt.\n The meter infrastructure is continuously being expanded by the Energy Management unit.\n Unfortunately, you cannot do anything to complete the analysis.",
+      
       "NachhaltigkeitTipps_0": "The Sustainable Development Office has collected tips on ",
       "NachhaltigkeitTipps_1": "saving energy at the workplace",
       "NachhaltigkeitTipps_2": ".",
+      "NachhaltigkeitTipps_Link": "https://www.intern.tu-darmstadt.de/informationsportal/themenwelten/energie_ressourcen/index.en.jsp#fifteenadvices_absatzgruppe_1",
+      
       "DownloadAlsExcel": "Download as Excel",
       "Linksharing_0": "Link sharing ",
-      "aktivieren": "Activate",
-      "deaktivieren": "Deactivate",
-      "Auswertung": "Analysis",
+      "aktiviert": "activated",
+      "deaktiviert": "deactivated",
+      "Auswertung": "analysis",
+      
       "HaushaltReferenzText_0": "Your total consumption is equivalent to about ",
       "HaushaltReferenzText_1": " or ",
       "HaushaltReferenzText_2": " per year.",
-      "HaushaltReferenzText_3": " Two-person households",
-      "HaushaltReferenzText_4": " Four-person households",
+      "HaushaltReferenzText_3": " two-person households",
+      "HaushaltReferenzText_4": " four-person households",
+      
       "MakeSpreadsheet_0": "Analysis of the survey",
       "MakeSpreadsheet_1": "Rate / proportion",
       "MakeSpreadsheet_2": "Emission overview",
       "MakeSpreadsheet_3": "Total emissions",
       "MakeSpreadsheet_4": "Emissions per employee",
-      "MakeSpreadsheet_5": "Compare 4-person household",
-      "MakeSpreadsheet_6": "Compare 2-person household",
+      "MakeSpreadsheet_5": "Compare four-person household",
+      "MakeSpreadsheet_6": "Compare two-person household",
       "MakeSpreadsheet_7": "Distribution based on main emission factors",
       "MakeSpreadsheet_8": "Distribution based on energy type",
       "MakeSpreadsheet_9": "Plotting the energy consumed",
-      "MakeSpreadsheet_10": "CO2 calculator"
+      "MakeSpreadsheet_10": "CO2 calculator",
+      "MakeSpreadsheet_11": "Distribution based on business trips",
+      "MakeSpreadsheet_12": "Distribution based on commuting distances",
+      "MakeSpreadsheet_13": "Distribution based on IT devices"
     },
     "ResultSharingDisabled": {
       "ResultSharingDisabled_0": "Sorry, but the survey with the ID ",
@@ -623,8 +650,8 @@
     "Accounteinstellungen": "Account settings",
     "UmfrageUebersicht": "Survey overview",
     "CO2_Rechner": "CO₂ calculator",
-    "Umfrage": "survey",
-    "Auswertung": "analysis",
+    "Umfrage": "Survey",
+    "Auswertung": "Analysis",
     "Datenbank": "Database",
     "Bezeichung": "Term (name)",
     "Pendelwege": "Commuting distances",
@@ -647,6 +674,8 @@
     "AngefordertRegel": "Need not be entered",
     "nichtNegativRegel": "Please do NOT enter a number that is less than zero",
     "jahrRegel": "Please enter a valid year",
-    "Gebaeude": "Buildings"
+    "Gebaeude": "Buildings",
+    "GithubRepo": "Github repository",
+    "Verbrauch": "Consumption"
   }
 }

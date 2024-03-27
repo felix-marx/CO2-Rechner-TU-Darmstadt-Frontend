@@ -5,7 +5,10 @@
   "landingpage": {
     "Login": {
       "Titel": "Willkommen beim CO<sub>2</sub>-Rechner der TU Darmstadt",
-      "Willkommen_1": "Der CO<sub>2</sub>-Rechner ermöglicht die selbständige Erstellung einer CO<sub>2</sub>-Bilanz einer TU Einheit."
+      "Willkommen_1": "Erstelle noch heute selbständig eine CO<sub>2</sub>-Bilanz deiner TU-Einheit.",
+      "PanelTitel_1": "FAQ",
+      "PanelTitel_2": "Mach mit!",
+      "PanelTitel_3": "Was habe ich davon?"
     }
   },
   "footer": {
@@ -240,6 +243,10 @@
       "Antwort_2_9_Tabelle_6": "Weitere Testläufe des CO<sub>2</sub>-Rechners",
       "Antwort_2_9_Tabelle_7": "Projektplanung: Gesamtkonzept CO<sub>2</sub>-Bilanz und Rollout des CO<sub>2</sub>-Rechners",
 
+      "Frage_2_10": "Ist der CO<sub>2</sub>-Rechner öffentlich zugänglich? Ist das Projekt Open Source?",
+      "Antwort_2_10_1": "Der CO<sub>2</sub>-Rechner wurde öffentlich unter der GNU AGPL-3.0 Open Source Lizenz entwickelt. Sie können die gesamte Code Basis auf Github einsehen.",
+      "Antwort_2_10_2": "Webseite / Frontend:",
+      "Antwort_2_10_3": "Backend:",
 
       "Titel_3": "Nutzung des CO<sub>2</sub>-Rechners",
       
@@ -286,14 +293,6 @@
       "Impressum": "Impressum",
       "Datenschutzerklearung": "Datenschutzerklärung",
       "FAQ": "FAQ"
-    },
-    "OpenSource": {
-      "Text_0": "Der CO₂-Rechner wurde öffentlich unter der GNU AGPL-3.0 Open Source Lizenz entwickelt.",
-      "Text_1": "Sie können die gesamte Code Basis auf Github einsehen.",
-      "Website": "Webseite",
-      "Projektcode": "Projektcode",
-      "Github": "Github Repository",
-      "Backend": "Backend"
     },
     "Contact": {
       "Name": "Kontakt",
@@ -369,7 +368,7 @@
       "geraeteRules_3": "Bitte geben Sie eine valide Menge an.",
 
       "nichtnegativRules_0": "Muss angegeben werden.",
-      "nichtnegativRules_1": "Bitte geben Sie einen positiven Wert an.",
+      "nichtnegativRules_1": "Bitte geben Sie einen nicht negativen Wert an.",
 
       "absolutpositivRules_0": "Muss angegeben werden.",
       "absolutpositivRules_1": "Bitte geben Sie einen positiven Wert an.",
@@ -390,7 +389,9 @@
       "ITGeraetIDDic_9": "Laser- & Tintenstrahldrucker",
       "ITGeraetIDDic_10": "Laser & Tintenstrahldrucker Toner",
       "ITGeraetIDDic_4": "Beamer",
-      "ITGeraetIDDic_6": "interne Server"
+      "ITGeraetIDDic_6": "interne Server",
+
+      "gebaeudeHinzufuegen": "Gebäude"
     }
   },
   "colleagueSurvey": {
@@ -432,6 +433,7 @@
       "dienstreiseMediumListe_3": "Flugzeug",
       "dienstreiseMedium_Benzin": "Benzin",
       "dienstreiseMedium_Diesel": "Diesel",
+      "dienstreiseMedium_Auto": "PKW",
 
       "Flugstrecke": "Flugstrecke",
       "EinfacheDistanz": "Einfache Distanz",
@@ -504,29 +506,39 @@
       "HochrechnungUngenau_0": "Die Hochrechnung der Emissionsdaten ist ungenau, weil bisher nur ",
       "HochrechnungUngenau_1": "% der Mitarbeitenden die Umfrage ausgefüllt haben.",
       "Gesamtemissionen": "Gesamtemissionen:",
-      "tCO2eq": "t CO₂ eq.",
+      "tCO2eq": "t CO₂eq",
+      "kWh": "kWh",
       "EmissionProMitarbeitende": "Emissionen pro Mitarbeitende: ",
       "DidYouKnow": "Did you know?",
       "AufteilungHauptemissionsfaktoren": "Aufteilung nach Hauptemissionsfaktoren",
       "AufteilungNachEnergieart": "Aufteilung der Emissionen nach Energieart",
       "AufteilungNachEnergieart_tooltip": "Die angezeigten Emissionen für den Energieverbrauch können unvollständig sein. Der Grund dafür ist, dass nicht alle Gebäude der TU mit einem eigenen Zähler ausgestattet sind und keine Zählerdaten vorliegen.",
+      "AufteilungDienstreisen": "Aufteilung nach Dienstreisen",
+      "AufteilungPendelwege": "Aufteilung nach Pendelwege",
+      "AufteilungITGeraete": "Aufteilung nach IT-Geraete",
+      
       "KeineEmissionenAuswertung": "Es ist keine Auswertung der Emissionen nach Energieverbrauch möglich. \n Für das ausgewählte Bilanzierungsjahr fehlen Daten seitens der TU Darmstadt, um die Emissionen berechnen zu können. \n Die Zählerinfrastruktur wird durch das Energiemanagment immer weiter ausgebaut.\n Sie können leider nichts tun, um die Auswertung zu vervollständigen.Es ist kein Auswertung der Emissionen durch den Energieverbrauch möglich. \n Für das ausgewählte Bilanzierungsjahr fehlen Daten seitens der TU Darmstadt, um die Emissionen berechnen zu können. \n              Die Zählerinfrastruktur wird durch das Energiemanagment immer weiter ausgebaut.\n Sie können leider nichts tun, um die Auswertung zu vervollständigen.",
       "DarstellungEnergieverbrauch": "Darstellung des Energieverbrauches",
       "DarstellungEnergieverbrauch_tooltip": "Die angezeigten Verbrauche für den Energieverbrauch können unvollständig sein.\n Der Grund dafür ist, dass nicht alle Gebäude der TU mit einem eigenen Zähler ausgestattet sind und keine Zählerdaten vorliegen.",
       "DarstellungEnergieverbrauchWarning": "Es ist kein Auswertung der Emissionen durch den Energieverbrauch möglich.\n Für das ausgewählte Bilanzierungsjahr fehlen Daten seitens der TU Darmstadt, um die Emissionen berechnen zu können.\n Die Zählerinfrastruktur wird durch das Energiemanagment immer weiter ausgebaut.\n Sie können leider nichts tun, um die Auswertung zu vervollständigen.",
+      
       "NachhaltigkeitTipps_0": "Das Büro für Nachhaltigkeit hat Tipps zum ",
       "NachhaltigkeitTipps_1": "Energiesparen am Arbeitsplatz",
       "NachhaltigkeitTipps_2": " zusammengestellt.",
+      "NachhaltigkeitTipps_Link": "https://www.intern.tu-darmstadt.de/informationsportal/themenwelten/energie_ressourcen/index.de.jsp#fifteenadvices_absatzgruppe_1",
+      
       "DownloadAlsExcel": "Download als Excel",
       "Linksharing_0": "Linksharing ",
-      "aktivieren": "aktivieren",
-      "deaktivieren": "deaktivieren",
+      "aktiviert": "aktiviert",
+      "deaktiviert": "deaktiviert",
       "Auswertung": "Auswertung",
+      
       "HaushaltReferenzText_0": "Ihr Gesamtverbrauch entspricht circa ",
       "HaushaltReferenzText_1": " bzw. ",
       "HaushaltReferenzText_2": " in einem Jahr.",
       "HaushaltReferenzText_3": " Zwei-Personen-Haushalten",
       "HaushaltReferenzText_4": " Vier-Personen-Haushalten",
+      
       "MakeSpreadsheet_0": "Auswertung der Umfrage",
       "MakeSpreadsheet_1": "Quote",
       "MakeSpreadsheet_2": "Emissionsüberblick",
@@ -537,7 +549,10 @@
       "MakeSpreadsheet_7": "Aufteilung nach Hauptemissonsfaktoren",
       "MakeSpreadsheet_8": "Aufteilung nach Energieart",
       "MakeSpreadsheet_9": "Darstellung des Energieverbrauches",
-      "MakeSpreadsheet_10": "CO2-Rechner"
+      "MakeSpreadsheet_10": "CO2-Rechner",
+      "MakeSpreadsheet_11": "Aufteilung nach Dienstreisen",
+      "MakeSpreadsheet_12": "Aufteilung nach Pendelwege",
+      "MakeSpreadsheet_13": "Aufteilung nach IT-Geraete"
     },
     "ResultSharingDisabled": {
       "ResultSharingDisabled_0": "Es tut uns leid, aber die Umfrage mit ID ",
@@ -663,6 +678,7 @@
     "nichtNegativRegel": "Bitte geben Sie eine nicht-negative Zahl an",
     "jahrRegel": "Bitte geben Sie ein valides Jahr an",
     "Gebaeude": "Gebäude",
-    "Verbrauch": "Verbrauch"
+    "Verbrauch": "Verbrauch",
+    "GithubRepo": "Github Repository"
   }
 }

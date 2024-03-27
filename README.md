@@ -35,10 +35,25 @@ Der CO2 Rechner verwendet folgende Abhängigkeiten, um die Funktionalität berei
 - [vue-chartjs Version 3.5.1](https://vue-chartjs.org/) - Chartjs integration in Vue
 - [file-saver Version 2.0.5](https://github.com/eligrey/FileSaver.js/) - clientseitiger Download von Auswertungen
 - [xlsx Version 0.17.5](https://github.com/SheetJS/sheetjs) - Auswertungsexport
+- [vue-keycloak-js 2.4.0](https://github.com/dsb-norge/vue-keycloak-js) - Vue Keycloak Client
+- [katex 0.12.0](https://github.com/KaTeX/KaTeX) - TeX Rendering
+- [vue-katex 0.5.0](https://github.com/lucpotage/vue-katex) - KaTeX in Vue
+- [vue-i18n 8.28.2](https://github.com/kazupon/vue-i18n) - i18n für Vue
+- [vue-papa-parse 3.1.0](https://github.com/twickstrom/vue-papa-parse) - PapaParse zum Parsen von CSV Dateien
+
 
 
 ## Entwicklungssetup
 Das Projekt wurde mit der Vue CLI v4.5.15 erstellt.
+
+Im Backend Repository ist eine Docker Compose File gegeben, die folgende Container enthält:
+- MongoDB als Datenbank
+- NGINX als Webserver und Reverse Proxy
+- Keycloak zur Authentifizierung und Kommunikation mit externen Diensten
+- Postgres als Datenbank für Keycloak
+
+Das Frontend und Backend müssen unabhängig von der Docker Compose lokal gestartet werden. 
+Die default Konfiguration erwartet das Frontend unter `localhost:8081` und das Backend unter `localhost:3000`.
 
 Installation von allen Abhängigkeiten über Paketverwaltung npm.
 
