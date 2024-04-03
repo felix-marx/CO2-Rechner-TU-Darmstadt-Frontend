@@ -1,56 +1,81 @@
 <template>
-  <v-app-bar
-    app
-    color="primary"
-    dark
-  >
-    <div class="d-flex align-center" />
-    <!--- Tab Menu --->
-
-    <v-tabs
-      center-active
-      :value="selectedTab"
+  <div>
+    <v-app-bar
+      app
+      color="primary"
+      dark
     >
-      <v-tab
-        v-for="tab in filteredTabs"
-        :key="'tab-' + tab.id"
-        @click="changeTab(tab.id, tab.componentType)"
+      <div class="d-flex align-center" /> 
+    
+      <v-tabs
+        center-active
+        :value="selectedTab"
       >
-        {{ tab.title }}
-      </v-tab>
-      <v-tab 
-        class="pa-0 ma-0"
-        style="min-width:0px"
-      />
-    </v-tabs>
-    <span>
-      <LangSelection />
-    </span>
-    <span>
-      <UserSettingsHeader
-        v-if="displayUserSetting"
-        @openAccountSettings="changeTab(2, accountSettings)"
-      />
-      <v-btn
-        v-if="displayBackButton"
-        :icon="true"
-        @click="$router.back()"
-      >
-        <v-icon>mdi-close</v-icon>
-      </v-btn>
-      <v-btn
-        v-if="displayLoginButton"
-        color="primary"
-        elevation="0"
-        @click="$keycloak.loginFn()"
-      >
-        <v-icon left>
-          mdi-account
-        </v-icon>
-        {{ $t('header.Header.LoginButton') }}
-      </v-btn>
-    </span>
-  </v-app-bar>
+        <!-- display tabs normally -->
+        <template v-if="!this.$vuetify.breakpoint.mobile">
+          <v-tab
+            v-for="tab in filteredTabs"
+            :key="'tab-' + tab.id"
+            @click="changeTab(tab.id, tab.componentType)"
+          >
+            {{ tab.title }}
+          </v-tab>
+        </template>
+
+        <!-- display menu button for tabs on mobile -->
+        <v-menu v-if="this.$vuetify.breakpoint.mobile && filteredTabs">
+          <template v-slot:activator="{ on }">
+            <v-btn
+              icon
+              v-on="on"
+            >
+              <v-icon>mdi-menu</v-icon>
+            </v-btn>
+          </template>
+          <v-list>
+            <v-list-item
+              v-for="tab in filteredTabs"
+              :key="'tab-' + tab.id"
+              @click="changeTab(tab.id, tab.componentType)"
+            >
+              <v-list-item-title>
+                {{ tab.title }}
+              </v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-menu>
+      </v-tabs>
+
+      <span>
+        <LangSelection />
+      </span>
+
+      <span>
+        <UserSettingsHeader
+          v-if="displayUserSetting"
+          @openAccountSettings="changeTab(2, accountSettings)"
+        />
+        <v-btn
+          v-if="displayBackButton"
+          :icon="true"
+          @click="$router.back()"
+        >
+          <v-icon>mdi-close</v-icon>
+        </v-btn>
+        <v-btn
+          v-if="displayLoginButton"
+          color="primary"
+          elevation="0"
+          @click="$keycloak.loginFn()"
+        >
+          <v-icon left>
+            mdi-account
+          </v-icon>
+          {{ $t('header.Header.LoginButton') }}
+        </v-btn>
+      </span>
+    </v-app-bar>
+  </div>
 </template>
 <script>
 
@@ -86,10 +111,12 @@ export default {
       type: Boolean
     }
   },
+
   data: () => ({
     accountSettings: AccountSettings,
     selectedTab: 0,
   }),
+
   computed: {
     /**
      * Returns all tabs with id >= 0. Tab with index -1 is a placeholder for when settings are shown.
@@ -99,8 +126,9 @@ export default {
         return null
       }
       return this.tabs.filter(tab => tab.id != 2)
-    }
+    },
   },
+
   methods: {
     /**
      * Emits the selected tab and new component type to the parent.
