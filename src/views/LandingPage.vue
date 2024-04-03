@@ -8,7 +8,7 @@
     />
 
     <v-main
-      class="mb-16 mx-3"
+      :class="$vuetify.breakpoint.mobile ? 'mb-6 mx-3' : 'mb-16 mx-3'"
     >
       <v-card
         class="mt-3 mx-auto"
@@ -35,6 +35,9 @@
             class="px-4 py-2 pb-4 mb-0"
             v-html="$t('landingpage.Login.Willkommen_1')"
           />
+          <p class="px-4 py-2 pb-4 mb-0">
+            Debug: {{ $vuetify.breakpoint.name }} {{ $vuetify.breakpoint.width }} {{ $vuetify.breakpoint.mobile }}
+          </p>
         </div>
         
         <v-container>

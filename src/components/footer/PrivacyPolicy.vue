@@ -7,7 +7,7 @@
       :display-back-button="true"
       :display-login-button="false"
     />
-    <v-main class="mb-16">
+    <v-main :class="$vuetify.breakpoint.mobile ? 'mb-0' : 'mb-16'">
       <v-container>
         <v-card
           elevation="0"

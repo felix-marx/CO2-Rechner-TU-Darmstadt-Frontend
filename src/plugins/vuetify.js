@@ -20,4 +20,7 @@ export default new Vuetify({
       },
     },
   },
+  breakpoint: {
+    mobileBreakpoint: 'xs' // default value of xs is 600px
+  },
 });
