@@ -12,7 +12,7 @@
         :value="selectedTab"
       >
         <!-- display tabs normally -->
-        <template v-if="!this.$vuetify.breakpoint.mobile">
+        <template v-if="displayTabs">
           <v-tab
             v-for="tab in filteredTabs"
             :key="'tab-' + tab.id"
@@ -23,7 +23,7 @@
         </template>
 
         <!-- display menu button for tabs on mobile -->
-        <v-menu v-if="this.$vuetify.breakpoint.mobile && filteredTabs">
+        <v-menu v-else>
           <template v-slot:activator="{ on }">
             <v-btn
               icon
@@ -127,6 +127,25 @@ export default {
       }
       return this.tabs.filter(tab => tab.id != 2)
     },
+
+    displayTabs: function() {
+      // wenn width > 600px, dann displayTabs = true
+      if (this.$vuetify.breakpoint.smAndUp) {
+        return true
+      }
+
+      // wenn keine tabs, dann displayTabs = True, damit der Menu Button nicht angezeigt wird
+      if (!this.filteredTabs) {
+        return true
+      }
+
+      // wenn nur ein tab, dann displayTabs = True, weil ein Menu Button keinen Sinn macht
+      if (this.filteredTabs.length === 1) {
+        return true
+      }
+
+      return false
+    }
   },
 
   methods: {

@@ -36,7 +36,7 @@
             v-html="$t('landingpage.Login.Willkommen_1')"
           />
           <p class="px-4 py-2 pb-4 mb-0">
-            Debug: {{ $vuetify.breakpoint.name }} {{ $vuetify.breakpoint.width }} {{ $vuetify.breakpoint.mobile }}
+            DEBUG: Breakpoint: {{ $vuetify.breakpoint.name }}, Height: {{ $vuetify.breakpoint.height }}, Width: {{ $vuetify.breakpoint.width }}, Mobile: {{ $vuetify.breakpoint.mobile }}
           </p>
         </div>
         
