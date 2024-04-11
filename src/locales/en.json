@@ -292,6 +292,7 @@
     "Footer": {
       "Impressum": "Legal note",
       "Datenschutzerklearung": "Privacy policy",
+      "Datenschutzerklearung_kurz": "Privacy policy",
       "FAQ": "FAQ"
     },
     "Contact": {

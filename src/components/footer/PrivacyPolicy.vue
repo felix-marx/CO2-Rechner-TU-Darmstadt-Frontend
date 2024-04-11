@@ -220,6 +220,10 @@ export default {
   watch: {
     '$i18n.locale': function() {
       this.setTabList();
+    },
+
+    '$vuetify.breakpoint.smAndUp': function() {
+      this.setTabList();
     }
   },
   
@@ -230,7 +234,7 @@ export default {
   methods: {
     setTabList(){
       this.tabList = [
-        { id: 0, title: i18n.t('footer.Footer.Datenschutzerklearung'), componentType: loadingAnimation},
+        { id: 0, title: this.$vuetify.breakpoint.smAndUp ? i18n.t('footer.Footer.Datenschutzerklearung') : i18n.t('footer.Footer.Datenschutzerklearung_kurz'), componentType: loadingAnimation},
       ]
     }
   },
