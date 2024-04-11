@@ -503,6 +503,7 @@
     "surveyEvaluation": {
       "AuswertungDerUmfrage": "Auswertung der Umfrage ",
       "AusgefuellteMitarbeiterumfragen": "Ausgefüllte Mitarbeitendenumfragen: ",
+      "HochrechnungInfo": "Die angezeigten Emissionen sind auf alle Mitarbeitenden hochgerechnet, basierend auf den ausgefüllten Mitrarbeitendenumfragen. Dies führt zu etwaigen Ungenauigkeiten, insbesondere bei geringer Beteiligung.",
       "HochrechnungUngenau_0": "Die Hochrechnung der Emissionsdaten ist ungenau, weil bisher nur ",
       "HochrechnungUngenau_1": "% der Mitarbeitenden die Umfrage ausgefüllt haben.",
       "Gesamtemissionen": "Gesamtemissionen:",
