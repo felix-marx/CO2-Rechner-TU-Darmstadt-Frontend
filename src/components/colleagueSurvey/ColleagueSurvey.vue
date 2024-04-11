@@ -691,6 +691,8 @@ export default {  components: {
       
       //Tankart should be empty if not PKW
       var tankart = "";
+      var flugklasse = "";
+      var flugstreckeart = "";
 
       //Check if verkehrsmittel is PKW
       if(parseInt(verkehrsmittelMap.get(verkehrsmittel[0])) == 2) {
@@ -709,9 +711,45 @@ export default {  components: {
         }
       }
 
+      //Check if verkehrsmittel is Flugzeug, then set the Flugstreckeart
+      if(parseInt(verkehrsmittelMap.get(verkehrsmittel[0])) == 3) {
+        if(verkehrsmittel[1] == i18n.t('colleagueSurvey.colleagueSurvey.flugstreckeListe_0')) {
+          flugstreckeart = "Langstrecke"
+        } else if(verkehrsmittel[1] == i18n.t('colleagueSurvey.colleagueSurvey.flugstreckeListe_1')) {
+          flugstreckeart = "Kurzstrecke"
+        } else if(verkehrsmittel[1] == i18n.t('colleagueSurvey.colleagueSurvey.flugstreckeListe_2')) {
+          flugstreckeart = "Inland"
+        } else if(verkehrsmittel[1] == i18n.t('colleagueSurvey.colleagueSurvey.flugstreckeListe_3')) {
+          flugstreckeart = "International"
+        } else {
+          console.error("No valid Flugstreckeart selected")
+          flugstreckeart = "";
+        }
+      }
+
+      //Check if verkehrsmittel is Flugzeug, then set the Flugklasse
+      if(parseInt(verkehrsmittelMap.get(verkehrsmittel[0])) == 3) {
+        if(verkehrsmittel[3] == i18n.t('colleagueSurvey.colleagueSurvey.flugklasse_average')) {
+          flugklasse = "average"
+        } else if(verkehrsmittel[3] == i18n.t('colleagueSurvey.colleagueSurvey.flugklasse_economy')) {
+          flugklasse = "economy"
+        } else if(verkehrsmittel[3] == i18n.t('colleagueSurvey.colleagueSurvey.flugklasse_business')) {
+          flugklasse = "business"
+        } else if(verkehrsmittel[3] == i18n.t('colleagueSurvey.colleagueSurvey.flugklasse_premiumeconomy')) {
+          flugklasse = "premium economy"
+        } else if(verkehrsmittel[3] == i18n.t('colleagueSurvey.colleagueSurvey.flugklasse_first')) {
+          flugklasse = "first"
+        } else {
+          console.error("No valid Flugklasse selected")
+          flugklasse = "";
+        }
+      }
+
       return [
         verkehrsmittelMap.get(verkehrsmittel[0]),
-        tankart
+        tankart,
+        flugstreckeart,
+        flugklasse
       ];
     },
 
@@ -843,10 +881,10 @@ export default {  components: {
           buildDienstreisen.push({
             idDienstreise: parseInt(dienstreisetyp[0]),
             //Catches spezial case where user selects Flugtyp but then changes to other Verkehrsmedium
-            streckentyp: parseInt(dienstreisetyp[0]) == 3 ? dienstreise[1] : "",
+            streckentyp: parseInt(dienstreisetyp[0]) == 3 ? dienstreisetyp[2] : "",
             strecke: parseInt(dienstreise[2]),
             tankart: dienstreisetyp[1], //Empty if not PKW
-            klasse: dienstreise[3], //Empty if not Flugzeug
+            klasse: dienstreisetyp[3], //Empty if not Flugzeug
           });
         }
       }
@@ -965,7 +1003,7 @@ export default {  components: {
         .catch((error) => {
           console.error("Error:", error);
           this.umfrageYear = "UnknownYear";
-        });
+        });   
     },
   },
 };
