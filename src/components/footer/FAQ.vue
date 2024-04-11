@@ -660,6 +660,7 @@ import Header from '../header/Header.vue'
 import Footer from '../footer/Footer.vue'
 import loadingAnimation from '../componentParts/LoadingAnimation.vue'
 import constants from '../../const'
+import i18n from "../../i18n";
 
 export default {
   name: "FAQ",
@@ -741,7 +742,7 @@ export default {
   methods: {
     setTabList(){
       this.tabList = [
-        { id: 0, title: 'FAQ', componentType: loadingAnimation},
+        { id: 0, title: i18n.t('footer.Footer.FAQ'), componentType: loadingAnimation},
       ]
     }
   }
