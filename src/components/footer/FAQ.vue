@@ -25,7 +25,7 @@
               elevation="0"
             >
               <v-card-title
-                class="mx-4"
+                class="mx-4 headerClass"
                 v-html="$t('footer.FAQ.Titel_1')"
               />
 
@@ -235,7 +235,7 @@
               elevation="0"
             >
               <v-card-title
-                class="mx-4"
+                class="mx-4 headerClass"
               >
                 <label v-html="$t('footer.FAQ.Titel_2')" />
               </v-card-title>
@@ -508,7 +508,7 @@
               elevation="0"
             >
               <v-card-title
-                class="mx-4"
+                class="mx-4 headerClass"
               >
                 <label v-html="$t('footer.FAQ.Titel_3')" />
               </v-card-title>
@@ -755,5 +755,11 @@ export default {
       background-color: inherit !important;
       border-color: inherit !important;
     }
+  }
+  .headerClass{
+    white-space: wrap ;
+    word-break: normal;
+    display: block;
+    hyphens: auto;
   }
 </style>
