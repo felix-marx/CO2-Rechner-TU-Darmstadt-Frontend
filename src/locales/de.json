@@ -595,6 +595,10 @@
       "BearbeitenAktivieren": " Bearbeiten aktivieren",
       "BearbeitenDeaktivieren": " Bearbeiten deaktivieren",
 
+      "SpeicherDialog_1": "Probleme mit Ihrer Eingabe!",
+      "SpeicherDialog_2": "Umfrage vollständig?",
+      "AenderungTrotzdemSpeichern": "Änderungen trotzdem speichern",
+
       "UmfrageBezeichnung": "Wie soll Ihre Umfrage bezeichnet werden?",
       "WelchesBilanzierungsjahr": "Auf welches Bilanzierungsjahr beziehen Sie sich in dieser Umfrage?",
       "MitarbeiterInAbteilung": "Wie viele Mitarbeitende gibt es in Ihrer Abteilung?",

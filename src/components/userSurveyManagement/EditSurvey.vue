@@ -64,7 +64,7 @@
                   color="primary"
                   dark
                 >
-                  {{ (errorTextArray.required.length != 0 || errorTextArray.nonRequired.length != 0) ? "Probleme mit Ihrer Eingabe!" : "Umfrage vollständig?" }}
+                  {{ (errorTextArray.required.length != 0 || errorTextArray.nonRequired.length != 0) ? $t('userSurveyManagement.editSurvey.SpeicherDialog_1') : $t('userSurveyManagement.editSurvey.SpeicherDialog_2') }}
                 </v-toolbar>
                 <v-card-text>
                   <div
@@ -74,7 +74,7 @@
                     <div
                       v-if="errorTextArray.required.length != 0"
                     >
-                      {{ $t('userSurveyManagement.editSurvey.AenderungSpeichern') }} <br>
+                      {{ $t('userSurveyManagement.editSurvey.PflichtFelderNichtAngegeben') }} <br>
                       <v-list
                         flat
                       >
@@ -137,7 +137,7 @@
                     text
                     @click="sendEdit(), errorDialog = false"
                   >
-                    {{ (errorTextArray.nonRequired.length == 0) ? "Änderungen speichern" : "Änderungen trotzdem speichern" }}
+                    {{ (errorTextArray.nonRequired.length == 0) ? $t('userSurveyManagement.editSurvey.AenderungSpeichern') : $t('userSurveyManagement.editSurvey.AenderungTrotzdemSpeichern') }}
                   </v-btn>
                 </v-card-actions>
               </v-card>

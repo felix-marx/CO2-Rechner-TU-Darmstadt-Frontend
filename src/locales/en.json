@@ -591,8 +591,13 @@
       "UmfrageHatProbleme": "Your survey has the following minor issues:",
       "UmfrageWirklichSpeichern_1": "Do you really want to save your survey?",
       "WeiterBearbeiten": "Resume editing",
-      "BearbeitenAktivieren": " Activate editing",
-      "BearbeitenDeaktivieren": " deactivate editing",
+      "BearbeitenAktivieren": "Activate editing",
+      "BearbeitenDeaktivieren": "Deactivate editing",
+
+      "SpeicherDialog_1": "Issues with your input!",
+      "SpeicherDialog_2": "Survey complete?",
+      "AenderungTrotzdemSpeichern": "Save changes anyway",
+
       "UmfrageBezeichnung": "How do you want to name your survey?",
       "WelchesBilanzierungsjahr": "What reporting year is being examined in your survey?",
       "MitarbeiterInAbteilung": "How many employees are there in your unit?",
