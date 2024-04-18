@@ -504,7 +504,7 @@
       "AuswertungDerUmfrage": "Analysis of the survey ",
       "AusgefuellteMitarbeiterumfragen": "Completed surveys for employees: ",
       "HochrechnungInfo": "The emission data shown is extrapolated to all employees based on the completed employee surveys. This may lead to inaccuracies, especially if participation is low.",
-      "HochrechnungUngenau_0": "The projection of emission data is inaccurate because only ",
+      "HochrechnungUngenau_0": "For your survey, the projection of emission data is inaccurate because only ",
       "HochrechnungUngenau_1": "% of employees have completed the survey so far.",
       "Gesamtemissionen": "Overall emissions:",
       "tCO2eq": "t CO₂eq",

@@ -45,22 +45,14 @@
         <v-row>
           <v-col>
             <v-alert
-              type="info"
+              :type="displayExtrapolationWarning ? 'warning' : 'info'"
               class="mb-0"
               text
             >
               {{ $t('evaluation.surveyEvaluation.HochrechnungInfo') }}
-            </v-alert>
-          </v-col>
-        </v-row>
-
-        <v-row v-if="displayExtrapolationWarning">
-          <v-col>
-            <v-alert
-              class="mb-0"
-              type="warning"
-            >
-              {{ $t('evaluation.surveyEvaluation.HochrechnungUngenau_0') }} {{ $n(responsedata.umfragenanteil, 'decimal') }}{{ $t('evaluation.surveyEvaluation.HochrechnungUngenau_1') }}
+              <template v-if="displayExtrapolationWarning">
+                {{ $t('evaluation.surveyEvaluation.HochrechnungUngenau_0') }} {{ $n(responsedata.umfragenanteil, 'decimal') }}{{ $t('evaluation.surveyEvaluation.HochrechnungUngenau_1') }}
+              </template>
             </v-alert>
           </v-col>
         </v-row>
