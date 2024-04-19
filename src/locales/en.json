@@ -462,7 +462,7 @@
       
       "Dienstreise_0": "What business trips have you ",
       "Dienstreise_1": " taken?",
-      "Dienstreise_tooltip": "You can use Google Maps etc. to calculate the distance. In case of travel by air, you can enter the total of all your short and long-distance flights.",
+      "Dienstreise_tooltip": "You can use Google Maps etc. to calculate the distance. If you no longer have any information about your flight class, you can simply select 'No information'. If you have flown the same route in the same class several times, you can also enter the total. The one-way distance is the distance between your point of departure and your destination, measured in one direction.",
       
       "IT_Geraete": "Which IT devices do you use at work?",
       "IT_Geraete_tooltip": "Jointly used IT devices such as multifunctional printers are not included here.",
