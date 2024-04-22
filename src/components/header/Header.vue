@@ -5,10 +5,8 @@
       color="primary"
       dark
     >
-      <div class="d-flex align-center" /> 
-    
       <v-tabs
-        center-active
+        class="ml-0"
         :value="selectedTab"
       >
         <!-- display tabs normally -->
@@ -162,3 +160,9 @@ export default {
   }
 };
 </script>
+
+<style lang="scss">
+  .v-slide-group__content {
+    transform: none !important;
+  }
+</style>

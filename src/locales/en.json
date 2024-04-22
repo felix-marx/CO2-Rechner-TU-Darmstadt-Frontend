@@ -632,8 +632,8 @@
     },
     "userSettingsHeader": {
       "AngemeldetAls": "Logged in as: ",
-      "Accountverwaltung": "Account management",
-      "Abmelden": "Log out",
+      "Accountverwaltung": "Account Management",
+      "Abmelden": "Log Out",
       "ZurUmfrage": "Go to survey",
       "ZurAdminuebersicht": "Go to Administrator overview"
     }
@@ -649,9 +649,9 @@
     "Dienstreisen": "Business trips",
     "ITGeraete": "IT devices",
     "CO": "CO",
-    "Accounteinstellungen": "Account settings",
-    "UmfrageUebersicht": "Survey overview",
-    "CO2_Rechner": "CO₂ calculator",
+    "Accounteinstellungen": "Account Settings",
+    "UmfrageUebersicht": "Survey Overview",
+    "CO2_Rechner": "CO₂ Calculator",
     "Umfrage": "Survey",
     "Auswertung": "Analysis",
     "Datenbank": "Database",

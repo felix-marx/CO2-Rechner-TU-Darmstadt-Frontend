@@ -758,7 +758,7 @@ export default {
     }
   }
   .headerClass{
-    white-space: wrap ;
+    white-space: wrap;
     word-break: normal;
     display: block;
     hyphens: auto;
