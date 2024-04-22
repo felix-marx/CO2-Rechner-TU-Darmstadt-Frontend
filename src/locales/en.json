@@ -604,7 +604,8 @@
     },
     "SurveyOverview": {
       "GespeicherteUmfragen": "Saved surveys",
-      "LinkZurMitarbeiterumfrage": "Copy link to access survey for employees",
+      "LinkZurMitarbeiterumfrage": "Copy link to survey for employees",
+      "LinkZurMitarbeiterumfrage_short": "Copy link to survey for employees",
       "Anzeigen": "Display",
       "LoeschenDerUmfrage_0": "Delete survey",
       "LoeschenDerUmfrage_1": "Are you sure that you ",
