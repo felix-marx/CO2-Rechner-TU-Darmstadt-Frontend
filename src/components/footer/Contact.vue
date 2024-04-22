@@ -15,7 +15,7 @@
     </template>
 
     <v-card>
-      <v-card-title class="text-h5 grey lighten-2">
+      <v-card-title class="text-h5 grey lighten-2 headerClass">
         {{ $t('footer.Contact.Titel') }}
       </v-card-title>
 
@@ -88,3 +88,12 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+  .headerClass{
+    white-space: wrap;
+    word-break: normal;
+    display: block;
+    hyphens: auto;
+  }
+</style>
