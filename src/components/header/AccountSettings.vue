@@ -10,21 +10,22 @@
         {{ $t('header.accountSettings.AccountLoeschen') }}
         <v-divider class="ml-2" />
       </v-card-title>
-      <v-row class="mb-2">
-        <v-col cols="10">
-          <div class="mt-4 pl-7 pr-7">
+
+      <v-container>
+        <v-row>
+          <v-col class="py-0 pl-7 pr-7">
             {{ $t('header.accountSettings.AccountLoeschen_text') }}
-          </div>
-        </v-col>
-        <v-col cols="2">
-          <v-dialog
-            v-model="showDeleteDialog"
-            transition="dialog-bottom-transition"
-            :max-width="constants.v_dialog_max_width"
-          >
-            <template v-slot:activator="{ on, attrs }">
-              <!-- Mit diesem Button soll der Account gelöscht werden. -->
-              <v-col class="text-right">
+          </v-col>
+        </v-row>
+        <v-row>  
+          <v-col class="py-4 pl-7 pr-7">
+            <v-dialog
+              v-model="showDeleteDialog"
+              transition="dialog-bottom-transition"
+              :max-width="constants.v_dialog_max_width"
+            >
+              <template v-slot:activator="{ on, attrs }">
+                <!-- Mit diesem Button soll der Account gelöscht werden. -->
                 <v-btn
                   outlined
                   text
@@ -32,66 +33,66 @@
                   v-bind="attrs"
                   v-on="on"
                 >
-                  <v-icon>mdi-delete-outline</v-icon>
+                  <v-icon> mdi-delete-outline </v-icon>
                   {{ $t('common.Loeschen') }}
                 </v-btn>
-              </v-col>
-            </template>
-            <v-card>
-              <v-toolbar
-                color="primary"
-                dark
-              >
-                {{ $t('header.accountSettings.LoeschenDesAccounts') }}
-              </v-toolbar>
-              <v-card-text>
-                <p class="pt-6">
-                  {{ $t('header.accountSettings.AccountLoeschen_bestaetigen_0') }}
-                  <br>
-                  <b>{{ $t('header.accountSettings.AccountLoeschen_bestaetigen_1') }} </b>
-                </p>
+              </template>
+              <v-card>
+                <v-toolbar
+                  color="primary"
+                  dark
+                >
+                  {{ $t('header.accountSettings.LoeschenDesAccounts') }}
+                </v-toolbar>
+                <v-card-text>
+                  <p class="pt-6">
+                    {{ $t('header.accountSettings.AccountLoeschen_bestaetigen_0') }}
+                    <br>
+                    <b>{{ $t('header.accountSettings.AccountLoeschen_bestaetigen_1') }} </b>
+                  </p>
             
-                <div>
-                  {{ $t('header.accountSettings.AccountLoeschen_bestaetigen_2') }}
-                </div>
-                <v-text-field
-                  v-model="usernameConfirmation"
-                  outlined
-                />
-              </v-card-text>
+                  <div>
+                    {{ $t('header.accountSettings.AccountLoeschen_bestaetigen_2') }}
+                  </div>
+                  <v-text-field
+                    v-model="usernameConfirmation"
+                    outlined
+                  />
+                </v-card-text>
 
-              <v-divider />
+                <v-divider />
 
-              <v-card-actions>
-                <LoadingAnimation
-                  v-if="displayLoadingAnimation"
-                />
-                <v-alert
-                  v-if="accountDeleted && signedOut && !displayLoadingAnimation"
-                  type="success"
-                >
-                  {{ $t('header.accountSettings.AccountGeloescht_0') }}
-                </v-alert>
-                <v-alert
-                  v-if="deleteRequestError && !displayLoadingAnimation"
-                  type="error"
-                >
-                  {{ $t('header.accountSettings.AccountNichtGeloescht') }}
-                </v-alert>
-                <v-spacer />
-                <v-btn
-                  :disabled="!checkUsernameConfirmation || accountDeleted"
-                  color="delete"
-                  text
-                  @click="deleteAccountAndSignout()"
-                >
-                  {{ $t('header.accountSettings.Bestaetigung') }}
-                </v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-dialog>
-        </v-col>
-      </v-row>
+                <v-card-actions>
+                  <LoadingAnimation
+                    v-if="displayLoadingAnimation"
+                  />
+                  <v-alert
+                    v-if="accountDeleted && signedOut && !displayLoadingAnimation"
+                    type="success"
+                  >
+                    {{ $t('header.accountSettings.AccountGeloescht_0') }}
+                  </v-alert>
+                  <v-alert
+                    v-if="deleteRequestError && !displayLoadingAnimation"
+                    type="error"
+                  >
+                    {{ $t('header.accountSettings.AccountNichtGeloescht') }}
+                  </v-alert>
+                  <v-spacer />
+                  <v-btn
+                    :disabled="!checkUsernameConfirmation || accountDeleted"
+                    color="delete"
+                    text
+                    @click="deleteAccountAndSignout()"
+                  >
+                    {{ $t('header.accountSettings.Bestaetigung') }}
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+          </v-col>
+        </v-row>
+      </v-container>
     </v-card>
   </v-container>
 </template>

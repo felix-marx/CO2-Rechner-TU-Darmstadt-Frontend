@@ -625,7 +625,7 @@
       "LoeschenDesAccounts": "Deleting accounts",
       "AccountLoeschen_bestaetigen_0": "Do you really want to delete your account?",
       "AccountLoeschen_bestaetigen_1": "This action cannot be undone and all your surveys will be deleted!",
-      "AccountLoeschen_bestaetigen_2": "Please confirm by entering “Delete” in the field below:",
+      "AccountLoeschen_bestaetigen_2": "Please confirm by entering \"delete\" in the field below:",
       "AccountGeloescht_0": "Your account has been successfully deleted. You can now close this window.",
       "AccountNichtGeloescht": "Your account could not be deleted. Please try again.",
       "Bestaetigung": "I confirm"
