@@ -185,7 +185,7 @@
           <br>
 
           <v-row>
-            <v-col cols="5">
+            <v-col :cols="$vuetify.breakpoint.smAndUp ? 5 : 8">
               <v-autocomplete
                 v-model="umfrage.jahr"
                 :items="possibleYears"
@@ -239,14 +239,13 @@
             :key="index"
           >
             <v-row>
-              <v-col cols="6">
+              <v-col :cols="$vuetify.breakpoint.smAndUp ? 6 : 5">
                 <v-autocomplete
                   v-if="gebaeudeIDs"
                   v-model="objekt[0]"
                   :items="gebaeudeIDs"
                   :label="$t('common.Gebäudenummer')"
                   prepend-icon="mdi-domain"
-                  class="pr-5"
                   :disabled="blockInput"
                 />
               </v-col>
@@ -262,7 +261,7 @@
                 />
               </v-col>
               <v-col
-                cols="1"
+                :cols="$vuetify.breakpoint.smAndUp ? 1 : 2"
                 class="mt-3 text-center"
               >
                 <v-btn
