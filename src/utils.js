@@ -79,8 +79,17 @@ export function getDienstreisenLabelMap(){
     ["3", i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3")],
     ["Benzin", i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMedium_Benzin")],
     ["Diesel", i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMedium_Diesel")],
+    ["Plug-In-Hybrid", i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMedium_Hybrid")],
+    ["Elektro", i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMedium_Elektro")],
     ["Kurzstrecke", i18n.t("colleagueSurvey.colleagueSurvey.flugstreckeListe_1")],
     ["Langstrecke", i18n.t("colleagueSurvey.colleagueSurvey.flugstreckeListe_0")],
+    ["Inland", i18n.t("colleagueSurvey.colleagueSurvey.flugstreckeListe_2")],
+    ["International", i18n.t("colleagueSurvey.colleagueSurvey.flugstreckeListe_3")],
+    ["average", i18n.t("colleagueSurvey.colleagueSurvey.flugklasse_average")],
+    ["economy", i18n.t("colleagueSurvey.colleagueSurvey.flugklasse_economy")],
+    ["premium economy", i18n.t("colleagueSurvey.colleagueSurvey.flugklasse_premiumeconomy")],
+    ["business", i18n.t("colleagueSurvey.colleagueSurvey.flugklasse_business")],
+    ["first", i18n.t("colleagueSurvey.colleagueSurvey.flugklasse_first")],
   ])
 }
 
@@ -92,15 +101,17 @@ export function getPendelwegeLabelMap(){
     ["1", i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_2')],
     ["2", i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_3')],
     ["3", i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_4')],
-    ["4", i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_0')],
-    ["5", i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_1')],
+    ["4", i18n.t('colleagueSurvey.colleagueSurvey.Pkw_pendelweg_benzin')],
+    ["5", i18n.t('colleagueSurvey.colleagueSurvey.Pkw_pendelweg_diesel')],
     ["6", i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_1')],
     ["7", i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_0')],
     ["8", i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_2')],
     ["9", i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_3')],
     ["10", i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_4')],
     ["11", i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_5')],
-    ["12", i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_6')]
+    ["12", i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_6')],
+    ["13", i18n.t('colleagueSurvey.colleagueSurvey.Pkw_pendelweg_hybrid')],
+    ["14", i18n.t('colleagueSurvey.colleagueSurvey.Pkw_pendelweg_elektro')]
   ]);
 }
 
