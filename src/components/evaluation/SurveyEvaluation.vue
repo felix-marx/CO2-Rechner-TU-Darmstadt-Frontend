@@ -10,39 +10,85 @@
       <v-card-title class="headerClass">
         {{ $t('evaluation.surveyEvaluation.AuswertungDerUmfrage') }} "{{ responsedata.bezeichnung }}"
       </v-card-title>
+      
       <v-divider />
+      
       <v-container>
-        <v-row>
-          <v-col>
-            <v-icon>
-              mdi-calendar
-            </v-icon>
-            {{ $t('common.Bilanzierungsjahr') }}: {{ responsedata.jahr }}
-          </v-col>
-          <v-col>
-            <v-icon>
-              mdi-account
-            </v-icon>
-            {{ $t('common.Mitarbeitendenzahl') }}: {{ $n(responsedata.mitarbeiteranzahl, 'integer') }}
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col>
-            <v-icon>
-              mdi-account-edit
-            </v-icon>
-            {{ $t('evaluation.surveyEvaluation.AusgefuellteMitarbeiterumfragen') }} {{ $n(responsedata.umfragenanzahl, 'integer') }}
-          </v-col>
-          <v-col>
-            <v-progress-linear
-              height="25"
-              color="cyan"
-              :value="responsedata.umfragenanteil"
-            >
-              <strong>{{ $n(responsedata.umfragenanteil, 'decimal') }}%</strong>
-            </v-progress-linear>
-          </v-col>
-        </v-row>
+        <!-- On desktop display a 2x2 grid -->
+        <template v-if="!$vuetify.breakpoint.mobile">
+          <v-row>
+            <v-col>
+              <v-icon>
+                mdi-calendar
+              </v-icon>
+              {{ $t('common.Bilanzierungsjahr') }}: {{ responsedata.jahr }}
+            </v-col>
+            <v-col>
+              <v-icon>
+                mdi-account
+              </v-icon>
+              {{ $t('common.Mitarbeitendenzahl') }}: {{ $n(responsedata.mitarbeiteranzahl, 'integer') }}
+            </v-col>
+          </v-row>
+
+          <v-row>
+            <v-col>
+              <v-icon>
+                mdi-account-edit
+              </v-icon>
+              {{ $t('evaluation.surveyEvaluation.AusgefuellteMitarbeiterumfragen') }} {{ $n(responsedata.umfragenanzahl, 'integer') }}
+            </v-col>
+            <v-col>
+              <v-progress-linear
+                height="25"
+                color="cyan"
+                :value="responsedata.umfragenanteil"
+              >
+                <strong>{{ $n(responsedata.umfragenanteil, 'decimal') }}%</strong>
+              </v-progress-linear>
+            </v-col>
+          </v-row>
+        </template>
+
+        <!-- On mobile display all in on column -->
+        <template v-else>
+          <v-row>
+            <v-col>
+              <v-icon>
+                mdi-calendar
+              </v-icon>
+              {{ $t('common.Bilanzierungsjahr') }}: {{ responsedata.jahr }}
+            </v-col>
+          </v-row>
+          <v-row>  
+            <v-col>
+              <v-icon>
+                mdi-account
+              </v-icon>
+              {{ $t('common.Mitarbeitendenzahl') }}: {{ $n(responsedata.mitarbeiteranzahl, 'integer') }}
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col>
+              <v-icon>
+                mdi-account-edit
+              </v-icon>
+              {{ $t('evaluation.surveyEvaluation.AusgefuellteMitarbeiterumfragen') }} {{ $n(responsedata.umfragenanzahl, 'integer') }}
+            </v-col>
+          </v-row>
+          <v-row>  
+            <v-col>
+              <v-progress-linear
+                height="25"
+                color="cyan"
+                :value="responsedata.umfragenanteil"
+              >
+                <strong>{{ $n(responsedata.umfragenanteil, 'decimal') }}%</strong>
+              </v-progress-linear>
+            </v-col>
+          </v-row>
+        </template>
+
         <v-row v-if="displayExtrapolationWarning">
           <v-col>
             <v-alert
@@ -67,20 +113,43 @@
 
       <v-divider />
       <v-container>
-        <v-row>
-          <v-col>
-            <v-icon>
-              mdi-thought-bubble
-            </v-icon>
-            {{ $t('evaluation.surveyEvaluation.Gesamtemissionen') }} {{ $n(responsedata.emissionenGesamt, 'decimal') }} {{ $t('evaluation.surveyEvaluation.tCO2eq') }}
-          </v-col>
-          <v-col>
-            <v-icon>
-              mdi-human-male-board-poll
-            </v-icon>
-            {{ $t('evaluation.surveyEvaluation.EmissionProMitarbeitende') }} {{ $n(responsedata.emissionenProMitarbeiter, 'decimal') }} {{ $t('evaluation.surveyEvaluation.tCO2eq') }}
-          </v-col>
-        </v-row>
+        <!-- On desktop display in a single row -->
+        <template v-if="!$vuetify.breakpoint.mobile">
+          <v-row>
+            <v-col>
+              <v-icon>
+                mdi-thought-bubble
+              </v-icon>
+              {{ $t('evaluation.surveyEvaluation.Gesamtemissionen') }} {{ $n(responsedata.emissionenGesamt, 'decimal') }} {{ $t('evaluation.surveyEvaluation.tCO2eq') }}
+            </v-col>
+            <v-col>
+              <v-icon>
+                mdi-human-male-board-poll
+              </v-icon>
+              {{ $t('evaluation.surveyEvaluation.EmissionProMitarbeitende') }} {{ $n(responsedata.emissionenProMitarbeiter, 'decimal') }} {{ $t('evaluation.surveyEvaluation.tCO2eq') }}
+            </v-col>
+          </v-row>
+        </template>
+
+        <!-- On mobile display in two rows -->
+        <template v-else>
+          <v-row>
+            <v-col>
+              <v-icon>
+                mdi-thought-bubble
+              </v-icon>
+              {{ $t('evaluation.surveyEvaluation.Gesamtemissionen') }} {{ $n(responsedata.emissionenGesamt, 'decimal') }} {{ $t('evaluation.surveyEvaluation.tCO2eq') }}
+            </v-col>
+          </v-row>
+          <v-row>    
+            <v-col>
+              <v-icon>
+                mdi-human-male-board-poll
+              </v-icon>
+              {{ $t('evaluation.surveyEvaluation.EmissionProMitarbeitende') }} {{ $n(responsedata.emissionenProMitarbeiter, 'decimal') }} {{ $t('evaluation.surveyEvaluation.tCO2eq') }}
+            </v-col>
+          </v-row>
+        </template>
 
         <!-- Referenzwerte (Haushalte) -->
         <v-row justify="center">

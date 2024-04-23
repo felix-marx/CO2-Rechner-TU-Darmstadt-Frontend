@@ -190,7 +190,7 @@
             </v-card>
           </v-dialog>
 
-          <v-spacer v-if="!$vuetify.breakpoint.mobile" />
+          <v-spacer />
 
           <!-- Mit diesem Button sollen ausgewählte Umfragen dupliziert werden können. -->
           <v-btn
