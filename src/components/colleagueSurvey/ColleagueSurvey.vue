@@ -19,7 +19,7 @@
       outlined
       :max-width="constants.v_card_max_width"
     >
-      <v-card-title>
+      <v-card-title class="headerClass">
         {{ bezeichnung }}
       </v-card-title>
 
@@ -854,3 +854,12 @@ export default {  components: {
   },
 };
 </script>
+
+<style lang="scss">
+  .headerClass{
+    white-space: wrap;
+    word-break: normal;
+    display: block;
+    hyphens: auto;
+  }
+</style>

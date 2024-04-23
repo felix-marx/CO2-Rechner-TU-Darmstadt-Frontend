@@ -7,7 +7,9 @@
       class="pa-7 mx-auto"
       :max-width="constants.v_card_max_width"
     >
-      <v-card-title>{{ $t('evaluation.surveyEvaluation.AuswertungDerUmfrage') }} "{{ responsedata.bezeichnung }}"</v-card-title>
+      <v-card-title class="headerClass">
+        {{ $t('evaluation.surveyEvaluation.AuswertungDerUmfrage') }} "{{ responsedata.bezeichnung }}"
+      </v-card-title>
       <v-divider />
       <v-container>
         <v-row>
@@ -59,7 +61,9 @@
         />
       </v-container>
 
-      <v-card-title>{{ $t('common.Emissionen') }}</v-card-title>
+      <v-card-title class="headerClass">
+        {{ $t('common.Emissionen') }}
+      </v-card-title>
 
       <v-divider />
       <v-container>
@@ -316,7 +320,9 @@
       class="mx-auto"
       :max-width="constants.v_card_max_width"
     >
-      <v-card-title>Error {{ responseerror.code }}: {{ responseerror.message }}</v-card-title>
+      <v-card-title class="headerClass">
+        Error {{ responseerror.code }}: {{ responseerror.message }}
+      </v-card-title>
     </v-card>
   </v-container>
 </template>
@@ -1236,10 +1242,16 @@ export default {
 
 </script>
 
-<style>
-.p{
-  overflow: hidden; 
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
+<style lang="scss">
+  .p{
+    overflow: hidden; 
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .headerClass{
+    white-space: wrap;
+    word-break: normal;
+    display: block;
+    hyphens: auto;
+  }
 </style>

@@ -6,7 +6,7 @@
       outlined
       :max-width="constants.v_card_max_width"
     >
-      <v-card-title>
+      <v-card-title class="headerClass">
         {{ $t('header.accountSettings.AccountLoeschen') }}
         <v-divider class="ml-2" />
       </v-card-title>
@@ -185,3 +185,12 @@ export default {
   }
 };
 </script>
+
+<style lang="scss">
+  .headerClass{
+    white-space: wrap;
+    word-break: normal;
+    display: block;
+    hyphens: auto;
+  }
+</style>

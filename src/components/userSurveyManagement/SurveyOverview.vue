@@ -4,7 +4,7 @@
       class="mx-auto"
       :max-width="constants.v_card_max_width"
     >
-      <v-card-title>
+      <v-card-title class="headerClass">
         {{ $t('userSurveyManagement.SurveyOverview.GespeicherteUmfragen') }}
       </v-card-title>
 
@@ -440,3 +440,12 @@ export default {
 }
   
 </script>
+
+<style lang="scss">
+  .headerClass{
+    white-space: wrap;
+    word-break: normal;
+    display: block;
+    hyphens: auto;
+  }
+</style>
