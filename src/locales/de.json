@@ -466,9 +466,11 @@
       "TageBuero_label": "Tage im Büro",
 
       "Dienstreise_0": "Welche Dienstreisen haben Sie ",
-      "Dienstreise_1": " unternommen?",
-      "Dienstreise_tooltip": "Zur Berechnung der Distanz können Sie z.B. Google Maps verwenden. Inlandsflüge sind Flüge innerhalb Deutschlands (z.B. Frankfurt - Berlin). Kurzstreckenflüge sind Flüge innerhalb der EU (z.B. London - Madrid). Langstreckenflüge sind Flüge über 3700 km, die in Deutschland beginnen oder enden (z.B. Frankfurt - Bangkok). Internationalflüge sind Langstreckenflüge, die weder in DE starten noch enden (z.B. Madrid - Bangkok). Wenn Sie keine Informationen mehr über ihre Flugklasse haben, können Sie einfach 'Keine Angabe' auswählen. Falls Sie mehrmals den gleichen Flugstreckentyp in der selben Klasse geflogen sind können Sie auch gleich die Summe angeben. Die einfache Distanz bezeichnet die Strecke zwischen Ihrem Abflugsort und Ihrem Zielort, gemessen in eine Richtung.",
-      
+      "Dienstreise_1": " unternommen?",      
+      "Dienstreise_tooltip_1": "Zur Berechnung der Distanz können Sie z.B. Google Maps verwenden.",
+      "Dienstreise_tooltip_2": "Inlandsflüge sind Flüge innerhalb Deutschlands (z.B. Frankfurt - Berlin). Kurzstreckenflüge sind Flüge innerhalb der EU (z.B. London - Madrid). Langstreckenflüge sind Flüge über 3700 km, die in Deutschland beginnen oder enden (z.B. Frankfurt - Bangkok). Internationalflüge sind Langstreckenflüge, die weder in DE starten noch enden (z.B. Madrid - Bangkok).",
+      "Dienstreise_tooltip_3": "Wenn Sie keine Informationen mehr über ihre Flugklasse haben, können Sie einfach 'Keine Angabe' auswählen. Falls Sie mehrmals den gleichen Flugstreckentyp in der selben Klasse geflogen sind können Sie auch gleich die Summe angeben. Die einfache Distanz bezeichnet die Strecke zwischen Ihrem Abflugsort und Ihrem Zielort, gemessen in eine Richtung.",
+
       "IT_Geraete": "Welche IT-Geräte benutzen Sie bei Ihrer Arbeit?",
       "IT_Geraete_tooltip": "Gemeinschaftlich genutzte IT-Geräte wie z.B. Multifunktionsdrucker werden hier nicht betrachtet.",
       "IT_Geraete_Notebooks": "Notebooks",

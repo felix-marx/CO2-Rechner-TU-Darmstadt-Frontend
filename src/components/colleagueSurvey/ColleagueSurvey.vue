@@ -191,7 +191,7 @@
           {{ $t('colleagueSurvey.colleagueSurvey.Dienstreise_0') }} {{ umfrageYear }} 
           {{ $t('colleagueSurvey.colleagueSurvey.Dienstreise_1') }}
           <Tooltip
-            :tooltip-text="$t('colleagueSurvey.colleagueSurvey.Dienstreise_tooltip')"
+            :tooltip-text="$t('colleagueSurvey.colleagueSurvey.Dienstreise_tooltip_1') + ' ' + $t('colleagueSurvey.colleagueSurvey.Dienstreise_tooltip_2') + ' ' + $t('colleagueSurvey.colleagueSurvey.Dienstreise_tooltip_3')"
           />
         </h3>
         <v-divider />
@@ -514,7 +514,8 @@ import LoadingAnimation from '../componentParts/LoadingAnimation.vue';
 import i18n from "@/i18n";
 import constants from "../../const";
 
-export default {  components: {
+export default {  
+  components: {
     Tooltip,
     LoadingAnimation
   },
@@ -700,7 +701,6 @@ export default {  components: {
      * Returns an Integer ID that resolves the Pendelmedium Name to its specified internal ID
      */
     mapPendelverkehrsmittel: function (verkehrsmitteltyp, oepnvspezifikation, tankspezifikation) {
-      console.log(verkehrsmitteltyp, oepnvspezifikation, tankspezifikation)
       //Backend expects the following IDs for the following Verkehrsmittel
       const verkehrsmittelMap = new Map([
         [i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_2'), 1], //Fahrrad
@@ -925,8 +925,6 @@ export default {  components: {
       for (var dienstreise of this.dienstreisen) {
         // eslint-disable-next-line no-extra-boolean-cast
         if(!!dienstreise[0]){
-          console.log("-----");
-          console.log(dienstreise);
           var dienstreisetyp = this.mapDienstreisemittel(dienstreise);
 
           buildDienstreisen.push({
@@ -939,7 +937,6 @@ export default {  components: {
           });
         }
       }
-      console.log(buildDienstreisen);
       return buildDienstreisen;
     },
 
@@ -996,14 +993,6 @@ export default {  components: {
      */
     sendData: async function () {
       this.displayLoadingAnimation = true;
-
-      console.log(JSON.stringify({
-          pendelweg: this.pendelwegJSON(),
-          tageImBuero: parseInt(this.arbeitstageBuero == null || this.arbeitstageBuero == "" ? "0" : this.arbeitstageBuero),
-          dienstreisen: this.dienstreisenJSON(),
-          itGeraete: this.itGeraeteJSON(),
-          idUmfrage: this.$route.params.umfrageID,
-        }))
 
       await fetch(process.env.VUE_APP_BASEURL + "/mitarbeiterumfrage/insert", {
         method: "POST",

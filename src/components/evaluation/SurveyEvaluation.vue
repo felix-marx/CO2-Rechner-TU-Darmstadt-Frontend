@@ -199,7 +199,12 @@
           <div v-if="chart.ref == 'bar-dienstreisen'">
             <v-row v-if="displayAufteilungDienstreisen">
               <v-col class="d-flex justify-center">
-                <h4>{{ $t('evaluation.surveyEvaluation.AufteilungDienstreisen') }}</h4>
+                <h4>
+                  {{ $t('evaluation.surveyEvaluation.AufteilungDienstreisen') }}
+                  <Tooltip
+                    :tooltip-text="$t('colleagueSurvey.colleagueSurvey.Dienstreise_tooltip_2')"
+                  />
+                </h4>
               </v-col>
             </v-row>
             <v-row v-if="displayAufteilungDienstreisen">
@@ -409,6 +414,7 @@ import saveAs from 'file-saver';
 import LoadingAnimation from "../componentParts/LoadingAnimation.vue";
 import LinkSharingComponent from "../componentParts/LinkSharingComponent.vue";
 import DataGapVisualization from '../componentParts/DataGapVisualization.vue';
+import Tooltip from "@/components/componentParts/Tooltip.vue";
 import i18n from "@/i18n";
 import { translateGebaeudeIDToSymbolic, getITGeraeteLabelMap, getDienstreisenLabelMap, getPendelwegeLabelMap } from "../../utils";
 import constants from "../../const.js";
@@ -423,6 +429,7 @@ export default {
     LoadingAnimation,
     LinkSharingComponent,
     DataGapVisualization,
+    Tooltip
   },
 
   props: {

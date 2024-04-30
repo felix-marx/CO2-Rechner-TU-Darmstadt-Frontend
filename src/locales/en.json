@@ -466,9 +466,11 @@
       "TageBuero_label": "Days in the office",
       
       "Dienstreise_0": "What business trips have you ",
-      "Dienstreise_1": " taken?",
-      "Dienstreise_tooltip": "You can use Google Maps etc. to calculate the distance. Domestic flights are flights within Germany (e.g. Frankfurt - Berlin). Short distance flights are flights within the EU (e.g. London - Madrid). Long distance flights are flights over 3700 km that begin or end in Germany (e.g. Frankfurt - Bangkok). International flights are long distance flights that neither start nor end in Germany (e.g. Madrid - Bangkok). If you no longer have any information about your flight class, you can simply select 'No information'. If you have flown the same route in the same class several times, you can also enter the total. The one-way distance is the distance between your point of departure and your destination, measured in one direction.",
-      
+      "Dienstreise_1": " taken?",     
+      "Dienstreise_tooltip_1": "You can use Google Maps etc. to calculate the distance.",
+      "Dienstreise_tooltip_2": "Domestic flights are flights within Germany (e.g. Frankfurt - Berlin). Short distance flights are flights within the EU (e.g. London - Madrid). Long distance flights are flights over 3700 km that begin or end in Germany (e.g. Frankfurt - Bangkok). International flights are long distance flights that neither start nor end in Germany (e.g. Madrid - Bangkok).",
+      "Dienstreise_tooltip_3": "If you no longer have any information about your flight class, you can simply select 'No information'. If you have flown the same route in the same class several times, you can also enter the total. The one-way distance is the distance between your point of departure and your destination, measured in one direction.",
+
       "IT_Geraete": "Which IT devices do you use at work?",
       "IT_Geraete_tooltip": "Jointly used IT devices such as multifunctional printers are not included here.",
       "IT_Geraete_Notebooks": "Notebooks",
