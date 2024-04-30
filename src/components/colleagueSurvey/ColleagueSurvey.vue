@@ -61,6 +61,17 @@
                 :label="$t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNV')"
               />
             </v-col>
+            <v-col
+              v-if="medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_0')"
+            >
+              <v-select
+                v-model="medium[5]"
+                :items="pkwListe"
+                :disabled="submittedDataSuccessfully"
+                :label="$t('colleagueSurvey.colleagueSurvey.Pkw_Motortyp')"
+              >
+              </v-select>
+            </v-col>
             <v-col :cols="medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_5') ? 3 : 4">
               <v-text-field
                 v-model="medium[4]"
@@ -95,7 +106,7 @@
           <!-- Weitere Reihe für PKWs mit Fahrgemeinschaft -->
           <h4
             v-show="
-              medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_0') || medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_1')
+              medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_0')
             "
             class="my-3"
           >
@@ -105,7 +116,7 @@
             <v-col :cols="1">
               <v-checkbox
                 v-show="
-                  medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_0') || medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_1')
+                  medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_0')
                 "
                 v-model="medium[2]"
                 :disabled="submittedDataSuccessfully"
@@ -117,8 +128,7 @@
               <v-text-field
                 v-show="
                   medium[2] &&
-                    (medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_0') ||
-                      medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_1'))
+                    (medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_0'))
                 "
                 v-model="medium[3]"
                 :rules="mitfahrerRules"
@@ -165,11 +175,11 @@
         <br>
 
         <div
-          v-for="(reise, index) in dienstreise"
-          :key="'dienstreise-' + index"
+          v-for="(reise, index) in dienstreisen"
+          :key="'dienstreisen-' + index"
         >
           <v-row>
-            <v-col :cols="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3') ? 4 : 5">
+            <v-col :cols="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3') ? 2 : 5">
               <v-select
                 v-model="reise[0]"
                 :disabled="submittedDataSuccessfully"
@@ -177,26 +187,52 @@
                 :items="dienstreiseMediumListe"
                 class="pr-5"
               />
+
             </v-col>
-            <!--<v-select v-model="flugklasse" label="Klasse" v-show="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3')" :items="flugklasseListe"></v-select>-->
             <v-col
-              v-if="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3')"
-              :cols="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3') ? 3 : 0"
+              v-if="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_0')"
+              :cols="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_0') ? 3 : 0"
             >
+              <!-- PKW Diesel / Benzin auswahl -->
               <v-select
                 v-model="reise[1]"
-                :v-show="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3')"
-                :label="$t('colleagueSurvey.colleagueSurvey.Flugstrecke')"
-                :items="flugstreckeListe"
+                :v-show="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_0')"
+                :label="$t('colleagueSurvey.colleagueSurvey.Pkw_Motortyp')"
+                :items="pkwListe"
                 :disabled="submittedDataSuccessfully"
                 class="pr-5"
               />
+            </v-col>
+            <!-- Flugstreckentyp auswahl-->
+            <v-col 
+              v-if="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3')"
+              :cols="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3') ? 2 : 0"
+            >
+              <v-select 
+                v-model="reise[1]" 
+                :label="$t('colleagueSurvey.colleagueSurvey.flugstreckentyp')" 
+                v-show="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3')" 
+                :items="flugstreckeListe"
+                class="pr-5"
+              />
+            </v-col>
+            <!-- Flugklasse auswahl-->
+            <v-col
+              v-if="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3')"
+              :cols="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3') ? 2 : 0"
+            >
+              <v-select
+                v-model="reise[3]"
+                :disabled="submittedDataSuccessfully"
+                :label="$t('colleagueSurvey.colleagueSurvey.Flugklasse')"
+                :items="mapDienstreiseFlugklasse(reise[1])"
+                class="pr-5"/>
             </v-col>
             <v-col :cols="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3') ? 3 : 5">
               <v-text-field
                 v-model="reise[2]"
                 :rules="streckeRules"
-                :disabled="reise[0] === null || (reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3') && reise[1] === null) || submittedDataSuccessfully"
+                :disabled="reise[0] === null || submittedDataSuccessfully"
                 :min="0"
                 :label="$t('colleagueSurvey.colleagueSurvey.EinfacheDistanz')"
                 suffix="km"
@@ -458,7 +494,7 @@ export default {  components: {
     //Arbeitstage
     arbeitstageBuero: null,
 
-    //Pendelweg
+    //Pendelweg ------------------------------------------
     fahrtmediumListe: [],
     fahrtmediumÖPNVListe: [],
     /*
@@ -468,19 +504,23 @@ export default {  components: {
      * [2]: true if Fahrgemeinschaft and [0] is a PKW typ
      * [3]: number of fahrgemeinschaftsmitglieder
      * [4]: einfacher Pendelweg
+     * [5]: Tankart if [0] is PKW(Diesel or Benzin)
      */
-    verkehrsmittel: [[null, null, false, null, null]],
+    verkehrsmittel: [[null, null, false, null, null, null]],
 
-    //Dienstreisen
+    //Dienstreisen ---------------------------------------
     dienstreiseMediumListe: [],
     flugstreckeListe: [],
+    flugklassenListe: [],
+
     /*
-     * dienstreise Array format:
+     * dienstreisen Array format:
      * [0]: dienstreiseMedium selected from List
      * [1]: flugstreckentTyp either Lang- or Kurzstrecke
      * [2]: dienstreiseDistanz accumulates all distances over multiple Dienstreisen of the last 12 months
+     * [3]: flugklasse
      */
-    dienstreise: [[null, null, null]],
+    dienstreisen: [[null, null, null, null]],
 
     //IT Geräte
     /* Geraet mit Array Position format [intern Geraete ID, Anzahl, enabled]
@@ -530,27 +570,26 @@ export default {  components: {
         i18n.t('colleagueSurvey.colleagueSurvey.MitfahrerRules_1'),
     ],
   }),
-
   watch: {
     '$i18n.locale': function() {
       this.setListe();
 
       // reset values for Pendelwege and Dienstreisen
-      this.verkehrsmittel = [[null, null, false, null, null]]
-      this.dienstreise = [[null, null, null]]
+      this.verkehrsmittel = [[null, null, false, null, null, null]]
+      this.dienstreisen = [[null, null, null, null]]
     },
   },
-
   created() {
     this.fetchUmfrageYear(this.$route.params.umfrageID);  // request the year of the umfrage
     this.setListe();
   },
 
   methods: {
+    // This Method is needed bc of i18n. 
+    // Otherwise after changing the language the dropdown menus would not change.
     setListe: function(){
       this.fahrtmediumListe = [
         i18n.t("colleagueSurvey.colleagueSurvey.fahrmediumListe_0"),
-        i18n.t("colleagueSurvey.colleagueSurvey.fahrmediumListe_1"),
         i18n.t("colleagueSurvey.colleagueSurvey.fahrmediumListe_2"),
         i18n.t("colleagueSurvey.colleagueSurvey.fahrmediumListe_3"),
         i18n.t("colleagueSurvey.colleagueSurvey.fahrmediumListe_4"),
@@ -567,13 +606,27 @@ export default {  components: {
       ]
       this.dienstreiseMediumListe = [
         i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_0"),
-        i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_1"),
         i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_2"),
         i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3"),
       ],
       this.flugstreckeListe = [
-        i18n.t("colleagueSurvey.colleagueSurvey.flugstreckeListe_0"),
-        i18n.t("colleagueSurvey.colleagueSurvey.flugstreckeListe_1"),
+        i18n.t("colleagueSurvey.colleagueSurvey.flugstreckeListe_0"), //Langstrecke
+        i18n.t("colleagueSurvey.colleagueSurvey.flugstreckeListe_1"), //Kurzstrecke
+        i18n.t("colleagueSurvey.colleagueSurvey.flugstreckeListe_2"), //Inland
+        i18n.t("colleagueSurvey.colleagueSurvey.flugstreckeListe_3"), //International
+      ],
+      this.pkwListe = [
+        i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMedium_Diesel"),
+        i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMedium_Benzin"),
+        i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMedium_Hybrid"),
+        i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMedium_Elektro"),
+      ],
+      this.flugklassenListe = [
+        i18n.t("colleagueSurvey.colleagueSurvey.flugklasse_average"), //average
+        i18n.t("colleagueSurvey.colleagueSurvey.flugklasse_economy"), //economy
+        i18n.t("colleagueSurvey.colleagueSurvey.flugklasse_business"), //business
+        i18n.t("colleagueSurvey.colleagueSurvey.flugklasse_premiumeconomy"), //premium economy
+        i18n.t("colleagueSurvey.colleagueSurvey.flugklasse_first"), //first
       ]
     },
 
@@ -581,7 +634,7 @@ export default {  components: {
      * Adds a new Verkehrsmittel to select as the  Pendelmedium
      */
     newVerkehrsmittel: function () {
-      this.verkehrsmittel.push([null, null, false, null, null]);
+      this.verkehrsmittel.push([null, null, false, null, null, null]);
     },
 
     /**
@@ -602,25 +655,34 @@ export default {  components: {
     /**
      * Returns an Integer ID that resolves the Pendelmedium Name to its specified internal ID
      */
-    mapPendelverkehrsmittel: function (verkehrmittel1, verkehrsmittel2) {
+    mapPendelverkehrsmittel: function (verkehrsmitteltyp, oepnvspezifikation, tankspezifikation) {
+      console.log(verkehrsmitteltyp, oepnvspezifikation, tankspezifikation)
+      //Backend expects the following IDs for the following Verkehrsmittel
       const verkehrsmittelMap = new Map([
-        [i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_2'), 1],
-        [i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_3'), 2],
-        [i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_4'), 3],
-        [i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_0'), 4],
-        [i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_1'), 5],
-        [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_1'), 6],
-        [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_0'), 7],
-        [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_2'), 8],
-        [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_3'), 9],
-        [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_4'), 10],
-        [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_5'), 11],
-        [i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_6'), 12]
+        [i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_2'), 1], //Fahrrad
+        [i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_3'), 2], //E-Bike
+        [i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_4'), 3], //Motorisiertes Zweirad"
+        [i18n.t('colleagueSurvey.colleagueSurvey.Pkw_diesel'), 4], // Diesel
+        [i18n.t('colleagueSurvey.colleagueSurvey.Pkw_benzin'), 5], // Benzin
+        [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_1'), 6], //Bus
+        [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_0'), 7], //Bahn
+        [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_2'), 8], //U-Bahn
+        [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_3'), 9], //Straßenbahn
+        [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_4'), 10], //Mix inkl. U-Bahn
+        [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_5'), 11], //Mix exkl. U-Bahn
+        [i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_6'), 12], // Zu Fuß 
+        [i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMedium_Hybrid'), 13], // Plug-in-Hybrid
+        [i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMedium_Elektro'), 14] // Elektro
       ]);
-      if (verkehrmittel1 !== i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_5')) {
-        return verkehrsmittelMap.get(verkehrmittel1);
+
+      //Check if Öffentliche is selected
+      if(verkehrsmitteltyp === i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_5')) {
+        return verkehrsmittelMap.get(oepnvspezifikation);
+        //Check if PKW is selected
+      } else if(verkehrsmitteltyp === i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_0')){
+        return verkehrsmittelMap.get(tankspezifikation);
       } else {
-        return verkehrsmittelMap.get(verkehrsmittel2);
+        return verkehrsmittelMap.get(verkehrsmitteltyp);
       }
     },
 
@@ -629,36 +691,121 @@ export default {  components: {
      */
     mapDienstreisemittel: function (verkehrsmittel) {
       const verkehrsmittelMap = new Map([
-        [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_0'), 1],
-        [i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_0'), 2],
-        [i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_1'), 2],
-        [i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3'), 3],
+        [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_0'), 1], //Bahn
+        [i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_0'), 2], //PKW
+        [i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3'), 3], //Flugzeug
       ]);
+      
+      //Tankart should be empty if not PKW
+      var tankart = "";
+      var flugklasse = "";
+      var flugstreckeart = "";
+
+      //Check if verkehrsmittel is PKW
+      if(parseInt(verkehrsmittelMap.get(verkehrsmittel[0])) == 2) {
+        //Check if Benzin or Diesel
+        if(verkehrsmittel[1] == i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMedium_Benzin')) {
+          tankart = "Benzin"
+        } else if(verkehrsmittel[1] == i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMedium_Diesel')) {
+          tankart = "Diesel"
+        } else if(verkehrsmittel[1] == i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMedium_Hybrid')) {
+          tankart = "Plug-In-Hybrid"
+        } else if(verkehrsmittel[1] == i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMedium_Elektro')) {
+          tankart = "Elektro"
+        } else { 
+          console.error("No valid Tankart selected")
+          tankart = "";
+        }
+      }
+
+      //Check if verkehrsmittel is Flugzeug, then set the Flugstreckeart
+      if(parseInt(verkehrsmittelMap.get(verkehrsmittel[0])) == 3) {
+        if(verkehrsmittel[1] == i18n.t('colleagueSurvey.colleagueSurvey.flugstreckeListe_0')) {
+          flugstreckeart = "Langstrecke"
+        } else if(verkehrsmittel[1] == i18n.t('colleagueSurvey.colleagueSurvey.flugstreckeListe_1')) {
+          flugstreckeart = "Kurzstrecke"
+        } else if(verkehrsmittel[1] == i18n.t('colleagueSurvey.colleagueSurvey.flugstreckeListe_2')) {
+          flugstreckeart = "Inland"
+        } else if(verkehrsmittel[1] == i18n.t('colleagueSurvey.colleagueSurvey.flugstreckeListe_3')) {
+          flugstreckeart = "International"
+        } else {
+          console.error("No valid Flugstreckeart selected")
+          flugstreckeart = "";
+        }
+      }
+
+      //Check if verkehrsmittel is Flugzeug, then set the Flugklasse
+      if(parseInt(verkehrsmittelMap.get(verkehrsmittel[0])) == 3) {
+        if(verkehrsmittel[3] == i18n.t('colleagueSurvey.colleagueSurvey.flugklasse_average')) {
+          flugklasse = "average"
+        } else if(verkehrsmittel[3] == i18n.t('colleagueSurvey.colleagueSurvey.flugklasse_economy')) {
+          flugklasse = "economy"
+        } else if(verkehrsmittel[3] == i18n.t('colleagueSurvey.colleagueSurvey.flugklasse_business')) {
+          flugklasse = "business"
+        } else if(verkehrsmittel[3] == i18n.t('colleagueSurvey.colleagueSurvey.flugklasse_premiumeconomy')) {
+          flugklasse = "premium economy"
+        } else if(verkehrsmittel[3] == i18n.t('colleagueSurvey.colleagueSurvey.flugklasse_first')) {
+          flugklasse = "first"
+        } else {
+          console.error("No valid Flugklasse selected")
+          flugklasse = "";
+        }
+      }
+
       return [
-        verkehrsmittelMap.get(verkehrsmittel),
-        parseInt(verkehrsmittelMap.get(verkehrsmittel)) == 2
-          ? verkehrsmittel == i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_1')
-            ? i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMedium_Benzin')
-            : i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMedium_Diesel')
-          : "",
+        verkehrsmittelMap.get(verkehrsmittel[0]),
+        tankart,
+        flugstreckeart,
+        flugklasse
       ];
     },
+
+    mapDienstreiseFlugklasse: function (flugstreckeart) {
+      if(flugstreckeart == i18n.t('colleagueSurvey.colleagueSurvey.flugstreckeListe_0')){ //Langstrecke
+        return [
+          i18n.t('colleagueSurvey.colleagueSurvey.flugklasse_average'),
+          i18n.t('colleagueSurvey.colleagueSurvey.flugklasse_economy'),
+          i18n.t('colleagueSurvey.colleagueSurvey.flugklasse_business'),
+          i18n.t('colleagueSurvey.colleagueSurvey.flugklasse_premiumeconomy'),
+          i18n.t('colleagueSurvey.colleagueSurvey.flugklasse_first')
+        ]
+      } else if (flugstreckeart == i18n.t('colleagueSurvey.colleagueSurvey.flugstreckeListe_1')) { //Kurzstrecke
+        return [
+          i18n.t('colleagueSurvey.colleagueSurvey.flugklasse_average'),
+          i18n.t('colleagueSurvey.colleagueSurvey.flugklasse_economy'),
+          i18n.t('colleagueSurvey.colleagueSurvey.flugklasse_business')
+        ]
+      } else if (flugstreckeart == i18n.t('colleagueSurvey.colleagueSurvey.flugstreckeListe_2')) { //Inland
+        return [
+          i18n.t('colleagueSurvey.colleagueSurvey.flugklasse_average'),
+        ]
+      } else if (flugstreckeart == i18n.t('colleagueSurvey.colleagueSurvey.flugstreckeListe_3')) { //International
+        return [
+          i18n.t('colleagueSurvey.colleagueSurvey.flugklasse_average'),
+          i18n.t('colleagueSurvey.colleagueSurvey.flugklasse_economy'),
+          i18n.t('colleagueSurvey.colleagueSurvey.flugklasse_business'),
+          i18n.t('colleagueSurvey.colleagueSurvey.flugklasse_premiumeconomy'),
+          i18n.t('colleagueSurvey.colleagueSurvey.flugklasse_first')
+        ]
+      }
+    },
+
 
     /**
      * Adds a new Dienstreise to select as another Dienstreisemedium
      */
     newDienstreise: function () {
-      this.dienstreise.push([null, null, null]);
+      this.dienstreisen.push([null, null, null, null]);
     },
 
     /**
      * Removes a Dienstreise at the given index, therby deleting it from the webpage
      */
     removeDienstreise: function (index) {
-      if (index >= 0 && this.dienstreise.length > index) {
-        this.dienstreise.splice(index, 1);
+      if (index >= 0 && this.dienstreisen.length > index) {
+        this.dienstreisen.splice(index, 1);
         //When the only element is removed add a new, thereby clearing the values of the fields on the webpage
-        if (this.dienstreise.length === 0) {
+        if (this.dienstreisen.length === 0) {
           this.newDienstreise();
         }
       } else {
@@ -684,7 +831,7 @@ export default {  components: {
           buildPendelweg.push({
             strecke: parseInt(pendel[4]),
             idPendelweg: parseInt(
-              this.mapPendelverkehrsmittel(pendel[0], pendel[1])
+              this.mapPendelverkehrsmittel(pendel[0], pendel[1], pendel[5])
             ),
             //return 1 for no fahrgemeinschaft. In Question we ask Anzahl Mitfahrer so pendel[3]+1 are all persons in the vehicle
             personenanzahl: parseInt(
@@ -731,19 +878,24 @@ export default {  components: {
     dienstreisenJSON: function () {
       //Build Dienstreisen Array
       var buildDienstreisen = [];
-      for (var reise of this.dienstreise) {
+      for (var dienstreise of this.dienstreisen) {
         // eslint-disable-next-line no-extra-boolean-cast
-        if(!!reise[0]){
-          var dienstreisetyp = this.mapDienstreisemittel(reise[0]);
+        if(!!dienstreise[0]){
+          console.log("-----");
+          console.log(dienstreise);
+          var dienstreisetyp = this.mapDienstreisemittel(dienstreise);
+
           buildDienstreisen.push({
             idDienstreise: parseInt(dienstreisetyp[0]),
-            //Catches spezial case were user selects Flugtyp but then changes to other Verkehrsmedium
-            streckentyp: parseInt(dienstreisetyp[0]) == 3 ? reise[1] : "",
-            strecke: parseInt(reise[2]),
-            tankart: dienstreisetyp[1],
+            //Catches spezial case where user selects Flugtyp but then changes to other Verkehrsmedium
+            streckentyp: parseInt(dienstreisetyp[0]) == 3 ? dienstreisetyp[2] : "",
+            strecke: parseInt(dienstreise[2]),
+            tankart: dienstreisetyp[1], //Empty if not PKW
+            klasse: dienstreisetyp[3], //Empty if not Flugzeug
           });
         }
       }
+      console.log(buildDienstreisen);
       return buildDienstreisen;
     },
 
@@ -772,7 +924,7 @@ export default {  components: {
         errors.push(i18n.t('colleagueSurvey.colleagueSurvey.EingabeValidierung_TageBuero'))
       }
       // Check for Dienstreise
-      for(const dienst of this.dienstreise) {
+      for(const dienst of this.dienstreisen) {
         if(dienst[0] && (!dienst[2] || dienst[2] < 0)) {
           var dienstmedium = (dienst[0] != i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3')) ? dienst[0] : dienst[1]
           if(dienstmedium == null) {
@@ -800,6 +952,15 @@ export default {  components: {
      */
     sendData: async function () {
       this.displayLoadingAnimation = true;
+
+      console.log(JSON.stringify({
+          pendelweg: this.pendelwegJSON(),
+          tageImBuero: parseInt(this.arbeitstageBuero == null || this.arbeitstageBuero == "" ? "0" : this.arbeitstageBuero),
+          dienstreisen: this.dienstreisenJSON(),
+          itGeraete: this.itGeraeteJSON(),
+          idUmfrage: this.$route.params.umfrageID,
+        }))
+
       await fetch(process.env.VUE_APP_BASEURL + "/mitarbeiterumfrage/insert", {
         method: "POST",
         headers: {
@@ -808,7 +969,7 @@ export default {  components: {
         body: JSON.stringify({
           pendelweg: this.pendelwegJSON(),
           tageImBuero: parseInt(this.arbeitstageBuero),
-          dienstreise: this.dienstreisenJSON(),
+          dienstreisen: this.dienstreisenJSON(),
           itGeraete: this.itGeraeteJSON(),
           idUmfrage: this.$route.params.umfrageID,
         }),
@@ -849,7 +1010,7 @@ export default {  components: {
         .catch((error) => {
           console.error("Error:", error);
           this.umfrageYear = "UnknownYear";
-        });
+        });   
     },
   },
 };

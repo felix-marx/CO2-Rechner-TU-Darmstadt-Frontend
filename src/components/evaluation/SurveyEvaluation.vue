@@ -92,9 +92,14 @@
         <v-row v-if="displayExtrapolationWarning">
           <v-col>
             <v-alert
-              type="warning"
+              :type="displayExtrapolationWarning ? 'warning' : 'info'"
+              class="mb-0"
+              text
             >
-              {{ $t('evaluation.surveyEvaluation.HochrechnungUngenau_0') }} {{ $n(responsedata.umfragenanteil, 'decimal') }}{{ $t('evaluation.surveyEvaluation.HochrechnungUngenau_1') }}
+              {{ $t('evaluation.surveyEvaluation.HochrechnungInfo') }}
+              <template v-if="displayExtrapolationWarning">
+                {{ $t('evaluation.surveyEvaluation.HochrechnungUngenau_0') }} {{ $n(responsedata.umfragenanteil, 'decimal') }}{{ $t('evaluation.surveyEvaluation.HochrechnungUngenau_1') }}
+              </template>
             </v-alert>
           </v-col>
         </v-row>
@@ -991,8 +996,9 @@ export default {
       let labelMap = getDienstreisenLabelMap()
 
       Object.keys(dienstreisenAufgeteilt).forEach(function(key) {
-        let labelParts = key.split("-")
-        let label = labelMap.get(labelParts[0]) + (labelParts[1] ? " - " + labelMap.get(labelParts[1]) : "")
+        console.log(key)
+        let labelParts = key.split("_")
+        let label = labelMap.get(labelParts[0]) + (labelParts[1] ? " - " + labelMap.get(labelParts[1]) : "") + (labelParts[2] ? " - " + labelMap.get(labelParts[2]) : "")
         data.push({label: label, value: dienstreisenAufgeteilt[key], color: 'rgb(54,162,235)'})
       })
 
