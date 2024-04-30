@@ -41,12 +41,18 @@
             </v-progress-linear>
           </v-col>
         </v-row>
-        <v-row v-if="displayExtrapolationWarning">
+
+        <v-row>
           <v-col>
             <v-alert
-              type="warning"
+              :type="displayExtrapolationWarning ? 'warning' : 'info'"
+              class="mb-0"
+              text
             >
-              {{ $t('evaluation.surveyEvaluation.HochrechnungUngenau_0') }} {{ $n(responsedata.umfragenanteil, 'decimal') }}{{ $t('evaluation.surveyEvaluation.HochrechnungUngenau_1') }}
+              {{ $t('evaluation.surveyEvaluation.HochrechnungInfo') }}
+              <template v-if="displayExtrapolationWarning">
+                {{ $t('evaluation.surveyEvaluation.HochrechnungUngenau_0') }} {{ $n(responsedata.umfragenanteil, 'decimal') }}{{ $t('evaluation.surveyEvaluation.HochrechnungUngenau_1') }}
+              </template>
             </v-alert>
           </v-col>
         </v-row>
