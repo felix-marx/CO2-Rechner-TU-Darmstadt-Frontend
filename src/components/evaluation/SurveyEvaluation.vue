@@ -646,7 +646,10 @@ export default {
           "emission": "this.responsedata.emissionenITGeraete",
           "ref": "bar-itgeraete",
         },
-      ]
+      ],
+
+      // character to split up Dienstreisen names
+      splitChar: "_",
     }
   },
 
@@ -994,10 +997,10 @@ export default {
 
       let dienstreisenAufgeteilt = this.responsedata.emissionenDienstreisenAufgeteilt
       let labelMap = getDienstreisenLabelMap()
+      let splitChar = this.splitChar
 
       Object.keys(dienstreisenAufgeteilt).forEach(function(key) {
-        console.log(key)
-        let labelParts = key.split("_")
+        let labelParts = key.split(splitChar)
         let label = labelMap.get(labelParts[0]) + (labelParts[1] ? " - " + labelMap.get(labelParts[1]) : "") + (labelParts[2] ? " - " + labelMap.get(labelParts[2]) : "")
         data.push({label: label, value: dienstreisenAufgeteilt[key], color: 'rgb(54,162,235)'})
       })
@@ -1229,10 +1232,11 @@ export default {
       ])
       let dienstreisenAufgeteilt = this.responsedata.emissionenDienstreisenAufgeteilt
       let labelMap = getDienstreisenLabelMap()
+      let splitChar = this.splitChar
       let emissionen = this.responsedata.emissionenDienstreisen
       Object.keys(dienstreisenAufgeteilt).forEach(function(key) {
-        let labelParts = key.split("-")
-        let label = labelMap.get(labelParts[0]) + (labelParts[1] ? " - " + labelMap.get(labelParts[1]) : "")
+        let labelParts = key.split(splitChar)
+        let label = labelMap.get(labelParts[0]) + (labelParts[1] ? " - " + labelMap.get(labelParts[1]) : "") + (labelParts[2] ? " - " + labelMap.get(labelParts[2]) : "")
         data.push({
           "col1": label, 
           "col2": dienstreisenAufgeteilt[key],
