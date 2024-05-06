@@ -16,7 +16,7 @@
     
     <v-card
       elevation="2"
-      class="pa-7 mt-2 mx-auto"
+      :class="$vuetify.breakpoint.smAndUp ? 'pa-7 mt-2 mx-auto' : 'py-7 px-3 mt-2 mx-auto'"
       outlined
       :max-width="constants.v_card_max_width"
     >
@@ -40,114 +40,246 @@
           v-for="(medium, index) in verkehrsmittel"
           :key="'pendelweg-' + index"
         >
-          <v-row>
-            <!-- Allgemeines Verkehrsmedium -->
-            <v-col
-              :cols="medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_5') || medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_0') ? 4 : 8"
-              class="pb-0"
-            >
-              <v-select
-                v-model="medium[0]"
-                :items="fahrtmediumListe"
-                :disabled="submittedDataSuccessfully"
-                :label="$t('colleagueSurvey.colleagueSurvey.WieInsBuero_verkehrsmedium')"
-              />
-            </v-col>
-            <!-- ÖPNV -->
-            <v-col
-              v-if="medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_5')"
-              cols="4"
-              class="pb-0"
-            >
-              <v-select
-                v-model="medium[1]"
-                :disabled="submittedDataSuccessfully"
-                :items="fahrtmediumÖPNVListe"
-                :label="$t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNV')"
-              />
-            </v-col>
-            <!-- PKW-Typ -->
-            <v-col
-              v-if="medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_0')"
-              cols="4"
-              class="pb-0"
-            >
-              <v-select
-                v-model="medium[5]"
-                :items="pkwListe"
-                :disabled="submittedDataSuccessfully"
-                :label="$t('colleagueSurvey.colleagueSurvey.Pkw_Motortyp')"
-              />
-            </v-col>
-            <!-- Distanz -->
-            <v-col
-              cols="3"
-              class="pb-0"
-            >
-              <v-text-field
-                v-model="medium[4]"
-                :rules="streckeRules"
-                :disabled="medium[0] === null || (medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_5') && medium[1] === null) || (medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_0') && medium[5] === null) || submittedDataSuccessfully"
-                :min="0"
-                :label="$t('colleagueSurvey.colleagueSurvey.WieInsBuero_pendelweg')"
-                suffix="km"
-              />
-            </v-col>
-            <!-- Delete Button -->
-            <v-col
-              class="mt-3 pb-0 text-center"
-              cols="1"
-            >
-              <v-btn
-                class="delete_text--text mx-auto"
-                color="delete"
-                fab
-                small
-                :disabled="submittedDataSuccessfully"
-                @click="removeVerkehrsmittel(index)"
+          <!-- Desktop -->
+          <template v-if="$vuetify.breakpoint.smAndUp">
+            <v-row>
+              <!-- Allgemeines Verkehrsmedium -->
+              <v-col
+                :cols="medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_5') || medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_0') ? 4 : 8"
+                class="pb-0"
               >
-                <v-icon dark>
-                  mdi-delete-outline
-                </v-icon>
-              </v-btn>
-            </v-col>
-          </v-row>
-          <!-- Weitere Reihe für PKWs mit Fahrgemeinschaft -->
-          <v-row
-            v-if="medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_0')"
-          >
-            <v-col
-              cols="4"
-              class="pt-0"
+                <v-select
+                  v-model="medium[0]"
+                  :items="fahrtmediumListe"
+                  :disabled="submittedDataSuccessfully"
+                  :label="$t('colleagueSurvey.colleagueSurvey.WieInsBuero_verkehrsmedium')"
+                />
+              </v-col>
+              <!-- ÖPNV -->
+              <v-col
+                v-if="medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_5')"
+                cols="4"
+                class="pb-0"
+              >
+                <v-select
+                  v-model="medium[1]"
+                  :disabled="submittedDataSuccessfully"
+                  :items="fahrtmediumÖPNVListe"
+                  :label="$t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNV')"
+                />
+              </v-col>
+              <!-- PKW-Typ -->
+              <v-col
+                v-if="medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_0')"
+                cols="4"
+                class="pb-0"
+              >
+                <v-select
+                  v-model="medium[5]"
+                  :items="pkwListe"
+                  :disabled="submittedDataSuccessfully"
+                  :label="$t('colleagueSurvey.colleagueSurvey.Pkw_Motortyp')"
+                />
+              </v-col>
+              <!-- Distanz -->
+              <v-col
+                cols="3"
+                class="pb-0"
+              >
+                <v-text-field
+                  v-model="medium[4]"
+                  :rules="streckeRules"
+                  :disabled="medium[0] === null || (medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_5') && medium[1] === null) || (medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_0') && medium[5] === null) || submittedDataSuccessfully"
+                  :min="0"
+                  :label="$t('colleagueSurvey.colleagueSurvey.WieInsBuero_pendelweg')"
+                  suffix="km"
+                />
+              </v-col>
+              <!-- Delete Button -->
+              <v-col
+                class="mt-3 pb-0 text-center"
+                cols="1"
+              >
+                <v-btn
+                  class="delete_text--text mx-auto"
+                  color="delete"
+                  fab
+                  small
+                  :disabled="submittedDataSuccessfully"
+                  @click="removeVerkehrsmittel(index)"
+                >
+                  <v-icon dark>
+                    mdi-delete-outline
+                  </v-icon>
+                </v-btn>
+              </v-col>
+            </v-row>
+            <!-- Weitere Reihe für PKWs mit Fahrgemeinschaft -->
+            <v-row
+              v-if="medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_0')"
             >
-              <h4 class="pt-5">
-                {{ $t('colleagueSurvey.colleagueSurvey.WieInsBuero_fahrgemeinschaft') }}
-              </h4>
-            </v-col>
-            <v-col
-              cols="1"
-              class="pt-0"
-            >
-              <v-checkbox
-                v-model="medium[2]"
-                :disabled="submittedDataSuccessfully"
-                :label="$t('common.Ja')"
-                class="pr-4"
-              />
-            </v-col>
-            <v-col
-              cols="6"
-              class="pt-0"
-            >
-              <v-text-field
-                v-model="medium[3]"
-                :rules="mitfahrerRules"
-                :disabled="!medium[2] || submittedDataSuccessfully"
-                :min="0"
-                :label="$t('colleagueSurvey.colleagueSurvey.WieInsBuero_anzahlMitfahrende')"
-              />
-            </v-col>
-          </v-row>
+              <v-col
+                cols="4"
+                class="pt-0"
+              >
+                <h4 class="pt-5">
+                  {{ $t('colleagueSurvey.colleagueSurvey.WieInsBuero_fahrgemeinschaft') }}
+                </h4>
+              </v-col>
+              <v-col
+                cols="1"
+                class="pt-0"
+              >
+                <v-checkbox
+                  v-model="medium[2]"
+                  :disabled="submittedDataSuccessfully"
+                  :label="$t('common.Ja')"
+                  class="pr-4"
+                />
+              </v-col>
+              <v-col
+                cols="6"
+                class="pt-0"
+              >
+                <v-text-field
+                  v-model="medium[3]"
+                  :rules="mitfahrerRules"
+                  :disabled="!medium[2] || submittedDataSuccessfully"
+                  :min="0"
+                  :label="$t('colleagueSurvey.colleagueSurvey.WieInsBuero_anzahlMitfahrende')"
+                />
+              </v-col>
+            </v-row>
+          </template>
+          <!-- Mobile -->
+          <template v-else>
+            <v-card class="mb-2">
+              <v-container class="py-4">
+                <v-row
+                  align="center"
+                >
+                  <v-col
+                    cols="10"
+                    class="pa-0"
+                  >
+                    <v-container>
+                      <v-row>
+                        <!-- Allgemeines Verkehrsmedium -->
+                        <v-col
+                          :cols="medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_5') || medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_0') ? 6 : 12"
+                          class="py-0"
+                        >
+                          <v-select
+                            v-model="medium[0]"
+                            :items="fahrtmediumListe"
+                            :disabled="submittedDataSuccessfully"
+                            :label="$t('colleagueSurvey.colleagueSurvey.WieInsBuero_verkehrsmedium')"
+                          />
+                        </v-col>
+                        <!-- ÖPNV -->
+                        <v-col
+                          v-if="medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_5')"
+                          cols="6"
+                          class="py-0"
+                        >
+                          <v-select
+                            v-model="medium[1]"
+                            :disabled="submittedDataSuccessfully"
+                            :items="fahrtmediumÖPNVListe"
+                            :label="$t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNV')"
+                          />
+                        </v-col>
+                        <!-- PKW-Typ -->
+                        <v-col
+                          v-if="medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_0')"
+                          cols="6"
+                          class="py-0"
+                        >
+                          <v-select
+                            v-model="medium[5]"
+                            :items="pkwListe"
+                            :disabled="submittedDataSuccessfully"
+                            :label="$t('colleagueSurvey.colleagueSurvey.Pkw_Motortyp')"
+                          />
+                        </v-col>
+                      </v-row>
+                      <v-row>  
+                        <!-- Distanz -->
+                        <v-col
+                          cols="12"
+                          class="pt-0 pb-1"
+                        >
+                          <v-text-field
+                            v-model="medium[4]"
+                            :rules="streckeRules"
+                            :disabled="medium[0] === null || (medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_5') && medium[1] === null) || (medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_0') && medium[5] === null) || submittedDataSuccessfully"
+                            :min="0"
+                            :label="$t('colleagueSurvey.colleagueSurvey.WieInsBuero_pendelweg')"
+                            suffix="km"
+                          />
+                        </v-col>
+                      </v-row>
+                    </v-container>
+                  </v-col>
+                  <v-col
+                    class="pa-0 text-center"
+                    cols="2"
+                  >
+                    <v-btn
+                      class="delete_text--text mx-auto"
+                      color="delete"
+                      fab
+                      small
+                      :disabled="submittedDataSuccessfully"
+                      @click="removeVerkehrsmittel(index)"
+                    >
+                      <v-icon dark>
+                        mdi-delete-outline
+                      </v-icon>
+                    </v-btn>
+                  </v-col>
+                </v-row>
+
+                <!-- Weitere Reihe für PKWs mit Fahrgemeinschaft -->
+                <template v-if="medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_0')">
+                  <v-row>
+                    <v-col
+                      class="pt-0"
+                    >
+                      <h4>
+                        {{ $t('colleagueSurvey.colleagueSurvey.WieInsBuero_fahrgemeinschaft') }}
+                      </h4>
+                    </v-col>
+                  </v-row>
+                  <v-row>  
+                    <v-col
+                      cols="2"
+                      class="pt-0"
+                    >
+                      <v-checkbox
+                        v-model="medium[2]"
+                        :disabled="submittedDataSuccessfully"
+                        :label="$t('common.Ja')"
+                        class="pr-4"
+                      />
+                    </v-col>
+                    <v-col
+                      cols="810"
+                      class="pt-0"
+                    >
+                      <v-text-field
+                        v-model="medium[3]"
+                        :rules="mitfahrerRules"
+                        :disabled="!medium[2] || submittedDataSuccessfully"
+                        :min="0"
+                        :label="$t('colleagueSurvey.colleagueSurvey.WieInsBuero_anzahlMitfahrende')"
+                      />
+                    </v-col>
+                  </v-row>
+                </template>
+              </v-container>
+            </v-card>
+          </template>
         </div>
         <!-- Add Button -->
         <v-row class="mt-4">
@@ -201,93 +333,197 @@
           v-for="(reise, index) in dienstreisen"
           :key="'dienstreisen-' + index"
         >
-          <v-row>
-            <!-- Allgemeines Verkehrsmedium -->
-            <v-col 
-              :cols="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_0') ? 3 : (reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3') ? 3 : 8)"
-              class=""
-            >
-              <v-select
-                v-model="reise[0]"
-                :disabled="submittedDataSuccessfully"
-                :label="$t('colleagueSurvey.colleagueSurvey.WieInsBuero_verkehrsmedium')"
-                :items="dienstreiseMediumListe"
-                class="pr-5"
-              />
-            </v-col>
-            <!-- PKW-Typ -->
-            <v-col
-              v-if="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_0')"
-              cols="5"
-            >
-              <v-select
-                v-model="reise[1]"
-                :v-show="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_0')"
-                :label="$t('colleagueSurvey.colleagueSurvey.Pkw_Motortyp')"
-                :items="pkwListe"
-                :disabled="submittedDataSuccessfully"
-                class="pr-5"
-              />
-            </v-col>
-            <!-- Flugstreckentyp -->
-            <v-col 
-              v-if="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3')"
-              cols="3"
-            >
-              <v-select 
-                v-show="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3')" 
-                v-model="reise[1]" 
-                :label="$t('colleagueSurvey.colleagueSurvey.flugstreckentyp')" 
-                :items="flugstreckeListe"
-                class="pr-5"
-              />
-            </v-col>
-            <!-- Flugklasse -->
-            <v-col
-              v-if="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3')"
-              class="pl-0"
-              cols="2"
-            >
-              <v-select
-                v-model="reise[3]"
-                :disabled="submittedDataSuccessfully || (reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3') && !reise[1])"
-                :label="$t('colleagueSurvey.colleagueSurvey.Flugklasse')"
-                :items="mapDienstreiseFlugklasse(reise[1])"
-                class="pr-5"
-              />
-            </v-col>
-            <v-col 
-              cols="3"
-              class=""
-            >
-              <v-text-field
-                v-model="reise[2]"
-                :rules="streckeRules"
-                :disabled="reise[0] === null || submittedDataSuccessfully || (reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_0') && reise[1] === null) || (reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3') && reise[3] === null)"
-                :min="0"
-                :label="$t('colleagueSurvey.colleagueSurvey.EinfacheDistanz')"
-                suffix="km"
-              />
-            </v-col>
-            <!-- Delete Button -->
-            <v-col
-              class="mt-3 text-center"
-              cols="1"
-            >
-              <v-btn
-                class="delete_text--text mx-auto"
-                color="delete"
-                fab
-                small
-                :disabled="submittedDataSuccessfully"
-                @click="removeDienstreise(index)"
+          <!-- Desktop -->
+          <template v-if="$vuetify.breakpoint.smAndUp">
+            <v-row>
+              <!-- Allgemeines Verkehrsmedium -->
+              <v-col 
+                :cols="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_0') ? 3 : (reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3') ? 3 : 8)"
+                class=""
               >
-                <v-icon dark>
-                  mdi-delete-outline
-                </v-icon>
-              </v-btn>
-            </v-col>
-          </v-row>
+                <v-select
+                  v-model="reise[0]"
+                  :disabled="submittedDataSuccessfully"
+                  :label="$t('colleagueSurvey.colleagueSurvey.WieInsBuero_verkehrsmedium')"
+                  :items="dienstreiseMediumListe"
+                />
+              </v-col>
+              <!-- PKW-Typ -->
+              <v-col
+                v-if="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_0')"
+                cols="5"
+              >
+                <v-select
+                  v-model="reise[1]"
+                  :v-show="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_0')"
+                  :label="$t('colleagueSurvey.colleagueSurvey.Pkw_Motortyp')"
+                  :items="pkwListe"
+                  :disabled="submittedDataSuccessfully"
+                />
+              </v-col>
+              <!-- Flugstreckentyp -->
+              <v-col 
+                v-if="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3')"
+                cols="3"
+              >
+                <v-select 
+                  v-show="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3')" 
+                  v-model="reise[1]" 
+                  :label="$t('colleagueSurvey.colleagueSurvey.flugstreckentyp')" 
+                  :items="flugstreckeListe"
+                />
+              </v-col>
+              <!-- Flugklasse -->
+              <v-col
+                v-if="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3')"
+                class="pl-0"
+                cols="2"
+              >
+                <v-select
+                  v-model="reise[3]"
+                  :disabled="submittedDataSuccessfully || (reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3') && !reise[1])"
+                  :label="$t('colleagueSurvey.colleagueSurvey.Flugklasse')"
+                  :items="mapDienstreiseFlugklasse(reise[1])"
+                />
+              </v-col>
+              <v-col 
+                cols="3"
+                class=""
+              >
+                <v-text-field
+                  v-model="reise[2]"
+                  :rules="streckeRules"
+                  :disabled="reise[0] === null || submittedDataSuccessfully || (reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_0') && reise[1] === null) || (reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3') && reise[3] === null)"
+                  :min="0"
+                  :label="$t('colleagueSurvey.colleagueSurvey.EinfacheDistanz')"
+                  suffix="km"
+                />
+              </v-col>
+              <!-- Delete Button -->
+              <v-col
+                class="mt-3 text-center"
+                cols="1"
+              >
+                <v-btn
+                  class="delete_text--text mx-auto"
+                  color="delete"
+                  fab
+                  small
+                  :disabled="submittedDataSuccessfully"
+                  @click="removeDienstreise(index)"
+                >
+                  <v-icon dark>
+                    mdi-delete-outline
+                  </v-icon>
+                </v-btn>
+              </v-col>
+            </v-row>
+          </template>
+
+          <!-- Mobile -->
+          <template v-else>
+            <v-card class="mb-4">
+              <v-container class="py-4">
+                <v-row
+                  align="center"
+                >
+                  <v-col
+                    cols="10"
+                    class="pa-0"
+                  >
+                    <v-container>
+                      <v-row>
+                        <!-- Allgemeines Verkehrsmedium -->
+                        <v-col 
+                          :cols="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_0') ? 4 : (reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3') ? 4 : 12)"
+                          class="py-0"
+                        >
+                          <v-select
+                            v-model="reise[0]"
+                            :disabled="submittedDataSuccessfully"
+                            :label="$t('colleagueSurvey.colleagueSurvey.WieInsBuero_verkehrsmedium')"
+                            :items="dienstreiseMediumListe"
+                          />
+                        </v-col>
+                        <!-- PKW-Typ -->
+                        <v-col
+                          v-if="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_0')"
+                          cols="8"
+                          class="py-0"
+                        >
+                          <v-select
+                            v-model="reise[1]"
+                            :v-show="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_0')"
+                            :label="$t('colleagueSurvey.colleagueSurvey.Pkw_Motortyp')"
+                            :items="pkwListe"
+                            :disabled="submittedDataSuccessfully"
+                          />
+                        </v-col>
+                        <!-- Flugstreckentyp -->
+                        <v-col 
+                          v-if="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3')"
+                          cols="4"
+                          class="py-0"
+                        >
+                          <v-select 
+                            v-show="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3')" 
+                            v-model="reise[1]" 
+                            :label="$t('colleagueSurvey.colleagueSurvey.flugstreckentyp')" 
+                            :items="flugstreckeListe"
+                          />
+                        </v-col>
+                        <!-- Flugklasse -->
+                        <v-col
+                          v-if="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3')"
+                          class="py-0"
+                          cols="4"
+                        >
+                          <v-select
+                            v-model="reise[3]"
+                            :disabled="submittedDataSuccessfully || (reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3') && !reise[1])"
+                            :label="$t('colleagueSurvey.colleagueSurvey.Flugklasse')"
+                            :items="mapDienstreiseFlugklasse(reise[1])"
+                          />
+                        </v-col>
+                      </v-row>
+                      <v-row>  
+                        <v-col 
+                          class="py-0"
+                        >
+                          <v-text-field
+                            v-model="reise[2]"
+                            :rules="streckeRules"
+                            :disabled="reise[0] === null || submittedDataSuccessfully || (reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_0') && reise[1] === null) || (reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3') && reise[3] === null)"
+                            :min="0"
+                            :label="$t('colleagueSurvey.colleagueSurvey.EinfacheDistanz')"
+                            suffix="km"
+                          />
+                        </v-col>
+                      </v-row>
+                    </v-container>
+                  </v-col>
+                  <!-- Delete Button -->
+                  <v-col
+                    class="pa-0 text-center"
+                    cols="2"
+                  >
+                    <v-btn
+                      class="delete_text--text mx-auto"
+                      color="delete"
+                      fab
+                      small
+                      :disabled="submittedDataSuccessfully"
+                      @click="removeDienstreise(index)"
+                    >
+                      <v-icon dark>
+                        mdi-delete-outline
+                      </v-icon>
+                    </v-btn>
+                  </v-col>
+                </v-row>
+              </v-container>
+            </v-card>          
+          </template>
         </div>
         <!-- Add Button -->
         <v-row>
