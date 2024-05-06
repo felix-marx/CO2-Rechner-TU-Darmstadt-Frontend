@@ -90,6 +90,7 @@ export function getDienstreisenLabelMap(){
     ["premium economy", i18n.t("colleagueSurvey.colleagueSurvey.flugklasse_premiumeconomy")],
     ["business", i18n.t("colleagueSurvey.colleagueSurvey.flugklasse_business")],
     ["first", i18n.t("colleagueSurvey.colleagueSurvey.flugklasse_first")],
+    ["Verbrenner", "Verbrenner"]
   ])
 }
 
@@ -111,7 +112,10 @@ export function getPendelwegeLabelMap(){
     ["11", i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_5')],
     ["12", i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_6')],
     ["13", i18n.t('colleagueSurvey.colleagueSurvey.Pkw_pendelweg_hybrid')],
-    ["14", i18n.t('colleagueSurvey.colleagueSurvey.Pkw_pendelweg_elektro')]
+    ["14", i18n.t('colleagueSurvey.colleagueSurvey.Pkw_pendelweg_elektro')],
+    ["ÖPNV", "ÖPNV"],
+    ["PKW - Verbrenner", "PKW - Verbrenner"],
+    ["PKW - Elektro", "PKW - Elektro"],
   ]);
 }
 
