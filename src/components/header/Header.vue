@@ -24,6 +24,7 @@
         <v-menu v-else>
           <template v-slot:activator="{ on }">
             <v-btn
+              class="mt-1"
               icon
               v-on="on"
             >
