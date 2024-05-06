@@ -16,7 +16,7 @@
     
     <v-card
       elevation="2"
-      :class="$vuetify.breakpoint.smAndUp ? 'pa-7 mt-2 mx-auto' : 'py-7 px-3 mt-2 mx-auto'"
+      :class="$vuetify.breakpoint.smAndUp ? 'pa-7 mt-2 mx-auto' : 'py-7 px-5 mt-2 mx-auto'"
       outlined
       :max-width="constants.v_card_max_width"
     >
@@ -435,7 +435,7 @@
                       <v-row>
                         <!-- Allgemeines Verkehrsmedium -->
                         <v-col 
-                          :cols="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_0') ? 4 : (reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3') ? 4 : 12)"
+                          :cols="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_0') ? 6 : (reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3') ? 12 : 12)"
                           class="py-0"
                         >
                           <v-select
@@ -448,7 +448,7 @@
                         <!-- PKW-Typ -->
                         <v-col
                           v-if="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_0')"
-                          cols="8"
+                          cols="6"
                           class="py-0"
                         >
                           <v-select
@@ -459,10 +459,12 @@
                             :disabled="submittedDataSuccessfully"
                           />
                         </v-col>
+                      </v-row>
+                      <v-row>  
                         <!-- Flugstreckentyp -->
                         <v-col 
                           v-if="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3')"
-                          cols="4"
+                          cols="6"
                           class="py-0"
                         >
                           <v-select 
@@ -476,7 +478,7 @@
                         <v-col
                           v-if="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3')"
                           class="py-0"
-                          cols="4"
+                          cols="6"
                         >
                           <v-select
                             v-model="reise[3]"
@@ -678,12 +680,9 @@
                         v-for="(problem, index) in errorsArray"
                         :key="index"
                       >
-                        <v-list-item-content>
-                          <v-list-item-title
-                            class="text-sm-body-2"
-                            v-text="problem"
-                          />
-                        </v-list-item-content>
+                        <label class="text-sm-body-2 mb-2">
+                          {{ problem }}
+                        </label>
                       </v-list-item>
                     </v-list>
                   </div>

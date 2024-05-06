@@ -503,16 +503,16 @@
       "MitfahrerRules_1": "Please enter a positive number of co-travellers.",
       
       "EingabeValidierung_Verkehrsmedium": "The means of public transport has not been entered.",
-      "EingabeValidierung_Pendelweg_0": "For the means of transport: XYZ, ",
-      "EingabeValidierung_Pendelweg_1": " the commuting distance entered is not valid.",
-      "EingabeValidierung_Fahrgemeinschaft_0": "For the means of transport: XYZ ",
+      "EingabeValidierung_Pendelweg_0": "For the means of transport ",
+      "EingabeValidierung_Pendelweg_1": ", the commuting distance entered is not valid.",
+      "EingabeValidierung_Fahrgemeinschaft_0": "For the means of transport ",
       "EingabeValidierung_Fahrgemeinschaft_1": "in a privately organised carpool, the number of co-travellers has not been entered.",
       "EingabeValidierung_TageBuero": "Please enter the days per week that you are at the office.",
       "EingabeValidierung_Dienstreise_0": "For a business trip by plane, the type of flight distance has not been entered.",
-      "EingabeValidierung_Dienstreise_1": "For the business trip by XYZ, ",
-      "EingabeValidierung_Dienstreise_2": " the distance entered is not valid.",
-      "EingabeValidierung_Gereate_0": "For the device: XYZ ",
-      "EingabeValidierung_Gereate_1": "  selected, the quantity has not been entered."
+      "EingabeValidierung_Dienstreise_1": "For the business trip by ",
+      "EingabeValidierung_Dienstreise_2": ", the distance entered is not valid.",
+      "EingabeValidierung_Gereate_0": "For the selected device ",
+      "EingabeValidierung_Gereate_1": ", the quantity has not been entered."
     },
     "surveyCompleted": {
       "UmfrageVollstaendig_0": "This survey is already completed.",
