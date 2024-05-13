@@ -23,8 +23,8 @@ const constants = {
     pendelweg_fahrrad: 1,
     pendelweg_e_fahrrad: 2,
     pendelweg_motorisiertes_zweirad: 3,
-    pendelweg_pkw_benzin: 4,
-    pendelweg_pkw_diesel: 5,
+    pendelweg_pkw_diesel: 4,
+    pendelweg_pkw_benzin: 5,
     pendelweg_bus: 6,
     pendelweg_bahn: 7,
     pendelweg_u_bahn: 8,
@@ -32,8 +32,8 @@ const constants = {
     pendelweg_mix_inkl_u_bahn: 10,
     pendelweg_mix_exkl_u_bahn: 11,
     pendelweg_fußgaenger: 12,
-    pendelweg_pkw_elektro: 13,
-    pendelweg_pkw_plug_in_hybrid: 14,
+    pendelweg_pkw_plug_in_hybrid: 13,
+    pendelweg_pkw_elektro: 14,
 
 
     // Dienstreisen-Label aus der Datenbank
