@@ -260,14 +260,10 @@
           <v-col class="d-flex justify-center">
             <h4>
               {{ $t('evaluation.surveyEvaluation.AufteilungNachEnergieart') }}
-              <v-tooltip bottom>
-                <template v-slot:activator="{ on }">
-                  <v-icon v-on="on">
-                    mdi-alert-circle-outline
-                  </v-icon>
-                </template>
-                {{ $t('evaluation.surveyEvaluation.AufteilungNachEnergieart_tooltip') }}
-              </v-tooltip>
+              <Tooltip
+                :tooltip-text="$t('evaluation.surveyEvaluation.AufteilungNachEnergieart_tooltip')"
+                tooltip-icon="mdi-alert-circle-outline"
+              />
             </h4>
           </v-col>
         </v-row>
@@ -302,14 +298,10 @@
           <v-col class="d-flex justify-center">
             <h4>
               {{ $t('evaluation.surveyEvaluation.DarstellungEnergieverbrauch') }}
-              <v-tooltip bottom>
-                <template v-slot:activator="{ on }">
-                  <v-icon v-on="on">
-                    mdi-alert-circle-outline
-                  </v-icon>
-                </template>
-                {{ $t('evaluation.surveyEvaluation.DarstellungEnergieverbrauch_tooltip') }}
-              </v-tooltip>
+              <Tooltip
+                :tooltip-text="$t('evaluation.surveyEvaluation.DarstellungEnergieverbrauch_tooltip')"
+                tooltip-icon="mdi-alert-circle-outline"
+              />
             </h4>
           </v-col>
         </v-row>
