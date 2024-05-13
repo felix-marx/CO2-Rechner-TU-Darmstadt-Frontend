@@ -481,22 +481,9 @@ export default {
     },
 
     //Rules for input validation
-    geraeteRules: [
-      (v) =>
-        !!v || i18n.t('userSurvey.Survey.geraeteRules_1'),
-      (v) =>
-        parseInt(v) != 0 ||
-        i18n.t('userSurvey.Survey.geraeteRules_1'),
-      (v) => parseInt(v) > 0 || i18n.t('userSurvey.Survey.geraeteRules_3'),
-    ],
-    nichtnegativRules: [
-      (v) => !!v || i18n.t('userSurvey.Survey.nichtnegativRules_0'),
-      (v) => parseInt(v) >= 0 || i18n.t('userSurvey.Survey.nichtnegativRules_1'),
-    ],
-    absolutpositivRules: [
-      (v) => !!v || i18n.t('userSurvey.Survey.absolutpositivRules_0'),
-      (v) => parseInt(v) > 0 || i18n.t('userSurvey.Survey.absolutpositivRules_1'),
-    ],
+    geraeteRules: [],
+    nichtnegativRules: [],
+    absolutpositivRules: [],
   }),
   computed: {
     /**
@@ -523,14 +510,44 @@ export default {
     }
   },
 
+  watch: {
+    '$i18n.locale': function() {
+      this.setRules();
+    },
+  },
+
   created() {
-      //this.fetchGebaeudeData();
+      this.setRules();
       this.fetchGebaeudeUndZaehlerData();
       this.umfrage.umfrageID = JSON.parse(JSON.stringify(this.umfrageidprop));
       this.fetchUmfrageData();
   },
 
   methods: {
+    /**
+     * This Method is needed bc of i18n. Otherwise after changing the language the rules would not change.
+     */
+    setRules: function(){
+      this.geraeteRules = [
+        (v) =>
+          !!v || i18n.t('userSurvey.Survey.geraeteRules_1'),
+        (v) =>
+          parseInt(v) != 0 ||
+          i18n.t('userSurvey.Survey.geraeteRules_1'),
+        (v) => parseInt(v) > 0 || i18n.t('userSurvey.Survey.geraeteRules_3'),
+      ]
+
+      this.nichtnegativRules = [
+        (v) => !!v || i18n.t('userSurvey.Survey.nichtnegativRules_0'),
+        (v) => parseInt(v) >= 0 || i18n.t('userSurvey.Survey.nichtnegativRules_1'),
+      ]
+
+      this.absolutpositivRules = [
+        (v) => !!v || i18n.t('userSurvey.Survey.absolutpositivRules_0'),
+        (v) => parseInt(v) > 0 || i18n.t('userSurvey.Survey.absolutpositivRules_1'),
+      ]
+    },
+
     flipBearbeiten: function() {
         this.blockInput = !this.blockInput
         this.displaySuccess = false

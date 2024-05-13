@@ -830,31 +830,12 @@ export default {
     errorDialog: false,
 
     //Rules for input validation
-    tageImBueroRules: [
-      (v) => !!v || i18n.t('colleagueSurvey.colleagueSurvey.Rules_MussAngegeben'),
-      (v) =>
-        (parseInt(v) < 8 && parseInt(v) >= 0) ||
-        i18n.t('colleagueSurvey.colleagueSurvey.TageBueroRules_0'),
-    ],
-    streckeRules: [
-      (v) => !!v || i18n.t('colleagueSurvey.colleagueSurvey.Rules_MussAngegeben'),
-      (v) => parseInt(v) > 0 || i18n.t('colleagueSurvey.colleagueSurvey.StreckeRules_0'),
-    ],
-    geraeteRules: [
-      (v) =>
-        !!v || i18n.t('colleagueSurvey.colleagueSurvey.GeraeteRules_0'),
-      (v) =>
-        parseInt(v) != 0 ||
-        i18n.t('colleagueSurvey.colleagueSurvey.GeraeteRules_0'),
-      (v) => parseInt(v) > 0 || i18n.t('colleagueSurvey.colleagueSurvey.GeraeteRules_1'),
-    ],
-    mitfahrerRules: [
-      (v) => !!v || i18n.t('colleagueSurvey.colleagueSurvey.MitfahrerRules_0'),
-      (v) =>
-        parseInt(v) > 0 ||
-        i18n.t('colleagueSurvey.colleagueSurvey.MitfahrerRules_1'),
-    ],
+    tageImBueroRules: [],
+    streckeRules: [],
+    geraeteRules: [],
+    mitfahrerRules: [],
   }),
+
   watch: {
     '$i18n.locale': function() {
       this.setListe();
@@ -864,14 +845,17 @@ export default {
       this.dienstreisen = [[null, null, null, null]]
     },
   },
+
   created() {
     this.fetchUmfrageYear(this.$route.params.umfrageID);  // request the year of the umfrage
     this.setListe();
+    this.setRules(); 
   },
 
   methods: {
-    // This Method is needed bc of i18n. 
-    // Otherwise after changing the language the dropdown menus would not change.
+    /**
+     * This Method is needed bc of i18n. Otherwise after changing the language the dropdown menus would not change.
+     */
     setListe: function(){
       this.fahrtmediumListe = [
         i18n.t("colleagueSurvey.colleagueSurvey.fahrmediumListe_0"),
@@ -941,6 +925,39 @@ export default {
       this.flugklassenListeKurzstrecke.sort(collator.compare);
       this.flugklassenListeInland.sort(collator.compare);
       this.flugklassenListeInternational.sort(collator.compare);
+    },
+
+    /**
+     * This Method is needed bc of i18n. Otherwise after changing the language the rules would not change.
+     */
+    setRules: function(){
+      this.tageImBueroRules = [
+        (v) => !!v || i18n.t('colleagueSurvey.colleagueSurvey.Rules_MussAngegeben'),
+        (v) =>
+          (parseInt(v) < 8 && parseInt(v) >= 0) ||
+          i18n.t('colleagueSurvey.colleagueSurvey.TageBueroRules_0'),
+      ]
+
+      this.streckeRules = [
+        (v) => !!v || i18n.t('colleagueSurvey.colleagueSurvey.Rules_MussAngegeben'),
+        (v) => parseInt(v) > 0 || i18n.t('colleagueSurvey.colleagueSurvey.StreckeRules_0'),
+      ]
+
+      this.geraeteRules = [
+        (v) =>
+          !!v || i18n.t('colleagueSurvey.colleagueSurvey.GeraeteRules_0'),
+        (v) =>
+          parseInt(v) != 0 ||
+          i18n.t('colleagueSurvey.colleagueSurvey.GeraeteRules_0'),
+        (v) => parseInt(v) > 0 || i18n.t('colleagueSurvey.colleagueSurvey.GeraeteRules_1'),
+      ]
+
+      this.mitfahrerRules = [
+        (v) => !!v || i18n.t('colleagueSurvey.colleagueSurvey.MitfahrerRules_0'),
+        (v) =>
+          parseInt(v) > 0 ||
+          i18n.t('colleagueSurvey.colleagueSurvey.MitfahrerRules_1'),
+      ]
     },
 
     /**

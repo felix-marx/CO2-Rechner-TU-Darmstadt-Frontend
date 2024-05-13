@@ -504,26 +504,14 @@ export default {
     
     //Rules for input validation
 
-    geraeteRules: [
-      (v) =>
-        !!v ||  i18n.t('userSurvey.Survey.geraeteRules_1'),
-      (v) =>
-        parseInt(v) != 0 ||
-          i18n.t('userSurvey.Survey.geraeteRules_1'),
-      (v) => parseInt(v) > 0 ||  i18n.t('userSurvey.Survey.geraeteRules_3'),
-    ],
-    nichtnegativRules: [
-      (v) => !!v || i18n.t('userSurvey.Survey.nichtnegativRules_0'),
-      (v) => parseInt(v) >= 0 || i18n.t('userSurvey.Survey.nichtnegativRules_1'),
-    ],
-    absolutpositivRules: [
-      (v) => !!v || i18n.t('userSurvey.Survey.absolutpositivRules_0'),
-      (v) => parseInt(v) > 0 || i18n.t('userSurvey.Survey.absolutpositivRules_1'),
-    ],
+    geraeteRules: [],
+    nichtnegativRules: [],
+    absolutpositivRules: [],
 
     // has Absenden Button been clicked
     displayLoadingAnimation: false,
   }),
+
   computed: {
     /**
      * Returns a list beginning with the current year until 2018.
@@ -556,13 +544,43 @@ export default {
     },
   },
 
+  watch: {
+    '$i18n.locale': function() {
+      this.setRules();
+    },
+  },
+
   created() {
+    this.setRules();
     // get all possible gebaeude IDs on creation of the component
-    //this.fetchGebaeudeData();
     this.fetchGebaeudeUndZaehlerData();
   },
 
   methods: {
+    /**
+     * This Method is needed bc of i18n. Otherwise after changing the language the rules would not change.
+     */
+    setRules: function(){
+      this.geraeteRules = [
+        (v) =>
+          !!v ||  i18n.t('userSurvey.Survey.geraeteRules_1'),
+        (v) =>
+          parseInt(v) != 0 ||
+            i18n.t('userSurvey.Survey.geraeteRules_1'),
+        (v) => parseInt(v) > 0 ||  i18n.t('userSurvey.Survey.geraeteRules_3'),
+      ],
+
+      this.nichtnegativRules = [
+        (v) => !!v || i18n.t('userSurvey.Survey.nichtnegativRules_0'),
+        (v) => parseInt(v) >= 0 || i18n.t('userSurvey.Survey.nichtnegativRules_1'),
+      ],
+
+      this.absolutpositivRules = [
+        (v) => !!v || i18n.t('userSurvey.Survey.absolutpositivRules_0'),
+        (v) => parseInt(v) > 0 || i18n.t('userSurvey.Survey.absolutpositivRules_1'),
+      ]
+    },
+
     /**
      * Returns an array containing a list with every required field missing
      */
