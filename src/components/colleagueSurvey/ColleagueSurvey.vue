@@ -721,6 +721,7 @@
           <v-col cols="10">
             <LoadingAnimation v-if="displayLoadingAnimation" />
             <v-alert
+              class="mb-0"
               :value="errorMessage !== null"
               dense
               text
@@ -729,6 +730,7 @@
               {{ errorMessage }}
             </v-alert>
             <v-alert
+              class="mb-0"
               :value="submittedDataSuccessfully"
               dense
               text
@@ -791,7 +793,10 @@ export default {
     //Dienstreisen ---------------------------------------
     dienstreiseMediumListe: [],
     flugstreckeListe: [],
-    flugklassenListe: [],
+    flugklassenListeLangstrecke: [],
+    flugklassenListeKurzstrecke: [],
+    flugklassenListeInland: [],
+    flugklassenListeInternational: [],
 
     /*
      * dienstreisen Array format:
@@ -888,26 +893,54 @@ export default {
         i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_0"),
         i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_2"),
         i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3"),
-      ],
+      ]
       this.flugstreckeListe = [
         i18n.t("colleagueSurvey.colleagueSurvey.flugstreckeListe_0"), //Langstrecke
         i18n.t("colleagueSurvey.colleagueSurvey.flugstreckeListe_1"), //Kurzstrecke
         i18n.t("colleagueSurvey.colleagueSurvey.flugstreckeListe_2"), //Inland
         i18n.t("colleagueSurvey.colleagueSurvey.flugstreckeListe_3"), //International
-      ],
+      ]
       this.pkwListe = [
         i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMedium_Diesel"),
         i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMedium_Benzin"),
         i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMedium_Hybrid"),
         i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMedium_Elektro"),
-      ],
-      this.flugklassenListe = [
-        i18n.t("colleagueSurvey.colleagueSurvey.flugklasse_average"), //average
-        i18n.t("colleagueSurvey.colleagueSurvey.flugklasse_economy"), //economy
-        i18n.t("colleagueSurvey.colleagueSurvey.flugklasse_business"), //business
-        i18n.t("colleagueSurvey.colleagueSurvey.flugklasse_premiumeconomy"), //premium economy
-        i18n.t("colleagueSurvey.colleagueSurvey.flugklasse_first"), //first
       ]
+      this.flugklassenListeLangstrecke = [
+        i18n.t("colleagueSurvey.colleagueSurvey.flugklasse_average"),
+        i18n.t("colleagueSurvey.colleagueSurvey.flugklasse_economy"),
+        i18n.t("colleagueSurvey.colleagueSurvey.flugklasse_business"),
+        i18n.t("colleagueSurvey.colleagueSurvey.flugklasse_premiumeconomy"),
+        i18n.t("colleagueSurvey.colleagueSurvey.flugklasse_first"),
+      ]
+      this.flugklassenListeKurzstrecke = [
+        i18n.t("colleagueSurvey.colleagueSurvey.flugklasse_average"),
+        i18n.t("colleagueSurvey.colleagueSurvey.flugklasse_economy"),
+        i18n.t("colleagueSurvey.colleagueSurvey.flugklasse_business"),
+      ]
+      this.flugklassenListeInland = [
+        i18n.t("colleagueSurvey.colleagueSurvey.flugklasse_average"),
+      ]
+      this.flugklassenListeInternational = [
+        i18n.t("colleagueSurvey.colleagueSurvey.flugklasse_average"),
+        i18n.t("colleagueSurvey.colleagueSurvey.flugklasse_economy"),
+        i18n.t("colleagueSurvey.colleagueSurvey.flugklasse_business"),
+        i18n.t("colleagueSurvey.colleagueSurvey.flugklasse_premiumeconomy"),
+        i18n.t("colleagueSurvey.colleagueSurvey.flugklasse_first"),
+      ]
+
+      // Sort the lists based on current language
+      let collator = new Intl.Collator(this.$i18n.locale, {sensitivity: 'base'});
+
+      this.fahrtmediumListe.sort(collator.compare);
+      this.fahrtmediumÖPNVListe.sort(collator.compare);
+      this.dienstreiseMediumListe.sort(collator.compare);
+      this.flugstreckeListe.sort(collator.compare);
+      this.pkwListe.sort(collator.compare);
+      this.flugklassenListeLangstrecke.sort(collator.compare);
+      this.flugklassenListeKurzstrecke.sort(collator.compare);
+      this.flugklassenListeInland.sort(collator.compare);
+      this.flugklassenListeInternational.sort(collator.compare);
     },
 
     /**
@@ -1039,36 +1072,20 @@ export default {
       ];
     },
 
+    /**
+     * Returns the Flugklassenliste based on the Flugstreckeart
+     */
     mapDienstreiseFlugklasse: function (flugstreckeart) {
       if(flugstreckeart == i18n.t('colleagueSurvey.colleagueSurvey.flugstreckeListe_0')){ //Langstrecke
-        return [
-          i18n.t('colleagueSurvey.colleagueSurvey.flugklasse_average'),
-          i18n.t('colleagueSurvey.colleagueSurvey.flugklasse_economy'),
-          i18n.t('colleagueSurvey.colleagueSurvey.flugklasse_business'),
-          i18n.t('colleagueSurvey.colleagueSurvey.flugklasse_premiumeconomy'),
-          i18n.t('colleagueSurvey.colleagueSurvey.flugklasse_first')
-        ]
+        return this.flugklassenListeLangstrecke;
       } else if (flugstreckeart == i18n.t('colleagueSurvey.colleagueSurvey.flugstreckeListe_1')) { //Kurzstrecke
-        return [
-          i18n.t('colleagueSurvey.colleagueSurvey.flugklasse_average'),
-          i18n.t('colleagueSurvey.colleagueSurvey.flugklasse_economy'),
-          i18n.t('colleagueSurvey.colleagueSurvey.flugklasse_business')
-        ]
+        return this.flugklassenListeKurzstrecke;
       } else if (flugstreckeart == i18n.t('colleagueSurvey.colleagueSurvey.flugstreckeListe_2')) { //Inland
-        return [
-          i18n.t('colleagueSurvey.colleagueSurvey.flugklasse_average'),
-        ]
+        return this.flugklassenListeInland;
       } else if (flugstreckeart == i18n.t('colleagueSurvey.colleagueSurvey.flugstreckeListe_3')) { //International
-        return [
-          i18n.t('colleagueSurvey.colleagueSurvey.flugklasse_average'),
-          i18n.t('colleagueSurvey.colleagueSurvey.flugklasse_economy'),
-          i18n.t('colleagueSurvey.colleagueSurvey.flugklasse_business'),
-          i18n.t('colleagueSurvey.colleagueSurvey.flugklasse_premiumeconomy'),
-          i18n.t('colleagueSurvey.colleagueSurvey.flugklasse_first')
-        ]
+        return this.flugklassenListeInternational;
       }
     },
-
 
     /**
      * Adds a new Dienstreise to select as another Dienstreisemedium
