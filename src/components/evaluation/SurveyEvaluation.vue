@@ -726,6 +726,9 @@ export default {
       }).then((response) => response.json())
         .then((body) => {
           if (body.status == "success") {
+            // console.log(body.data)
+            // console.log(constants)
+
             this.responseSuccessful = true
             this.responsedata = body.data
             this.responsedata.auswertungFreigegeben = (body.data.auswertungFreigegeben == 1) ? true : false
@@ -1015,26 +1018,26 @@ export default {
       let splitChar = this.splitChar
 
       Object.keys(dienstreisenAufgeteilt).forEach(function(key) {
-        console.log(key)
+        //console.log(key)
         let new_key = key
         let labelParts = key.split(splitChar)
 
-        if(labelParts[0] === "2" && ["Benzin", "Diesel"].includes(labelParts[1])){
+        if(labelParts[0] === constants.dienstreisen_pkw.toString() && [constants.dienstreisen_benzin, constants.dienstreisen_diesel].includes(labelParts[1])){
           new_key = "2_Verbrenner"
         }
-        else if(labelParts[0] === "2" && ["Plug-In-Hybrid", "Elektro"].includes(labelParts[1])){
+        else if(labelParts[0] === constants.dienstreisen_pkw.toString() && [constants.dienstreisen_plug_in_hybrid, constants.dienstreisen_elektro].includes(labelParts[1])){
           new_key = "2_Elektro"
         }
-        else if(labelParts[0] === "3" && labelParts[1] === "Kurzstrecke"){
+        else if(labelParts[0] === constants.dienstreisen_flugzeug.toString() && labelParts[1] === constants.dienstreisen_kurzstrecke){
           new_key = "3_Kurzstrecke"
         }
-        else if(labelParts[0] === "3" && labelParts[1] === "Langstrecke"){
+        else if(labelParts[0] === constants.dienstreisen_flugzeug.toString() && labelParts[1] === constants.dienstreisen_langstrecke){
           new_key = "3_Langstrecke"
         }
-        else if(labelParts[0] === "3" && labelParts[1] === "Inland"){
+        else if(labelParts[0] === constants.dienstreisen_flugzeug.toString() && labelParts[1] === constants.dienstreisen_inland){
           new_key = "3_Inland"
         }
-        else if(labelParts[0] === "3" && labelParts[1] === "International"){
+        else if(labelParts[0] === constants.dienstreisen_flugzeug.toString() && labelParts[1] === constants.dienstreisen_international){
           new_key = "3_International"
         }
 
@@ -1044,10 +1047,12 @@ export default {
       let labelMap = getDienstreisenLabelMap()
 
       Object.keys(aggregation).forEach(function(key) {
-        console.log(key)
+        //console.log(key)
         let labelParts = key.split(splitChar)
         let label = labelMap.get(labelParts[0]) + (labelParts[1] ? " - " + labelMap.get(labelParts[1]) : "")
-        data.push({label: label, value: aggregation[key], color: 'rgb(54,162,235)'})
+        let roundedValue = Math.round(aggregation[key] * 100) / 100
+
+        data.push({label: label, value: roundedValue, color: 'rgb(54,162,235)'})
       })
 
       // Object.keys(dienstreisenAufgeteilt).forEach(function(key) {
@@ -1082,28 +1087,35 @@ export default {
 
       let pendelwegeAufgeteilt = this.responsedata.emissionenPendelwegeAufgeteilt
       let aggregation = {}
+
+      let pkw_verbrenner = [constants.pendelweg_pkw_benzin.toString(), constants.pendelweg_pkw_diesel.toString()]
+      let pkw_elektro = [constants.pendelweg_pkw_elektro.toString(), constants.pendelweg_pkw_plug_in_hybrid.toString()]
+      let oepnv = [constants.pendelweg_bus.toString(), constants.pendelweg_bahn.toString(), constants.pendelweg_u_bahn.toString(), constants.pendelweg_straßenbahn.toString(), constants.pendelweg_mix_inkl_u_bahn.toString(), constants.pendelweg_mix_exkl_u_bahn.toString()]
+
       Object.keys(pendelwegeAufgeteilt).forEach(function(key) {
         let new_key = key
 
-        if(["6", "7", "8", "9", "10", "11"].includes(key)){
+        if(oepnv.includes(key)){
           new_key = "ÖPNV"
         }
-        else if(["4", "5"].includes(key)){
+        else if(pkw_verbrenner.includes(key)){
           new_key = "PKW - Verbrenner"
         }
-        else if(["13", "14"].includes(key)){
+        else if(pkw_elektro.includes(key)){
           new_key = "PKW - Elektro"
         }
 
         aggregation[new_key] = (aggregation[new_key] || 0) + pendelwegeAufgeteilt[key]
       })
 
-      console.log(aggregation)
+      // console.log(aggregation)
 
       
       let labelMap = getPendelwegeLabelMap()
       Object.keys(aggregation).forEach(function(key) {
-        data.push({label: labelMap.get(key), value: aggregation[key], color: 'rgb(255, 205, 86)'})
+        let roundedValue = Math.round(aggregation[key] * 100) / 100
+
+        data.push({label: labelMap.get(key), value: roundedValue, color: 'rgb(255, 205, 86)'})
       })
 
       // Object.keys(pendelwegeAufgeteilt).forEach(function(key) {

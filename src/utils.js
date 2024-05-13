@@ -1,5 +1,5 @@
 import i18n from "@/i18n";
-
+import constants from "@/const"; 
 
 /**
  * Translates a given gebaeudeID to its numerical equivalent.
@@ -40,15 +40,16 @@ export function translateGebaeudeIDToSymbolic(gebaeudeID) {
 }
 
 export function resolveITGeraetID(geraetID) {
-  let ITGeraetIDDict = {
-    7: i18n.t("userSurvey.Survey.ITGeraetIDDic_7"),
-    8: i18n.t("userSurvey.Survey.ITGeraetIDDic_8"),
-    9: i18n.t("userSurvey.Survey.ITGeraetIDDic_9"),
-    10: i18n.t("userSurvey.Survey.ITGeraetIDDic_10"),
-    4: i18n.t("userSurvey.Survey.ITGeraetIDDic_4"),
-    6: i18n.t("userSurvey.Survey.ITGeraetIDDic_6"),
-  };
-  return ITGeraetIDDict[geraetID]
+  let ITGeraetIDDict = new Map([
+    [constants.it_geraet_multifunktionsgeraet, i18n.t("userSurvey.Survey.ITGeraetIDDic_7")],
+    [constants.it_geraet_multifunktionsgeraet_toner, i18n.t("userSurvey.Survey.ITGeraetIDDic_8")],
+    [constants.it_geraet_drucker, i18n.t("userSurvey.Survey.ITGeraetIDDic_9")],
+    [constants.it_geraet_drucker_toner, i18n.t("userSurvey.Survey.ITGeraetIDDic_10")],
+    [constants.it_geraet_beamer, i18n.t("userSurvey.Survey.ITGeraetIDDic_4")],
+    [constants.it_geraet_server, i18n.t("userSurvey.Survey.ITGeraetIDDic_6")],
+  ]);
+
+  return ITGeraetIDDict.get(geraetID)
 }
 
 /**
@@ -56,16 +57,16 @@ export function resolveITGeraetID(geraetID) {
  */
 export function getITGeraeteLabelMap(){
   return new Map([
-    ["1", i18n.t('colleagueSurvey.colleagueSurvey.IT_Geraete_Notebooks')],
-    ["2", i18n.t('colleagueSurvey.colleagueSurvey.IT_Geraete_Desktops')],
-    ["3", i18n.t('colleagueSurvey.colleagueSurvey.IT_Geraete_Bildschirme')],
-    ["4", i18n.t('userSurvey.Survey.ITGeraetIDDic_4')],
-    ["5", i18n.t('colleagueSurvey.colleagueSurvey.IT_Geraete_Mobiltelefone')],
-    ["6", i18n.t('userSurvey.Survey.ITGeraetIDDic_6')],
-    ["7", i18n.t('userSurvey.Survey.ITGeraetIDDic_7')],
-    ["8", i18n.t('userSurvey.Survey.ITGeraetIDDic_8')],
-    ["9", i18n.t('userSurvey.Survey.ITGeraetIDDic_9')],
-    ["10", i18n.t('userSurvey.Survey.ITGeraetIDDic_10')],
+    [constants.it_geraet_notebook.toString(), i18n.t('colleagueSurvey.colleagueSurvey.IT_Geraete_Notebooks')],
+    [constants.it_geraet_desktop.toString(), i18n.t('colleagueSurvey.colleagueSurvey.IT_Geraete_Desktops')],
+    [constants.it_geraet_bildschirm.toString(), i18n.t('colleagueSurvey.colleagueSurvey.IT_Geraete_Bildschirme')],
+    [constants.it_geraet_beamer.toString(), i18n.t('userSurvey.Survey.ITGeraetIDDic_4')],
+    [constants.it_geraet_mobiltelefon.toString(), i18n.t('colleagueSurvey.colleagueSurvey.IT_Geraete_Mobiltelefone')],
+    [constants.it_geraet_server.toString(), i18n.t('userSurvey.Survey.ITGeraetIDDic_6')],
+    [constants.it_geraet_multifunktionsgeraet.toString(), i18n.t('userSurvey.Survey.ITGeraetIDDic_7')],
+    [constants.it_geraet_multifunktionsgeraet_toner.toString(), i18n.t('userSurvey.Survey.ITGeraetIDDic_8')],
+    [constants.it_geraet_drucker.toString(), i18n.t('userSurvey.Survey.ITGeraetIDDic_9')],
+    [constants.it_geraet_drucker_toner.toString(), i18n.t('userSurvey.Survey.ITGeraetIDDic_10')],
   ]) 
 }
 
@@ -74,22 +75,22 @@ export function getITGeraeteLabelMap(){
  */
 export function getDienstreisenLabelMap(){
   return new Map([
-    ["1", i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_2")],
-    ["2", i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMedium_Auto")],
-    ["3", i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3")],
-    ["Benzin", i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMedium_Benzin")],
-    ["Diesel", i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMedium_Diesel")],
-    ["Plug-In-Hybrid", i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMedium_Hybrid")],
-    ["Elektro", i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMedium_Elektro")],
-    ["Kurzstrecke", i18n.t("colleagueSurvey.colleagueSurvey.flugstreckeListe_1")],
-    ["Langstrecke", i18n.t("colleagueSurvey.colleagueSurvey.flugstreckeListe_0")],
-    ["Inland", i18n.t("colleagueSurvey.colleagueSurvey.flugstreckeListe_2")],
-    ["International", i18n.t("colleagueSurvey.colleagueSurvey.flugstreckeListe_3")],
-    ["average", i18n.t("colleagueSurvey.colleagueSurvey.flugklasse_average")],
-    ["economy", i18n.t("colleagueSurvey.colleagueSurvey.flugklasse_economy")],
-    ["premium economy", i18n.t("colleagueSurvey.colleagueSurvey.flugklasse_premiumeconomy")],
-    ["business", i18n.t("colleagueSurvey.colleagueSurvey.flugklasse_business")],
-    ["first", i18n.t("colleagueSurvey.colleagueSurvey.flugklasse_first")],
+    [constants.dienstreisen_bahn.toString(), i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_2")],
+    [constants.dienstreisen_pkw.toString(), i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMedium_Auto")],
+    [constants.dienstreisen_flugzeug.toString(), i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3")],
+    [constants.dienstreisen_benzin, i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMedium_Benzin")],
+    [constants.dienstreisen_diesel, i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMedium_Diesel")],
+    [constants.dienstreisen_plug_in_hybrid, i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMedium_Hybrid")],
+    [constants.dienstreisen_elektro, i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMedium_Elektro")],
+    [constants.dienstreisen_kurzstrecke, i18n.t("colleagueSurvey.colleagueSurvey.flugstreckeListe_1")],
+    [constants.dienstreisen_langstrecke, i18n.t("colleagueSurvey.colleagueSurvey.flugstreckeListe_0")],
+    [constants.dienstreisen_inland, i18n.t("colleagueSurvey.colleagueSurvey.flugstreckeListe_2")],
+    [constants.dienstreisen_international, i18n.t("colleagueSurvey.colleagueSurvey.flugstreckeListe_3")],
+    [constants.dienstreisen_average, i18n.t("colleagueSurvey.colleagueSurvey.flugklasse_average")],
+    [constants.dienstreisen_economy, i18n.t("colleagueSurvey.colleagueSurvey.flugklasse_economy")],
+    [constants.dienstreisen_premium_economy, i18n.t("colleagueSurvey.colleagueSurvey.flugklasse_premiumeconomy")],
+    [constants.dienstreisen_business, i18n.t("colleagueSurvey.colleagueSurvey.flugklasse_business")],
+    [constants.dienstreisen_first, i18n.t("colleagueSurvey.colleagueSurvey.flugklasse_first")],
     ["Verbrenner", "Verbrenner"]
   ])
 }
@@ -99,20 +100,20 @@ export function getDienstreisenLabelMap(){
  */
 export function getPendelwegeLabelMap(){
   return new Map([
-    ["1", i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_2')],
-    ["2", i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_3')],
-    ["3", i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_4')],
-    ["4", i18n.t('colleagueSurvey.colleagueSurvey.Pkw_pendelweg_benzin')],
-    ["5", i18n.t('colleagueSurvey.colleagueSurvey.Pkw_pendelweg_diesel')],
-    ["6", i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_1')],
-    ["7", i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_0')],
-    ["8", i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_2')],
-    ["9", i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_3')],
-    ["10", i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_4')],
-    ["11", i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_5')],
-    ["12", i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_6')],
-    ["13", i18n.t('colleagueSurvey.colleagueSurvey.Pkw_pendelweg_hybrid')],
-    ["14", i18n.t('colleagueSurvey.colleagueSurvey.Pkw_pendelweg_elektro')],
+    [constants.pendelweg_fahrrad.toString(), i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_2')],
+    [constants.pendelweg_e_fahrrad.toString(), i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_3')],
+    [constants.pendelweg_motorisiertes_zweirad.toString(), i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_4')],
+    [constants.pendelweg_pkw_benzin.toString(), i18n.t('colleagueSurvey.colleagueSurvey.Pkw_pendelweg_benzin')],
+    [constants.pendelweg_pkw_diesel.toString(), i18n.t('colleagueSurvey.colleagueSurvey.Pkw_pendelweg_diesel')],
+    [constants.pendelweg_bus.toString(), i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_1')],
+    [constants.pendelweg_bahn.toString(), i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_0')],
+    [constants.pendelweg_u_bahn.toString(), i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_2')],
+    [constants.pendelweg_straßenbahn.toString(), i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_3')],
+    [constants.pendelweg_mix_inkl_u_bahn.toString(), i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_4')],
+    [constants.pendelweg_mix_exkl_u_bahn.toString(), i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_5')],
+    [constants.pendelweg_fußgaenger.toString(), i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_6')],
+    [constants.pendelweg_pkw_elektro.toString(), i18n.t('colleagueSurvey.colleagueSurvey.Pkw_pendelweg_hybrid')],
+    [constants.pendelweg_pkw_plug_in_hybrid.toString(), i18n.t('colleagueSurvey.colleagueSurvey.Pkw_pendelweg_elektro')],
     ["ÖPNV", "ÖPNV"],
     ["PKW - Verbrenner", "PKW - Verbrenner"],
     ["PKW - Elektro", "PKW - Elektro"],
