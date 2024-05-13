@@ -654,9 +654,6 @@ export default {
           "ref": "bar-itgeraete",
         },
       ],
-
-      // character to split up Dienstreisen names
-      splitChar: "_",
     }
   },
 
@@ -726,9 +723,6 @@ export default {
       }).then((response) => response.json())
         .then((body) => {
           if (body.status == "success") {
-            // console.log(body.data)
-            // console.log(constants)
-
             this.responseSuccessful = true
             this.responsedata = body.data
             this.responsedata.auswertungFreigegeben = (body.data.auswertungFreigegeben == 1) ? true : false
@@ -1005,22 +999,12 @@ export default {
     setChartDienstreisen: function () {
       let data = []
 
-      // Aggregation von Dienstreisen
-      // - PKW - Verbrenner: Diesel, Benzin
-      // - PKW - Elektro: Elektro, Hybrid
-      // - Flugzeug - Inland: keine Angabe
-      // - Flugzeug - Kurzstrecke: keine Angabe, economy, business
-      // - Flugzeug - Langstrecke: keine Angabe, economy, business, premium economy, first
-      // - Flugzeug - International: keine Angabe, economy, business, premium economy, first
-
       let dienstreisenAufgeteilt = this.responsedata.emissionenDienstreisenAufgeteilt
       let aggregation = {}
-      let splitChar = this.splitChar
 
       Object.keys(dienstreisenAufgeteilt).forEach(function(key) {
-        //console.log(key)
         let new_key = key
-        let labelParts = key.split(splitChar)
+        let labelParts = key.split(constants.split_char)
 
         if(labelParts[0] === constants.dienstreisen_pkw.toString() && [constants.dienstreisen_benzin, constants.dienstreisen_diesel].includes(labelParts[1])){
           new_key = "2_Verbrenner"
@@ -1047,19 +1031,12 @@ export default {
       let labelMap = getDienstreisenLabelMap()
 
       Object.keys(aggregation).forEach(function(key) {
-        //console.log(key)
-        let labelParts = key.split(splitChar)
+        let labelParts = key.split(constants.split_char)
         let label = labelMap.get(labelParts[0]) + (labelParts[1] ? " - " + labelMap.get(labelParts[1]) : "")
         let roundedValue = Math.round(aggregation[key] * 100) / 100
 
         data.push({label: label, value: roundedValue, color: 'rgb(54,162,235)'})
       })
-
-      // Object.keys(dienstreisenAufgeteilt).forEach(function(key) {
-      //   let labelParts = key.split(splitChar)
-      //   let label = labelMap.get(labelParts[0]) + (labelParts[1] ? " - " + labelMap.get(labelParts[1]) : "") + (labelParts[2] ? " - " + labelMap.get(labelParts[2]) : "")
-      //   data.push({label: label, value: dienstreisenAufgeteilt[key], color: 'rgb(54,162,235)'})
-      // })
 
       data.sort((a, b) => b.value - a.value)
 
@@ -1080,14 +1057,8 @@ export default {
     setChartPendelwege: function () {
       let data = []
 
-      // Aggregation von Pendelwege basierend auf ID
-      // - ÖPNV: 6, 7, 8, 9, 10, 11
-      // - PKW - Verbrenner: 4, 5
-      // - PKW - Elektro: 13, 14
-
       let pendelwegeAufgeteilt = this.responsedata.emissionenPendelwegeAufgeteilt
       let aggregation = {}
-
       let pkw_verbrenner = [constants.pendelweg_pkw_benzin.toString(), constants.pendelweg_pkw_diesel.toString()]
       let pkw_elektro = [constants.pendelweg_pkw_elektro.toString(), constants.pendelweg_pkw_plug_in_hybrid.toString()]
       let oepnv = [constants.pendelweg_bus.toString(), constants.pendelweg_bahn.toString(), constants.pendelweg_u_bahn.toString(), constants.pendelweg_straßenbahn.toString(), constants.pendelweg_mix_inkl_u_bahn.toString(), constants.pendelweg_mix_exkl_u_bahn.toString()]
@@ -1096,31 +1067,24 @@ export default {
         let new_key = key
 
         if(oepnv.includes(key)){
-          new_key = "ÖPNV"
+          new_key = "Aggregation_OEPNV"
         }
         else if(pkw_verbrenner.includes(key)){
-          new_key = "PKW - Verbrenner"
+          new_key = "Aggregation_Verbrenner"
         }
         else if(pkw_elektro.includes(key)){
-          new_key = "PKW - Elektro"
+          new_key = "Aggregation_Elektro"
         }
 
         aggregation[new_key] = (aggregation[new_key] || 0) + pendelwegeAufgeteilt[key]
       })
 
-      // console.log(aggregation)
-
-      
       let labelMap = getPendelwegeLabelMap()
       Object.keys(aggregation).forEach(function(key) {
         let roundedValue = Math.round(aggregation[key] * 100) / 100
 
         data.push({label: labelMap.get(key), value: roundedValue, color: 'rgb(255, 205, 86)'})
       })
-
-      // Object.keys(pendelwegeAufgeteilt).forEach(function(key) {
-      //   data.push({label: labelMap.get(key), value: pendelwegeAufgeteilt[key], color: 'rgb(255, 205, 86)'})
-      // })
 
       data.sort((a, b) => b.value - a.value)
 
@@ -1324,10 +1288,9 @@ export default {
       ])
       let dienstreisenAufgeteilt = this.responsedata.emissionenDienstreisenAufgeteilt
       let labelMap = getDienstreisenLabelMap()
-      let splitChar = this.splitChar
       let emissionen = this.responsedata.emissionenDienstreisen
       Object.keys(dienstreisenAufgeteilt).forEach(function(key) {
-        let labelParts = key.split(splitChar)
+        let labelParts = key.split(constants.split_char)
         let label = labelMap.get(labelParts[0]) + (labelParts[1] ? " - " + labelMap.get(labelParts[1]) : "") + (labelParts[2] ? " - " + labelMap.get(labelParts[2]) : "")
         data.push({
           "col1": label, 

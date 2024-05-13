@@ -416,7 +416,7 @@
       "fahrmediumListe_2": "Fahrrad",
       "fahrmediumListe_3": "E-Fahrrad",
       "fahrmediumListe_4": "Motorisiertes Zweirad",
-      "fahrmediumListe_5": "Öffentliche",
+      "fahrmediumListe_5": "Öffentliche Verkehrsmittel",
       "fahrmediumListe_6": "Zu Fuß",
 
       "fahrtmediumOEPNV": "ÖPNV",
@@ -435,6 +435,7 @@
       "dienstreiseMedium_Hybrid": "Plug-In-Hybrid",
       "dienstreiseMedium_Elektro": "Elektro",
       "dienstreiseMedium_Auto": "PKW",
+      "dienstreiseMedium_Verbrenner": "Verbrenner",
 
       "Pkw_Motortyp": "Motortyp",
       "Pkw_diesel": "Diesel",
@@ -445,6 +446,7 @@
       "Pkw_pendelweg_diesel": "PKW - Diesel",
       "Pkw_pendelweg_hybrid": "PKW - Plug-In-Hybrid",
       "Pkw_pendelweg_elektro": "PKW - Elektro",
+      "Pkw_pendelweg_verbrenner": "PKW - Verbrenner",
 
       "Flugstrecke": "Flugstrecke",
       "EinfacheDistanz": "Einfache Distanz",

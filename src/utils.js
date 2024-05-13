@@ -91,7 +91,7 @@ export function getDienstreisenLabelMap(){
     [constants.dienstreisen_premium_economy, i18n.t("colleagueSurvey.colleagueSurvey.flugklasse_premiumeconomy")],
     [constants.dienstreisen_business, i18n.t("colleagueSurvey.colleagueSurvey.flugklasse_business")],
     [constants.dienstreisen_first, i18n.t("colleagueSurvey.colleagueSurvey.flugklasse_first")],
-    ["Verbrenner", "Verbrenner"]
+    [constants.aggregation_dienstreisen_verbrenner, i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMedium_Verbrenner")]
   ])
 }
 
@@ -114,9 +114,9 @@ export function getPendelwegeLabelMap(){
     [constants.pendelweg_fußgaenger.toString(), i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_6')],
     [constants.pendelweg_pkw_plug_in_hybrid.toString(), i18n.t('colleagueSurvey.colleagueSurvey.Pkw_pendelweg_hybrid')],
     [constants.pendelweg_pkw_elektro.toString(), i18n.t('colleagueSurvey.colleagueSurvey.Pkw_pendelweg_elektro')],
-    ["ÖPNV", "ÖPNV"],
-    ["PKW - Verbrenner", "PKW - Verbrenner"],
-    ["PKW - Elektro", "PKW - Elektro"],
+    [constants.aggregation_pendelwege_oepnv, i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNV')],
+    [constants.aggregation_pendelwege_verbrenner, i18n.t('colleagueSurvey.colleagueSurvey.Pkw_pendelweg_verbrenner')],
+    [constants.aggregation_pendelwege_elektro, i18n.t('colleagueSurvey.colleagueSurvey.Pkw_pendelweg_elektro')],
   ]);
 }
 
