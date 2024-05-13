@@ -815,10 +815,10 @@ export default {
      * [3] Mobiltelefon
      */
     geraeteAnzahl: [
-      [1, null, false],
-      [2, null, false],
-      [3, null, false],
-      [5, null, false],
+      [constants.it_geraet_notebook, null, false],
+      [constants.it_geraet_desktop, null, false],
+      [constants.it_geraet_bildschirm, null, false],
+      [constants.it_geraet_mobiltelefon, null, false],
     ],
 
     //Papierverbrauch currently not used
@@ -971,20 +971,20 @@ export default {
     mapPendelverkehrsmittel: function (verkehrsmitteltyp, oepnvspezifikation, tankspezifikation) {
       //Backend expects the following IDs for the following Verkehrsmittel
       const verkehrsmittelMap = new Map([
-        [i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_2'), 1], //Fahrrad
-        [i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_3'), 2], //E-Bike
-        [i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_4'), 3], //Motorisiertes Zweirad"
-        [i18n.t('colleagueSurvey.colleagueSurvey.Pkw_diesel'), 4], // Diesel
-        [i18n.t('colleagueSurvey.colleagueSurvey.Pkw_benzin'), 5], // Benzin
-        [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_1'), 6], //Bus
-        [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_0'), 7], //Bahn
-        [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_2'), 8], //U-Bahn
-        [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_3'), 9], //Straßenbahn
-        [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_4'), 10], //Mix inkl. U-Bahn
-        [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_5'), 11], //Mix exkl. U-Bahn
-        [i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_6'), 12], // Zu Fuß 
-        [i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMedium_Hybrid'), 13], // Plug-in-Hybrid
-        [i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMedium_Elektro'), 14] // Elektro
+        [i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_2'), constants.pendelweg_fahrrad],
+        [i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_3'), constants.pendelweg_e_fahrrad],
+        [i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_4'), constants.pendelweg_motorisiertes_zweirad],
+        [i18n.t('colleagueSurvey.colleagueSurvey.Pkw_diesel'), constants.pendelweg_pkw_diesel],
+        [i18n.t('colleagueSurvey.colleagueSurvey.Pkw_benzin'), constants.pendelweg_pkw_benzin],
+        [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_1'), constants.pendelweg_bus],
+        [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_0'), constants.pendelweg_bahn],
+        [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_2'), constants.pendelweg_u_bahn],
+        [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_3'), constants.pendelweg_straßenbahn],
+        [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_4'), constants.pendelweg_mix_inkl_u_bahn],
+        [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_5'), constants.pendelweg_mix_exkl_u_bahn],
+        [i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_6'), constants.pendelweg_fußgaenger],
+        [i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMedium_Hybrid'), constants.pendelweg_pkw_plug_in_hybrid],
+        [i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMedium_Elektro'), constants.pendelweg_pkw_elektro]
       ]);
 
       //Check if Öffentliche is selected
@@ -1003,9 +1003,9 @@ export default {
      */
     mapDienstreisemittel: function (verkehrsmittel) {
       const verkehrsmittelMap = new Map([
-        [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_0'), 1], //Bahn
-        [i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_0'), 2], //PKW
-        [i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3'), 3], //Flugzeug
+        [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_0'), constants.dienstreisen_bahn],
+        [i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_0'), constants.dienstreisen_pkw],
+        [i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3'), constants.dienstreisen_flugzeug],
       ]);
       
       //Tankart should be empty if not PKW
@@ -1017,13 +1017,13 @@ export default {
       if(parseInt(verkehrsmittelMap.get(verkehrsmittel[0])) == 2) {
         //Check if Benzin or Diesel
         if(verkehrsmittel[1] == i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMedium_Benzin')) {
-          tankart = "Benzin"
+          tankart = constants.dienstreisen_benzin
         } else if(verkehrsmittel[1] == i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMedium_Diesel')) {
-          tankart = "Diesel"
+          tankart = constants.dienstreisen_diesel
         } else if(verkehrsmittel[1] == i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMedium_Hybrid')) {
-          tankart = "Plug-In-Hybrid"
+          tankart = constants.dienstreisen_plug_in_hybrid
         } else if(verkehrsmittel[1] == i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMedium_Elektro')) {
-          tankart = "Elektro"
+          tankart = constants.dienstreisen_elektro
         } else { 
           console.error("No valid Tankart selected")
           tankart = "";
@@ -1033,13 +1033,13 @@ export default {
       //Check if verkehrsmittel is Flugzeug, then set the Flugstreckeart
       if(parseInt(verkehrsmittelMap.get(verkehrsmittel[0])) == 3) {
         if(verkehrsmittel[1] == i18n.t('colleagueSurvey.colleagueSurvey.flugstreckeListe_0')) {
-          flugstreckeart = "Langstrecke"
+          flugstreckeart = constants.dienstreisen_langstrecke
         } else if(verkehrsmittel[1] == i18n.t('colleagueSurvey.colleagueSurvey.flugstreckeListe_1')) {
-          flugstreckeart = "Kurzstrecke"
+          flugstreckeart = constants.dienstreisen_kurzstrecke
         } else if(verkehrsmittel[1] == i18n.t('colleagueSurvey.colleagueSurvey.flugstreckeListe_2')) {
-          flugstreckeart = "Inland"
+          flugstreckeart = constants.dienstreisen_inland
         } else if(verkehrsmittel[1] == i18n.t('colleagueSurvey.colleagueSurvey.flugstreckeListe_3')) {
-          flugstreckeart = "International"
+          flugstreckeart = constants.dienstreisen_international
         } else {
           console.error("No valid Flugstreckeart selected")
           flugstreckeart = "";
@@ -1049,15 +1049,15 @@ export default {
       //Check if verkehrsmittel is Flugzeug, then set the Flugklasse
       if(parseInt(verkehrsmittelMap.get(verkehrsmittel[0])) == 3) {
         if(verkehrsmittel[3] == i18n.t('colleagueSurvey.colleagueSurvey.flugklasse_average')) {
-          flugklasse = "average"
+          flugklasse = constants.dienstreisen_average
         } else if(verkehrsmittel[3] == i18n.t('colleagueSurvey.colleagueSurvey.flugklasse_economy')) {
-          flugklasse = "economy"
+          flugklasse = constants.dienstreisen_economy
         } else if(verkehrsmittel[3] == i18n.t('colleagueSurvey.colleagueSurvey.flugklasse_business')) {
-          flugklasse = "business"
+          flugklasse = constants.dienstreisen_business
         } else if(verkehrsmittel[3] == i18n.t('colleagueSurvey.colleagueSurvey.flugklasse_premiumeconomy')) {
-          flugklasse = "premium economy"
+          flugklasse = constants.dienstreisen_premium_economy  
         } else if(verkehrsmittel[3] == i18n.t('colleagueSurvey.colleagueSurvey.flugklasse_first')) {
-          flugklasse = "first"
+          flugklasse = constants.dienstreisen_first
         } else {
           console.error("No valid Flugklasse selected")
           flugklasse = "";
