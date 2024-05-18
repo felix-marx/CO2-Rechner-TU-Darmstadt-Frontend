@@ -5,6 +5,7 @@
       <v-icon
         class="mb-1"
         v-on="on"
+        @click="() => {}"
       >
         {{ tooltipIcon }}
       </v-icon>
