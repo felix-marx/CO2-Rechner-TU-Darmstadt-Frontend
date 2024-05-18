@@ -82,12 +82,9 @@
                           v-for="(problem, index) in errorTextArray.required"
                           :key="index"
                         >
-                          <v-list-item-content>
-                            <v-list-item-title
-                              class="text-sm-body-2 delete--text font-weight-black"
-                              v-text="problem"
-                            />
-                          </v-list-item-content>
+                          <label class="text-sm-body-2 delete--text font-weight-black mb-2">
+                            {{ problem }}
+                          </label>
                         </v-list-item>
                       </v-list>
                     </div>
@@ -103,10 +100,9 @@
                           :key="index"
                         >
                           <v-list-item-content>
-                            <v-list-item-title
-                              class="text-sm-body-2"
-                              v-text="problem"
-                            />
+                            <label class="text-sm-body-2 mb-2">
+                              {{ problem }}
+                            </label>
                           </v-list-item-content>
                         </v-list-item>
                       </v-list>
