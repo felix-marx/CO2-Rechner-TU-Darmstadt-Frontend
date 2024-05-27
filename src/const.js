@@ -3,6 +3,7 @@
 const constants = {
     v_card_max_width: "1500px",
     v_dialog_max_width: "1450px",
+    v_tooltip_max_width: "1000px",
 
     // Pendelweg-Label aus der Datenbank
     pendelweg_fahrrad: 1,

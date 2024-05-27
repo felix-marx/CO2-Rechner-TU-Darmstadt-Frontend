@@ -1,6 +1,10 @@
 <template>
   <!-- general tooltip component. Small "pop-up" when hovering with mouse over circle with question mark -->
-  <v-tooltip bottom>
+  <v-tooltip
+    bottom
+    :max-width="constants.v_tooltip_max_width"
+    :nudge-width="constants.v_tooltip_max_width"
+  >
     <template v-slot:activator="{ on }">
       <v-icon
         class="mb-1"
@@ -15,6 +19,8 @@
 </template>
 
 <script>
+import constants from "../../const.js";
+
 export default {
   name: "Tooltip",
 
@@ -28,5 +34,9 @@ export default {
       type: String
     }
   },
+
+  data: () => ({
+    constants: constants
+  })
 };
 </script>
