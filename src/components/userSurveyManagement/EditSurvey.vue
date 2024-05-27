@@ -162,8 +162,9 @@
           <v-row>
             <v-col>
               <v-text-field
+                ref="bezeichnung"
                 v-model="umfrage.bezeichnung"
-                :min="0"
+                :rules="universalRules"
                 :label="$t('common.Bezeichung')"
                 type="string" 
                 prepend-icon="mdi-form-textbox"
@@ -203,6 +204,7 @@
           <v-container>
             <v-row>
               <v-text-field
+                ref="anzahlMitarbeiter"
                 v-model="umfrage.mitarbeiteranzahl"
                 :rules="absolutpositivRules"
                 :min="0"
@@ -247,6 +249,7 @@
               </v-col>
               <v-col cols="5">
                 <v-text-field
+                  :ref="'flaeche' + index"
                   v-model="objekt[1]"
                   :rules="absolutpositivRules"
                   :min="0"
@@ -329,6 +332,7 @@
                 :disabled="blockInput"
               />
               <v-text-field
+              ref="multifunktionsgeraete"
                 v-model="umfrage.geraeteanzahl[0][1]"
                 :rules="geraeteRules"
                 :disabled="!umfrage.geraeteanzahl[0][2] || blockInput"
@@ -338,6 +342,7 @@
                 :suffix="$t('userSurvey.Survey.ITGeraeteMFP_Suffix')"
               />
               <v-text-field
+              ref="multifunktionsgeraeteToner"
                 v-model="umfrage.geraeteanzahl[1][1]"
                 :rules="nichtnegativRules"
                 :disabled="!umfrage.geraeteanzahl[0][2] || blockInput"
@@ -354,6 +359,7 @@
                 :disabled="blockInput"
               />
               <v-text-field
+              ref="drucker"
                 v-model="umfrage.geraeteanzahl[2][1]"
                 :rules="geraeteRules"
                 :disabled="!umfrage.geraeteanzahl[2][2] || blockInput"
@@ -363,6 +369,7 @@
                 class="pr-5"
               />
               <v-text-field
+              ref="druckerToner"
                 v-model="umfrage.geraeteanzahl[3][1]"
                 :rules="nichtnegativRules"
                 :disabled="!umfrage.geraeteanzahl[2][2] || blockInput"
@@ -379,6 +386,7 @@
                 :disabled="blockInput"
               />
               <v-text-field
+              ref="beamer"
                 v-model="umfrage.geraeteanzahl[4][1]"
                 :rules="geraeteRules"
                 :disabled="!umfrage.geraeteanzahl[4][2] || blockInput"
@@ -395,6 +403,7 @@
                 :disabled="blockInput"
               />
               <v-text-field
+              ref="server"
                 v-model="umfrage.geraeteanzahl[5][1]"
                 :rules="geraeteRules"
                 :disabled="!umfrage.geraeteanzahl[5][2] || blockInput"
@@ -509,6 +518,19 @@ export default {
   watch: {
     '$i18n.locale': function() {
       this.setRules();
+
+      // revalidate textfields to change language of error messages
+      this.$refs.bezeichnung.validate();
+      this.$refs.anzahlMitarbeiter.validate();
+      for (var i = 0; i < this.gebaeude.length; i++) {
+        this.$refs["flaeche" + i][0].validate();
+      }
+      this.$refs.multifunktionsgeraete.validate();
+      this.$refs.multifunktionsgeraeteToner.validate();
+      this.$refs.drucker.validate();
+      this.$refs.druckerToner.validate();
+      this.$refs.beamer.validate();
+      this.$refs.server.validate();
     },
   },
 
@@ -524,6 +546,10 @@ export default {
      * This Method is needed bc of i18n. Otherwise after changing the language the rules would not change.
      */
     setRules: function(){
+      this.universalRules = [
+        (v) => !!v || i18n.t('userSurvey.Survey.universalRules_0'),
+      ],
+
       this.geraeteRules = [
         (v) =>
           !!v || i18n.t('userSurvey.Survey.geraeteRules_1'),

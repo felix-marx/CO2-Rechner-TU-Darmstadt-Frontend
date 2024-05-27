@@ -87,6 +87,7 @@
                 class="pb-0"
               >
                 <v-text-field
+                  :ref="'pendelwegDistanz' + index"
                   v-model="medium[4]"
                   :rules="streckeRules"
                   :disabled="medium[0] === null || (medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_5') && medium[1] === null) || (medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_0') && medium[5] === null) || submittedDataSuccessfully"
@@ -142,6 +143,7 @@
                 class="pt-0"
               >
                 <v-text-field
+                  :ref="'mitfahrer' + index"
                   v-model="medium[3]"
                   :rules="mitfahrerRules"
                   :disabled="!medium[2] || submittedDataSuccessfully"
@@ -210,6 +212,7 @@
                           class="pt-0 pb-1"
                         >
                           <v-text-field
+                            :ref="'pendelwegDistanz' + index"
                             v-model="medium[4]"
                             :rules="streckeRules"
                             :disabled="medium[0] === null || (medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_5') && medium[1] === null) || (medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_0') && medium[5] === null) || submittedDataSuccessfully"
@@ -268,6 +271,7 @@
                       class="pt-0"
                     >
                       <v-text-field
+                        :ref="'mitfahrer' + index"
                         v-model="medium[3]"
                         :rules="mitfahrerRules"
                         :disabled="!medium[2] || submittedDataSuccessfully"
@@ -307,6 +311,7 @@
         <v-container>
           <v-row>
             <v-text-field
+              ref="arbeitstageBuero"
               v-model="arbeitstageBuero"
               :rules="tageImBueroRules"
               :disabled="submittedDataSuccessfully"
@@ -386,11 +391,13 @@
                   :items="mapDienstreiseFlugklasse(reise[1])"
                 />
               </v-col>
+              <!-- Distanz -->
               <v-col 
                 cols="3"
                 class=""
               >
                 <v-text-field
+                  :ref="'dienstreiseDistanz' + index"
                   v-model="reise[2]"
                   :rules="streckeRules"
                   :disabled="reise[0] === null || submittedDataSuccessfully || (reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_0') && reise[1] === null) || (reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3') && reise[3] === null)"
@@ -488,11 +495,13 @@
                           />
                         </v-col>
                       </v-row>
-                      <v-row>  
+                      <v-row> 
+                        <!-- Distanz --> 
                         <v-col 
                           class="py-0"
                         >
                           <v-text-field
+                            :ref="'dienstreiseDistanz' + index"
                             v-model="reise[2]"
                             :rules="streckeRules"
                             :disabled="reise[0] === null || submittedDataSuccessfully || (reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_0') && reise[1] === null) || (reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3') && reise[3] === null)"
@@ -566,6 +575,7 @@
               hide-details
             />
             <v-text-field
+              ref="notebooks"
               v-model="geraeteAnzahl[0][1]"
               :rules="geraeteRules"
               :disabled="!geraeteAnzahl[0][2] || submittedDataSuccessfully"
@@ -583,6 +593,7 @@
               :disabled="submittedDataSuccessfully"
             />
             <v-text-field
+              ref="desktops"
               v-model="geraeteAnzahl[1][1]"
               :rules="geraeteRules"
               :disabled="!geraeteAnzahl[1][2] || submittedDataSuccessfully"
@@ -600,6 +611,7 @@
               :disabled="submittedDataSuccessfully"
             />
             <v-text-field
+              ref="bildschirme"
               v-model="geraeteAnzahl[2][1]"
               :rules="geraeteRules"
               :disabled="!geraeteAnzahl[2][2] || submittedDataSuccessfully"
@@ -617,6 +629,7 @@
               :disabled="submittedDataSuccessfully"
             />
             <v-text-field
+              ref="mobiltelefone"
               v-model="geraeteAnzahl[3][1]"
               :rules="geraeteRules"
               :disabled="!geraeteAnzahl[3][2] || submittedDataSuccessfully"
@@ -839,10 +852,28 @@ export default {
   watch: {
     '$i18n.locale': function() {
       this.setListe();
+      this.setRules();
 
       // reset values for Pendelwege and Dienstreisen
       this.verkehrsmittel = [[null, null, false, null, null, null]]
       this.dienstreisen = [[null, null, null, null]]
+
+      // revalidate textfields to change language of error messages
+      for (var i = 0; i < this.verkehrsmittel.length; i++) {
+        this.$refs["pendelwegDistanz" + i][0].resetValidation();
+
+        if (this.verkehrsmittel[i][0] === this.$t('colleagueSurvey.colleagueSurvey.fahrmediumListe_0')) {
+          this.$refs["mitfahrer" + i][0].resetValidation();
+        }
+      }
+      this.$refs.arbeitstageBuero.validate();
+      for (i = 0; i < this.verkehrsmittel.length; i++) {
+        this.$refs["dienstreiseDistanz" + i][0].resetValidation();
+      }
+      this.$refs.notebooks.validate();
+      this.$refs.desktops.validate();
+      this.$refs.bildschirme.validate();
+      this.$refs.mobiltelefone.validate();
     },
   },
 

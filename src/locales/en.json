@@ -363,6 +363,8 @@
       "UmfrageTzdSpeichern": "Save survey anyway",
       "WeitereUmfrageErstellen": "Create more surveys",
       "Umfrage": "survey",
+
+      "universalRules_0": "Must be entered.",
       
       "geraeteRules_1": "Deselect the device if you do not use it.",
       "geraeteRules_2": "Deselect the device if you do not use it.",
