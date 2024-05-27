@@ -34,6 +34,8 @@ export default {
     Footer,
     Header,
     Survey,
+    SurveyOverview,
+    AccountSettings
   },
 
   data: () => ({
