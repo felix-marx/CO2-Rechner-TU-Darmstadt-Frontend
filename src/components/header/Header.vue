@@ -157,6 +157,10 @@ export default {
       this.selectedTab = selectedTab;
       let data = { id: selectedTab, componentType: componentType };
       this.$emit("changeTab", data);
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
     },
   }
 };
