@@ -4,16 +4,16 @@
       v-if="responseSuccessful"
       elevation="2"
       outlined
-      class="pa-7 mx-auto"
+      :class="$vuetify.breakpoint.xsOnly ? 'pa-0 mx-auto' : 'pa-7 mx-auto'"
       :max-width="constants.v_card_max_width"
     >
-      <v-card-title class="headerClass">
+      <v-card-title :class="$vuetify.breakpoint.xsOnly ? 'px-7 pt-7 headerClass' : 'px-0 pt-0 headerClass'">
         {{ $t('evaluation.surveyEvaluation.AuswertungDerUmfrage') }} "{{ responsedata.bezeichnung }}"
       </v-card-title>
       
       <v-divider />
       
-      <v-container>
+      <v-container :class="$vuetify.breakpoint.xsOnly ? 'px-7' : 'px-0'">
         <!-- On desktop display a 2x2 grid -->
         <template v-if="!$vuetify.breakpoint.mobile">
           <v-row>
@@ -112,7 +112,7 @@
         />
       </v-container>
 
-      <v-card-title class="headerClass">
+      <v-card-title :class="$vuetify.breakpoint.xsOnly ? 'px-7 headerClass' : 'px-0 headerClass'">
         {{ $t('common.Emissionen') }}
       </v-card-title>
 
@@ -138,7 +138,7 @@
 
         <!-- On mobile display in two rows -->
         <template v-else>
-          <v-row>
+          <v-row :class="$vuetify.breakpoint.xsOnly ? 'px-7' : 'px-0'">
             <v-col>
               <v-icon>
                 mdi-thought-bubble
@@ -146,7 +146,7 @@
               {{ $t('evaluation.surveyEvaluation.Gesamtemissionen') }} {{ $n(responsedata.emissionenGesamt, 'decimal') }} {{ $t('evaluation.surveyEvaluation.tCO2eq') }}
             </v-col>
           </v-row>
-          <v-row>    
+          <v-row :class="$vuetify.breakpoint.xsOnly ? 'px-7' : 'px-0'">    
             <v-col>
               <v-icon>
                 mdi-human-male-board-poll
@@ -157,7 +157,10 @@
         </template>
 
         <!-- Referenzwerte (Haushalte) -->
-        <v-row justify="center">
+        <v-row
+          justify="center"
+          :class="$vuetify.breakpoint.xsOnly ? 'px-7' : 'px-0'"
+        >
           <v-card
             outlined
             class="pa-7"
@@ -348,7 +351,7 @@
         </v-row>
 
         <!-- Spreadsheet and Link Sharing -->
-        <v-row>
+        <v-row :class="$vuetify.breakpoint.xsOnly ? 'pb-7' : 'pb-0'">
           <v-btn
             class="ml-8 align-self-center"
             color="primary"
@@ -556,7 +559,7 @@ export default {
               // weight: 'bold',
             },
             rotation: function() {  // rotation of numbers on bars
-              return this.barChartLabelRoation
+              return this.barChartBarLabelRoation
             },
           },
         },
@@ -580,6 +583,9 @@ export default {
           xAxes: [{ // font for labels on x-axis
             ticks: {
               fontColor: "black",
+              maxRotation: 90,
+              minRotation:  0,
+              autoSkip: false,
             },
           }]
         },
@@ -671,7 +677,7 @@ export default {
       return this.responsedata.umfragenanteil <= 50.0
     },
 
-    barChartLabelRoation: function () {
+    barChartBarLabelRoation: function () {
       return this.$vuetify.breakpoint.mobile ? 270 : 0
     },
   },
@@ -988,7 +994,7 @@ export default {
       this.optionsGesamtBar.plugins.datalabels.formatter = (value) => {
         return i18n.n(value, "decimal");
       }
-      this.optionsGesamtBar.plugins.datalabels.rotation = () => { return this.barChartLabelRoation }
+      this.optionsGesamtBar.plugins.datalabels.rotation = () => { return this.barChartBarLabelRoation }
 
       this.$refs["doughnut-gesamt"].updateChart()
       this.$refs["bar-gesamt"].updateChart()
@@ -1024,7 +1030,7 @@ export default {
       this.optionsEnergieBar.plugins.datalabels.formatter = (value) => {
         return i18n.n(value, "decimal");
       }
-      this.optionsEnergieBar.plugins.datalabels.rotation = () => { return this.barChartLabelRoation }
+      this.optionsEnergieBar.plugins.datalabels.rotation = () => { return this.barChartBarLabelRoation }
 
       this.$refs["doughnut-energie"].updateChart()
       this.$refs["bar-energie"].updateChart()
@@ -1067,7 +1073,7 @@ export default {
       this.optionsVerbrauchBar.plugins.datalabels.formatter = (value) => {
         return i18n.n(value, "decimal");
       }
-      this.optionsVerbrauchBar.plugins.datalabels.rotation = () => { return this.barChartLabelRoation }
+      this.optionsVerbrauchBar.plugins.datalabels.rotation = () => { return this.barChartBarLabelRoation }
 
       this.$refs["doughnut-verbrauch"].updateChart()
       this.$refs["bar-verbrauch"].updateChart()
@@ -1096,7 +1102,7 @@ export default {
       this.optionsDienstreisenBar.plugins.datalabels.formatter = (value) => {
         return i18n.n(value, "decimal");
       }
-      this.optionsDienstreisenBar.plugins.datalabels.rotation = () => { return this.barChartLabelRoation }
+      this.optionsDienstreisenBar.plugins.datalabels.rotation = () => { return this.barChartBarLabelRoation }
 
       this.$refs["bar-dienstreisen"][0].updateChart()
     },
@@ -1122,7 +1128,7 @@ export default {
       this.optionsPendelwegeBar.plugins.datalabels.formatter = (value) => {
         return i18n.n(value, "decimal");
       }
-      this.optionsPendelwegeBar.plugins.datalabels.rotation = () => { return this.barChartLabelRoation }
+      this.optionsPendelwegeBar.plugins.datalabels.rotation = () => { return this.barChartBarLabelRoation }
 
       this.$refs["bar-pendelwege"][0].updateChart()
     },
@@ -1148,7 +1154,7 @@ export default {
       this.optionsITGeraeteBar.plugins.datalabels.formatter = (value) => {
         return i18n.n(value, "decimal");
       }
-      this.optionsITGeraeteBar.plugins.datalabels.rotation = () => { return this.barChartLabelRoation }
+      this.optionsITGeraeteBar.plugins.datalabels.rotation = () => { return this.barChartBarLabelRoation }
 
       this.$refs["bar-itgeraete"][0].updateChart()
     },
