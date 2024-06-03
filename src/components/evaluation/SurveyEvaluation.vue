@@ -476,6 +476,11 @@ export default {
         code: null,
         message: null,
       },
+
+      // aggregated chart data
+      aggregatedDienstreisen: null,
+      aggregatedPendelwege: null,
+
       // for link sharing
       displaySuccess: false,
       showLoading: false,
@@ -672,6 +677,7 @@ export default {
   async mounted() { 
     await this.getData();
     this.initializeCharts();
+    this.aggregateChartdata();
     this.setChartData();
   },
 
@@ -826,6 +832,77 @@ export default {
     },
 
     /**
+     * Method aggregates the data for the charts.
+     */
+    aggregateChartdata: function () {
+
+      // aggregate dienstreisen data
+      let dienstreisenAufgeteilt = this.responsedata.emissionenDienstreisenAufgeteilt
+      let aggregation = {}
+
+      Object.keys(dienstreisenAufgeteilt).forEach(function(key) {
+        let new_key = key
+        let labelParts = key.split(constants.split_char)
+
+        if(labelParts[0] === constants.dienstreisen_pkw.toString() && [constants.dienstreisen_benzin, constants.dienstreisen_diesel].includes(labelParts[1])){
+          new_key = constants.dienstreisen_pkw.toString() + constants.split_char + constants.aggregation_dienstreisen_verbrenner
+        }
+        else if(labelParts[0] === constants.dienstreisen_pkw.toString() && [constants.dienstreisen_plug_in_hybrid, constants.dienstreisen_elektro].includes(labelParts[1])){
+          new_key = constants.dienstreisen_pkw.toString() + constants.split_char + constants.dienstreisen_elektro
+        }
+        else if(labelParts[0] === constants.dienstreisen_flugzeug.toString() && labelParts[1] === constants.dienstreisen_kurzstrecke){
+          new_key = constants.dienstreisen_flugzeug.toString() + constants.split_char + constants.dienstreisen_kurzstrecke
+        }
+        else if(labelParts[0] === constants.dienstreisen_flugzeug.toString() && labelParts[1] === constants.dienstreisen_langstrecke){
+          new_key = constants.dienstreisen_flugzeug.toString() + constants.split_char + constants.dienstreisen_langstrecke
+        }
+        else if(labelParts[0] === constants.dienstreisen_flugzeug.toString() && labelParts[1] === constants.dienstreisen_inland){
+          new_key = constants.dienstreisen_flugzeug.toString() + constants.split_char + constants.dienstreisen_inland
+        }
+        else if(labelParts[0] === constants.dienstreisen_flugzeug.toString() && labelParts[1] === constants.dienstreisen_international){
+          new_key = constants.dienstreisen_flugzeug.toString() + constants.split_char + constants.dienstreisen_international
+        }
+
+        aggregation[new_key] = (aggregation[new_key] || 0) + dienstreisenAufgeteilt[key]
+      })
+
+      Object.keys(aggregation).forEach(function(key) {
+        aggregation[key] = Math.round(aggregation[key] * 100) / 100
+      })
+
+      this.aggregatedDienstreisen = aggregation
+
+      // aggregate pendelwege data
+      let pendelwegeAufgeteilt = this.responsedata.emissionenPendelwegeAufgeteilt
+      aggregation = {}
+      let pkw_verbrenner = [constants.pendelweg_pkw_benzin.toString(), constants.pendelweg_pkw_diesel.toString()]
+      let pkw_elektro = [constants.pendelweg_pkw_elektro.toString(), constants.pendelweg_pkw_plug_in_hybrid.toString()]
+      let oepnv = [constants.pendelweg_bus.toString(), constants.pendelweg_bahn.toString(), constants.pendelweg_u_bahn.toString(), constants.pendelweg_straßenbahn.toString(), constants.pendelweg_mix_inkl_u_bahn.toString(), constants.pendelweg_mix_exkl_u_bahn.toString()]
+
+      Object.keys(pendelwegeAufgeteilt).forEach(function(key) {
+        let new_key = key
+
+        if(oepnv.includes(key)){
+          new_key = constants.aggregation_pendelwege_oepnv
+        }
+        else if(pkw_verbrenner.includes(key)){
+          new_key = constants.aggregation_pendelwege_verbrenner
+        }
+        else if(pkw_elektro.includes(key)){
+          new_key = constants.aggregation_pendelwege_elektro
+        }
+
+        aggregation[new_key] = (aggregation[new_key] || 0) + pendelwegeAufgeteilt[key]
+      })
+
+      Object.keys(aggregation).forEach(function(key) {
+        aggregation[key] = Math.round(aggregation[key] * 100) / 100
+      })
+
+      this.aggregatedPendelwege = aggregation
+    },
+
+    /**
      * Helper function to call all setChart functions and compute the current bar width.
      */
     setChartData: function() {
@@ -859,7 +936,7 @@ export default {
      * Computes the bar width for the bar charts based on the current canvas with and number of bars to display.
      */
     computeBarWidth: function() {
-      let maxBars = Math.max(Object.keys(this.responsedata.emissionenDienstreisenAufgeteilt).length, Object.keys(this.responsedata.emissionenPendelwegeAufgeteilt).length, Object.keys(this.responsedata.emissionenITGeraeteAufgeteilt).length)
+      let maxBars = Math.max(Object.keys(this.aggregatedDienstreisen).length, Object.keys(this.aggregatedPendelwege).length, Object.keys(this.responsedata.emissionenITGeraeteAufgeteilt).length)
 
       let chartWidths = ["bar-dienstreisen", "bar-pendelwege", "bar-itgeraete"].map(x => this.$refs[x] ? this.$refs[x][0].$refs.canvas.width : 0)
       let chartWidth = Math.max(...chartWidths)
@@ -990,44 +1067,13 @@ export default {
      */
     setChartDienstreisen: function () {
       let data = []
-
-      let dienstreisenAufgeteilt = this.responsedata.emissionenDienstreisenAufgeteilt
-      let aggregation = {}
-
-      Object.keys(dienstreisenAufgeteilt).forEach(function(key) {
-        let new_key = key
-        let labelParts = key.split(constants.split_char)
-
-        if(labelParts[0] === constants.dienstreisen_pkw.toString() && [constants.dienstreisen_benzin, constants.dienstreisen_diesel].includes(labelParts[1])){
-          new_key = "2_Verbrenner"
-        }
-        else if(labelParts[0] === constants.dienstreisen_pkw.toString() && [constants.dienstreisen_plug_in_hybrid, constants.dienstreisen_elektro].includes(labelParts[1])){
-          new_key = "2_Elektro"
-        }
-        else if(labelParts[0] === constants.dienstreisen_flugzeug.toString() && labelParts[1] === constants.dienstreisen_kurzstrecke){
-          new_key = "3_Kurzstrecke"
-        }
-        else if(labelParts[0] === constants.dienstreisen_flugzeug.toString() && labelParts[1] === constants.dienstreisen_langstrecke){
-          new_key = "3_Langstrecke"
-        }
-        else if(labelParts[0] === constants.dienstreisen_flugzeug.toString() && labelParts[1] === constants.dienstreisen_inland){
-          new_key = "3_Inland"
-        }
-        else if(labelParts[0] === constants.dienstreisen_flugzeug.toString() && labelParts[1] === constants.dienstreisen_international){
-          new_key = "3_International"
-        }
-
-        aggregation[new_key] = (aggregation[new_key] || 0) + dienstreisenAufgeteilt[key]
-      })
-
       let labelMap = getDienstreisenLabelMap()
+      let aggregation = this.aggregatedDienstreisen
 
       Object.keys(aggregation).forEach(function(key) {
         let labelParts = key.split(constants.split_char)
         let label = labelMap.get(labelParts[0]) + (labelParts[1] ? " - " + labelMap.get(labelParts[1]) : "")
-        let roundedValue = Math.round(aggregation[key] * 100) / 100
-
-        data.push({label: label, value: roundedValue, color: 'rgb(54,162,235)'})
+        data.push({label: label, value: aggregation[key], color: 'rgb(54,162,235)'})
       })
 
       data.sort((a, b) => b.value - a.value)
@@ -1048,34 +1094,11 @@ export default {
      */
     setChartPendelwege: function () {
       let data = []
-
-      let pendelwegeAufgeteilt = this.responsedata.emissionenPendelwegeAufgeteilt
-      let aggregation = {}
-      let pkw_verbrenner = [constants.pendelweg_pkw_benzin.toString(), constants.pendelweg_pkw_diesel.toString()]
-      let pkw_elektro = [constants.pendelweg_pkw_elektro.toString(), constants.pendelweg_pkw_plug_in_hybrid.toString()]
-      let oepnv = [constants.pendelweg_bus.toString(), constants.pendelweg_bahn.toString(), constants.pendelweg_u_bahn.toString(), constants.pendelweg_straßenbahn.toString(), constants.pendelweg_mix_inkl_u_bahn.toString(), constants.pendelweg_mix_exkl_u_bahn.toString()]
-
-      Object.keys(pendelwegeAufgeteilt).forEach(function(key) {
-        let new_key = key
-
-        if(oepnv.includes(key)){
-          new_key = "Aggregation_OEPNV"
-        }
-        else if(pkw_verbrenner.includes(key)){
-          new_key = "Aggregation_Verbrenner"
-        }
-        else if(pkw_elektro.includes(key)){
-          new_key = "Aggregation_Elektro"
-        }
-
-        aggregation[new_key] = (aggregation[new_key] || 0) + pendelwegeAufgeteilt[key]
-      })
-
+      let aggregation = this.aggregatedPendelwege
       let labelMap = getPendelwegeLabelMap()
-      Object.keys(aggregation).forEach(function(key) {
-        let roundedValue = Math.round(aggregation[key] * 100) / 100
 
-        data.push({label: labelMap.get(key), value: roundedValue, color: 'rgb(255, 205, 86)'})
+      Object.keys(aggregation).forEach(function(key) {
+        data.push({label: labelMap.get(key), value: aggregation[key], color: 'rgb(255, 205, 86)'})
       })
 
       data.sort((a, b) => b.value - a.value)
