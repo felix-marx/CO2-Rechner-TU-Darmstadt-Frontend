@@ -382,6 +382,7 @@
       <LoadingAnimation v-if="showLoading" />
       <LinkSharingComponent
         v-if="!this.$props.shared && responsedata.auswertungFreigegeben && !showLoading"
+        ref="linkSharing"
         :mitarbeiter-link="linkshareBaseURL + responsedata.id"
         :link-ziel="$t('evaluation.surveyEvaluation.Auswertung')"
       />
@@ -487,6 +488,7 @@ export default {
       // for link sharing
       displaySuccess: false,
       showLoading: false,
+      scrollToLinkScharing: false,
 
       // base url for Mitarbeiterumfragen
       linkshareBaseURL: process.env.VUE_APP_URL + '/survey/results/',
@@ -686,6 +688,15 @@ export default {
     '$i18n.locale': function() {  // reload charts when language changes to update labels
       this.setChartData();
     },
+  },
+
+  updated: function () {
+    this.$nextTick(function () {
+      if(this.scrollToLinkScharing){  // scroll to link sharing component when it appears
+        this.scrollToLinkScharing = false;
+        this.$refs.linkSharing.$el.scrollIntoView({behavior: "smooth", block: "end", inline: "nearest" });
+      }
+    })
   },
 
   async mounted() { 
@@ -1185,6 +1196,7 @@ export default {
           this.showLoading = false
           if (body.status == "success") {
             this.displaySuccess = true
+            this.scrollToLinkScharing = this.responsedata.auswertungFreigegeben
         }
         else {  // Fehlerbehandlung
           this.showLoading = false

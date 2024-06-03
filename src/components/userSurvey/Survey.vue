@@ -411,6 +411,7 @@
       <LoadingAnimation v-if="displayLoadingAnimation" />
       <LinkSharingComponent
         v-if="displaySurveyLink"
+        ref="linkSharing"
         :mitarbeiter-link="mitarbeiterumfrageBaseURL + responseData.umfrageID"
         :link-ziel="$t('userSurvey.Survey.Umfrage')"
       />
@@ -425,6 +426,7 @@
       v-if="!displaySurveyLink && errorMessage"
     >
       <v-alert
+        ref="errorMessage"
         type="error"
       >
         {{ errorMessage }}
@@ -498,6 +500,7 @@ export default {
     // has Absenden Button been clicked
     dataRequestSent: false,
     responseData: null,
+
     // Dialogvariable + Array mit fehlerhaften Eingaben {fehler: "", pflicht: 0}
     errorDialog: false,
     errorTextArray: {
@@ -512,13 +515,15 @@ export default {
     errorMessage: null,
     
     //Rules for input validation
-
+    universalRules: [],
     geraeteRules: [],
     nichtnegativRules: [],
     absolutpositivRules: [],
 
-    // has Absenden Button been clicked
+    // after survey has been sent, display loading animation and scrollToLinkSharing
     displayLoadingAnimation: false,
+    scrollToLinkScharing: false,
+    scrollToErrorMessage: false,
   }),
 
   computed: {
@@ -556,21 +561,25 @@ export default {
   watch: {
     '$i18n.locale': function() {
       this.setRules();
+      this.revalidateAllFields();
 
-      // revalidate textfields to change language of error messages
-      this.$refs.bezeichnung.validate();
-      this.$refs.anzahlMitarbeiter.validate();
-      for (var i = 0; i < this.gebaeude.length; i++) {
-        this.$refs["flaeche" + i][0].validate();
-      }
-      this.$refs.multifunktionsgeraete.validate();
-      this.$refs.multifunktionsgeraeteToner.validate();
-      this.$refs.drucker.validate();
-      this.$refs.druckerToner.validate();
-      this.$refs.beamer.validate();
-      this.$refs.server.validate();
-
+      console.log(this.$refs.drucker)
+      this.$refs.bezeichnung.resetValidation();
     },
+  },
+
+  updated: function () {
+    this.$nextTick(function () {
+      if(this.scrollToLinkScharing){  // scroll to link sharing component when it appears
+        this.scrollToLinkScharing = false;
+        this.$refs.linkSharing.$el.scrollIntoView({behavior: "smooth", block: "center", inline: "nearest" });
+      }
+
+      if(this.scrollToErrorMessage){  // scroll to error message when it appears
+        this.scrollToErrorMessage = false;
+        this.$refs.errorMessage.$el.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest" });
+      }
+    })
   },
 
   created() {
@@ -606,6 +615,23 @@ export default {
         (v) => !!v || i18n.t('userSurvey.Survey.absolutpositivRules_0'),
         (v) => parseInt(v) > 0 || i18n.t('userSurvey.Survey.absolutpositivRules_1'),
       ]
+    },
+
+    /**
+     * Revalidates all fields in the survey 
+     */
+    revalidateAllFields: function() {
+      this.$refs.bezeichnung.validate();
+      this.$refs.anzahlMitarbeiter.validate();
+      for (var i = 0; i < this.gebaeude.length; i++) {
+        this.$refs["flaeche" + i][0].validate();
+      }
+      this.$refs.multifunktionsgeraete.validate();
+      this.$refs.multifunktionsgeraeteToner.validate();
+      this.$refs.drucker.validate();
+      this.$refs.druckerToner.validate();
+      this.$refs.beamer.validate();
+      this.$refs.server.validate();
     },
 
     /**
@@ -686,6 +712,19 @@ export default {
       this.blockInput = false
       this.dataRequestSent = false
       this.responseData = null
+
+      // reset valdiation on all fields
+      this.$refs.bezeichnung.resetValidation();
+      this.$refs.anzahlMitarbeiter.resetValidation();
+      for (var i = 0; i < this.gebaeude.length; i++) {
+        this.$refs["flaeche" + i][0].resetValidation();
+      }
+      this.$refs.multifunktionsgeraete.resetValidation();
+      this.$refs.multifunktionsgeraeteToner.resetValidation();
+      this.$refs.drucker.resetValidation();
+      this.$refs.druckerToner.resetValidation();
+      this.$refs.beamer.resetValidation();
+      this.$refs.server.resetValidation();
     },
 
     /**
@@ -778,11 +817,16 @@ export default {
           if(data.status == "error") {
             this.errorMessage = data.error.message
             this.blockInput = false
+            this.scrollToErrorMessage = true
+          }
+          else if(data.status == "success") {
+            this.scrollToLinkScharing = true
           }
         })
         .catch((error) => {
           console.error("Error:", error);
           this.errorMessage = i18n.t("common.ServerNichtErreichbar");
+          this.scrollToErrorMessage = true
         });
 
       this.displayLoadingAnimation = false;
