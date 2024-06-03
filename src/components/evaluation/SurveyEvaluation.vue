@@ -555,6 +555,9 @@ export default {
               size: 14,
               // weight: 'bold',
             },
+            rotation: function() {  // rotation of numbers on bars
+              return this.barChartLabelRoation
+            },
           },
         },
         scales: {
@@ -663,8 +666,13 @@ export default {
       let base_text_ending = i18n.t('evaluation.surveyEvaluation.HaushaltReferenzText_2')
       return base_text_beginning + text_vierPersonenHaushalt + base_text_middle + text_zweiPersonenHaushalt + base_text_ending;
     },
+
     displayExtrapolationWarning: function () {
       return this.responsedata.umfragenanteil <= 50.0
+    },
+
+    barChartLabelRoation: function () {
+      return this.$vuetify.breakpoint.mobile ? 270 : 0
     },
   },
 
@@ -980,6 +988,7 @@ export default {
       this.optionsGesamtBar.plugins.datalabels.formatter = (value) => {
         return i18n.n(value, "decimal");
       }
+      this.optionsGesamtBar.plugins.datalabels.rotation = () => { return this.barChartLabelRoation }
 
       this.$refs["doughnut-gesamt"].updateChart()
       this.$refs["bar-gesamt"].updateChart()
@@ -1015,6 +1024,7 @@ export default {
       this.optionsEnergieBar.plugins.datalabels.formatter = (value) => {
         return i18n.n(value, "decimal");
       }
+      this.optionsEnergieBar.plugins.datalabels.rotation = () => { return this.barChartLabelRoation }
 
       this.$refs["doughnut-energie"].updateChart()
       this.$refs["bar-energie"].updateChart()
@@ -1057,6 +1067,7 @@ export default {
       this.optionsVerbrauchBar.plugins.datalabels.formatter = (value) => {
         return i18n.n(value, "decimal");
       }
+      this.optionsVerbrauchBar.plugins.datalabels.rotation = () => { return this.barChartLabelRoation }
 
       this.$refs["doughnut-verbrauch"].updateChart()
       this.$refs["bar-verbrauch"].updateChart()
@@ -1085,6 +1096,7 @@ export default {
       this.optionsDienstreisenBar.plugins.datalabels.formatter = (value) => {
         return i18n.n(value, "decimal");
       }
+      this.optionsDienstreisenBar.plugins.datalabels.rotation = () => { return this.barChartLabelRoation }
 
       this.$refs["bar-dienstreisen"][0].updateChart()
     },
@@ -1110,6 +1122,7 @@ export default {
       this.optionsPendelwegeBar.plugins.datalabels.formatter = (value) => {
         return i18n.n(value, "decimal");
       }
+      this.optionsPendelwegeBar.plugins.datalabels.rotation = () => { return this.barChartLabelRoation }
 
       this.$refs["bar-pendelwege"][0].updateChart()
     },
@@ -1135,6 +1148,7 @@ export default {
       this.optionsITGeraeteBar.plugins.datalabels.formatter = (value) => {
         return i18n.n(value, "decimal");
       }
+      this.optionsITGeraeteBar.plugins.datalabels.rotation = () => { return this.barChartLabelRoation }
 
       this.$refs["bar-itgeraete"][0].updateChart()
     },
