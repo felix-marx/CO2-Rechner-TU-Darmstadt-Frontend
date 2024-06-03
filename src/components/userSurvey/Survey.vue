@@ -562,9 +562,6 @@ export default {
     '$i18n.locale': function() {
       this.setRules();
       this.revalidateAllFields();
-
-      console.log(this.$refs.drucker)
-      this.$refs.bezeichnung.resetValidation();
     },
   },
 
