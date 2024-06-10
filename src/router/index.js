@@ -100,8 +100,6 @@ const router = new VueRouter({
 
 
 router.beforeEach((to, from, next) => {
-  console.log("from: ", from.fullPath, "to: ", to.fullPath)
-
   if(to.meta.loginPage) {
     if(!router.app.$keycloak.authenticated){  // let user to login if not authenticated
       next()

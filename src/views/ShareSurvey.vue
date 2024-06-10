@@ -25,7 +25,7 @@
         <v-container>
           <v-row>
             <v-col>
-              Es wurden zur Umfrage "{{ this.$route.params.umfrageID }}" eingeladen.
+              Es wurden zur Umfrage "{{ umfrageID }}" eingeladen.
             </v-col>
           </v-row>
           <v-row>
@@ -77,6 +77,9 @@ export default {
 
   created() {
     this.setTabList();
+    this.umfrageID = this.$route.params.umfrageID
+
+    this.shareUmfrageRequest();
   },
 
   methods: {
@@ -84,7 +87,27 @@ export default {
       this.tabList = [
         { id: 0, title: 'Survey Share', componentType: loadingAnimation},
       ]
-    }
+    },
+
+    shareUmfrageRequest: async function() {
+       await fetch(process.env.VUE_APP_BASEURL + "/umfrage/share", {
+        method: "Post",
+        headers: {
+          "Authorization": "Bearer " + this.$keycloak.token,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          umfrageID: this.umfrageID,
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    },
   }
 };
 </script>
