@@ -268,6 +268,7 @@
 import EditSurvey from "../userSurveyManagement/EditSurvey.vue";
 import Nutzerauswertung from "../evaluation/SurveyEvaluation.vue";
 import CopyButton from '../componentParts/CopyButton.vue';
+import i18n from "../../i18n";
 import constants from "../../const.js";
 
 export default {
@@ -360,7 +361,7 @@ export default {
      * Dupliziert eine Umfrage nach Nutzerbestaetigung
      */
       async duplicateSurvey(index, umfrageID) {
-      await this.duplicateUmfrage(index, umfrageID)
+      await this.duplicateUmfrage(index, umfrageID, i18n.t('userSurveyManagement.SurveyOverview.DuplizierenSuffix'))
     
       if(!this.errors[index]){
         this.fetchUmfragen()
@@ -446,12 +447,17 @@ export default {
     /**
     * Dupliziert die Umfrage mit der gegebenen ID, gibt false bei error, true bei success zurueck
     */
-    duplicateUmfrage: async function (index, umfrageID) {
-      await fetch(process.env.VUE_APP_BASEURL + "/umfrage/duplicate?id=" + umfrageID, {
-      method: "GET",
+    duplicateUmfrage: async function (index, umfrageID, suffix) {
+      await fetch(process.env.VUE_APP_BASEURL + "/umfrage/duplicate", {
+      method: "POST",
       headers: {
         "Authorization": "Bearer " + this.$keycloak.token,
+        "Content-Type": "application/json",
       },
+      body: JSON.stringify({
+        umfrageID: umfrageID,
+        suffix: suffix,
+      }),
     })
       .then((response) => response.json())
       .then((data) => {

@@ -634,7 +634,8 @@
       "LoeschenDerUmfrage_2": " want to delete the survey? This action cannot be undone.",
       "LoeschenBestaetigen": "I confirm",
       "ServerNichtErreichbar": "Server is unavailable.",
-      "MitarbeiterAnzahl": "Employees have completed the survey"
+      "MitarbeiterAnzahl": "Employees have completed the survey",
+      "DuplizierenSuffix": "(Copy)"
     }
   },
   "header": {

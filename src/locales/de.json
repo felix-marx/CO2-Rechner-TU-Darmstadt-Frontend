@@ -638,7 +638,8 @@
       "LoeschenDerUmfrage_2": " löschen möchten? Diese Aktion kann nicht zurückgenommen werden.",
       "LoeschenBestaetigen": "Ich bestätige",
       "ServerNichtErreichbar": "Server nicht erreichbar.",
-      "MitarbeiterAnzahl": "Mitarbeitende haben ausgefüllt"
+      "MitarbeiterAnzahl": "Mitarbeitende haben ausgefüllt",
+      "DuplizierenSuffix": "(Kopie)"
     }
   },
   "header": {
