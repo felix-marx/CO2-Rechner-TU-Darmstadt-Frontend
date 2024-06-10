@@ -332,7 +332,7 @@
                 :disabled="blockInput"
               />
               <v-text-field
-              ref="multifunktionsgeraete"
+                ref="multifunktionsgeraete"
                 v-model="umfrage.geraeteanzahl[0][1]"
                 :rules="geraeteRules"
                 :disabled="!umfrage.geraeteanzahl[0][2] || blockInput"
@@ -342,7 +342,7 @@
                 :suffix="$t('userSurvey.Survey.ITGeraeteMFP_Suffix')"
               />
               <v-text-field
-              ref="multifunktionsgeraeteToner"
+                ref="multifunktionsgeraeteToner"
                 v-model="umfrage.geraeteanzahl[1][1]"
                 :rules="nichtnegativRules"
                 :disabled="!umfrage.geraeteanzahl[0][2] || blockInput"
@@ -359,7 +359,7 @@
                 :disabled="blockInput"
               />
               <v-text-field
-              ref="drucker"
+                ref="drucker"
                 v-model="umfrage.geraeteanzahl[2][1]"
                 :rules="geraeteRules"
                 :disabled="!umfrage.geraeteanzahl[2][2] || blockInput"
@@ -369,7 +369,7 @@
                 class="pr-5"
               />
               <v-text-field
-              ref="druckerToner"
+                ref="druckerToner"
                 v-model="umfrage.geraeteanzahl[3][1]"
                 :rules="nichtnegativRules"
                 :disabled="!umfrage.geraeteanzahl[2][2] || blockInput"
@@ -386,7 +386,7 @@
                 :disabled="blockInput"
               />
               <v-text-field
-              ref="beamer"
+                ref="beamer"
                 v-model="umfrage.geraeteanzahl[4][1]"
                 :rules="geraeteRules"
                 :disabled="!umfrage.geraeteanzahl[4][2] || blockInput"
@@ -403,7 +403,7 @@
                 :disabled="blockInput"
               />
               <v-text-field
-              ref="server"
+                ref="server"
                 v-model="umfrage.geraeteanzahl[5][1]"
                 :rules="geraeteRules"
                 :disabled="!umfrage.geraeteanzahl[5][2] || blockInput"
