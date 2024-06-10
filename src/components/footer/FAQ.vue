@@ -8,7 +8,7 @@
       :display-back-button="true"
       :display-login-button="true"
     />
-    <v-main class="mb-16">
+    <v-main :class="$vuetify.breakpoint.mobile ? 'mb-0' : 'mb-16'">
       <v-container>
         <v-card
           elevation="0"
@@ -25,7 +25,7 @@
               elevation="0"
             >
               <v-card-title
-                class="mx-4"
+                class="mx-4 headerClass"
                 v-html="$t('footer.FAQ.Titel_1')"
               />
 
@@ -235,7 +235,7 @@
               elevation="0"
             >
               <v-card-title
-                class="mx-4"
+                class="mx-4 headerClass"
               >
                 <label v-html="$t('footer.FAQ.Titel_2')" />
               </v-card-title>
@@ -508,7 +508,7 @@
               elevation="0"
             >
               <v-card-title
-                class="mx-4"
+                class="mx-4 headerClass"
               >
                 <label v-html="$t('footer.FAQ.Titel_3')" />
               </v-card-title>
@@ -660,6 +660,7 @@ import Header from '../header/Header.vue'
 import Footer from '../footer/Footer.vue'
 import loadingAnimation from '../componentParts/LoadingAnimation.vue'
 import constants from '../../const'
+import i18n from "../../i18n";
 
 export default {
   name: "FAQ",
@@ -741,7 +742,7 @@ export default {
   methods: {
     setTabList(){
       this.tabList = [
-        { id: 0, title: 'FAQ', componentType: loadingAnimation},
+        { id: 0, title: i18n.t('footer.Footer.FAQ'), componentType: loadingAnimation},
       ]
     }
   }
@@ -755,5 +756,11 @@ export default {
       background-color: inherit !important;
       border-color: inherit !important;
     }
+  }
+  .headerClass{
+    white-space: wrap;
+    word-break: normal;
+    display: block;
+    hyphens: auto;
   }
 </style>

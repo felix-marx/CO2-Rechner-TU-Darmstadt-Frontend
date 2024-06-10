@@ -4,43 +4,84 @@
       class="mx-auto"
       :max-width="constants.v_card_max_width"
     >
-      <v-card-title class="mx-2">
+      <v-card-title class="mx-2 headerclass">
         Gespeicherte Umfragen:
       </v-card-title>
 
-      <v-row
-        align="baseline" 
-        class="mx-2"
-      >
-        <v-col
-          cols="2"
-          align="center"
+      <!-- Desktop -->
+      <template v-if="$vuetify.breakpoint.smAndUp">
+        <v-row
+          align="baseline" 
+          class="mx-2"
         >
-          Sortieren nach:
-        </v-col>
-        <v-col cols="5">
-          <v-select
-            v-model="sortingOptionSelected"
-            item-text="name"
-            item-value="key"
-            :items="sortingOptions"
-            label="Sortierkriterium"
-            solo
-            @input="sortUmfragen"
-          />
-        </v-col>
-        <v-col cols="5">
-          <v-select
-            v-model="sortingOrderSelected"
-            item-text="name"
-            item-value="key"
-            :items="sortingOrders"
-            label="Reihenfolge"
-            solo
-            @input="sortUmfragen"
-          />
-        </v-col>
-      </v-row>
+          <v-col
+            cols="2"
+            align="center"
+          >
+            Sortieren nach:
+          </v-col>
+          <v-col cols="5">
+            <v-select
+              v-model="sortingOptionSelected"
+              item-text="name"
+              item-value="key"
+              :items="sortingOptions"
+              label="Sortierkriterium"
+              solo
+              @input="sortUmfragen"
+            />
+          </v-col>
+          <v-col cols="5">
+            <v-select
+              v-model="sortingOrderSelected"
+              item-text="name"
+              item-value="key"
+              :items="sortingOrders"
+              label="Reihenfolge"
+              solo
+              @input="sortUmfragen"
+            />
+          </v-col>
+        </v-row>
+      </template>
+      <!-- Mobile -->
+      <template v-else>
+        <v-row
+          align="baseline" 
+          class="mx-2"
+        >
+          <v-col class="pb-0">
+            Sortieren nach:
+          </v-col>
+        </v-row>
+        <v-row
+          align="baseline" 
+          class="mx-2"
+        >
+          <v-col cols="6">
+            <v-select
+              v-model="sortingOptionSelected"
+              item-text="name"
+              item-value="key"
+              :items="sortingOptions"
+              label="Sortierkriterium"
+              solo
+              @input="sortUmfragen"
+            />
+          </v-col>
+          <v-col cols="6">
+            <v-select
+              v-model="sortingOrderSelected"
+              item-text="name"
+              item-value="key"
+              :items="sortingOrders"
+              label="Reihenfolge"
+              solo
+              @input="sortUmfragen"
+            />
+          </v-col>
+        </v-row>
+      </template>
 
       <!-- Die erstellte Umfrage soll eine Karte erhalten. -->
       <v-card
@@ -50,37 +91,68 @@
         outlined
         class="pb-2"
       >
-        <v-list-item
-          three-line
-        >
-          <v-list-item-content>
-            <div class="text-overline mb-1">
-              Bilanzierungsjahr {{ umfrage.jahr }}
-            </div> 
-            <v-list-item-title class="text-h5 mb-4">
-              {{ umfrage.bezeichnung }}
-            </v-list-item-title>
+        <v-container class="mx-1">
+          <v-row>
+            <v-col class="pb-0">
+              <div class="text-overline">
+                {{ $t('common.Bilanzierungsjahr') }} {{ umfrage.jahr }}
+              </div> 
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col class="pt-1 pb-0">
+              <v-list-item-title class="text-h5">
+                {{ umfrage.bezeichnung }}
+              </v-list-item-title>
+            </v-col>
+          </v-row>
+          <!-- Desktop design in one row -->
+          <v-row v-if="!$vuetify.breakpoint.mobile">
+            <v-col cols="7">
+              <CopyButton
+                :button-text="$t('userSurveyManagement.SurveyOverview.LinkZurMitarbeiterumfrage')"
+                :text-to-copy="mitarbeiterumfrageBaseURL + umfrage._id"
+              />
+            </v-col> 
+            <v-col
+              cols=""
+              class="text-right"
+              align-self="start"
+            >
+              <b>{{ umfrage.mitarbeiterUmfrageRef.length }}/{{ umfrage.mitarbeiteranzahl }} </b>  {{ $t('userSurveyManagement.SurveyOverview.MitarbeiterAnzahl') }}
+            </v-col>
+            <v-col
+              cols="1"
+              align-self="start"
+            >
+              <v-progress-circular 
+                :color=" umfrage.mitarbeiterUmfrageRef.length == umfrage.mitarbeiteranzahl ? 'primary' : 'grey'"
+                :value="100*(umfrage.mitarbeiterUmfrageRef.length / umfrage.mitarbeiteranzahl)"
+                :size="35"
+              />
+            </v-col>
+          </v-row>
+
+          <!-- Mobile design in two rows -->
+          <template v-else>
             <v-row>
-              <v-col
-                cols="7"
-              >
+              <v-col>
                 <CopyButton
-                  :button-text="'Link zur Umfrage kopieren'"
+                  :button-text="$t('userSurveyManagement.SurveyOverview.LinkZurMitarbeiterumfrage_short')"
                   :text-to-copy="mitarbeiterumfrageBaseURL + umfrage._id"
                 />
               </v-col>
-              <v-col 
-                cols=""
-                class="text-right"
-                align-self="center"
+            </v-row>
+            <v-row>  
+              <v-col
+                class="text-left"
+                align-self="start"
               >
-                <div>
-                  <b>{{ umfrage.mitarbeiterUmfrageRef.length }}/{{ umfrage.mitarbeiteranzahl }} </b> Mitarbeitende haben ausgefüllt
-                </div>
+                <b>{{ umfrage.mitarbeiterUmfrageRef.length }}/{{ umfrage.mitarbeiteranzahl }} </b>  {{ $t('userSurveyManagement.SurveyOverview.MitarbeiterAnzahl') }}
               </v-col>
               <v-col
-                cols="1"
-                align-self="center"
+                cols="2"
+                align-self="end"
               >
                 <v-progress-circular 
                   :color=" umfrage.mitarbeiterUmfrageRef.length == umfrage.mitarbeiteranzahl ? 'primary' : 'grey'"
@@ -89,11 +161,14 @@
                 />
               </v-col>
             </v-row>
-          </v-list-item-content>
-        </v-list-item>
+          </template>
+        </v-container> 
 
         <!-- Die erstellte Umfrage soll bearbeitet und ausgewählt werden können. -->
-        <v-card-actions>
+        <v-card-actions
+          style="display: flex; flex-wrap: wrap; gap:12px"
+        >
+          <!-- Umfragen bearbeiten -->
           <v-dialog
             v-model="dialog[index]"
             fullscreen
@@ -113,7 +188,7 @@
                 >
                   mdi-clipboard-edit
                 </v-icon>
-                <span>anzeigen</span>
+                <span>{{ $t('userSurveyManagement.SurveyOverview.Anzeigen') }}</span>
               </v-btn>
             </template>
             <v-card>
@@ -128,11 +203,12 @@
                 >
                   <v-icon>mdi-close</v-icon>
                 </v-btn>
-                <v-toolbar-title>Umfrage</v-toolbar-title>
+                <v-toolbar-title>{{ $t('common.Umfrage') }}</v-toolbar-title>
               </v-toolbar>
               <!-- Hier kommt der Inhalt der Umfrage hin -->
               <v-card
                 v-if="dialog[index]"
+                :style="{background: $vuetify.theme.themes[theme].background}"
               >
                 <EditSurvey 
                   :umfrageidprop="umfrage._id"
@@ -141,6 +217,7 @@
             </v-card>
           </v-dialog>
 
+          <!-- Auswertung anzeigen -->
           <v-dialog
             v-model="dialogAuswertung[index]"
             fullscreen
@@ -158,7 +235,7 @@
                 <v-icon left>
                   mdi-chart-bar
                 </v-icon>
-                Auswertung
+                {{ $t('common.Auswertung') }}
               </v-btn>
             </template>
             <v-card>
@@ -173,20 +250,21 @@
                 >
                   <v-icon>mdi-close</v-icon>
                 </v-btn>
-                <v-toolbar-title>Auswertung</v-toolbar-title>
+                <v-toolbar-title>{{ $t('common.Auswertung') }}</v-toolbar-title>
                 <v-spacer />
               </v-toolbar>
               <v-card
                 v-if="dialogAuswertung[index]"
+                :style="{background: $vuetify.theme.themes[theme].background}"
               >
-                <Nutzerauswertung
+                <SurveyEvaluation
                   :umfrageid="umfrage._id"
-                  :shared="true"
+                  :shared="false"
                 />
               </v-card>
             </v-card>
           </v-dialog>
-        
+
           <v-spacer />
 
           <!-- Mit diesem Button sollen ausgewählte Umfragen dupliziert werden können. -->
@@ -200,7 +278,7 @@
             <v-icon class="mr-1">
               mdi-content-copy
             </v-icon>
-            Duplizieren
+            {{ $t('common.Duplizieren') }}
           </v-btn>
 
           <v-dialog
@@ -218,8 +296,10 @@
                 v-bind="attrs"
                 v-on="on"
               >
-                <v-icon>mdi-delete-outline</v-icon>
-                Löschen
+                <v-icon>
+                  mdi-delete-outline
+                </v-icon>
+                {{ $t('common.Loeschen') }}
               </v-btn>
             </template>
 
@@ -228,12 +308,11 @@
                 color="primary"
                 dark
               >
-                Löschen der Umfrage
+                {{ $t('userSurveyManagement.SurveyOverview.LoeschenDerUmfrage_0') }}
               </v-toolbar>
               <v-card-text>
                 <div class="pt-6">
-                  Sind Sie sicher, dass Sie die Umfrage {{ umfrage.bezeichnung }} löschen möchten?
-                  Diese Aktion kann nicht zurückgenommen werden.
+                  {{ $t('userSurveyManagement.SurveyOverview.LoeschenDerUmfrage_1') }} {{ umfrage.bezeichnung }} {{ $t('userSurveyManagement.SurveyOverview.LoeschenDerUmfrage_2') }}
                 </div>
               </v-card-text>
 
@@ -246,7 +325,7 @@
                   text
                   @click="removeSurvey(index, umfrage._id)"
                 >
-                  Ich bestätige
+                  {{ $t('userSurveyManagement.SurveyOverview.LoeschenBestaetigen') }}
                 </v-btn>
               </v-card-actions>
             </v-card>
@@ -266,14 +345,14 @@
 
 <script>
 import EditSurvey from "../userSurveyManagement/EditSurvey.vue";
-import Nutzerauswertung from "../evaluation/SurveyEvaluation.vue";
+import SurveyEvaluation from "../evaluation/SurveyEvaluation.vue";
 import CopyButton from '../componentParts/CopyButton.vue';
 import constants from "../../const.js";
 
 export default {
   components: {
     EditSurvey,
-    Nutzerauswertung,
+    SurveyEvaluation,
     CopyButton
   },
 
@@ -319,6 +398,12 @@ export default {
     // base url for Mitarbeiterumfragen
     mitarbeiterumfrageBaseURL: process.env.VUE_APP_URL + '/survey/'
   }),
+
+  computed:{
+    theme(){
+      return (this.$vuetify.theme.dark) ? 'dark' : 'light'
+    }
+  },
 
   created() {
     this.displayLoadingAnimation = true;
@@ -498,3 +583,12 @@ function GetSortOrder(prop) {
     }    
 }    
 </script>
+
+<style lang="scss">
+  .headerClass{
+    white-space: wrap;
+    word-break: normal;
+    display: block;
+    hyphens: auto;
+  }
+</style>

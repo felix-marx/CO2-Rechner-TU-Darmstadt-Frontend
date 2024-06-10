@@ -64,7 +64,7 @@
                   color="primary"
                   dark
                 >
-                  {{ (errorTextArray.required.length != 0 || errorTextArray.nonRequired.length != 0) ? "Probleme mit Ihrer Eingabe!" : "Umfrage vollständig?" }}
+                  {{ (errorTextArray.required.length != 0 || errorTextArray.nonRequired.length != 0) ? $t('userSurveyManagement.editSurvey.SpeicherDialog_1') : $t('userSurveyManagement.editSurvey.SpeicherDialog_2') }}
                 </v-toolbar>
                 <v-card-text>
                   <div
@@ -74,7 +74,7 @@
                     <div
                       v-if="errorTextArray.required.length != 0"
                     >
-                      {{ $t('userSurveyManagement.editSurvey.AenderungSpeichern') }} <br>
+                      {{ $t('userSurveyManagement.editSurvey.PflichtFelderNichtAngegeben') }} <br>
                       <v-list
                         flat
                       >
@@ -82,12 +82,9 @@
                           v-for="(problem, index) in errorTextArray.required"
                           :key="index"
                         >
-                          <v-list-item-content>
-                            <v-list-item-title
-                              class="text-sm-body-2 delete--text font-weight-black"
-                              v-text="problem"
-                            />
-                          </v-list-item-content>
+                          <label class="text-sm-body-2 delete--text font-weight-black mb-2">
+                            {{ problem }}
+                          </label>
                         </v-list-item>
                       </v-list>
                     </div>
@@ -103,10 +100,9 @@
                           :key="index"
                         >
                           <v-list-item-content>
-                            <v-list-item-title
-                              class="text-sm-body-2"
-                              v-text="problem"
-                            />
+                            <label class="text-sm-body-2 mb-2">
+                              {{ problem }}
+                            </label>
                           </v-list-item-content>
                         </v-list-item>
                       </v-list>
@@ -137,7 +133,7 @@
                     text
                     @click="sendEdit(), errorDialog = false"
                   >
-                    {{ (errorTextArray.nonRequired.length == 0) ? "Änderungen speichern" : "Änderungen trotzdem speichern" }}
+                    {{ (errorTextArray.nonRequired.length == 0) ? $t('userSurveyManagement.editSurvey.AenderungSpeichern') : $t('userSurveyManagement.editSurvey.AenderungTrotzdemSpeichern') }}
                   </v-btn>
                 </v-card-actions>
               </v-card>
@@ -166,8 +162,9 @@
           <v-row>
             <v-col>
               <v-text-field
+                ref="bezeichnung"
                 v-model="umfrage.bezeichnung"
-                :min="0"
+                :rules="universalRules"
                 :label="$t('common.Bezeichung')"
                 type="string" 
                 prepend-icon="mdi-form-textbox"
@@ -185,7 +182,7 @@
           <br>
 
           <v-row>
-            <v-col cols="5">
+            <v-col :cols="$vuetify.breakpoint.smAndUp ? 5 : 8">
               <v-autocomplete
                 v-model="umfrage.jahr"
                 :items="possibleYears"
@@ -207,6 +204,7 @@
           <v-container>
             <v-row>
               <v-text-field
+                ref="anzahlMitarbeiter"
                 v-model="umfrage.mitarbeiteranzahl"
                 :rules="absolutpositivRules"
                 :min="0"
@@ -239,19 +237,19 @@
             :key="index"
           >
             <v-row>
-              <v-col cols="6">
+              <v-col :cols="$vuetify.breakpoint.smAndUp ? 6 : 5">
                 <v-autocomplete
                   v-if="gebaeudeIDs"
                   v-model="objekt[0]"
                   :items="gebaeudeIDs"
                   :label="$t('common.Gebäudenummer')"
                   prepend-icon="mdi-domain"
-                  class="pr-5"
                   :disabled="blockInput"
                 />
               </v-col>
               <v-col cols="5">
                 <v-text-field
+                  :ref="'flaeche' + index"
                   v-model="objekt[1]"
                   :rules="absolutpositivRules"
                   :min="0"
@@ -262,7 +260,7 @@
                 />
               </v-col>
               <v-col
-                cols="1"
+                :cols="$vuetify.breakpoint.smAndUp ? 1 : 2"
                 class="mt-3 text-center"
               >
                 <v-btn
@@ -334,6 +332,7 @@
                 :disabled="blockInput"
               />
               <v-text-field
+                ref="multifunktionsgeraete"
                 v-model="umfrage.geraeteanzahl[0][1]"
                 :rules="geraeteRules"
                 :disabled="!umfrage.geraeteanzahl[0][2] || blockInput"
@@ -343,6 +342,7 @@
                 :suffix="$t('userSurvey.Survey.ITGeraeteMFP_Suffix')"
               />
               <v-text-field
+                ref="multifunktionsgeraeteToner"
                 v-model="umfrage.geraeteanzahl[1][1]"
                 :rules="nichtnegativRules"
                 :disabled="!umfrage.geraeteanzahl[0][2] || blockInput"
@@ -359,6 +359,7 @@
                 :disabled="blockInput"
               />
               <v-text-field
+                ref="drucker"
                 v-model="umfrage.geraeteanzahl[2][1]"
                 :rules="geraeteRules"
                 :disabled="!umfrage.geraeteanzahl[2][2] || blockInput"
@@ -368,6 +369,7 @@
                 class="pr-5"
               />
               <v-text-field
+                ref="druckerToner"
                 v-model="umfrage.geraeteanzahl[3][1]"
                 :rules="nichtnegativRules"
                 :disabled="!umfrage.geraeteanzahl[2][2] || blockInput"
@@ -384,6 +386,7 @@
                 :disabled="blockInput"
               />
               <v-text-field
+                ref="beamer"
                 v-model="umfrage.geraeteanzahl[4][1]"
                 :rules="geraeteRules"
                 :disabled="!umfrage.geraeteanzahl[4][2] || blockInput"
@@ -400,6 +403,7 @@
                 :disabled="blockInput"
               />
               <v-text-field
+                ref="server"
                 v-model="umfrage.geraeteanzahl[5][1]"
                 :rules="geraeteRules"
                 :disabled="!umfrage.geraeteanzahl[5][2] || blockInput"
@@ -482,22 +486,9 @@ export default {
     },
 
     //Rules for input validation
-    geraeteRules: [
-      (v) =>
-        !!v || i18n.t('userSurvey.Survey.geraeteRules_1'),
-      (v) =>
-        parseInt(v) != 0 ||
-        i18n.t('userSurvey.Survey.geraeteRules_1'),
-      (v) => parseInt(v) > 0 || i18n.t('userSurvey.Survey.geraeteRules_3'),
-    ],
-    nichtnegativRules: [
-      (v) => !!v || i18n.t('userSurvey.Survey.nichtnegativRules_0'),
-      (v) => parseInt(v) >= 0 || i18n.t('userSurvey.Survey.nichtnegativRules_1'),
-    ],
-    absolutpositivRules: [
-      (v) => !!v || i18n.t('userSurvey.Survey.absolutpositivRules_0'),
-      (v) => parseInt(v) > 0 || i18n.t('userSurvey.Survey.absolutpositivRules_1'),
-    ],
+    geraeteRules: [],
+    nichtnegativRules: [],
+    absolutpositivRules: [],
   }),
   computed: {
     /**
@@ -505,7 +496,7 @@ export default {
      */
     possibleYears: function() {
       const beginningYear = 2018;
-      let currentYear = new Date().getFullYear();
+      let currentYear = new Date().getFullYear() - 1;
       return Array.from(new Array(currentYear - beginningYear + 1), (x, i) => i + beginningYear).reverse();
     },
 
@@ -524,14 +515,61 @@ export default {
     }
   },
 
+  watch: {
+    '$i18n.locale': function() {
+      this.setRules();
+
+      // revalidate textfields to change language of error messages
+      this.$refs.bezeichnung.validate();
+      this.$refs.anzahlMitarbeiter.validate();
+      for (var i = 0; i < this.gebaeude.length; i++) {
+        this.$refs["flaeche" + i][0].validate();
+      }
+      this.$refs.multifunktionsgeraete.validate();
+      this.$refs.multifunktionsgeraeteToner.validate();
+      this.$refs.drucker.validate();
+      this.$refs.druckerToner.validate();
+      this.$refs.beamer.validate();
+      this.$refs.server.validate();
+    },
+  },
+
   created() {
-      //this.fetchGebaeudeData();
+      this.setRules();
       this.fetchGebaeudeUndZaehlerData();
       this.umfrage.umfrageID = JSON.parse(JSON.stringify(this.umfrageidprop));
       this.fetchUmfrageData();
   },
 
   methods: {
+    /**
+     * This Method is needed bc of i18n. Otherwise after changing the language the rules would not change.
+     */
+    setRules: function(){
+      this.universalRules = [
+        (v) => !!v || i18n.t('userSurvey.Survey.universalRules_0'),
+      ],
+
+      this.geraeteRules = [
+        (v) =>
+          !!v || i18n.t('userSurvey.Survey.geraeteRules_1'),
+        (v) =>
+          parseInt(v) != 0 ||
+          i18n.t('userSurvey.Survey.geraeteRules_1'),
+        (v) => parseInt(v) > 0 || i18n.t('userSurvey.Survey.geraeteRules_3'),
+      ]
+
+      this.nichtnegativRules = [
+        (v) => !!v || i18n.t('userSurvey.Survey.nichtnegativRules_0'),
+        (v) => parseInt(v) >= 0 || i18n.t('userSurvey.Survey.nichtnegativRules_1'),
+      ]
+
+      this.absolutpositivRules = [
+        (v) => !!v || i18n.t('userSurvey.Survey.absolutpositivRules_0'),
+        (v) => parseInt(v) > 0 || i18n.t('userSurvey.Survey.absolutpositivRules_1'),
+      ]
+    },
+
     flipBearbeiten: function() {
         this.blockInput = !this.blockInput
         this.displaySuccess = false

@@ -4,7 +4,7 @@
       class="mx-auto"
       :max-width="constants.v_card_max_width"
     >
-      <v-card-title>
+      <v-card-title class="headerClass">
         {{ $t('userSurveyManagement.SurveyOverview.GespeicherteUmfragen') }}
       </v-card-title>
 
@@ -16,37 +16,68 @@
         outlined
         class="pb-2"
       >
-        <v-list-item
-          three-line
-        >
-          <v-list-item-content>
-            <div class="text-overline mb-1">
-              {{ $t('common.Bilanzierungsjahr') }} {{ umfrage.jahr }}
-            </div> 
-            <v-list-item-title class="text-h5 mb-4">
-              {{ umfrage.bezeichnung }}
-            </v-list-item-title>
+        <v-container class="mx-1">
+          <v-row>
+            <v-col class="pb-0">
+              <div class="text-overline">
+                {{ $t('common.Bilanzierungsjahr') }} {{ umfrage.jahr }}
+              </div> 
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col class="pt-1 pb-0">
+              <v-list-item-title class="text-h5">
+                {{ umfrage.bezeichnung }}
+              </v-list-item-title>
+            </v-col>
+          </v-row>
+          <!-- Desktop design in one row -->
+          <v-row v-if="!$vuetify.breakpoint.mobile">
+            <v-col cols="7">
+              <CopyButton
+                :button-text="$t('userSurveyManagement.SurveyOverview.LinkZurMitarbeiterumfrage')"
+                :text-to-copy="mitarbeiterumfrageBaseURL + umfrage._id"
+              />
+            </v-col> 
+            <v-col
+              cols=""
+              class="text-right"
+              align-self="start"
+            >
+              <b>{{ umfrage.mitarbeiterUmfrageRef.length }}/{{ umfrage.mitarbeiteranzahl }} </b>  {{ $t('userSurveyManagement.SurveyOverview.MitarbeiterAnzahl') }}
+            </v-col>
+            <v-col
+              cols="1"
+              align-self="start"
+            >
+              <v-progress-circular 
+                :color=" umfrage.mitarbeiterUmfrageRef.length == umfrage.mitarbeiteranzahl ? 'primary' : 'grey'"
+                :value="100*(umfrage.mitarbeiterUmfrageRef.length / umfrage.mitarbeiteranzahl)"
+                :size="35"
+              />
+            </v-col>
+          </v-row>
+
+          <!-- Mobile design in two rows -->
+          <template v-else>
             <v-row>
-              <v-col
-                cols="7"
-              >
+              <v-col>
                 <CopyButton
-                  :button-text="$t('userSurveyManagement.SurveyOverview.LinkZurMitarbeiterumfrage')"
+                  :button-text="$t('userSurveyManagement.SurveyOverview.LinkZurMitarbeiterumfrage_short')"
                   :text-to-copy="mitarbeiterumfrageBaseURL + umfrage._id"
                 />
               </v-col>
-              <v-col 
-                cols=""
-                class="text-right"
+            </v-row>
+            <v-row>  
+              <v-col
+                class="text-left"
                 align-self="start"
               >
-                <div class="py-2">
-                  <b>{{ umfrage.mitarbeiterUmfrageRef.length }}/{{ umfrage.mitarbeiteranzahl }} </b>  {{ $t('userSurveyManagement.SurveyOverview.MitarbeiterAnzahl') }}
-                </div>
+                <b>{{ umfrage.mitarbeiterUmfrageRef.length }}/{{ umfrage.mitarbeiteranzahl }} </b>  {{ $t('userSurveyManagement.SurveyOverview.MitarbeiterAnzahl') }}
               </v-col>
               <v-col
-                cols="1"
-                align-self="start"
+                cols="2"
+                align-self="end"
               >
                 <v-progress-circular 
                   :color=" umfrage.mitarbeiterUmfrageRef.length == umfrage.mitarbeiteranzahl ? 'primary' : 'grey'"
@@ -55,10 +86,13 @@
                 />
               </v-col>
             </v-row>
-          </v-list-item-content>
-        </v-list-item>
+          </template>
+        </v-container>  
 
-        <v-card-actions>
+
+        <v-card-actions
+          style="display: flex; flex-wrap: wrap; gap:12px"
+        >
           <!-- Umfragen bearbeiten -->
           <v-dialog
             v-model="dialog[index]"
@@ -406,3 +440,12 @@ export default {
 }
   
 </script>
+
+<style lang="scss">
+  .headerClass{
+    white-space: wrap;
+    word-break: normal;
+    display: block;
+    hyphens: auto;
+  }
+</style>
