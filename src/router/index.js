@@ -12,6 +12,22 @@ import ShareSurvey from '../views/ShareSurvey.vue'
 
 Vue.use(VueRouter)
 
+function surveyTabSelect(route) {
+  let props = {}
+
+  if(route.query.tab) {
+    props = {
+      tab: parseInt(route.query.tab)
+    }
+  }
+  else {
+    props = {
+      tab: 0
+    }
+  }
+  return props
+}
+
 const routes = [
   {
     path: '/',
@@ -25,6 +41,7 @@ const routes = [
     path: '/survey',
     name: 'Survey',
     component: Home,
+    props: surveyTabSelect,
     meta: { 
       requiresAuth: true 
     }

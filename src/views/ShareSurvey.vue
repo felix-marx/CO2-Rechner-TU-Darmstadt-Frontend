@@ -30,7 +30,7 @@
             </v-row>
             <v-row v-if="!response.hinzugefuegt">
               <v-col>
-                Die Umfrage "{{ response.bezeichnung }}" wurde bereits mit Ihnen geteilt und befindet sich in Ihrem Konto.
+                Die Umfrage "{{ response.bezeichnung }}" wurde bereits mit Ihnen geteilt und befindet sich in Ihrer Umfragenübersicht.
               </v-col>
             </v-row>
 
@@ -38,7 +38,7 @@
               <v-col>
                 <v-btn
                   color="primary"
-                  @click="$router.push({path: '/survey'})"
+                  @click="$router.push('/survey?tab=1')"
                 >
                   Zurück zum Dashboard
                 </v-btn>
