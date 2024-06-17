@@ -14,7 +14,6 @@
       <v-card
         class="mt-3 mx-auto"
         :max-width="constants.v_card_max_width"
-        height="100%"
       >
         <v-card-title>
           Survey Share
@@ -23,16 +22,43 @@
         <v-divider />
 
         <v-container>
-          <v-row>
+          <template v-if="displaySuccess">
+            <v-row v-if="response.hinzugefuegt">
+              <v-col>
+                Es wurden zur Umfrage "{{ response.bezeichnung }}" eingeladen. Die Umfrage wurde zu Ihrem Konto hinzugefügt.
+              </v-col>
+            </v-row>
+            <v-row v-if="!response.hinzugefuegt">
+              <v-col>
+                Die Umfrage "{{ response.bezeichnung }}" wurde bereits mit Ihnen geteilt und befindet sich in Ihrem Konto.
+              </v-col>
+            </v-row>
+
+            <v-row>
+              <v-col>
+                <v-btn
+                  color="primary"
+                  @click="$router.push({path: '/survey'})"
+                >
+                  Zurück zum Dashboard
+                </v-btn>
+              </v-col>
+            </v-row>
+          </template>
+
+          <v-row v-if="displayLoading">
             <v-col>
-              Es wurden zur Umfrage "{{ umfrageID }}" eingeladen.
+              <loadingAnimation />
             </v-col>
           </v-row>
-          <v-row>
+          <v-row v-if="displayError">
             <v-col>
-              <v-btn>
-                Anfrage annehmen
-              </v-btn>
+              <v-alert
+                type="error"
+                text
+              >
+                Es ist ein Fehler aufgetreten: {{ errorMessage }}
+              </v-alert>
             </v-col>
           </v-row>
         </v-container>
@@ -54,13 +80,23 @@ export default {
 
   components: {
     Header,
-    Footer
+    Footer,
+    loadingAnimation
   },
 
   data: () => ({
     constants: constants,
     tabList: [],
     umfrageID: null,
+    response: {
+      bezeichnung: null,
+      hinzugefuegt: null,
+    },
+    errorMessage: null,
+
+    displayLoading: false,
+    displaySuccess: false,
+    displayError: false,
   }),
 
   computed:{
@@ -78,6 +114,7 @@ export default {
   created() {
     this.setTabList();
     this.umfrageID = this.$route.params.umfrageID
+    this.displayLoading = true;
 
     this.shareUmfrageRequest();
   },
@@ -103,6 +140,20 @@ export default {
         .then((response) => response.json())
         .then((data) => {
           console.log(data);
+          this.displayLoading = false;
+
+          if (data.status == "success") {
+            this.response = data.data;
+            this.displaySuccess = true;
+          } 
+          else {
+            this.errorMessage = data.error.message + " (Code: " + data.error.code + ")";
+            this.displayError = true;
+          }
+
+          console.log(this.displayLoading);
+          console.log(this.displaySuccess);
+          console.log(this.displayError);
         })
         .catch((error) => {
           console.error("Error:", error);
