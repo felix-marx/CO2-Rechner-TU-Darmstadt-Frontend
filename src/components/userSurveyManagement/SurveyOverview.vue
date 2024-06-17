@@ -87,6 +87,15 @@
               </v-col>
             </v-row>
           </template>
+
+          <v-row>
+            <v-col>
+              <CopyButton
+                :button-text="$t('userSurveyManagement.SurveyOverview.LinkZumUmfrageTeilen')"
+                :text-to-copy="umfrageTeilenBaseURL + umfrage._id"
+              />
+            </v-col>
+          </v-row>
         </v-container>  
 
 
@@ -298,6 +307,7 @@ export default {
 
     // base url for Mitarbeiterumfragen
     mitarbeiterumfrageBaseURL: process.env.VUE_APP_URL + '/survey/',
+    umfrageTeilenBaseURL: process.env.VUE_APP_URL + '/share/',
   }),
 
   computed:{
