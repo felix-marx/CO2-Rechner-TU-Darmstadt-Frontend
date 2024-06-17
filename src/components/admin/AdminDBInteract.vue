@@ -22,20 +22,6 @@
             MongoDB v5.0.6
           </v-col>
         </v-row>
-        <v-row>
-          <v-col
-            cols="3"
-            class="mx-4"
-          >
-            Monitoring:
-          </v-col>
-          <v-col class="mx-4">
-            <a
-              href="https://cloud.mongodb.com/freemonitoring/cluster/FJISZV76EW3BHYEPQZKEOLCQTMZ457BD"
-              target="_blank"
-            >https://cloud.mongodb.com/freemonitoring/cluster/FJISZV76EW3BHYEPQZKEOLCQTMZ457BD</a>
-          </v-col>
-        </v-row>
       </v-container>
     </v-card>
 
