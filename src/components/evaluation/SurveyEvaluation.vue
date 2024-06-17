@@ -932,7 +932,7 @@ export default {
      */
     setChartData: function() {
       this.computeBarWidth();
-      
+
       this.generalChartdataBar.datasets[0].maxBarThickness = this.barWidth
       this.chartdataDienstreisenBar.datasets[0].maxBarThickness = this.barWidth
       this.chartdataPendelwegeBar.datasets[0].maxBarThickness = this.barWidth
@@ -963,15 +963,18 @@ export default {
     computeBarWidth: function() {
       let maxBars = Math.max(Object.keys(this.aggregatedDienstreisen).length, Object.keys(this.aggregatedPendelwege).length, Object.keys(this.responsedata.emissionenITGeraeteAufgeteilt).length)
 
-      let chartWidths = ["bar-dienstreisen", "bar-pendelwege", "bar-itgeraete"].map(x => this.$refs[x] ? this.$refs[x][0].$refs.canvas.width : 0)
+      let chartWidths = ["bar-dienstreisen", "bar-pendelwege", "bar-itgeraete"].map(x => this.$refs[x] ? this.$refs[x][0].$refs.canvas.clientWidth : 0)
       let chartWidth = Math.max(...chartWidths)
 
-      let halfChartWidth = this.$refs["bar-gesamt"].$refs.canvas.width
+      let halfChartWidth = this.$refs["bar-gesamt"].$refs.canvas.clientWidth
+
+      let halfWidth = halfChartWidth / 4 * 0.6
+      let fullWidth = chartWidth / maxBars * 0.75
 
       if (chartWidth == 0) {
-        this.barWidth = halfChartWidth / 4 * 0.75
+        this.barWidth = halfWidth
       } else {
-        this.barWidth = Math.min(chartWidth / maxBars * 0.75, halfChartWidth / 4 * 0.75)
+        this.barWidth = Math.min(halfWidth, fullWidth)
       }
     },
 
