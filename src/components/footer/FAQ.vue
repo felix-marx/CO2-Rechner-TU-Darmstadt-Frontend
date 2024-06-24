@@ -492,7 +492,7 @@
                       <p>
                         {{ $t('footer.FAQ.Antwort_2_10_3') }} 
                         <a
-                          href="https://github.com/felix-marx/CO2-Rechner-TU-Darmstadt-Frontend"
+                          href="https://github.com/Anhilly/co2-rechner-TU-Darmstadt-backend"
                           target="_blank"
                         >{{ $t('common.GithubRepo') }}</a>
                       </p>
