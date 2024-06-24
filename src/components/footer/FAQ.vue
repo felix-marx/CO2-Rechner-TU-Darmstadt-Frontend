@@ -6,7 +6,7 @@
       :tabs="tabList"
       :display-user-setting="false"
       :display-back-button="true"
-      :display-login-button="true"
+      :display-login-button="false"
     />
     <v-main :class="$vuetify.breakpoint.mobile ? 'mb-0' : 'mb-16'">
       <v-container>
