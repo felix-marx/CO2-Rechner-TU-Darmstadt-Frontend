@@ -376,7 +376,7 @@
 
     <v-card
       v-if="showLoading || responsedata.auswertungFreigegeben"
-      class="mx-auto"
+      class="mx-auto px-4 pt-4"
       :max-width="constants.v_card_max_width"
     >
       <LoadingAnimation v-if="showLoading" />
@@ -384,7 +384,7 @@
         v-if="!this.$props.shared && responsedata.auswertungFreigegeben && !showLoading"
         ref="linkSharing"
         :mitarbeiter-link="linkshareBaseURL + responsedata.id"
-        :link-ziel="$t('evaluation.surveyEvaluation.Auswertung')"
+        :text="$t('componentParts.LinkSharingComponent.Share_Auswertung')"
       />
     </v-card>
 

@@ -607,8 +607,9 @@
       "UnvollstaendigeEnergieverbrauch_2": ", we unfortunately have incomplete data on energy consumption at the moment!"
     },
     "LinkSharingComponent": {
-      "Link_0": "Please forward the link below to your employees to give them access to the ",
-      "Link_1": ":",
+      "Share_Mitarbeiterumfrage": "Please forward the link below to your employees to give them access to the employee survey:",
+      "Share_Umfrage": "Please forward the link below to your employees to give them access to the survey:",
+      "Share_Auswertung": "Please forward the link below to your employees to give them access to the analysis:",
       "Link_Button": "Copy link"
     }
   },
@@ -640,13 +641,16 @@
       "LinkZurMitarbeiterumfrage": "Copy link to survey for employees",
       "LinkZurMitarbeiterumfrage_short": "Copy link to survey for employees",
       "LinkZumUmfrageTeilen": "Copy link to share survey",
-      "Anzeigen": "Display",
+      "Bearbeiten": "Edit",
+      "Teilen": "Share",
       "LoeschenDerUmfrage_0": "Delete survey",
       "LoeschenDerUmfrage_1": "Are you sure that you ",
       "LoeschenDerUmfrage_2": " want to delete the survey? This action cannot be undone.",
       "LoeschenBestaetigen": "I confirm",
       "ServerNichtErreichbar": "Server is unavailable.",
-      "MitarbeiterAnzahl": "Employees have completed the survey"
+      "MitarbeiterAnzahl": "Employees have completed the survey",
+      "ShareDialog_Title": "Share Survey",
+      "ShareDialog_Text": "Send the link below to another person to grant them access to the survey."
     }
   },
   "header": {

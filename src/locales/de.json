@@ -608,8 +608,9 @@
       "UnvollstaendigeEnergieverbrauch_2": " haben wir aktuell leider nur unvollständige Daten zum Energieverbrauch!"
     },
     "LinkSharingComponent": {
-      "Link_0": "Leiten Sie den folgenden Link an Ihre Mitarbeitenden weiter, um ihnen Zugang zur ",
-      "Link_1": " zu gewähren:",
+      "Share_Mitarbeiterumfrage": "Leiten Sie den folgenden Link an Ihre Mitarbeitenden weiter, um ihnen Zugang zur Mitarbeitendenumfrage zu gewähren:",
+      "Share_Umfrage": "Leiten Sie den folgenden Link an Ihre Mitarbeitenden weiter, um ihnen Zugang zur Umfrage zu gewähren:",
+      "Share_Auswertung": "Leiten Sie den folgenden Link an Ihre Mitarbeitenden weiter, um ihnen Zugang zur Auswertung zu gewähren:",
       "Link_Button": "Link kopieren"
     }
   },
@@ -641,13 +642,16 @@
       "LinkZurMitarbeiterumfrage": "Link zur Mitarbeitendenumfrage kopieren",
       "LinkZurMitarbeiterumfrage_short": "Mitarbeitendenumfrage-Link",
       "LinkZumUmfrageTeilen": "Link zum Teilen der Umfrage kopieren",
-      "Anzeigen": "Anzeigen",
+      "Bearbeiten": "Bearbeiten",
+      "Teilen": "Teilen",
       "LoeschenDerUmfrage_0": "Löschen der Umfrage",
       "LoeschenDerUmfrage_1": "Sind Sie sicher, dass Sie die Umfrage ",
       "LoeschenDerUmfrage_2": " löschen möchten? Diese Aktion kann nicht zurückgenommen werden.",
       "LoeschenBestaetigen": "Ich bestätige",
       "ServerNichtErreichbar": "Server nicht erreichbar.",
-      "MitarbeiterAnzahl": "Mitarbeitende haben ausgefüllt"
+      "MitarbeiterAnzahl": "Mitarbeitende haben ausgefüllt",
+      "ShareDialog_Title": "Umfrage Teilen",
+      "ShareDialog_Text": "Senden Sie unten aufgeführten Link an eine andere Person, um Ihr Zugriff auf die Umfrage zu gewähren."
     }
   },
   "header": {

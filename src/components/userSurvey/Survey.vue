@@ -403,7 +403,7 @@
     <!-- Component for showing Link for employees after sending formular data. -->
     <v-card
       v-if="displaySurveyLink || displayLoadingAnimation"
-      class="mt-2 mx-auto"
+      class="mx-auto mt-2 px-4 pt-4"
       elevation="2"
       outlined
       :max-width="constants.v_card_max_width"
@@ -413,7 +413,7 @@
         v-if="displaySurveyLink"
         ref="linkSharing"
         :mitarbeiter-link="mitarbeiterumfrageBaseURL + responseData.umfrageID"
-        :link-ziel="$t('userSurvey.Survey.Umfrage')"
+        :text="$t('componentParts.LinkSharingComponent.Share_Mitarbeiterumfrage')"
       />
     </v-card>
 

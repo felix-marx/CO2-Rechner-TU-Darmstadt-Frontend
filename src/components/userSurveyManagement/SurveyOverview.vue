@@ -122,7 +122,7 @@
                 >
                   mdi-clipboard-edit
                 </v-icon>
-                <span>{{ $t('userSurveyManagement.SurveyOverview.Anzeigen') }}</span>
+                <span>{{ $t('userSurveyManagement.SurveyOverview.Bearbeiten') }}</span>
               </v-btn>
             </template>
             <v-card>
@@ -148,6 +148,59 @@
                   :umfrageidprop="umfrage._id"
                 />
               </v-card>
+            </v-card>
+          </v-dialog>
+
+                    <!-- Umfrage teilen -->
+                    <v-dialog
+            v-model="shareDialog[index]"
+            :max-width="constants.v_dialog_max_width"
+          >
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn
+                class="mx-2"
+                color="primary"
+                rounded
+                v-bind="attrs"
+                v-on="on"
+              >
+                <v-icon 
+                  left 
+                >
+                  mdi-export-variant
+                </v-icon>
+                <span>{{ $t('userSurveyManagement.SurveyOverview.Teilen') }}</span>
+                <v-icon 
+                  right 
+                >
+                  mdi-share
+                </v-icon>
+              </v-btn>
+            </template>
+              
+            <v-card class="pa-0">
+              <v-card-title class="text-h5 grey lighten-2 headerClass">
+                {{ $t('userSurveyManagement.SurveyOverview.ShareDialog_Title') }}
+              </v-card-title>
+
+              <v-card-text class="px-4 pt-4">
+                <v-container>
+                  <v-row>
+                    <v-col class="black--text">
+                      {{ $t('userSurveyManagement.SurveyOverview.ShareDialog_Text') }}
+                    </v-col>
+                  </v-row>
+                  <v-row>
+                    <v-col>
+                      <LinkSharingComponent
+                        :mitarbeiter-link="umfrageTeilenBaseURL + umfrage._id"
+                      />
+                    </v-col>
+                  </v-row>
+                </v-container>
+              </v-card-text>
+
+              <v-divider />
             </v-card>
           </v-dialog>
 
@@ -281,6 +334,7 @@
 import EditSurvey from "./EditSurvey.vue";
 import SurveyEvaluation from "../evaluation/SurveyEvaluation.vue";
 import CopyButton from '../componentParts/CopyButton.vue';
+import LinkSharingComponent from "../componentParts/LinkSharingComponent";
 import i18n from "../../i18n";
 import constants from "../../const.js";
 
@@ -289,6 +343,7 @@ export default {
     EditSurvey,
     SurveyEvaluation,
     CopyButton,
+    LinkSharingComponent,
   },
 
   data: () => ({
@@ -297,6 +352,7 @@ export default {
     deleteSurvey: [],
     dialog: [], 
     dialogAuswertung: [],
+    shareDialog: [],
     errors: [],
     message: "",
 
