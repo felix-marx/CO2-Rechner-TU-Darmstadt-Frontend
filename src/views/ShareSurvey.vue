@@ -12,25 +12,25 @@
       class="mb-16 mx-3"
     >
       <v-card
-        class="mt-3 mx-auto"
+        class="mt-3 mx-auto pb-4"
         :max-width="constants.v_card_max_width"
       >
         <v-card-title>
-          Survey Share
+          {{ $t('shareSurvey.Title') }}
         </v-card-title>
 
         <v-divider />
 
-        <v-container>
+        <v-container class="mx-7">
           <template v-if="displaySuccess">
             <v-row v-if="response.hinzugefuegt">
               <v-col>
-                Es wurden zur Umfrage "{{ response.bezeichnung }}" eingeladen. Die Umfrage wurde zu Ihrem Konto hinzugefügt.
+                {{ $t('shareSurvey.TeilenErfolgreich_1') }}{{ response.bezeichnung }}{{ $t('shareSurvey.TeilenErfolgreich_2') }}
               </v-col>
             </v-row>
             <v-row v-if="!response.hinzugefuegt">
               <v-col>
-                Die Umfrage "{{ response.bezeichnung }}" wurde bereits mit Ihnen geteilt und befindet sich in Ihrer Umfragenübersicht.
+                {{ $t('shareSurvey.SchonVorhanden_1') }}{{ response.bezeichnung }}{{ $t('shareSurvey.SchonVorhanden_2') }}
               </v-col>
             </v-row>
 
@@ -40,7 +40,7 @@
                   color="primary"
                   @click="$router.push('/survey?tab=1')"
                 >
-                  Zurück zum Dashboard
+                  {{ $t('shareSurvey.BackButton') }}
                 </v-btn>
               </v-col>
             </v-row>
@@ -51,16 +51,25 @@
               <loadingAnimation />
             </v-col>
           </v-row>
-          <v-row v-if="displayError">
-            <v-col>
-              <v-alert
-                type="error"
-                text
-              >
-                Es ist ein Fehler aufgetreten: {{ errorMessage }}
-              </v-alert>
-            </v-col>
-          </v-row>
+
+          <template v-if="displayError">
+            <v-row>
+              <v-col>
+                {{ $t('shareSurvey.TeilenFehler') }}
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col>
+                <v-alert
+                  class="mb-0"
+                  type="error"
+                  text
+                >
+                  {{ errorMessage }}
+                </v-alert>
+              </v-col>
+            </v-row>
+          </template>
         </v-container>
       </v-card>
     </v-main>
@@ -74,6 +83,7 @@ import Footer from "@/components/footer/Footer";
 import Header from "@/components/header/Header";
 import loadingAnimation from '@/components/componentParts/LoadingAnimation.vue';
 import constants from "../const.js";
+import i18n from "../i18n";
 
 export default {
   name: "Login",
@@ -122,7 +132,7 @@ export default {
   methods: {
     setTabList(){
       this.tabList = [
-        { id: 0, title: 'Survey Share', componentType: loadingAnimation},
+        { id: 0, title: i18n.t('shareSurvey.Tab'), componentType: loadingAnimation},
       ]
     },
 

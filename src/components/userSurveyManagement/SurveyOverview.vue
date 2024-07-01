@@ -151,8 +151,8 @@
             </v-card>
           </v-dialog>
 
-                    <!-- Umfrage teilen -->
-                    <v-dialog
+          <!-- Umfrage teilen -->
+          <v-dialog
             v-model="shareDialog[index]"
             :max-width="constants.v_dialog_max_width"
           >

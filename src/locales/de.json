@@ -678,6 +678,16 @@
       "ZurAdminuebersicht": "Zur Adminübersicht"
     }
   },
+  "shareSurvey": {
+    "Tab" : "Umfrage Teilen",
+    "Title": "Eine Umfrage wurde mit Ihnen geteilt",
+    "TeilenErfolgreich_1": "Es wurden zur Umfrage \"",
+    "TeilenErfolgreich_2": "\" eingeladen. Die Umfrage wurde zu Ihrem Konto hinzugefügt.",
+    "SchonVorhanden_1": "Die Umfrage \"",
+    "SchonVorhanden_2": "\" wurde bereits mit Ihnen geteilt und befindet sich in Ihrer Umfragenübersicht.",
+    "BackButton": "Zurück zur Umfragenübersicht",
+    "TeilenFehler": "Beim Teilen der Umfrage ist ein Fehler aufgetreten. Wenden Sie sich bitte an die Person, von der Sie den Link erhalten haben und überprüfen Sie, ob der Link korrekt ist."
+  },
   "common": {
     "Ja": "Ja",
     "Jahr": "Jahr",
