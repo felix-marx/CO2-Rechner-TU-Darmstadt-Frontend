@@ -650,7 +650,8 @@
       "ServerNichtErreichbar": "Server is unavailable.",
       "MitarbeiterAnzahl": "Employees have completed the survey",
       "ShareDialog_Title": "Share Survey",
-      "ShareDialog_Text": "Send the link below to another person to grant them access to the survey."
+      "ShareDialog_Text_1": "Send the link below to a person to grant them access to the survey. This person can then edit, analyse and delete the survey.",
+      "ShareDialog_Text_2": "Note: This is not the link to give employees access to the employee survey. You can find this link above the Share button."
     }
   },
   "header": {

@@ -651,7 +651,8 @@
       "ServerNichtErreichbar": "Server nicht erreichbar.",
       "MitarbeiterAnzahl": "Mitarbeitende haben ausgefüllt",
       "ShareDialog_Title": "Umfrage Teilen",
-      "ShareDialog_Text": "Senden Sie unten aufgeführten Link an eine andere Person, um Ihr Zugriff auf die Umfrage zu gewähren."
+      "ShareDialog_Text_1": "Senden Sie unten aufgeführten Link an eine Person, um Ihr Zugriff auf die Umfrage zu gewähren. Diese Person kann die Umfrage dann bearbeiten, auswerten und löschen.",
+      "ShareDialog_Text_2": "Hinweis: Das ist nicht der Link, um Mitarbeitenden Zugriff auf die Mitarbeitendenumfrage zu ermöglichen. Diesen Link finden Sie über dem Teilen Knopf."
     }
   },
   "header": {
