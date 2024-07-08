@@ -292,6 +292,7 @@
     "Footer": {
       "Impressum": "Legal note",
       "Datenschutzerklearung": "Privacy policy",
+      "Datenschutzerklearung_kurz": "Privacy policy",
       "FAQ": "FAQ"
     },
     "Contact": {
@@ -362,6 +363,8 @@
       "UmfrageTzdSpeichern": "Save survey anyway",
       "WeitereUmfrageErstellen": "Create more surveys",
       "Umfrage": "survey",
+
+      "universalRules_0": "Must be entered.",
       
       "geraeteRules_1": "Deselect the device if you do not use it.",
       "geraeteRules_2": "Deselect the device if you do not use it.",
@@ -434,37 +437,44 @@
       "dienstreiseMedium_Hybrid": "Plug-in hybrid",
       "dienstreiseMedium_Elektro": "Electric",
       "dienstreiseMedium_Auto": "Passenger car",
+      "dienstreiseMedium_Verbrenner": "Combustion engine",
       
       "Pkw_Motortyp": "Motortype",
-      "Pkw_diesel": "diesel",
-      "Pkw_benzin": "petrol / gasoline",
-      "Pkw_Hybrid": "plug-in hybrid",
-      "Pkw_Elektro": "electric",
-      "Pkw_pendelweg_benzin": "Passenger car - petrol / gasoline",
-      "Pkw_pendelweg_diesel": "Passenger car - diesel",
-      "Pkw_pendelweg_hybrid": "Passenger car - plug-in hybrid",
-      "Pkw_pendelweg_elektro": "Passenger car - electric",
+      "Pkw_diesel": "Diesel",
+      "Pkw_benzin": "Petrol / gasoline",
+      "Pkw_Hybrid": "Plug-in hybrid",
+      "Pkw_Elektro": "Electric",
+      "Pkw_pendelweg_benzin": "Passenger car - Petrol / gasoline",
+      "Pkw_pendelweg_diesel": "Passenger car - Diesel",
+      "Pkw_pendelweg_hybrid": "Passenger car - Plug-in hybrid",
+      "Pkw_pendelweg_elektro": "Passenger car - Electric",
+      "Pkw_pendelweg_verbrenner": "Passenger car - Combustion engine",
 
       "Flugstrecke": "Flying distance",
       "EinfacheDistanz": "One-way distance",
+
+      "flugstreckentyp": "Flight route type",
       "flugstreckeListe_0": "Long distance",
       "flugstreckeListe_1": "Short distance",
       "flugstreckeListe_2": "Domestic",
       "flugstreckeListe_3": "International",
 
-      "flugklasse_average": "no information",
-      "flugklasse_economy": "economy",
-      "flugklasse_premiumeconomy": "premium economy",
-      "flugklasse_business": "business",
-      "flugklasse_first": "first",
+      "Flugklasse": "Flight class",
+      "flugklasse_average": "No information",
+      "flugklasse_economy": "Economy",
+      "flugklasse_premiumeconomy": "Premium economy",
+      "flugklasse_business": "Business",
+      "flugklasse_first": "First",
       
       "TageBuero": "How many days per week are you at the office?",
       "TageBuero_label": "Days in the office",
       
       "Dienstreise_0": "What business trips have you ",
-      "Dienstreise_1": " taken?",
-      "Dienstreise_tooltip": "You can use Google Maps etc. to calculate the distance. Domestic flights are flights within Germany (e.g. Frankfurt - Berlin). Short distance flights are flights within the EU (e.g. London - Madrid). Long distance flights are flights over 3700 km that begin or end in Germany (e.g. Frankfurt - Bangkok). International flights are long distance flights that neither start nor end in Germany (e.g. Madrid - Bangkok). If you no longer have any information about your flight class, you can simply select 'No information'. If you have flown the same route in the same class several times, you can also enter the total. The one-way distance is the distance between your point of departure and your destination, measured in one direction.",
-      
+      "Dienstreise_1": " taken?",     
+      "Dienstreise_tooltip_1": "You can use Google Maps etc. to calculate the distance.",
+      "Dienstreise_tooltip_2": "Domestic flights are flights within Germany (e.g. Frankfurt - Berlin). Short distance flights are flights within the EU (e.g. London - Madrid). Long distance flights are flights over 3700 km that begin or end in Germany (e.g. Frankfurt - Bangkok). International flights are long distance flights that neither start nor end in Germany (e.g. Madrid - Bangkok).",
+      "Dienstreise_tooltip_3": "If you no longer have any information about your flight class, you can simply select 'No information'. If you have flown the same route in the same class several times, you can also enter the total. The one-way distance is the distance between your point of departure and your destination, measured in one direction.",
+
       "IT_Geraete": "Which IT devices do you use at work?",
       "IT_Geraete_tooltip": "Jointly used IT devices such as multifunctional printers are not included here.",
       "IT_Geraete_Notebooks": "Notebooks",
@@ -497,16 +507,16 @@
       "MitfahrerRules_1": "Please enter a positive number of co-travellers.",
       
       "EingabeValidierung_Verkehrsmedium": "The means of public transport has not been entered.",
-      "EingabeValidierung_Pendelweg_0": "For the means of transport: XYZ, ",
-      "EingabeValidierung_Pendelweg_1": " the commuting distance entered is not valid.",
-      "EingabeValidierung_Fahrgemeinschaft_0": "For the means of transport: XYZ ",
+      "EingabeValidierung_Pendelweg_0": "For the means of transport ",
+      "EingabeValidierung_Pendelweg_1": ", the commuting distance entered is not valid.",
+      "EingabeValidierung_Fahrgemeinschaft_0": "For the means of transport ",
       "EingabeValidierung_Fahrgemeinschaft_1": "in a privately organised carpool, the number of co-travellers has not been entered.",
       "EingabeValidierung_TageBuero": "Please enter the days per week that you are at the office.",
       "EingabeValidierung_Dienstreise_0": "For a business trip by plane, the type of flight distance has not been entered.",
-      "EingabeValidierung_Dienstreise_1": "For the business trip by XYZ, ",
-      "EingabeValidierung_Dienstreise_2": " the distance entered is not valid.",
-      "EingabeValidierung_Gereate_0": "For the device: XYZ ",
-      "EingabeValidierung_Gereate_1": "  selected, the quantity has not been entered."
+      "EingabeValidierung_Dienstreise_1": "For the business trip by ",
+      "EingabeValidierung_Dienstreise_2": ", the distance entered is not valid.",
+      "EingabeValidierung_Gereate_0": "For the selected device ",
+      "EingabeValidierung_Gereate_1": ", the quantity has not been entered."
     },
     "surveyCompleted": {
       "UmfrageVollstaendig_0": "This survey is already completed.",
@@ -627,7 +637,8 @@
     },
     "SurveyOverview": {
       "GespeicherteUmfragen": "Saved surveys",
-      "LinkZurMitarbeiterumfrage": "Copy link to access survey for employees",
+      "LinkZurMitarbeiterumfrage": "Copy link to survey for employees",
+      "LinkZurMitarbeiterumfrage_short": "Copy link to survey for employees",
       "Anzeigen": "Display",
       "LoeschenDerUmfrage_0": "Delete survey",
       "LoeschenDerUmfrage_1": "Are you sure that you ",
@@ -648,15 +659,15 @@
       "LoeschenDesAccounts": "Deleting accounts",
       "AccountLoeschen_bestaetigen_0": "Do you really want to delete your account?",
       "AccountLoeschen_bestaetigen_1": "This action cannot be undone and all your surveys will be deleted!",
-      "AccountLoeschen_bestaetigen_2": "Please confirm by entering “Delete” in the field below:",
+      "AccountLoeschen_bestaetigen_2": "Please confirm by entering \"delete\" in the field below:",
       "AccountGeloescht_0": "Your account has been successfully deleted. You can now close this window.",
       "AccountNichtGeloescht": "Your account could not be deleted. Please try again.",
       "Bestaetigung": "I confirm"
     },
     "userSettingsHeader": {
       "AngemeldetAls": "Logged in as: ",
-      "Accountverwaltung": "Account management",
-      "Abmelden": "Log out",
+      "Accountverwaltung": "Account Management",
+      "Abmelden": "Log Out",
       "ZurUmfrage": "Go to survey",
       "ZurAdminuebersicht": "Go to Administrator overview"
     }
@@ -672,9 +683,9 @@
     "Dienstreisen": "Business trips",
     "ITGeraete": "IT devices",
     "CO": "CO",
-    "Accounteinstellungen": "Account settings",
-    "UmfrageUebersicht": "Survey overview",
-    "CO2_Rechner": "CO₂ calculator",
+    "Accounteinstellungen": "Account Settings",
+    "UmfrageUebersicht": "Survey Overview",
+    "CO2_Rechner": "CO₂ Calculator",
     "Umfrage": "Survey",
     "Auswertung": "Analysis",
     "Datenbank": "Database",

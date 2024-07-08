@@ -8,7 +8,7 @@
     />
 
     <v-main
-      class="mb-16 mx-3"
+      :class="$vuetify.breakpoint.mobile ? 'mb-6 mx-3' : 'mb-16 mx-3'"
     >
       <v-card
         class="mt-3 mx-auto"
