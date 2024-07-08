@@ -607,8 +607,9 @@
       "UnvollstaendigeEnergieverbrauch_2": ", we unfortunately have incomplete data on energy consumption at the moment!"
     },
     "LinkSharingComponent": {
-      "Link_0": "Please forward the link below to your employees to give them access to the ",
-      "Link_1": ":",
+      "Share_Mitarbeiterumfrage": "Please forward the link below to your employees to give them access to the employee survey:",
+      "Share_Umfrage": "Please forward the link below to your employees to give them access to the survey:",
+      "Share_Auswertung": "Please forward the link below to your employees to give them access to the analysis:",
       "Link_Button": "Copy link"
     }
   },
@@ -639,14 +640,19 @@
       "GespeicherteUmfragen": "Saved surveys",
       "LinkZurMitarbeiterumfrage": "Copy link to survey for employees",
       "LinkZurMitarbeiterumfrage_short": "Copy link to survey for employees",
-      "Anzeigen": "Display",
+      "LinkZumUmfrageTeilen": "Copy link to share survey",
+      "Bearbeiten": "Edit",
+      "Teilen": "Share",
       "LoeschenDerUmfrage_0": "Delete survey",
       "LoeschenDerUmfrage_1": "Are you sure that you ",
       "LoeschenDerUmfrage_2": " want to delete the survey? This action cannot be undone.",
       "LoeschenBestaetigen": "I confirm",
       "ServerNichtErreichbar": "Server is unavailable.",
       "MitarbeiterAnzahl": "Employees have completed the survey",
-      "DuplizierenSuffix": "(Copy)"
+      "DuplizierenSuffix": "(Copy)",
+      "ShareDialog_Title": "Share Survey",
+      "ShareDialog_Text_1": "Send the link below to a person to grant them access to the survey. This person can then edit, analyse and delete the survey.",
+      "ShareDialog_Text_2": "Note: This is not the link to give employees access to the employee survey. You can find this link above the Share button."
     }
   },
   "header": {
@@ -671,6 +677,17 @@
       "ZurUmfrage": "Go to survey",
       "ZurAdminuebersicht": "Go to Administrator overview"
     }
+  },
+  "shareSurvey": {
+    "Tab" : "Share Survey",
+    "Tab_kurz" : "Share",
+    "Title": "A Survey Has Been Shared With You!",
+    "TeilenErfolgreich_1": "You have been invited to the survey \"",
+    "TeilenErfolgreich_2": "\". The survey has been added to your account.",
+    "SchonVorhanden_1": "The survey \"",
+    "SchonVorhanden_2": "\" has already been shared with you and can be found in your survey overview.",
+    "BackButton": "Back to Survey Overview",
+    "TeilenFehler": "An error has occurred while sharing the survey. Please contact the person who sent you the link and check whether the link is correct."
   },
   "common": {
     "Ja": "Yes",

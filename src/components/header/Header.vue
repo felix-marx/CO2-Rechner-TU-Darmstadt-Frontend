@@ -97,6 +97,10 @@ export default {
       default: null,
       type: Array
     },
+    defaultTab: {
+      default: 0,
+      type: Number
+    },
     displayUserSetting: {
       default: true,
       type: Boolean
@@ -145,6 +149,10 @@ export default {
 
       return false
     }
+  },
+
+  created() {
+    this.selectedTab = this.defaultTab;
   },
 
   methods: {

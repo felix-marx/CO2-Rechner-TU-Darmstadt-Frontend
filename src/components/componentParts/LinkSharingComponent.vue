@@ -1,8 +1,8 @@
 <template>
-  <v-container class="pa-7">
+  <v-container>
     <v-row>
       <h4>
-        {{ $t('componentParts.LinkSharingComponent.Link_0') }} {{ this.$props.linkZiel }} {{ $t('componentParts.LinkSharingComponent.Link_1') }}
+        {{ this.$props.text }}
       </h4>
     </v-row>
     <v-row>
@@ -45,9 +45,9 @@ export default {
       type: String,
       default: "",
     },
-    linkZiel: {
+    text: {
       type: String,
-      default: "Umfrage",
+      default: "",
     },
   },
 

@@ -608,8 +608,9 @@
       "UnvollstaendigeEnergieverbrauch_2": " haben wir aktuell leider nur unvollständige Daten zum Energieverbrauch!"
     },
     "LinkSharingComponent": {
-      "Link_0": "Leiten Sie den folgenden Link an Ihre Mitarbeitenden weiter, um ihnen Zugang zur ",
-      "Link_1": " zu gewähren:",
+      "Share_Mitarbeiterumfrage": "Leiten Sie den folgenden Link an Ihre Mitarbeitenden weiter, um ihnen Zugang zur Mitarbeitendenumfrage zu gewähren:",
+      "Share_Umfrage": "Leiten Sie den folgenden Link an Ihre Mitarbeitenden weiter, um ihnen Zugang zur Umfrage zu gewähren:",
+      "Share_Auswertung": "Leiten Sie den folgenden Link an Ihre Mitarbeitenden weiter, um ihnen Zugang zur Auswertung zu gewähren:",
       "Link_Button": "Link kopieren"
     }
   },
@@ -640,14 +641,19 @@
       "GespeicherteUmfragen": "Gespeicherte Umfragen",
       "LinkZurMitarbeiterumfrage": "Link zur Mitarbeitendenumfrage kopieren",
       "LinkZurMitarbeiterumfrage_short": "Mitarbeitendenumfrage-Link",
-      "Anzeigen": "Anzeigen",
+      "LinkZumUmfrageTeilen": "Link zum Teilen der Umfrage kopieren",
+      "Bearbeiten": "Bearbeiten",
+      "Teilen": "Teilen",
       "LoeschenDerUmfrage_0": "Löschen der Umfrage",
       "LoeschenDerUmfrage_1": "Sind Sie sicher, dass Sie die Umfrage ",
       "LoeschenDerUmfrage_2": " löschen möchten? Diese Aktion kann nicht zurückgenommen werden.",
       "LoeschenBestaetigen": "Ich bestätige",
       "ServerNichtErreichbar": "Server nicht erreichbar.",
       "MitarbeiterAnzahl": "Mitarbeitende haben ausgefüllt",
-      "DuplizierenSuffix": "(Kopie)"
+      "DuplizierenSuffix": "(Kopie)",
+      "ShareDialog_Title": "Umfrage Teilen",
+      "ShareDialog_Text_1": "Senden Sie unten aufgeführten Link an eine Person, um Ihr Zugriff auf die Umfrage zu gewähren. Diese Person kann die Umfrage dann bearbeiten, auswerten und löschen.",
+      "ShareDialog_Text_2": "Hinweis: Das ist nicht der Link, um Mitarbeitenden Zugriff auf die Mitarbeitendenumfrage zu ermöglichen. Diesen Link finden Sie über dem Teilen Knopf."
     }
   },
   "header": {
@@ -673,6 +679,17 @@
       "ZurUmfrage": "Zur Umfrage",
       "ZurAdminuebersicht": "Zur Adminübersicht"
     }
+  },
+  "shareSurvey": {
+    "Tab" : "Umfrage Teilen",
+    "Tab_kurz" : "Teilen",
+    "Title": "Eine Umfrage wurde mit Ihnen geteilt!",
+    "TeilenErfolgreich_1": "Sie wurden zur Umfrage \"",
+    "TeilenErfolgreich_2": "\" eingeladen. Die Umfrage wurde zu Ihrem Konto hinzugefügt.",
+    "SchonVorhanden_1": "Die Umfrage \"",
+    "SchonVorhanden_2": "\" wurde bereits mit Ihnen geteilt und befindet sich in Ihrer Umfragenübersicht.",
+    "BackButton": "Zurück zur Umfragenübersicht",
+    "TeilenFehler": "Beim Teilen der Umfrage ist ein Fehler aufgetreten. Wenden Sie sich bitte an die Person, von der Sie den Link erhalten haben und überprüfen Sie, ob der Link korrekt ist."
   },
   "common": {
     "Ja": "Ja",
