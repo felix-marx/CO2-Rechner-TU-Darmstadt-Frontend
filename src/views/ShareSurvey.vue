@@ -15,27 +15,27 @@
         class="mt-3 mx-auto pb-4"
         :max-width="constants.v_card_max_width"
       >
-        <v-card-title>
+        <v-card-title class="headerClass">
           {{ $t('shareSurvey.Title') }}
         </v-card-title>
 
         <v-divider />
 
-        <v-container class="mx-7">
+        <v-container>
           <template v-if="displaySuccess">
             <v-row v-if="response.hinzugefuegt">
-              <v-col>
+              <v-col :class="$vuetify.breakpoint.smAndUp ? 'mx-7' : 'mx-0'">
                 {{ $t('shareSurvey.TeilenErfolgreich_1') }}{{ response.bezeichnung }}{{ $t('shareSurvey.TeilenErfolgreich_2') }}
               </v-col>
             </v-row>
             <v-row v-if="!response.hinzugefuegt">
-              <v-col>
+              <v-col :class="$vuetify.breakpoint.smAndUp ? 'mx-7' : 'mx-0'">
                 {{ $t('shareSurvey.SchonVorhanden_1') }}{{ response.bezeichnung }}{{ $t('shareSurvey.SchonVorhanden_2') }}
               </v-col>
             </v-row>
 
             <v-row>
-              <v-col>
+              <v-col :class="$vuetify.breakpoint.smAndUp ? 'mx-7' : 'mx-0'">
                 <v-btn
                   color="primary"
                   @click="$router.push('/survey?tab=1')"
@@ -54,12 +54,12 @@
 
           <template v-if="displayError">
             <v-row>
-              <v-col>
+              <v-col :class="$vuetify.breakpoint.smAndUp ? 'mx-7' : 'mx-0'">
                 {{ $t('shareSurvey.TeilenFehler') }}
               </v-col>
             </v-row>
             <v-row>
-              <v-col>
+              <v-col :class="$vuetify.breakpoint.smAndUp ? 'mx-7' : 'mx-0'">
                 <v-alert
                   class="mb-0"
                   type="error"
@@ -118,6 +118,9 @@ export default {
   watch: {
     '$i18n.locale': function() {
       this.setTabList();
+    },
+    '$vuetify.breakpoint.smAndUp': function() {
+      this.setTabList();
     }
   },
 
@@ -132,7 +135,7 @@ export default {
   methods: {
     setTabList(){
       this.tabList = [
-        { id: 0, title: i18n.t('shareSurvey.Tab'), componentType: loadingAnimation},
+        { id: 0, title: this.$vuetify.breakpoint.smAndUp ? i18n.t('shareSurvey.Tab') : i18n.t('shareSurvey.Tab_kurz'), componentType: loadingAnimation},
       ]
     },
 
@@ -172,3 +175,11 @@ export default {
   }
 };
 </script>
+<style lang="scss">
+  .headerClass{
+    white-space: wrap;
+    word-break: normal;
+    display: block;
+    hyphens: auto;
+  }
+</style>

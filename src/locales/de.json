@@ -681,8 +681,9 @@
   },
   "shareSurvey": {
     "Tab" : "Umfrage Teilen",
-    "Title": "Eine Umfrage wurde mit Ihnen geteilt",
-    "TeilenErfolgreich_1": "Es wurden zur Umfrage \"",
+    "Tab_kurz" : "Teilen",
+    "Title": "Eine Umfrage wurde mit Ihnen geteilt!",
+    "TeilenErfolgreich_1": "Sie wurden zur Umfrage \"",
     "TeilenErfolgreich_2": "\" eingeladen. Die Umfrage wurde zu Ihrem Konto hinzugefügt.",
     "SchonVorhanden_1": "Die Umfrage \"",
     "SchonVorhanden_2": "\" wurde bereits mit Ihnen geteilt und befindet sich in Ihrer Umfragenübersicht.",

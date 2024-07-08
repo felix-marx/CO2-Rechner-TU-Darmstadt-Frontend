@@ -678,14 +678,15 @@
     }
   },
   "shareSurvey": {
-    "Tab" : "<Need Translation>",
-    "Title": "<Need Translation>",
-    "TeilenErfolgreich_1": "<Need Translation> \"",
-    "TeilenErfolgreich_2": "\" <Need Translation>",
-    "SchonVorhanden_1": "<Need Translation> \"",
-    "SchonVorhanden_2": "\" <Need Translation>",
-    "BackButton": "<Need Translation>",
-    "TeilenFehler": "<Need Translation>"
+    "Tab" : "Share Survey",
+    "Tab_kurz" : "Share",
+    "Title": "A Survey Has Been Shared With You!",
+    "TeilenErfolgreich_1": "You have been invited to the survey \"",
+    "TeilenErfolgreich_2": "\". The survey has been added to your account.",
+    "SchonVorhanden_1": "The survey \"",
+    "SchonVorhanden_2": "\" has already been shared with you and can be found in your survey overview.",
+    "BackButton": "Back to Survey Overview",
+    "TeilenFehler": "An error has occurred while sharing the survey. Please contact the person who sent you the link and check whether the link is correct."
   },
   "common": {
     "Ja": "Yes",
