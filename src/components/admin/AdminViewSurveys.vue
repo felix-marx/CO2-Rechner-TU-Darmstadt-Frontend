@@ -549,8 +549,7 @@ export default {
 
   created() {
     this.displayLoadingAnimation = true;
-    this.fetchUmfragen().then(() => 
-    this.sortUmfragen());
+    this.fetchUmfragen();
     this.displayLoadingAnimation = false;
   },
 
@@ -600,7 +599,7 @@ export default {
      * Closes v-dialog with dialog as v-model
      */
     closeDialog(index) {
-      this.fetchUmfragen().then(() => this.sortUmfragen());
+      this.fetchUmfragen()
       this.$set(this.dialog, index, false)
     },
 
@@ -608,7 +607,7 @@ export default {
      * Closes v-dialog with dialogAuswertung as v-model
      */
     closeDialogAuswertung(index) {
-      this.fetchUmfragen().then(() => this.sortUmfragen());
+      this.fetchUmfragen()
       this.$set(this.dialogAuswertung, index, false)
     },
 
@@ -633,6 +632,8 @@ export default {
         this.dialog = new Array(this.umfragen.length).fill(false)
         this.dialogAuswertung = new Array(this.umfragen.length).fill(false)
         this.errors = new Array(this.umfragen.length).fill(false)
+
+        this.sortUmfragen()
       })
       .catch((error) => {
         console.error("Error:", error);
