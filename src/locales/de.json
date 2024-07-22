@@ -647,6 +647,7 @@
       "LoeschenDerUmfrage_0": "Löschen der Umfrage",
       "LoeschenDerUmfrage_1": "Sind Sie sicher, dass Sie die Umfrage ",
       "LoeschenDerUmfrage_2": " löschen möchten? Diese Aktion kann nicht zurückgenommen werden.",
+      "LoeschenDerUmfrage_3": "Hinweis: Sollte diese Umfrage mit anderen Personen geteilt sein, wird sie bei allen Personen gelöscht!",
       "LoeschenBestaetigen": "Ich bestätige",
       "ServerNichtErreichbar": "Server nicht erreichbar.",
       "MitarbeiterAnzahl": "Mitarbeitende haben ausgefüllt",

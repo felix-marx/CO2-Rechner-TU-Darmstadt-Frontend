@@ -371,7 +371,10 @@
                       </v-toolbar>
                       <v-card-text>
                         <div class="pt-6">
-                          {{ $t('userSurveyManagement.SurveyOverview.LoeschenDerUmfrage_1') }} {{ umfrage.bezeichnung }} {{ $t('userSurveyManagement.SurveyOverview.LoeschenDerUmfrage_2') }}
+                          {{ $t('userSurveyManagement.SurveyOverview.LoeschenDerUmfrage_1') }} {{ umfrage.bezeichnung }} {{ $t('userSurveyManagement.SurveyOverview.LoeschenDerUmfrage_2') }} 
+                        </div>
+                        <div class="pt-2">
+                          {{ $t('userSurveyManagement.SurveyOverview.LoeschenDerUmfrage_3') }}
                         </div>
                       </v-card-text>
 
@@ -445,7 +448,10 @@
                       </v-toolbar>
                       <v-card-text>
                         <div class="pt-6">
-                          {{ $t('userSurveyManagement.SurveyOverview.LoeschenDerUmfrage_1') }} {{ umfrage.bezeichnung }} {{ $t('userSurveyManagement.SurveyOverview.LoeschenDerUmfrage_2') }}
+                          {{ $t('userSurveyManagement.SurveyOverview.LoeschenDerUmfrage_1') }} {{ umfrage.bezeichnung }} {{ $t('userSurveyManagement.SurveyOverview.LoeschenDerUmfrage_2') }} 
+                        </div>
+                        <div class="pt-2">
+                          {{ $t('userSurveyManagement.SurveyOverview.LoeschenDerUmfrage_3') }}
                         </div>
                       </v-card-text>
 

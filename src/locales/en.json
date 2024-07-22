@@ -646,6 +646,7 @@
       "LoeschenDerUmfrage_0": "Delete survey",
       "LoeschenDerUmfrage_1": "Are you sure that you ",
       "LoeschenDerUmfrage_2": " want to delete the survey? This action cannot be undone.",
+      "LoeschenDerUmfrage_3": "Note: If this survey is shared with other people, it will be deleted for everyone!",
       "LoeschenBestaetigen": "I confirm",
       "ServerNichtErreichbar": "Server is unavailable.",
       "MitarbeiterAnzahl": "Employees have completed the survey",
