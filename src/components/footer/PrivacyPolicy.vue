@@ -7,7 +7,7 @@
       :display-back-button="true"
       :display-login-button="false"
     />
-    <v-main class="mb-16">
+    <v-main :class="$vuetify.breakpoint.mobile ? 'mb-0' : 'mb-16'">
       <v-container>
         <v-card
           elevation="0"
@@ -65,12 +65,24 @@
               <v-list
                 dense
               >
-                <v-list-item-title>{{ $t('footer.PrivacyPolicy.RechtAuskunft') }}</v-list-item-title>
-                <v-list-item-title>{{ $t('footer.PrivacyPolicy.RechtLoeschung') }}</v-list-item-title>
-                <v-list-item-title>{{ $t('footer.PrivacyPolicy.RechtVerarbeitung') }}</v-list-item-title>
-                <v-list-item-title>{{ $t('footer.PrivacyPolicy.RechtWiederruf') }}</v-list-item-title>
-                <v-list-item-title>{{ $t('footer.PrivacyPolicy.RechtWiderspruch') }}</v-list-item-title>
-                <v-list-item-title>{{ $t('footer.PrivacyPolicy.RechtDatenuebertragbarkeit') }}</v-list-item-title>
+                <v-list-item-title class="headerClass">
+                  {{ $t('footer.PrivacyPolicy.RechtAuskunft') }}
+                </v-list-item-title>
+                <v-list-item-title class="headerClass">
+                  {{ $t('footer.PrivacyPolicy.RechtLoeschung') }}
+                </v-list-item-title>
+                <v-list-item-title class="headerClass">
+                  {{ $t('footer.PrivacyPolicy.RechtVerarbeitung') }}
+                </v-list-item-title>
+                <v-list-item-title class="headerClass">
+                  {{ $t('footer.PrivacyPolicy.RechtWiederruf') }}
+                </v-list-item-title>
+                <v-list-item-title class="headerClass">
+                  {{ $t('footer.PrivacyPolicy.RechtWiderspruch') }}
+                </v-list-item-title>
+                <v-list-item-title class="headerClass">
+                  {{ $t('footer.PrivacyPolicy.RechtDatenuebertragbarkeit') }}
+                </v-list-item-title>
               </v-list>
             </p>
 
@@ -87,12 +99,24 @@
               <br>
      
               <v-list dense>
-                <v-list-item-title>{{ $t('footer.PrivacyPolicy.Logdateien_2') }}</v-list-item-title>
-                <v-list-item-title>{{ $t('footer.PrivacyPolicy.Logdateien_3') }}</v-list-item-title>
-                <v-list-item-title>{{ $t('footer.PrivacyPolicy.Logdateien_4') }}</v-list-item-title>
-                <v-list-item-title>{{ $t('footer.PrivacyPolicy.Logdateien_5') }}</v-list-item-title>
-                <v-list-item-title>{{ $t('footer.PrivacyPolicy.Logdateien_6') }}</v-list-item-title>
-                <v-list-item-title>{{ $t('footer.PrivacyPolicy.Logdateien_7') }}</v-list-item-title>
+                <v-list-item-title class="headerClass">
+                  {{ $t('footer.PrivacyPolicy.Logdateien_2') }}
+                </v-list-item-title>
+                <v-list-item-title class="headerClass">
+                  {{ $t('footer.PrivacyPolicy.Logdateien_3') }}
+                </v-list-item-title>
+                <v-list-item-title class="headerClass">
+                  {{ $t('footer.PrivacyPolicy.Logdateien_4') }}
+                </v-list-item-title>
+                <v-list-item-title class="headerClass">
+                  {{ $t('footer.PrivacyPolicy.Logdateien_5') }}
+                </v-list-item-title>
+                <v-list-item-title class="headerClass">
+                  {{ $t('footer.PrivacyPolicy.Logdateien_6') }}
+                </v-list-item-title>
+                <v-list-item-title class="headerClass">
+                  {{ $t('footer.PrivacyPolicy.Logdateien_7') }}
+                </v-list-item-title>
               </v-list>
 
               {{ $t('footer.PrivacyPolicy.Logdateien_8') }}<br>
@@ -147,25 +171,49 @@
 
               {{ $t('footer.PrivacyPolicy.ErstellungUmfrage_7') }}
               <v-list dense>
-                <v-list-item-title>{{ $t('footer.PrivacyPolicy.ErstellungUmfrage_7_1') }}</v-list-item-title>
-                <v-list-item-title>{{ $t('footer.PrivacyPolicy.ErstellungUmfrage_7_2') }}</v-list-item-title>
-                <v-list-item-title>{{ $t('footer.PrivacyPolicy.ErstellungUmfrage_7_3') }}</v-list-item-title>
-                <v-list-item-title>{{ $t('footer.PrivacyPolicy.ErstellungUmfrage_7_4') }}</v-list-item-title>
-                <v-list-item-title>{{ $t('footer.PrivacyPolicy.ErstellungUmfrage_7_5') }}</v-list-item-title>
+                <v-list-item-title class="headerClass">
+                  {{ $t('footer.PrivacyPolicy.ErstellungUmfrage_7_1') }}
+                </v-list-item-title>
+                <v-list-item-title class="headerClass">
+                  {{ $t('footer.PrivacyPolicy.ErstellungUmfrage_7_2') }}
+                </v-list-item-title>
+                <v-list-item-title class="headerClass">
+                  {{ $t('footer.PrivacyPolicy.ErstellungUmfrage_7_3') }}
+                </v-list-item-title>
+                <v-list-item-title class="headerClass">
+                  {{ $t('footer.PrivacyPolicy.ErstellungUmfrage_7_4') }}
+                </v-list-item-title>
+                <v-list-item-title class="headerClass">
+                  {{ $t('footer.PrivacyPolicy.ErstellungUmfrage_7_5') }}
+                </v-list-item-title>
               </v-list>
               {{ $t('footer.PrivacyPolicy.ErstellungUmfrage_8_0') }}
               <v-list dense>
-                <v-list-item-title>{{ $t('footer.PrivacyPolicy.ErstellungUmfrage_8_1') }}</v-list-item-title>
-                <v-list-item-title>{{ $t('footer.PrivacyPolicy.ErstellungUmfrage_8_2') }}</v-list-item-title>
+                <v-list-item-title class="headerClass">
+                  {{ $t('footer.PrivacyPolicy.ErstellungUmfrage_8_1') }}
+                </v-list-item-title>
+                <v-list-item-title class="headerClass">
+                  {{ $t('footer.PrivacyPolicy.ErstellungUmfrage_8_2') }}
+                </v-list-item-title>
               </v-list>
 
               {{ $t('footer.PrivacyPolicy.ErstellungUmfrage_9_0') }}
               <v-list dense>
-                <v-list-item-title>{{ $t('footer.PrivacyPolicy.ErstellungUmfrage_9_1') }}</v-list-item-title>
-                <v-list-item-title>{{ $t('footer.PrivacyPolicy.ErstellungUmfrage_9_2') }}</v-list-item-title>
-                <v-list-item-title>{{ $t('footer.PrivacyPolicy.ErstellungUmfrage_9_3') }}</v-list-item-title>
-                <v-list-item-title>{{ $t('footer.PrivacyPolicy.ErstellungUmfrage_9_4') }}</v-list-item-title>
-                <v-list-item-title>{{ $t('footer.PrivacyPolicy.ErstellungUmfrage_9_5') }}</v-list-item-title>
+                <v-list-item-title class="headerClass">
+                  {{ $t('footer.PrivacyPolicy.ErstellungUmfrage_9_1') }}
+                </v-list-item-title>
+                <v-list-item-title class="headerClass">
+                  {{ $t('footer.PrivacyPolicy.ErstellungUmfrage_9_2') }}
+                </v-list-item-title>
+                <v-list-item-title class="headerClass">
+                  {{ $t('footer.PrivacyPolicy.ErstellungUmfrage_9_3') }}
+                </v-list-item-title>
+                <v-list-item-title class="headerClass">
+                  {{ $t('footer.PrivacyPolicy.ErstellungUmfrage_9_4') }}
+                </v-list-item-title>
+                <v-list-item-title class="headerClass">
+                  {{ $t('footer.PrivacyPolicy.ErstellungUmfrage_9_5') }}
+                </v-list-item-title>
               </v-list>
               {{ $t('footer.PrivacyPolicy.ErstellungUmfrage_10') }}
               <br>
@@ -220,6 +268,10 @@ export default {
   watch: {
     '$i18n.locale': function() {
       this.setTabList();
+    },
+
+    '$vuetify.breakpoint.smAndUp': function() {
+      this.setTabList();
     }
   },
   
@@ -230,11 +282,18 @@ export default {
   methods: {
     setTabList(){
       this.tabList = [
-        { id: 0, title: i18n.t('footer.Footer.Datenschutzerklearung'), componentType: loadingAnimation},
+        { id: 0, title: this.$vuetify.breakpoint.smAndUp ? i18n.t('footer.Footer.Datenschutzerklearung') : i18n.t('footer.Footer.Datenschutzerklearung_kurz'), componentType: loadingAnimation},
       ]
     }
   },
 }
-
-
 </script>
+
+<style lang="scss">
+  .headerClass{
+    white-space: wrap;
+    word-break: normal;
+    display: block;
+    hyphens: auto;
+  }
+</style>

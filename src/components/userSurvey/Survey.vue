@@ -42,8 +42,9 @@
         <v-row>
           <v-col>
             <v-text-field
+              ref="bezeichnung"
               v-model="bezeichnung"
-              :min="0"
+              :rules="universalRules"
               :label="$t('common.Bezeichung')"
               type="string"
               prepend-icon="mdi-form-textbox"
@@ -59,7 +60,7 @@
         <br>
 
         <v-row>
-          <v-col cols="5">
+          <v-col :cols="$vuetify.breakpoint.smAndUp ? 5 : 8">
             <v-autocomplete
               v-model="bilanzierungsjahr"
               :items="possibleYears"
@@ -81,6 +82,7 @@
         <v-container>
           <v-row>
             <v-text-field
+              ref="anzahlMitarbeiter"
               v-model="anzahlMitarbeiter"
               :rules="absolutpositivRules"
               :min="0"
@@ -113,19 +115,19 @@
           :key="index"
         >
           <v-row justify="center">
-            <v-col cols="6">
+            <v-col :cols="$vuetify.breakpoint.smAndUp ? 6 : 5">
               <v-autocomplete
                 v-if="gebaeudeIDs"
                 v-model="objekt[0]"
                 :items="gebaeudeIDs"
                 :label="$t('common.Gebäudenummer')"
                 prepend-icon="mdi-domain"
-                class="pr-5"
                 :disabled="blockInput"
               />
             </v-col>
             <v-col cols="5">
               <v-text-field
+                :ref="'flaeche' + index"
                 v-model="objekt[1]"
                 :rules="absolutpositivRules"
                 :min="0"
@@ -136,7 +138,7 @@
               />
             </v-col>
             <v-col
-              cols="1"
+              :cols="$vuetify.breakpoint.smAndUp ? 1 : 2"
               class="mt-3 text-center"
             >
               <v-btn
@@ -205,6 +207,7 @@
               :disabled="blockInput"
             />
             <v-text-field
+              ref="multifunktionsgeraete"
               v-model="geraeteAnzahl[0][1]"
               :rules="geraeteRules"
               :disabled="!geraeteAnzahl[0][2] || blockInput"
@@ -214,6 +217,7 @@
               :suffix="$t('userSurvey.Survey.ITGeraeteMFP_Suffix')"
             />
             <v-text-field
+              ref="multifunktionsgeraeteToner"
               v-model="geraeteAnzahl[1][1]"
               :rules="nichtnegativRules"
               :disabled="!geraeteAnzahl[0][2] || blockInput"
@@ -230,6 +234,7 @@
               :disabled="blockInput"
             />
             <v-text-field
+              ref="drucker"
               v-model="geraeteAnzahl[2][1]"
               :rules="geraeteRules"
               :disabled="!geraeteAnzahl[2][2] || blockInput"
@@ -239,6 +244,7 @@
               class="pr-5"
             />
             <v-text-field
+              ref="druckerToner"
               v-model="geraeteAnzahl[3][1]"
               :rules="nichtnegativRules"
               :disabled="!geraeteAnzahl[2][2] || blockInput"
@@ -255,6 +261,7 @@
               :disabled="blockInput"
             />
             <v-text-field
+              ref="beamer"
               v-model="geraeteAnzahl[4][1]"
               :rules="geraeteRules"
               :disabled="!geraeteAnzahl[4][2] || blockInput"
@@ -271,6 +278,7 @@
               :disabled="blockInput"
             />
             <v-text-field
+              ref="server"
               v-model="geraeteAnzahl[5][1]"
               :rules="geraeteRules"
               :disabled="!geraeteAnzahl[5][2] || blockInput"
@@ -323,12 +331,9 @@
                         v-for="(problem, index) in errorTextArray.required"
                         :key="index"
                       >
-                        <v-list-item-content>
-                          <v-list-item-title
-                            class="text-sm-body-2 delete--text font-weight-black"
-                            v-text="problem"
-                          />
-                        </v-list-item-content>
+                        <label class="text-sm-body-2 delete--text font-weight-black mb-2">
+                          {{ problem }}
+                        </label>
                       </v-list-item>
                     </v-list>
                   </div>
@@ -343,12 +348,9 @@
                         v-for="(problem, index) in errorTextArray.nonRequired"
                         :key="index"
                       >
-                        <v-list-item-content>
-                          <v-list-item-title
-                            class="text-sm-body-2"
-                            v-text="problem"
-                          />
-                        </v-list-item-content>
+                        <label class="text-sm-body-2 mb-2">
+                          {{ problem }}
+                        </label>
                       </v-list-item>
                     </v-list>
                   </div>
@@ -401,7 +403,7 @@
     <!-- Component for showing Link for employees after sending formular data. -->
     <v-card
       v-if="displaySurveyLink || displayLoadingAnimation"
-      class="mt-2 mx-auto"
+      class="mx-auto mt-2 px-4 pt-4"
       elevation="2"
       outlined
       :max-width="constants.v_card_max_width"
@@ -409,8 +411,9 @@
       <LoadingAnimation v-if="displayLoadingAnimation" />
       <LinkSharingComponent
         v-if="displaySurveyLink"
+        ref="linkSharing"
         :mitarbeiter-link="mitarbeiterumfrageBaseURL + responseData.umfrageID"
-        :link-ziel="$t('userSurvey.Survey.Umfrage')"
+        :text="$t('componentParts.LinkSharingComponent.Share_Mitarbeiterumfrage')"
       />
     </v-card>
 
@@ -423,6 +426,7 @@
       v-if="!displaySurveyLink && errorMessage"
     >
       <v-alert
+        ref="errorMessage"
         type="error"
       >
         {{ errorMessage }}
@@ -496,6 +500,7 @@ export default {
     // has Absenden Button been clicked
     dataRequestSent: false,
     responseData: null,
+
     // Dialogvariable + Array mit fehlerhaften Eingaben {fehler: "", pflicht: 0}
     errorDialog: false,
     errorTextArray: {
@@ -510,27 +515,17 @@ export default {
     errorMessage: null,
     
     //Rules for input validation
+    universalRules: [],
+    geraeteRules: [],
+    nichtnegativRules: [],
+    absolutpositivRules: [],
 
-    geraeteRules: [
-      (v) =>
-        !!v ||  i18n.t('userSurvey.Survey.geraeteRules_1'),
-      (v) =>
-        parseInt(v) != 0 ||
-          i18n.t('userSurvey.Survey.geraeteRules_1'),
-      (v) => parseInt(v) > 0 ||  i18n.t('userSurvey.Survey.geraeteRules_3'),
-    ],
-    nichtnegativRules: [
-      (v) => !!v || i18n.t('userSurvey.Survey.nichtnegativRules_0'),
-      (v) => parseInt(v) >= 0 || i18n.t('userSurvey.Survey.nichtnegativRules_1'),
-    ],
-    absolutpositivRules: [
-      (v) => !!v || i18n.t('userSurvey.Survey.absolutpositivRules_0'),
-      (v) => parseInt(v) > 0 || i18n.t('userSurvey.Survey.absolutpositivRules_1'),
-    ],
-
-    // has Absenden Button been clicked
+    // after survey has been sent, display loading animation and scrollToLinkSharing
     displayLoadingAnimation: false,
+    scrollToLinkScharing: false,
+    scrollToErrorMessage: false,
   }),
+
   computed: {
     /**
      * Returns a list beginning with the current year until 2018.
@@ -563,13 +558,79 @@ export default {
     },
   },
 
+  watch: {
+    '$i18n.locale': function() {
+      this.setRules();
+      this.revalidateAllFields();
+    },
+  },
+
+  updated: function () {
+    this.$nextTick(function () {
+      if(this.scrollToLinkScharing){  // scroll to link sharing component when it appears
+        this.scrollToLinkScharing = false;
+        this.$refs.linkSharing.$el.scrollIntoView({behavior: "smooth", block: "center", inline: "nearest" });
+      }
+
+      if(this.scrollToErrorMessage){  // scroll to error message when it appears
+        this.scrollToErrorMessage = false;
+        this.$refs.errorMessage.$el.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest" });
+      }
+    })
+  },
+
   created() {
+    this.setRules();
     // get all possible gebaeude IDs on creation of the component
-    //this.fetchGebaeudeData();
     this.fetchGebaeudeUndZaehlerData();
   },
 
   methods: {
+    /**
+     * This Method is needed bc of i18n. Otherwise after changing the language the rules would not change.
+     */
+    setRules: function(){
+      this.universalRules = [
+        (v) => !!v || i18n.t('userSurvey.Survey.universalRules_0'),
+      ],
+
+      this.geraeteRules = [
+        (v) =>
+          !!v ||  i18n.t('userSurvey.Survey.geraeteRules_1'),
+        (v) =>
+          parseInt(v) != 0 ||
+            i18n.t('userSurvey.Survey.geraeteRules_1'),
+        (v) => parseInt(v) > 0 ||  i18n.t('userSurvey.Survey.geraeteRules_3'),
+      ],
+
+      this.nichtnegativRules = [
+        (v) => !!v || i18n.t('userSurvey.Survey.nichtnegativRules_0'),
+        (v) => parseInt(v) >= 0 || i18n.t('userSurvey.Survey.nichtnegativRules_1'),
+      ],
+
+      this.absolutpositivRules = [
+        (v) => !!v || i18n.t('userSurvey.Survey.absolutpositivRules_0'),
+        (v) => parseInt(v) > 0 || i18n.t('userSurvey.Survey.absolutpositivRules_1'),
+      ]
+    },
+
+    /**
+     * Revalidates all fields in the survey 
+     */
+    revalidateAllFields: function() {
+      this.$refs.bezeichnung.validate();
+      this.$refs.anzahlMitarbeiter.validate();
+      for (var i = 0; i < this.gebaeude.length; i++) {
+        this.$refs["flaeche" + i][0].validate();
+      }
+      this.$refs.multifunktionsgeraete.validate();
+      this.$refs.multifunktionsgeraeteToner.validate();
+      this.$refs.drucker.validate();
+      this.$refs.druckerToner.validate();
+      this.$refs.beamer.validate();
+      this.$refs.server.validate();
+    },
+
     /**
      * Returns an array containing a list with every required field missing
      */
@@ -648,6 +709,19 @@ export default {
       this.blockInput = false
       this.dataRequestSent = false
       this.responseData = null
+
+      // reset valdiation on all fields
+      this.$refs.bezeichnung.resetValidation();
+      this.$refs.anzahlMitarbeiter.resetValidation();
+      for (var i = 0; i < this.gebaeude.length; i++) {
+        this.$refs["flaeche" + i][0].resetValidation();
+      }
+      this.$refs.multifunktionsgeraete.resetValidation();
+      this.$refs.multifunktionsgeraeteToner.resetValidation();
+      this.$refs.drucker.resetValidation();
+      this.$refs.druckerToner.resetValidation();
+      this.$refs.beamer.resetValidation();
+      this.$refs.server.resetValidation();
     },
 
     /**
@@ -740,11 +814,16 @@ export default {
           if(data.status == "error") {
             this.errorMessage = data.error.message
             this.blockInput = false
+            this.scrollToErrorMessage = true
+          }
+          else if(data.status == "success") {
+            this.scrollToLinkScharing = true
           }
         })
         .catch((error) => {
           console.error("Error:", error);
           this.errorMessage = i18n.t("common.ServerNichtErreichbar");
+          this.scrollToErrorMessage = true
         });
 
       this.displayLoadingAnimation = false;
@@ -764,20 +843,15 @@ export default {
       .then((data) => {
         this.gebaeudeIDsUndZaehler = data.data.gebaeude
         this.zaehler = data.data.zaehler
-
-        //console.log(data)
-      
         this.gebaeudeIDs = data.data.gebaeude.map(obj => translateGebaeudeIDToSymbolic(obj.nr));
 
         this.mapGebauedeZaehlerRefs = new Map(
           data.data.gebaeude.map((obj) => [translateGebaeudeIDToSymbolic(obj.nr), {kaelteRef: obj.kaelteRef, stromRef: obj.stromRef, waermeRef: obj.waermeRef}])
         )
-        //console.log(this.mapGebauedeZaehlerRefs)
 
         this.mapZaehlerWerte = new Map(
           data.data.zaehler.map((obj) => [obj.pkEnergie, new Map(obj.zaehlerdatenVorhanden.map((obj2) => [obj2.jahr, obj2.vorhanden]))])
         )
-        //console.log(this.mapZaehlerWerte)
       })
       .catch((error) => {
         console.error("Error:", error);

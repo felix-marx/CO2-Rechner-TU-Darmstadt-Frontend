@@ -2,7 +2,7 @@
   <!--- Footer --->
   <v-footer
     padless
-    fixed
+    :fixed="!$vuetify.breakpoint.mobile"
     bottom
   >
     <v-card

@@ -3,6 +3,7 @@
     <!-- Header -->
     <Header
       :tabs="tabList" 
+      :default-tab="defaultTab"
       :display-user-setting="true"
       :display-back-button="false"
       :display-login-button="false"
@@ -10,7 +11,7 @@
     />
 
     <!-- main body -->
-    <v-main class="mb-16">
+    <v-main :class="$vuetify.breakpoint.mobile ? 'mb-0' : 'mb-16'">
       <component :is="currentTabType" />
     </v-main>
 
@@ -34,12 +35,22 @@ export default {
     Footer,
     Header,
     Survey,
+    SurveyOverview,
+    AccountSettings
+  },
+
+  props: {
+    tab: {
+      type: Number,
+      default: 0
+    }
   },
 
   data: () => ({
     // standard tab selected is the first tab / Survey tab
     // could extend this to be persistent on site refresh, but this would require additional plugins, like e.g. Vuex.
     selectedTab: 0,
+    defaultTab: 0,
     currentTabType: Survey,
     tabList: [],
   }),
@@ -58,6 +69,19 @@ export default {
   
   created() {
     this.setTabList();
+
+    let tabObj = null
+    for (let i = 0; i < this.tabList.length; i++) {
+      if (this.tabList[i].id === this.tab) {
+        tabObj = this.tabList[i]
+        break
+      }
+    }
+
+    if (tabObj !== null) {
+      this.defaultTab = tabObj.id
+      this.changeTab(tabObj)
+    }
   },
 
   methods: {

@@ -9,7 +9,7 @@
     />
 
     <!-- main body -->
-    <v-main class="mb-16">
+    <v-main :class="$vuetify.breakpoint.mobile ? 'mb-0' : 'mb-16'">
       <component
         :is="bodyComponent"
         v-bind="properties"

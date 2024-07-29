@@ -292,6 +292,7 @@
     "Footer": {
       "Impressum": "Impressum",
       "Datenschutzerklearung": "Datenschutzerklärung",
+      "Datenschutzerklearung_kurz": "Datenschutz",
       "FAQ": "FAQ"
     },
     "Contact": {
@@ -363,6 +364,8 @@
       "WeitereUmfrageErstellen": "Weitere Umfragen erstellen",
       "Umfrage": "Umfrage",
 
+      "universalRules_0": "Muss angegeben werden.",
+
       "geraeteRules_1": "Wenn Sie das Gerät nicht benutzen, wählen Sie es bitte ab.",
       "geraeteRules_2": "Wenn Sie das Gerät nicht benutzen, wählen Sie es bitte ab.",
       "geraeteRules_3": "Bitte geben Sie eine valide Menge an.",
@@ -411,12 +414,11 @@
       "WieInsBuero_fahrgemeinschaft": "Fahren Sie in einer Fahrgemeinschaft?",
       "WieInsBuero_anzahlMitfahrende": "Anzahl Mitfahrende",
 
-      "fahrmediumListe_0": "PKW (Diesel)",
-      "fahrmediumListe_1": "PKW (Benzin)",
+      "fahrmediumListe_0": "PKW",
       "fahrmediumListe_2": "Fahrrad",
       "fahrmediumListe_3": "E-Fahrrad",
       "fahrmediumListe_4": "Motorisiertes Zweirad",
-      "fahrmediumListe_5": "Öffentliche",
+      "fahrmediumListe_5": "Öffentliche Verkehrsmittel",
       "fahrmediumListe_6": "Zu Fuß",
 
       "fahrtmediumOEPNV": "ÖPNV",
@@ -427,26 +429,52 @@
       "fahrtmediumOEPNVListe_4": "Mix inkl. U-Bahn",
       "fahrtmediumOEPNVListe_5": "Mix exkl. U-Bahn",
 
-      "dienstreiseMediumListe_0": "PKW (Diesel)",
-      "dienstreiseMediumListe_1": "PKW (Benzin)",
+      "dienstreiseMediumListe_0": "PKW",
       "dienstreiseMediumListe_2": "Bahn",
       "dienstreiseMediumListe_3": "Flugzeug",
       "dienstreiseMedium_Benzin": "Benzin",
       "dienstreiseMedium_Diesel": "Diesel",
+      "dienstreiseMedium_Hybrid": "Plug-In-Hybrid",
+      "dienstreiseMedium_Elektro": "Elektro",
       "dienstreiseMedium_Auto": "PKW",
+      "dienstreiseMedium_Verbrenner": "Verbrenner",
+
+      "Pkw_Motortyp": "Motortyp",
+      "Pkw_diesel": "Diesel",
+      "Pkw_benzin": "Benzin",
+      "Pkw_Hybrid": "Plug-In-Hybrid",
+      "Pkw_Elektro": "Elektro",
+      "Pkw_pendelweg_benzin": "PKW - Benzin",
+      "Pkw_pendelweg_diesel": "PKW - Diesel",
+      "Pkw_pendelweg_hybrid": "PKW - Plug-In-Hybrid",
+      "Pkw_pendelweg_elektro": "PKW - Elektro",
+      "Pkw_pendelweg_verbrenner": "PKW - Verbrenner",
 
       "Flugstrecke": "Flugstrecke",
       "EinfacheDistanz": "Einfache Distanz",
+
+      "flugstreckentyp": "Flugstreckentyp",
       "flugstreckeListe_0": "Langstrecke",
       "flugstreckeListe_1": "Kurzstrecke",
+      "flugstreckeListe_2": "Inland",
+      "flugstreckeListe_3": "International",
+      
+      "Flugklasse": "Flugklasse",
+      "flugklasse_average": "Keine Angabe",
+      "flugklasse_economy": "Economy",
+      "flugklasse_premiumeconomy": "Premium Economy",
+      "flugklasse_business": "Business",
+      "flugklasse_first": "First",
       
       "TageBuero": "Wie viele Tage in der Woche sind Sie im Büro?",
       "TageBuero_label": "Tage im Büro",
 
       "Dienstreise_0": "Welche Dienstreisen haben Sie ",
-      "Dienstreise_1": " unternommen?",
-      "Dienstreise_tooltip": "Zur Berechnung können Sie z.B. Google Maps verwenden. Bei Flugreisen können Sie als Distanz direkt die Summe aller Kurz- und Langstreckenflüge angeben.",
-      
+      "Dienstreise_1": " unternommen?",      
+      "Dienstreise_tooltip_1": "Zur Berechnung der Distanz können Sie z.B. Google Maps verwenden.",
+      "Dienstreise_tooltip_2": "Inlandsflüge sind Flüge innerhalb Deutschlands (z.B. Frankfurt - Berlin). Kurzstreckenflüge sind Flüge innerhalb der EU (z.B. London - Madrid). Langstreckenflüge sind Flüge über 3700 km, die in Deutschland beginnen oder enden (z.B. Frankfurt - Bangkok). Internationalflüge sind Langstreckenflüge, die weder in DE starten noch enden (z.B. Madrid - Bangkok).",
+      "Dienstreise_tooltip_3": "Wenn Sie keine Informationen mehr über ihre Flugklasse haben, können Sie einfach 'Keine Angabe' auswählen. Falls Sie mehrmals den gleichen Flugstreckentyp in der selben Klasse geflogen sind können Sie auch gleich die Summe angeben. Die einfache Distanz bezeichnet die Strecke zwischen Ihrem Abflugsort und Ihrem Zielort, gemessen in eine Richtung.",
+
       "IT_Geraete": "Welche IT-Geräte benutzen Sie bei Ihrer Arbeit?",
       "IT_Geraete_tooltip": "Gemeinschaftlich genutzte IT-Geräte wie z.B. Multifunktionsdrucker werden hier nicht betrachtet.",
       "IT_Geraete_Notebooks": "Notebooks",
@@ -503,7 +531,8 @@
     "surveyEvaluation": {
       "AuswertungDerUmfrage": "Auswertung der Umfrage ",
       "AusgefuellteMitarbeiterumfragen": "Ausgefüllte Mitarbeitendenumfragen: ",
-      "HochrechnungUngenau_0": "Die Hochrechnung der Emissionsdaten ist ungenau, weil bisher nur ",
+      "HochrechnungInfo": "Die angezeigten Emissionen sind auf alle Mitarbeitenden hochgerechnet, basierend auf den ausgefüllten Mitrarbeitendenumfragen. Dies führt zu etwaigen Ungenauigkeiten, insbesondere bei geringer Beteiligung.",
+      "HochrechnungUngenau_0": "Für Ihre Umfrage ist die Hochrechnung der Emissionsdaten ungenau, weil bisher nur ",
       "HochrechnungUngenau_1": "% der Mitarbeitenden die Umfrage ausgefüllt haben.",
       "Gesamtemissionen": "Gesamtemissionen:",
       "tCO2eq": "t CO₂eq",
@@ -579,8 +608,9 @@
       "UnvollstaendigeEnergieverbrauch_2": " haben wir aktuell leider nur unvollständige Daten zum Energieverbrauch!"
     },
     "LinkSharingComponent": {
-      "Link_0": "Leiten Sie den folgenden Link an Ihre Mitarbeitenden weiter, um ihnen Zugang zur ",
-      "Link_1": " zu gewähren:",
+      "Share_Mitarbeiterumfrage": "Leiten Sie den folgenden Link an Ihre Mitarbeitenden weiter, um ihnen Zugang zur Mitarbeitendenumfrage zu gewähren:",
+      "Share_Umfrage": "Leiten Sie den folgenden Link an Ihre Mitarbeitenden weiter, um ihnen Zugang zur Umfrage zu gewähren:",
+      "Share_Auswertung": "Leiten Sie den folgenden Link an Ihre Mitarbeitenden weiter, um ihnen Zugang zur Auswertung zu gewähren:",
       "Link_Button": "Link kopieren"
     }
   },
@@ -595,6 +625,10 @@
       "BearbeitenAktivieren": " Bearbeiten aktivieren",
       "BearbeitenDeaktivieren": " Bearbeiten deaktivieren",
 
+      "SpeicherDialog_1": "Probleme mit Ihrer Eingabe!",
+      "SpeicherDialog_2": "Umfrage vollständig?",
+      "AenderungTrotzdemSpeichern": "Änderungen trotzdem speichern",
+
       "UmfrageBezeichnung": "Wie soll Ihre Umfrage bezeichnet werden?",
       "WelchesBilanzierungsjahr": "Auf welches Bilanzierungsjahr beziehen Sie sich in dieser Umfrage?",
       "MitarbeiterInAbteilung": "Wie viele Mitarbeitende gibt es in Ihrer Abteilung?",
@@ -606,13 +640,21 @@
     "SurveyOverview": {
       "GespeicherteUmfragen": "Gespeicherte Umfragen",
       "LinkZurMitarbeiterumfrage": "Link zur Mitarbeitendenumfrage kopieren",
-      "Anzeigen": "Anzeigen",
+      "LinkZurMitarbeiterumfrage_short": "Mitarbeitendenumfrage-Link",
+      "LinkZumUmfrageTeilen": "Link zum Teilen der Umfrage kopieren",
+      "Bearbeiten": "Bearbeiten",
+      "Teilen": "Teilen",
       "LoeschenDerUmfrage_0": "Löschen der Umfrage",
       "LoeschenDerUmfrage_1": "Sind Sie sicher, dass Sie die Umfrage ",
       "LoeschenDerUmfrage_2": " löschen möchten? Diese Aktion kann nicht zurückgenommen werden.",
+      "LoeschenDerUmfrage_3": "Hinweis: Sollte diese Umfrage mit anderen Personen geteilt sein, wird sie bei allen Personen gelöscht!",
       "LoeschenBestaetigen": "Ich bestätige",
       "ServerNichtErreichbar": "Server nicht erreichbar.",
-      "MitarbeiterAnzahl": "Mitarbeitende haben ausgefüllt"
+      "MitarbeiterAnzahl": "Mitarbeitende haben ausgefüllt",
+      "DuplizierenSuffix": "(Kopie)",
+      "ShareDialog_Title": "Umfrage Teilen",
+      "ShareDialog_Text_1": "Senden Sie unten aufgeführten Link an eine Person, um Ihr Zugriff auf die Umfrage zu gewähren. Diese Person kann die Umfrage dann bearbeiten, auswerten und löschen.",
+      "ShareDialog_Text_2": "Hinweis: Das ist nicht der Link, um Mitarbeitenden Zugriff auf die Mitarbeitendenumfrage zu ermöglichen. Diesen Link finden Sie über dem Teilen Knopf."
     }
   },
   "header": {
@@ -638,6 +680,17 @@
       "ZurUmfrage": "Zur Umfrage",
       "ZurAdminuebersicht": "Zur Adminübersicht"
     }
+  },
+  "shareSurvey": {
+    "Tab" : "Umfrage Teilen",
+    "Tab_kurz" : "Teilen",
+    "Title": "Eine Umfrage wurde mit Ihnen geteilt!",
+    "TeilenErfolgreich_1": "Sie wurden zur Umfrage \"",
+    "TeilenErfolgreich_2": "\" eingeladen. Die Umfrage wurde zu Ihrem Konto hinzugefügt.",
+    "SchonVorhanden_1": "Die Umfrage \"",
+    "SchonVorhanden_2": "\" wurde bereits mit Ihnen geteilt und befindet sich in Ihrer Umfragenübersicht.",
+    "BackButton": "Zurück zur Umfragenübersicht",
+    "TeilenFehler": "Beim Teilen der Umfrage ist ein Fehler aufgetreten. Wenden Sie sich bitte an die Person, von der Sie den Link erhalten haben und überprüfen Sie, ob der Link korrekt ist."
   },
   "common": {
     "Ja": "Ja",

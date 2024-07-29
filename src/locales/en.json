@@ -292,6 +292,7 @@
     "Footer": {
       "Impressum": "Legal note",
       "Datenschutzerklearung": "Privacy policy",
+      "Datenschutzerklearung_kurz": "Privacy policy",
       "FAQ": "FAQ"
     },
     "Contact": {
@@ -362,6 +363,8 @@
       "UmfrageTzdSpeichern": "Save survey anyway",
       "WeitereUmfrageErstellen": "Create more surveys",
       "Umfrage": "survey",
+
+      "universalRules_0": "Must be entered.",
       
       "geraeteRules_1": "Deselect the device if you do not use it.",
       "geraeteRules_2": "Deselect the device if you do not use it.",
@@ -411,8 +414,7 @@
       "WieInsBuero_fahrgemeinschaft": "Are you travelling as a member of a privately organised carpool?",
       
       "WieInsBuero_anzahlMitfahrende": "Number of co-travellers",
-      "fahrmediumListe_0": "Passenger car (Diesel)",
-      "fahrmediumListe_1": "Passenger car (petrol / gasoline)",
+      "fahrmediumListe_0": "Passenger car",
       "fahrmediumListe_2": "Bicycle",
       "fahrmediumListe_3": "Electric bicycle",
       "fahrmediumListe_4": "Motorised bicycle",
@@ -427,26 +429,52 @@
       "fahrtmediumOEPNVListe_4": "Mix incl. underground",
       "fahrtmediumOEPNVListe_5": "Mix excl. underground",
       
-      "dienstreiseMediumListe_0": "Passenger car (Diesel)",
-      "dienstreiseMediumListe_1": "Passenger car (petrol / gasoline)",
+      "dienstreiseMediumListe_0": "Passenger car",
       "dienstreiseMediumListe_2": "Train",
       "dienstreiseMediumListe_3": "Plane",
       "dienstreiseMedium_Benzin": "Petrol / gasoline",
       "dienstreiseMedium_Diesel": "Diesel",
+      "dienstreiseMedium_Hybrid": "Plug-in hybrid",
+      "dienstreiseMedium_Elektro": "Electric",
       "dienstreiseMedium_Auto": "Passenger car",
+      "dienstreiseMedium_Verbrenner": "Combustion engine",
       
+      "Pkw_Motortyp": "Motortype",
+      "Pkw_diesel": "Diesel",
+      "Pkw_benzin": "Petrol / gasoline",
+      "Pkw_Hybrid": "Plug-in hybrid",
+      "Pkw_Elektro": "Electric",
+      "Pkw_pendelweg_benzin": "Passenger car - Petrol / gasoline",
+      "Pkw_pendelweg_diesel": "Passenger car - Diesel",
+      "Pkw_pendelweg_hybrid": "Passenger car - Plug-in hybrid",
+      "Pkw_pendelweg_elektro": "Passenger car - Electric",
+      "Pkw_pendelweg_verbrenner": "Passenger car - Combustion engine",
+
       "Flugstrecke": "Flying distance",
       "EinfacheDistanz": "One-way distance",
+
+      "flugstreckentyp": "Flight route type",
       "flugstreckeListe_0": "Long distance",
       "flugstreckeListe_1": "Short distance",
+      "flugstreckeListe_2": "Domestic",
+      "flugstreckeListe_3": "International",
+
+      "Flugklasse": "Flight class",
+      "flugklasse_average": "No information",
+      "flugklasse_economy": "Economy",
+      "flugklasse_premiumeconomy": "Premium economy",
+      "flugklasse_business": "Business",
+      "flugklasse_first": "First",
       
       "TageBuero": "How many days per week are you at the office?",
       "TageBuero_label": "Days in the office",
       
       "Dienstreise_0": "What business trips have you ",
-      "Dienstreise_1": " taken?",
-      "Dienstreise_tooltip": "You can use Google Maps etc. to calculate the distance. In case of travel by air, you can enter the total of all your short and long-distance flights.",
-      
+      "Dienstreise_1": " taken?",     
+      "Dienstreise_tooltip_1": "You can use Google Maps etc. to calculate the distance.",
+      "Dienstreise_tooltip_2": "Domestic flights are flights within Germany (e.g. Frankfurt - Berlin). Short distance flights are flights within the EU (e.g. London - Madrid). Long distance flights are flights over 3700 km that begin or end in Germany (e.g. Frankfurt - Bangkok). International flights are long distance flights that neither start nor end in Germany (e.g. Madrid - Bangkok).",
+      "Dienstreise_tooltip_3": "If you no longer have any information about your flight class, you can simply select 'No information'. If you have flown the same route in the same class several times, you can also enter the total. The one-way distance is the distance between your point of departure and your destination, measured in one direction.",
+
       "IT_Geraete": "Which IT devices do you use at work?",
       "IT_Geraete_tooltip": "Jointly used IT devices such as multifunctional printers are not included here.",
       "IT_Geraete_Notebooks": "Notebooks",
@@ -479,16 +507,16 @@
       "MitfahrerRules_1": "Please enter a positive number of co-travellers.",
       
       "EingabeValidierung_Verkehrsmedium": "The means of public transport has not been entered.",
-      "EingabeValidierung_Pendelweg_0": "For the means of transport: XYZ, ",
-      "EingabeValidierung_Pendelweg_1": " the commuting distance entered is not valid.",
-      "EingabeValidierung_Fahrgemeinschaft_0": "For the means of transport: XYZ ",
+      "EingabeValidierung_Pendelweg_0": "For the means of transport ",
+      "EingabeValidierung_Pendelweg_1": ", the commuting distance entered is not valid.",
+      "EingabeValidierung_Fahrgemeinschaft_0": "For the means of transport ",
       "EingabeValidierung_Fahrgemeinschaft_1": "in a privately organised carpool, the number of co-travellers has not been entered.",
       "EingabeValidierung_TageBuero": "Please enter the days per week that you are at the office.",
       "EingabeValidierung_Dienstreise_0": "For a business trip by plane, the type of flight distance has not been entered.",
-      "EingabeValidierung_Dienstreise_1": "For the business trip by XYZ, ",
-      "EingabeValidierung_Dienstreise_2": " the distance entered is not valid.",
-      "EingabeValidierung_Gereate_0": "For the device: XYZ ",
-      "EingabeValidierung_Gereate_1": "  selected, the quantity has not been entered."
+      "EingabeValidierung_Dienstreise_1": "For the business trip by ",
+      "EingabeValidierung_Dienstreise_2": ", the distance entered is not valid.",
+      "EingabeValidierung_Gereate_0": "For the selected device ",
+      "EingabeValidierung_Gereate_1": ", the quantity has not been entered."
     },
     "surveyCompleted": {
       "UmfrageVollstaendig_0": "This survey is already completed.",
@@ -503,7 +531,8 @@
     "surveyEvaluation": {
       "AuswertungDerUmfrage": "Analysis of the survey ",
       "AusgefuellteMitarbeiterumfragen": "Completed surveys for employees: ",
-      "HochrechnungUngenau_0": "The projection of emission data is inaccurate because only ",
+      "HochrechnungInfo": "The emission data shown is extrapolated to all employees based on the completed employee surveys. This may lead to inaccuracies, especially if participation is low.",
+      "HochrechnungUngenau_0": "For your survey, the projection of emission data is inaccurate because only ",
       "HochrechnungUngenau_1": "% of employees have completed the survey so far.",
       "Gesamtemissionen": "Overall emissions:",
       "tCO2eq": "t CO₂eq",
@@ -578,8 +607,9 @@
       "UnvollstaendigeEnergieverbrauch_2": ", we unfortunately have incomplete data on energy consumption at the moment!"
     },
     "LinkSharingComponent": {
-      "Link_0": "Please forward the link below to your employees to give them access to the ",
-      "Link_1": ":",
+      "Share_Mitarbeiterumfrage": "Please forward the link below to your employees to give them access to the employee survey:",
+      "Share_Umfrage": "Please forward the link below to your employees to give them access to the survey:",
+      "Share_Auswertung": "Please forward the link below to your employees to give them access to the analysis:",
       "Link_Button": "Copy link"
     }
   },
@@ -591,8 +621,13 @@
       "UmfrageHatProbleme": "Your survey has the following minor issues:",
       "UmfrageWirklichSpeichern_1": "Do you really want to save your survey?",
       "WeiterBearbeiten": "Resume editing",
-      "BearbeitenAktivieren": " Activate editing",
-      "BearbeitenDeaktivieren": " deactivate editing",
+      "BearbeitenAktivieren": "Activate editing",
+      "BearbeitenDeaktivieren": "Deactivate editing",
+
+      "SpeicherDialog_1": "Issues with your input!",
+      "SpeicherDialog_2": "Survey complete?",
+      "AenderungTrotzdemSpeichern": "Save changes anyway",
+
       "UmfrageBezeichnung": "How do you want to name your survey?",
       "WelchesBilanzierungsjahr": "What reporting year is being examined in your survey?",
       "MitarbeiterInAbteilung": "How many employees are there in your unit?",
@@ -603,14 +638,22 @@
     },
     "SurveyOverview": {
       "GespeicherteUmfragen": "Saved surveys",
-      "LinkZurMitarbeiterumfrage": "Copy link to access survey for employees",
-      "Anzeigen": "Display",
+      "LinkZurMitarbeiterumfrage": "Copy link to survey for employees",
+      "LinkZurMitarbeiterumfrage_short": "Copy link to survey for employees",
+      "LinkZumUmfrageTeilen": "Copy link to share survey",
+      "Bearbeiten": "Edit",
+      "Teilen": "Share",
       "LoeschenDerUmfrage_0": "Delete survey",
       "LoeschenDerUmfrage_1": "Are you sure that you ",
       "LoeschenDerUmfrage_2": " want to delete the survey? This action cannot be undone.",
+      "LoeschenDerUmfrage_3": "Note: If this survey is shared with other people, it will be deleted for everyone!",
       "LoeschenBestaetigen": "I confirm",
       "ServerNichtErreichbar": "Server is unavailable.",
-      "MitarbeiterAnzahl": "Employees have completed the survey"
+      "MitarbeiterAnzahl": "Employees have completed the survey",
+      "DuplizierenSuffix": "(Copy)",
+      "ShareDialog_Title": "Share Survey",
+      "ShareDialog_Text_1": "Send the link below to a person to grant them access to the survey. This person can then edit, analyse and delete the survey.",
+      "ShareDialog_Text_2": "Note: This is not the link to give employees access to the employee survey. You can find this link above the Share button."
     }
   },
   "header": {
@@ -623,18 +666,29 @@
       "LoeschenDesAccounts": "Deleting accounts",
       "AccountLoeschen_bestaetigen_0": "Do you really want to delete your account?",
       "AccountLoeschen_bestaetigen_1": "This action cannot be undone and all your surveys will be deleted!",
-      "AccountLoeschen_bestaetigen_2": "Please confirm by entering “Delete” in the field below:",
+      "AccountLoeschen_bestaetigen_2": "Please confirm by entering \"delete\" in the field below:",
       "AccountGeloescht_0": "Your account has been successfully deleted. You can now close this window.",
       "AccountNichtGeloescht": "Your account could not be deleted. Please try again.",
       "Bestaetigung": "I confirm"
     },
     "userSettingsHeader": {
       "AngemeldetAls": "Logged in as: ",
-      "Accountverwaltung": "Account management",
-      "Abmelden": "Log out",
+      "Accountverwaltung": "Account Management",
+      "Abmelden": "Log Out",
       "ZurUmfrage": "Go to survey",
       "ZurAdminuebersicht": "Go to Administrator overview"
     }
+  },
+  "shareSurvey": {
+    "Tab" : "Share Survey",
+    "Tab_kurz" : "Share",
+    "Title": "A Survey Has Been Shared With You!",
+    "TeilenErfolgreich_1": "You have been invited to the survey \"",
+    "TeilenErfolgreich_2": "\". The survey has been added to your account.",
+    "SchonVorhanden_1": "The survey \"",
+    "SchonVorhanden_2": "\" has already been shared with you and can be found in your survey overview.",
+    "BackButton": "Back to Survey Overview",
+    "TeilenFehler": "An error has occurred while sharing the survey. Please contact the person who sent you the link and check whether the link is correct."
   },
   "common": {
     "Ja": "Yes",
@@ -647,9 +701,9 @@
     "Dienstreisen": "Business trips",
     "ITGeraete": "IT devices",
     "CO": "CO",
-    "Accounteinstellungen": "Account settings",
-    "UmfrageUebersicht": "Survey overview",
-    "CO2_Rechner": "CO₂ calculator",
+    "Accounteinstellungen": "Account Settings",
+    "UmfrageUebersicht": "Survey Overview",
+    "CO2_Rechner": "CO₂ Calculator",
     "Umfrage": "Survey",
     "Auswertung": "Analysis",
     "Datenbank": "Database",

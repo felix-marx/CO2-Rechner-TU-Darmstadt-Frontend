@@ -13,20 +13,20 @@
       <p> {{ ($t('colleagueSurvey.colleagueSurvey.UmfrageErklaerung_5')) }}</p>
       <p> {{ ($t('colleagueSurvey.colleagueSurvey.UmfrageErklaerung_6')) }}</p>
     </v-card>
+    
     <v-card
       elevation="2"
-      class="pa-7 mt-2 mx-auto"
+      :class="$vuetify.breakpoint.smAndUp ? 'pa-7 mt-2 mx-auto' : 'py-7 px-5 mt-2 mx-auto'"
       outlined
       :max-width="constants.v_card_max_width"
     >
-      <v-card-title>
+      <v-card-title class="headerClass">
         {{ bezeichnung }}
       </v-card-title>
 
       <!-- Umfrage -->
       <v-form>
         <!-- Pendelwege -->
-
         <h3>
           {{ ($t('colleagueSurvey.colleagueSurvey.WieInsBuero')) }}
           <Tooltip
@@ -40,99 +40,278 @@
           v-for="(medium, index) in verkehrsmittel"
           :key="'pendelweg-' + index"
         >
-          <v-row>
-            <!-- The length of the column is calculated based on the selection, so that the button to add new elements in this line -->
-            <v-col :cols="medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_5') ? 4 : 6">
-              <v-select
-                v-model="medium[0]"
-                :items="fahrtmediumListe"
-                :disabled="submittedDataSuccessfully"
-                :label="$t('colleagueSurvey.colleagueSurvey.WieInsBuero_verkehrsmedium')"
-              />
-            </v-col>
-            <v-col
-              v-if="medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_5')"
-              :cols="medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_5') ? 3 : 0"
-            >
-              <v-select
-                v-model="medium[1]"
-                :disabled="submittedDataSuccessfully"
-                :items="fahrtmediumÖPNVListe"
-                :label="$t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNV')"
-              />
-            </v-col>
-            <v-col :cols="medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_5') ? 3 : 4">
-              <v-text-field
-                v-model="medium[4]"
-                :rules="streckeRules"
-                :disabled="medium[0] === null || (medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_5') && medium[1] === null) || submittedDataSuccessfully"
-                :min="0"
-                :label="$t('colleagueSurvey.colleagueSurvey.WieInsBuero_pendelweg')"
-                suffix="km"
-              />
-            </v-col>
-            <v-col>
-              <v-btn
-                class="add_text--text"
-                color="add"
-                :disabled="submittedDataSuccessfully"
-                @click="newVerkehrsmittel()"
+          <!-- Desktop -->
+          <template v-if="$vuetify.breakpoint.smAndUp">
+            <v-row>
+              <v-col
+                cols="11"
+                class="pa-0"
               >
-                {{ ($t('common.Hinzufuegen')) }}
-              </v-btn>
-            </v-col>
-            <v-col>
-              <v-btn
-                class="delete_text--text"
-                color="delete"
-                :disabled="submittedDataSuccessfully"
-                @click="removeVerkehrsmittel(index)"
+                <v-container>
+                  <v-row>
+                    <!-- Allgemeines Verkehrsmedium -->
+                    <v-col
+                      :cols="medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_5') || medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_0') ? 4 : 8"
+                      class="pb-0"
+                    >
+                      <v-select
+                        v-model="medium[0]"
+                        :items="fahrtmediumListe"
+                        :disabled="submittedDataSuccessfully"
+                        :label="$t('colleagueSurvey.colleagueSurvey.WieInsBuero_verkehrsmedium')"
+                      />
+                    </v-col>
+                    <!-- ÖPNV -->
+                    <v-col
+                      v-if="medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_5')"
+                      cols="4"
+                      class="pb-0"
+                    >
+                      <v-select
+                        v-model="medium[1]"
+                        :disabled="submittedDataSuccessfully"
+                        :items="fahrtmediumÖPNVListe"
+                        :label="$t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNV')"
+                      />
+                    </v-col>
+                    <!-- PKW-Typ -->
+                    <v-col
+                      v-if="medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_0')"
+                      cols="4"
+                      class="pb-0"
+                    >
+                      <v-select
+                        v-model="medium[5]"
+                        :items="pkwListe"
+                        :disabled="submittedDataSuccessfully"
+                        :label="$t('colleagueSurvey.colleagueSurvey.Pkw_Motortyp')"
+                      />
+                    </v-col>
+                    <!-- Distanz -->
+                    <v-col
+                      cols="4"
+                      class="pb-0"
+                    >
+                      <v-text-field
+                        :ref="'pendelwegDistanz' + index"
+                        v-model="medium[4]"
+                        :rules="streckeRules"
+                        :disabled="medium[0] === null || (medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_5') && medium[1] === null) || (medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_0') && medium[5] === null) || submittedDataSuccessfully"
+                        :min="0"
+                        :label="$t('colleagueSurvey.colleagueSurvey.WieInsBuero_pendelweg')"
+                        suffix="km"
+                      />
+                    </v-col>
+                  </v-row>
+                  <!-- Weitere Reihe für PKWs mit Fahrgemeinschaft -->
+                  <v-row
+                    v-if="medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_0')"
+                  >
+                    <v-col
+                      cols="4"
+                      class="pt-0"
+                    >
+                      <h4 class="pt-5">
+                        {{ $t('colleagueSurvey.colleagueSurvey.WieInsBuero_fahrgemeinschaft') }}
+                      </h4>
+                    </v-col>
+                    <v-col
+                      cols="1"
+                      class="pt-0"
+                    >
+                      <v-checkbox
+                        v-model="medium[2]"
+                        :disabled="submittedDataSuccessfully"
+                        :label="$t('common.Ja')"
+                        class="pr-4"
+                      />
+                    </v-col>
+                    <v-col
+                      cols="6"
+                      class="pt-0"
+                    >
+                      <v-text-field
+                        :ref="'mitfahrer' + index"
+                        v-model="medium[3]"
+                        :rules="mitfahrerRules"
+                        :disabled="!medium[2] || submittedDataSuccessfully"
+                        :min="0"
+                        :label="$t('colleagueSurvey.colleagueSurvey.WieInsBuero_anzahlMitfahrende')"
+                      />
+                    </v-col>
+                  </v-row>
+                </v-container>
+              </v-col>
+              <!-- Delete Button -->
+              <v-col
+                class="mt-3 pb-0 text-center"
+                cols="1"
               >
-                {{ ($t('common.Loeschen')) }}
-              </v-btn>
-            </v-col>
-          </v-row>
-          <!-- Weitere Reihe für PKWs mit Fahrgemeinschaft -->
-          <h4
-            v-show="
-              medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_0') || medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_1')
-            "
-            class="my-3"
-          >
-            {{ $t('colleagueSurvey.colleagueSurvey.WieInsBuero_fahrgemeinschaft') }}
-          </h4>
-          <v-row>
-            <v-col :cols="1">
-              <v-checkbox
-                v-show="
-                  medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_0') || medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_1')
-                "
-                v-model="medium[2]"
-                :disabled="submittedDataSuccessfully"
-                :label="$t('common.Ja')"
-                class="pr-4"
-              />
-            </v-col>
-            <v-col :cols="9">
-              <v-text-field
-                v-show="
-                  medium[2] &&
-                    (medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_0') ||
-                      medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_1'))
-                "
-                v-model="medium[3]"
-                :rules="mitfahrerRules"
-                :disabled="submittedDataSuccessfully"
-                :min="0"
-                :label="$t('colleagueSurvey.colleagueSurvey.WieInsBuero_anzahlMitfahrende')"
-                class="pr-5"
-              />
-            </v-col>
-          </v-row>
+                <v-btn
+                  class="delete_text--text mx-auto"
+                  color="delete"
+                  fab
+                  small
+                  :disabled="submittedDataSuccessfully"
+                  @click="removeVerkehrsmittel(index)"
+                >
+                  <v-icon dark>
+                    mdi-delete-outline
+                  </v-icon>
+                </v-btn>
+              </v-col>
+            </v-row>
+          </template>
+          <!-- Mobile -->
+          <template v-else>
+            <v-card class="mb-2">
+              <v-container class="py-4">
+                <v-row
+                  align="center"
+                >
+                  <v-col
+                    cols="10"
+                    class="pa-0"
+                  >
+                    <v-container>
+                      <v-row>
+                        <!-- Allgemeines Verkehrsmedium -->
+                        <v-col
+                          :cols="medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_5') || medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_0') ? 6 : 12"
+                          class="py-0"
+                        >
+                          <v-select
+                            v-model="medium[0]"
+                            :items="fahrtmediumListe"
+                            :disabled="submittedDataSuccessfully"
+                            :label="$t('colleagueSurvey.colleagueSurvey.WieInsBuero_verkehrsmedium')"
+                          />
+                        </v-col>
+                        <!-- ÖPNV -->
+                        <v-col
+                          v-if="medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_5')"
+                          cols="6"
+                          class="py-0"
+                        >
+                          <v-select
+                            v-model="medium[1]"
+                            :disabled="submittedDataSuccessfully"
+                            :items="fahrtmediumÖPNVListe"
+                            :label="$t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNV')"
+                          />
+                        </v-col>
+                        <!-- PKW-Typ -->
+                        <v-col
+                          v-if="medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_0')"
+                          cols="6"
+                          class="py-0"
+                        >
+                          <v-select
+                            v-model="medium[5]"
+                            :items="pkwListe"
+                            :disabled="submittedDataSuccessfully"
+                            :label="$t('colleagueSurvey.colleagueSurvey.Pkw_Motortyp')"
+                          />
+                        </v-col>
+                      </v-row>
+                      <v-row>  
+                        <!-- Distanz -->
+                        <v-col
+                          cols="12"
+                          class="pt-0 pb-1"
+                        >
+                          <v-text-field
+                            :ref="'pendelwegDistanz' + index"
+                            v-model="medium[4]"
+                            :rules="streckeRules"
+                            :disabled="medium[0] === null || (medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_5') && medium[1] === null) || (medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_0') && medium[5] === null) || submittedDataSuccessfully"
+                            :min="0"
+                            :label="$t('colleagueSurvey.colleagueSurvey.WieInsBuero_pendelweg')"
+                            suffix="km"
+                          />
+                        </v-col>
+                      </v-row>
+                    </v-container>
+                  </v-col>
+                  <v-col
+                    class="pa-0 text-center"
+                    cols="2"
+                  >
+                    <v-btn
+                      class="delete_text--text mx-auto"
+                      color="delete"
+                      fab
+                      small
+                      :disabled="submittedDataSuccessfully"
+                      @click="removeVerkehrsmittel(index)"
+                    >
+                      <v-icon dark>
+                        mdi-delete-outline
+                      </v-icon>
+                    </v-btn>
+                  </v-col>
+                </v-row>
+
+                <!-- Weitere Reihe für PKWs mit Fahrgemeinschaft -->
+                <template v-if="medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_0')">
+                  <v-row>
+                    <v-col
+                      class="pt-0"
+                    >
+                      <h4>
+                        {{ $t('colleagueSurvey.colleagueSurvey.WieInsBuero_fahrgemeinschaft') }}
+                      </h4>
+                    </v-col>
+                  </v-row>
+                  <v-row>  
+                    <v-col
+                      cols="2"
+                      class="pt-0"
+                    >
+                      <v-checkbox
+                        v-model="medium[2]"
+                        :disabled="submittedDataSuccessfully"
+                        :label="$t('common.Ja')"
+                        class="pr-4"
+                      />
+                    </v-col>
+                    <v-col
+                      cols="810"
+                      class="pt-0"
+                    >
+                      <v-text-field
+                        :ref="'mitfahrer' + index"
+                        v-model="medium[3]"
+                        :rules="mitfahrerRules"
+                        :disabled="!medium[2] || submittedDataSuccessfully"
+                        :min="0"
+                        :label="$t('colleagueSurvey.colleagueSurvey.WieInsBuero_anzahlMitfahrende')"
+                      />
+                    </v-col>
+                  </v-row>
+                </template>
+              </v-container>
+            </v-card>
+          </template>
         </div>
+        <!-- Add Button -->
+        <v-row class="mt-4">
+          <v-col>
+            <v-btn
+              class="add_text--text pl-2"
+              color="add"
+              :disabled="submittedDataSuccessfully"
+              @click="newVerkehrsmittel()"
+            >
+              <v-icon>
+                mdi-plus
+              </v-icon>
+              {{ ($t('colleagueSurvey.colleagueSurvey.WieInsBuero_verkehrsmedium')) }}
+            </v-btn>
+          </v-col>
+        </v-row>
 
         <!-- Arbeitstage im Büro -->
-
         <br>
         <h3>{{ $t('colleagueSurvey.colleagueSurvey.TageBuero') }}</h3>
         <v-divider />
@@ -141,6 +320,7 @@
         <v-container>
           <v-row>
             <v-text-field
+              ref="arbeitstageBuero"
               v-model="arbeitstageBuero"
               :rules="tageImBueroRules"
               :disabled="submittedDataSuccessfully"
@@ -152,82 +332,238 @@
         </v-container>
 
         <!-- Dienstreisen Abfrage Option mehrere anzugeben -->
-
         <br>
         <h3>
           {{ $t('colleagueSurvey.colleagueSurvey.Dienstreise_0') }} {{ umfrageYear }} 
           {{ $t('colleagueSurvey.colleagueSurvey.Dienstreise_1') }}
           <Tooltip
-            :tooltip-text="$t('colleagueSurvey.colleagueSurvey.Dienstreise_tooltip')"
+            :tooltip-text="$t('colleagueSurvey.colleagueSurvey.Dienstreise_tooltip_1') + ' ' + $t('colleagueSurvey.colleagueSurvey.Dienstreise_tooltip_2') + ' ' + $t('colleagueSurvey.colleagueSurvey.Dienstreise_tooltip_3')"
           />
         </h3>
         <v-divider />
         <br>
 
         <div
-          v-for="(reise, index) in dienstreise"
-          :key="'dienstreise-' + index"
+          v-for="(reise, index) in dienstreisen"
+          :key="'dienstreisen-' + index"
         >
-          <v-row>
-            <v-col :cols="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3') ? 4 : 5">
-              <v-select
-                v-model="reise[0]"
-                :disabled="submittedDataSuccessfully"
-                :label="$t('colleagueSurvey.colleagueSurvey.WieInsBuero_verkehrsmedium')"
-                :items="dienstreiseMediumListe"
-                class="pr-5"
-              />
-            </v-col>
-            <!--<v-select v-model="flugklasse" label="Klasse" v-show="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3')" :items="flugklasseListe"></v-select>-->
-            <v-col
-              v-if="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3')"
-              :cols="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3') ? 3 : 0"
-            >
-              <v-select
-                v-model="reise[1]"
-                :v-show="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3')"
-                :label="$t('colleagueSurvey.colleagueSurvey.Flugstrecke')"
-                :items="flugstreckeListe"
-                :disabled="submittedDataSuccessfully"
-                class="pr-5"
-              />
-            </v-col>
-            <v-col :cols="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3') ? 3 : 5">
-              <v-text-field
-                v-model="reise[2]"
-                :rules="streckeRules"
-                :disabled="reise[0] === null || (reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3') && reise[1] === null) || submittedDataSuccessfully"
-                :min="0"
-                :label="$t('colleagueSurvey.colleagueSurvey.EinfacheDistanz')"
-                suffix="km"
-                class="pr-5"
-              />
-            </v-col>
-            <v-col>
-              <v-btn
-                class="add_text--text"
-                color="add"
-                :disabled="submittedDataSuccessfully"
-                @click="newDienstreise()"
+          <!-- Desktop -->
+          <template v-if="$vuetify.breakpoint.smAndUp">
+            <v-row>
+              <!-- Allgemeines Verkehrsmedium -->
+              <v-col 
+                :cols="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_0') ? 3 : (reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3') ? 3 : 8)"
+                class=""
               >
-                {{ $t('common.Hinzufuegen') }}
-              </v-btn>
-            </v-col>
-            <v-col>
-              <v-btn
-                class="delete_text--text"
-                color="delete"
-                :disabled="submittedDataSuccessfully"
-                @click="removeDienstreise(index)"
+                <v-select
+                  v-model="reise[0]"
+                  :disabled="submittedDataSuccessfully"
+                  :label="$t('colleagueSurvey.colleagueSurvey.WieInsBuero_verkehrsmedium')"
+                  :items="dienstreiseMediumListe"
+                />
+              </v-col>
+              <!-- PKW-Typ -->
+              <v-col
+                v-if="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_0')"
+                cols="5"
               >
-                {{ $t('common.Loeschen') }}
-              </v-btn>
-            </v-col>
-          </v-row>
+                <v-select
+                  v-model="reise[1]"
+                  :v-show="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_0')"
+                  :label="$t('colleagueSurvey.colleagueSurvey.Pkw_Motortyp')"
+                  :items="pkwListe"
+                  :disabled="submittedDataSuccessfully"
+                />
+              </v-col>
+              <!-- Flugstreckentyp -->
+              <v-col 
+                v-if="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3')"
+                cols="3"
+              >
+                <v-select 
+                  v-show="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3')" 
+                  v-model="reise[1]" 
+                  :label="$t('colleagueSurvey.colleagueSurvey.flugstreckentyp')" 
+                  :items="flugstreckeListe"
+                />
+              </v-col>
+              <!-- Flugklasse -->
+              <v-col
+                v-if="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3')"
+                class="pl-0"
+                cols="2"
+              >
+                <v-select
+                  v-model="reise[3]"
+                  :disabled="submittedDataSuccessfully || (reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3') && !reise[1])"
+                  :label="$t('colleagueSurvey.colleagueSurvey.Flugklasse')"
+                  :items="mapDienstreiseFlugklasse(reise[1])"
+                />
+              </v-col>
+              <!-- Distanz -->
+              <v-col 
+                cols="3"
+                class=""
+              >
+                <v-text-field
+                  :ref="'dienstreiseDistanz' + index"
+                  v-model="reise[2]"
+                  :rules="streckeRules"
+                  :disabled="reise[0] === null || submittedDataSuccessfully || (reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_0') && reise[1] === null) || (reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3') && reise[3] === null)"
+                  :min="0"
+                  :label="$t('colleagueSurvey.colleagueSurvey.EinfacheDistanz')"
+                  suffix="km"
+                />
+              </v-col>
+              <!-- Delete Button -->
+              <v-col
+                class="mt-3 text-center"
+                cols="1"
+              >
+                <v-btn
+                  class="delete_text--text mx-auto"
+                  color="delete"
+                  fab
+                  small
+                  :disabled="submittedDataSuccessfully"
+                  @click="removeDienstreise(index)"
+                >
+                  <v-icon dark>
+                    mdi-delete-outline
+                  </v-icon>
+                </v-btn>
+              </v-col>
+            </v-row>
+          </template>
+
+          <!-- Mobile -->
+          <template v-else>
+            <v-card class="mb-4">
+              <v-container class="py-4">
+                <v-row
+                  align="center"
+                >
+                  <v-col
+                    cols="10"
+                    class="pa-0"
+                  >
+                    <v-container>
+                      <v-row>
+                        <!-- Allgemeines Verkehrsmedium -->
+                        <v-col 
+                          :cols="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_0') ? 6 : (reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3') ? 12 : 12)"
+                          class="py-0"
+                        >
+                          <v-select
+                            v-model="reise[0]"
+                            :disabled="submittedDataSuccessfully"
+                            :label="$t('colleagueSurvey.colleagueSurvey.WieInsBuero_verkehrsmedium')"
+                            :items="dienstreiseMediumListe"
+                          />
+                        </v-col>
+                        <!-- PKW-Typ -->
+                        <v-col
+                          v-if="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_0')"
+                          cols="6"
+                          class="py-0"
+                        >
+                          <v-select
+                            v-model="reise[1]"
+                            :v-show="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_0')"
+                            :label="$t('colleagueSurvey.colleagueSurvey.Pkw_Motortyp')"
+                            :items="pkwListe"
+                            :disabled="submittedDataSuccessfully"
+                          />
+                        </v-col>
+                      </v-row>
+                      <v-row>  
+                        <!-- Flugstreckentyp -->
+                        <v-col 
+                          v-if="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3')"
+                          cols="6"
+                          class="py-0"
+                        >
+                          <v-select 
+                            v-show="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3')" 
+                            v-model="reise[1]" 
+                            :label="$t('colleagueSurvey.colleagueSurvey.flugstreckentyp')" 
+                            :items="flugstreckeListe"
+                          />
+                        </v-col>
+                        <!-- Flugklasse -->
+                        <v-col
+                          v-if="reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3')"
+                          class="py-0"
+                          cols="6"
+                        >
+                          <v-select
+                            v-model="reise[3]"
+                            :disabled="submittedDataSuccessfully || (reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3') && !reise[1])"
+                            :label="$t('colleagueSurvey.colleagueSurvey.Flugklasse')"
+                            :items="mapDienstreiseFlugklasse(reise[1])"
+                          />
+                        </v-col>
+                      </v-row>
+                      <v-row> 
+                        <!-- Distanz --> 
+                        <v-col 
+                          class="py-0"
+                        >
+                          <v-text-field
+                            :ref="'dienstreiseDistanz' + index"
+                            v-model="reise[2]"
+                            :rules="streckeRules"
+                            :disabled="reise[0] === null || submittedDataSuccessfully || (reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_0') && reise[1] === null) || (reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3') && reise[3] === null)"
+                            :min="0"
+                            :label="$t('colleagueSurvey.colleagueSurvey.EinfacheDistanz')"
+                            suffix="km"
+                          />
+                        </v-col>
+                      </v-row>
+                    </v-container>
+                  </v-col>
+                  <!-- Delete Button -->
+                  <v-col
+                    class="pa-0 text-center"
+                    cols="2"
+                  >
+                    <v-btn
+                      class="delete_text--text mx-auto"
+                      color="delete"
+                      fab
+                      small
+                      :disabled="submittedDataSuccessfully"
+                      @click="removeDienstreise(index)"
+                    >
+                      <v-icon dark>
+                        mdi-delete-outline
+                      </v-icon>
+                    </v-btn>
+                  </v-col>
+                </v-row>
+              </v-container>
+            </v-card>          
+          </template>
         </div>
+        <!-- Add Button -->
+        <v-row>
+          <v-col>
+            <v-btn
+              class="add_text--text pl-2"
+              color="add"
+              :disabled="submittedDataSuccessfully"
+              @click="newDienstreise()"
+            >
+              <v-icon>
+                mdi-plus
+              </v-icon>
+              {{ ($t('colleagueSurvey.colleagueSurvey.WieInsBuero_verkehrsmedium')) }}
+            </v-btn>
+          </v-col>
+        </v-row>
+
 
         <!-- Umfrage für die IT Geräte Notebook, Desktop PC, Bildschirm, Mobiltelfon -->
-
         <br>
         <h3>
           {{ $t('colleagueSurvey.colleagueSurvey.IT_Geraete') }}
@@ -248,6 +584,7 @@
               hide-details
             />
             <v-text-field
+              ref="notebooks"
               v-model="geraeteAnzahl[0][1]"
               :rules="geraeteRules"
               :disabled="!geraeteAnzahl[0][2] || submittedDataSuccessfully"
@@ -265,6 +602,7 @@
               :disabled="submittedDataSuccessfully"
             />
             <v-text-field
+              ref="desktops"
               v-model="geraeteAnzahl[1][1]"
               :rules="geraeteRules"
               :disabled="!geraeteAnzahl[1][2] || submittedDataSuccessfully"
@@ -282,6 +620,7 @@
               :disabled="submittedDataSuccessfully"
             />
             <v-text-field
+              ref="bildschirme"
               v-model="geraeteAnzahl[2][1]"
               :rules="geraeteRules"
               :disabled="!geraeteAnzahl[2][2] || submittedDataSuccessfully"
@@ -299,6 +638,7 @@
               :disabled="submittedDataSuccessfully"
             />
             <v-text-field
+              ref="mobiltelefone"
               v-model="geraeteAnzahl[3][1]"
               :rules="geraeteRules"
               :disabled="!geraeteAnzahl[3][2] || submittedDataSuccessfully"
@@ -362,12 +702,9 @@
                         v-for="(problem, index) in errorsArray"
                         :key="index"
                       >
-                        <v-list-item-content>
-                          <v-list-item-title
-                            class="text-sm-body-2"
-                            v-text="problem"
-                          />
-                        </v-list-item-content>
+                        <label class="text-sm-body-2 mb-2">
+                          {{ problem }}
+                        </label>
                       </v-list-item>
                     </v-list>
                   </div>
@@ -406,6 +743,7 @@
           <v-col cols="10">
             <LoadingAnimation v-if="displayLoadingAnimation" />
             <v-alert
+              class="mb-0"
               :value="errorMessage !== null"
               dense
               text
@@ -414,6 +752,7 @@
               {{ errorMessage }}
             </v-alert>
             <v-alert
+              class="mb-0"
               :value="submittedDataSuccessfully"
               dense
               text
@@ -434,7 +773,8 @@ import LoadingAnimation from '../componentParts/LoadingAnimation.vue';
 import i18n from "@/i18n";
 import constants from "../../const";
 
-export default {  components: {
+export default {  
+  components: {
     Tooltip,
     LoadingAnimation
   },
@@ -458,7 +798,7 @@ export default {  components: {
     //Arbeitstage
     arbeitstageBuero: null,
 
-    //Pendelweg
+    //Pendelweg ------------------------------------------
     fahrtmediumListe: [],
     fahrtmediumÖPNVListe: [],
     /*
@@ -468,19 +808,26 @@ export default {  components: {
      * [2]: true if Fahrgemeinschaft and [0] is a PKW typ
      * [3]: number of fahrgemeinschaftsmitglieder
      * [4]: einfacher Pendelweg
+     * [5]: Tankart if [0] is PKW(Diesel or Benzin)
      */
-    verkehrsmittel: [[null, null, false, null, null]],
+    verkehrsmittel: [[null, null, false, null, null, null]],
 
-    //Dienstreisen
+    //Dienstreisen ---------------------------------------
     dienstreiseMediumListe: [],
     flugstreckeListe: [],
+    flugklassenListeLangstrecke: [],
+    flugklassenListeKurzstrecke: [],
+    flugklassenListeInland: [],
+    flugklassenListeInternational: [],
+
     /*
-     * dienstreise Array format:
+     * dienstreisen Array format:
      * [0]: dienstreiseMedium selected from List
      * [1]: flugstreckentTyp either Lang- or Kurzstrecke
      * [2]: dienstreiseDistanz accumulates all distances over multiple Dienstreisen of the last 12 months
+     * [3]: flugklasse
      */
-    dienstreise: [[null, null, null]],
+    dienstreisen: [[null, null, null, null]],
 
     //IT Geräte
     /* Geraet mit Array Position format [intern Geraete ID, Anzahl, enabled]
@@ -490,10 +837,10 @@ export default {  components: {
      * [3] Mobiltelefon
      */
     geraeteAnzahl: [
-      [1, null, false],
-      [2, null, false],
-      [3, null, false],
-      [5, null, false],
+      [constants.it_geraet_notebook, null, false],
+      [constants.it_geraet_desktop, null, false],
+      [constants.it_geraet_bildschirm, null, false],
+      [constants.it_geraet_mobiltelefon, null, false],
     ],
 
     //Papierverbrauch currently not used
@@ -505,52 +852,53 @@ export default {  components: {
     errorDialog: false,
 
     //Rules for input validation
-    tageImBueroRules: [
-      (v) => !!v || i18n.t('colleagueSurvey.colleagueSurvey.Rules_MussAngegeben'),
-      (v) =>
-        (parseInt(v) < 8 && parseInt(v) >= 0) ||
-        i18n.t('colleagueSurvey.colleagueSurvey.TageBueroRules_0'),
-    ],
-    streckeRules: [
-      (v) => !!v || i18n.t('colleagueSurvey.colleagueSurvey.Rules_MussAngegeben'),
-      (v) => parseInt(v) > 0 || i18n.t('colleagueSurvey.colleagueSurvey.StreckeRules_0'),
-    ],
-    geraeteRules: [
-      (v) =>
-        !!v || i18n.t('colleagueSurvey.colleagueSurvey.GeraeteRules_0'),
-      (v) =>
-        parseInt(v) != 0 ||
-        i18n.t('colleagueSurvey.colleagueSurvey.GeraeteRules_0'),
-      (v) => parseInt(v) > 0 || i18n.t('colleagueSurvey.colleagueSurvey.GeraeteRules_1'),
-    ],
-    mitfahrerRules: [
-      (v) => !!v || i18n.t('colleagueSurvey.colleagueSurvey.MitfahrerRules_0'),
-      (v) =>
-        parseInt(v) > 0 ||
-        i18n.t('colleagueSurvey.colleagueSurvey.MitfahrerRules_1'),
-    ],
+    tageImBueroRules: [],
+    streckeRules: [],
+    geraeteRules: [],
+    mitfahrerRules: [],
   }),
 
   watch: {
     '$i18n.locale': function() {
       this.setListe();
+      this.setRules();
 
       // reset values for Pendelwege and Dienstreisen
-      this.verkehrsmittel = [[null, null, false, null, null]]
-      this.dienstreise = [[null, null, null]]
+      this.verkehrsmittel = [[null, null, false, null, null, null]]
+      this.dienstreisen = [[null, null, null, null]]
+
+      // revalidate textfields to change language of error messages
+      for (var i = 0; i < this.verkehrsmittel.length; i++) {
+        this.$refs["pendelwegDistanz" + i][0].resetValidation();
+
+        if (this.verkehrsmittel[i][0] === this.$t('colleagueSurvey.colleagueSurvey.fahrmediumListe_0')) {
+          this.$refs["mitfahrer" + i][0].resetValidation();
+        }
+      }
+      this.$refs.arbeitstageBuero.validate();
+      for (i = 0; i < this.verkehrsmittel.length; i++) {
+        this.$refs["dienstreiseDistanz" + i][0].resetValidation();
+      }
+      this.$refs.notebooks.validate();
+      this.$refs.desktops.validate();
+      this.$refs.bildschirme.validate();
+      this.$refs.mobiltelefone.validate();
     },
   },
 
   created() {
     this.fetchUmfrageYear(this.$route.params.umfrageID);  // request the year of the umfrage
     this.setListe();
+    this.setRules(); 
   },
 
   methods: {
+    /**
+     * This Method is needed bc of i18n. Otherwise after changing the language the dropdown menus would not change.
+     */
     setListe: function(){
       this.fahrtmediumListe = [
         i18n.t("colleagueSurvey.colleagueSurvey.fahrmediumListe_0"),
-        i18n.t("colleagueSurvey.colleagueSurvey.fahrmediumListe_1"),
         i18n.t("colleagueSurvey.colleagueSurvey.fahrmediumListe_2"),
         i18n.t("colleagueSurvey.colleagueSurvey.fahrmediumListe_3"),
         i18n.t("colleagueSurvey.colleagueSurvey.fahrmediumListe_4"),
@@ -567,13 +915,88 @@ export default {  components: {
       ]
       this.dienstreiseMediumListe = [
         i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_0"),
-        i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_1"),
         i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_2"),
         i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3"),
-      ],
+      ]
       this.flugstreckeListe = [
-        i18n.t("colleagueSurvey.colleagueSurvey.flugstreckeListe_0"),
-        i18n.t("colleagueSurvey.colleagueSurvey.flugstreckeListe_1"),
+        i18n.t("colleagueSurvey.colleagueSurvey.flugstreckeListe_0"), //Langstrecke
+        i18n.t("colleagueSurvey.colleagueSurvey.flugstreckeListe_1"), //Kurzstrecke
+        i18n.t("colleagueSurvey.colleagueSurvey.flugstreckeListe_2"), //Inland
+        i18n.t("colleagueSurvey.colleagueSurvey.flugstreckeListe_3"), //International
+      ]
+      this.pkwListe = [
+        i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMedium_Diesel"),
+        i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMedium_Benzin"),
+        i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMedium_Hybrid"),
+        i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMedium_Elektro"),
+      ]
+      this.flugklassenListeLangstrecke = [
+        i18n.t("colleagueSurvey.colleagueSurvey.flugklasse_average"),
+        i18n.t("colleagueSurvey.colleagueSurvey.flugklasse_economy"),
+        i18n.t("colleagueSurvey.colleagueSurvey.flugklasse_business"),
+        i18n.t("colleagueSurvey.colleagueSurvey.flugklasse_premiumeconomy"),
+        i18n.t("colleagueSurvey.colleagueSurvey.flugklasse_first"),
+      ]
+      this.flugklassenListeKurzstrecke = [
+        i18n.t("colleagueSurvey.colleagueSurvey.flugklasse_average"),
+        i18n.t("colleagueSurvey.colleagueSurvey.flugklasse_economy"),
+        i18n.t("colleagueSurvey.colleagueSurvey.flugklasse_business"),
+      ]
+      this.flugklassenListeInland = [
+        i18n.t("colleagueSurvey.colleagueSurvey.flugklasse_average"),
+      ]
+      this.flugklassenListeInternational = [
+        i18n.t("colleagueSurvey.colleagueSurvey.flugklasse_average"),
+        i18n.t("colleagueSurvey.colleagueSurvey.flugklasse_economy"),
+        i18n.t("colleagueSurvey.colleagueSurvey.flugklasse_business"),
+        i18n.t("colleagueSurvey.colleagueSurvey.flugklasse_premiumeconomy"),
+        i18n.t("colleagueSurvey.colleagueSurvey.flugklasse_first"),
+      ]
+
+      // Sort the lists based on current language
+      let collator = new Intl.Collator(this.$i18n.locale, {sensitivity: 'base'});
+
+      this.fahrtmediumListe.sort(collator.compare);
+      this.fahrtmediumÖPNVListe.sort(collator.compare);
+      this.dienstreiseMediumListe.sort(collator.compare);
+      this.flugstreckeListe.sort(collator.compare);
+      this.pkwListe.sort(collator.compare);
+      this.flugklassenListeLangstrecke.sort(collator.compare);
+      this.flugklassenListeKurzstrecke.sort(collator.compare);
+      this.flugklassenListeInland.sort(collator.compare);
+      this.flugklassenListeInternational.sort(collator.compare);
+    },
+
+    /**
+     * This Method is needed bc of i18n. Otherwise after changing the language the rules would not change.
+     */
+    setRules: function(){
+      this.tageImBueroRules = [
+        (v) => !!v || i18n.t('colleagueSurvey.colleagueSurvey.Rules_MussAngegeben'),
+        (v) =>
+          (parseInt(v) < 8 && parseInt(v) >= 0) ||
+          i18n.t('colleagueSurvey.colleagueSurvey.TageBueroRules_0'),
+      ]
+
+      this.streckeRules = [
+        (v) => !!v || i18n.t('colleagueSurvey.colleagueSurvey.Rules_MussAngegeben'),
+        (v) => parseInt(v) > 0 || i18n.t('colleagueSurvey.colleagueSurvey.StreckeRules_0'),
+      ]
+
+      this.geraeteRules = [
+        (v) =>
+          !!v || i18n.t('colleagueSurvey.colleagueSurvey.GeraeteRules_0'),
+        (v) =>
+          parseInt(v) != 0 ||
+          i18n.t('colleagueSurvey.colleagueSurvey.GeraeteRules_0'),
+        (v) => parseInt(v) > 0 || i18n.t('colleagueSurvey.colleagueSurvey.GeraeteRules_1'),
+      ]
+
+      this.mitfahrerRules = [
+        (v) => !!v || i18n.t('colleagueSurvey.colleagueSurvey.MitfahrerRules_0'),
+        (v) =>
+          parseInt(v) > 0 ||
+          i18n.t('colleagueSurvey.colleagueSurvey.MitfahrerRules_1'),
       ]
     },
 
@@ -581,7 +1004,7 @@ export default {  components: {
      * Adds a new Verkehrsmittel to select as the  Pendelmedium
      */
     newVerkehrsmittel: function () {
-      this.verkehrsmittel.push([null, null, false, null, null]);
+      this.verkehrsmittel.push([null, null, false, null, null, null]);
     },
 
     /**
@@ -602,25 +1025,33 @@ export default {  components: {
     /**
      * Returns an Integer ID that resolves the Pendelmedium Name to its specified internal ID
      */
-    mapPendelverkehrsmittel: function (verkehrmittel1, verkehrsmittel2) {
+    mapPendelverkehrsmittel: function (verkehrsmitteltyp, oepnvspezifikation, tankspezifikation) {
+      //Backend expects the following IDs for the following Verkehrsmittel
       const verkehrsmittelMap = new Map([
-        [i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_2'), 1],
-        [i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_3'), 2],
-        [i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_4'), 3],
-        [i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_0'), 4],
-        [i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_1'), 5],
-        [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_1'), 6],
-        [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_0'), 7],
-        [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_2'), 8],
-        [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_3'), 9],
-        [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_4'), 10],
-        [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_5'), 11],
-        [i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_6'), 12]
+        [i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_2'), constants.pendelweg_fahrrad],
+        [i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_3'), constants.pendelweg_e_fahrrad],
+        [i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_4'), constants.pendelweg_motorisiertes_zweirad],
+        [i18n.t('colleagueSurvey.colleagueSurvey.Pkw_diesel'), constants.pendelweg_pkw_diesel],
+        [i18n.t('colleagueSurvey.colleagueSurvey.Pkw_benzin'), constants.pendelweg_pkw_benzin],
+        [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_1'), constants.pendelweg_bus],
+        [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_0'), constants.pendelweg_bahn],
+        [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_2'), constants.pendelweg_u_bahn],
+        [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_3'), constants.pendelweg_straßenbahn],
+        [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_4'), constants.pendelweg_mix_inkl_u_bahn],
+        [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_5'), constants.pendelweg_mix_exkl_u_bahn],
+        [i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_6'), constants.pendelweg_fußgaenger],
+        [i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMedium_Hybrid'), constants.pendelweg_pkw_plug_in_hybrid],
+        [i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMedium_Elektro'), constants.pendelweg_pkw_elektro]
       ]);
-      if (verkehrmittel1 !== i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_5')) {
-        return verkehrsmittelMap.get(verkehrmittel1);
+
+      //Check if Öffentliche is selected
+      if(verkehrsmitteltyp === i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_5')) {
+        return verkehrsmittelMap.get(oepnvspezifikation);
+        //Check if PKW is selected
+      } else if(verkehrsmitteltyp === i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_0')){
+        return verkehrsmittelMap.get(tankspezifikation);
       } else {
-        return verkehrsmittelMap.get(verkehrsmittel2);
+        return verkehrsmittelMap.get(verkehrsmitteltyp);
       }
     },
 
@@ -629,36 +1060,105 @@ export default {  components: {
      */
     mapDienstreisemittel: function (verkehrsmittel) {
       const verkehrsmittelMap = new Map([
-        [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_0'), 1],
-        [i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_0'), 2],
-        [i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_1'), 2],
-        [i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3'), 3],
+        [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_0'), constants.dienstreisen_bahn],
+        [i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_0'), constants.dienstreisen_pkw],
+        [i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3'), constants.dienstreisen_flugzeug],
       ]);
+      
+      //Tankart should be empty if not PKW
+      var tankart = "";
+      var flugklasse = "";
+      var flugstreckeart = "";
+
+      //Check if verkehrsmittel is PKW
+      if(parseInt(verkehrsmittelMap.get(verkehrsmittel[0])) == 2) {
+        //Check if Benzin or Diesel
+        if(verkehrsmittel[1] == i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMedium_Benzin')) {
+          tankart = constants.dienstreisen_benzin
+        } else if(verkehrsmittel[1] == i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMedium_Diesel')) {
+          tankart = constants.dienstreisen_diesel
+        } else if(verkehrsmittel[1] == i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMedium_Hybrid')) {
+          tankart = constants.dienstreisen_plug_in_hybrid
+        } else if(verkehrsmittel[1] == i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMedium_Elektro')) {
+          tankart = constants.dienstreisen_elektro
+        } else { 
+          console.error("No valid Tankart selected")
+          tankart = "";
+        }
+      }
+
+      //Check if verkehrsmittel is Flugzeug, then set the Flugstreckeart
+      if(parseInt(verkehrsmittelMap.get(verkehrsmittel[0])) == 3) {
+        if(verkehrsmittel[1] == i18n.t('colleagueSurvey.colleagueSurvey.flugstreckeListe_0')) {
+          flugstreckeart = constants.dienstreisen_langstrecke
+        } else if(verkehrsmittel[1] == i18n.t('colleagueSurvey.colleagueSurvey.flugstreckeListe_1')) {
+          flugstreckeart = constants.dienstreisen_kurzstrecke
+        } else if(verkehrsmittel[1] == i18n.t('colleagueSurvey.colleagueSurvey.flugstreckeListe_2')) {
+          flugstreckeart = constants.dienstreisen_inland
+        } else if(verkehrsmittel[1] == i18n.t('colleagueSurvey.colleagueSurvey.flugstreckeListe_3')) {
+          flugstreckeart = constants.dienstreisen_international
+        } else {
+          console.error("No valid Flugstreckeart selected")
+          flugstreckeart = "";
+        }
+      }
+
+      //Check if verkehrsmittel is Flugzeug, then set the Flugklasse
+      if(parseInt(verkehrsmittelMap.get(verkehrsmittel[0])) == 3) {
+        if(verkehrsmittel[3] == i18n.t('colleagueSurvey.colleagueSurvey.flugklasse_average')) {
+          flugklasse = constants.dienstreisen_average
+        } else if(verkehrsmittel[3] == i18n.t('colleagueSurvey.colleagueSurvey.flugklasse_economy')) {
+          flugklasse = constants.dienstreisen_economy
+        } else if(verkehrsmittel[3] == i18n.t('colleagueSurvey.colleagueSurvey.flugklasse_business')) {
+          flugklasse = constants.dienstreisen_business
+        } else if(verkehrsmittel[3] == i18n.t('colleagueSurvey.colleagueSurvey.flugklasse_premiumeconomy')) {
+          flugklasse = constants.dienstreisen_premium_economy  
+        } else if(verkehrsmittel[3] == i18n.t('colleagueSurvey.colleagueSurvey.flugklasse_first')) {
+          flugklasse = constants.dienstreisen_first
+        } else {
+          console.error("No valid Flugklasse selected")
+          flugklasse = "";
+        }
+      }
+
       return [
-        verkehrsmittelMap.get(verkehrsmittel),
-        parseInt(verkehrsmittelMap.get(verkehrsmittel)) == 2
-          ? verkehrsmittel == i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_1')
-            ? i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMedium_Benzin')
-            : i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMedium_Diesel')
-          : "",
+        verkehrsmittelMap.get(verkehrsmittel[0]),
+        tankart,
+        flugstreckeart,
+        flugklasse
       ];
+    },
+
+    /**
+     * Returns the Flugklassenliste based on the Flugstreckeart
+     */
+    mapDienstreiseFlugklasse: function (flugstreckeart) {
+      if(flugstreckeart == i18n.t('colleagueSurvey.colleagueSurvey.flugstreckeListe_0')){ //Langstrecke
+        return this.flugklassenListeLangstrecke;
+      } else if (flugstreckeart == i18n.t('colleagueSurvey.colleagueSurvey.flugstreckeListe_1')) { //Kurzstrecke
+        return this.flugklassenListeKurzstrecke;
+      } else if (flugstreckeart == i18n.t('colleagueSurvey.colleagueSurvey.flugstreckeListe_2')) { //Inland
+        return this.flugklassenListeInland;
+      } else if (flugstreckeart == i18n.t('colleagueSurvey.colleagueSurvey.flugstreckeListe_3')) { //International
+        return this.flugklassenListeInternational;
+      }
     },
 
     /**
      * Adds a new Dienstreise to select as another Dienstreisemedium
      */
     newDienstreise: function () {
-      this.dienstreise.push([null, null, null]);
+      this.dienstreisen.push([null, null, null, null]);
     },
 
     /**
      * Removes a Dienstreise at the given index, therby deleting it from the webpage
      */
     removeDienstreise: function (index) {
-      if (index >= 0 && this.dienstreise.length > index) {
-        this.dienstreise.splice(index, 1);
+      if (index >= 0 && this.dienstreisen.length > index) {
+        this.dienstreisen.splice(index, 1);
         //When the only element is removed add a new, thereby clearing the values of the fields on the webpage
-        if (this.dienstreise.length === 0) {
+        if (this.dienstreisen.length === 0) {
           this.newDienstreise();
         }
       } else {
@@ -684,7 +1184,7 @@ export default {  components: {
           buildPendelweg.push({
             strecke: parseInt(pendel[4]),
             idPendelweg: parseInt(
-              this.mapPendelverkehrsmittel(pendel[0], pendel[1])
+              this.mapPendelverkehrsmittel(pendel[0], pendel[1], pendel[5])
             ),
             //return 1 for no fahrgemeinschaft. In Question we ask Anzahl Mitfahrer so pendel[3]+1 are all persons in the vehicle
             personenanzahl: parseInt(
@@ -731,16 +1231,18 @@ export default {  components: {
     dienstreisenJSON: function () {
       //Build Dienstreisen Array
       var buildDienstreisen = [];
-      for (var reise of this.dienstreise) {
+      for (var dienstreise of this.dienstreisen) {
         // eslint-disable-next-line no-extra-boolean-cast
-        if(!!reise[0]){
-          var dienstreisetyp = this.mapDienstreisemittel(reise[0]);
+        if(!!dienstreise[0]){
+          var dienstreisetyp = this.mapDienstreisemittel(dienstreise);
+
           buildDienstreisen.push({
             idDienstreise: parseInt(dienstreisetyp[0]),
-            //Catches spezial case were user selects Flugtyp but then changes to other Verkehrsmedium
-            streckentyp: parseInt(dienstreisetyp[0]) == 3 ? reise[1] : "",
-            strecke: parseInt(reise[2]),
-            tankart: dienstreisetyp[1],
+            //Catches spezial case where user selects Flugtyp but then changes to other Verkehrsmedium
+            streckentyp: parseInt(dienstreisetyp[0]) == 3 ? dienstreisetyp[2] : "",
+            strecke: parseInt(dienstreise[2]),
+            tankart: dienstreisetyp[1], //Empty if not PKW
+            klasse: dienstreisetyp[3], //Empty if not Flugzeug
           });
         }
       }
@@ -772,7 +1274,7 @@ export default {  components: {
         errors.push(i18n.t('colleagueSurvey.colleagueSurvey.EingabeValidierung_TageBuero'))
       }
       // Check for Dienstreise
-      for(const dienst of this.dienstreise) {
+      for(const dienst of this.dienstreisen) {
         if(dienst[0] && (!dienst[2] || dienst[2] < 0)) {
           var dienstmedium = (dienst[0] != i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3')) ? dienst[0] : dienst[1]
           if(dienstmedium == null) {
@@ -800,6 +1302,7 @@ export default {  components: {
      */
     sendData: async function () {
       this.displayLoadingAnimation = true;
+
       await fetch(process.env.VUE_APP_BASEURL + "/mitarbeiterumfrage/insert", {
         method: "POST",
         headers: {
@@ -808,7 +1311,7 @@ export default {  components: {
         body: JSON.stringify({
           pendelweg: this.pendelwegJSON(),
           tageImBuero: parseInt(this.arbeitstageBuero),
-          dienstreise: this.dienstreisenJSON(),
+          dienstreisen: this.dienstreisenJSON(),
           itGeraete: this.itGeraeteJSON(),
           idUmfrage: this.$route.params.umfrageID,
         }),
@@ -849,8 +1352,17 @@ export default {  components: {
         .catch((error) => {
           console.error("Error:", error);
           this.umfrageYear = "UnknownYear";
-        });
+        });   
     },
   },
 };
 </script>
+
+<style lang="scss">
+  .headerClass{
+    white-space: wrap;
+    word-break: normal;
+    display: block;
+    hyphens: auto;
+  }
+</style>

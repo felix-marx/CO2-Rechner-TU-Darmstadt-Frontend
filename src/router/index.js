@@ -8,8 +8,25 @@ import ColleagueSurveyView from '../views/ColleagueSurveyView.vue'
 import EvaluationView from '../views/EvaluationView.vue'
 import PrivacyPolicy from '../components/footer/PrivacyPolicy.vue'
 import FAQ from '../components/footer/FAQ.vue'
+import ShareSurvey from '../views/ShareSurvey.vue'
 
 Vue.use(VueRouter)
+
+function surveyTabSelect(route) {
+  let props = {}
+
+  if(route.query.tab) {
+    props = {
+      tab: parseInt(route.query.tab)
+    }
+  }
+  else {
+    props = {
+      tab: 0
+    }
+  }
+  return props
+}
 
 const routes = [
   {
@@ -24,6 +41,7 @@ const routes = [
     path: '/survey',
     name: 'Survey',
     component: Home,
+    props: surveyTabSelect,
     meta: { 
       requiresAuth: true 
     }
@@ -69,6 +87,14 @@ const routes = [
     }
   },
   {
+    path: '/share/:umfrageID',
+    name: 'ShareSurvey',
+    component: ShareSurvey,
+    meta: { 
+      requiresAuth: true 
+    }
+  },
+  {
     path: "*",
     component: PageNotFound,
     meta: { 
@@ -104,8 +130,9 @@ router.beforeEach((to, from, next) => {
     if(router.app.$keycloak.authenticated){
       next()
       return
-    } else {  // redirect user to login page if not authenticated
-      next({path: '/'})
+    } else {  // redirect user to keycloak to login
+      const loginUrl = router.app.$keycloak.createLoginUrl()
+      window.location.replace(loginUrl)
     }
 
   } else if(to.meta.requiresAdminAuth){

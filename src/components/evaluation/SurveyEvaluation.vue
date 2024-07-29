@@ -4,49 +4,102 @@
       v-if="responseSuccessful"
       elevation="2"
       outlined
-      class="pa-7 mx-auto"
+      :class="$vuetify.breakpoint.xsOnly ? 'pa-0 mx-auto' : 'pa-7 mx-auto'"
       :max-width="constants.v_card_max_width"
     >
-      <v-card-title>{{ $t('evaluation.surveyEvaluation.AuswertungDerUmfrage') }} "{{ responsedata.bezeichnung }}"</v-card-title>
+      <v-card-title :class="$vuetify.breakpoint.xsOnly ? 'px-7 pt-7 headerClass' : 'px-0 pt-0 headerClass'">
+        {{ $t('evaluation.surveyEvaluation.AuswertungDerUmfrage') }} "{{ responsedata.bezeichnung }}"
+      </v-card-title>
+      
       <v-divider />
-      <v-container>
-        <v-row>
-          <v-col>
-            <v-icon>
-              mdi-calendar
-            </v-icon>
-            {{ $t('common.Bilanzierungsjahr') }}: {{ responsedata.jahr }}
-          </v-col>
-          <v-col>
-            <v-icon>
-              mdi-account
-            </v-icon>
-            {{ $t('common.Mitarbeitendenzahl') }}: {{ $n(responsedata.mitarbeiteranzahl, 'integer') }}
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col>
-            <v-icon>
-              mdi-account-edit
-            </v-icon>
-            {{ $t('evaluation.surveyEvaluation.AusgefuellteMitarbeiterumfragen') }} {{ $n(responsedata.umfragenanzahl, 'integer') }}
-          </v-col>
-          <v-col>
-            <v-progress-linear
-              height="25"
-              color="cyan"
-              :value="responsedata.umfragenanteil"
-            >
-              <strong>{{ $n(responsedata.umfragenanteil, 'decimal') }}%</strong>
-            </v-progress-linear>
-          </v-col>
-        </v-row>
+      
+      <v-container :class="$vuetify.breakpoint.xsOnly ? 'px-7' : 'px-0'">
+        <!-- On desktop display a 2x2 grid -->
+        <template v-if="!$vuetify.breakpoint.mobile">
+          <v-row>
+            <v-col>
+              <v-icon>
+                mdi-calendar
+              </v-icon>
+              {{ $t('common.Bilanzierungsjahr') }}: {{ responsedata.jahr }}
+            </v-col>
+            <v-col>
+              <v-icon>
+                mdi-account
+              </v-icon>
+              {{ $t('common.Mitarbeitendenzahl') }}: {{ $n(responsedata.mitarbeiteranzahl, 'integer') }}
+            </v-col>
+          </v-row>
+
+          <v-row>
+            <v-col>
+              <v-icon>
+                mdi-account-edit
+              </v-icon>
+              {{ $t('evaluation.surveyEvaluation.AusgefuellteMitarbeiterumfragen') }} {{ $n(responsedata.umfragenanzahl, 'integer') }}
+            </v-col>
+            <v-col>
+              <v-progress-linear
+                height="25"
+                color="cyan"
+                :value="responsedata.umfragenanteil"
+              >
+                <strong>{{ $n(responsedata.umfragenanteil, 'decimal') }}%</strong>
+              </v-progress-linear>
+            </v-col>
+          </v-row>
+        </template>
+
+        <!-- On mobile display all in on column -->
+        <template v-else>
+          <v-row>
+            <v-col>
+              <v-icon>
+                mdi-calendar
+              </v-icon>
+              {{ $t('common.Bilanzierungsjahr') }}: {{ responsedata.jahr }}
+            </v-col>
+          </v-row>
+          <v-row>  
+            <v-col>
+              <v-icon>
+                mdi-account
+              </v-icon>
+              {{ $t('common.Mitarbeitendenzahl') }}: {{ $n(responsedata.mitarbeiteranzahl, 'integer') }}
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col>
+              <v-icon>
+                mdi-account-edit
+              </v-icon>
+              {{ $t('evaluation.surveyEvaluation.AusgefuellteMitarbeiterumfragen') }} {{ $n(responsedata.umfragenanzahl, 'integer') }}
+            </v-col>
+          </v-row>
+          <v-row>  
+            <v-col>
+              <v-progress-linear
+                height="25"
+                color="cyan"
+                :value="responsedata.umfragenanteil"
+              >
+                <strong>{{ $n(responsedata.umfragenanteil, 'decimal') }}%</strong>
+              </v-progress-linear>
+            </v-col>
+          </v-row>
+        </template>
+
         <v-row v-if="displayExtrapolationWarning">
           <v-col>
             <v-alert
-              type="warning"
+              :type="displayExtrapolationWarning ? 'warning' : 'info'"
+              class="mb-0"
+              text
             >
-              {{ $t('evaluation.surveyEvaluation.HochrechnungUngenau_0') }} {{ $n(responsedata.umfragenanteil, 'decimal') }}{{ $t('evaluation.surveyEvaluation.HochrechnungUngenau_1') }}
+              {{ $t('evaluation.surveyEvaluation.HochrechnungInfo') }}
+              <template v-if="displayExtrapolationWarning">
+                {{ $t('evaluation.surveyEvaluation.HochrechnungUngenau_0') }} {{ $n(responsedata.umfragenanteil, 'decimal') }}{{ $t('evaluation.surveyEvaluation.HochrechnungUngenau_1') }}
+              </template>
             </v-alert>
           </v-col>
         </v-row>
@@ -59,27 +112,55 @@
         />
       </v-container>
 
-      <v-card-title>{{ $t('common.Emissionen') }}</v-card-title>
+      <v-card-title :class="$vuetify.breakpoint.xsOnly ? 'px-7 headerClass' : 'px-0 headerClass'">
+        {{ $t('common.Emissionen') }}
+      </v-card-title>
 
       <v-divider />
       <v-container>
-        <v-row>
-          <v-col>
-            <v-icon>
-              mdi-thought-bubble
-            </v-icon>
-            {{ $t('evaluation.surveyEvaluation.Gesamtemissionen') }} {{ $n(responsedata.emissionenGesamt, 'decimal') }} {{ $t('evaluation.surveyEvaluation.tCO2eq') }}
-          </v-col>
-          <v-col>
-            <v-icon>
-              mdi-human-male-board-poll
-            </v-icon>
-            {{ $t('evaluation.surveyEvaluation.EmissionProMitarbeitende') }} {{ $n(responsedata.emissionenProMitarbeiter, 'decimal') }} {{ $t('evaluation.surveyEvaluation.tCO2eq') }}
-          </v-col>
-        </v-row>
+        <!-- On desktop display in a single row -->
+        <template v-if="!$vuetify.breakpoint.mobile">
+          <v-row>
+            <v-col>
+              <v-icon>
+                mdi-thought-bubble
+              </v-icon>
+              {{ $t('evaluation.surveyEvaluation.Gesamtemissionen') }} {{ $n(responsedata.emissionenGesamt, 'decimal') }} {{ $t('evaluation.surveyEvaluation.tCO2eq') }}
+            </v-col>
+            <v-col>
+              <v-icon>
+                mdi-human-male-board-poll
+              </v-icon>
+              {{ $t('evaluation.surveyEvaluation.EmissionProMitarbeitende') }} {{ $n(responsedata.emissionenProMitarbeiter, 'decimal') }} {{ $t('evaluation.surveyEvaluation.tCO2eq') }}
+            </v-col>
+          </v-row>
+        </template>
+
+        <!-- On mobile display in two rows -->
+        <template v-else>
+          <v-row :class="$vuetify.breakpoint.xsOnly ? 'px-7' : 'px-0'">
+            <v-col>
+              <v-icon>
+                mdi-thought-bubble
+              </v-icon>
+              {{ $t('evaluation.surveyEvaluation.Gesamtemissionen') }} {{ $n(responsedata.emissionenGesamt, 'decimal') }} {{ $t('evaluation.surveyEvaluation.tCO2eq') }}
+            </v-col>
+          </v-row>
+          <v-row :class="$vuetify.breakpoint.xsOnly ? 'px-7' : 'px-0'">    
+            <v-col>
+              <v-icon>
+                mdi-human-male-board-poll
+              </v-icon>
+              {{ $t('evaluation.surveyEvaluation.EmissionProMitarbeitende') }} {{ $n(responsedata.emissionenProMitarbeiter, 'decimal') }} {{ $t('evaluation.surveyEvaluation.tCO2eq') }}
+            </v-col>
+          </v-row>
+        </template>
 
         <!-- Referenzwerte (Haushalte) -->
-        <v-row justify="center">
+        <v-row
+          justify="center"
+          :class="$vuetify.breakpoint.xsOnly ? 'px-7' : 'px-0'"
+        >
           <v-card
             outlined
             class="pa-7"
@@ -121,7 +202,12 @@
           <div v-if="chart.ref == 'bar-dienstreisen'">
             <v-row v-if="displayAufteilungDienstreisen">
               <v-col class="d-flex justify-center">
-                <h4>{{ $t('evaluation.surveyEvaluation.AufteilungDienstreisen') }}</h4>
+                <h4>
+                  {{ $t('evaluation.surveyEvaluation.AufteilungDienstreisen') }}
+                  <Tooltip
+                    :tooltip-text="$t('colleagueSurvey.colleagueSurvey.Dienstreise_tooltip_2')"
+                  />
+                </h4>
               </v-col>
             </v-row>
             <v-row v-if="displayAufteilungDienstreisen">
@@ -177,14 +263,10 @@
           <v-col class="d-flex justify-center">
             <h4>
               {{ $t('evaluation.surveyEvaluation.AufteilungNachEnergieart') }}
-              <v-tooltip bottom>
-                <template v-slot:activator="{ on }">
-                  <v-icon v-on="on">
-                    mdi-alert-circle-outline
-                  </v-icon>
-                </template>
-                {{ $t('evaluation.surveyEvaluation.AufteilungNachEnergieart_tooltip') }}
-              </v-tooltip>
+              <Tooltip
+                :tooltip-text="$t('evaluation.surveyEvaluation.AufteilungNachEnergieart_tooltip')"
+                tooltip-icon="mdi-alert-circle-outline"
+              />
             </h4>
           </v-col>
         </v-row>
@@ -219,14 +301,10 @@
           <v-col class="d-flex justify-center">
             <h4>
               {{ $t('evaluation.surveyEvaluation.DarstellungEnergieverbrauch') }}
-              <v-tooltip bottom>
-                <template v-slot:activator="{ on }">
-                  <v-icon v-on="on">
-                    mdi-alert-circle-outline
-                  </v-icon>
-                </template>
-                {{ $t('evaluation.surveyEvaluation.DarstellungEnergieverbrauch_tooltip') }}
-              </v-tooltip>
+              <Tooltip
+                :tooltip-text="$t('evaluation.surveyEvaluation.DarstellungEnergieverbrauch_tooltip')"
+                tooltip-icon="mdi-alert-circle-outline"
+              />
             </h4>
           </v-col>
         </v-row>
@@ -273,7 +351,7 @@
         </v-row>
 
         <!-- Spreadsheet and Link Sharing -->
-        <v-row>
+        <v-row :class="$vuetify.breakpoint.xsOnly ? 'pb-7' : 'pb-0'">
           <v-btn
             class="ml-8 align-self-center"
             color="primary"
@@ -298,14 +376,15 @@
 
     <v-card
       v-if="showLoading || responsedata.auswertungFreigegeben"
-      class="mx-auto"
+      class="mx-auto px-4 pt-4"
       :max-width="constants.v_card_max_width"
     >
       <LoadingAnimation v-if="showLoading" />
       <LinkSharingComponent
         v-if="!this.$props.shared && responsedata.auswertungFreigegeben && !showLoading"
+        ref="linkSharing"
         :mitarbeiter-link="linkshareBaseURL + responsedata.id"
-        :link-ziel="$t('evaluation.surveyEvaluation.Auswertung')"
+        :text="$t('componentParts.LinkSharingComponent.Share_Auswertung')"
       />
     </v-card>
 
@@ -316,7 +395,9 @@
       class="mx-auto"
       :max-width="constants.v_card_max_width"
     >
-      <v-card-title>Error {{ responseerror.code }}: {{ responseerror.message }}</v-card-title>
+      <v-card-title class="headerClass">
+        Error {{ responseerror.code }}: {{ responseerror.message }}
+      </v-card-title>
     </v-card>
   </v-container>
 </template>
@@ -329,6 +410,7 @@ import saveAs from 'file-saver';
 import LoadingAnimation from "../componentParts/LoadingAnimation.vue";
 import LinkSharingComponent from "../componentParts/LinkSharingComponent.vue";
 import DataGapVisualization from '../componentParts/DataGapVisualization.vue';
+import Tooltip from "@/components/componentParts/Tooltip.vue";
 import i18n from "@/i18n";
 import { translateGebaeudeIDToSymbolic, getITGeraeteLabelMap, getDienstreisenLabelMap, getPendelwegeLabelMap } from "../../utils";
 import constants from "../../const.js";
@@ -343,6 +425,7 @@ export default {
     LoadingAnimation,
     LinkSharingComponent,
     DataGapVisualization,
+    Tooltip
   },
 
   props: {
@@ -397,9 +480,15 @@ export default {
         code: null,
         message: null,
       },
+
+      // aggregated chart data
+      aggregatedDienstreisen: null,
+      aggregatedPendelwege: null,
+
       // for link sharing
       displaySuccess: false,
       showLoading: false,
+      scrollToLinkScharing: false,
 
       // base url for Mitarbeiterumfragen
       linkshareBaseURL: process.env.VUE_APP_URL + '/survey/results/',
@@ -471,6 +560,9 @@ export default {
               size: 14,
               // weight: 'bold',
             },
+            rotation: function() {  // rotation of numbers on bars
+              return this.barChartBarLabelRoation
+            },
           },
         },
         scales: {
@@ -493,6 +585,9 @@ export default {
           xAxes: [{ // font for labels on x-axis
             ticks: {
               fontColor: "black",
+              maxRotation: 90,
+              minRotation:  0,
+              autoSkip: false,
             },
           }]
         },
@@ -566,7 +661,7 @@ export default {
           "emission": "this.responsedata.emissionenITGeraete",
           "ref": "bar-itgeraete",
         },
-      ]
+      ],
     }
   },
 
@@ -579,8 +674,13 @@ export default {
       let base_text_ending = i18n.t('evaluation.surveyEvaluation.HaushaltReferenzText_2')
       return base_text_beginning + text_vierPersonenHaushalt + base_text_middle + text_zweiPersonenHaushalt + base_text_ending;
     },
+
     displayExtrapolationWarning: function () {
       return this.responsedata.umfragenanteil <= 50.0
+    },
+
+    barChartBarLabelRoation: function () {
+      return this.$vuetify.breakpoint.mobile ? 270 : 0
     },
   },
 
@@ -590,9 +690,19 @@ export default {
     },
   },
 
+  updated: function () {
+    this.$nextTick(function () {
+      if(this.scrollToLinkScharing){  // scroll to link sharing component when it appears
+        this.scrollToLinkScharing = false;
+        this.$refs.linkSharing.$el.scrollIntoView({behavior: "smooth", block: "end", inline: "nearest" });
+      }
+    })
+  },
+
   async mounted() { 
     await this.getData();
     this.initializeCharts();
+    this.aggregateChartdata();
     this.setChartData();
   },
 
@@ -747,11 +857,82 @@ export default {
     },
 
     /**
+     * Method aggregates the data for the charts.
+     */
+    aggregateChartdata: function () {
+
+      // aggregate dienstreisen data
+      let dienstreisenAufgeteilt = this.responsedata.emissionenDienstreisenAufgeteilt
+      let aggregation = {}
+
+      Object.keys(dienstreisenAufgeteilt).forEach(function(key) {
+        let new_key = key
+        let labelParts = key.split(constants.split_char)
+
+        if(labelParts[0] === constants.dienstreisen_pkw.toString() && [constants.dienstreisen_benzin, constants.dienstreisen_diesel].includes(labelParts[1])){
+          new_key = constants.dienstreisen_pkw.toString() + constants.split_char + constants.aggregation_dienstreisen_verbrenner
+        }
+        else if(labelParts[0] === constants.dienstreisen_pkw.toString() && [constants.dienstreisen_plug_in_hybrid, constants.dienstreisen_elektro].includes(labelParts[1])){
+          new_key = constants.dienstreisen_pkw.toString() + constants.split_char + constants.dienstreisen_elektro
+        }
+        else if(labelParts[0] === constants.dienstreisen_flugzeug.toString() && labelParts[1] === constants.dienstreisen_kurzstrecke){
+          new_key = constants.dienstreisen_flugzeug.toString() + constants.split_char + constants.dienstreisen_kurzstrecke
+        }
+        else if(labelParts[0] === constants.dienstreisen_flugzeug.toString() && labelParts[1] === constants.dienstreisen_langstrecke){
+          new_key = constants.dienstreisen_flugzeug.toString() + constants.split_char + constants.dienstreisen_langstrecke
+        }
+        else if(labelParts[0] === constants.dienstreisen_flugzeug.toString() && labelParts[1] === constants.dienstreisen_inland){
+          new_key = constants.dienstreisen_flugzeug.toString() + constants.split_char + constants.dienstreisen_inland
+        }
+        else if(labelParts[0] === constants.dienstreisen_flugzeug.toString() && labelParts[1] === constants.dienstreisen_international){
+          new_key = constants.dienstreisen_flugzeug.toString() + constants.split_char + constants.dienstreisen_international
+        }
+
+        aggregation[new_key] = (aggregation[new_key] || 0) + dienstreisenAufgeteilt[key]
+      })
+
+      Object.keys(aggregation).forEach(function(key) {
+        aggregation[key] = Math.round(aggregation[key] * 100) / 100
+      })
+
+      this.aggregatedDienstreisen = aggregation
+
+      // aggregate pendelwege data
+      let pendelwegeAufgeteilt = this.responsedata.emissionenPendelwegeAufgeteilt
+      aggregation = {}
+      let pkw_verbrenner = [constants.pendelweg_pkw_benzin.toString(), constants.pendelweg_pkw_diesel.toString()]
+      let pkw_elektro = [constants.pendelweg_pkw_elektro.toString(), constants.pendelweg_pkw_plug_in_hybrid.toString()]
+      let oepnv = [constants.pendelweg_bus.toString(), constants.pendelweg_bahn.toString(), constants.pendelweg_u_bahn.toString(), constants.pendelweg_straßenbahn.toString(), constants.pendelweg_mix_inkl_u_bahn.toString(), constants.pendelweg_mix_exkl_u_bahn.toString()]
+
+      Object.keys(pendelwegeAufgeteilt).forEach(function(key) {
+        let new_key = key
+
+        if(oepnv.includes(key)){
+          new_key = constants.aggregation_pendelwege_oepnv
+        }
+        else if(pkw_verbrenner.includes(key)){
+          new_key = constants.aggregation_pendelwege_verbrenner
+        }
+        else if(pkw_elektro.includes(key)){
+          new_key = constants.aggregation_pendelwege_elektro
+        }
+
+        aggregation[new_key] = (aggregation[new_key] || 0) + pendelwegeAufgeteilt[key]
+      })
+
+      Object.keys(aggregation).forEach(function(key) {
+        aggregation[key] = Math.round(aggregation[key] * 100) / 100
+      })
+
+      this.aggregatedPendelwege = aggregation
+    },
+
+    /**
      * Helper function to call all setChart functions and compute the current bar width.
      */
     setChartData: function() {
       this.computeBarWidth();
-      
+
       this.generalChartdataBar.datasets[0].maxBarThickness = this.barWidth
       this.chartdataDienstreisenBar.datasets[0].maxBarThickness = this.barWidth
       this.chartdataPendelwegeBar.datasets[0].maxBarThickness = this.barWidth
@@ -780,17 +961,20 @@ export default {
      * Computes the bar width for the bar charts based on the current canvas with and number of bars to display.
      */
     computeBarWidth: function() {
-      let maxBars = Math.max(Object.keys(this.responsedata.emissionenDienstreisenAufgeteilt).length, Object.keys(this.responsedata.emissionenPendelwegeAufgeteilt).length, Object.keys(this.responsedata.emissionenITGeraeteAufgeteilt).length)
+      let maxBars = Math.max(Object.keys(this.aggregatedDienstreisen).length, Object.keys(this.aggregatedPendelwege).length, Object.keys(this.responsedata.emissionenITGeraeteAufgeteilt).length)
 
-      let chartWidths = ["bar-dienstreisen", "bar-pendelwege", "bar-itgeraete"].map(x => this.$refs[x] ? this.$refs[x][0].$refs.canvas.width : 0)
+      let chartWidths = ["bar-dienstreisen", "bar-pendelwege", "bar-itgeraete"].map(x => this.$refs[x] ? this.$refs[x][0].$refs.canvas.clientWidth : 0)
       let chartWidth = Math.max(...chartWidths)
 
-      let halfChartWidth = this.$refs["bar-gesamt"].$refs.canvas.width
+      let halfChartWidth = this.$refs["bar-gesamt"].$refs.canvas.clientWidth
+
+      let halfWidth = halfChartWidth / 4 * 0.6
+      let fullWidth = chartWidth / maxBars * 0.75
 
       if (chartWidth == 0) {
-        this.barWidth = halfChartWidth / 4 * 0.75
+        this.barWidth = halfWidth
       } else {
-        this.barWidth = Math.min(chartWidth / maxBars * 0.75, halfChartWidth / 4 * 0.75)
+        this.barWidth = Math.min(halfWidth, fullWidth)
       }
     },
 
@@ -824,6 +1008,7 @@ export default {
       this.optionsGesamtBar.plugins.datalabels.formatter = (value) => {
         return i18n.n(value, "decimal");
       }
+      this.optionsGesamtBar.plugins.datalabels.rotation = () => { return this.barChartBarLabelRoation }
 
       this.$refs["doughnut-gesamt"].updateChart()
       this.$refs["bar-gesamt"].updateChart()
@@ -859,6 +1044,7 @@ export default {
       this.optionsEnergieBar.plugins.datalabels.formatter = (value) => {
         return i18n.n(value, "decimal");
       }
+      this.optionsEnergieBar.plugins.datalabels.rotation = () => { return this.barChartBarLabelRoation }
 
       this.$refs["doughnut-energie"].updateChart()
       this.$refs["bar-energie"].updateChart()
@@ -901,6 +1087,7 @@ export default {
       this.optionsVerbrauchBar.plugins.datalabels.formatter = (value) => {
         return i18n.n(value, "decimal");
       }
+      this.optionsVerbrauchBar.plugins.datalabels.rotation = () => { return this.barChartBarLabelRoation }
 
       this.$refs["doughnut-verbrauch"].updateChart()
       this.$refs["bar-verbrauch"].updateChart()
@@ -911,14 +1098,13 @@ export default {
      */
     setChartDienstreisen: function () {
       let data = []
-
-      let dienstreisenAufgeteilt = this.responsedata.emissionenDienstreisenAufgeteilt
       let labelMap = getDienstreisenLabelMap()
+      let aggregation = this.aggregatedDienstreisen
 
-      Object.keys(dienstreisenAufgeteilt).forEach(function(key) {
-        let labelParts = key.split("-")
+      Object.keys(aggregation).forEach(function(key) {
+        let labelParts = key.split(constants.split_char)
         let label = labelMap.get(labelParts[0]) + (labelParts[1] ? " - " + labelMap.get(labelParts[1]) : "")
-        data.push({label: label, value: dienstreisenAufgeteilt[key], color: 'rgb(54,162,235)'})
+        data.push({label: label, value: aggregation[key], color: 'rgb(54,162,235)'})
       })
 
       data.sort((a, b) => b.value - a.value)
@@ -930,6 +1116,7 @@ export default {
       this.optionsDienstreisenBar.plugins.datalabels.formatter = (value) => {
         return i18n.n(value, "decimal");
       }
+      this.optionsDienstreisenBar.plugins.datalabels.rotation = () => { return this.barChartBarLabelRoation }
 
       this.$refs["bar-dienstreisen"][0].updateChart()
     },
@@ -939,11 +1126,11 @@ export default {
      */
     setChartPendelwege: function () {
       let data = []
-
-      let pendelwegeAufgeteilt = this.responsedata.emissionenPendelwegeAufgeteilt
+      let aggregation = this.aggregatedPendelwege
       let labelMap = getPendelwegeLabelMap()
-      Object.keys(pendelwegeAufgeteilt).forEach(function(key) {
-        data.push({label: labelMap.get(key), value: pendelwegeAufgeteilt[key], color: 'rgb(255, 205, 86)'})
+
+      Object.keys(aggregation).forEach(function(key) {
+        data.push({label: labelMap.get(key), value: aggregation[key], color: 'rgb(255, 205, 86)'})
       })
 
       data.sort((a, b) => b.value - a.value)
@@ -955,6 +1142,7 @@ export default {
       this.optionsPendelwegeBar.plugins.datalabels.formatter = (value) => {
         return i18n.n(value, "decimal");
       }
+      this.optionsPendelwegeBar.plugins.datalabels.rotation = () => { return this.barChartBarLabelRoation }
 
       this.$refs["bar-pendelwege"][0].updateChart()
     },
@@ -980,6 +1168,7 @@ export default {
       this.optionsITGeraeteBar.plugins.datalabels.formatter = (value) => {
         return i18n.n(value, "decimal");
       }
+      this.optionsITGeraeteBar.plugins.datalabels.rotation = () => { return this.barChartBarLabelRoation }
 
       this.$refs["bar-itgeraete"][0].updateChart()
     },
@@ -1010,6 +1199,7 @@ export default {
           this.showLoading = false
           if (body.status == "success") {
             this.displaySuccess = true
+            this.scrollToLinkScharing = this.responsedata.auswertungFreigegeben
         }
         else {  // Fehlerbehandlung
           this.showLoading = false
@@ -1150,8 +1340,8 @@ export default {
       let labelMap = getDienstreisenLabelMap()
       let emissionen = this.responsedata.emissionenDienstreisen
       Object.keys(dienstreisenAufgeteilt).forEach(function(key) {
-        let labelParts = key.split("-")
-        let label = labelMap.get(labelParts[0]) + (labelParts[1] ? " - " + labelMap.get(labelParts[1]) : "")
+        let labelParts = key.split(constants.split_char)
+        let label = labelMap.get(labelParts[0]) + (labelParts[1] ? " - " + labelMap.get(labelParts[1]) : "") + (labelParts[2] ? " - " + labelMap.get(labelParts[2]) : "")
         data.push({
           "col1": label, 
           "col2": dienstreisenAufgeteilt[key],
@@ -1236,10 +1426,16 @@ export default {
 
 </script>
 
-<style>
-.p{
-  overflow: hidden; 
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
+<style lang="scss">
+  .p{
+    overflow: hidden; 
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .headerClass{
+    white-space: wrap;
+    word-break: normal;
+    display: block;
+    hyphens: auto;
+  }
 </style>
