@@ -152,7 +152,6 @@ export default {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log(data);
           this.displayLoading = false;
 
           if (data.status == "success") {
@@ -163,10 +162,6 @@ export default {
             this.errorMessage = data.error.message + " (Code: " + data.error.code + ")";
             this.displayError = true;
           }
-
-          console.log(this.displayLoading);
-          console.log(this.displaySuccess);
-          console.log(this.displayError);
         })
         .catch((error) => {
           console.error("Error:", error);
