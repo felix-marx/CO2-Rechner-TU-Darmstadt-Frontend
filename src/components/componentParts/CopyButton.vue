@@ -3,8 +3,7 @@
     <v-row>
       <v-col>
         <v-btn
-          dark
-          outlined
+          variant="outlined"
           color="primary"
           @click="copyLink()"
         >
@@ -17,9 +16,9 @@
         class="py-0"
       >
         <v-alert
-          :value="copySuccessful"
-          dense
-          text
+          :model-value="copySuccessful"
+          density="compact"
+          variant="tonal"
           type="success"
         >
           {{ $t('componentParts.copyButton.LinkInZwischenablage') }}

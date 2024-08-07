@@ -60,7 +60,7 @@
         <br>
 
         <v-row>
-          <v-col :cols="$vuetify.breakpoint.smAndUp ? 5 : 8">
+          <v-col :cols="$vuetify.display.smAndUp ? 5 : 8">
             <v-autocomplete
               v-model="bilanzierungsjahr"
               :items="possibleYears"
@@ -115,7 +115,7 @@
           :key="index"
         >
           <v-row justify="center">
-            <v-col :cols="$vuetify.breakpoint.smAndUp ? 6 : 5">
+            <v-col :cols="$vuetify.display.smAndUp ? 6 : 5">
               <v-autocomplete
                 v-if="gebaeudeIDs"
                 v-model="objekt[0]"
@@ -138,18 +138,18 @@
               />
             </v-col>
             <v-col
-              :cols="$vuetify.breakpoint.smAndUp ? 1 : 2"
+              :cols="$vuetify.display.smAndUp ? 1 : 2"
               class="mt-3 text-center"
             >
               <v-btn
                 class="delete_text--text mx-auto"
                 color="delete"
-                fab
-                small
+                size="default"
+                rounded
                 :disabled="blockInput"
                 @click="removeGebaeude(index)"
               >
-                <v-icon dark>
+                <v-icon>
                   mdi-delete-outline
                 </v-icon>
               </v-btn>
@@ -180,7 +180,8 @@
         <v-alert
           v-if="duplicateBuilding"
           type="warning"
-          dense
+          density="compact"
+          variant="tonal"
         >
           {{ $t('userSurvey.Survey.GebaeudeWarnung') }}
         </v-alert>
@@ -257,7 +258,7 @@
           <v-row>
             <v-checkbox
               v-model="geraeteAnzahl[4][2]"
-              hide-details
+              hide-details 
               :disabled="blockInput"
             />
             <v-text-field
@@ -295,13 +296,13 @@
             :max-width="constants.v_dialog_max_width"
           >
             <!-- Mit diesem Button soll die Umfrage abgesendet werden. -->
-            <template v-slot:activator="{ on, attrs }">
+            <template #activator="{ props }">
               <v-btn
                 class="mr-4"
                 color="primary"
                 :disabled="blockInput"
-                v-bind="attrs"
-                v-on="on"
+               
+                v-bind="props"
                 @click="problemeInUmfrage()"
               >
                 {{ $t('userSurvey.Survey.SpeicherButton') }}
@@ -310,6 +311,7 @@
 
             <v-card>
               <v-toolbar
+                class="px-4"
                 color="primary"
                 dark
               >
@@ -324,9 +326,7 @@
                     v-if="errorTextArray.required.length != 0"
                   >
                     {{ $t('userSurvey.Survey.FehlendePflichtfelder') }} <br>
-                    <v-list
-                      flat
-                    >
+                    <v-list>
                       <v-list-item
                         v-for="(problem, index) in errorTextArray.required"
                         :key="index"
@@ -341,9 +341,7 @@
                     v-if="errorTextArray.nonRequired.length != 0"
                   >
                     {{ $t('userSurvey.Survey.UmfrageHatProbleme') }} <br>
-                    <v-list
-                      flat
-                    >
+                    <v-list>
                       <v-list-item
                         v-for="(problem, index) in errorTextArray.nonRequired"
                         :key="index"
@@ -370,7 +368,7 @@
                 <v-spacer />
                 <v-btn
                   color="primary"
-                  text
+                  variant="text"
                   @click="errorDialog = false"
                 >
                   {{ $t('userSurvey.Survey.WeiterBearbeiten') }}
@@ -378,7 +376,7 @@
                 <v-btn
                   v-if="errorTextArray.required.length == 0"
                   color="primary"
-                  text
+                  variant="text"
                   @click="sendData(), errorDialog = false"
                 >
                   {{ (errorTextArray.nonRequired.length == 0) ? $t('userSurvey.Survey.UmfrageSpeichern') : $t('userSurvey.Survey.UmfrageTzdSpeichern') }}
@@ -405,7 +403,7 @@
       v-if="displaySurveyLink || displayLoadingAnimation"
       class="mx-auto mt-2 px-4 pt-4"
       elevation="2"
-      outlined
+      border
       :max-width="constants.v_card_max_width"
     >
       <LoadingAnimation v-if="displayLoadingAnimation" />
@@ -428,6 +426,7 @@
       <v-alert
         ref="errorMessage"
         type="error"
+        variant="tonal"
       >
         {{ errorMessage }}
       </v-alert>
@@ -437,15 +436,16 @@
 
 <script>
 import Tooltip from "@/components/componentParts/Tooltip.vue";
-import LinkSharingComponent from "../componentParts/LinkSharingComponent";
-import MailTemplate from "./MailTemplate";
-import LoadingAnimation from "../componentParts/LoadingAnimation";
-import i18n from "@/i18n";
-import DataGapVisualization from '../componentParts/DataGapVisualization.vue';
-import { translateGebaeudeIDToSymbolic, translateGebaeudeIDToNumeric, resolveITGeraetID } from "../../utils";
-import constants from "../../const.js";
+import LinkSharingComponent from "@/components/componentParts/LinkSharingComponent.vue";
+import MailTemplate from "@/components/userSurvey/MailTemplate.vue";
+import LoadingAnimation from "@/components/componentParts/LoadingAnimation.vue";
+import DataGapVisualization from '@/components/componentParts/DataGapVisualization.vue';
+import { translateGebaeudeIDToSymbolic, translateGebaeudeIDToNumeric, resolveITGeraetID } from "@/utils.js";
+import constants from "@/const.js";
 
 export default {
+  name: "Survey",
+
   components: {
     LinkSharingComponent,
     MailTemplate,
@@ -509,7 +509,7 @@ export default {
     },
 
     // base url for Mitarbeiterumfragen
-    mitarbeiterumfrageBaseURL: process.env.VUE_APP_URL + '/survey/',
+    mitarbeiterumfrageBaseURL: import.meta.env.VITE_URL + '/survey/',
 
     // Error Nachricht von Server bei Fehler
     errorMessage: null,
@@ -591,44 +591,106 @@ export default {
      */
     setRules: function(){
       this.universalRules = [
-        (v) => !!v || i18n.t('userSurvey.Survey.universalRules_0'),
+        (v) => !!v || this.$t('userSurvey.Survey.universalRules_0'),
       ],
 
       this.geraeteRules = [
         (v) =>
-          !!v ||  i18n.t('userSurvey.Survey.geraeteRules_1'),
+          !!v ||  this.$t('userSurvey.Survey.geraeteRules_1'),
         (v) =>
           parseInt(v) != 0 ||
-            i18n.t('userSurvey.Survey.geraeteRules_1'),
-        (v) => parseInt(v) > 0 ||  i18n.t('userSurvey.Survey.geraeteRules_3'),
+            this.$t('userSurvey.Survey.geraeteRules_1'),
+        (v) => parseInt(v) > 0 ||  this.$t('userSurvey.Survey.geraeteRules_3'),
       ],
 
       this.nichtnegativRules = [
-        (v) => !!v || i18n.t('userSurvey.Survey.nichtnegativRules_0'),
-        (v) => parseInt(v) >= 0 || i18n.t('userSurvey.Survey.nichtnegativRules_1'),
+        (v) => !!v || this.$t('userSurvey.Survey.nichtnegativRules_0'),
+        (v) => parseInt(v) >= 0 || this.$t('userSurvey.Survey.nichtnegativRules_1'),
       ],
 
       this.absolutpositivRules = [
-        (v) => !!v || i18n.t('userSurvey.Survey.absolutpositivRules_0'),
-        (v) => parseInt(v) > 0 || i18n.t('userSurvey.Survey.absolutpositivRules_1'),
+        (v) => !!v || this.$t('userSurvey.Survey.absolutpositivRules_0'),
+        (v) => parseInt(v) > 0 || this.$t('userSurvey.Survey.absolutpositivRules_1'),
       ]
     },
 
     /**
-     * Revalidates all fields in the survey 
+     * Revalidates all fields in the survey if they are not null. Otherwise, the fields are reset.
      */
     revalidateAllFields: function() {
-      this.$refs.bezeichnung.validate();
-      this.$refs.anzahlMitarbeiter.validate();
-      for (var i = 0; i < this.gebaeude.length; i++) {
-        this.$refs["flaeche" + i][0].validate();
+      if (this.bezeichnung) {
+        this.$refs.bezeichnung.validate();
       }
-      this.$refs.multifunktionsgeraete.validate();
-      this.$refs.multifunktionsgeraeteToner.validate();
-      this.$refs.drucker.validate();
-      this.$refs.druckerToner.validate();
-      this.$refs.beamer.validate();
-      this.$refs.server.validate();
+      else {
+        this.$refs.bezeichnung.resetValidation();
+      }
+
+      if (this.anzahlMitarbeiter) {
+        this.$refs.anzahlMitarbeiter.validate();
+      }
+      else {
+        this.$refs.anzahlMitarbeiter.resetValidation();
+      }
+
+      for (var i = 0; i < this.gebaeude.length; i++) {
+        if (this.gebaeude[i][1]) {
+          this.$refs["flaeche" + i][0].validate();
+        }
+        else {
+          this.$refs["flaeche" + i][0].resetValidation();
+          
+        }
+      }
+
+      if (this.geraeteAnzahl[0][1]) {
+        this.$refs.multifunktionsgeraete.validate();
+      }
+      else {
+        this.$refs.multifunktionsgeraete.resetValidation();
+      }
+      if (this.geraeteAnzahl[1][1]) {
+        this.$refs.multifunktionsgeraeteToner.validate();
+      }
+      else {
+        this.$refs.multifunktionsgeraeteToner.resetValidation();
+      }
+      if (this.geraeteAnzahl[2][1]) {
+        this.$refs.drucker.validate();
+      }
+      else {
+        this.$refs.drucker.resetValidation();
+      }
+      if (this.geraeteAnzahl[3][1]) {
+        this.$refs.druckerToner.validate();
+      }
+      else {
+        this.$refs.druckerToner.resetValidation();
+      }
+      if (this.geraeteAnzahl[4][1]) {
+        this.$refs.beamer.validate();
+      }
+      else {
+        this.$refs.beamer.resetValidation();
+      }
+      if (this.geraeteAnzahl[5][1]) {
+        this.$refs.server.validate();
+      }
+      else {
+        this.$refs.server.resetValidation();
+      }
+
+
+      //this.$refs.bezeichnung.validate();
+      //this.$refs.anzahlMitarbeiter.validate();
+      // for (var i = 0; i < this.gebaeude.length; i++) {
+      //   this.$refs["flaeche" + i][0].validate();
+      // }
+      // this.$refs.multifunktionsgeraete.validate();
+      // this.$refs.multifunktionsgeraeteToner.validate();
+      // this.$refs.drucker.validate();
+      // this.$refs.druckerToner.validate();
+      // this.$refs.beamer.validate();
+      // this.$refs.server.validate();
     },
 
     /**
@@ -637,13 +699,13 @@ export default {
     requiredFieldsMissingArray: function() {
       var fieldsarray = []
       if(this.bezeichnung == "" || this.bezeichnung == null) {
-        fieldsarray.push(i18n.t('userSurvey.Survey.requiredFieldsMissing_0'))
+        fieldsarray.push(this.$t('userSurvey.Survey.requiredFieldsMissing_0'))
       }
       if(!this.possibleYears.includes(parseInt(this.bilanzierungsjahr))) {
-        fieldsarray.push(i18n.t('userSurvey.Survey.requiredFieldsMissing_1'))
+        fieldsarray.push(this.$t('userSurvey.Survey.requiredFieldsMissing_1'))
       }
       if(this.anzahlMitarbeiter == null || this.anzahlMitarbeiter <= 0) {
-        fieldsarray.push(i18n.t('userSurvey.Survey.requiredFieldsMissing_2'))
+        fieldsarray.push(this.$t('userSurvey.Survey.requiredFieldsMissing_2'))
       }
       return fieldsarray
     },
@@ -662,20 +724,20 @@ export default {
       
       // Gebaeude
       if(this.duplicateBuilding) {
-        nonRequiredArray.push(i18n.t('userSurvey.Survey.problemeInUmfrage_0'))
+        nonRequiredArray.push(this.$t('userSurvey.Survey.problemeInUmfrage_0'))
       } 
       for(const gebaeude of this.gebaeude) {
         if(gebaeude[0] != null && gebaeude[1] <=0) {
-          nonRequiredArray.push(i18n.t('userSurvey.Survey.problemeInUmfrage_1') + gebaeude[0] + i18n.t('userSurvey.Survey.problemeInUmfrage_2'))
+          nonRequiredArray.push(this.$t('userSurvey.Survey.problemeInUmfrage_1') + gebaeude[0] + this.$t('userSurvey.Survey.problemeInUmfrage_2'))
         }
       }
       // IT Geraete
       for(const it of this.geraeteAnzahl) {
         if(it[2] && it[1] <= 0) { 
           if((it[0] != 8 && it[0] != 10)) {
-            nonRequiredArray.push(i18n.t("userSurvey.Survey.problemeInUmfrage_3") + resolveITGeraetID(it[0]) + i18n.t("userSurvey.Survey.problemeInUmfrage_4"))
+            nonRequiredArray.push(this.$t("userSurvey.Survey.problemeInUmfrage_3") + resolveITGeraetID(it[0]) + this.$t("userSurvey.Survey.problemeInUmfrage_4"))
           } else { // Toner
-            nonRequiredArray.push(i18n.t("userSurvey.Survey.problemeInUmfrage_5"))
+            nonRequiredArray.push(this.$t("userSurvey.Survey.problemeInUmfrage_5"))
           }
         }
       }
@@ -794,7 +856,7 @@ export default {
       this.displayLoadingAnimation = true;
       this.errorMessage = null;
 
-      await fetch(process.env.VUE_APP_BASEURL + "/umfrage/insert", {
+      await fetch(import.meta.env.VITE_BASEURL + "/umfrage/insert", {
         method: "POST",
         headers: {
           "Authorization": "Bearer " + this.$keycloak.token,
@@ -822,7 +884,7 @@ export default {
         })
         .catch((error) => {
           console.error("Error:", error);
-          this.errorMessage = i18n.t("common.ServerNichtErreichbar");
+          this.errorMessage = this.$t("common.ServerNichtErreichbar");
           this.scrollToErrorMessage = true
         });
 
@@ -833,7 +895,7 @@ export default {
      * Fetches all possible gebaeudeIDs and the Zaehler References from the database.
      */
     fetchGebaeudeUndZaehlerData: async function () {
-    await fetch(process.env.VUE_APP_BASEURL + "/umfrage/gebaeudeUndZaehler", {
+    await fetch(import.meta.env.VITE_BASEURL + "/umfrage/gebaeudeUndZaehler", {
       method: "GET",
       headers: {
           "Authorization": "Bearer " + this.$keycloak.token,

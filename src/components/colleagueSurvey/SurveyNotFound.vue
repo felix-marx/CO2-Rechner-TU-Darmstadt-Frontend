@@ -2,7 +2,7 @@
   <div class="text-center">
     <h3 class="text-center">
       {{ $t("colleagueSurvey.surveyNotFound.SurveyNotFound_0") }}
-      {{ this.$route.params.umfrageID }} {{ $t("colleagueSurvey.surveyNotFound.SurveyNotFound_1") }}
+      {{ $route.params.umfrageID }} {{ $t("colleagueSurvey.surveyNotFound.SurveyNotFound_1") }}
     </h3>
     <p>
       {{ $t("colleagueSurvey.surveyCompleted.UmfrageVollstaendig_1") }}

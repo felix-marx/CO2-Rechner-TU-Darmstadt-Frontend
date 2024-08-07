@@ -2,6 +2,7 @@
   <v-container>
     <v-card
       class="mx-auto"
+      align="top"
       :max-width="constants.v_card_max_width"
     >
       <v-card-title class="headerClass">
@@ -13,7 +14,7 @@
         v-for="(umfrage, index) in umfragen"
         :key="'umfrage_'+index"
         elevation="2"
-        outlined
+        border
         class="pb-2"
       >
         <v-container class="mx-1">
@@ -32,7 +33,7 @@
             </v-col>
           </v-row>
           <!-- Desktop design in one row -->
-          <v-row v-if="!$vuetify.breakpoint.mobile">
+          <v-row v-if="!$vuetify.display.mobile">
             <v-col cols="7">
               <CopyButton
                 :button-text="$t('userSurveyManagement.SurveyOverview.LinkZurMitarbeiterumfrage')"
@@ -52,7 +53,7 @@
             >
               <v-progress-circular 
                 :color=" umfrage.mitarbeiterUmfrageRef.length == umfrage.mitarbeiteranzahl ? 'primary' : 'grey'"
-                :value="100*(umfrage.mitarbeiterUmfrageRef.length / umfrage.mitarbeiteranzahl)"
+                :model-value="100*(umfrage.mitarbeiterUmfrageRef.length / umfrage.mitarbeiteranzahl)"
                 :size="35"
               />
             </v-col>
@@ -81,7 +82,7 @@
               >
                 <v-progress-circular 
                   :color=" umfrage.mitarbeiterUmfrageRef.length == umfrage.mitarbeiteranzahl ? 'primary' : 'grey'"
-                  :value="100*(umfrage.mitarbeiterUmfrageRef.length / umfrage.mitarbeiteranzahl)"
+                  :model-value="100*(umfrage.mitarbeiterUmfrageRef.length / umfrage.mitarbeiteranzahl)"
                   :size="35"
                 />
               </v-col>
@@ -100,49 +101,50 @@
                 <v-dialog
                   v-model="dialog[index]"
                   fullscreen
-                  hide-overlay
                   transition="dialog-bottom-transition"
                 >
-                  <template #activator="{ on, attrs }">
+                  <template #activator="{ props }">
                     <v-btn
                       class="mx-2"
                       color="primary"
                       rounded
-                      v-bind="attrs"
-                      v-on="on"
+                      variant="tonal"
+                      v-bind="props"
                     >
                       <v-icon 
-                        left 
+                        start 
                       >
                         mdi-clipboard-edit
                       </v-icon>
                       <span>{{ $t('userSurveyManagement.SurveyOverview.Bearbeiten') }}</span>
                     </v-btn>
                   </template>
-                  <v-card>
-                    <v-toolbar
-                      dark
-                      color="primary"
-                    >
-                      <v-btn
-                        icon
+
+                  <v-sheet>
+                    <v-card>
+                      <v-toolbar
                         dark
-                        @click="closeDialog(index)"
+                        color="primary"
                       >
-                        <v-icon>mdi-close</v-icon>
-                      </v-btn>
-                      <v-toolbar-title>{{ $t('common.Umfrage') }}</v-toolbar-title>
-                    </v-toolbar>
-                    <!-- Hier kommt der Inhalt der Umfrage hin -->
-                    <v-card
-                      v-if="dialog[index]"
-                      :style="{background: $vuetify.theme.themes[theme].background}"
-                    >
-                      <EditSurvey 
-                        :umfrageidprop="umfrage._id"
-                      />
+                        <v-btn
+                          icon
+                          @click="closeDialog(index)"
+                        >
+                          <v-icon>mdi-close</v-icon>
+                        </v-btn>
+                        <v-toolbar-title>{{ $t('common.Umfrage') }}</v-toolbar-title>
+                      </v-toolbar>
+                      <!-- Hier kommt der Inhalt der Umfrage hin -->
+                      <v-card
+                        v-if="dialog[index]"
+                        :style="{background: $vuetify.theme.themes[theme].colors.background}"
+                      >
+                        <EditSurvey 
+                          :umfrageidprop="umfrage._id"
+                        />
+                      </v-card>
                     </v-card>
-                  </v-card>
+                  </v-sheet>
                 </v-dialog>
 
                 <!-- Umfrage teilen -->
@@ -150,16 +152,16 @@
                   v-model="shareDialog[index]"
                   :max-width="constants.v_dialog_max_width"
                 >
-                  <template v-slot:activator="{ on, attrs }">
+                  <template #activator="{ props }">
                     <v-btn
                       class="mx-2"
                       color="primary"
                       rounded
-                      v-bind="attrs"
-                      v-on="on"
+                      variant="tonal"
+                      v-bind="props"
                     >
                       <v-icon 
-                        left 
+                        start 
                       >
                         mdi-share-variant-outline
                       </v-icon>
@@ -168,19 +170,23 @@
                   </template>
               
                   <v-card class="pa-0">
-                    <v-card-title class="text-h5 grey lighten-2 headerClass">
+                    <v-toolbar
+                      class="px-4"
+                      color="primary"
+                      dark
+                    >
                       {{ $t('userSurveyManagement.SurveyOverview.ShareDialog_Title') }}
-                    </v-card-title>
+                    </v-toolbar>
 
                     <v-card-text class="px-4 pt-4">
                       <v-container>
                         <v-row>
-                          <v-col class="black--text">
+                          <v-col class="text-black">
                             {{ $t('userSurveyManagement.SurveyOverview.ShareDialog_Text_1') }}
                           </v-col>
                         </v-row>
                         <v-row>
-                          <v-col class="black--text">
+                          <v-col class="text-black">
                             {{ $t('userSurveyManagement.SurveyOverview.ShareDialog_Text_2') }}
                           </v-col>
                         </v-row>
@@ -202,59 +208,61 @@
                 <v-dialog
                   v-model="dialogAuswertung[index]"
                   fullscreen
-                  hide-overlay
+                  scrollable
+                  :scrim="false"
                   transition="dialog-bottom-transition"
                 >
-                  <template v-slot:activator="{ on, attrs }">
+                  <template #activator="{ props }">
                     <v-btn
                       class="mx-2"
                       color="primary"
                       rounded
-                      v-bind="attrs"
-                      v-on="on"
+                      variant="tonal"
+                      v-bind="props"
                     >
-                      <v-icon left>
+                      <v-icon start>
                         mdi-chart-bar
                       </v-icon>
                       {{ $t('common.Auswertung') }}
                     </v-btn>
                   </template>
-                  <v-card>
-                    <v-toolbar
-                      dark
-                      color="primary"
-                    >
-                      <v-btn
-                        icon
+
+                  <v-sheet>
+                    <v-card>
+                      <v-toolbar
                         dark
-                        @click="closeDialogAuswertung(index)"
+                        color="primary"
                       >
-                        <v-icon>mdi-close</v-icon>
-                      </v-btn>
-                      <v-toolbar-title>{{ $t('common.Auswertung') }}</v-toolbar-title>
-                      <v-spacer />
-                    </v-toolbar>
-                    <v-card
-                      v-if="dialogAuswertung[index]"
-                      :style="{background: $vuetify.theme.themes[theme].background}"
-                    >
-                      <SurveyEvaluation
-                        :umfrageid="umfrage._id"
-                        :shared="false"
-                      />
+                        <v-btn
+                          icon
+                          @click="closeDialogAuswertung(index)"
+                        >
+                          <v-icon>mdi-close</v-icon>
+                        </v-btn>
+                        <v-toolbar-title>{{ $t('common.Auswertung') }}</v-toolbar-title>
+                        <v-spacer />
+                      </v-toolbar>
+                      <v-card
+                        v-if="dialogAuswertung[index]"
+                        :style="{background: $vuetify.theme.themes[theme].colors.background}"
+                      >
+                        <SurveyEvaluation
+                          :umfrageid="umfrage._id"
+                          :shared="false"
+                        />
+                      </v-card>
                     </v-card>
-                  </v-card>
+                  </v-sheet>
                 </v-dialog>
 
                 <!-- Desktop -->
-                <template v-if="!$vuetify.breakpoint.mobile">
+                <template v-if="!$vuetify.display.mobile">
                   <v-spacer />
 
                   <!-- Mit diesem Button sollen ausgewählte Umfragen dupliziert werden können. -->
                   <v-btn
                     class="mx-2"
-                    outlined
-                    text
+                    variant="outlined"
                     color="primary"
                     @click="duplicateSurvey(index, umfrage._id)"
                   >
@@ -270,15 +278,14 @@
                     transition="dialog-bottom-transition"
                     :max-width="constants.v_dialog_max_width"
                   >
-                    <template v-slot:activator="{ on, attrs }">
+                    <template #activator="{ props }">
                       <!-- Mit diesem Button sollen ausgewählte Umfragen gelöscht werden können. -->
                       <v-btn
                         class="mx-2 pl-1"
-                        outlined
-                        text
+                        variant="outlined"
                         color="delete"
-                        v-bind="attrs"
-                        v-on="on"
+                       
+                        v-bind="props"
                       >
                         <v-icon>
                           mdi-delete-outline
@@ -289,6 +296,7 @@
 
                     <v-card>
                       <v-toolbar
+                        class="px-4"
                         color="primary"
                         dark
                       >
@@ -309,7 +317,7 @@
                         <v-spacer />
                         <v-btn
                           color="primary"
-                          text
+                          variant="text"
                           @click="removeSurvey(index, umfrage._id)"
                         >
                           {{ $t('userSurveyManagement.SurveyOverview.LoeschenBestaetigen') }}
@@ -321,7 +329,7 @@
               </v-col>
             </v-row>
 
-            <template v-if="$vuetify.breakpoint.mobile">
+            <template v-if="$vuetify.display.mobile">
               <v-row>
                 <v-col
                   class="pa-0"
@@ -330,8 +338,7 @@
                   <!-- Mit diesem Button sollen ausgewählte Umfragen dupliziert werden können. -->
                   <v-btn
                     class="mx-2"
-                    outlined
-                    text
+                    variant="outlined"
                     color="primary"
                     @click="duplicateSurvey(index, umfrage._id)"
                   >
@@ -347,15 +354,14 @@
                     transition="dialog-bottom-transition"
                     :max-width="constants.v_dialog_max_width"
                   >
-                    <template v-slot:activator="{ on, attrs }">
+                    <template #activator="{ props }">
                       <!-- Mit diesem Button sollen ausgewählte Umfragen gelöscht werden können. -->
                       <v-btn
                         class="mx-2 pl-1"
-                        outlined
-                        text
+                        variant="outlined"
                         color="delete"
-                        v-bind="attrs"
-                        v-on="on"
+                       
+                        v-bind="props"
                       >
                         <v-icon>
                           mdi-delete-outline
@@ -366,6 +372,7 @@
 
                     <v-card>
                       <v-toolbar
+                        class="px-4"
                         color="primary"
                         dark
                       >
@@ -386,7 +393,7 @@
                         <v-spacer />
                         <v-btn
                           color="primary"
-                          text
+                          variant="text"
                           @click="removeSurvey(index, umfrage._id)"
                         >
                           {{ $t('userSurveyManagement.SurveyOverview.LoeschenBestaetigen') }}
@@ -403,6 +410,7 @@
         <v-alert
           v-show="errors[index]"
           type="error"
+          variant="tonal"
         >
           {{ message }}
         </v-alert>
@@ -412,14 +420,15 @@
 </template>
 
 <script>
-import EditSurvey from "./EditSurvey.vue";
-import SurveyEvaluation from "../evaluation/SurveyEvaluation.vue";
-import CopyButton from '../componentParts/CopyButton.vue';
-import LinkSharingComponent from "../componentParts/LinkSharingComponent";
-import i18n from "../../i18n";
-import constants from "../../const.js";
+import EditSurvey from "@/components/userSurveyManagement/EditSurvey.vue";
+import SurveyEvaluation from "@/components/evaluation/SurveyEvaluation.vue";
+import CopyButton from '@/components/componentParts/CopyButton.vue';
+import LinkSharingComponent from "@/components/componentParts/LinkSharingComponent.vue";
+import constants from "@/const.js";
 
 export default {
+  name: "SurveyOverview",
+
   components: {
     EditSurvey,
     SurveyEvaluation,
@@ -443,8 +452,8 @@ export default {
     anteilMitarbeiterUmfrage: 40,
 
     // base url for Mitarbeiterumfragen
-    mitarbeiterumfrageBaseURL: process.env.VUE_APP_URL + '/survey/',
-    umfrageTeilenBaseURL: process.env.VUE_APP_URL + '/share/',
+    mitarbeiterumfrageBaseURL: import.meta.env.VITE_URL + '/survey/',
+    umfrageTeilenBaseURL: import.meta.env.VITE_URL + '/share/',
   }),
 
   computed:{
@@ -477,7 +486,7 @@ export default {
      * Dupliziert eine Umfrage nach Nutzerbestaetigung
      */
     async duplicateSurvey(index, umfrageID) {
-      await this.duplicateUmfrage(index, umfrageID, i18n.t('userSurveyManagement.SurveyOverview.DuplizierenSuffix'))
+      await this.duplicateUmfrage(index, umfrageID, this.$t('userSurveyManagement.SurveyOverview.DuplizierenSuffix'))
     
       if(!this.errors[index]){
         this.fetchUmfragenForUser()
@@ -491,7 +500,8 @@ export default {
      */
     closeDialog(index) {
       this.fetchUmfragenForUser()
-      this.$set(this.dialog, index, false)
+      // this.$set(this.dialog, index, false)
+      this.dialog[index] = false
     },
 
     /**
@@ -499,11 +509,12 @@ export default {
      */
     closeDialogAuswertung(index) {
       this.fetchUmfragenForUser()
-      this.$set(this.dialogAuswertung, index, false)
+      // this.$set(this.dialogAuswertung, index, false)
+      this.dialogAuswertung[index] = false
     },
 
     fetchUmfragenForUser: async function () {
-    await fetch(process.env.VUE_APP_BASEURL + "/umfrage/alleUmfragenVonNutzer", {
+    await fetch(import.meta.env.VITE_BASEURL + "/umfrage/alleUmfragenVonNutzer", {
       method: "GET",
       headers: {
         "Authorization": "Bearer " + this.$keycloak.token,
@@ -530,7 +541,7 @@ export default {
      * Loescht die Umfrage mit der gegebenen ID, gibt false bei error, true bei success zurueck
      */
     deleteUmfrage: async function (index, umfrageID) {
-      await fetch(process.env.VUE_APP_BASEURL + "/umfrage", {
+      await fetch(import.meta.env.VITE_BASEURL + "/umfrage", {
       method: "DELETE",
       headers: {
         "Authorization": "Bearer " + this.$keycloak.token,
@@ -551,7 +562,7 @@ export default {
       })
       .catch((error) => {
         this.errors[index] = true
-        this.message = i18n.t('SurveyOverview.ServerNichtErreichbar')
+        this.message = this.$t('SurveyOverview.ServerNichtErreichbar')
         console.error("Error:", error);
         return false
       });
@@ -561,7 +572,7 @@ export default {
      * Dupliziert die Umfrage mit der gegebenen ID, gibt false bei error, true bei success zurueck
      */
     duplicateUmfrage: async function (index, umfrageID, suffix) {
-      await fetch(process.env.VUE_APP_BASEURL + "/umfrage/duplicate", {
+      await fetch(import.meta.env.VITE_BASEURL + "/umfrage/duplicate", {
       method: "POST",
       headers: {
         "Authorization": "Bearer " + this.$keycloak.token,
@@ -583,7 +594,7 @@ export default {
       })
       .catch((error) => {
         this.errors[index] = true
-        this.message = i18n.t('SurveyOverview.ServerNichtErreichbar')
+        this.message = this.$t('SurveyOverview.ServerNichtErreichbar')
         console.error("Error:", error);
         return false
       });
@@ -592,12 +603,3 @@ export default {
 }
   
 </script>
-
-<style lang="scss">
-  .headerClass{
-    white-space: wrap;
-    word-break: normal;
-    display: block;
-    hyphens: auto;
-  }
-</style>

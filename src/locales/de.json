@@ -73,7 +73,7 @@
 
       "ErstellungUmfrage_0": "Erstellung einer Umfrage",
       "ErstellungUmfrage_1": "Zum Erstellen einer Umfrage ist das Anlegen eines Nutzeraccounts notwendig.",
-      "ErstellungUmfrage_2": "Für den Nutzeraccount müssen Sie eine gültige E-Mail der Technischen Universität Darmstadt (z.B. max.mustermann@tu-darmstadt.de) angeben.",
+      "ErstellungUmfrage_2": "Für den Nutzeraccount müssen Sie eine gültige E-Mail der Technischen Universität Darmstadt (z.B. max.mustermann{'@'}tu-darmstadt.de) angeben.",
       "ErstellungUmfrage_3": "Die zum Erzeugen der der Umfrage eingegebenen Daten sind in einer Weise abstrahiert, dass Rückschlüsse auf individuelle Personen nicht möglich sind.",
       "ErstellungUmfrage_4": "Die zum Erstellen einer Umfrage durch Sie eingegebenen Daten können Sie jederzeit löschen.",
       "ErstellungUmfrage_5": "Sie entscheiden, wie lange die Daten in unserem System vorhanden sind.",
@@ -298,7 +298,7 @@
     "Contact": {
       "Name": "Kontakt",
       "Titel": "Büro für Nachhaltigkeit",
-      "Adresse_1": "L3|02 Solarhaus",
+      "Adresse_1": "L3{'|'}02 Solarhaus",
       "Adresse_2": "El-Lissitzky-Straße 3",
       "Adresse_3": "64287 Darmstadt"
     }

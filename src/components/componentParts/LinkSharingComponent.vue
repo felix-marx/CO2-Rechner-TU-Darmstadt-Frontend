@@ -2,31 +2,57 @@
   <v-container>
     <v-row>
       <h4>
-        {{ this.$props.text }}
+        {{ $props.text }}
       </h4>
     </v-row>
-    <v-row>
-      <!--- Textfield for display of employee link --->
-      <v-text-field
-        ref="mitarbeiterLinkTextfield"
-        v-model="mitarbeiterLink"
-        outlined
-        readonly
-      />
-      <v-btn
-        dark
-        x-large
-        color="primary"
-        @click="copyLink()"
-      >
-        {{ $t('componentParts.LinkSharingComponent.Link_Button') }}
-      </v-btn>
-    </v-row>
+
+    <!-- Desktop -->
+    <template v-if="!$vuetify.display.mobile">
+      <v-row>
+        <!--- Textfield for display of employee link --->
+        <v-text-field
+          ref="mitarbeiterLinkTextfield"
+          v-model="localMitarbeiterLink"
+          variant="outlined"
+          readonly
+        />
+        <v-btn
+          size="x-large"
+          color="primary"
+          @click="copyLink()"
+        >
+          {{ $t('componentParts.LinkSharingComponent.Link_Button') }}
+        </v-btn>
+      </v-row>
+    </template>
+
+    <!-- Mobile -->
+    <template v-else>
+      <v-row>
+        <!--- Textfield for display of employee link --->
+        <v-text-field
+          ref="mitarbeiterLinkTextfield"
+          v-model="localMitarbeiterLink"
+          variant="outlined"
+          readonly
+        />
+      </v-row>
+      <v-row>
+        <v-btn
+          color="primary"
+          @click="copyLink()"
+        >
+          {{ $t('componentParts.LinkSharingComponent.Link_Button') }}
+        </v-btn>
+      </v-row>
+    </template>
+    
     <v-row>
       <v-alert
-        :value="copySuccessful"
-        dense
-        text
+        class="my-4"
+        :model-value="copySuccessful"
+        density="compact"
+        variant="tonal"
         type="success"
       >
         {{ $t('componentParts.copyButton.LinkInZwischenablage') }}
@@ -54,6 +80,12 @@ export default {
   data: () => ({
     copySuccessful: false,
   }),
+
+  computed: {
+    localMitarbeiterLink: function () {
+      return this.mitarbeiterLink;
+    },
+  },
 
   watch: {
     // timeout for letting message for successful copying disappear

@@ -1,15 +1,14 @@
 <template>
-  <!--- Footer --->
+  <!--- Footer :app="!$vuetify.display.mobile" --->
   <v-footer
-    padless
-    :fixed="!$vuetify.breakpoint.mobile"
-    bottom
+    app
+    color="primary"
+    class="py-1"
+    :style="{ 'position': $vuetify.display.mobile ? 'static' : 'fixed' }"
   >
-    <v-card
-      text
-      tile
-      width="100%"
-      class="primary text-center"
+    <v-row
+      justify="center"
+      no-gutters
     >
       <!--- Contact Dialog --->
       <Contact />
@@ -18,19 +17,18 @@
         v-for="(fElem, index) in footerButtons"
         :key="'footerButton-' + index"
         :href="fElem.href"
-        class="mx-4 my-1"
+        class="mx-4"
         :target="fElem.target"
-        text
+        variant="text"
       >
-        <span class="white--text">{{ fElem.text }}</span>
+        <span class="text-white">{{ fElem.text }}</span>
       </v-btn>
-    </v-card>
+    </v-row>
   </v-footer>
 </template>
 
 <script>
-import Contact from "../footer/Contact.vue";
-import i18n from "@/i18n";
+import Contact from "@/components/footer/Contact.vue";
 
 export default {
   name: "Footer",
@@ -57,18 +55,18 @@ export default {
     setFooterButtons() {
       this.footerButtons = [
         {
-          text: i18n.t('footer.Footer.Impressum'),
+          text: this.$t('footer.Footer.Impressum'),
           href: "https://www.tu-darmstadt.de/impressum/index.de.jsp",
           target: "_blank",
         },
         {
-          text: i18n.t('footer.Footer.Datenschutzerklearung'),
-          href: process.env.VUE_APP_URL + "/datenschutz", // Eigene Datenschutzerklaerung
+          text: this.$t('footer.Footer.Datenschutzerklearung'),
+          href: import.meta.env.VITE_URL + "/datenschutz", // Eigene Datenschutzerklaerung
           target: "",
         },
         {
-          text: i18n.t('footer.Footer.FAQ'),
-          href: process.env.VUE_APP_URL + "/faq",
+          text: this.$t('footer.Footer.FAQ'),
+          href: import.meta.env.VITE_URL + "/faq",
           target: "",
         },
       ]

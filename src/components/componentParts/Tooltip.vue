@@ -1,14 +1,13 @@
 <template>
   <!-- general tooltip component. Small "pop-up" when hovering with mouse over circle with question mark -->
   <v-tooltip
-    bottom
+    location="bottom"
     :max-width="constants.v_tooltip_max_width"
-    :nudge-width="constants.v_tooltip_max_width"
   >
-    <template v-slot:activator="{ on }">
+    <template #activator="{ props }">
       <v-icon
         class="mb-1"
-        v-on="on"
+        v-bind="props"
         @click="() => {}"
       >
         {{ tooltipIcon }}
@@ -19,7 +18,7 @@
 </template>
 
 <script>
-import constants from "../../const.js";
+import constants from "@/const.js";
 
 export default {
   name: "Tooltip",

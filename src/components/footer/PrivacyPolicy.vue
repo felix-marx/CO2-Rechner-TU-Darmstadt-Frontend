@@ -1,13 +1,13 @@
 <!-- eslint-disable vue/no-v-html -->
 <template>
-  <v-app :style="{background: $vuetify.theme.themes[theme].background}">
+  <v-app :style="{background: $vuetify.theme.themes[theme].colors.background}">
     <Header
       :tabs="tabList"
       :display-user-setting="false"
       :display-back-button="true"
       :display-login-button="false"
     />
-    <v-main :class="$vuetify.breakpoint.mobile ? 'mb-0' : 'mb-16'">
+    <v-main class="mb-0">
       <v-container>
         <v-card
           elevation="0"
@@ -16,7 +16,7 @@
         >
           <v-card
             elevation="2"
-            outlined
+            border
             class="pa-8"
           >
             <p>
@@ -63,7 +63,7 @@
 
               {{ $t('footer.PrivacyPolicy.RechteDaten') }}<br>
               <v-list
-                dense
+                density="compact"
               >
                 <v-list-item-title class="headerClass">
                   {{ $t('footer.PrivacyPolicy.RechtAuskunft') }}
@@ -98,7 +98,7 @@
             {{ $t('footer.PrivacyPolicy.Logdateien_1') }}<p>
               <br>
      
-              <v-list dense>
+              <v-list density="compact">
                 <v-list-item-title class="headerClass">
                   {{ $t('footer.PrivacyPolicy.Logdateien_2') }}
                 </v-list-item-title>
@@ -170,7 +170,7 @@
               {{ $t('footer.PrivacyPolicy.ErstellungUmfrage_6') }}<br>
 
               {{ $t('footer.PrivacyPolicy.ErstellungUmfrage_7') }}
-              <v-list dense>
+              <v-list density="compact">
                 <v-list-item-title class="headerClass">
                   {{ $t('footer.PrivacyPolicy.ErstellungUmfrage_7_1') }}
                 </v-list-item-title>
@@ -188,7 +188,7 @@
                 </v-list-item-title>
               </v-list>
               {{ $t('footer.PrivacyPolicy.ErstellungUmfrage_8_0') }}
-              <v-list dense>
+              <v-list density="compact">
                 <v-list-item-title class="headerClass">
                   {{ $t('footer.PrivacyPolicy.ErstellungUmfrage_8_1') }}
                 </v-list-item-title>
@@ -198,7 +198,7 @@
               </v-list>
 
               {{ $t('footer.PrivacyPolicy.ErstellungUmfrage_9_0') }}
-              <v-list dense>
+              <v-list density="compact">
                 <v-list-item-title class="headerClass">
                   {{ $t('footer.PrivacyPolicy.ErstellungUmfrage_9_1') }}
                 </v-list-item-title>
@@ -240,11 +240,9 @@
 </template>
 
 <script>
-import Header from '../header/Header.vue'
-import Footer from '../footer/Footer.vue'
-import loadingAnimation from '../componentParts/LoadingAnimation.vue'
-import i18n from '../../i18n'
-import constants from '../../const.js'
+import Header from '@/components/header/Header.vue'
+import Footer from '@/components/footer/Footer.vue'
+import constants from '@/const.js'
 
 export default {
   name: "PrivacyPolicy",
@@ -270,7 +268,7 @@ export default {
       this.setTabList();
     },
 
-    '$vuetify.breakpoint.smAndUp': function() {
+    '$vuetify.display.smAndUp': function() {
       this.setTabList();
     }
   },
@@ -282,18 +280,9 @@ export default {
   methods: {
     setTabList(){
       this.tabList = [
-        { id: 0, title: this.$vuetify.breakpoint.smAndUp ? i18n.t('footer.Footer.Datenschutzerklearung') : i18n.t('footer.Footer.Datenschutzerklearung_kurz'), componentType: loadingAnimation},
+        { id: 0, title: this.$vuetify.display.smAndUp ? this.$t('footer.Footer.Datenschutzerklearung') : this.$t('footer.Footer.Datenschutzerklearung_kurz'), component: null},
       ]
     }
   },
 }
 </script>
-
-<style lang="scss">
-  .headerClass{
-    white-space: wrap;
-    word-break: normal;
-    display: block;
-    hyphens: auto;
-  }
-</style>

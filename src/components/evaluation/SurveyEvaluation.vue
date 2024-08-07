@@ -3,19 +3,19 @@
     <v-card
       v-if="responseSuccessful"
       elevation="2"
-      outlined
-      :class="$vuetify.breakpoint.xsOnly ? 'pa-0 mx-auto' : 'pa-7 mx-auto'"
+      border
+      :class="$vuetify.display.xsOnly ? 'pa-0 mx-auto' : 'pa-7 pb-0 mx-auto'"
       :max-width="constants.v_card_max_width"
     >
-      <v-card-title :class="$vuetify.breakpoint.xsOnly ? 'px-7 pt-7 headerClass' : 'px-0 pt-0 headerClass'">
+      <v-card-title :class="$vuetify.display.xsOnly ? 'px-7 pt-7 headerClass' : 'px-0 pt-0 headerClass'">
         {{ $t('evaluation.surveyEvaluation.AuswertungDerUmfrage') }} "{{ responsedata.bezeichnung }}"
       </v-card-title>
       
       <v-divider />
       
-      <v-container :class="$vuetify.breakpoint.xsOnly ? 'px-7' : 'px-0'">
+      <v-container :class="$vuetify.display.xsOnly ? 'px-7' : 'px-0'">
         <!-- On desktop display a 2x2 grid -->
-        <template v-if="!$vuetify.breakpoint.mobile">
+        <template v-if="!$vuetify.display.mobile">
           <v-row>
             <v-col>
               <v-icon>
@@ -42,7 +42,7 @@
               <v-progress-linear
                 height="25"
                 color="cyan"
-                :value="responsedata.umfragenanteil"
+                :model-value="responsedata.umfragenanteil"
               >
                 <strong>{{ $n(responsedata.umfragenanteil, 'decimal') }}%</strong>
               </v-progress-linear>
@@ -81,7 +81,7 @@
               <v-progress-linear
                 height="25"
                 color="cyan"
-                :value="responsedata.umfragenanteil"
+                :model-value="responsedata.umfragenanteil"
               >
                 <strong>{{ $n(responsedata.umfragenanteil, 'decimal') }}%</strong>
               </v-progress-linear>
@@ -94,7 +94,7 @@
             <v-alert
               :type="displayExtrapolationWarning ? 'warning' : 'info'"
               class="mb-0"
-              text
+              variant="tonal"
             >
               {{ $t('evaluation.surveyEvaluation.HochrechnungInfo') }}
               <template v-if="displayExtrapolationWarning">
@@ -112,14 +112,14 @@
         />
       </v-container>
 
-      <v-card-title :class="$vuetify.breakpoint.xsOnly ? 'px-7 headerClass' : 'px-0 headerClass'">
+      <v-card-title :class="$vuetify.display.xsOnly ? 'px-7 headerClass' : 'px-0 headerClass'">
         {{ $t('common.Emissionen') }}
       </v-card-title>
 
       <v-divider />
       <v-container>
         <!-- On desktop display in a single row -->
-        <template v-if="!$vuetify.breakpoint.mobile">
+        <template v-if="!$vuetify.display.mobile">
           <v-row>
             <v-col>
               <v-icon>
@@ -138,7 +138,7 @@
 
         <!-- On mobile display in two rows -->
         <template v-else>
-          <v-row :class="$vuetify.breakpoint.xsOnly ? 'px-7' : 'px-0'">
+          <v-row :class="$vuetify.display.xsOnly ? 'px-7' : 'px-0'">
             <v-col>
               <v-icon>
                 mdi-thought-bubble
@@ -146,7 +146,7 @@
               {{ $t('evaluation.surveyEvaluation.Gesamtemissionen') }} {{ $n(responsedata.emissionenGesamt, 'decimal') }} {{ $t('evaluation.surveyEvaluation.tCO2eq') }}
             </v-col>
           </v-row>
-          <v-row :class="$vuetify.breakpoint.xsOnly ? 'px-7' : 'px-0'">    
+          <v-row :class="$vuetify.display.xsOnly ? 'px-7' : 'px-0'">    
             <v-col>
               <v-icon>
                 mdi-human-male-board-poll
@@ -159,10 +159,10 @@
         <!-- Referenzwerte (Haushalte) -->
         <v-row
           justify="center"
-          :class="$vuetify.breakpoint.xsOnly ? 'px-7' : 'px-0'"
+          :class="$vuetify.display.xsOnly ? 'px-7' : 'px-0'"
         >
           <v-card
-            outlined
+            border
             class="pa-7"
           >
             <v-icon>mdi-thought-bubble-outline</v-icon>
@@ -185,7 +185,7 @@
               :options="optionsGesamtDoughnut"
             />
           </v-col>
-          <v-col>
+          <v-col :style="{ 'min-height': constants.charts_min_height }">
             <bar-chart
               ref="bar-gesamt"
               :chart-data="chartdataGesamtBar"
@@ -211,7 +211,7 @@
               </v-col>
             </v-row>
             <v-row v-if="displayAufteilungDienstreisen">
-              <v-col>
+              <v-col :style="{ 'min-height': constants.charts_min_height }">
                 <bar-chart
                   ref="bar-dienstreisen"
                   :chart-data="chartdataDienstreisenBar"
@@ -229,7 +229,7 @@
               </v-col>
             </v-row>
             <v-row v-if="displayAufteilungPendelwege">
-              <v-col>
+              <v-col :style="{ 'min-height': constants.charts_min_height }">
                 <bar-chart
                   ref="bar-pendelwege"
                   :chart-data="chartdataPendelwegeBar"
@@ -247,7 +247,7 @@
               </v-col>
             </v-row>
             <v-row v-if="displayAufteilungITGeraete">
-              <v-col>
+              <v-col :style="{ 'min-height': constants.charts_min_height }">
                 <bar-chart
                   ref="bar-itgeraete"
                   :chart-data="chartdataITGeraeteBar"
@@ -274,6 +274,7 @@
           <v-col>
             <v-alert
               type="warning"
+              variant="tonal"
             >
               {{ $t('evaluation.surveyEvaluation.KeineEmissionenAuswertung') }}
             </v-alert>
@@ -287,7 +288,7 @@
               :options="optionsEnergieDoughnut"
             />
           </v-col>
-          <v-col>
+          <v-col :style="{ 'min-height': constants.charts_min_height }">
             <bar-chart
               ref="bar-energie"
               :chart-data="chartdataEnergieBar"
@@ -312,6 +313,7 @@
           <v-col>
             <v-alert
               type="warning"
+              variant="tonal"
             >
               {{ $t('evaluation.surveyEvaluation.DarstellungEnergieverbrauchWarning') }}
             </v-alert>
@@ -325,7 +327,7 @@
               :options="optionsVerbrauchDoughnut"
             />
           </v-col>
-          <v-col>
+          <v-col :style="{ 'min-height': constants.charts_min_height }">
             <bar-chart
               ref="bar-verbrauch"
               :chart-data="chartdataVerbrauchBar"
@@ -338,7 +340,7 @@
         <v-row>
           <v-col>
             <v-alert 
-              text
+              variant="tonal"
               type="info"
             >
               {{ $t('evaluation.surveyEvaluation.NachhaltigkeitTipps_0') }}<a
@@ -351,37 +353,49 @@
         </v-row>
 
         <!-- Spreadsheet and Link Sharing -->
-        <v-row :class="$vuetify.breakpoint.xsOnly ? 'pb-7' : 'pb-0'">
-          <v-btn
-            class="ml-8 align-self-center"
-            color="primary"
-            @click="makeSpreadsheet"
+        <v-row :class="$vuetify.display.xsOnly ? 'pb-7' : 'pb-0'">
+          <v-col
+            :class="$props.shared ? 'pb-6' : 'pb-0'"
+            self-align="center"
           >
-            <v-icon left>
-              mdi-file-chart-outline
-            </v-icon>{{ $t('evaluation.surveyEvaluation.DownloadAlsExcel') }}
-          </v-btn>
+            <v-btn
+              class="ml-8 mt-3"
+              color="primary"
+              @click="makeSpreadsheet"
+            >
+              <v-icon start>
+                mdi-file-chart-outline
+              </v-icon>{{ $t('evaluation.surveyEvaluation.DownloadAlsExcel') }}
+            </v-btn>
+          </v-col>
 
-          <v-switch
-            v-if="!this.$props.shared"
-            v-model="responsedata.auswertungFreigegeben"
-            class="ml-8"
-            inset
-            :label="`${$t('evaluation.surveyEvaluation.Linksharing_0') + ' ' + (responsedata.auswertungFreigegeben ? $t('evaluation.surveyEvaluation.aktiviert') : $t('evaluation.surveyEvaluation.deaktiviert'))}`"
-            @click="updateFlipLinkShare"
-          />
+          <v-col
+            class="pb-0"
+            self-align="center"
+          >
+            <v-switch
+              v-if="!$props.shared"
+              v-model="responsedata.auswertungFreigegeben"
+              self-align="center"
+              color="primary"
+              class="ml-8"
+              inset
+              :label="`${$t('evaluation.surveyEvaluation.Linksharing_0') + ' ' + (responsedata.auswertungFreigegeben ? $t('evaluation.surveyEvaluation.aktiviert') : $t('evaluation.surveyEvaluation.deaktiviert'))}`"
+              @click="updateFlipLinkShare"
+            />
+          </v-col>
         </v-row>
       </v-container>
     </v-card>
 
     <v-card
-      v-if="showLoading || responsedata.auswertungFreigegeben"
+      v-if="!$props.shared && (showLoading || responsedata.auswertungFreigegeben)"
       class="mx-auto px-4 pt-4"
       :max-width="constants.v_card_max_width"
     >
       <LoadingAnimation v-if="showLoading" />
       <LinkSharingComponent
-        v-if="!this.$props.shared && responsedata.auswertungFreigegeben && !showLoading"
+        v-if="responsedata.auswertungFreigegeben && !showLoading"
         ref="linkSharing"
         :mitarbeiter-link="linkshareBaseURL + responsedata.id"
         :text="$t('componentParts.LinkSharingComponent.Share_Auswertung')"
@@ -391,7 +405,7 @@
     <v-card
       v-if="responseNotSuccessful"
       elevation="2"
-      outlined
+      border
       class="mx-auto"
       :max-width="constants.v_card_max_width"
     >
@@ -403,17 +417,16 @@
 </template>
 
 <script>
-import DoughnutChart from "../charts/DoughnutChart.js";
-import BarChart from "../charts/BarChart.js";
+import DoughnutChart from "@/components/charts/DoughnutChart.vue";
+import BarChart from "@/components/charts/BarChart.vue";
 import XLSX from "xlsx";
 import saveAs from 'file-saver';
-import LoadingAnimation from "../componentParts/LoadingAnimation.vue";
-import LinkSharingComponent from "../componentParts/LinkSharingComponent.vue";
-import DataGapVisualization from '../componentParts/DataGapVisualization.vue';
+import LoadingAnimation from "@/components/componentParts/LoadingAnimation.vue";
+import LinkSharingComponent from "@/components/componentParts/LinkSharingComponent.vue";
+import DataGapVisualization from '@/components/componentParts/DataGapVisualization.vue';
 import Tooltip from "@/components/componentParts/Tooltip.vue";
-import i18n from "@/i18n";
-import { translateGebaeudeIDToSymbolic, getITGeraeteLabelMap, getDienstreisenLabelMap, getPendelwegeLabelMap } from "../../utils";
-import constants from "../../const.js";
+import { translateGebaeudeIDToSymbolic, getITGeraeteLabelMap, getDienstreisenLabelMap, getPendelwegeLabelMap } from "@/utils.js";
+import constants from "@/const.js";
 
 
 export default {
@@ -491,7 +504,7 @@ export default {
       scrollToLinkScharing: false,
 
       // base url for Mitarbeiterumfragen
-      linkshareBaseURL: process.env.VUE_APP_URL + '/survey/results/',
+      linkshareBaseURL: import.meta.env.VITE_URL + '/survey/results/',
 
       // display charts
       displayEnergieCharts: true,
@@ -500,40 +513,39 @@ export default {
       displayAufteilungITGeraete: true,
 
       // specific chart options and data
-      chartdataGesamtDoughnut: null,
-      optionsGesamtDoughnut: null,
+      chartdataGesamtDoughnut: {},
+      optionsGesamtDoughnut: {},
 
-      chartdataGesamtBar: null,
-      optionsGesamtBar: null,
+      chartdataGesamtBar: {},
+      optionsGesamtBar: {},
 
-      chartdataEnergieDoughnut: null,
-      optionsEnergieDoughnut: null,
+      chartdataEnergieDoughnut: {},
+      optionsEnergieDoughnut: {},
 
-      chartdataEnergieBar: null,
-      optionsEnergieBar: null,
+      chartdataEnergieBar: {},
+      optionsEnergieBar: {},
 
-      chartdataVerbrauchDoughnut: null,
-      optionsVerbrauchDoughnut: null,
+      chartdataVerbrauchDoughnut: {},
+      optionsVerbrauchDoughnut: {},
 
-      chartdataVerbrauchBar: null,
-      optionsVerbrauchBar: null,
+      chartdataVerbrauchBar: {},
+      optionsVerbrauchBar: {},
 
-      chartdataDienstreisenBar: null,
-      optionsDienstreisenBar: null,
+      chartdataDienstreisenBar: {},
+      optionsDienstreisenBar: {},
 
-      chartdataPendelwegeBar: null,
-      optionsPendelwegeBar: null,
+      chartdataPendelwegeBar: {},
+      optionsPendelwegeBar: {},
 
-      chartdataITGeraeteBar: null,
-      optionsITGeraeteBar: null,
+      chartdataITGeraeteBar: {},
+      optionsITGeraeteBar: {},
 
       // general options for all charts
       generalChartdataBar: {
         labels: [],
         datasets: [{
           type: 'bar',
-          label: i18n.t('common.Emissionen'),
-          yAxisID: 'bar',
+          label: this.$t('common.Emissionen'),
           data: [],
           backgroundColor: [],
           borderWidth: 1,
@@ -550,9 +562,6 @@ export default {
       generalOptionsBar: {
         responsive: true,
         maintainAspectRatio: false,
-        legend: {
-          display: false
-        },
         plugins: {
           datalabels: {
             display: true,
@@ -564,47 +573,50 @@ export default {
               return this.barChartBarLabelRoation
             },
           },
+          legend: {
+            display: false
+          },
+          tooltip: {
+            callbacks: {
+              label: () => { return "" }  // tooltip funtion set by each chart individually
+            }
+          }
         },
         scales: {
-          yAxes: [{
-            id: 'bar',
+          y: {
             position: 'left',
             ticks: {          // font for numbers on y-axis
-              fontColor: "black",
-              fontSize: 13,   // default is 12
-              // fontStyle: "bold",
+              color: "black",
+              font: {
+                size: 13,
+                // style: "bold",
+              },
               beginAtZero: true
             },
-            scaleLabel: {     // font for label on y-axis
+            title: {     // font for label on y-axis
               display: true,
-              labelString: i18n.t('evaluation.surveyEvaluation.tCO2eq'),
-              fontColor: "black",
-              fontSize: 13,
+              text: this.$t('evaluation.surveyEvaluation.tCO2eq'),
+              color: "black",
+              font: {
+                size: 13,
+              },
             }
-          }],
-          xAxes: [{ // font for labels on x-axis
+          },
+          x: { // font for labels on x-axis
             ticks: {
-              fontColor: "black",
+              color: "black",
               maxRotation: 90,
               minRotation:  0,
               autoSkip: false,
             },
-          }]
-        },
-        tooltips: {
-          callbacks: {
-            label: function(tooltipItem, data) {
-              let idx = tooltipItem.index;
-              return i18n.t('common.Emissionen') + ": " + i18n.n(data.datasets[0].data[idx], "decimal")
-            }
           }
-        }
+        },
       },
 
       generalChartdataDoughnut: {
         labels: [],
         datasets: [{
-          label: i18n.t('common.Emissionen'),
+          label: this.$t('common.Emissionen'),
           data: [],
           backgroundColor: [],
           hoverOffset: 4,
@@ -613,28 +625,26 @@ export default {
       generalOptionsDoghnut: {
         responsive: true,
         maintainAspectRatio: false,
-        legend: {
-          labels: {
-            fontColor: 'black',
-            fontSize: 13,
-          }
-        },
         plugins: {
           datalabels: {   // formatter is set individually for each chart
             display: true,
             font: {
               weight: 'bold',
               size: 14,
-              color: 'black',
             },
           },
-        },
-        tooltips: {
-          callbacks: {
-              label: function(tooltipItem, data) {
-                  let idx = tooltipItem.index;
-                  return data.labels[idx] + ": " + i18n.n(data.datasets[0].data[idx], "decimal")
-              }
+          legend: {
+            labels: {
+              color: 'black',
+              font: {
+                size: 13,
+              },
+            }
+          },
+          tooltip: {
+            callbacks: {
+              label: () => { return "" }  // tooltip funtion set by each chart individually
+            }
           }
         }
       },
@@ -667,11 +677,11 @@ export default {
 
   computed: {
     haushalteReferenzText: function () {
-      let base_text_beginning = i18n.t('evaluation.surveyEvaluation.HaushaltReferenzText_0');
-      let base_text_middle = i18n.t('evaluation.surveyEvaluation.HaushaltReferenzText_1');
-      let text_zweiPersonenHaushalt = i18n.n(this.responsedata.vergleich2PersonenHaushalt, 'decimal') + i18n.t('evaluation.surveyEvaluation.HaushaltReferenzText_3');
-      let text_vierPersonenHaushalt = i18n.n(this.responsedata.vergleich4PersonenHaushalt, 'decimal') + i18n.t('evaluation.surveyEvaluation.HaushaltReferenzText_4');
-      let base_text_ending = i18n.t('evaluation.surveyEvaluation.HaushaltReferenzText_2')
+      let base_text_beginning = this.$t('evaluation.surveyEvaluation.HaushaltReferenzText_0');
+      let base_text_middle = this.$t('evaluation.surveyEvaluation.HaushaltReferenzText_1');
+      let text_zweiPersonenHaushalt = this.$n(this.responsedata.vergleich2PersonenHaushalt, 'decimal') + this.$t('evaluation.surveyEvaluation.HaushaltReferenzText_3');
+      let text_vierPersonenHaushalt = this.$n(this.responsedata.vergleich4PersonenHaushalt, 'decimal') + this.$t('evaluation.surveyEvaluation.HaushaltReferenzText_4');
+      let base_text_ending = this.$t('evaluation.surveyEvaluation.HaushaltReferenzText_2')
       return base_text_beginning + text_vierPersonenHaushalt + base_text_middle + text_zweiPersonenHaushalt + base_text_ending;
     },
 
@@ -680,7 +690,7 @@ export default {
     },
 
     barChartBarLabelRoation: function () {
-      return this.$vuetify.breakpoint.mobile ? 270 : 0
+      return this.$vuetify.display.mobile ? 270 : 0
     },
   },
 
@@ -700,17 +710,19 @@ export default {
   },
 
   async mounted() { 
-    await this.getData();
-    this.initializeCharts();
+    this.initializeCharts();  // need to initialize the charts first otherwise there is an rendering error
+    await this.getData(); 
     this.aggregateChartdata();
     this.setChartData();
+
+    this.responseSuccessful = true
   },
 
   created() {
     window.addEventListener("resize", this.resizeEventHandler);
   },
 
-  destroyed() {
+  unmounted() {
     window.removeEventListener("resize", this.resizeEventHandler);
   },
 
@@ -738,7 +750,7 @@ export default {
      * Fetches Get request to get survey data and evaluation.
      */
     getData: async function () {
-      await fetch(process.env.VUE_APP_BASEURL + "/auswertung?id=" + this.$props.umfrageid, {
+      await fetch(import.meta.env.VITE_BASEURL + "/auswertung?id=" + this.$props.umfrageid, {
         method: "GET",
         headers: {
           "Authorization": "Bearer " + this.$keycloak.token,
@@ -933,6 +945,8 @@ export default {
     setChartData: function() {
       this.computeBarWidth();
 
+      //this.barWidth = 1000
+
       this.generalChartdataBar.datasets[0].maxBarThickness = this.barWidth
       this.chartdataDienstreisenBar.datasets[0].maxBarThickness = this.barWidth
       this.chartdataPendelwegeBar.datasets[0].maxBarThickness = this.barWidth
@@ -963,10 +977,10 @@ export default {
     computeBarWidth: function() {
       let maxBars = Math.max(Object.keys(this.aggregatedDienstreisen).length, Object.keys(this.aggregatedPendelwege).length, Object.keys(this.responsedata.emissionenITGeraeteAufgeteilt).length)
 
-      let chartWidths = ["bar-dienstreisen", "bar-pendelwege", "bar-itgeraete"].map(x => this.$refs[x] ? this.$refs[x][0].$refs.canvas.clientWidth : 0)
+      let chartWidths = ["bar-dienstreisen", "bar-pendelwege", "bar-itgeraete"].map(x => this.$refs[x] ? this.$refs[x][0].$el.clientWidth : 0)
       let chartWidth = Math.max(...chartWidths)
 
-      let halfChartWidth = this.$refs["bar-gesamt"].$refs.canvas.clientWidth
+      let halfChartWidth = this.$refs["bar-gesamt"].$el.clientWidth
 
       let halfWidth = halfChartWidth / 4 * 0.6
       let fullWidth = chartWidth / maxBars * 0.75
@@ -983,10 +997,10 @@ export default {
      */
     setChartGesamt: function () {
       let data = [
-        { label: i18n.t('common.Energie'), value: this.responsedata.emissionenEnergie, color: 'rgb(255, 99, 132)' },
-        { label: i18n.t('common.Dienstreisen'), value: this.responsedata.emissionenDienstreisen, color: 'rgb(54, 162, 235)' },
-        { label: i18n.t('common.Pendelwege'), value: this.responsedata.emissionenPendelwege, color: 'rgb(255, 205, 86)' },
-        { label: i18n.t('common.ITGeraete'), value: this.responsedata.emissionenITGeraete, color: 'rgb(75, 192, 192)' },
+        { label: this.$t('common.Energie'), value: this.responsedata.emissionenEnergie, color: 'rgb(255, 99, 132)' },
+        { label: this.$t('common.Dienstreisen'), value: this.responsedata.emissionenDienstreisen, color: 'rgb(54, 162, 235)' },
+        { label: this.$t('common.Pendelwege'), value: this.responsedata.emissionenPendelwege, color: 'rgb(255, 205, 86)' },
+        { label: this.$t('common.ITGeraete'), value: this.responsedata.emissionenITGeraete, color: 'rgb(75, 192, 192)' },
       ];
       data.sort((a, b) => b.value - a.value)
 
@@ -994,19 +1008,28 @@ export default {
       this.chartdataGesamtDoughnut.datasets[0].data = data.map(a => a.value);
       this.chartdataGesamtDoughnut.datasets[0].backgroundColor = data.map(a => a.color);
       
+      let i18n_n = this.$n
+      this.optionsGesamtDoughnut.plugins.tooltip.callbacks.label = function(context) {
+        return context.label + ": " + i18n_n(context.dataset.data[context.dataIndex], "decimal")
+      }
       this.optionsGesamtDoughnut.plugins.datalabels.formatter = (value) => {
         if(this.responsedata.emissionenGesamt === 0){
           return 0
         }
-        return i18n.n((Math.round(value / this.responsedata.emissionenGesamt * 1000) / 10), "decimal") + '%';
+        return this.$n((Math.round(value / this.responsedata.emissionenGesamt * 1000) / 10), "decimal") + '%';
       }
 
       this.chartdataGesamtBar.labels = data.map(a => a.label);
       this.chartdataGesamtBar.datasets[0].data = data.map(a => a.value);
       this.chartdataGesamtBar.datasets[0].backgroundColor = data.map(a => a.color);
 
+      let prefix = this.$t('common.Emissionen')
+      this.optionsGesamtBar.plugins.tooltip.callbacks.label = function(context) {
+        let value = context.dataset.data[context.dataIndex];
+        return prefix + ": " + i18n_n(value, "decimal")
+      }
       this.optionsGesamtBar.plugins.datalabels.formatter = (value) => {
-        return i18n.n(value, "decimal");
+        return this.$n(value, "decimal");
       }
       this.optionsGesamtBar.plugins.datalabels.rotation = () => { return this.barChartBarLabelRoation }
 
@@ -1019,9 +1042,9 @@ export default {
      */
     setChartEnergie: function () {
       let data = [
-        { label: i18n.t('common.Waerme'), value: this.responsedata.emissionenWaerme, color: 'rgb(240, 128, 128)' },
-        { label: i18n.t('common.Kaelte'), value: this.responsedata.emissionenKaelte, color: 'rgb(0, 204, 255)' },
-        { label: i18n.t('common.Strom'), value: this.responsedata.emissionenStrom, color: 'rgb(255, 219, 77)' },
+        { label: this.$t('common.Waerme'), value: this.responsedata.emissionenWaerme, color: 'rgb(240, 128, 128)' },
+        { label: this.$t('common.Kaelte'), value: this.responsedata.emissionenKaelte, color: 'rgb(0, 204, 255)' },
+        { label: this.$t('common.Strom'), value: this.responsedata.emissionenStrom, color: 'rgb(255, 219, 77)' },
       ];
 
       data.sort((a, b) => b.value - a.value)
@@ -1030,19 +1053,28 @@ export default {
       this.chartdataEnergieDoughnut.datasets[0].data = data.map(a => a.value);
       this.chartdataEnergieDoughnut.datasets[0].backgroundColor = data.map(a => a.color);
 
+      let i18n_n = this.$n
+      this.optionsEnergieDoughnut.plugins.tooltip.callbacks.label = function(context) {
+        return context.label + ": " + i18n_n(context.dataset.data[context.dataIndex], "decimal")
+      }
       this.optionsEnergieDoughnut.plugins.datalabels.formatter = (value) => {
         if(this.responsedata.emissionenEnergie === 0){
           return 0
         }
-        return i18n.n((Math.round(value / this.responsedata.emissionenEnergie * 1000) / 10), "decimal") + '%';
+        return this.$n((Math.round(value / this.responsedata.emissionenEnergie * 1000) / 10), "decimal") + '%';
       }
 
       this.chartdataEnergieBar.labels = data.map(a => a.label);
       this.chartdataEnergieBar.datasets[0].data = data.map(a => a.value);
       this.chartdataEnergieBar.datasets[0].backgroundColor = data.map(a => a.color);
 
+      let prefix = this.$t('common.Emissionen')
+      this.optionsEnergieBar.plugins.tooltip.callbacks.label = function(context) {
+        let value = context.dataset.data[context.dataIndex];
+        return prefix + ": " + i18n_n(value, "decimal")
+      }
       this.optionsEnergieBar.plugins.datalabels.formatter = (value) => {
-        return i18n.n(value, "decimal");
+        return this.$n(value, "decimal");
       }
       this.optionsEnergieBar.plugins.datalabels.rotation = () => { return this.barChartBarLabelRoation }
 
@@ -1055,37 +1087,43 @@ export default {
      */
     setChartVerbrauch: function () {
       let data = [
-        { label: i18n.t('common.Waerme'), value: this.responsedata.verbrauchWaerme, color: 'rgb(240, 128, 128)'},
-        { label: i18n.t('common.Kaelte'), value: this.responsedata.verbrauchKaelte, color:  'rgb(0, 204, 255)'},
-        { label: i18n.t('common.Strom'), value: this.responsedata.verbrauchStrom, color: 'rgb(255, 219, 77)' },
+        { label: this.$t('common.Waerme'), value: this.responsedata.verbrauchWaerme, color: 'rgb(240, 128, 128)'},
+        { label: this.$t('common.Kaelte'), value: this.responsedata.verbrauchKaelte, color:  'rgb(0, 204, 255)'},
+        { label: this.$t('common.Strom'), value: this.responsedata.verbrauchStrom, color: 'rgb(255, 219, 77)' },
       ];
 
       data.sort((a, b) => b.value - a.value)
 
       this.chartdataVerbrauchDoughnut.labels = data.map(a => a.label);
-      this.chartdataVerbrauchDoughnut.datasets[0].label = i18n.t('evaluation.surveyEvaluation.kWh')
+      this.chartdataVerbrauchDoughnut.datasets[0].label = this.$t('evaluation.surveyEvaluation.kWh')
       this.chartdataVerbrauchDoughnut.datasets[0].data = data.map(a => a.value);
       this.chartdataVerbrauchDoughnut.datasets[0].backgroundColor = data.map(a => a.color);
 
+      let i18n_n = this.$n
+      this.optionsVerbrauchDoughnut.plugins.tooltip.callbacks.label = function(context) {
+        return context.label + ": " + i18n_n(context.dataset.data[context.dataIndex], "decimal")
+      }
       this.optionsVerbrauchDoughnut.plugins.datalabels.formatter = (value) => {
         if(this.responsedata.verbrauchEnergie === 0){
           return 0
         }
-        return i18n.n((Math.round(value / this.responsedata.verbrauchEnergie * 1000) / 10), "decimal") + '%';
+        return this.$n((Math.round(value / this.responsedata.verbrauchEnergie * 1000) / 10), "decimal") + '%';
       }
 
       this.chartdataVerbrauchBar.labels = data.map(a => a.label);
-      this.chartdataVerbrauchBar.datasets[0].label = i18n.t('evaluation.surveyEvaluation.kWh')
+      this.chartdataVerbrauchBar.datasets[0].label = this.$t('evaluation.surveyEvaluation.kWh')
       this.chartdataVerbrauchBar.datasets[0].data = data.map(a => a.value);
       this.chartdataVerbrauchBar.datasets[0].backgroundColor = data.map(a => a.color);
 
-      this.optionsVerbrauchBar.scales.yAxes[0].scaleLabel.labelString = i18n.t('evaluation.surveyEvaluation.kWh')
-      this.optionsVerbrauchBar.tooltips.callbacks.label = function(tooltipItem, data) {
-        let idx = tooltipItem.index;
-        return i18n.t('common.Verbrauch') + ": " + i18n.n(data.datasets[0].data[idx], "decimal")
+      this.optionsVerbrauchBar.scales.y.title.text = this.$t('evaluation.surveyEvaluation.kWh')
+      
+      let prefix = this.$t('common.Verbrauch')
+      this.optionsVerbrauchBar.plugins.tooltip.callbacks.label = function(context) {
+        let value = context.dataset.data[context.dataIndex];
+        return prefix + ": " + i18n_n(value, "decimal")
       }
       this.optionsVerbrauchBar.plugins.datalabels.formatter = (value) => {
-        return i18n.n(value, "decimal");
+        return this.$n(value, "decimal");
       }
       this.optionsVerbrauchBar.plugins.datalabels.rotation = () => { return this.barChartBarLabelRoation }
 
@@ -1113,8 +1151,14 @@ export default {
       this.chartdataDienstreisenBar.datasets[0].data = data.map(a => a.value);
       this.chartdataDienstreisenBar.datasets[0].backgroundColor = data.map(a => a.color);
 
+      let prefix = this.$t('common.Emissionen')
+      let i18n_n = this.$n
+      this.optionsDienstreisenBar.plugins.tooltip.callbacks.label = function(context) {
+        let value = context.dataset.data[context.dataIndex];
+        return prefix + ": " + i18n_n(value, "decimal")
+      }
       this.optionsDienstreisenBar.plugins.datalabels.formatter = (value) => {
-        return i18n.n(value, "decimal");
+        return this.$n(value, "decimal");
       }
       this.optionsDienstreisenBar.plugins.datalabels.rotation = () => { return this.barChartBarLabelRoation }
 
@@ -1139,8 +1183,14 @@ export default {
       this.chartdataPendelwegeBar.datasets[0].data = data.map(a => a.value);
       this.chartdataPendelwegeBar.datasets[0].backgroundColor = data.map(a => a.color);
 
+      let prefix = this.$t('common.Emissionen')
+      let i18n_n = this.$n
+      this.optionsPendelwegeBar.plugins.tooltip.callbacks.label = function(context) {
+        let value = context.dataset.data[context.dataIndex];
+        return prefix + ": " + i18n_n(value, "decimal")
+      }
       this.optionsPendelwegeBar.plugins.datalabels.formatter = (value) => {
-        return i18n.n(value, "decimal");
+        return this.$n(value, "decimal");
       }
       this.optionsPendelwegeBar.plugins.datalabels.rotation = () => { return this.barChartBarLabelRoation }
 
@@ -1165,8 +1215,14 @@ export default {
       this.chartdataITGeraeteBar.datasets[0].data = data.map(a => a.value);
       this.chartdataITGeraeteBar.datasets[0].backgroundColor = data.map(a => a.color);
 
+      let prefix = this.$t('common.Emissionen')
+      let i18n_n = this.$n
+      this.optionsITGeraeteBar.plugins.tooltip.callbacks.label = function(context) {
+        let value = context.dataset.data[context.dataIndex];
+        return prefix + ": " + i18n_n(value, "decimal")
+      }
       this.optionsITGeraeteBar.plugins.datalabels.formatter = (value) => {
-        return i18n.n(value, "decimal");
+        return this.$n(value, "decimal");
       }
       this.optionsITGeraeteBar.plugins.datalabels.rotation = () => { return this.barChartBarLabelRoation }
 
@@ -1183,7 +1239,9 @@ export default {
       this.showLoading = true;
       this.displaySuccess = false;
 
-      await fetch(process.env.VUE_APP_BASEURL + "/auswertung/updateLinkShare", {
+      let flippedValue = !this.responsedata.auswertungFreigegeben // when this function is called, the value has not been updated
+
+      await fetch(import.meta.env.VITE_BASEURL + "/auswertung/updateLinkShare", {
         method: "POST",
         headers: {
           "Authorization": "Bearer " + this.$keycloak.token,
@@ -1192,7 +1250,7 @@ export default {
         body: JSON.stringify({
           umfrageID: this.$props.umfrageid,
           // freigabewert 0 ist teilen deaktiviert, 1 aktiviert und wir flippen hier
-          freigabewert: ((this.responsedata.auswertungFreigegeben) ? 1 : 0),
+          freigabewert: (flippedValue ? 1 : 0),
         }),
       }).then((response) => response.json())
         .then((body) => {
@@ -1218,111 +1276,111 @@ export default {
     makeSpreadsheet: function () {
       var data = [
         {
-          "col1": i18n.t('evaluation.surveyEvaluation.MakeSpreadsheet_0'),
+          "col1": this.$t('evaluation.surveyEvaluation.MakeSpreadsheet_0'),
         },
         {
-          "col1": i18n.t('common.Jahr'),
+          "col1": this.$t('common.Jahr'),
           "col2": this.responsedata.jahr,
         },
         {
-          "col1": i18n.t('common.Mitarbeitendenzahl'),
+          "col1": this.$t('common.Mitarbeitendenzahl'),
           "col2": this.responsedata.mitarbeiteranzahl,
         },
         {
-          "col1":  i18n.t('evaluation.surveyEvaluation.AusgefuellteMitarbeiterumfragen'),
+          "col1":  this.$t('evaluation.surveyEvaluation.AusgefuellteMitarbeiterumfragen'),
           "col2": this.responsedata.umfragenanzahl,
         },
         {
-          "col1": i18n.t('evaluation.surveyEvaluation.MakeSpreadsheet_1'),
+          "col1": this.$t('evaluation.surveyEvaluation.MakeSpreadsheet_1'),
           "col2": this.responsedata.umfragenanteil + "%",
         },
         {},
         {
-          "col1": i18n.t('evaluation.surveyEvaluation.MakeSpreadsheet_2'),
-          "col2": i18n.t('evaluation.surveyEvaluation.tCO2eq'),
+          "col1": this.$t('evaluation.surveyEvaluation.MakeSpreadsheet_2'),
+          "col2": this.$t('evaluation.surveyEvaluation.tCO2eq'),
         },
         {
-          "col1": i18n.t('evaluation.surveyEvaluation.MakeSpreadsheet_3'),
+          "col1": this.$t('evaluation.surveyEvaluation.MakeSpreadsheet_3'),
           "col2": this.responsedata.emissionenGesamt,
         },
         {
-          "col1": i18n.t('evaluation.surveyEvaluation.MakeSpreadsheet_4'),
+          "col1": this.$t('evaluation.surveyEvaluation.MakeSpreadsheet_4'),
           "col2": this.responsedata.emissionenProMitarbeiter,
         },
         {},
         {
-          "col1": i18n.t('evaluation.surveyEvaluation.MakeSpreadsheet_5'),
+          "col1": this.$t('evaluation.surveyEvaluation.MakeSpreadsheet_5'),
           "col2": this.responsedata.vergleich4PersonenHaushalt,
         },
         {
-          "col1": i18n.t('evaluation.surveyEvaluation.MakeSpreadsheet_6'),
+          "col1": this.$t('evaluation.surveyEvaluation.MakeSpreadsheet_6'),
           "col2": this.responsedata.vergleich2PersonenHaushalt,
         },
         {},
         {
-          "col1": i18n.t('evaluation.surveyEvaluation.MakeSpreadsheet_7'),
-          "col2": i18n.t('evaluation.surveyEvaluation.tCO2eq'),
+          "col1": this.$t('evaluation.surveyEvaluation.MakeSpreadsheet_7'),
+          "col2": this.$t('evaluation.surveyEvaluation.tCO2eq'),
           "col3": "%",
         },
         {
-          "col1": i18n.t('common.Energie'),
+          "col1": this.$t('common.Energie'),
           "col2": this.responsedata.emissionenEnergie,
           "col3": this.responsedata.emissionenGesamt === 0.0 ? 0 : Math.round(this.responsedata.emissionenEnergie / this.responsedata.emissionenGesamt * 1000) / 10,
         },
         {
-          "col1": i18n.t('common.Pendelwege'),
+          "col1": this.$t('common.Pendelwege'),
           "col2": this.responsedata.emissionenPendelwege,
           "col3": this.responsedata.emissionenGesamt === 0.0 ? 0 : Math.round(this.responsedata.emissionenPendelwege / this.responsedata.emissionenGesamt * 1000) / 10,
         },
         {
-          "col1": i18n.t('common.Dienstreise'),
+          "col1": this.$t('common.Dienstreise'),
           "col2": this.responsedata.emissionenDienstreisen,
           "col3": this.responsedata.emissionenGesamt === 0.0 ? 0 : Math.round(this.responsedata.emissionenDienstreisen / this.responsedata.emissionenGesamt * 1000) / 10,
         },
         {
-          "col1": i18n.t('common.ITGeraete'),
+          "col1": this.$t('common.ITGeraete'),
           "col2": this.responsedata.emissionenITGeraete,
           "col3": this.responsedata.emissionenGesamt === 0.0 ? 0 : Math.round(this.responsedata.emissionenITGeraete / this.responsedata.emissionenGesamt * 1000) / 10
         },
         {},
         {
-          "col1": i18n.t('evaluation.surveyEvaluation.MakeSpreadsheet_8'),
-          "col2": i18n.t('evaluation.surveyEvaluation.tCO2eq'),
+          "col1": this.$t('evaluation.surveyEvaluation.MakeSpreadsheet_8'),
+          "col2": this.$t('evaluation.surveyEvaluation.tCO2eq'),
           "col3": "%",
         },
         {
-          "col1": i18n.t('common.Waerme'),
+          "col1": this.$t('common.Waerme'),
           "col2": this.responsedata.emissionenWaerme,
           "col3": this.responsedata.emissionenEnergie === 0.0 ? 0 : Math.round(this.responsedata.emissionenWaerme / this.responsedata.emissionenEnergie * 1000) / 10,
         },
         {
-          "col1": i18n.t('common.Kaelte'),
+          "col1": this.$t('common.Kaelte'),
           "col2": this.responsedata.emissionenKaelte,
           "col3": this.responsedata.emissionenEnergie === 0.0 ? 0 : Math.round(this.responsedata.emissionenKaelte / this.responsedata.emissionenEnergie * 1000) / 10,
         },
         {
-          "col1": i18n.t('common.Strom'),
+          "col1": this.$t('common.Strom'),
           "col2": this.responsedata.emissionenStrom,
           "col3": this.responsedata.emissionenEnergie === 0.0 ? 0 : Math.round(this.responsedata.emissionenStrom / this.responsedata.emissionenEnergie * 1000) / 10,
         },
         {},
         {
-          "col1": i18n.t('evaluation.surveyEvaluation.MakeSpreadsheet_9'),
-          "col2": i18n.t('evaluation.surveyEvaluation.kWh'),
+          "col1": this.$t('evaluation.surveyEvaluation.MakeSpreadsheet_9'),
+          "col2": this.$t('evaluation.surveyEvaluation.kWh'),
           "col3": "%",
         },
         {
-          "col1": i18n.t('common.Waerme'),
+          "col1": this.$t('common.Waerme'),
           "col2": this.responsedata.verbrauchWaerme,
           "col3": this.responsedata.verbrauchEnergie === 0.0 ? 0 : Math.round(this.responsedata.verbrauchWaerme / this.responsedata.verbrauchEnergie * 1000) / 10,
         },
         {
-          "col1": i18n.t('common.Kaelte'),
+          "col1": this.$t('common.Kaelte'),
           "col2": this.responsedata.verbrauchKaelte,
           "col3": this.responsedata.verbrauchEnergie === 0.0 ? 0 : Math.round(this.responsedata.verbrauchKaelte / this.responsedata.verbrauchEnergie * 1000) / 10,
         },
         {
-          "col1": i18n.t('common.Strom'),
+          "col1": this.$t('common.Strom'),
           "col2": this.responsedata.verbrauchStrom,
           "col3": this.responsedata.verbrauchEnergie === 0.0 ? 0 : Math.round(this.responsedata.verbrauchStrom / this.responsedata.verbrauchEnergie * 1000) / 10,
         },
@@ -1331,8 +1389,8 @@ export default {
       data = data.concat([
         {},
         {
-          "col1": i18n.t('evaluation.surveyEvaluation.MakeSpreadsheet_11'),
-          "col2": i18n.t('evaluation.surveyEvaluation.tCO2eq'),
+          "col1": this.$t('evaluation.surveyEvaluation.MakeSpreadsheet_11'),
+          "col2": this.$t('evaluation.surveyEvaluation.tCO2eq'),
           "col3": "%",
         },
       ])
@@ -1352,8 +1410,8 @@ export default {
       data = data.concat([
         {},
         {
-          "col1": i18n.t('evaluation.surveyEvaluation.MakeSpreadsheet_12'),
-          "col2": i18n.t('evaluation.surveyEvaluation.tCO2eq'),
+          "col1": this.$t('evaluation.surveyEvaluation.MakeSpreadsheet_12'),
+          "col2": this.$t('evaluation.surveyEvaluation.tCO2eq'),
           "col3": "%",
         },
       ])
@@ -1371,8 +1429,8 @@ export default {
       data = data.concat([
         {},
         {
-          "col1": i18n.t('evaluation.surveyEvaluation.MakeSpreadsheet_13'),
-          "col2": i18n.t('evaluation.surveyEvaluation.tCO2eq'),
+          "col1": this.$t('evaluation.surveyEvaluation.MakeSpreadsheet_13'),
+          "col2": this.$t('evaluation.surveyEvaluation.tCO2eq'),
           "col3": "%",
         },
       ])
@@ -1395,14 +1453,14 @@ export default {
       // workbook
       var wb = XLSX.utils.book_new();
       wb.Props = {
-        Title: i18n.t('evaluation.surveyEvaluation.MakeSpreadsheet_10'),
+        Title: this.$t('evaluation.surveyEvaluation.MakeSpreadsheet_10'),
         CreatedDate: new Date()
       };
-      wb.SheetNames.push(i18n.t('common.Emissionen'));
+      wb.SheetNames.push(this.$t('common.Emissionen'));
 
       // worksheet
       var ws = XLSX.utils.json_to_sheet(data, options);
-      wb.Sheets[i18n.t('common.Emissionen')] = ws;
+      wb.Sheets[this.$t('common.Emissionen')] = ws;
 
       var wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
 
@@ -1418,7 +1476,7 @@ export default {
           [s2ab(wbout)], 
           { type: "application/octet-stream" }
         ), 
-        i18n.t('common.Emissionen') + '_' + this.responsedata.bezeichnung + '.xlsx'
+        this.$t('common.Emissionen') + '_' + this.responsedata.bezeichnung + '.xlsx'
       );
     },
   },
@@ -1431,11 +1489,5 @@ export default {
     overflow: hidden; 
     text-overflow: ellipsis;
     white-space: nowrap;
-  }
-  .headerClass{
-    white-space: wrap;
-    word-break: normal;
-    display: block;
-    hyphens: auto;
   }
 </style>

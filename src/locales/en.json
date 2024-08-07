@@ -73,7 +73,7 @@
       
       "ErstellungUmfrage_0": "Preparing a survey",
       "ErstellungUmfrage_1": "To prepare a survey, you need to create a user account.",
-      "ErstellungUmfrage_2": "This requires that you enter one of your valid TU Darmstadt email addresses (such as jane.anyone@tu-darmstadt.de).",
+      "ErstellungUmfrage_2": "This requires that you enter one of your valid TU Darmstadt email addresses (such as jane.anyone{'@'}tu-darmstadt.de).",
       "ErstellungUmfrage_3": "The data entered to create the survey are generalised in such a way that no conclusion about individual persons can be drawn.",
       "ErstellungUmfrage_4": "You can delete the data that you entered to prepare a survey anytime.",
       "ErstellungUmfrage_5": "How long the data remains on our system is completely up to you.",

@@ -34,11 +34,11 @@
       </v-card-title>
 
       <v-alert
-        class="mx-4"
+        class="mx-4 mb-4"
         type="warning"
-        border="bottom"
-        colored-border
+        border-color
         elevation="3"
+        variant="tonal"
       >
         Bei Dezimalzahlen muss ein Punkt als Dezimaltrenner verwendet werden!
       </v-alert>
@@ -53,12 +53,12 @@
       </p>
 
       <v-expansion-panels
-        focusable
         class="px-4 pb-4 mt-2"
+        multiple
       >
         <!-- Add CO2 factors to the database -->
-        <v-expansion-panel>
-          <v-expansion-panel-header>
+        <v-expansion-panel focusable>
+          <v-expansion-panel-title>
             <div>
               <label>
                 Neuen CO<sub>2</sub>-Faktor für Energie hinzufügen
@@ -67,9 +67,8 @@
                 tooltip-text="Hiermit kann ein CO2-Faktor für Energie für ein bestimmtes Jahr eingetragen werden. Es sind alle Jahre von 2018 bis zum letzten Jahr möglich. Zusätzlich wird zwischen Faktoren den Energiearten und dem Versorger (TU Darmstadt oder extern) unterschieden."
               />
             </div>
-          </v-expansion-panel-header>
-
-          <v-expansion-panel-content>
+          </v-expansion-panel-title>
+          <v-expansion-panel-text>
             <v-autocomplete
               v-model="co2_factor.year"
               :items="possibleYears"
@@ -100,17 +99,19 @@
                 <label>Wert des CO<sub>2</sub>-Faktors in g/kWh</label>
               </template>
             </v-text-field>
-
-            <v-card-actions>
-              <v-col class="text-left">
-                <v-btn
-                  color="primary"
-                  @click="sendFactor"
-                >
-                  Absenden
-                </v-btn>
-              </v-col>
-            </v-card-actions>
+            
+            <v-col
+              class="pt-0"
+              cols="3"
+            >
+              <v-btn
+                color="primary"
+                variant="outlined"
+                @click="sendFactor"
+              >
+                Absenden
+              </v-btn>
+            </v-col>
 
             <v-card
               v-if="displaySuccess[0] || displayLoadingAnimation[0] || displayError[0]"
@@ -119,18 +120,20 @@
               <LoadingAnimation v-if="displayLoadingAnimation[0]" />
               <v-alert
                 v-if="displaySuccess[0]"
+                variant="tonal"
                 type="success"
               >
                 {{ successMessage[0] }}
               </v-alert>
               <v-alert
                 v-if="displayError[0]"
+                variant="tonal"
                 type="error"
               >
                 {{ errorMessage[0] }}
               </v-alert>
             </v-card>
-          </v-expansion-panel-content>
+          </v-expansion-panel-text>
         </v-expansion-panel>
       </v-expansion-panels>
 
@@ -144,12 +147,12 @@
       </p>
 
       <v-expansion-panels
-        focusable
         class="px-4 pb-4 mt-2"
+        multiple
       >
         <!-- Add a new building to the database -->
-        <v-expansion-panel>
-          <v-expansion-panel-header>
+        <v-expansion-panel focusable>
+          <v-expansion-panel-title>
             <div>
               <label> 
                 Gebäude hinzufügen 
@@ -158,8 +161,8 @@
                 tooltip-text="Hiermit lässt sich ein neues Gebäude in die Datenbank einfügen. Es wird eine eindeutige Gebäudenummer sowie eine Gebäudebezeichnung benötigt. Zusätzlich muss die Fläche des Gebäudes angegebnen werden. Falls ein Wert nicht vorliegt, soll 0 als Wert eigentragen werden. Ist das Gebäude an einen externen Versorger angeschlossen, so können die entsprechenden Jahre angegeben werden. Dafür muss die Checkbox ausgewählt sein und die Jahre seit 2018 als kommaseparierte in das entsprechende Feld eingetragen werden." 
               />
             </div>
-          </v-expansion-panel-header>
-          <v-expansion-panel-content>
+          </v-expansion-panel-title>
+          <v-expansion-panel-text>
             <v-row>
               <v-col cols="11">
                 <v-text-field
@@ -289,6 +292,7 @@
               <v-col class="text-left">
                 <v-btn
                   color="primary"
+                  variant="outlined"
                   @click="sendNewBuilding"
                 >
                   Absenden
@@ -303,23 +307,25 @@
               <LoadingAnimation v-if="displayLoadingAnimation[1]" />
               <v-alert
                 v-if="displaySuccess[1]"
+                variant="tonal"
                 type="success"
               >
                 {{ successMessage[1] }}
               </v-alert>
               <v-alert
                 v-if="displayError[1]"
+                variant="tonal"
                 type="error"
               >
                 {{ errorMessage[1] }}
               </v-alert>
             </v-card>
-          </v-expansion-panel-content>
+          </v-expansion-panel-text>
         </v-expansion-panel>
 
         <!-- Add external suppliers to a building -->
-        <v-expansion-panel>
-          <v-expansion-panel-header>
+        <v-expansion-panel focusable>
+          <v-expansion-panel-title>
             <div>
               <label>
                 Externe Versorger für Gebäude hinzufügen
@@ -328,8 +334,8 @@
                 tooltip-text="Hiermit kann für ein bestehendes Gebäude der Versorger für ein Jahr zwischen 2018 und dem letzten Jahr festgelegt werden, solange noch kein Versorger angegeben ist. Bei Versorgern wird zwischen der TU Darmstadt und jeglichen anderen, externen Versorger unterschieden. Ebenso sind die Versorger von verschiedenen Energiearten getrennt voneinander aufgeführt. Um das Gebäude zu identifizieren, wird die eindeutige Gebäudenummer verwendet."
               />
             </div>
-          </v-expansion-panel-header>
-          <v-expansion-panel-content>
+          </v-expansion-panel-title>
+          <v-expansion-panel-text>
             <v-row>
               <v-col cols="11">
                 <v-text-field
@@ -372,6 +378,7 @@
               <v-col class="text-left">
                 <v-btn
                   color="primary"
+                  variant="outlined"
                   @click="sendSupplier"
                 >
                   Absenden
@@ -386,23 +393,25 @@
               <LoadingAnimation v-if="displayLoadingAnimation[4]" />
               <v-alert
                 v-if="displaySuccess[4]"
+                variant="tonal"
                 type="success"
               >
                 {{ successMessage[4] }}
               </v-alert>
               <v-alert
                 v-if="displayError[4]"
+                variant="tonal"
                 type="error"
               >
                 {{ errorMessage[4] }}
               </v-alert>
             </v-card>
-          </v-expansion-panel-content>
+          </v-expansion-panel-text>
         </v-expansion-panel>
 
         <!-- Add default external suppliers to buildings that don't have a supplier for a specific year -->
-        <v-expansion-panel>
-          <v-expansion-panel-header>
+        <v-expansion-panel focusable>
+          <v-expansion-panel-title>
             <div>
               <label>
                 Standard Versorger für alle Gebäude hinzufügen
@@ -411,8 +420,8 @@
                 tooltip-text="Hiermit lässt sich für alle in der Datenbank vorhanden Gebäude der Standard-Versorger TU Darmstadt für ein bestimmtes Jahr eintragen. Der Wert wird bei allen Gebäuden und für alle Energiearten eingetragen, wenn noch kein Versorger für das spezifizierte Jahr angegeben wurde. Als Jahre stehen alle Jahre zwischen 2018 und dem letzten Jahr zur Verfügung."
               />
             </div>
-          </v-expansion-panel-header>
-          <v-expansion-panel-content>
+          </v-expansion-panel-title>
+          <v-expansion-panel-text>
             <v-row>
               <v-col>
                 <v-autocomplete
@@ -428,6 +437,7 @@
               <v-col class="text-left">
                 <v-btn
                   color="primary"
+                  variant="outlined"
                   @click="sendDefaultSupplier"
                 >
                   Absenden
@@ -442,18 +452,20 @@
               <LoadingAnimation v-if="displayLoadingAnimation[5]" />
               <v-alert
                 v-if="displaySuccess[5]"
+                variant="tonal"
                 type="success"
               >
                 {{ successMessage[5] }}
               </v-alert>
               <v-alert
                 v-if="displayError[5]"
+                variant="tonal"
                 type="error"
               >
                 {{ errorMessage[5] }}
               </v-alert>
             </v-card>
-          </v-expansion-panel-content>
+          </v-expansion-panel-text>
         </v-expansion-panel>
       </v-expansion-panels>
 
@@ -467,12 +479,12 @@
       </p>
 
       <v-expansion-panels
-        focusable
         class="px-4 mt-2"
+        multiple
       >
         <!-- Add a new counter to the database -->
-        <v-expansion-panel>
-          <v-expansion-panel-header>
+        <v-expansion-panel focusable>
+          <v-expansion-panel-title>
             <div>
               <label>
                 Neuen Zähler hinzufügen
@@ -481,8 +493,8 @@
                 tooltip-text="Hiermit kann ein neuer Zähler in die Datenbank eingetragen werden. Dazu wird die eindeutige Nummer des Zählers benötigt. Weitere Angaben sind die Zählereinheit, den Zählertyp, und die Bezeichnung. Referenzen zu Gebäude, zu denen der Zähler gehört, können durch die zusätzlichen Felder eingetragen werden. Standardmäßig wird einem Zähler für alle Jahre von 2018 bis zum letzten Jahr der Wert 0 als Zählerstand eingetragen."
               />
             </div>
-          </v-expansion-panel-header>
-          <v-expansion-panel-content>
+          </v-expansion-panel-title>
+          <v-expansion-panel-text>
             <v-text-field
               v-model="counter.primary_key"
               :rules="notNegativeRule"
@@ -514,7 +526,7 @@
               :key="'Gebäudereferenz-' + i"
             >
               <v-row>
-                <v-col cols="9">
+                <v-col cols="11">
                   <v-text-field
                     v-model="building_reference[0]"
                     :rules="basicRule"
@@ -523,29 +535,41 @@
                 </v-col>
                 <v-col>
                   <v-btn
-                    class="add_text--text"
-                    color="add"
-                    @click="newBuildingRef()"
-                  >
-                    Hinzufügen
-                  </v-btn>
-                </v-col>
-                <v-col>
-                  <v-btn
-                    class="delete_text--text"
+                    class="delete_text--text mx-auto"
                     color="delete"
+                    size="default"
+                    rounded
                     @click="removeBuildingRef(i)"
                   >
-                    Löschen
+                    <v-icon>
+                      mdi-delete-outline
+                    </v-icon>
                   </v-btn>
                 </v-col>
               </v-row>
             </div>
 
+            <v-row>
+              <v-col>
+                <v-btn
+                  class="add_text--text pl-2"
+                  color="add"
+                  @click="newBuildingRef()"
+                >
+                  <v-icon>
+                    mdi-plus
+                  </v-icon>
+                  {{ $t('userSurvey.Survey.gebaeudeHinzufuegen') }}
+                </v-btn>
+              </v-col>
+            </v-row>
+            
+
             <v-card-actions>
               <v-col class="text-left">
                 <v-btn
                   color="primary"
+                  variant="outlined"
                   @click="sendNewCounter"
                 >
                   Absenden
@@ -560,23 +584,25 @@
               <LoadingAnimation v-if="displayLoadingAnimation[2]" />
               <v-alert
                 v-if="displaySuccess[2]"
+                variant="tonal"
                 type="success"
               >
                 {{ successMessage[2] }}
               </v-alert>
               <v-alert
                 v-if="displayError[2]"
+                variant="tonal"
                 type="error"
               >
                 {{ errorMessage[2] }}
               </v-alert>
             </v-card>
-          </v-expansion-panel-content>
+          </v-expansion-panel-text>
         </v-expansion-panel>
 
         <!-- Set counter value for specific counter -->
-        <v-expansion-panel>
-          <v-expansion-panel-header>
+        <v-expansion-panel focusable>
+          <v-expansion-panel-title>
             <div>
               <label>
                 Zählerdaten für Zähler hinzufügen
@@ -585,8 +611,8 @@
                 tooltip-text="Hiermit kann einem bestehenden Zähler ein Zählerstand für ein Jahr zwischen 2018 und dem letzten Jahr eingetragen werden. Dazu wird die eindeutige Zählernummer und der Zählertyp benötigt. Ist der Zähler nicht vorhanden oder ist für das angegeben Jahr schon ein Wert (außer 0) eingetragen, schlägt die Operation fehl."
               />
             </div>
-          </v-expansion-panel-header>
-          <v-expansion-panel-content>
+          </v-expansion-panel-title>
+          <v-expansion-panel-text>
             <v-autocomplete
               v-model="counter_data.year"
               :items="possibleYears"
@@ -617,6 +643,7 @@
               <v-col class="text-left">
                 <v-btn
                   color="primary"
+                  variant="outlined"
                   @click="sendCounterData"
                 >
                   Absenden
@@ -631,23 +658,25 @@
               <LoadingAnimation v-if="displayLoadingAnimation[3]" />
               <v-alert
                 v-if="displaySuccess[3]"
+                variant="tonal"
                 type="success"
               >
                 {{ successMessage[3] }}
               </v-alert>
               <v-alert
                 v-if="displayError[3]"
+                variant="tonal"
                 type="error"
               >
                 {{ errorMessage[3] }}
               </v-alert>
             </v-card>
-          </v-expansion-panel-content>
+          </v-expansion-panel-text>
         </v-expansion-panel>
 
         <!-- Set default counter values for all counters that don't have a value in a given year -->
-        <v-expansion-panel>
-          <v-expansion-panel-header>
+        <v-expansion-panel focusable>
+          <v-expansion-panel-title>
             <div>
               <label>
                 Standard Zählerdaten für alle Zähler hinzufügen
@@ -656,8 +685,8 @@
                 tooltip-text="Hiermit kann allen Zähler in der Datenbank der Standardwert 0 für ein Jahr zwischen 2018 und dem letzten Jahr eingetragen werden. Dies funktioniert nur bei Zählern, die für das angegebene Jahr noch keine Zählerstand eingetragen haben."
               />
             </div>
-          </v-expansion-panel-header>
-          <v-expansion-panel-content>
+          </v-expansion-panel-title>
+          <v-expansion-panel-text>
             <v-autocomplete
               v-model="default_counter_data.year"
               :items="possibleYears"
@@ -669,6 +698,7 @@
               <v-col class="text-left">
                 <v-btn
                   color="primary"
+                  variant="outlined"
                   @click="sendDefaultCounterData"
                 >
                   Absenden
@@ -683,23 +713,25 @@
               <LoadingAnimation v-if="displayLoadingAnimation[6]" />
               <v-alert
                 v-if="displaySuccess[6]"
+                variant="tonal"
                 type="success"
               >
                 {{ successMessage[6] }}
               </v-alert>
               <v-alert
                 v-if="displayError[6]"
+                variant="tonal"
                 type="error"
               >
                 {{ errorMessage[6] }}
               </v-alert>
             </v-card>
-          </v-expansion-panel-content>
+          </v-expansion-panel-text>
         </v-expansion-panel>
 
         <!-- CSV parser for sending a bunch of counter values -->
-        <v-expansion-panel>
-          <v-expansion-panel-header>
+        <v-expansion-panel focusable>
+          <v-expansion-panel-title>
             <div>
               <label>
                 Zählerdaten mittels CSV-Datei hinzufügen
@@ -708,8 +740,8 @@
                 tooltip-text="Hiermit lassen sich Zählerdaten mittels einer CSV-Datei direkt aus dem EMS in die Datenbank übertragen. Das Jahr von welchem die Daten kommen, muss angegeben werden, damit die richtigen Daten aus der CSV gelesen werden. Sollte ein Fehler bei einem Zähler auftreten, wird dieser angezeigt. Die anderen Zähler sind von diesem Fehler nicht behindert und deren Daten werden erfolgreich eingetragen. Eine Anleitung zu auslesen der Daten aus dem EMS ist über den Button 'EMS Anleitung' verfügbar. Unwichtige Zähler werden aus der CSV-Datei herausgefilter."
               />
             </div>
-          </v-expansion-panel-header>
-          <v-expansion-panel-content>
+          </v-expansion-panel-title>
+          <v-expansion-panel-text>
             <v-row>
               <v-col>
                 <v-autocomplete
@@ -734,6 +766,7 @@
             <v-card-actions>
               <v-col class="text-left">
                 <v-btn
+                  variant="outlined"
                   color="primary"
                   @click="parseFile"
                 >
@@ -746,32 +779,32 @@
                   v-model="dialog"
                   :max-width="constants.v_dialog_max_width"
                 >
-                  <template v-slot:activator="{ on, attrs }">
+                  <template #activator="{ props }">
                     <v-btn
-                      v-bind="attrs"
-                      v-on="on"
+                      variant="outlined"
+                      v-bind="props"
                     >
                       EMS Anleitung
                     </v-btn>
                   </template>
 
                   <v-card>
-                    <v-card-title class="text-h5 grey lighten-2">
+                    <v-card-title class="text-h5 bg-grey-lighten-2">
                       Daten aus dem EMS auslesen
                     </v-card-title>
 
                     <v-card-text style="white-space: pre-wrap">
                       <p
-                        class="mb-0 mt-4 text-body-2 black--text"
+                        class="mb-0 mt-4 text-body-2 text-black"
                       >
                         1. Ganz oben auf "Auswertung", dann auf "Werte und Korrekturen" <br>
                         2. Links an der Seite auf "Werte", dann "Alle Zähler" und "Alle - Zähler" <br>
                         3. In der obersten Zeile der Tabelle folgendes auswählen: <br>
                       </p>
-                      <v-simple-table 
+                      <v-table 
                         class="mt-0 mb-1 ml-4"
                       >
-                        <template v-slot:default>
+                        <template #default>
                           <thead>
                             <tr>
                               <th />
@@ -801,9 +834,9 @@
                             </tr>
                           </tbody>
                         </template>
-                      </v-simple-table>
+                      </v-table>
                       <p
-                        class="mb-0 mt-0  text-body-2 black--text"
+                        class="mb-0 mt-0 text-body-2 text-black"
                       >
                         4. Dann alle Zähler auswählen und "Datenpunkte selektieren" klicken <br>
                         5. In ausgewählte Datenpunkte können ungewollte Zähler über "&#x2014;" wieder entfernt werden <br>
@@ -826,6 +859,7 @@
               <LoadingAnimation v-if="displayLoadingAnimation[7]" />
               <v-alert 
                 v-if="displayError[7]"
+                variant="tonal"
                 type="error"
                 style="white-space: pre-wrap"
               >
@@ -833,12 +867,13 @@
               </v-alert>
               <v-alert 
                 v-if="displaySuccess[7]"
+                variant="tonal"
                 type="success"
               >
                 {{ successMessage[7] }}
               </v-alert>
             </v-card>
-          </v-expansion-panel-content>
+          </v-expansion-panel-text>
         </v-expansion-panel>
       </v-expansion-panels>
     </v-card>
@@ -847,8 +882,8 @@
 
 <script>
 import Tooltip from "@/components/componentParts/Tooltip.vue";
-import LoadingAnimation from "../componentParts/LoadingAnimation.vue";
-import constants from "../../const";
+import LoadingAnimation from "@/components/componentParts/LoadingAnimation.vue";
+import constants from "@/const.js";
 
 export default {
   components: {
@@ -987,19 +1022,19 @@ export default {
      * sends CO2 factor as a json file to db
      */
     sendFactor: async function () {
-      this.$set(this.displaySuccess, 0, false)
-      this.$set(this.displayError, 0, false)
-      this.$set(this.displayLoadingAnimation, 0, true)
+      this.displaySuccess[0] = false
+      this.displayError[0] = false
+      this.displayLoadingAnimation[0] = true
 
       if(!this.co2_factor.year || !this.co2_factor.energy_type || !this.co2_factor.value || !this.co2_factor.contract){
-        this.$set(this.errorMessage, 0, "Alle Felder müssen ausgefüllt sein")
-        this.$set(this.displayLoadingAnimation, 0, false)
-        this.$set(this.displayError, 0, true)
+        this.errorMessage[0] = "Alle Felder müssen ausgefüllt sein"
+        this.displayLoadingAnimation[0] = false
+        this.displayError[0] = true
 
         return
       }
 
-      await fetch(process.env.VUE_APP_BASEURL + "/db/addFaktor", {
+      await fetch(import.meta.env.VITE_BASEURL + "/db/addFaktor", {
         method: "POST",
         headers: {
           "Authorization": "Bearer " + this.$keycloak.token,
@@ -1015,14 +1050,14 @@ export default {
         .then((response) => response.json())
         .then((data) => {
           if(data.status == "success"){
-            this.$set(this.successMessage, 0, "Der CO2-Faktor wurde erfolgreich in der Datenbank gespeichert.")
-            this.$set(this.displayLoadingAnimation, 0, false)
-            this.$set(this.displaySuccess, 0, true)
+            this.successMessage[0] = "Der CO2-Faktor wurde erfolgreich in der Datenbank gespeichert."
+            this.displayLoadingAnimation[0] = false
+            this.displaySuccess[0] = true
           }
           else if(data.status == "error"){
-            this.$set(this.errorMessage, 0, "Code " + data.error.code + ": " + data.error.message)
-            this.$set(this.displayLoadingAnimation, 0, false)
-            this.$set(this.displayError, 0, true)
+            this.errorMessage[0] = "Code " + data.error.code + ": " + data.error.message
+            this.displayLoadingAnimation[0] = false
+            this.displayError[0] = true
           }
         })
         .catch((error) => {
@@ -1034,23 +1069,23 @@ export default {
      * sends new building as a json file to db
      */
     sendNewBuilding: async function () {
-      this.$set(this.displaySuccess, 1, false)
-      this.$set(this.displayError, 1, false)
-      this.$set(this.displayLoadingAnimation, 1, true)
+      this.displaySuccess[1] = false
+      this.displayError[1] = false
+      this.displayLoadingAnimation[1] = true
 
       if(!this.building.number || !this.building.name || !this.building.hnf || !this.building.nnf  || !this.building.ngf || 
          !this.building.ff || !this.building.vf || !this.building.freif || !this.building.gesamtf){
-        this.$set(this.errorMessage, 1, "Gebäudenummer, Gebäudebezeichnung und Flächen müssen ausgefüllt sein!")
-        this.$set(this.displayLoadingAnimation, 1, false)
-        this.$set(this.displayError, 1, true)
+        this.errorMessage[1] = "Gebäudenummer, Gebäudebezeichnung und Flächen müssen ausgefüllt sein!"
+        this.displayLoadingAnimation[1] = false
+        this.displayError[1] = true
 
         return
       }
 
       if(this.irrelevant_buildings.includes(parseInt(this.building.number))){
-        this.$set(this.errorMessage, 1, "Das Gebäude " + this.building.number + " wurde explizit ausgeschlossen!")
-        this.$set(this.displayLoadingAnimation, 1, false)
-        this.$set(this.displayError, 1, true)
+        this.errorMessage[1] = "Das Gebäude " + this.building.number + " wurde explizit ausgeschlossen!"
+        this.displayLoadingAnimation[1] = false
+        this.displayError[1] = true
 
         return
       }
@@ -1082,7 +1117,7 @@ export default {
         electricity_supplier = electricity_supplier.filter(numberfilter)
       }
 
-      await fetch(process.env.VUE_APP_BASEURL + "/db/insertGebaeude", {
+      await fetch(import.meta.env.VITE_BASEURL + "/db/insertGebaeude", {
         method: "POST",
         headers: {
           "Authorization": "Bearer " + this.$keycloak.token,
@@ -1108,14 +1143,14 @@ export default {
         .then((response) => response.json())
         .then((data) => {
           if(data.status == "success"){
-            this.$set(this.successMessage, 1, "Das Gebäude wurde erfolgreich in der Datenbank gespeichert.")
-            this.$set(this.displayLoadingAnimation, 1, false)
-            this.$set(this.displaySuccess, 1, true)
+            this.successMessage[1] = "Das Gebäude wurde erfolgreich in der Datenbank gespeichert."
+            this.displayLoadingAnimation[1] = false
+            this.displaySuccess[1] = true
           }
           else if(data.status == "error"){
-            this.$set(this.errorMessage, 1, "Code " + data.error.code + ": " + data.error.message)
-            this.$set(this.displayLoadingAnimation, 1, false)
-            this.$set(this.displayError, 1, true)
+            this.errorMessage[1] = "Code " + data.error.code + ": " + data.error.message
+            this.displayLoadingAnimation[1] = false
+            this.displayError[1] = true
           }
         })
         .catch((error) => {
@@ -1127,19 +1162,19 @@ export default {
      * send supplier to db
      */
     sendSupplier: async function () {
-      this.$set(this.displaySuccess, 4, false)
-      this.$set(this.displayError, 4, false)
-      this.$set(this.displayLoadingAnimation, 4, true)
+      this.displaySuccess[4] = false
+      this.displayError[4] = false
+      this.displayLoadingAnimation[4] = true
 
       if(!this.supplier.number || !this.supplier.year || !this.supplier.energy_type || !this.supplier.contract){
-        this.$set(this.errorMessage, 4, "Alle Felder müssen ausgefüllt sein")
-        this.$set(this.displayLoadingAnimation, 4, false)
-        this.$set(this.displayError, 4, true)
+        this.errorMessage[4] = "Alle Felder müssen ausgefüllt sein"
+        this.displayLoadingAnimation[4] = false
+        this.displayError[4] = true
 
         return
       }
 
-      await fetch(process.env.VUE_APP_BASEURL + "/db/addVersorger", {
+      await fetch(import.meta.env.VITE_BASEURL + "/db/addVersorger", {
         method: "POST",
         headers: {
           "Authorization": "Bearer " + this.$keycloak.token,
@@ -1155,14 +1190,14 @@ export default {
         .then((response) => response.json())
         .then((data) => {
           if(data.status == "success"){
-            this.$set(this.successMessage, 4, "Der Versorger wurde erfolgreich in der Datenbank gespeichert.")
-            this.$set(this.displayLoadingAnimation, 4, false)
-            this.$set(this.displaySuccess, 4, true)
+            this.successMessage[4] = "Der Versorger wurde erfolgreich in der Datenbank gespeichert."
+            this.displayLoadingAnimation[4] = false
+            this.displaySuccess[4] = true
           }
           else if(data.status == "error"){
-            this.$set(this.errorMessage, 4, "Code " + data.error.code + ": " + data.error.message)
-            this.$set(this.displayLoadingAnimation, 4, false)
-            this.$set(this.displayError, 4, true)
+            this.errorMessage[4] = "Code " + data.error.code + ": " + data.error.message
+            this.displayLoadingAnimation[4] = false
+            this.displayError[4] = true
           }
         })
         .catch((error) => {
@@ -1174,19 +1209,19 @@ export default {
      * send default supplier to db
      */
      sendDefaultSupplier: async function () {
-      this.$set(this.displaySuccess, 5, false)
-      this.$set(this.displayError, 5, false)
-      this.$set(this.displayLoadingAnimation, 5, true)
+      this.displaySuccess[5] = false
+      this.displayError[5] = false
+      this.displayLoadingAnimation[5] = true
 
       if(!this.default_supplier.year){
-        this.$set(this.errorMessage, 5, "Alle Felder müssen ausgefüllt sein")
-        this.$set(this.displayLoadingAnimation, 5, false)
-        this.$set(this.displayError, 5, true)
+        this.errorMessage[5] = "Alle Felder müssen ausgefüllt sein"
+        this.displayLoadingAnimation[5] = false
+        this.displayError[5] = true
 
         return
       }
 
-      await fetch(process.env.VUE_APP_BASEURL + "/db/addStandardVersorger", {
+      await fetch(import.meta.env.VITE_BASEURL + "/db/addStandardVersorger", {
         method: "POST",
         headers: {
           "Authorization": "Bearer " + this.$keycloak.token,
@@ -1199,14 +1234,14 @@ export default {
         .then((response) => response.json())
         .then((data) => {
           if(data.status == "success"){
-            this.$set(this.successMessage, 5, "Für alle Gebäude ohne Versorger wurde die TU Darmstadt als Versorger eingetragen.")
-            this.$set(this.displayLoadingAnimation, 5, false)
-            this.$set(this.displaySuccess, 5, true)
+            this.successMessage[5] = "Für alle Gebäude ohne Versorger wurde die TU Darmstadt als Versorger eingetragen."
+            this.displayLoadingAnimation[5] = false
+            this.displaySuccess[5] = true
           }
           else if(data.status == "error"){
-            this.$set(this.errorMessage, 5, "Code " + data.error.code + ": " + data.error.message)
-            this.$set(this.displayLoadingAnimation, 5, false)
-            this.$set(this.displayError, 5, true)
+            this.errorMessage[5] = "Code " + data.error.code + ": " + data.error.message
+            this.displayLoadingAnimation[5] = false
+            this.displayError[5] = true
           }
         })
         .catch((error) => {
@@ -1218,20 +1253,20 @@ export default {
      * sends new counter as a json file to db
      */
     sendNewCounter: async function () {
-      this.$set(this.displaySuccess, 2, false)
-      this.$set(this.displayError, 2, false)
-      this.$set(this.displayLoadingAnimation, 2, true)
+      this.displaySuccess[2] = false
+      this.displayError[2] = false
+      this.displayLoadingAnimation[2] = true
 
       if(!this.counter.primary_key || !this.counter.unit || !this.counter.energy_type ||
          !this.counter.name || this.buildingRefJSON().length === 0){
-        this.$set(this.errorMessage, 2, "Alle Felder müssen ausgefüllt sein")
-        this.$set(this.displayLoadingAnimation, 2, false)
-        this.$set(this.displayError, 2, true)
+        this.errorMessage[2] = "Alle Felder müssen ausgefüllt sein"
+        this.displayLoadingAnimation[2] = false
+        this.displayError[2] = true
 
         return
       }
 
-      await fetch(process.env.VUE_APP_BASEURL + "/db/insertZaehler", {
+      await fetch(import.meta.env.VITE_BASEURL + "/db/insertZaehler", {
         method: "POST",
         headers: {
           "Authorization": "Bearer " + this.$keycloak.token,
@@ -1248,14 +1283,14 @@ export default {
         .then((response) => response.json())
         .then((data) => {
           if(data.status == "success"){
-            this.$set(this.successMessage, 2, "Der Zähler wurde erfolgreich in der Datenbank gespeichert.")
-            this.$set(this.displayLoadingAnimation, 2, false)
-            this.$set(this.displaySuccess, 2, true)
+            this.successMessage[2] = "Der Zähler wurde erfolgreich in der Datenbank gespeichert."
+            this.displayLoadingAnimation[2] = false
+            this.displaySuccess[2] = true
           }
           else if(data.status == "error"){
-            this.$set(this.errorMessage, 2, "Code " + data.error.code + ": " + data.error.message)
-            this.$set(this.displayLoadingAnimation, 2, false)
-            this.$set(this.displayError, 2, true)
+            this.errorMessage[2] = "Code " + data.error.code + ": " + data.error.message
+            this.displayLoadingAnimation[2] = false
+            this.displayError[2] = true
           }
         })
         .catch((error) => {
@@ -1267,19 +1302,19 @@ export default {
      * sends counter data as a json file to db
      */
     sendCounterData: async function () {
-      this.$set(this.displaySuccess, 3, false)
-      this.$set(this.displayError, 3, false)
-      this.$set(this.displayLoadingAnimation, 3, true)
+      this.displaySuccess[3] = false
+      this.displayError[3] = false
+      this.displayLoadingAnimation[3] = true
 
       if(!this.counter_data.year || !this.counter_data.primary_key || !this.counter_data.energy_type || !this.counter_data.value){
-        this.$set(this.errorMessage, 3, "Alle Felder müssen ausgefüllt sein")
-        this.$set(this.displayLoadingAnimation, 3, false)
-        this.$set(this.displayError, 3, true)
+        this.errorMessage[3] = "Alle Felder müssen ausgefüllt sein"
+        this.displayLoadingAnimation[3] = false
+        this.displayError[3] = true
 
         return
       }
 
-      await fetch(process.env.VUE_APP_BASEURL + "/db/addZaehlerdaten", {
+      await fetch(import.meta.env.VITE_BASEURL + "/db/addZaehlerdaten", {
         method: "POST",
         headers: {
           "Authorization": "Bearer " + this.$keycloak.token,
@@ -1295,14 +1330,14 @@ export default {
         .then((response) => response.json())
         .then((data) => {
           if(data.status == "success"){
-            this.$set(this.successMessage, 3, "Die Zählerdaten wurden erfolgreich in der Datenbank gespeichert.")
-            this.$set(this.displayLoadingAnimation, 3, false)
-            this.$set(this.displaySuccess, 3, true)
+            this.successMessage[3] = "Die Zählerdaten wurden erfolgreich in der Datenbank gespeichert."
+            this.displayLoadingAnimation[3] = false
+            this.displaySuccess[3] = true
           }
           else if(data.status == "error"){
-            this.$set(this.errorMessage, 3, "Code " + data.error.code + ": " + data.error.message)
-            this.$set(this.displayLoadingAnimation, 3, false)
-            this.$set(this.displayError, 3, true)
+            this.errorMessage[3] = "Code " + data.error.code + ": " + data.error.message
+            this.displayLoadingAnimation[3] = false
+            this.displayError[3] = true
           }
         })
         .catch((error) => {
@@ -1314,19 +1349,19 @@ export default {
      * send default counter data to db
      */
     sendDefaultCounterData: async function () {
-      this.$set(this.displaySuccess, 6, false)
-      this.$set(this.displayError, 6, false)
-      this.$set(this.displayLoadingAnimation, 6, true)
+      this.displaySuccess[6] = false
+      this.displayError[6] = false
+      this.displayLoadingAnimation[6] = true
 
       if(!this.default_counter_data.year){
-        this.$set(this.errorMessage, 6, "Alle Felder müssen ausgefüllt sein")
-        this.$set(this.displayLoadingAnimation, 6, false)
-        this.$set(this.displayError, 6, true)
+        this.errorMessage[6] = "Alle Felder müssen ausgefüllt sein"
+        this.displayLoadingAnimation[6] = false
+        this.displayError[6] = true
 
         return
       }
 
-      await fetch(process.env.VUE_APP_BASEURL + "/db/addStandardZaehlerdaten", {
+      await fetch(import.meta.env.VITE_BASEURL + "/db/addStandardZaehlerdaten", {
         method: "POST",
         headers: {
           "Authorization": "Bearer " + this.$keycloak.token,
@@ -1339,14 +1374,14 @@ export default {
         .then((response) => response.json())
         .then((data) => {
           if(data.status == "success"){
-            this.$set(this.successMessage, 6, "Für alle Zähler von Wert für " + this.default_counter_data.year + " wurde 0 als Zählerwert eingetragen.")
-            this.$set(this.displayLoadingAnimation, 6, false)
-            this.$set(this.displaySuccess, 6, true)
+            this.successMessage[6] = "Für alle Zähler von Wert für " + this.default_counter_data.year + " wurde 0 als Zählerwert eingetragen."
+            this.displayLoadingAnimation[6] = false
+            this.displaySuccess[6] = true
           }
           else if(data.status == "error"){
-            this.$set(this.errorMessage, 6, "Code " + data.error.code + ": " + data.error.message)
-            this.$set(this.displayLoadingAnimation, 6, false)
-            this.$set(this.displayError, 6, true)
+            this.errorMessage[6] = "Code " + data.error.code + ": " + data.error.message
+            this.displayLoadingAnimation[6] = false
+            this.displayError[6] = true
           }
         })
         .catch((error) => {
@@ -1374,9 +1409,9 @@ export default {
      * parses a CSV file containing counter values
      */
     parseFile: async function () {
-      this.$set(this.displaySuccess, 7, false)
-      this.$set(this.displayError, 7, false)
-      this.$set(this.displayLoadingAnimation, 7, true)
+      this.displaySuccess[7] = false
+      this.displayError[7] = false
+      this.displayLoadingAnimation[7] = true
 
       // reset object for data
       this.csv_counter_data.primary_keys = null
@@ -1384,9 +1419,9 @@ export default {
       this.csv_counter_data.values = null
 
       if(!this.chosenFile){
-        this.$set(this.errorMessage, 7, "No File selected")
-        this.$set(this.displayLoadingAnimation, 7, false)
-        this.$set(this.displayError, 7, true)
+        this.errorMessage[7] = "No File selected"
+        this.displayLoadingAnimation[7] = false
+        this.displayError[7] = true
 
         return
       }
@@ -1451,9 +1486,9 @@ export default {
                   return 3;
                 }
                 else{
-                  this.$set(this.errorMessage, 7, "Zählertype des Zählers mit der Bezeichung " + elem + " ist nicht bekannt!!")
-                  this.$set(this.displayLoadingAnimation, 7, false)
-                  this.$set(this.displayError, 7, true)
+                  this.errorMessage[7] = "Zählertype des Zählers mit der Bezeichung " + elem + " ist nicht bekannt!!"
+                  this.displayLoadingAnimation[7] = false
+                  this.displayError[7] = true
                 }
               }
             )
@@ -1468,9 +1503,9 @@ export default {
 
       if (!this.csv_counter_data.year || !this.csv_counter_data.primary_keys || !this.csv_counter_data.energy_types || !this.csv_counter_data.values
           || this.csv_counter_data.primary_keys.length != this.csv_counter_data.energy_types.length || this.csv_counter_data.energy_types.length != this.csv_counter_data.values.length){
-        this.$set(this.errorMessage, 7, "CSV Datei konnte nicht korrekt gelesen werden!")
-        this.$set(this.displayLoadingAnimation, 7, false)
-        this.$set(this.displayError, 7, true)
+        this.errorMessage[7] = "CSV Datei konnte nicht korrekt gelesen werden!"
+        this.displayLoadingAnimation[7] = false
+        this.displayError[7] = true
 
         return
       }
@@ -1482,9 +1517,9 @@ export default {
       this.csv_counter_data.values = this.csv_counter_data.values.filter((elem, index) => mask[index])
 
       if (this.csv_counter_data.primary_keys.length != this.csv_counter_data.energy_types.length || this.csv_counter_data.energy_types.length != this.csv_counter_data.values.length){
-        this.$set(this.errorMessage, 7, "CSV Datei konnte nicht korrekt gelesen werden!")
-        this.$set(this.displayLoadingAnimation, 7, false)
-        this.$set(this.displayError, 7, true)
+        this.errorMessage[7] = "CSV Datei konnte nicht korrekt gelesen werden!"
+        this.displayLoadingAnimation[7] = false
+        this.displayError[7] = true
 
         return
       }
@@ -1499,7 +1534,7 @@ export default {
      * send parsed CSV file to db
      */
     sendCSVCounterData: async function(){
-      await fetch(process.env.VUE_APP_BASEURL + "/db/addZaehlerdatenCSV", {
+      await fetch(import.meta.env.VITE_BASEURL + "/db/addZaehlerdatenCSV", {
         method: "POST",
         headers: {
           "Authorization": "Bearer " + this.$keycloak.token,
@@ -1515,14 +1550,14 @@ export default {
         .then((response) => response.json())
         .then((data) => {
           if(data.status == "success"){
-            this.$set(this.successMessage, 7, "Die Zählerdaten wurden erfolgreich in der Datenbank gespeichert.")
-            this.$set(this.displayLoadingAnimation, 7, false)
-            this.$set(this.displaySuccess, 7, true)
+            this.successMessage[7] = "Die Zählerdaten wurden erfolgreich in der Datenbank gespeichert."
+            this.displayLoadingAnimation[7] = false
+            this.displaySuccess[7] = true
           }
           else if(data.status == "error"){
-            this.$set(this.errorMessage, 7, "Code " + data.error.code + ": " + data.error.message)
-            this.$set(this.displayLoadingAnimation, 7, false)
-            this.$set(this.displayError, 7, true)
+            this.errorMessage[7] = "Code " + data.error.code + ": " + data.error.message 
+            this.displayLoadingAnimation[7] = false
+            this.displayError[7] = true
           }
         })
         .catch((error) => {
@@ -1532,6 +1567,7 @@ export default {
   },
 }
 </script>
+
 <style>
 tr:hover {
   background-color: transparent !important;

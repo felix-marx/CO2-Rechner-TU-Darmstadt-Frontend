@@ -1,6 +1,6 @@
 <!-- eslint-disable vue/no-v-html -->
 <template>
-  <v-app :style="{background: $vuetify.theme.themes[theme].background}">
+  <v-app :style="{background: $vuetify.theme.themes[theme].colors.background}">
     <Header 
       :display-user-setting="false"
       :display-back-button="false"
@@ -8,7 +8,7 @@
     />
 
     <v-main
-      :class="$vuetify.breakpoint.mobile ? 'mb-6 mx-3' : 'mb-16 mx-3'"
+      class="mb-6 mx-3"
     >
       <v-card
         class="mt-3 mx-auto"
@@ -18,7 +18,7 @@
         <!-- Banner Image -->
         <v-img
           max-height="500px"
-          src="../assets/landingpage.png"
+          src="@/assets/landingpage.png"
           class="d-flex align-end"
         /> 
 
@@ -40,7 +40,7 @@
         <v-container>
           <!-- Icon-Boxes -->
           <!-- all boxes in one row -->
-          <template v-if="$vuetify.breakpoint.width >= min_width_icons">
+          <template v-if="$vuetify.display.width >= min_width_icons">
             <v-row>
               <v-spacer />
               <v-col
@@ -57,12 +57,11 @@
                     class="py-4 px-3"
                   >
                     <v-img
-                      contain
                       class="mx-auto"
                       height="20vh"
                       max-height="200px"
                       max-width="200px"
-                      src="../assets/icon_question_and_answer.svg" 
+                      src="@/assets/icon_question_and_answer.svg" 
                     />
                   </a>
                 </v-card>
@@ -82,12 +81,11 @@
                     class="py-4 px-3"
                   >
                     <v-img
-                      contain
                       class="mx-auto"
                       height="20vh"
                       max-height="200px"
                       max-width="200px"
-                      src="../assets/icon_broadcast.svg" 
+                      src="@/assets/icon_broadcast.svg" 
                     />
                   </a>
                 </v-card>
@@ -99,7 +97,7 @@
               >
                 <v-card class="flex d-flex flex-column">
                   <v-card-title class="text-center justify-center flex d-flex flex-column">
-                    <nobr>{{ $t('landingpage.Login.PanelTitel_3') }}</nobr>
+                    <span style="white-space: nowrap;">{{ $t('landingpage.Login.PanelTitel_3') }}</span>
                   </v-card-title>
                   <v-divider />
                   <a
@@ -107,12 +105,11 @@
                     class="py-4 px-3"
                   >
                     <v-img
-                      contain
                       class="mx-auto"
                       height="20vh"
                       max-height="200px"
                       max-width="200px"
-                      src="../assets/icon_lightbulb_green.svg"
+                      src="@/assets/icon_lightbulb_green.svg"
                     />
                   </a>  
                 </v-card>
@@ -134,12 +131,11 @@
                     class="py-4 px-3"
                   >
                     <v-img
-                      contain
                       class="mx-auto"
                       height="20vh"
                       max-height="200px"
                       max-width="200px"
-                      src="../assets/icon_broadcast.svg" 
+                      src="@/assets/icon_broadcast.svg" 
                     />
                   </a>
                 </v-card>
@@ -157,12 +153,11 @@
                     class="py-4 px-3"
                   >
                     <v-img
-                      contain
                       class="mx-auto"
                       height="20vh"
                       max-height="200px"
                       max-width="200px"
-                      src="../assets/icon_question_and_answer.svg" 
+                      src="@/assets/icon_question_and_answer.svg" 
                     />
                   </a>
                 </v-card>
@@ -172,7 +167,7 @@
               <v-col>
                 <v-card class="flex d-flex flex-column">
                   <v-card-title class="text-center justify-center flex d-flex flex-column">
-                    <nobr>{{ $t('landingpage.Login.PanelTitel_3') }}</nobr>
+                    <span style="white-space: nowrap;">{{ $t('landingpage.Login.PanelTitel_3') }}</span>
                   </v-card-title>
                   <v-divider />
                   <a
@@ -180,12 +175,11 @@
                     class="py-4 px-3"
                   >
                     <v-img
-                      contain
                       class="mx-auto"
                       height="20vh"
                       max-height="200px"
                       max-width="200px"
-                      src="../assets/icon_lightbulb_green.svg"
+                      src="@/assets/icon_lightbulb_green.svg"
                     />
                   </a>  
                 </v-card>
@@ -201,7 +195,7 @@
               color="primary"
               @click="$keycloak.loginFn()"
             >
-              <v-icon left>
+              <v-icon start>
                 mdi-account
               </v-icon>
               {{ $t('header.Header.LoginButton') }}
@@ -211,7 +205,7 @@
 
           <!-- Logos -->
           <!-- all logos in one row -->
-          <template v-if="$vuetify.breakpoint.width >= min_width_logos">
+          <template v-if="$vuetify.display.width >= min_width_logos">
             <v-row
               class="d-flex justify-center mt-10"
             >
@@ -222,11 +216,10 @@
                   target="_blank"
                 >
                   <v-img
-                    contain
                     class="mx-auto py-6"
                     max-height="177"
                     max-width="230"
-                    src="../assets/logo_Maschinenbau.png"
+                    src="@/assets/logo_Maschinenbau.png"
                   />
                 </a>
               </v-col>
@@ -236,11 +229,10 @@
                   target="_blank"
                 >
                   <v-img
-                    contain
                     class="mx-auto"
                     max-height="177"
                     max-width="230"
-                    src="../assets/logo_Nachhaltigkeit.jpg"
+                    src="@/assets/logo_Nachhaltigkeit.jpg"
                   />
                 </a>
               </v-col>
@@ -250,11 +242,10 @@
                   target="_blank"
                 >
                   <v-img
-                    contain
                     class="mx-auto"
                     max-height="177"
                     max-width="230"
-                    src="../assets/logo_tud.png"
+                    src="@/assets/logo_tud.png"
                   />
                 </a>
               </v-col>
@@ -270,11 +261,10 @@
                   target="_blank"
                 >
                   <v-img
-                    contain
                     class="mx-auto"
                     max-height="177"
                     max-width="250"
-                    src="../assets/logo_Nachhaltigkeit.jpg"
+                    src="@/assets/logo_Nachhaltigkeit.jpg"
                   />
                 </a>
               </v-col>
@@ -286,11 +276,10 @@
                   target="_blank"
                 >
                   <v-img
-                    contain
                     class="mx-auto py-6"
                     max-height="177"
                     max-width="250"
-                    src="../assets/logo_Maschinenbau.png"
+                    src="@/assets/logo_Maschinenbau.png"
                   />
                 </a>
               </v-col>
@@ -302,11 +291,10 @@
                   target="_blank"
                 >
                   <v-img
-                    contain
                     class="mx-auto"
                     max-height="177"
                     max-width="250"
-                    src="../assets/logo_tud.png"
+                    src="@/assets/logo_tud.png"
                   />
                 </a>
               </v-col>
@@ -321,9 +309,9 @@
 </template>
 
 <script>
-import Footer from "@/components/footer/Footer";
-import Header from "@/components/header/Header";
-import constants from "../const.js";
+import Footer from "@/components/footer/Footer.vue";
+import Header from "@/components/header/Header.vue";
+import constants from "@/const.js";
 
 export default {
   name: "Login",
@@ -335,10 +323,10 @@ export default {
 
   data: () => ({
     constants: constants,
-    faq: process.env.VUE_APP_URL + '/faq',
-    faq_bilazierung: process.env.VUE_APP_URL + '/faq#bilanzierung',
-    faq_allgemein: process.env.VUE_APP_URL + '/faq#allgemein',
-    faq_warum: process.env.VUE_APP_URL + '/faq#warum',
+    faq: import.meta.env.VITE_URL + '/faq',
+    faq_bilazierung: import.meta.env.VITE_URL + '/faq#bilanzierung',
+    faq_allgemein: import.meta.env.VITE_URL + '/faq#allgemein',
+    faq_warum: import.meta.env.VITE_URL + '/faq#warum',
     min_width_logos: 770,   // minimum pixel width to display logos in one row
     min_width_icons: 770,   // minimum pixel width to display icons in one row
   }),
@@ -347,7 +335,7 @@ export default {
     theme(){
       return (this.$vuetify.theme.dark) ? 'dark' : 'light'
     },
-  },  
+  },
 };
 </script>
 

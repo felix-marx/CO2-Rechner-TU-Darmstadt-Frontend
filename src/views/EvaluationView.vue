@@ -1,5 +1,5 @@
 <template>
-  <v-app :style="{background: $vuetify.theme.themes[theme].background}">
+  <v-app :style="{background: $vuetify.theme.themes[theme].colors.background}">
     <!-- Header -->
     <Header
       :tabs="tabList"
@@ -9,7 +9,7 @@
     />
 
     <!-- main body -->
-    <v-main :class="$vuetify.breakpoint.mobile ? 'mb-0' : 'mb-16'">
+    <v-main class="mb-0">
       <component
         :is="bodyComponent"
         v-bind="properties"
@@ -22,13 +22,12 @@
 </template>
 
 <script>
-import Footer from "@/components/footer/Footer";
-import Header from "@/components/header/Header";
-import SurveyNotFound from "@/components/colleagueSurvey/SurveyNotFound";
-import LoadingAnimation from "@/components/componentParts/LoadingAnimation";
-import SurveyEvaluation from "@/components/evaluation/SurveyEvaluation";
-import ResultSharingDisabled from "../components/evaluation/ResultSharingDisabled.vue";
-import i18n from "../i18n";
+import Footer from "@/components/footer/Footer.vue";
+import Header from "@/components/header/Header.vue";
+import SurveyNotFound from "@/components/colleagueSurvey/SurveyNotFound.vue";
+import LoadingAnimation from "@/components/componentParts/LoadingAnimation.vue";
+import SurveyEvaluation from "@/components/evaluation/SurveyEvaluation.vue";
+import ResultSharingDisabled from "@/components/evaluation/ResultSharingDisabled.vue";
 
 export default {
   name: "AuswertungView",
@@ -41,13 +40,15 @@ export default {
     ResultSharingDisabled
   },
 
-  data: () => ({
-      tabList: [{ id: 0, title: i18n.t('common.Auswertung'), componentType: LoadingAnimation}],
+  data() {
+    return {
+      tabList: [],
       umfrageID: null,
       freigegeben: 0,
-  }),
+    }
+  },
 
-  computed:{
+  computed: {
     theme(){
       return (this.$vuetify.theme.dark) ? 'dark' : 'light'
     },
@@ -118,7 +119,7 @@ export default {
      * Requests from the server whether a survey with the givenID has result sharing enabled.
      */
     fetchUmfrage: async function (givenID) {
-      await fetch(process.env.VUE_APP_BASEURL + "/umfrage/sharedResults?id=" + givenID, {
+      await fetch(import.meta.env.VITE_BASEURL + "/umfrage/sharedResults?id=" + givenID, {
         method: "GET",
         })
         .then((response) => response.json())
@@ -143,7 +144,7 @@ export default {
 
     setTabList(){
       this.tabList = [
-        { id: 0, title: i18n.t('common.Auswertung'), componentType: LoadingAnimation},
+        { id: 0, title: this.$t('common.Auswertung'), component: null},
       ]
     }
   },
