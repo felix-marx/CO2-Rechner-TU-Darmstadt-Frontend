@@ -1,30 +1,31 @@
 <template>
   <v-container>
     <v-row>
-      <v-col cols="1">
-        <v-btn
-          @click="decrement"
-        >
-          <v-icon>
-            mdi-minus
-          </v-icon>
-        </v-btn>
-      </v-col>
-      <v-col cols="10">
-        <v-text-field
-          v-model="fieldValue"
-          :label="props.label"
-        />
-      </v-col>
-      <v-col cols="1">
-        <v-btn
-          @click="increment"
-        >
-          <v-icon>
-            mdi-plus
-          </v-icon>
-        </v-btn>
-      </v-col>
+      <v-btn
+        class="mr-1"
+        size="x-large"
+        @click="decrement"
+      >
+        <v-icon>
+          mdi-minus
+        </v-icon>
+      </v-btn>
+      <v-text-field
+        v-model="model"
+        :label="props.label"
+        variant="outlined"
+        type="number"
+        :hide-spin-buttons="true"
+      />
+      <v-btn
+        class="ml-1"
+        size="x-large"
+        @click="increment"
+      >
+        <v-icon>
+          mdi-plus
+        </v-icon>
+      </v-btn>
     </v-row>
   </v-container>
 </template>
@@ -37,9 +38,8 @@ export default {
 </script>
 
 <script setup>
-import { ref } from 'vue';
 
-const fieldValue = ref(0);
+const model = defineModel({type: Number});
 
 const props = defineProps({
   defaultValue: {
@@ -62,23 +62,23 @@ const props = defineProps({
 
 
 // created
-fieldValue.value = props.defaultValue;
+model.value = props.defaultValue;
 
 function increment() {
   if (props.max === null) {
-    fieldValue.value++;
+    model.value++;
   }
-  else if (fieldValue.value < props.max) {
-    fieldValue.value++;
+  else if (model.value < props.max) {
+    model.value++;
   }
 }
 
 function decrement() {
   if (props.min === null) {
-    fieldValue.value--;
+    model.value--;
   }
-  else if (fieldValue.value > props.min) {
-    fieldValue.value--;
+  else if (model.value > props.min) {
+    model.value--;
   }
 }
 
