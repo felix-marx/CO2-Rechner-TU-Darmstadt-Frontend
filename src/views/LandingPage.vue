@@ -42,7 +42,6 @@
           <!-- all boxes in one row -->
           <template v-if="$vuetify.display.width >= min_width_icons">
             <v-row>
-              <v-spacer />
               <v-col
                 class="d-flex flex-column"
                 col="2"
@@ -114,7 +113,6 @@
                   </a>  
                 </v-card>
               </v-col>
-              <v-spacer />
             </v-row>
           </template>
           <!-- each box in a separate row -->
