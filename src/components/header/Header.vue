@@ -22,7 +22,7 @@
         <v-menu v-else>
           <template #activator="{ props }">
             <v-btn
-              class="mt-2 ml-2"
+              class="mt-2 mx-2"
               icon
               v-bind="props"
             >

@@ -37,7 +37,7 @@
           readonly
         />
       </v-row>
-      <v-row>
+      <v-row class="mb-0">
         <v-btn
           color="primary"
           @click="copyLink()"

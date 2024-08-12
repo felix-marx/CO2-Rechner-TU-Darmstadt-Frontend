@@ -657,7 +657,7 @@
           </v-container> -->
 
         <v-row>
-          <v-col cols="2">
+          <v-col>
             <v-dialog
               v-model="errorDialog"
               transition="dialog-bottom-transition"
@@ -669,7 +669,6 @@
                   class="mr-4"
                   color="primary"
                   :disabled="submittedDataSuccessfully"
-                 
                   v-bind="props"
                   @click="checkValidInput()"
                 >
@@ -734,7 +733,9 @@
               </v-card>
             </v-dialog>
           </v-col>
-          <v-col cols="10">
+        </v-row>
+        <v-row v-if="displayLoadingAnimation || submittedDataSuccessfully || (errorMessage !== null)">
+          <v-col>
             <LoadingAnimation v-if="displayLoadingAnimation" />
             <v-alert
               class="mb-0"
