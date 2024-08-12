@@ -24,9 +24,12 @@
               elevation="0"
             >
               <v-card-title
-                class="mx-4 mt-3 headerClass"
+                class="mx-4 mt-3"
               >
-                <span v-html="title1" />      <!-- TODO change for more -->
+                <label
+                  class="headerClass"
+                  v-html="title1"
+                />
               </v-card-title>
 
               <v-expansion-panels
@@ -234,9 +237,12 @@
               elevation="0"
             >
               <v-card-title
-                class="mx-4 headerClass"
+                class="mx-4"
               >
-                <label v-html="$t('footer.FAQ.Titel_2')" />
+                <label
+                  class="headerClass"
+                  v-html="$t('footer.FAQ.Titel_2')"
+                />
               </v-card-title>
 
               <v-expansion-panels
@@ -506,9 +512,12 @@
               elevation="0"
             >
               <v-card-title
-                class="mx-4 headerClass"
+                class="mx-4"
               >
-                <label v-html="$t('footer.FAQ.Titel_3')" />
+                <label
+                  class="headerClass"
+                  v-html="$t('footer.FAQ.Titel_3')"
+                />
               </v-card-title>
 
               <v-expansion-panels
