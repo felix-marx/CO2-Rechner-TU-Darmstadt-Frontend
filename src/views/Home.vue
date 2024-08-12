@@ -14,7 +14,7 @@
     />
 
     <!-- main body -->
-    <v-main class="mb-0">
+    <v-main :class="$vuetify.display.mobile ? 'mb-0 pb-0' : 'mb-0'">
       <component :is="currentTabType" />
     </v-main>
 

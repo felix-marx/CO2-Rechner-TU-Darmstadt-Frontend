@@ -8,9 +8,7 @@
       :display-login-button="false"
     />
 
-    <v-main
-      class="mb-0 mx-3"
-    >
+    <v-main :class="$vuetify.display.mobile ? 'mb-0 mx-3 pb-0' : 'mb-0 mx-3'">
       <v-card
         class="mt-3 mx-auto pb-4"
         :max-width="constants.v_card_max_width"
