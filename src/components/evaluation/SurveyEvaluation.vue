@@ -427,6 +427,7 @@ import DataGapVisualization from '@/components/componentParts/DataGapVisualizati
 import Tooltip from "@/components/componentParts/Tooltip.vue";
 import { translateGebaeudeIDToSymbolic, getITGeraeteLabelMap, getDienstreisenLabelMap, getPendelwegeLabelMap } from "@/utils.js";
 import constants from "@/const.js";
+import { nextTick } from "vue";
 
 
 export default {
@@ -698,15 +699,17 @@ export default {
     '$i18n.locale': function() {  // reload charts when language changes to update labels
       this.setChartData();
     },
-  },
 
-  updated: function () {
-    this.$nextTick(function () {
-      if(this.scrollToLinkScharing){  // scroll to link sharing component when it appears
-        this.scrollToLinkScharing = false;
-        this.$refs.linkSharing.$el.scrollIntoView({behavior: "smooth", block: "end", inline: "nearest" });
+    scrollToLinkScharing: async function () {
+      if (!this.scrollToLinkScharing){
+        return
       }
-    })
+
+      await nextTick();
+
+      this.$refs.linkSharing.$el.scrollIntoView({behavior: "smooth", block: "end", inline: "nearest" });
+      this.scrollToLinkScharing = false;
+    }
   },
 
   async mounted() { 

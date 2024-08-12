@@ -442,6 +442,7 @@ import LoadingAnimation from "@/components/componentParts/LoadingAnimation.vue";
 import DataGapVisualization from '@/components/componentParts/DataGapVisualization.vue';
 import { translateGebaeudeIDToSymbolic, translateGebaeudeIDToNumeric, resolveITGeraetID } from "@/utils.js";
 import constants from "@/const.js";
+import { nextTick } from "vue";
 
 export default {
   name: "Survey",
@@ -563,20 +564,28 @@ export default {
       this.setRules();
       this.revalidateAllFields();
     },
-  },
 
-  updated: function () {
-    this.$nextTick(function () {
-      if(this.scrollToLinkScharing){  // scroll to link sharing component when it appears
-        this.scrollToLinkScharing = false;
-        this.$refs.linkSharing.$el.scrollIntoView({behavior: "smooth", block: "center", inline: "nearest" });
+    scrollToLinkScharing: async function() {
+      if (!this.scrollToLinkScharing) {
+        return;
       }
 
-      if(this.scrollToErrorMessage){  // scroll to error message when it appears
-        this.scrollToErrorMessage = false;
-        this.$refs.errorMessage.$el.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest" });
+      await nextTick();
+
+      this.$refs.linkSharing.$el.scrollIntoView({behavior: "smooth", block: "center", inline: "nearest" });
+      this.scrollToLinkScharing = false;
+    },
+
+    scrollToErrorMessage: async function() {
+      if (!this.scrollToErrorMessage) {
+        return;
       }
-    })
+
+      await nextTick();
+
+      this.$refs.errorMessage.$el.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest" });
+      this.scrollToErrorMessage = false;
+    }
   },
 
   created() {
@@ -678,19 +687,6 @@ export default {
       else {
         this.$refs.server.resetValidation();
       }
-
-
-      //this.$refs.bezeichnung.validate();
-      //this.$refs.anzahlMitarbeiter.validate();
-      // for (var i = 0; i < this.gebaeude.length; i++) {
-      //   this.$refs["flaeche" + i][0].validate();
-      // }
-      // this.$refs.multifunktionsgeraete.validate();
-      // this.$refs.multifunktionsgeraeteToner.validate();
-      // this.$refs.drucker.validate();
-      // this.$refs.druckerToner.validate();
-      // this.$refs.beamer.validate();
-      // this.$refs.server.validate();
     },
 
     /**
