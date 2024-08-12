@@ -2,6 +2,7 @@
   <!-- general tooltip component. Small "pop-up" when hovering with mouse over circle with question mark -->
   <v-tooltip
     location="bottom"
+    open-on-click="true"
     :max-width="constants.v_tooltip_max_width"
   >
     <template #activator="{ props }">
