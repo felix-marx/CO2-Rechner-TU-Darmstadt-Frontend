@@ -2,33 +2,33 @@
   <v-container>
     <v-row>
       <v-btn
-        class="mr-1"
-        size="x-large"
+        class="mr-1 px-0"
         :disabled="props.disabled"
+        density="comfortable"
+        icon="mdi-minus"
+        rounded="0"
+        style="margin-top: 2px"
         @click="decrement"
-      >
-        <v-icon>
-          mdi-minus
-        </v-icon>
-      </v-btn>
+      />
       <v-text-field
         v-model="model"
         :label="props.label"
+        :rules="props.rules"
+        :suffix="props.suffix"
         variant="outlined"
         type="number"
         :hide-spin-buttons="true"
         :disabled="props.disabled"
+        density="compact"
       />
       <v-btn
         class="ml-1"
-        size="x-large"
         :disabled="props.disabled"
+        density="comfortable"
+        icon="mdi-plus"
+        style="margin-top: 2px"
         @click="increment"
-      >
-        <v-icon>
-          mdi-plus
-        </v-icon>
-      </v-btn>
+      />
     </v-row>
   </v-container>
 </template>
@@ -41,7 +41,6 @@ export default {
 </script>
 
 <script setup>
-
 const model = defineModel({type: Number});
 
 const props = defineProps({
@@ -64,6 +63,14 @@ const props = defineProps({
   disabled: {
     type: Boolean,
     default: false
+  },
+  suffix: {
+    type: String,
+    default: ''
+  },
+  rules: {
+    type: Array,
+    default: () => []
   }
 });
 

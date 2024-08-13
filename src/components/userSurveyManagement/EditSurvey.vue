@@ -258,19 +258,15 @@
               </v-col>
               <v-col
                 :cols="$vuetify.display.smAndUp ? 1 : 2"
-                class="mt-3 text-center"
+                class="text-center"
               >
                 <v-btn
-                  class="delete_text--text mx-auto"
+                  class="delete_text--text mx-auto mt-1"
                   color="delete"
-                  size="small"
+                  icon="mdi-delete-outline"
                   :disabled="blockInput"
                   @click="removeGebaeude(index)"
-                >
-                  <v-icon>
-                    mdi-delete-outline
-                  </v-icon>
-                </v-btn>
+                />
               </v-col>
             </v-row>
           </div>

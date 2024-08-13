@@ -34,11 +34,6 @@
             v-html="$t('landingpage.Login.Willkommen_1')"
           />
         </div>
-
-        <number-input
-          v-model="testField"
-          :min="0"
-        />
         
         <v-container>
           <!-- Icon-Boxes -->
@@ -313,7 +308,6 @@
 import Footer from "@/components/footer/Footer.vue";
 import Header from "@/components/header/Header.vue";
 import constants from "@/const.js";
-import NumberInput from "@/components/componentParts/NumberInput.vue";
 
 export default {
   name: "Login",
@@ -321,7 +315,6 @@ export default {
   components: {
     Header,
     Footer,
-    NumberInput
   },
 
   data: () => ({

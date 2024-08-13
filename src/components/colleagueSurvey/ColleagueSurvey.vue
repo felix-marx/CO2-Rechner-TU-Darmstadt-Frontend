@@ -144,20 +144,16 @@
               </v-col>
               <!-- Delete Button -->
               <v-col
-                class="mt-3 pb-0 text-center"
+                class="pb-0 text-center"
                 cols="1"
               >
                 <v-btn
-                  class="delete_text--text mx-auto"
+                  class="delete_text--text mx-auto mt-1"
                   color="delete"
-                  size="small"
-                  :disabled="submittedDataSuccessfully"
+                  icon="mdi-delete-outline"
+                  :disabled="blockInput"
                   @click="removeVerkehrsmittel(index)"
-                >
-                  <v-icon>
-                    mdi-delete-outline
-                  </v-icon>
-                </v-btn>
+                />
               </v-col>
             </v-row>
           </template>
@@ -239,14 +235,10 @@
                     <v-btn
                       class="delete_text--text mx-auto"
                       color="delete"
-                      size="small"
-                      :disabled="submittedDataSuccessfully"
+                      icon="mdi-delete-outline"
+                      :disabled="blockInput"
                       @click="removeVerkehrsmittel(index)"
-                    >
-                      <v-icon>
-                        mdi-delete-outline
-                      </v-icon>
-                    </v-btn>
+                    />
                   </v-col>
                 </v-row>
 
@@ -414,20 +406,16 @@
               </v-col>
               <!-- Delete Button -->
               <v-col
-                class="mt-3 text-center"
+                class="text-center"
                 cols="1"
               >
                 <v-btn
-                  class="delete_text--text mx-auto"
+                  class="delete_text--text mx-auto mt-1"
                   color="delete"
-                  size="small"
-                  :disabled="submittedDataSuccessfully"
+                  icon="mdi-delete-outline"
+                  :disabled="blockInput"
                   @click="removeDienstreise(index)"
-                >
-                  <v-icon>
-                    mdi-delete-outline
-                  </v-icon>
-                </v-btn>
+                />
               </v-col>
             </v-row>
           </template>
@@ -526,14 +514,10 @@
                     <v-btn
                       class="delete_text--text mx-auto"
                       color="delete"
-                      size="small"
-                      :disabled="submittedDataSuccessfully"
+                      icon="mdi-delete-outline"
+                      :disabled="blockInput"
                       @click="removeDienstreise(index)"
-                    >
-                      <v-icon>
-                        mdi-delete-outline
-                      </v-icon>
-                    </v-btn>
+                    />
                   </v-col>
                 </v-row>
               </v-container>

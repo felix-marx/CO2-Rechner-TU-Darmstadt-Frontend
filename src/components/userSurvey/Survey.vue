@@ -139,20 +139,15 @@
             </v-col>
             <v-col
               :cols="$vuetify.display.smAndUp ? 1 : 2"
-              class="mt-3 text-center"
+              class="text-center"
             >
               <v-btn
-                class="delete_text--text mx-auto"
+                class="delete_text--text mx-auto mt-1"
                 color="delete"
-                size="default"
-                rounded
+                icon="mdi-delete-outline"
                 :disabled="blockInput"
                 @click="removeGebaeude(index)"
-              >
-                <v-icon>
-                  mdi-delete-outline
-                </v-icon>
-              </v-btn>
+              />
             </v-col>
           </v-row>
         </div>
@@ -293,70 +288,130 @@
           </v-row>
 
           <!-- Neue Version mit Number Input -->
-          <!-- Multifunktionsgeräte -->
-          <v-row>
-            <v-col>
-              <number-input 
-                v-model="geraeteAnzahl[0][1]"
-                :disabled="blockInput"
-                :min="0"
-                :label="$t('userSurvey.Survey.ITGeraeteMFP')"
-              />
-            </v-col>
-            <v-col>
-              <number-input  
-                v-model="geraeteAnzahl[1][1]"
-                :disabled="blockInput"
-                :min="0"
-                :label="$t('userSurvey.Survey.ITGeraeteBenutzteToner')"
-              />
-            </v-col>
-          </v-row>
+          <!-- Desktop -->
+          <template v-if="!$vuetify.display.mobile">
+            <!-- Multifunktionsgeräte -->
+            <v-row>
+              <v-col class="py-0">
+                <number-input 
+                  v-model="geraeteAnzahl[0][1]"
+                  :disabled="blockInput"
+                  :min="0"
+                  :label="$t('userSurvey.Survey.ITGeraeteMFP')"
+                  :suffix="$t('userSurvey.Survey.ITGeraeteMFP_Suffix')"
+                />
+              </v-col>
+              <v-col class="py-0">
+                <number-input  
+                  v-model="geraeteAnzahl[1][1]"
+                  :disabled="blockInput"
+                  :min="0"
+                  :label="$t('userSurvey.Survey.ITGeraeteBenutzteToner')"
+                  :suffix="$t('userSurvey.Survey.ITGeraeteBenutzteToner_Suffix')"
+                />
+              </v-col>
+            </v-row>
 
-          <!-- Drucker -->
-          <v-row>
-            <v-col>
-              <number-input 
-                v-model="geraeteAnzahl[2][1]"
-                :disabled="blockInput"
-                :min="0"
-                :label="$t('userSurvey.Survey.DruckerLabel')"
-              />
-            </v-col>
-            <v-col>
-              <number-input  
-                v-model="geraeteAnzahl[3][1]"
-                :disabled="blockInput"
-                :min="0"
-                :label="$t('userSurvey.Survey.ITGeraeteBenutzteToner')"
-              />
-            </v-col>
-          </v-row>
+            <!-- Drucker -->
+            <v-row>
+              <v-col class="py-0">
+                <number-input 
+                  v-model="geraeteAnzahl[2][1]"
+                  :disabled="blockInput"
+                  :min="0"
+                  :label="$t('userSurvey.Survey.DruckerLabel')"
+                  :suffix="$t('userSurvey.Survey.Drucker_Suffix')"
+                />
+              </v-col>
+              <v-col class="py-0">
+                <number-input  
+                  v-model="geraeteAnzahl[3][1]"
+                  :disabled="blockInput"
+                  :min="0"
+                  :label="$t('userSurvey.Survey.ITGeraeteBenutzteToner')"
+                  :suffix="$t('userSurvey.Survey.ITGeraeteBenutzteToner_Suffix')"
+                />
+              </v-col>
+            </v-row>
+          </template>
+          <!-- Mobile -->
+          <template v-else>
+            <!-- Multifunktionsgeräte -->
+            <v-row>
+              <v-col class="py-0">
+                <number-input 
+                  v-model="geraeteAnzahl[0][1]"
+                  :disabled="blockInput"
+                  :min="0"
+                  :label="$t('userSurvey.Survey.ITGeraeteMFP')"
+                  :suffix="$t('userSurvey.Survey.ITGeraeteMFP_Suffix')"
+                />
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col class="py-0">
+                <number-input  
+                  v-model="geraeteAnzahl[1][1]"
+                  :disabled="blockInput"
+                  :min="0"
+                  :label="$t('userSurvey.Survey.ITGeraeteBenutzteToner')"
+                  :suffix="$t('userSurvey.Survey.ITGeraeteBenutzteToner_Suffix')"
+                />
+              </v-col>
+            </v-row>
+
+            <!-- Drucker -->
+            <v-row>
+              <v-col class="py-0">
+                <number-input 
+                  v-model="geraeteAnzahl[2][1]"
+                  :disabled="blockInput"
+                  :min="0"
+                  :label="$t('userSurvey.Survey.DruckerLabel')"
+                  :suffix="$t('userSurvey.Survey.Drucker_Suffix')"
+                />
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col class="py-0">
+                <number-input  
+                  v-model="geraeteAnzahl[3][1]"
+                  :disabled="blockInput"
+                  :min="0"
+                  :label="$t('userSurvey.Survey.ITGeraeteBenutzteToner')"
+                  :suffix="$t('userSurvey.Survey.ITGeraeteBenutzteToner_Suffix')"
+                />
+              </v-col>
+            </v-row>
+          </template>
 
           <!-- Beamer -->
           <v-row>
-            <v-col>
+            <v-col class="py-0">
               <number-input 
                 v-model="geraeteAnzahl[4][1]"
                 :disabled="blockInput"
                 :min="0"
                 :label="$t('userSurvey.Survey.Beamer')"
+                :suffix="$t('userSurvey.Survey.Beamer')"
               />
             </v-col>
           </v-row>
 
           <!-- Server -->
           <v-row>
-            <v-col>
+            <v-col class="py-0">
               <number-input 
                 v-model="geraeteAnzahl[5][1]"
                 :disabled="blockInput"
                 :min="0"
                 :label="$t('userSurvey.Survey.interneServer')"
+                :suffix="$t('userSurvey.Survey.Server')"
               />
             </v-col>
           </v-row>
         </v-container>
+
         <v-row class="mt-1 text-center">
           <v-dialog
             v-model="errorDialog"
