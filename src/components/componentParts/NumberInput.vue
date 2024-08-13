@@ -4,6 +4,7 @@
       <v-btn
         class="mr-1"
         size="x-large"
+        :disabled="props.disabled"
         @click="decrement"
       >
         <v-icon>
@@ -16,10 +17,12 @@
         variant="outlined"
         type="number"
         :hide-spin-buttons="true"
+        :disabled="props.disabled"
       />
       <v-btn
         class="ml-1"
         size="x-large"
+        :disabled="props.disabled"
         @click="increment"
       >
         <v-icon>
@@ -57,6 +60,10 @@ const props = defineProps({
   max: {
     type: Number,
     default: null
+  },
+  disabled: {
+    type: Boolean,
+    default: false
   }
 });
 

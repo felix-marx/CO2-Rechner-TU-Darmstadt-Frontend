@@ -227,6 +227,7 @@
               :suffix="$t('userSurvey.Survey.ITGeraeteBenutzteToner_Suffix')"
             />
           </v-row>
+
           <!-- Drucker -->
           <v-row>
             <v-checkbox
@@ -254,6 +255,7 @@
               :suffix="$t('userSurvey.Survey.ITGeraeteBenutzteToner_Suffix')"
             />
           </v-row>
+
           <!-- Beamer -->
           <v-row>
             <v-checkbox
@@ -271,6 +273,7 @@
               :suffix="$t('userSurvey.Survey.Beamer')"
             />
           </v-row>
+
           <!-- Server -->
           <v-row>
             <v-checkbox
@@ -287,6 +290,71 @@
               :label="$t('userSurvey.Survey.interneServer')"
               :suffix="$t('userSurvey.Survey.Server')"
             />
+          </v-row>
+
+          <!-- Neue Version mit Number Input -->
+          <!-- Multifunktionsgeräte -->
+          <v-row>
+            <v-col>
+              <number-input 
+                v-model="geraeteAnzahl[0][1]"
+                :disabled="blockInput"
+                :min="0"
+                :label="$t('userSurvey.Survey.ITGeraeteMFP')"
+              />
+            </v-col>
+            <v-col>
+              <number-input  
+                v-model="geraeteAnzahl[1][1]"
+                :disabled="blockInput"
+                :min="0"
+                :label="$t('userSurvey.Survey.ITGeraeteBenutzteToner')"
+              />
+            </v-col>
+          </v-row>
+
+          <!-- Drucker -->
+          <v-row>
+            <v-col>
+              <number-input 
+                v-model="geraeteAnzahl[2][1]"
+                :disabled="blockInput"
+                :min="0"
+                :label="$t('userSurvey.Survey.DruckerLabel')"
+              />
+            </v-col>
+            <v-col>
+              <number-input  
+                v-model="geraeteAnzahl[3][1]"
+                :disabled="blockInput"
+                :min="0"
+                :label="$t('userSurvey.Survey.ITGeraeteBenutzteToner')"
+              />
+            </v-col>
+          </v-row>
+
+          <!-- Beamer -->
+          <v-row>
+            <v-col>
+              <number-input 
+                v-model="geraeteAnzahl[4][1]"
+                :disabled="blockInput"
+                :min="0"
+                :label="$t('userSurvey.Survey.Beamer')"
+              />
+            </v-col>
+          </v-row>
+
+          <!-- Server -->
+          <v-row>
+            <v-col>
+              <number-input 
+                v-model="geraeteAnzahl[5][1]"
+                :disabled="blockInput"
+                :min="0"
+                :label="$t('userSurvey.Survey.interneServer')"
+              />
+            </v-col>
           </v-row>
         </v-container>
         <v-row class="mt-1 text-center">
@@ -440,6 +508,7 @@ import LinkSharingComponent from "@/components/componentParts/LinkSharingCompone
 import MailTemplate from "@/components/userSurvey/MailTemplate.vue";
 import LoadingAnimation from "@/components/componentParts/LoadingAnimation.vue";
 import DataGapVisualization from '@/components/componentParts/DataGapVisualization.vue';
+import NumberInput from "@/components/componentParts/NumberInput.vue";
 import { translateGebaeudeIDToSymbolic, translateGebaeudeIDToNumeric, resolveITGeraetID } from "@/utils.js";
 import constants from "@/const.js";
 import { nextTick } from "vue";
@@ -452,7 +521,8 @@ export default {
     MailTemplate,
     LoadingAnimation,
     Tooltip,
-    DataGapVisualization
+    DataGapVisualization,
+    NumberInput
   },
 
   data: () => ({

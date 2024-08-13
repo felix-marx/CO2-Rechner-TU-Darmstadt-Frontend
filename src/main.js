@@ -10,7 +10,12 @@ import i18n from './plugins/i18n.js'
 import VueKatex from '@hsorby/vue3-katex';
 import 'katex/dist/katex.min.css';
 
+import NumberInput from './components/componentParts/NumberInput.vue'
+
+
 const app = createApp(App)
+
+app.component('NumberInput', NumberInput)
 
 app.use(VuePapaParse)
 
