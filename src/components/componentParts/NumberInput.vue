@@ -1,15 +1,14 @@
 <template>
   <v-container>
     <v-row>
-      <v-btn
+      <!-- <v-btn
         class="mr-1 px-0"
         :disabled="props.disabled"
         density="comfortable"
         icon="mdi-minus"
-        rounded="0"
         style="margin-top: 2px"
         @click="decrement"
-      />
+      /> -->
       <v-text-field
         v-model="model"
         :label="props.label"
@@ -20,6 +19,14 @@
         :hide-spin-buttons="true"
         :disabled="props.disabled"
         density="compact"
+      />
+      <v-btn
+        class="mr-1 px-0"
+        :disabled="props.disabled"
+        density="comfortable"
+        icon="mdi-minus"
+        style="margin-top: 2px"
+        @click="decrement"
       />
       <v-btn
         class="ml-1"
