@@ -195,117 +195,28 @@
         <br>
 
         <v-container>
-          <!-- Multifunktionsgeräte -->
-          <v-row>
-            <v-checkbox
-              v-model="geraeteAnzahl[0][2]"
-              hide-details
-              :disabled="blockInput"
-            />
-            <v-text-field
-              ref="multifunktionsgeraete"
-              v-model="geraeteAnzahl[0][1]"
-              :rules="geraeteRules"
-              :disabled="!geraeteAnzahl[0][2] || blockInput"
-              :min="0"
-              :label="$t('userSurvey.Survey.ITGeraeteMFP')"
-              class="pr-5"
-              :suffix="$t('userSurvey.Survey.ITGeraeteMFP_Suffix')"
-            />
-            <v-text-field
-              ref="multifunktionsgeraeteToner"
-              v-model="geraeteAnzahl[1][1]"
-              :rules="nichtnegativRules"
-              :disabled="!geraeteAnzahl[0][2] || blockInput"
-              :min="0"
-              :label="$t('userSurvey.Survey.ITGeraeteBenutzteToner')"
-              :suffix="$t('userSurvey.Survey.ITGeraeteBenutzteToner_Suffix')"
-            />
-          </v-row>
-
-          <!-- Drucker -->
-          <v-row>
-            <v-checkbox
-              v-model="geraeteAnzahl[2][2]"
-              hide-details
-              :disabled="blockInput"
-            />
-            <v-text-field
-              ref="drucker"
-              v-model="geraeteAnzahl[2][1]"
-              :rules="geraeteRules"
-              :disabled="!geraeteAnzahl[2][2] || blockInput"
-              :min="0"
-              :label="$t('userSurvey.Survey.DruckerLabel')"
-              :suffix="$t('userSurvey.Survey.Drucker_Suffix')"
-              class="pr-5"
-            />
-            <v-text-field
-              ref="druckerToner"
-              v-model="geraeteAnzahl[3][1]"
-              :rules="nichtnegativRules"
-              :disabled="!geraeteAnzahl[2][2] || blockInput"
-              :min="0"
-              :label="$t('userSurvey.Survey.ITGeraeteBenutzteToner')"
-              :suffix="$t('userSurvey.Survey.ITGeraeteBenutzteToner_Suffix')"
-            />
-          </v-row>
-
-          <!-- Beamer -->
-          <v-row>
-            <v-checkbox
-              v-model="geraeteAnzahl[4][2]"
-              hide-details 
-              :disabled="blockInput"
-            />
-            <v-text-field
-              ref="beamer"
-              v-model="geraeteAnzahl[4][1]"
-              :rules="geraeteRules"
-              :disabled="!geraeteAnzahl[4][2] || blockInput"
-              :min="0"
-              :label="$t('userSurvey.Survey.Beamer')"
-              :suffix="$t('userSurvey.Survey.Beamer')"
-            />
-          </v-row>
-
-          <!-- Server -->
-          <v-row>
-            <v-checkbox
-              v-model="geraeteAnzahl[5][2]"
-              hide-details
-              :disabled="blockInput"
-            />
-            <v-text-field
-              ref="server"
-              v-model="geraeteAnzahl[5][1]"
-              :rules="geraeteRules"
-              :disabled="!geraeteAnzahl[5][2] || blockInput"
-              :min="0"
-              :label="$t('userSurvey.Survey.interneServer')"
-              :suffix="$t('userSurvey.Survey.Server')"
-            />
-          </v-row>
-
-          <!-- Neue Version mit Number Input -->
           <!-- Desktop -->
           <template v-if="!$vuetify.display.mobile">
             <!-- Multifunktionsgeräte -->
             <v-row>
               <v-col class="py-0">
-                <number-input 
+                <number-input
+                  ref="multifunktionsgeraete"
                   v-model="geraeteAnzahl[0][1]"
                   :disabled="blockInput"
                   :min="0"
+                  :rules="geraeteRules"
                   :label="$t('userSurvey.Survey.ITGeraeteMFP')"
                   :suffix="$t('userSurvey.Survey.ITGeraeteMFP_Suffix')"
                 />
               </v-col>
               <v-col class="py-0">
-                <number-input  
+                <number-input
+                  ref="multifunktionsgeraeteToner"
                   v-model="geraeteAnzahl[1][1]"
                   :disabled="blockInput"
                   :min="0"
+                  :rules="geraeteRules"
                   :label="$t('userSurvey.Survey.ITGeraeteBenutzteToner')"
                   :suffix="$t('userSurvey.Survey.ITGeraeteBenutzteToner_Suffix')"
                 />
@@ -316,18 +227,22 @@
             <v-row>
               <v-col class="py-0">
                 <number-input 
+                  ref="drucker"
                   v-model="geraeteAnzahl[2][1]"
                   :disabled="blockInput"
                   :min="0"
+                  :rules="geraeteRules"
                   :label="$t('userSurvey.Survey.DruckerLabel')"
                   :suffix="$t('userSurvey.Survey.Drucker_Suffix')"
                 />
               </v-col>
               <v-col class="py-0">
                 <number-input  
+                  ref="druckerToner"
                   v-model="geraeteAnzahl[3][1]"
                   :disabled="blockInput"
                   :min="0"
+                  :rules="geraeteRules"
                   :label="$t('userSurvey.Survey.ITGeraeteBenutzteToner')"
                   :suffix="$t('userSurvey.Survey.ITGeraeteBenutzteToner_Suffix')"
                 />
@@ -340,9 +255,11 @@
             <v-row>
               <v-col class="py-0">
                 <number-input 
+                  ref="multifunktionsgeraete"
                   v-model="geraeteAnzahl[0][1]"
                   :disabled="blockInput"
                   :min="0"
+                  :rules="geraeteRules"
                   :label="$t('userSurvey.Survey.ITGeraeteMFP')"
                   :suffix="$t('userSurvey.Survey.ITGeraeteMFP_Suffix')"
                 />
@@ -351,9 +268,11 @@
             <v-row>
               <v-col class="py-0">
                 <number-input  
+                  ref="multifunktionsgeraeteToner"
                   v-model="geraeteAnzahl[1][1]"
                   :disabled="blockInput"
                   :min="0"
+                  :rules="geraeteRules"
                   :label="$t('userSurvey.Survey.ITGeraeteBenutzteToner')"
                   :suffix="$t('userSurvey.Survey.ITGeraeteBenutzteToner_Suffix')"
                 />
@@ -364,9 +283,11 @@
             <v-row>
               <v-col class="py-0">
                 <number-input 
+                  ref="drucker"
                   v-model="geraeteAnzahl[2][1]"
                   :disabled="blockInput"
                   :min="0"
+                  :rules="geraeteRules"
                   :label="$t('userSurvey.Survey.DruckerLabel')"
                   :suffix="$t('userSurvey.Survey.Drucker_Suffix')"
                 />
@@ -375,9 +296,11 @@
             <v-row>
               <v-col class="py-0">
                 <number-input  
+                  ref="druckerToner"
                   v-model="geraeteAnzahl[3][1]"
                   :disabled="blockInput"
                   :min="0"
+                  :rules="geraeteRules"
                   :label="$t('userSurvey.Survey.ITGeraeteBenutzteToner')"
                   :suffix="$t('userSurvey.Survey.ITGeraeteBenutzteToner_Suffix')"
                 />
@@ -389,9 +312,11 @@
           <v-row>
             <v-col class="py-0">
               <number-input 
+                ref="beamer"
                 v-model="geraeteAnzahl[4][1]"
                 :disabled="blockInput"
                 :min="0"
+                :rules="geraeteRules"
                 :label="$t('userSurvey.Survey.Beamer')"
                 :suffix="$t('userSurvey.Survey.Beamer')"
               />
@@ -402,9 +327,11 @@
           <v-row>
             <v-col class="py-0">
               <number-input 
+                ref="server"
                 v-model="geraeteAnzahl[5][1]"
                 :disabled="blockInput"
                 :min="0"
+                :rules="geraeteRules"
                 :label="$t('userSurvey.Survey.interneServer')"
                 :suffix="$t('userSurvey.Survey.Server')"
               />
@@ -603,7 +530,7 @@ export default {
     zaehler: [],
 
     //IT Geräte
-    /* Geraet an Array Position format [intern Geraete ID, Anzahl, enabled]
+    /* Geraet an Array Position format [intern Geraete ID, Anzahl]
      * [0] Multigeraete
      * [1] MultigeraetToner
      * [2] Laserdrucker
@@ -612,12 +539,12 @@ export default {
      * [5] Server
      */
     geraeteAnzahl: [
-      [7, null, false],
-      [8, null, false],
-      [9, null, false],
-      [10, null, false],
-      [4, null, false],
-      [6, null, false],
+      [7, null],
+      [8, null],
+      [9, null],
+      [10, null],
+      [4, null],
+      [6, null],
     ],
 
     // Blockiere Inputfelder nach Absenden der Umfrage
@@ -719,6 +646,10 @@ export default {
     this.fetchGebaeudeUndZaehlerData();
   },
 
+  mounted() {
+    console.log(this.$refs)
+  },
+
   methods: {
     /**
      * This Method is needed bc of i18n. Otherwise after changing the language the rules would not change.
@@ -729,12 +660,8 @@ export default {
       ],
 
       this.geraeteRules = [
-        (v) =>
-          !!v ||  this.$t('userSurvey.Survey.geraeteRules_1'),
-        (v) =>
-          parseInt(v) != 0 ||
-            this.$t('userSurvey.Survey.geraeteRules_1'),
-        (v) => parseInt(v) > 0 ||  this.$t('userSurvey.Survey.geraeteRules_3'),
+        (v) => !!v || this.$t('userSurvey.Survey.geraeteRules_3'),
+        (v) => parseInt(v) >= 0 || this.$t('userSurvey.Survey.geraeteRules_3'),
       ],
 
       this.nichtnegativRules = [
@@ -838,9 +765,7 @@ export default {
      *  required:    []
      * }
      */
-    problemeInUmfrage: function() {
-      this.geraeteAnzahl[1][2] = this.geraeteAnzahl[0][2];
-      this.geraeteAnzahl[3][2] = this.geraeteAnzahl[2][2];
+    problemeInUmfrage: function() {   // TODO change for new input
       var nonRequiredArray = []
       
       // Gebaeude
@@ -854,12 +779,8 @@ export default {
       }
       // IT Geraete
       for(const it of this.geraeteAnzahl) {
-        if(it[2] && it[1] <= 0) { 
-          if((it[0] != 8 && it[0] != 10)) {
-            nonRequiredArray.push(this.$t("userSurvey.Survey.problemeInUmfrage_3") + resolveITGeraetID(it[0]) + this.$t("userSurvey.Survey.problemeInUmfrage_4"))
-          } else { // Toner
-            nonRequiredArray.push(this.$t("userSurvey.Survey.problemeInUmfrage_5"))
-          }
+        if(it[1] < 0) { 
+          nonRequiredArray.push(this.$t("userSurvey.Survey.problemeInUmfrage_3") + resolveITGeraetID(it[0]) + this.$t("userSurvey.Survey.problemeInUmfrage_4"))
         }
       }
       this.errorTextArray.nonRequired = nonRequiredArray
@@ -882,12 +803,12 @@ export default {
       this.anzahlMitarbeiter = null
       this.gebaeude = [[null, null]]
       this.geraeteAnzahl = [
-        [7, null, false],
-        [8, null, false],
-        [9, null, false],
-        [10, null, false],
-        [4, null, false],
-        [6, null, false],
+        [7, null],
+        [8, null],
+        [9, null],
+        [10, null],
+        [4, null],
+        [6, null],
       ]
       this.blockInput = false
       this.dataRequestSent = false
@@ -899,11 +820,23 @@ export default {
       for (var i = 0; i < this.gebaeude.length; i++) {
         this.$refs["flaeche" + i][0].resetValidation();
       }
+
+      this.$refs.multifunktionsgeraete.reset();
       this.$refs.multifunktionsgeraete.resetValidation();
+
+      this.$refs.multifunktionsgeraeteToner.reset();
       this.$refs.multifunktionsgeraeteToner.resetValidation();
+
+      this.$refs.drucker.reset();
       this.$refs.drucker.resetValidation();
+
+      this.$refs.druckerToner.reset();  
       this.$refs.druckerToner.resetValidation();
+
+      this.$refs.beamer.reset();
       this.$refs.beamer.resetValidation();
+
+      this.$refs.server.reset();
       this.$refs.server.resetValidation();
     },
 
@@ -933,12 +866,9 @@ export default {
     itGeraeteJSON: function () {
       //Build IT Geräte Array of non-null gerate
       var usedITGeraete = [];
-      //Special case were we set the Toner enabled value to the matchig geraete value
-      this.geraeteAnzahl[1][2] = this.geraeteAnzahl[0][2];
-      this.geraeteAnzahl[3][2] = this.geraeteAnzahl[2][2];
 
       for (var geraet of this.geraeteAnzahl) {
-        if (geraet[1] > 0 && geraet[2]) {
+        if (geraet[1] > 0) {
           usedITGeraete.push({
             idITGeraete: parseInt(geraet[0]),
             anzahl: parseInt(geraet[1]),
