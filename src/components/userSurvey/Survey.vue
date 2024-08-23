@@ -646,10 +646,6 @@ export default {
     this.fetchGebaeudeUndZaehlerData();
   },
 
-  mounted() {
-    console.log(this.$refs)
-  },
-
   methods: {
     /**
      * This Method is needed bc of i18n. Otherwise after changing the language the rules would not change.

@@ -325,8 +325,6 @@ export default {
     faq_warum: import.meta.env.VITE_URL + '/faq#warum',
     min_width_logos: 770,   // minimum pixel width to display logos in one row
     min_width_icons: 770,   // minimum pixel width to display icons in one row
-
-    testField: null,
   }),
 
   computed:{
@@ -334,12 +332,6 @@ export default {
       return (this.$vuetify.theme.dark) ? 'dark' : 'light'
     },
   },
-
-  watch: {
-    testField: function() {
-      console.log(this.testField); 
-    }
-  }
 };
 </script>
 

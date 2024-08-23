@@ -48,7 +48,6 @@ export default {
 </script>
 
 <script setup>
-//const model = defineModel({type: Number});
 const model = defineModel({type: String});
 
 const props = defineProps({
