@@ -13,6 +13,7 @@
       <v-text-field
         ref="textfield"
         v-model="model"
+        type="number"
         :label="props.label"
         :rules="props.rules"
         :suffix="props.suffix"
