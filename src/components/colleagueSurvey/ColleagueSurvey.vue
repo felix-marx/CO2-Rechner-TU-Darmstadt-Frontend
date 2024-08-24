@@ -556,80 +556,6 @@
 
         <v-container>
           <!-- Notebook -->
-          <!-- <v-row>
-            <v-checkbox
-              v-model="geraeteAnzahl[0][2]"
-              :disabled="submittedDataSuccessfully"
-              hide-details
-            />
-            <v-text-field
-              ref="notebooks"
-              v-model="geraeteAnzahl[0][1]"
-              :rules="geraeteRules"
-              :disabled="!geraeteAnzahl[0][2] || submittedDataSuccessfully"
-              :min="0"
-              :label="$t('colleagueSurvey.colleagueSurvey.IT_Geraete_Notebooks')"
-              class="pr-5"
-              :suffix="$t('colleagueSurvey.colleagueSurvey.IT_Geraete_Suffix')"
-            />
-          </v-row> -->
-          <!-- Desktop PC -->
-          <!-- <v-row>
-            <v-checkbox
-              v-model="geraeteAnzahl[1][2]"
-              hide-details
-              :disabled="submittedDataSuccessfully"
-            />
-            <v-text-field
-              ref="desktops"
-              v-model="geraeteAnzahl[1][1]"
-              :rules="geraeteRules"
-              :disabled="!geraeteAnzahl[1][2] || submittedDataSuccessfully"
-              :min="0"
-              :label="$t('colleagueSurvey.colleagueSurvey.IT_Geraete_Desktops')"
-              class="pr-5"
-              :suffix="$t('colleagueSurvey.colleagueSurvey.IT_Geraete_Suffix')"
-            />
-          </v-row> -->
-          <!-- Bildschirm -->
-          <!-- <v-row>
-            <v-checkbox
-              v-model="geraeteAnzahl[2][2]"
-              hide-details
-              :disabled="submittedDataSuccessfully"
-            />
-            <v-text-field
-              ref="bildschirme"
-              v-model="geraeteAnzahl[2][1]"
-              :rules="geraeteRules"
-              :disabled="!geraeteAnzahl[2][2] || submittedDataSuccessfully"
-              :min="0"
-              :label="$t('colleagueSurvey.colleagueSurvey.IT_Geraete_Bildschirme')"
-              class="pr-5"
-              :suffix="$t('colleagueSurvey.colleagueSurvey.IT_Geraete_Suffix')"
-            />
-          </v-row> -->
-          <!-- Mobiltelefon -->
-          <!-- <v-row>
-            <v-checkbox
-              v-model="geraeteAnzahl[3][2]"
-              hide-details
-              :disabled="submittedDataSuccessfully"
-            />
-            <v-text-field
-              ref="mobiltelefone"
-              v-model="geraeteAnzahl[3][1]"
-              :rules="geraeteRules"
-              :disabled="!geraeteAnzahl[3][2] || submittedDataSuccessfully"
-              :min="0"
-              :label="$t('colleagueSurvey.colleagueSurvey.IT_Geraete_Mobiltelefone')"
-              class="pr-5"
-              :suffix="$t('colleagueSurvey.colleagueSurvey.IT_Geraete_Suffix')"
-            />
-          </v-row> -->
-
-
-          <!-- Notebook -->
           <v-row>
             <v-col class="py-0">
               <number-input
@@ -780,6 +706,7 @@
           <v-col>
             <LoadingAnimation v-if="displayLoadingAnimation" />
             <v-alert
+              ref="errorMessage"
               class="mb-0"
               :model-value="errorMessage !== null"
               density="compact"
@@ -789,6 +716,7 @@
               {{ errorMessage }}
             </v-alert>
             <v-alert
+              ref="successMessage"
               class="mb-0"
               :model-value="submittedDataSuccessfully"
               density="compact"
@@ -809,6 +737,7 @@ import Tooltip from "@/components/componentParts/Tooltip.vue";
 import LoadingAnimation from '@/components/componentParts/LoadingAnimation.vue';
 import NumberInput from "@/components/componentParts/NumberInput.vue";
 import constants from "@/const.js";
+import { nextTick } from "vue";
 
 export default {  
   components: {
@@ -832,6 +761,8 @@ export default {
     displayLoadingAnimation: false,
     errorMessage: null,
     submittedDataSuccessfully: false,
+    scrollToSuccesMessage: false,
+    scrollToErrorMessage: false,
 
     //Arbeitstage
     arbeitstageBuero: null,
@@ -950,6 +881,28 @@ export default {
         this.$refs.mobiltelefone.resetValidation();
       }
     },
+
+    scrollToSuccesMessage: async function() {
+      if (!this.scrollToSuccesMessage) {
+        return;
+      }
+
+      await nextTick();
+
+      this.$refs.successMessage.$el.scrollIntoView({behavior: "smooth", block: "center", inline: "nearest" });
+      this.scrollToSuccesMessage = false;
+    },
+
+    scrollToErrorMessage: async function() {
+      if (!this.scrollToErrorMessage) {
+        return;
+      }
+
+      await nextTick();
+
+      this.$refs.errorMessage.$el.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest" });
+      this.scrollToErrorMessage = false;
+    }
   },
 
   created() {
@@ -1357,7 +1310,7 @@ export default {
       }
       // Check IT Geraete
       for(const geraet of this.geraeteAnzahl) {
-        var geraeteName = (geraet[0] == 1) ? this.$t('colleagueSurvey.colleagueSurvey.IT_Geraete_Notebook') : (geraet[0] == 2) ? this.$t('colleagueSurvey.colleagueSurvey.IT_Geraete_Desktop')  : (geraet[0] == 3) ? this.$t('colleagueSurvey.colleagueSurvey.IT_Gereate_Bildschirm') : this.$t('colleagueSurvey.colleagueSurvey.IT_Gereate_Mobiltelefon')
+        var geraeteName = (geraet[0] == 1) ? this.$t('colleagueSurvey.colleagueSurvey.IT_Geraete_Notebook') : (geraet[0] == 2) ? this.$t('colleagueSurvey.colleagueSurvey.IT_Geraete_Desktop')  : (geraet[0] == 3) ? this.$t('colleagueSurvey.colleagueSurvey.IT_Geraete_Bildschirm') : this.$t('colleagueSurvey.colleagueSurvey.IT_Geraete_Mobiltelefon')
         if(geraet[1] < 0) {
           errors.push(this.$t('colleagueSurvey.colleagueSurvey.EingabeValidierung_Geraete_0') + geraeteName + this.$t('colleagueSurvey.colleagueSurvey.EingabeValidierung_Geraete_1'))
         }
@@ -1388,15 +1341,18 @@ export default {
         .then((data) => {
           if(data.status === "success"){
             this.submittedDataSuccessfully = true;
+            this.scrollToSuccesMessage = true;
             this.errorMessage = null;
           }else if(data.status == "error") {
             this.errorMessage = data.error.message;
+            this.scrollToErrorMessage = true;
           }
           this.displayLoadingAnimation = false;
         })
         .catch((error) => {
           console.error("Error:", error);
           this.errorMessage = "Server nicht erreichbar.";
+          this.scrollToErrorMessage = true;
           this.displayLoadingAnimation = false;
         });
     },
