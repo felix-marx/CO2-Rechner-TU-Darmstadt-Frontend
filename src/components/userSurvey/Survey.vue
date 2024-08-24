@@ -539,12 +539,12 @@ export default {
      * [5] Server
      */
     geraeteAnzahl: [
-      [7, null],
-      [8, null],
-      [9, null],
-      [10, null],
-      [4, null],
-      [6, null],
+      [constants.it_geraet_multifunktionsgeraet, null],
+      [constants.it_geraet_multifunktionsgeraet_toner, null],
+      [constants.it_geraet_drucker, null],
+      [constants.it_geraet_drucker_toner, null],
+      [constants.it_geraet_beamer, null],
+      [constants.it_geraet_server, null],
     ],
 
     // Blockiere Inputfelder nach Absenden der Umfrage
@@ -799,13 +799,13 @@ export default {
       this.anzahlMitarbeiter = null
       this.gebaeude = [[null, null]]
       this.geraeteAnzahl = [
-        [7, null],
-        [8, null],
-        [9, null],
-        [10, null],
-        [4, null],
-        [6, null],
-      ]
+        [this.constants.it_geraet_multifunktionsgeraet, null],
+        [this.constants.it_geraet_multifunktionsgeraet_toner, null],
+        [this.constants.it_geraet_drucker, null],
+        [this.constants.it_geraet_drucker_toner, null],
+        [this.constants.it_geraet_beamer, null],
+        [this.constants.it_geraet_server, null],
+      ],
       this.blockInput = false
       this.dataRequestSent = false
       this.responseData = null

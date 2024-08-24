@@ -482,8 +482,8 @@
       "IT_Geraete_Desktops": "Desktop-PCs",
       "IT_Geraete_Bildschirme": "Bildschirme",
       "IT_Geraete_Mobiltelefone": "Mobiltelefone",
-      "IT_Gereate_Notebook": "Notebook",
-      "IT_Gereate_Desktop": "Desktop-PC",
+      "IT_Geraete_Notebook": "Notebook",
+      "IT_Geraete_Desktop": "Desktop-PC",
       "IT_Geraete_Bildschirm": "Bildschirm",
       "IT_Geraete_Mobiltelefon": "Mobiltelefon",
 
@@ -515,8 +515,8 @@
       "EingabeValidierung_Dienstreise_0": "Sie haben bei einer Dienstreise mit Flugzeug keinen Flugstreckentyp angegeben.",
       "EingabeValidierung_Dienstreise_1": "Sie haben für die Dienstreise mit ",
       "EingabeValidierung_Dienstreise_2": " keine gültige Distanz angegeben.",
-      "EingabeValidierung_Gereate_0": "Sie haben das Gerät ",
-      "EingabeValidierung_Gereate_1": "  ausgewählt, aber keine Anzahl angegeben."
+      "EingabeValidierung_Geraete_0": "Sie haben das Gerät ",
+      "EingabeValidierung_Geraete_1": "  ausgewählt, aber keine valide Anzahl angegeben."
     },
     "surveyCompleted": {
       "UmfrageVollstaendig_0": "Diese Umfrage ist bereits vollständig ausgefüllt.",

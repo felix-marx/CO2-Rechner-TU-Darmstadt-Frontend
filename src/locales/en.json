@@ -482,8 +482,8 @@
       "IT_Geraete_Desktops": "Desktop PC’s",
       "IT_Geraete_Bildschirme": "Monitors",
       "IT_Geraete_Mobiltelefone": "Mobile phones",
-      "IT_Gereate_Notebook": "Notebook",
-      "IT_Gereate_Desktop": "Desktop PC",
+      "IT_Geraete_Notebook": "Notebook",
+      "IT_Geraete_Desktop": "Desktop PC",
       "IT_Geraete_Bildschirm": "Monitor",
       "IT_Geraete_Mobiltelefon": "Mobile phone",
       
@@ -515,8 +515,8 @@
       "EingabeValidierung_Dienstreise_0": "For a business trip by plane, the type of flight distance has not been entered.",
       "EingabeValidierung_Dienstreise_1": "For the business trip by ",
       "EingabeValidierung_Dienstreise_2": ", the distance entered is not valid.",
-      "EingabeValidierung_Gereate_0": "For the selected device ",
-      "EingabeValidierung_Gereate_1": ", the quantity has not been entered."
+      "EingabeValidierung_Geraete_0": "For the selected device ",
+      "EingabeValidierung_Geraete_1": ", the quantity entered is invalid."
     },
     "surveyCompleted": {
       "UmfrageVollstaendig_0": "This survey is already completed.",

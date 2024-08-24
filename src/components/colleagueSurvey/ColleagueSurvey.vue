@@ -151,7 +151,7 @@
                   class="delete_text--text mx-auto mt-1"
                   color="delete"
                   icon="mdi-delete-outline"
-                  :disabled="blockInput"
+                  :disabled="submittedDataSuccessfully"
                   @click="removeVerkehrsmittel(index)"
                 />
               </v-col>
@@ -236,7 +236,7 @@
                       class="delete_text--text mx-auto"
                       color="delete"
                       icon="mdi-delete-outline"
-                      :disabled="blockInput"
+                      :disabled="submittedDataSuccessfully"
                       @click="removeVerkehrsmittel(index)"
                     />
                   </v-col>
@@ -413,7 +413,7 @@
                   class="delete_text--text mx-auto mt-1"
                   color="delete"
                   icon="mdi-delete-outline"
-                  :disabled="blockInput"
+                  :disabled="submittedDataSuccessfully"
                   @click="removeDienstreise(index)"
                 />
               </v-col>
@@ -515,7 +515,7 @@
                       class="delete_text--text mx-auto"
                       color="delete"
                       icon="mdi-delete-outline"
-                      :disabled="blockInput"
+                      :disabled="submittedDataSuccessfully"
                       @click="removeDienstreise(index)"
                     />
                   </v-col>
@@ -556,7 +556,7 @@
 
         <v-container>
           <!-- Notebook -->
-          <v-row>
+          <!-- <v-row>
             <v-checkbox
               v-model="geraeteAnzahl[0][2]"
               :disabled="submittedDataSuccessfully"
@@ -572,9 +572,9 @@
               class="pr-5"
               :suffix="$t('colleagueSurvey.colleagueSurvey.IT_Geraete_Suffix')"
             />
-          </v-row>
+          </v-row> -->
           <!-- Desktop PC -->
-          <v-row>
+          <!-- <v-row>
             <v-checkbox
               v-model="geraeteAnzahl[1][2]"
               hide-details
@@ -590,9 +590,9 @@
               class="pr-5"
               :suffix="$t('colleagueSurvey.colleagueSurvey.IT_Geraete_Suffix')"
             />
-          </v-row>
+          </v-row> -->
           <!-- Bildschirm -->
-          <v-row>
+          <!-- <v-row>
             <v-checkbox
               v-model="geraeteAnzahl[2][2]"
               hide-details
@@ -608,9 +608,9 @@
               class="pr-5"
               :suffix="$t('colleagueSurvey.colleagueSurvey.IT_Geraete_Suffix')"
             />
-          </v-row>
+          </v-row> -->
           <!-- Mobiltelefon -->
-          <v-row>
+          <!-- <v-row>
             <v-checkbox
               v-model="geraeteAnzahl[3][2]"
               hide-details
@@ -626,6 +626,64 @@
               class="pr-5"
               :suffix="$t('colleagueSurvey.colleagueSurvey.IT_Geraete_Suffix')"
             />
+          </v-row> -->
+
+
+          <!-- Notebook -->
+          <v-row>
+            <v-col class="py-0">
+              <number-input
+                ref="notebooks"
+                v-model="geraeteAnzahl[0][1]"
+                :rules="geraeteRules"
+                :disabled="submittedDataSuccessfully"
+                :min="0"
+                :label="$t('colleagueSurvey.colleagueSurvey.IT_Geraete_Notebooks')"
+                :suffix="$t('colleagueSurvey.colleagueSurvey.IT_Geraete_Suffix')"
+              />
+            </v-col>
+          </v-row>
+          <!-- Desktop PC -->
+          <v-row>
+            <v-col class="py-0">
+              <number-input
+                ref="desktops"
+                v-model="geraeteAnzahl[1][1]"
+                :rules="geraeteRules"
+                :disabled="submittedDataSuccessfully"
+                :min="0"
+                :label="$t('colleagueSurvey.colleagueSurvey.IT_Geraete_Desktops')"
+                :suffix="$t('colleagueSurvey.colleagueSurvey.IT_Geraete_Suffix')"
+              />
+            </v-col>
+          </v-row>
+          <!-- Bildschirm -->
+          <v-row>
+            <v-col class="py-0">
+              <number-input
+                ref="bildschirme"
+                v-model="geraeteAnzahl[2][1]"
+                :rules="geraeteRules"
+                :disabled="submittedDataSuccessfully"
+                :min="0"
+                :label="$t('colleagueSurvey.colleagueSurvey.IT_Geraete_Bildschirme')"
+                :suffix="$t('colleagueSurvey.colleagueSurvey.IT_Geraete_Suffix')"
+              />
+            </v-col>
+          </v-row>
+          <!-- Mobiltelefon -->
+          <v-row>
+            <v-col class="py-0">
+              <number-input
+                ref="mobiltelefone"
+                v-model="geraeteAnzahl[3][1]"
+                :rules="geraeteRules"
+                :disabled="submittedDataSuccessfully"
+                :min="0"
+                :label="$t('colleagueSurvey.colleagueSurvey.IT_Geraete_Mobiltelefone')"
+                :suffix="$t('colleagueSurvey.colleagueSurvey.IT_Geraete_Suffix')"
+              />
+            </v-col>
           </v-row>
         </v-container>
 
@@ -749,12 +807,14 @@
 <script>
 import Tooltip from "@/components/componentParts/Tooltip.vue";
 import LoadingAnimation from '@/components/componentParts/LoadingAnimation.vue';
+import NumberInput from "@/components/componentParts/NumberInput.vue";
 import constants from "@/const.js";
 
 export default {  
   components: {
     Tooltip,
-    LoadingAnimation
+    LoadingAnimation,
+    NumberInput
   },
 
   props: {
@@ -808,17 +868,17 @@ export default {
     dienstreisen: [[null, null, null, null]],
 
     //IT Geräte
-    /* Geraet mit Array Position format [intern Geraete ID, Anzahl, enabled]
+    /* Geraet mit Array Position format [intern Geraete ID, Anzahl]
      * [0] Notebook
      * [1] DesktopPC
      * [2] Bildschirm
      * [3] Mobiltelefon
      */
     geraeteAnzahl: [
-      [constants.it_geraet_notebook, null, false],
-      [constants.it_geraet_desktop, null, false],
-      [constants.it_geraet_bildschirm, null, false],
-      [constants.it_geraet_mobiltelefon, null, false],
+      [constants.it_geraet_notebook, null],
+      [constants.it_geraet_desktop, null],
+      [constants.it_geraet_bildschirm, null],
+      [constants.it_geraet_mobiltelefon, null],
     ],
 
     //Papierverbrauch currently not used
@@ -996,7 +1056,12 @@ export default {
           parseInt(v) != 0 ||
           this.$t('colleagueSurvey.colleagueSurvey.GeraeteRules_0'),
         (v) => parseInt(v) > 0 || this.$t('colleagueSurvey.colleagueSurvey.GeraeteRules_1'),
-      ]
+      ],
+
+      this.geraeteRules = [
+        (v) => !!v || this.$t('colleagueSurvey.colleagueSurvey.GeraeteRules_1'),
+        (v) => parseInt(v) >= 0 || this.$t('colleagueSurvey.colleagueSurvey.GeraeteRules_1'),
+      ],
 
       this.mitfahrerRules = [
         (v) => !!v || this.$t('colleagueSurvey.colleagueSurvey.MitfahrerRules_0'),
@@ -1214,7 +1279,7 @@ export default {
       //Build IT Geräte Array of non-null gerate
       var usedITGeraete = [];
       for (var geraet of this.geraeteAnzahl) {
-        if (geraet[1] > 0 && geraet[2] == true) {
+        if (geraet[1] > 0) {
           usedITGeraete.push({
             idITGeraete: parseInt(geraet[0]),
             anzahl: parseInt(geraet[1]),
@@ -1292,12 +1357,9 @@ export default {
       }
       // Check IT Geraete
       for(const geraet of this.geraeteAnzahl) {
-        var geraeteName = (geraet[0] == 1) ? this.$t('colleagueSurvey.colleagueSurvey.IT_Gereate_Notebook') : (geraet[0] == 2) ? this.$t('colleagueSurvey.colleagueSurvey.IT_Gereate_Desktop')  : (geraet[0] == 3) ? this.$t('colleagueSurvey.colleagueSurvey.IT_Gereate_Bildschirm') : this.$t('colleagueSurvey.colleagueSurvey.IT_Gereate_Mobiltelefon')
-        if(geraet[2] && geraet[1] == null) {
-          errors.push(this.$t('colleagueSurvey.colleagueSurvey.EingabeValidierung_Gereate_0') + geraeteName + this.$t('colleagueSurvey.colleagueSurvey.EingabeValidierung_Gereate_1'))
-        }
-        else if(geraet[2] && geraet[1] < 0) {
-          errors.push(this.$t('colleagueSurvey.colleagueSurvey.EingabeValidierung_Gereate_0') + geraeteName + this.$t('colleagueSurvey.colleagueSurvey.EingabeValidierung_Gereate_1'))
+        var geraeteName = (geraet[0] == 1) ? this.$t('colleagueSurvey.colleagueSurvey.IT_Geraete_Notebook') : (geraet[0] == 2) ? this.$t('colleagueSurvey.colleagueSurvey.IT_Geraete_Desktop')  : (geraet[0] == 3) ? this.$t('colleagueSurvey.colleagueSurvey.IT_Gereate_Bildschirm') : this.$t('colleagueSurvey.colleagueSurvey.IT_Gereate_Mobiltelefon')
+        if(geraet[1] < 0) {
+          errors.push(this.$t('colleagueSurvey.colleagueSurvey.EingabeValidierung_Geraete_0') + geraeteName + this.$t('colleagueSurvey.colleagueSurvey.EingabeValidierung_Geraete_1'))
         }
       }
       this.errorsArray = errors
