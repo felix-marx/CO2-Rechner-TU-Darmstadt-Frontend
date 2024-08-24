@@ -2,6 +2,7 @@
   <v-container>
     <v-row>
       <v-btn
+        v-if="!props.buttonsRight"
         class="mr-1 px-0"
         :disabled="props.disabled"
         density="comfortable"
@@ -20,14 +21,15 @@
         :disabled="props.disabled"
         density="compact"
       />
-      <!-- <v-btn
-        class="mr-1 px-0"
+      <v-btn
+        v-if="props.buttonsRight"
+        class="ml-1 mr-1 px-0"
         :disabled="props.disabled"
         density="comfortable"
         icon="mdi-minus"
         style="margin-top: 2px"
         @click="decrement"
-      /> -->
+      />
       <v-btn
         class="ml-1"
         :disabled="props.disabled"
@@ -78,6 +80,10 @@ const props = defineProps({
   rules: {
     type: Array,
     default: () => []
+  },
+  buttonsRight: {
+    type: Boolean,
+    default: false
   }
 });
 
