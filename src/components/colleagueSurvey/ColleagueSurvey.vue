@@ -284,7 +284,7 @@
           </template>
         </div>
         <!-- Add Button -->
-        <v-row class="mt-4">
+        <v-row>
           <v-col>
             <v-btn
               class="add_text--text pl-2"
