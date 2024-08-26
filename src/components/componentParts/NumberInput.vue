@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-row>
+    <v-row style="flex-wrap: nowrap;">
       <v-btn
         v-if="!props.buttonsRight"
         class="mr-1 px-0"
