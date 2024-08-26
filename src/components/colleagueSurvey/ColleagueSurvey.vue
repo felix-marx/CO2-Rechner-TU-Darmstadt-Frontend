@@ -557,7 +557,7 @@
         <v-container>
           <!-- Notebook -->
           <v-row>
-            <v-col class="py-0">
+            <v-col :class="!$vuetify.display.mobile ? 'py-0' : 'pa-0'">
               <number-input
                 ref="notebooks"
                 v-model="geraeteAnzahl[0][1]"
@@ -571,7 +571,7 @@
           </v-row>
           <!-- Desktop PC -->
           <v-row>
-            <v-col class="py-0">
+            <v-col :class="!$vuetify.display.mobile ? 'py-0' : 'pa-0'">
               <number-input
                 ref="desktops"
                 v-model="geraeteAnzahl[1][1]"
@@ -585,7 +585,7 @@
           </v-row>
           <!-- Bildschirm -->
           <v-row>
-            <v-col class="py-0">
+            <v-col :class="!$vuetify.display.mobile ? 'py-0' : 'pa-0'">
               <number-input
                 ref="bildschirme"
                 v-model="geraeteAnzahl[2][1]"
@@ -599,7 +599,7 @@
           </v-row>
           <!-- Mobiltelefon -->
           <v-row>
-            <v-col class="py-0">
+            <v-col :class="!$vuetify.display.mobile ? 'py-0' : 'pa-0'">
               <number-input
                 ref="mobiltelefone"
                 v-model="geraeteAnzahl[3][1]"

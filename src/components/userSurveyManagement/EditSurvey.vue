@@ -375,7 +375,7 @@
             <template v-else>
               <!-- Multifunktionsgeräte -->
               <v-row>
-                <v-col class="py-0">
+                <v-col class="pa-0">
                   <number-input 
                     ref="multifunktionsgeraete"
                     v-model="umfrage.geraeteAnzahl[0][1]"
@@ -388,7 +388,7 @@
                 </v-col>
               </v-row>
               <v-row>
-                <v-col class="py-0">
+                <v-col class="pa-0">
                   <number-input  
                     ref="multifunktionsgeraeteToner"
                     v-model="umfrage.geraeteAnzahl[1][1]"
@@ -403,7 +403,7 @@
 
               <!-- Drucker -->
               <v-row>
-                <v-col class="py-0">
+                <v-col class="pa-0">
                   <number-input 
                     ref="drucker"
                     v-model="umfrage.geraeteAnzahl[2][1]"
@@ -416,7 +416,7 @@
                 </v-col>
               </v-row>
               <v-row>
-                <v-col class="py-0">
+                <v-col class="pa-0">
                   <number-input  
                     ref="druckerToner"
                     v-model="umfrage.geraeteAnzahl[3][1]"
@@ -432,7 +432,7 @@
 
             <!-- Beamer -->
             <v-row>
-              <v-col class="py-0">
+              <v-col :class="!$vuetify.display.mobile ? 'py-0' : 'pa-0'">
                 <number-input 
                   ref="beamer"
                   v-model="umfrage.geraeteAnzahl[4][1]"
@@ -447,7 +447,7 @@
 
             <!-- Server -->
             <v-row>
-              <v-col class="py-0">
+              <v-col :class="!$vuetify.display.mobile ? 'py-0' : 'pa-0'">
                 <number-input 
                   ref="server"
                   v-model="umfrage.geraeteAnzahl[5][1]"
