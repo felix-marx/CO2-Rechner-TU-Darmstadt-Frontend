@@ -9,6 +9,12 @@
         {{ $t('userSurveyManagement.SurveyOverview.GespeicherteUmfragen') }}
       </v-card-title>
 
+      <v-row v-if="showLoadingAnimation">
+        <v-col>
+          <LoadingAnimation />
+        </v-col>
+      </v-row>
+
       <!-- Die erstellte Umfrage soll eine Karte erhalten. -->
       <v-card
         v-for="(umfrage, index) in umfragen"
@@ -424,6 +430,7 @@ import EditSurvey from "@/components/userSurveyManagement/EditSurvey.vue";
 import SurveyEvaluation from "@/components/evaluation/SurveyEvaluation.vue";
 import CopyButton from '@/components/componentParts/CopyButton.vue';
 import LinkSharingComponent from "@/components/componentParts/LinkSharingComponent.vue";
+import LoadingAnimation from "@/components/componentParts/LoadingAnimation.vue";
 import constants from "@/const.js";
 
 export default {
@@ -434,6 +441,7 @@ export default {
     SurveyEvaluation,
     CopyButton,
     LinkSharingComponent,
+    LoadingAnimation,
   },
 
   data: () => ({
@@ -446,10 +454,7 @@ export default {
     errors: [],
     message: "",
 
-    notifications: false,
-    sound: true,
-    widgets: true,
-    anteilMitarbeiterUmfrage: 40,
+    showLoadingAnimation: false,
 
     // base url for Mitarbeiterumfragen
     mitarbeiterumfrageBaseURL: import.meta.env.VITE_URL + '/survey/',
@@ -514,27 +519,33 @@ export default {
     },
 
     fetchUmfragenForUser: async function () {
-    await fetch(import.meta.env.VITE_BASEURL + "/umfrage/alleUmfragenVonNutzer", {
-      method: "GET",
-      headers: {
-        "Authorization": "Bearer " + this.$keycloak.token,
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if(data.data.umfragen !== null) {
-          this.umfragen = data.data.umfragen;
-        } else {
-          this.umfragen = []
-        }
-        
-        this.dialog = new Array(this.umfragen.length).fill(false)
-        this.dialogAuswertung = new Array(this.umfragen.length).fill(false)
-        this.errors = new Array(this.umfragen.length).fill(false)
+      this.showLoadingAnimation = true;
+
+      await fetch(import.meta.env.VITE_BASEURL + "/umfrage/alleUmfragenVonNutzer", {
+        method: "GET",
+        headers: {
+          "Authorization": "Bearer " + this.$keycloak.token,
+        },
       })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+        .then((response) => response.json())
+        .then((data) => {
+          if(data.data.umfragen !== null) {
+            this.umfragen = data.data.umfragen;
+          } else {
+            this.umfragen = []
+          }
+          
+          this.dialog = new Array(this.umfragen.length).fill(false)
+          this.dialogAuswertung = new Array(this.umfragen.length).fill(false)
+          this.errors = new Array(this.umfragen.length).fill(false)
+
+          this.showLoadingAnimation = false;
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+
+          this.showLoadingAnimation = false;
+        });
     },
 
     /**
