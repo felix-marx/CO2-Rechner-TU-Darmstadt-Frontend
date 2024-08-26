@@ -208,6 +208,7 @@
                   :rules="geraeteRules"
                   :label="$t('userSurvey.Survey.ITGeraeteMFP')"
                   :suffix="$t('userSurvey.Survey.ITGeraeteMFP_Suffix')"
+                  buttons-right
                 />
               </v-col>
               <v-col class="py-0">
@@ -219,6 +220,7 @@
                   :rules="geraeteRules"
                   :label="$t('userSurvey.Survey.ITGeraeteBenutzteToner')"
                   :suffix="$t('userSurvey.Survey.ITGeraeteBenutzteToner_Suffix')"
+                  buttons-right
                 />
               </v-col>
             </v-row>
@@ -234,6 +236,7 @@
                   :rules="geraeteRules"
                   :label="$t('userSurvey.Survey.DruckerLabel')"
                   :suffix="$t('userSurvey.Survey.Drucker_Suffix')"
+                  buttons-right
                 />
               </v-col>
               <v-col class="py-0">
@@ -245,6 +248,7 @@
                   :rules="geraeteRules"
                   :label="$t('userSurvey.Survey.ITGeraeteBenutzteToner')"
                   :suffix="$t('userSurvey.Survey.ITGeraeteBenutzteToner_Suffix')"
+                  buttons-right
                 />
               </v-col>
             </v-row>
@@ -262,6 +266,7 @@
                   :rules="geraeteRules"
                   :label="$t('userSurvey.Survey.ITGeraeteMFP')"
                   :suffix="$t('userSurvey.Survey.ITGeraeteMFP_Suffix')"
+                  buttons-right
                 />
               </v-col>
             </v-row>
@@ -275,6 +280,7 @@
                   :rules="geraeteRules"
                   :label="$t('userSurvey.Survey.ITGeraeteBenutzteToner')"
                   :suffix="$t('userSurvey.Survey.ITGeraeteBenutzteToner_Suffix')"
+                  buttons-right
                 />
               </v-col>
             </v-row>
@@ -290,6 +296,7 @@
                   :rules="geraeteRules"
                   :label="$t('userSurvey.Survey.DruckerLabel')"
                   :suffix="$t('userSurvey.Survey.Drucker_Suffix')"
+                  buttons-right
                 />
               </v-col>
             </v-row>
@@ -303,6 +310,7 @@
                   :rules="geraeteRules"
                   :label="$t('userSurvey.Survey.ITGeraeteBenutzteToner')"
                   :suffix="$t('userSurvey.Survey.ITGeraeteBenutzteToner_Suffix')"
+                  buttons-right
                 />
               </v-col>
             </v-row>
@@ -319,6 +327,7 @@
                 :rules="geraeteRules"
                 :label="$t('userSurvey.Survey.Beamer')"
                 :suffix="$t('userSurvey.Survey.Beamer')"
+                buttons-right
               />
             </v-col>
           </v-row>
@@ -334,6 +343,7 @@
                 :rules="geraeteRules"
                 :label="$t('userSurvey.Survey.interneServer')"
                 :suffix="$t('userSurvey.Survey.Server')"
+                buttons-right
               />
             </v-col>
           </v-row>

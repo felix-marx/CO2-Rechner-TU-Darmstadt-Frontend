@@ -566,6 +566,7 @@
                 :min="0"
                 :label="$t('colleagueSurvey.colleagueSurvey.IT_Geraete_Notebooks')"
                 :suffix="$t('colleagueSurvey.colleagueSurvey.IT_Geraete_Suffix')"
+                buttons-right
               />
             </v-col>
           </v-row>
@@ -580,6 +581,7 @@
                 :min="0"
                 :label="$t('colleagueSurvey.colleagueSurvey.IT_Geraete_Desktops')"
                 :suffix="$t('colleagueSurvey.colleagueSurvey.IT_Geraete_Suffix')"
+                buttons-right
               />
             </v-col>
           </v-row>
@@ -594,6 +596,7 @@
                 :min="0"
                 :label="$t('colleagueSurvey.colleagueSurvey.IT_Geraete_Bildschirme')"
                 :suffix="$t('colleagueSurvey.colleagueSurvey.IT_Geraete_Suffix')"
+                buttons-right
               />
             </v-col>
           </v-row>
@@ -608,6 +611,7 @@
                 :min="0"
                 :label="$t('colleagueSurvey.colleagueSurvey.IT_Geraete_Mobiltelefone')"
                 :suffix="$t('colleagueSurvey.colleagueSurvey.IT_Geraete_Suffix')"
+                buttons-right
               />
             </v-col>
           </v-row>
