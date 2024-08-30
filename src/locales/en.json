@@ -730,6 +730,7 @@
     "jahrRegel": "Please enter a valid year",
     "Gebaeude": "Buildings",
     "GithubRepo": "Github repository",
-    "Verbrauch": "Consumption"
+    "Verbrauch": "Consumption",
+    "Einheit_km": "km"
   }
 }

@@ -95,11 +95,13 @@
                       <v-text-field
                         :ref="'pendelwegDistanz' + index"
                         v-model="medium[4]"
+                        type="number"
                         :rules="streckeRules"
                         :disabled="medium[0] === null || (medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_5') && medium[1] === null) || (medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_0') && medium[5] === null) || submittedDataSuccessfully"
                         :min="0"
                         :label="$t('colleagueSurvey.colleagueSurvey.WieInsBuero_pendelweg')"
-                        suffix="km"
+                        :suffix="$t('common.Einheit_km')"
+                        hide-spin-buttons
                       />
                     </v-col>
                   </v-row>
@@ -133,10 +135,12 @@
                       <v-text-field
                         :ref="'mitfahrer' + index"
                         v-model="medium[3]"
+                        type="number"
                         :rules="mitfahrerRules"
                         :disabled="!medium[2] || submittedDataSuccessfully"
                         :min="0"
                         :label="$t('colleagueSurvey.colleagueSurvey.WieInsBuero_anzahlMitfahrende')"
+                        hide-spin-buttons
                       />
                     </v-col>
                   </v-row>
@@ -218,11 +222,13 @@
                           <v-text-field
                             :ref="'pendelwegDistanz' + index"
                             v-model="medium[4]"
+                            type="number"
                             :rules="streckeRules"
                             :disabled="medium[0] === null || (medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_5') && medium[1] === null) || (medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_0') && medium[5] === null) || submittedDataSuccessfully"
                             :min="0"
                             :label="$t('colleagueSurvey.colleagueSurvey.WieInsBuero_pendelweg')"
-                            suffix="km"
+                            :suffix="$t('common.Einheit_km')"
+                            hide-spin-buttons
                           />
                         </v-col>
                       </v-row>
@@ -271,10 +277,12 @@
                       <v-text-field
                         :ref="'mitfahrer' + index"
                         v-model="medium[3]"
+                        type="number"
                         :rules="mitfahrerRules"
                         :disabled="!medium[2] || submittedDataSuccessfully"
                         :min="0"
                         :label="$t('colleagueSurvey.colleagueSurvey.WieInsBuero_anzahlMitfahrende')"
+                        hide-spin-buttons
                       />
                     </v-col>
                   </v-row>
@@ -311,11 +319,13 @@
             <v-text-field
               ref="arbeitstageBuero"
               v-model="arbeitstageBuero"
+              type="number"
               :rules="tageImBueroRules"
               :disabled="submittedDataSuccessfully"
               :min="0"
               :max="7"
               :label="$t('colleagueSurvey.colleagueSurvey.TageBuero_label')"
+              hide-spin-buttons
             />
           </v-row>
         </v-container>
@@ -397,11 +407,13 @@
                 <v-text-field
                   :ref="'dienstreiseDistanz' + index"
                   v-model="reise[2]"
+                  type="number"
                   :rules="streckeRules"
                   :disabled="reise[0] === null || submittedDataSuccessfully || (reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_0') && reise[1] === null) || (reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3') && reise[3] === null)"
                   :min="0"
                   :label="$t('colleagueSurvey.colleagueSurvey.EinfacheDistanz')"
-                  suffix="km"
+                  :suffix="$t('common.Einheit_km')"
+                  hide-spin-buttons
                 />
               </v-col>
               <!-- Delete Button -->
@@ -496,11 +508,13 @@
                           <v-text-field
                             :ref="'dienstreiseDistanz' + index"
                             v-model="reise[2]"
+                            type="number"
                             :rules="streckeRules"
                             :disabled="reise[0] === null || submittedDataSuccessfully || (reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_0') && reise[1] === null) || (reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3') && reise[3] === null)"
                             :min="0"
                             :label="$t('colleagueSurvey.colleagueSurvey.EinfacheDistanz')"
-                            suffix="km"
+                            :suffix="$t('common.Einheit_km')"
+                            hide-spin-buttons
                           />
                         </v-col>
                       </v-row>

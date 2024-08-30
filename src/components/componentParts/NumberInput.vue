@@ -18,7 +18,7 @@
         :rules="props.rules"
         :suffix="props.suffix"
         variant="outlined"
-        :hide-spin-buttons="true"
+        hide-spin-buttons
         :disabled="props.disabled"
         density="compact"
       />

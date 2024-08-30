@@ -84,11 +84,13 @@
             <v-text-field
               ref="anzahlMitarbeiter"
               v-model="anzahlMitarbeiter"
+              type="number"
               :rules="absolutpositivRules"
               :min="0"
               :label="$t('common.Mitarbeitendenzahl')"
               prepend-icon="mdi-account"
               :disabled="blockInput"
+              hide-spin-buttons
             />
           </v-row>
         </v-container>
@@ -129,12 +131,14 @@
               <v-text-field
                 :ref="'flaeche' + index"
                 v-model="objekt[1]"
+                type="number"
                 :rules="absolutpositivRules"
                 :min="0"
                 :label="$t('userSurvey.Survey.GebaeudeAbteilung_3')"
                 prepend-icon="mdi-domain"
                 suffix="qm"
                 :disabled="blockInput"
+                hide-spin-buttons
               />
             </v-col>
             <v-col
