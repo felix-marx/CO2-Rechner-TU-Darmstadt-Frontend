@@ -535,16 +535,11 @@
                 </v-col>
                 <v-col>
                   <v-btn
-                    class="delete_text--text mx-auto"
+                    class="delete_text--text mx-auto mt-1"
                     color="delete"
-                    size="default"
-                    rounded
+                    icon="mdi-delete-outline"
                     @click="removeBuildingRef(i)"
-                  >
-                    <v-icon>
-                      mdi-delete-outline
-                    </v-icon>
-                  </v-btn>
+                  />
                 </v-col>
               </v-row>
             </div>
