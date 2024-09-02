@@ -7,7 +7,10 @@
       :display-back-button="true"
       :display-login-button="false"
     />
-    <v-main :class="$vuetify.display.mobile ? 'mb-0 pb-0' : 'mb-0'">
+    <v-main 
+      :class="$vuetify.display.mobile ? 'mb-0 pb-0' : 'mb-0'" 
+      @vue:mounted="vuetifyMounted"
+    >
       <v-container>
         <v-card
           elevation="0"
@@ -21,7 +24,7 @@
             <v-card
               ref="#bilanzierung"
               class="px-0 pb-2"
-              elevation="0"
+              elevation="0" 
             >
               <v-card-title
                 class="mx-4 mt-3"
@@ -735,22 +738,25 @@ export default {
     }
   },
 
-  mounted() {
-    if(this.$route.hash){
-      let top = this.$refs[this.$route.hash].$refs.link.offsetTop
-
-      window.scrollTo({
-        top: top, 
-        left: 0
-      })
-    }
-  },
 
   methods: {
     setTabList(){
       this.tabList = [
         { id: 0, title: this.$t('footer.Footer.FAQ'), component: null},
       ]
+    },
+
+    // Vuetify uses <suspense> inside their components, which means that the mounted hook is called before the content is rendered
+    // This function is called once v-main is and all its childs are mounted
+    vuetifyMounted() {
+      if(this.$route.hash){
+        let top = this.$refs[this.$route.hash].$el.offsetTop
+
+        window.scrollTo({
+          top: top, 
+          left: 0
+        })
+      }
     }
   }
 }
