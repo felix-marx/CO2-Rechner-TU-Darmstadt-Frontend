@@ -37,6 +37,14 @@ const routes = [
     }
   },
   {
+    path: '/charts',
+    name: 'ChartTest',
+    component: ChartTest,
+    meta: { 
+      noAuth: true 
+    }
+  },
+  {
     path: '/survey',
     name: 'Survey',
     component: Home,

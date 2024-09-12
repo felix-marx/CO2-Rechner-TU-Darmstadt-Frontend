@@ -61,6 +61,15 @@
                   />
                 </v-card>
               </v-col>
+              <v-col>
+                <v-card>
+                  <v-card-title>Stacked Bar chart</v-card-title>
+                  <BarChart
+                    :chart-data="chartdataStackedBar"
+                    :options="optionsStackedBar"
+                  />
+                </v-card>
+              </v-col>
             </v-row>
             <v-row>
               <v-col>
@@ -248,7 +257,7 @@ export default{
       }
     },
 
-    chartdataBar:{
+    chartdataBar: {
       labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"],
       datasets: [{
         label: 'My First Dataset',
@@ -281,6 +290,53 @@ export default{
       scales:{
         y: {
           beginAtZero: true
+        }
+      }
+    },
+
+    chartdataStackedBar: {
+      labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"],
+      datasets: [{
+        label: 'Dataset 1',
+        data: [65, 59, 80, 81, 56, 55],
+        backgroundColor: 'rgb(255, 99, 132)',
+      },
+      {
+        label: 'Dataset 2',
+        data: [0, 48, 40, 19, 96, 27, 100],
+        backgroundColor: 'rgb(54, 162, 235)',
+      }
+      ]
+    },
+    optionsStackedBar: {
+      responsive: false,
+      maintainAspectRatio: false,
+      scales:{
+        x: {
+          stacked: true,
+        },
+        y: {
+          beginAtZero: true,
+          stacked: true,
+        }
+      },
+      plugins: {
+        tooltip: {
+          callbacks: {
+            label: function(context) {
+              return context.label
+            },
+          },
+        },
+        datalabels: {
+          formatter: function(value) {
+            if (value == 0) {
+              return ""
+            }
+            else {
+              return value
+            }
+          },
         }
       }
     },

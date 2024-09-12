@@ -221,6 +221,29 @@
             </v-row>
           </div>
 
+          <!-- Aufteilung Dienstreisen -->
+          <div v-if="chart.ref == 'bar-dienstreisen'">
+            <v-row v-if="displayAufteilungDienstreisen">
+              <v-col class="d-flex justify-center">
+                <h4>
+                  {{ $t('evaluation.surveyEvaluation.AufteilungDienstreisen') }} - Stack Bar Chart
+                  <Tooltip
+                    :tooltip-text="$t('colleagueSurvey.colleagueSurvey.Dienstreise_tooltip_2')"
+                  />
+                </h4>
+              </v-col>
+            </v-row>
+            <v-row v-if="displayAufteilungDienstreisen">
+              <v-col :style="{ 'min-height': constants.charts_min_height }">
+                <bar-chart
+                  ref="bar-dienstreisen-stacked"
+                  :chart-data="chartdataDienstreisenBarStacked"
+                  :options="optionsDienstreisenBarStacked"
+                />
+              </v-col>
+            </v-row>
+          </div>
+
           <!-- Aufteilung Pendelwege -->
           <div v-if="chart.ref == 'bar-pendelwege'">
             <v-row v-if="displayAufteilungPendelwege">
@@ -534,6 +557,9 @@ export default {
 
       chartdataDienstreisenBar: {},
       optionsDienstreisenBar: {},
+
+      chartdataDienstreisenBarStacked: {},
+      optionsDienstreisenBarStacked: {},
 
       chartdataPendelwegeBar: {},
       optionsPendelwegeBar: {},
@@ -864,6 +890,9 @@ export default {
       this.chartdataDienstreisenBar = JSON.parse(JSON.stringify(this.generalChartdataBar));
       this.optionsDienstreisenBar = JSON.parse(JSON.stringify(this.generalOptionsBar));
 
+      this.chartdataDienstreisenBarStacked = JSON.parse(JSON.stringify(this.generalChartdataBar));
+      this.optionsDienstreisenBarStacked = JSON.parse(JSON.stringify(this.generalOptionsBar));
+
       this.chartdataPendelwegeBar = JSON.parse(JSON.stringify(this.generalChartdataBar));
       this.optionsPendelwegeBar = JSON.parse(JSON.stringify(this.generalOptionsBar));
 
@@ -952,6 +981,7 @@ export default {
 
       this.generalChartdataBar.datasets[0].maxBarThickness = this.barWidth
       this.chartdataDienstreisenBar.datasets[0].maxBarThickness = this.barWidth
+      this.chartdataDienstreisenBarStacked.datasets[0].maxBarThickness = this.barWidth
       this.chartdataPendelwegeBar.datasets[0].maxBarThickness = this.barWidth
       this.chartdataITGeraeteBar.datasets[0].maxBarThickness = this.barWidth
       this.chartdataEnergieBar.datasets[0].maxBarThickness = this.barWidth
@@ -965,6 +995,7 @@ export default {
       }
       if (this.displayAufteilungDienstreisen){
         this.setChartDienstreisen();
+        this.setChartDienstreisenStacked();
       }
       if (this.displayAufteilungPendelwege){
         this.setChartPendelwege();
@@ -1167,6 +1198,42 @@ export default {
 
       this.$refs["bar-dienstreisen"][0].updateChart()
     },
+
+    setChartDienstreisenStacked: function () {
+
+      console.log("setChartDienstreisenStacked")
+      console.log(this.responsedata.emissionenDienstreisenAufgeteilt)
+
+      let data = []
+      let labelMap = getDienstreisenLabelMap()
+      let aggregation = this.aggregatedDienstreisen
+
+      Object.keys(aggregation).forEach(function(key) {
+        let labelParts = key.split(constants.split_char)
+        let label = labelMap.get(labelParts[0]) + (labelParts[1] ? " - " + labelMap.get(labelParts[1]) : "")
+        data.push({label: label, value: aggregation[key], color: 'rgb(54,162,235)'})
+      })
+
+      data.sort((a, b) => b.value - a.value)
+
+      this.chartdataDienstreisenBarStacked.labels = data.map(a => a.label);
+      this.chartdataDienstreisenBarStacked.datasets[0].data = data.map(a => a.value);
+      this.chartdataDienstreisenBarStacked.datasets[0].backgroundColor = data.map(a => a.color);
+
+      let prefix = this.$t('common.Emissionen')
+      let i18n_n = this.$n
+      this.optionsDienstreisenBarStacked.plugins.tooltip.callbacks.label = function(context) {
+        let value = context.dataset.data[context.dataIndex];
+        return prefix + ": " + i18n_n(value, "decimal")
+      }
+      this.optionsDienstreisenBarStacked.plugins.datalabels.formatter = (value) => {
+        return this.$n(value, "decimal");
+      }
+      this.optionsDienstreisenBarStacked.plugins.datalabels.rotation = () => { return this.barChartBarLabelRoation }
+
+      this.$refs["bar-dienstreisen-stacked"][0].updateChart()
+    },
+
 
     /**
      * Method sets data and options for the Pendelwege charts.
