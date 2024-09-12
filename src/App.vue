@@ -1,8 +1,4 @@
 <template>
-  <div id="app">
-    <!-- enables view management via the router -->
-    <router-view />
-  </div>
+  <!-- enables view management via the router -->
+  <router-view />
 </template>
-
-

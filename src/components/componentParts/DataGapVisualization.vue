@@ -5,8 +5,8 @@
       v-if="dataGap"
       class="mt-3 mb-0"
       type="info"
-      text
-      dense
+      variant="tonal"
+      density="compact"
       style="white-space: pre-wrap"
     >
       <v-container>
@@ -15,9 +15,8 @@
         </v-row>
         <v-row>
           <v-btn
-            small
-            plain
-            light
+            size="small"
+            variant="plain"
             :ripple="false"
             @click="moreInfo = !moreInfo"
           >
@@ -42,8 +41,7 @@
 </template>
   
 <script>
-import i18n from "@/i18n";
-import { translateGebaeudeIDToSymbolic } from "../../utils";
+import { translateGebaeudeIDToSymbolic } from "@/utils.js";
 
 
 export default {
@@ -131,28 +129,28 @@ export default {
           // generiere lange Nachricht
           var msgLongFragments = []
           if (zaehlerZustand[0] == 2){
-            msgLongFragments.push(i18n.t('componentParts.dataGapVisualization.KeineKaelteDaten') + this.bilanzierungsjahr)
+            msgLongFragments.push(this.$t('componentParts.dataGapVisualization.KeineKaelteDaten') + this.bilanzierungsjahr)
           }
           if (zaehlerZustand[1] == 1){
-            msgLongFragments.push(i18n.t('componentParts.dataGapVisualization.KeineStromzaehler') )
+            msgLongFragments.push(this.$t('componentParts.dataGapVisualization.KeineStromzaehler') )
           }
           else if (zaehlerZustand[1] == 2){
-            msgLongFragments.push(i18n.t('componentParts.dataGapVisualization.KeineStromdaten') + this.bilanzierungsjahr)
+            msgLongFragments.push(this.$t('componentParts.dataGapVisualization.KeineStromdaten') + this.bilanzierungsjahr)
           }
           if (zaehlerZustand[2] == 1){
-            msgLongFragments.push(i18n.t('componentParts.dataGapVisualization.KeineWaermezaehler') )
+            msgLongFragments.push(this.$t('componentParts.dataGapVisualization.KeineWaermezaehler') )
           }
           else if (zaehlerZustand[2] == 2){
-            msgLongFragments.push(i18n.t('componentParts.dataGapVisualization.KeineWaermedaten') + this.bilanzierungsjahr)
+            msgLongFragments.push(this.$t('componentParts.dataGapVisualization.KeineWaermedaten') + this.bilanzierungsjahr)
           }
 
-          msgLong = msgLong + i18n.t('componentParts.dataGapVisualization.FuerGebaeude_0') + selektierteGebaeude[i] + i18n.t('componentParts.dataGapVisualization.FuerGebaeude_1') + msgLongFragments.slice(0, -1).join(", ") + (msgLongFragments.length != 1 ? i18n.t('componentParts.dataGapVisualization.FuerGebaeude_2') : "") + msgLongFragments.slice(-1) + ".\n "
+          msgLong = msgLong + this.$t('componentParts.dataGapVisualization.FuerGebaeude_0') + selektierteGebaeude[i] + this.$t('componentParts.dataGapVisualization.FuerGebaeude_1') + msgLongFragments.slice(0, -1).join(", ") + (msgLongFragments.length != 1 ? this.$t('componentParts.dataGapVisualization.FuerGebaeude_2') : "") + msgLongFragments.slice(-1) + ".\n "
         }
       }
       msgLong = msgLong.slice(0, -2) // remove last \n and space
 
       // generiere kurze Nachricht
-      msgShort = i18n.t('componentParts.dataGapVisualization.UnvollstaendigeEnergieverbrauch_0') + msgShortFragments.slice(0, -1).join(", ") + (msgShortFragments.length > 1 ? i18n.t('componentParts.dataGapVisualization.UnvollstaendigeEnergieverbrauch_1') : "") + msgShortFragments.slice(-1) + i18n.t('componentParts.dataGapVisualization.UnvollstaendigeEnergieverbrauch_2')
+      msgShort = this.$t('componentParts.dataGapVisualization.UnvollstaendigeEnergieverbrauch_0') + msgShortFragments.slice(0, -1).join(", ") + (msgShortFragments.length > 1 ? this.$t('componentParts.dataGapVisualization.UnvollstaendigeEnergieverbrauch_1') : "") + msgShortFragments.slice(-1) + this.$t('componentParts.dataGapVisualization.UnvollstaendigeEnergieverbrauch_2')
 
       return [msgShort, msgLong]
     },

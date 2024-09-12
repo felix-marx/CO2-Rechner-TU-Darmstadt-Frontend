@@ -1,14 +1,12 @@
 <template>
   <!-- user settings component. Dropdown menu when clicking button for user options -->
   <v-container>
-    <v-menu offset-y>
-      <template v-slot:activator="{ on, attrs }">
+    <v-menu>
+      <template #activator="{ props }">
         <v-btn
           elevation="0"
-          color="primary"
-          dark
-          v-bind="attrs"
-          v-on="on"
+          variant="text"
+          v-bind="props"
         >
           <v-icon> mdi-account-cog </v-icon>
           {{ displayName }}
@@ -16,14 +14,14 @@
       </template>
       <v-list>
         <v-list-item>
-          <v-list-item-title class="grey--text">
+          <v-list-item-title class="text-grey">
             {{ $t('header.userSettingsHeader.AngemeldetAls') }} {{ displayName }}
           </v-list-item-title>
         </v-list-item>
         <v-divider />
         <v-list-item
           text
-          @click="openAccountSettings()"
+          @click="$emit('openAccountSettings')"
         >
           <v-list-item-title> {{ $t('header.userSettingsHeader.Accountverwaltung') }} </v-list-item-title>
         </v-list-item>
@@ -33,13 +31,13 @@
           text
           @click="switchAdminOrSurvey()"
         >
-          <v-list-item-title> {{ this.$route.fullPath == "/admin" ? $t('header.userSettingsHeader.ZurUmfrage') : $t('header.userSettingsHeader.ZurAdminuebersicht') }} </v-list-item-title>
+          <v-list-item-title> {{ $route.fullPath == "/admin" ? $t('header.userSettingsHeader.ZurUmfrage') : $t('header.userSettingsHeader.ZurAdminuebersicht') }} </v-list-item-title>
         </v-list-item>
         <v-list-item
           text
           @click="$keycloak.logoutFn()"
         >
-          <v-list-item-title class="red--text">
+          <v-list-item-title class="text-red">
             {{ $t('header.userSettingsHeader.Abmelden') }}
           </v-list-item-title>
         </v-list-item>
@@ -49,10 +47,10 @@
 </template>
 
 <script>
-import AccountSettings from "./AccountSettings.vue"
-
 export default {
   name: "UserSettingsHeader",
+
+  emits: ["openAccountSettings"],
 
   data: () => ({
     isAdmin: false,
@@ -77,11 +75,6 @@ export default {
   },
 
   methods: {
-    openAccountSettings: function() {
-      let data = { id: 2, componentType: AccountSettings };
-      this.$emit("openAccountSettings", data);
-    },
-
     switchAdminOrSurvey: function() {
       if(this.$route.fullPath == "/admin")  {
         this.$router.push('/survey').catch(() => {})
@@ -91,7 +84,7 @@ export default {
     },
 
     getRole: async function() {
-      await fetch(process.env.VUE_APP_BASEURL + "/nutzer/rolle", {
+      await fetch(import.meta.env.VITE_BASEURL + "/nutzer/rolle", {
         method: 'GET',
         headers: {
           "Authorization": "Bearer " + this.$keycloak.token,

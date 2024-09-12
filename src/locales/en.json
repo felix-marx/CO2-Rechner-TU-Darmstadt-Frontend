@@ -73,7 +73,7 @@
       
       "ErstellungUmfrage_0": "Preparing a survey",
       "ErstellungUmfrage_1": "To prepare a survey, you need to create a user account.",
-      "ErstellungUmfrage_2": "This requires that you enter one of your valid TU Darmstadt email addresses (such as jane.anyone@tu-darmstadt.de).",
+      "ErstellungUmfrage_2": "This requires that you enter one of your valid TU Darmstadt email addresses (such as jane.anyone{'@'}tu-darmstadt.de).",
       "ErstellungUmfrage_3": "The data entered to create the survey are generalised in such a way that no conclusion about individual persons can be drawn.",
       "ErstellungUmfrage_4": "You can delete the data that you entered to prepare a survey anytime.",
       "ErstellungUmfrage_5": "How long the data remains on our system is completely up to you.",
@@ -386,6 +386,8 @@
       "problemeInUmfrage_3": "For the selected device: ",
       "problemeInUmfrage_4": ", the quantity entered is not valid.",
       "problemeInUmfrage_5": "You have not entered the toners used for the device selected. If you are not using this device, please ignore this message.",
+      "problemeInUmfrage_6": "For the device: ",
+      "problemeInUmfrage_7": " you have entered the toners used, but have not entered the number of printers.",
       
       "ITGeraetIDDic_7": "Multifunctional devices",
       "ITGeraetIDDic_8": "Toner(s) for multifunctional devices",
@@ -482,8 +484,8 @@
       "IT_Geraete_Desktops": "Desktop PC’s",
       "IT_Geraete_Bildschirme": "Monitors",
       "IT_Geraete_Mobiltelefone": "Mobile phones",
-      "IT_Gereate_Notebook": "Notebook",
-      "IT_Gereate_Desktop": "Desktop PC",
+      "IT_Geraete_Notebook": "Notebook",
+      "IT_Geraete_Desktop": "Desktop PC",
       "IT_Geraete_Bildschirm": "Monitor",
       "IT_Geraete_Mobiltelefon": "Mobile phone",
       
@@ -515,8 +517,8 @@
       "EingabeValidierung_Dienstreise_0": "For a business trip by plane, the type of flight distance has not been entered.",
       "EingabeValidierung_Dienstreise_1": "For the business trip by ",
       "EingabeValidierung_Dienstreise_2": ", the distance entered is not valid.",
-      "EingabeValidierung_Gereate_0": "For the selected device ",
-      "EingabeValidierung_Gereate_1": ", the quantity has not been entered."
+      "EingabeValidierung_Geraete_0": "For the selected device ",
+      "EingabeValidierung_Geraete_1": ", the quantity entered is invalid."
     },
     "surveyCompleted": {
       "UmfrageVollstaendig_0": "This survey is already completed.",
@@ -545,10 +547,10 @@
       "AufteilungDienstreisen": "Distribution based on business trips",
       "AufteilungPendelwege": "Distribution based on commuting distances",
       "AufteilungITGeraete": "Distribution based on IT devices",
-      "KeineEmissionenAuswertung": "Emissions cannot be analysed by energy consumption. \n For the reporting year selected, emissions cannot be calculated because of missing data from TU Darmstadt. \n The meter infrastructure is continuously being expanded by the Energy Management unit.\n Unfortunately, you cannot do anything to complete the analysis. Emissions cannot be analysed by energy consumption. \n For the reporting year selected, emissions cannot be calculated because of missing data from TU Darmstadt. \n              The meter infrastructure is continuously being expanded by the Energy Management unit.\n Unfortunately, you cannot do anything to complete the analysis.",
+      "KeineEmissionenAuswertung": "Emissions cannot be analysed by energy consumption. \n For the reporting year selected, emissions cannot be calculated because of missing data from TU Darmstadt. \n The meter infrastructure is continuously being expanded by the Energy Management unit.\n Unfortunately, you cannot do anything to complete the analysis.",
       "DarstellungEnergieverbrauch": "Plotting the energy consumed",
       "DarstellungEnergieverbrauch_tooltip": "The respective consumption displayed for the energy consumed by individual organisational units can be incomplete.\n This is due to the fact that not all buildings of TU Darmstadt are equipped with their own meters and no meter data are available.",
-      "DarstellungEnergieverbrauchWarning": "Emissions cannot be analysed by energy consumption.\n For the reporting year selected, emissions cannot be calculated because of missing data from TU Darmstadt.\n The meter infrastructure is continuously being expanded by the Energy Management unit.\n Unfortunately, you cannot do anything to complete the analysis.",
+      "DarstellungEnergieverbrauchWarning": "The energy consumption cannot be displayed.\n For the reporting year selected, emissions cannot be calculated because of missing data from TU Darmstadt.\n The meter infrastructure is continuously being expanded by the Energy Management unit.\n Unfortunately, you cannot do anything to complete the analysis.",
       
       "NachhaltigkeitTipps_0": "The Sustainable Development Office has collected tips on ",
       "NachhaltigkeitTipps_1": "saving energy at the workplace",
@@ -730,6 +732,7 @@
     "jahrRegel": "Please enter a valid year",
     "Gebaeude": "Buildings",
     "GithubRepo": "Github repository",
-    "Verbrauch": "Consumption"
+    "Verbrauch": "Consumption",
+    "Einheit_km": "km"
   }
 }

@@ -3,12 +3,12 @@
     <v-card
       class="mb-5 mx-auto"
       elevation="2"
-      outlined
+      border
       :max-width="constants.v_card_max_width"
     >
-      <v-card-title class="headerClass">
+      <v-card-title class="headerClass ml-2 mt-2">
         {{ $t('header.accountSettings.AccountLoeschen') }}
-        <v-divider class="ml-2" />
+        <v-divider />
       </v-card-title>
 
       <v-container>
@@ -24,14 +24,13 @@
               transition="dialog-bottom-transition"
               :max-width="constants.v_dialog_max_width"
             >
-              <template v-slot:activator="{ on, attrs }">
+              <template #activator="{ props }">
                 <!-- Mit diesem Button soll der Account gelöscht werden. -->
                 <v-btn
-                  outlined
-                  text
+                  variant="outlined"
                   color="delete"
-                  v-bind="attrs"
-                  v-on="on"
+                 
+                  v-bind="props"
                 >
                   <v-icon> mdi-delete-outline </v-icon>
                   {{ $t('common.Loeschen') }}
@@ -39,6 +38,7 @@
               </template>
               <v-card>
                 <v-toolbar
+                  class="px-4"
                   color="primary"
                   dark
                 >
@@ -56,7 +56,7 @@
                   </div>
                   <v-text-field
                     v-model="usernameConfirmation"
-                    outlined
+                    variant="outlined"
                   />
                 </v-card-text>
 
@@ -69,12 +69,14 @@
                   <v-alert
                     v-if="accountDeleted && signedOut && !displayLoadingAnimation"
                     type="success"
+                    variant="tonal"
                   >
                     {{ $t('header.accountSettings.AccountGeloescht_0') }}
                   </v-alert>
                   <v-alert
                     v-if="deleteRequestError && !displayLoadingAnimation"
                     type="error"
+                    variant="tonal"
                   >
                     {{ $t('header.accountSettings.AccountNichtGeloescht') }}
                   </v-alert>
@@ -82,7 +84,7 @@
                   <v-btn
                     :disabled="!checkUsernameConfirmation || accountDeleted"
                     color="delete"
-                    text
+                    variant="text"
                     @click="deleteAccountAndSignout()"
                   >
                     {{ $t('header.accountSettings.Bestaetigung') }}
@@ -98,8 +100,8 @@
 </template>
 
 <script>
-import LoadingAnimation from "../componentParts/LoadingAnimation"
-import constants from "../../const";
+import LoadingAnimation from "@/components/componentParts/LoadingAnimation.vue"
+import constants from "@/const.js";
 
 export default {
   name: "AccountSettings",
@@ -149,7 +151,7 @@ export default {
      * Sends a Post-Request to the server for deleting the account.
      */
     async deleteAccount() {
-      await fetch(process.env.VUE_APP_BASEURL + "/nutzer", {
+      await fetch(import.meta.env.VITE_BASEURL + "/nutzer", {
         method: "DELETE",
         headers: {
           "Authorization": "Bearer " + this.$keycloak.token,
@@ -185,12 +187,3 @@ export default {
   }
 };
 </script>
-
-<style lang="scss">
-  .headerClass{
-    white-space: wrap;
-    word-break: normal;
-    display: block;
-    hyphens: auto;
-  }
-</style>

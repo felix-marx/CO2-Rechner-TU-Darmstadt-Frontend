@@ -1,27 +1,25 @@
 <template>
-  <v-menu
-    offset-y
-  >
-    <template v-slot:activator="{ on, attrs }">
+  <v-menu>
+    <template #activator="{ props }">
       <v-btn
         class="text-capitalize"
-        v-bind="attrs"
-        text
-        v-on="on"
+       
+        variant="text"
+        v-bind="props"
       >
-        <v-icon left>
+        <v-icon start>
           mdi-translate
         </v-icon>
         {{ langs.get($i18n.locale) }}
         <v-icon
-          small
-          right
+          size="small"
+          end
         >
           mdi-menu-down
         </v-icon>
       </v-btn>
     </template>
-    <v-list dense>
+    <v-list density="compact">
       <v-list-item
         v-for="(lang, i) in Array.from(langs)"
         :key="`lang-${i}`"
@@ -35,7 +33,7 @@
 </template>
 
 <script>
-import Cookie from '../../Cookie';
+import Cookie from '@/Cookie.js';
 
 export default {
   name: 'SelectLocale',

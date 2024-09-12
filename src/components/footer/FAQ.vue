@@ -1,14 +1,16 @@
 <!-- eslint-disable vue/no-v-html -->
-
 <template>
-  <v-app :style="{background: $vuetify.theme.themes[theme].background}">
+  <v-app :style="{background: $vuetify.theme.themes[theme].colors.background}">
     <Header
       :tabs="tabList"
       :display-user-setting="false"
       :display-back-button="true"
       :display-login-button="false"
     />
-    <v-main :class="$vuetify.breakpoint.mobile ? 'mb-0' : 'mb-16'">
+    <v-main 
+      :class="$vuetify.display.mobile ? 'mb-0 pb-0' : 'mb-0'" 
+      @vue:mounted="vuetifyMounted"
+    >
       <v-container>
         <v-card
           elevation="0"
@@ -17,43 +19,46 @@
         >
           <v-card
             elevation="2"
-            outlined
+            border
           >
             <v-card
               ref="#bilanzierung"
               class="px-0 pb-2"
-              elevation="0"
+              elevation="0" 
             >
               <v-card-title
-                class="mx-4 headerClass"
-                v-html="$t('footer.FAQ.Titel_1')"
-              />
+                class="mx-4 mt-3"
+              >
+                <label
+                  class="headerClass"
+                  v-html="title1"
+                />
+              </v-card-title>
 
               <v-expansion-panels
                 v-model="panel_1"
-                focusable
                 multiple
                 class="px-4 pb-4 mt-2"
               >
-                <v-expansion-panel>
-                  <v-expansion-panel-header>
+                <v-expansion-panel focusable>
+                  <v-expansion-panel-title>
                     <b v-html="$t('footer.FAQ.Frage_1_1')" /> 
-                  </v-expansion-panel-header>
-                  <v-expansion-panel-content>
+                  </v-expansion-panel-title>
+                  <v-expansion-panel-text>
                     <v-card
                       class="mt-4"
                       elevation="0"
                     >
                       <p v-html="$t('footer.FAQ.Antwort_1_1')" />
                     </v-card>
-                  </v-expansion-panel-content>
+                  </v-expansion-panel-text>
                 </v-expansion-panel>
 
-                <v-expansion-panel>
-                  <v-expansion-panel-header>
+                <v-expansion-panel focusable>
+                  <v-expansion-panel-title>
                     <b v-html="$t('footer.FAQ.Frage_1_2')" /> 
-                  </v-expansion-panel-header>
-                  <v-expansion-panel-content>
+                  </v-expansion-panel-title>
+                  <v-expansion-panel-text>
                     <v-card
                       class="mt-4"
                       elevation="0"
@@ -62,14 +67,14 @@
                       <p v-html="$t('footer.FAQ.Antwort_1_2_2')" />
                       <p v-html="$t('footer.FAQ.Antwort_1_2_3')" />
                     </v-card>
-                  </v-expansion-panel-content>
+                  </v-expansion-panel-text>
                 </v-expansion-panel>
 
-                <v-expansion-panel>
-                  <v-expansion-panel-header>
+                <v-expansion-panel focusable>
+                  <v-expansion-panel-title>
                     <b> {{ $t('footer.FAQ.Frage_1_3') }} </b> 
-                  </v-expansion-panel-header>
-                  <v-expansion-panel-content>
+                  </v-expansion-panel-title>
+                  <v-expansion-panel-text>
                     <v-card
                       class="mt-4"
                       elevation="0"
@@ -77,14 +82,14 @@
                       <p> {{ $t('footer.FAQ.Antwort_1_3_1') }} </p>
                       <p v-html="$t('footer.FAQ.Antwort_1_3_2')" />
                     </v-card>
-                  </v-expansion-panel-content>
+                  </v-expansion-panel-text>
                 </v-expansion-panel>
 
-                <v-expansion-panel>
-                  <v-expansion-panel-header>
+                <v-expansion-panel focusable>
+                  <v-expansion-panel-title>
                     <b> {{ $t('footer.FAQ.Frage_1_4') }} </b> 
-                  </v-expansion-panel-header>
-                  <v-expansion-panel-content>
+                  </v-expansion-panel-title>
+                  <v-expansion-panel-text>
                     <v-card
                       class="mt-4"
                       elevation="0"
@@ -106,8 +111,8 @@
                         {{ $t('footer.FAQ.Antwort_1_4_7') }}
                       </p>
                       <u> {{ $t('footer.FAQ.Antwort_1_4_8') }} </u>
-                      <v-simple-table>
-                        <template v-slot:default>
+                      <v-table>
+                        <template #default>
                           <thead>
                             <tr>
                               <th />
@@ -133,16 +138,16 @@
                             </tr>
                           </tbody>
                         </template>
-                      </v-simple-table>
+                      </v-table>
                     </v-card>
-                  </v-expansion-panel-content>
+                  </v-expansion-panel-text>
                 </v-expansion-panel>
 
-                <v-expansion-panel>
-                  <v-expansion-panel-header>
+                <v-expansion-panel focusable>
+                  <v-expansion-panel-title>
                     <b> {{ $t('footer.FAQ.Frage_1_5') }} </b> 
-                  </v-expansion-panel-header>
-                  <v-expansion-panel-content>
+                  </v-expansion-panel-title>
+                  <v-expansion-panel-text>
                     <v-card
                       class="mt-4"
                       elevation="0"
@@ -150,22 +155,22 @@
                       <p v-html="$t('footer.FAQ.Antwort_1_5_1')" />
                       <p> {{ $t('footer.FAQ.Antwort_1_5_2') }} </p>
                     </v-card>
-                  </v-expansion-panel-content>
+                  </v-expansion-panel-text>
                 </v-expansion-panel>
 
-                <v-expansion-panel>
-                  <v-expansion-panel-header>
+                <v-expansion-panel focusable>
+                  <v-expansion-panel-title>
                     <b v-html="$t('footer.FAQ.Frage_1_6')" />
-                  </v-expansion-panel-header>
-                  <v-expansion-panel-content>
+                  </v-expansion-panel-title>
+                  <v-expansion-panel-text>
                     <v-card
                       class="mt-4"
                       elevation="0"
                     >
                       <p v-html="$t('footer.FAQ.Antwort_1_6_1')" />
                       <p v-html="$t('footer.FAQ.Antwort_1_6_2')" />
-                      <v-simple-table>
-                        <template v-slot:default>
+                      <v-table>
+                        <template #default>
                           <thead>
                             <tr>
                               <th> {{ $t('footer.FAQ.Antwort_1_6_Tabelle_1') }} </th>
@@ -206,16 +211,16 @@
                             </tr>
                           </tbody>
                         </template>
-                      </v-simple-table>
+                      </v-table>
                     </v-card>
-                  </v-expansion-panel-content>
+                  </v-expansion-panel-text>
                 </v-expansion-panel>
 
-                <v-expansion-panel>
-                  <v-expansion-panel-header>
+                <v-expansion-panel focusable>
+                  <v-expansion-panel-title>
                     <b v-html="$t('footer.FAQ.Frage_1_7')" />
-                  </v-expansion-panel-header>
-                  <v-expansion-panel-content>
+                  </v-expansion-panel-title>
+                  <v-expansion-panel-text>
                     <v-card
                       class="mt-4"
                       elevation="0"
@@ -223,7 +228,7 @@
                       <p v-html="$t('footer.FAQ.Antwort_1_7_1')" />
                       <p v-html="$t('footer.FAQ.Antwort_1_7_2')" />
                     </v-card>
-                  </v-expansion-panel-content>
+                  </v-expansion-panel-text>
                 </v-expansion-panel>
               </v-expansion-panels>
             </v-card>
@@ -235,50 +240,52 @@
               elevation="0"
             >
               <v-card-title
-                class="mx-4 headerClass"
+                class="mx-4"
               >
-                <label v-html="$t('footer.FAQ.Titel_2')" />
+                <label
+                  class="headerClass"
+                  v-html="$t('footer.FAQ.Titel_2')"
+                />
               </v-card-title>
 
               <v-expansion-panels
                 v-model="panel_2"
-                focusable
                 multiple
                 class="px-4 pb-4 mt-2"
               >
-                <v-expansion-panel>
-                  <v-expansion-panel-header>
+                <v-expansion-panel focusable>
+                  <v-expansion-panel-title>
                     <b v-html="$t('footer.FAQ.Frage_2_1')" />
-                  </v-expansion-panel-header>
-                  <v-expansion-panel-content>
+                  </v-expansion-panel-title>
+                  <v-expansion-panel-text>
                     <v-card
                       class="mt-4"
                       elevation="0"
                     >
                       <p v-html="$t('footer.FAQ.Antwort_2_1')" />
                     </v-card>
-                  </v-expansion-panel-content>
+                  </v-expansion-panel-text>
                 </v-expansion-panel>
 
-                <v-expansion-panel>
-                  <v-expansion-panel-header>
+                <v-expansion-panel focusable>
+                  <v-expansion-panel-title>
                     <b v-html="$t('footer.FAQ.Frage_2_2')" />
-                  </v-expansion-panel-header>
-                  <v-expansion-panel-content>
+                  </v-expansion-panel-title>
+                  <v-expansion-panel-text>
                     <v-card
                       class="mt-4"
                       elevation="0"
                     >
                       <p v-html="$t('footer.FAQ.Antwort_2_2')" />
                     </v-card>
-                  </v-expansion-panel-content>
+                  </v-expansion-panel-text>
                 </v-expansion-panel>
 
-                <v-expansion-panel>
-                  <v-expansion-panel-header>
+                <v-expansion-panel focusable>
+                  <v-expansion-panel-title>
                     <b v-html="$t('footer.FAQ.Frage_2_3')" />
-                  </v-expansion-panel-header>
-                  <v-expansion-panel-content>
+                  </v-expansion-panel-title>
+                  <v-expansion-panel-text>
                     <v-card
                       class="mt-4"
                       elevation="0"
@@ -286,21 +293,21 @@
                       <p v-html="$t('footer.FAQ.Antwort_2_3_1')" />
                       <p v-html="$t('footer.FAQ.Antwort_2_3_2')" />
                     </v-card>
-                  </v-expansion-panel-content>
+                  </v-expansion-panel-text>
                 </v-expansion-panel>
 
-                <v-expansion-panel>
-                  <v-expansion-panel-header>
+                <v-expansion-panel focusable>
+                  <v-expansion-panel-title>
                     <b v-html="$t('footer.FAQ.Frage_2_4')" />
-                  </v-expansion-panel-header>
-                  <v-expansion-panel-content>
+                  </v-expansion-panel-title>
+                  <v-expansion-panel-text>
                     <v-card
                       class="mt-4"
                       elevation="0"
                     >
                       <p v-html="$t('footer.FAQ.Antwort_2_4')" />
-                      <v-simple-table>
-                        <template v-slot:default>
+                      <v-table>
+                        <template #default>
                           <thead>
                             <tr>
                               <th> {{ $t('footer.FAQ.Antwort_2_4_Tabelle_1') }} </th>
@@ -330,16 +337,16 @@
                             </tr>
                           </tbody>
                         </template>
-                      </v-simple-table>
+                      </v-table>
                     </v-card>
-                  </v-expansion-panel-content>
+                  </v-expansion-panel-text>
                 </v-expansion-panel>
 
-                <v-expansion-panel>
-                  <v-expansion-panel-header>
+                <v-expansion-panel focusable>
+                  <v-expansion-panel-title>
                     <b> {{ $t('footer.FAQ.Frage_2_5') }} </b> 
-                  </v-expansion-panel-header>
-                  <v-expansion-panel-content>
+                  </v-expansion-panel-title>
+                  <v-expansion-panel-text>
                     <v-card
                       class="mt-4"
                       elevation="0"
@@ -381,14 +388,14 @@
                         {{ formel_4 }}
                       </div>
                     </v-card>
-                  </v-expansion-panel-content>
+                  </v-expansion-panel-text>
                 </v-expansion-panel>
 
-                <v-expansion-panel>
-                  <v-expansion-panel-header>
+                <v-expansion-panel focusable>
+                  <v-expansion-panel-title>
                     <b> {{ $t('footer.FAQ.Frage_2_6') }} </b> 
-                  </v-expansion-panel-header>
-                  <v-expansion-panel-content>
+                  </v-expansion-panel-title>
+                  <v-expansion-panel-text>
                     <v-card
                       class="mt-4"
                       elevation="0"
@@ -397,28 +404,28 @@
                       <p> {{ $t('footer.FAQ.Antwort_2_6_2') }} </p>
                       <p v-html="$t('footer.FAQ.Antwort_2_6_3')" />
                     </v-card>
-                  </v-expansion-panel-content>
+                  </v-expansion-panel-text>
                 </v-expansion-panel>
 
-                <v-expansion-panel>
-                  <v-expansion-panel-header>
+                <v-expansion-panel focusable>
+                  <v-expansion-panel-title>
                     <b> {{ $t('footer.FAQ.Frage_2_7') }} </b> 
-                  </v-expansion-panel-header>
-                  <v-expansion-panel-content>
+                  </v-expansion-panel-title>
+                  <v-expansion-panel-text>
                     <v-card
                       class="mt-4"
                       elevation="0"
                     >
                       <p> {{ $t('footer.FAQ.Antwort_2_7') }} </p>
                     </v-card>
-                  </v-expansion-panel-content>
+                  </v-expansion-panel-text>
                 </v-expansion-panel>
 
-                <v-expansion-panel>
-                  <v-expansion-panel-header>
+                <v-expansion-panel focusable>
+                  <v-expansion-panel-title>
                     <b> {{ $t('footer.FAQ.Frage_2_8') }} </b> 
-                  </v-expansion-panel-header>
-                  <v-expansion-panel-content>
+                  </v-expansion-panel-title>
+                  <v-expansion-panel-text>
                     <v-card
                       class="mt-4"
                       elevation="0"
@@ -426,20 +433,20 @@
                       <p v-html="$t('footer.FAQ.Antwort_2_8_1')" />
                       <p> {{ $t('footer.FAQ.Antwort_2_8_2') }} </p>
                     </v-card>
-                  </v-expansion-panel-content>
+                  </v-expansion-panel-text>
                 </v-expansion-panel>
 
-                <v-expansion-panel>
-                  <v-expansion-panel-header>
+                <v-expansion-panel focusable>
+                  <v-expansion-panel-title>
                     <b> {{ $t('footer.FAQ.Frage_2_9') }} </b> 
-                  </v-expansion-panel-header>
-                  <v-expansion-panel-content>
+                  </v-expansion-panel-title>
+                  <v-expansion-panel-text>
                     <v-card
                       class="mt-4"
                       elevation="0"
                     >
-                      <v-simple-table>
-                        <template v-slot:default>
+                      <v-table>
+                        <template #default>
                           <tbody>
                             <tr>
                               <th> 2020 </th>
@@ -467,16 +474,16 @@
                             </tr>
                           </tbody>
                         </template>
-                      </v-simple-table>
+                      </v-table>
                     </v-card>
-                  </v-expansion-panel-content>
+                  </v-expansion-panel-text>
                 </v-expansion-panel>
 
-                <v-expansion-panel>
-                  <v-expansion-panel-header>
+                <v-expansion-panel focusable>
+                  <v-expansion-panel-title>
                     <b v-html="$t('footer.FAQ.Frage_2_10')" />
-                  </v-expansion-panel-header>
-                  <v-expansion-panel-content>
+                  </v-expansion-panel-title>
+                  <v-expansion-panel-text>
                     <v-card
                       class="mt-4"
                       elevation="0"
@@ -497,7 +504,7 @@
                         >{{ $t('common.GithubRepo') }}</a>
                       </p>
                     </v-card>
-                  </v-expansion-panel-content>
+                  </v-expansion-panel-text>
                 </v-expansion-panel>  
               </v-expansion-panels>
             </v-card>
@@ -508,22 +515,24 @@
               elevation="0"
             >
               <v-card-title
-                class="mx-4 headerClass"
+                class="mx-4"
               >
-                <label v-html="$t('footer.FAQ.Titel_3')" />
+                <label
+                  class="headerClass"
+                  v-html="$t('footer.FAQ.Titel_3')"
+                />
               </v-card-title>
 
               <v-expansion-panels
                 v-model="panel_3"
-                focusable
                 multiple
                 class="px-4 pb-4 mt-2"
               >
-                <v-expansion-panel>
-                  <v-expansion-panel-header>
+                <v-expansion-panel focusable>
+                  <v-expansion-panel-title>
                     <b v-html="$t('footer.FAQ.Frage_3_1')" />
-                  </v-expansion-panel-header>
-                  <v-expansion-panel-content>
+                  </v-expansion-panel-title>
+                  <v-expansion-panel-text>
                     <v-card
                       class="mt-4"
                       elevation="0"
@@ -550,14 +559,14 @@
                       <b> {{ $t('footer.FAQ.Antwort_3_1_5') }} </b>
                       <p> {{ $t('footer.FAQ.Antwort_3_1_5_1') }} </p>
                     </v-card>
-                  </v-expansion-panel-content>
+                  </v-expansion-panel-text>
                 </v-expansion-panel>
 
-                <v-expansion-panel>
-                  <v-expansion-panel-header>
+                <v-expansion-panel focusable>
+                  <v-expansion-panel-title>
                     <b v-html="$t('footer.FAQ.Frage_3_2')" /> 
-                  </v-expansion-panel-header>
-                  <v-expansion-panel-content>
+                  </v-expansion-panel-title>
+                  <v-expansion-panel-text>
                     <v-card
                       class="mt-4"
                       elevation="0"
@@ -568,14 +577,14 @@
                         <a href="mailto:co2-rechner@zv.tu-darmstadt.de">co2-rechner@zv.tu-darmstadt.de</a>.
                       </p>
                     </v-card>
-                  </v-expansion-panel-content>
+                  </v-expansion-panel-text>
                 </v-expansion-panel>
 
-                <v-expansion-panel>
-                  <v-expansion-panel-header>
+                <v-expansion-panel focusable>
+                  <v-expansion-panel-title>
                     <b> {{ $t('footer.FAQ.Frage_3_3') }} </b> 
-                  </v-expansion-panel-header>
-                  <v-expansion-panel-content>
+                  </v-expansion-panel-title>
+                  <v-expansion-panel-text>
                     <v-card
                       class="mt-4"
                       elevation="0"
@@ -585,42 +594,42 @@
                       <p> {{ $t('footer.FAQ.Antwort_3_3_3') }} </p>
                       <p v-html="$t('footer.FAQ.Antwort_3_3_4')" />
                     </v-card>
-                  </v-expansion-panel-content>
+                  </v-expansion-panel-text>
                 </v-expansion-panel>
 
-                <v-expansion-panel>
-                  <v-expansion-panel-header>
+                <v-expansion-panel focusable>
+                  <v-expansion-panel-title>
                     <b> {{ $t('footer.FAQ.Frage_3_4') }} </b> 
-                  </v-expansion-panel-header>
-                  <v-expansion-panel-content>
+                  </v-expansion-panel-title>
+                  <v-expansion-panel-text>
                     <v-card
                       class="mt-4"
                       elevation="0"
                     >
                       <p> {{ $t('footer.FAQ.Antwort_3_4') }} </p>
                     </v-card>
-                  </v-expansion-panel-content>
+                  </v-expansion-panel-text>
                 </v-expansion-panel>
 
-                <v-expansion-panel>
-                  <v-expansion-panel-header>
+                <v-expansion-panel focusable>
+                  <v-expansion-panel-title>
                     <b> {{ $t('footer.FAQ.Frage_3_5') }} </b> 
-                  </v-expansion-panel-header>
-                  <v-expansion-panel-content>
+                  </v-expansion-panel-title>
+                  <v-expansion-panel-text>
                     <v-card
                       class="mt-4"
                       elevation="0"
                     >
                       <p v-html="$t('footer.FAQ.Antwort_3_5')" />
                     </v-card>
-                  </v-expansion-panel-content>
+                  </v-expansion-panel-text>
                 </v-expansion-panel>
 
-                <v-expansion-panel>
-                  <v-expansion-panel-header>
+                <v-expansion-panel focusable>
+                  <v-expansion-panel-title>
                     <b> {{ $t('footer.FAQ.Frage_3_6') }} </b> 
-                  </v-expansion-panel-header>
-                  <v-expansion-panel-content>
+                  </v-expansion-panel-title>
+                  <v-expansion-panel-text>
                     <v-card
                       class="mt-4"
                       elevation="0"
@@ -628,14 +637,14 @@
                       <p v-html="$t('footer.FAQ.Antwort_3_6_1')" />
                       <p v-html="$t('footer.FAQ.Antwort_3_6_2')" />
                     </v-card>
-                  </v-expansion-panel-content>
+                  </v-expansion-panel-text>
                 </v-expansion-panel>
 
-                <v-expansion-panel>
-                  <v-expansion-panel-header>
+                <v-expansion-panel focusable>
+                  <v-expansion-panel-title>
                     <b v-html="$t('footer.FAQ.Frage_3_7')" />
-                  </v-expansion-panel-header>
-                  <v-expansion-panel-content>
+                  </v-expansion-panel-title>
+                  <v-expansion-panel-text>
                     <v-card
                       class="mt-4"
                       elevation="0"
@@ -643,7 +652,7 @@
                       <p> {{ $t('footer.FAQ.Antwort_3_7_1') }} </p>
                       <p> {{ $t('footer.FAQ.Antwort_3_7_2') }} </p>
                     </v-card>
-                  </v-expansion-panel-content>
+                  </v-expansion-panel-text>
                 </v-expansion-panel>
               </v-expansion-panels>
             </v-card>
@@ -656,11 +665,9 @@
 </template>
 
 <script>
-import Header from '../header/Header.vue'
-import Footer from '../footer/Footer.vue'
-import loadingAnimation from '../componentParts/LoadingAnimation.vue'
-import constants from '../../const'
-import i18n from "../../i18n";
+import Header from '@/components/header/Header.vue'
+import Footer from '@/components/footer/Footer.vue'
+import constants from '@/const.js'
 
 export default {
   name: "FAQ",
@@ -706,6 +713,9 @@ export default {
               "&= \\sum_{\\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_4_2')  + "}} \\left( 2 \\cdot \\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_4_5')  + "} \\cdot \\text{" + this.$t('footer.FAQ.Antwort_2_5_Formel_4_4')  + "} \\right)" +
               "\\end{aligned} \\)"
     },
+    title1() {
+      return this.$t('footer.FAQ.Titel_1')
+    },
   },
 
   watch: {
@@ -728,22 +738,25 @@ export default {
     }
   },
 
-  mounted() {
-    if(this.$route.hash){
-      let top = this.$refs[this.$route.hash].$refs.link.offsetTop
-
-      window.scrollTo({
-        top: top, 
-        left: 0
-      })
-    }
-  },
 
   methods: {
     setTabList(){
       this.tabList = [
-        { id: 0, title: i18n.t('footer.Footer.FAQ'), componentType: loadingAnimation},
+        { id: 0, title: this.$t('footer.Footer.FAQ'), component: null},
       ]
+    },
+
+    // Vuetify uses <suspense> inside their components, which means that the mounted hook is called before the content is rendered
+    // This function is called once v-main is and all its childs are mounted
+    vuetifyMounted() {
+      if(this.$route.hash){
+        let top = this.$refs[this.$route.hash].$el.offsetTop
+
+        window.scrollTo({
+          top: top, 
+          left: 0
+        })
+      }
     }
   }
 }
@@ -756,11 +769,5 @@ export default {
       background-color: inherit !important;
       border-color: inherit !important;
     }
-  }
-  .headerClass{
-    white-space: wrap;
-    word-break: normal;
-    display: block;
-    hyphens: auto;
   }
 </style>

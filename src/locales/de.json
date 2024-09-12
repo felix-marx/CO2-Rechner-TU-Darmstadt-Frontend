@@ -73,7 +73,7 @@
 
       "ErstellungUmfrage_0": "Erstellung einer Umfrage",
       "ErstellungUmfrage_1": "Zum Erstellen einer Umfrage ist das Anlegen eines Nutzeraccounts notwendig.",
-      "ErstellungUmfrage_2": "Für den Nutzeraccount müssen Sie eine gültige E-Mail der Technischen Universität Darmstadt (z.B. max.mustermann@tu-darmstadt.de) angeben.",
+      "ErstellungUmfrage_2": "Für den Nutzeraccount müssen Sie eine gültige E-Mail der Technischen Universität Darmstadt (z.B. max.mustermann{'@'}tu-darmstadt.de) angeben.",
       "ErstellungUmfrage_3": "Die zum Erzeugen der der Umfrage eingegebenen Daten sind in einer Weise abstrahiert, dass Rückschlüsse auf individuelle Personen nicht möglich sind.",
       "ErstellungUmfrage_4": "Die zum Erstellen einer Umfrage durch Sie eingegebenen Daten können Sie jederzeit löschen.",
       "ErstellungUmfrage_5": "Sie entscheiden, wie lange die Daten in unserem System vorhanden sind.",
@@ -298,7 +298,7 @@
     "Contact": {
       "Name": "Kontakt",
       "Titel": "Büro für Nachhaltigkeit",
-      "Adresse_1": "L3|02 Solarhaus",
+      "Adresse_1": "L3{'|'}02 Solarhaus",
       "Adresse_2": "El-Lissitzky-Straße 3",
       "Adresse_3": "64287 Darmstadt"
     }
@@ -386,6 +386,8 @@
       "problemeInUmfrage_3": "Sie haben das Gerät ",
       "problemeInUmfrage_4": " ausgewählt, aber keine gültige Anzahl angegeben.",
       "problemeInUmfrage_5": "Sie haben einem ausgewählten Gerät keine verwendeten Toner hinzugefügt. Wenn Sie das Gerät nicht in Benutzung haben, ignorieren Sie diese Nachricht.",
+      "problemeInUmfrage_6": "Sie haben für das Gerät ",
+      "problemeInUmfrage_7": " verbrauchte Toner angegeben, aber keinen Drucker angegeben.",
 
       "ITGeraetIDDic_7": "Multifunktionsgeräte",
       "ITGeraetIDDic_8": "Multifunktionsgeräte Toner",
@@ -482,8 +484,8 @@
       "IT_Geraete_Desktops": "Desktop-PCs",
       "IT_Geraete_Bildschirme": "Bildschirme",
       "IT_Geraete_Mobiltelefone": "Mobiltelefone",
-      "IT_Gereate_Notebook": "Notebook",
-      "IT_Gereate_Desktop": "Desktop-PC",
+      "IT_Geraete_Notebook": "Notebook",
+      "IT_Geraete_Desktop": "Desktop-PC",
       "IT_Geraete_Bildschirm": "Bildschirm",
       "IT_Geraete_Mobiltelefon": "Mobiltelefon",
 
@@ -515,8 +517,8 @@
       "EingabeValidierung_Dienstreise_0": "Sie haben bei einer Dienstreise mit Flugzeug keinen Flugstreckentyp angegeben.",
       "EingabeValidierung_Dienstreise_1": "Sie haben für die Dienstreise mit ",
       "EingabeValidierung_Dienstreise_2": " keine gültige Distanz angegeben.",
-      "EingabeValidierung_Gereate_0": "Sie haben das Gerät ",
-      "EingabeValidierung_Gereate_1": "  ausgewählt, aber keine Anzahl angegeben."
+      "EingabeValidierung_Geraete_0": "Sie haben das Gerät ",
+      "EingabeValidierung_Geraete_1": "  ausgewählt, aber keine valide Anzahl angegeben."
     },
     "surveyCompleted": {
       "UmfrageVollstaendig_0": "Diese Umfrage ist bereits vollständig ausgefüllt.",
@@ -546,10 +548,10 @@
       "AufteilungPendelwege": "Aufteilung nach Pendelwege",
       "AufteilungITGeraete": "Aufteilung nach IT-Geraete",
       
-      "KeineEmissionenAuswertung": "Es ist keine Auswertung der Emissionen nach Energieverbrauch möglich. \n Für das ausgewählte Bilanzierungsjahr fehlen Daten seitens der TU Darmstadt, um die Emissionen berechnen zu können. \n Die Zählerinfrastruktur wird durch das Energiemanagment immer weiter ausgebaut.\n Sie können leider nichts tun, um die Auswertung zu vervollständigen.Es ist kein Auswertung der Emissionen durch den Energieverbrauch möglich. \n Für das ausgewählte Bilanzierungsjahr fehlen Daten seitens der TU Darmstadt, um die Emissionen berechnen zu können. \n              Die Zählerinfrastruktur wird durch das Energiemanagment immer weiter ausgebaut.\n Sie können leider nichts tun, um die Auswertung zu vervollständigen.",
+      "KeineEmissionenAuswertung": "Es ist keine Auswertung der Emissionen nach Energieverbrauch möglich. \n Für das ausgewählte Bilanzierungsjahr fehlen Daten seitens der TU Darmstadt, um die Emissionen berechnen zu können. \n Die Zählerinfrastruktur wird durch das Energiemanagment immer weiter ausgebaut.\n Sie können leider nichts tun, um die Auswertung zu vervollständigen.",
       "DarstellungEnergieverbrauch": "Darstellung des Energieverbrauches",
       "DarstellungEnergieverbrauch_tooltip": "Die angezeigten Verbrauche für den Energieverbrauch können unvollständig sein.\n Der Grund dafür ist, dass nicht alle Gebäude der TU mit einem eigenen Zähler ausgestattet sind und keine Zählerdaten vorliegen.",
-      "DarstellungEnergieverbrauchWarning": "Es ist kein Auswertung der Emissionen durch den Energieverbrauch möglich.\n Für das ausgewählte Bilanzierungsjahr fehlen Daten seitens der TU Darmstadt, um die Emissionen berechnen zu können.\n Die Zählerinfrastruktur wird durch das Energiemanagment immer weiter ausgebaut.\n Sie können leider nichts tun, um die Auswertung zu vervollständigen.",
+      "DarstellungEnergieverbrauchWarning": "Es ist keine Darstellung des Energieverbrauch möglich.\n Für das ausgewählte Bilanzierungsjahr fehlen Daten seitens der TU Darmstadt, um die Emissionen berechnen zu können.\n Die Zählerinfrastruktur wird durch das Energiemanagment immer weiter ausgebaut.\n Sie können leider nichts tun, um die Auswertung zu vervollständigen.",
       
       "NachhaltigkeitTipps_0": "Das Büro für Nachhaltigkeit hat Tipps zum ",
       "NachhaltigkeitTipps_1": "Energiesparen am Arbeitsplatz",
@@ -732,6 +734,7 @@
     "jahrRegel": "Bitte geben Sie ein valides Jahr an",
     "Gebaeude": "Gebäude",
     "Verbrauch": "Verbrauch",
-    "GithubRepo": "Github Repository"
+    "GithubRepo": "Github Repository",
+    "Einheit_km": "km"
   }
 }

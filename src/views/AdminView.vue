@@ -1,16 +1,16 @@
 <template>
-  <v-app :style="{background: $vuetify.theme.themes[theme].background}">
+  <v-app :style="{background: $vuetify.theme.themes[theme].colors.background}">
     <!-- Header -->
     <Header
       :display-user-setting="true"
       :tabs="tabList"
       :display-back-button="false"
       :display-login-button="false"
-      @changeTab="changeTab($event)" 
+      @change-tab="changeTab($event)" 
     />
 
     <!-- main body -->
-    <v-main :class="$vuetify.breakpoint.mobile ? 'mb-0' : 'mb-16'">
+    <v-main :class="$vuetify.display.mobile ? 'mb-0 pb-0' : 'mb-0'">
       <component :is="currentTabType" />
     </v-main>
 
@@ -19,67 +19,76 @@
   </v-app>
 </template>
 
-<script>
-import Footer from "@/components/footer/Footer";
-import Header from "@/components/header/Header";
-import AdminDBInteract from "@/components/admin/AdminDBInteract";
-import AdminViewSurveys from "@/components/admin/AdminViewSurveys";
-import AccountSettings from '@/components/header/AccountSettings.vue';
-import i18n from "../i18n";
 
+<script>
 export default {
   name: "App",
+}
+</script>
 
-  components: {
-    Footer,
-    Header,
-    AdminDBInteract,
-    AdminViewSurveys,
-    AccountSettings
-  },
+<script setup>
+import Footer from "@/components/footer/Footer.vue";
+import Header from "@/components/header/Header.vue";
+import AdminDBInteract from "@/components/admin/AdminDBInteract.vue";
+import AdminViewSurveys from "@/components/admin/AdminViewSurveys.vue";
 
-  data: () => ({
-    // standard tab selected is the first tab / Umfrage tab
-    // could extend this to be persistent on site refresh, but this would require additional plugins, like e.g. Vuex.
-    selectedTab: 0,
-    currentTabType: AdminViewSurveys,
-    tabList: [],
-  }),
+import { computed, ref, watch, shallowRef } from "vue";
+import { useI18n } from "vue-i18n";
+import vuetify from "@/plugins/vuetify";
 
-  computed:{
-    theme(){
-      return (this.$vuetify.theme.dark) ? 'dark' : 'light'
+const { t, locale } = useI18n();
+
+const adminViewSurveys = shallowRef(AdminViewSurveys);
+const adminDBInteract = shallowRef(AdminDBInteract);
+
+const selectedTab = ref(0)
+const defaultTab = ref(0)
+const currentTabType = shallowRef(null);
+const tabList = ref([])
+
+
+const theme = computed(() => {
+  return vuetify.theme.dark ? "dark" : "light";
+});
+
+
+watch(locale, () => {
+  setTabList();
+});
+
+
+// created
+setTabList();
+setInitalTab();
+
+/**
+Listens for events in the header tab menu.
+@param tab the new tab that is now selected. Has two attributes id and component.
+The component determines the component that is then shown in the App Body.
+*/
+function changeTab(tab) {
+  selectedTab.value = tab.id;
+  currentTabType.value = tab.component;
+}
+
+function setTabList(){
+  tabList.value = [
+    { id: 0, title: t('common.UmfrageUebersicht'), component: adminViewSurveys},
+    { id: 1, title: t('common.Datenbank'), component: adminDBInteract},
+  ]
+}
+
+function setInitalTab(){
+  let tabObj = null
+  for (let i = 0; i < tabList.value.length; i++) {
+    if (tabList.value[i].id === defaultTab.value) {
+      tabObj = tabList.value[i]
+      break
     }
-  },
+  }
 
-  watch: {
-    '$i18n.locale': function() {
-      this.setTabList();
-    }
-  },
-  
-  created() {
-    this.setTabList();
-  },
-
-  methods: {
-    /**
-    Listens for events in the header tab menu.
-    @param tab the new tab that is now selected. Has two attributes id and componentType.
-    The componentType determines the component that is then shown in the App Body.
-    */
-    changeTab(tab) {
-      this.selectedTab = tab.id;
-      this.currentTabType = tab.componentType;
-    },
-
-    setTabList(){
-      this.tabList = [
-        { id: 2, title: i18n.t('common.Accounteinstellungen'), componentType: AccountSettings},
-        { id: 0, title: i18n.t('common.UmfrageUebersicht'), componentType: AdminViewSurveys},
-        { id: 1, title: i18n.t('common.Datenbank'), componentType: AdminDBInteract},
-      ]
-    }
-  },
-};
+  if (tabObj !== null) {
+    changeTab(tabObj)
+  }
+}
 </script>

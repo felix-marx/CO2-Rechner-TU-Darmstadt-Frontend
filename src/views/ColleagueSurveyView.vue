@@ -1,5 +1,5 @@
 <template>
-  <v-app :style="{background: $vuetify.theme.themes[theme].background}">
+  <v-app :style="{background: $vuetify.theme.themes[theme].colors.background}">
     <!-- Header -->
     <Header
       :tabs="tabList"
@@ -9,7 +9,7 @@
     />
 
     <!-- main body -->
-    <v-main :class="$vuetify.breakpoint.mobile ? 'mb-0' : 'mb-16'">
+    <v-main :class="$vuetify.display.mobile ? 'mb-0 pb-0' : 'mb-0'">
       <component
         :is="bodyComponent"
         v-bind="properties"
@@ -22,13 +22,12 @@
 </template>
 
 <script>
-import Footer from "@/components/footer/Footer";
-import Header from "@/components/header/Header";
-import ColleagueSurvey from "@/components/colleagueSurvey/ColleagueSurvey";
-import SurveyNotFound from "@/components/colleagueSurvey/SurveyNotFound";
-import LoadingAnimation from "@/components/componentParts/LoadingAnimation";
-import SurveyCompleted from "@/components/colleagueSurvey/SurveyCompleted"
-import i18n from "../i18n";
+import Footer from "@/components/footer/Footer.vue";
+import Header from "@/components/header/Header.vue";
+import ColleagueSurvey from "@/components/colleagueSurvey/ColleagueSurvey.vue";
+import SurveyNotFound from "@/components/colleagueSurvey/SurveyNotFound.vue";
+import LoadingAnimation from "@/components/componentParts/LoadingAnimation.vue";
+import SurveyCompleted from "@/components/colleagueSurvey/SurveyCompleted.vue"
 
 export default {
   name: "ColleagueSurveyView",
@@ -42,7 +41,7 @@ export default {
   },
 
   data: () => ({
-      tabList: [{ id: 0, title: i18n.t('common.Umfrage'), componentType: LoadingAnimation}],
+      tabList: [],
       umfrageID: null,
       bezeichnung: "",
       umfrageComplete: false
@@ -112,7 +111,7 @@ export default {
      * Requests from the server whether a survey with the givenID exists.
      */
     fetchUmfrageExists: async function (givenID) {
-      await fetch(process.env.VUE_APP_BASEURL + "/mitarbeiterumfrage/exists?id=" + givenID, {
+      await fetch(import.meta.env.VITE_BASEURL + "/mitarbeiterumfrage/exists?id=" + givenID, {
         method: "GET",
         })
         .then((response) => response.json())
@@ -135,7 +134,7 @@ export default {
 
     setTabList(){
       this.tabList = [
-        { id: 0, title: i18n.t('common.Umfrage'), componentType: LoadingAnimation},
+        { id: 0, title: this.$t('common.Umfrage'), component: null},
       ]
     }
   },
