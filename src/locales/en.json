@@ -386,6 +386,8 @@
       "problemeInUmfrage_3": "For the selected device: ",
       "problemeInUmfrage_4": ", the quantity entered is not valid.",
       "problemeInUmfrage_5": "You have not entered the toners used for the device selected. If you are not using this device, please ignore this message.",
+      "problemeInUmfrage_6": "For the device: ",
+      "problemeInUmfrage_7": " you have entered the toners used, but have not entered the number of printers.",
       
       "ITGeraetIDDic_7": "Multifunctional devices",
       "ITGeraetIDDic_8": "Toner(s) for multifunctional devices",

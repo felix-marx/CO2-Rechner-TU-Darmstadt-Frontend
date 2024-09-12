@@ -775,7 +775,7 @@ export default {
      *  required:    []
      * }
      */
-    problemeInUmfrage: function() {   // TODO change for new input
+    problemeInUmfrage: function() {
       var nonRequiredArray = []
       
       // Gebaeude
@@ -791,6 +791,16 @@ export default {
       for(const it of this.geraeteAnzahl) {
         if(it[1] < 0) { 
           nonRequiredArray.push(this.$t("userSurvey.Survey.problemeInUmfrage_3") + resolveITGeraetID(it[0]) + this.$t("userSurvey.Survey.problemeInUmfrage_4"))
+        }
+
+        // checks whether the user has entered a toner amount without a printer
+        if(it[0] == this.constants.it_geraet_multifunktionsgeraet_toner && it[1] > 0 && this.geraeteAnzahl[0][1] == 0) {
+          nonRequiredArray.push(this.$t("userSurvey.Survey.problemeInUmfrage_6") + resolveITGeraetID(this.constants.it_geraet_multifunktionsgeraet) + this.$t("userSurvey.Survey.problemeInUmfrage_7"))
+        }
+
+        // checks whether the user has entered a toner amount without a printer
+        if(it[0] == this.constants.it_geraet_drucker_toner && it[1] > 0 && this.geraeteAnzahl[2][1] == 0) {
+          nonRequiredArray.push(this.$t("userSurvey.Survey.problemeInUmfrage_6") + resolveITGeraetID(this.constants.it_geraet_drucker_toner) + this.$t("userSurvey.Survey.problemeInUmfrage_7"))
         }
       }
       this.errorTextArray.nonRequired = nonRequiredArray

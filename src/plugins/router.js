@@ -110,7 +110,6 @@ const routes = [
 ]
 
 const router = new createRouter({
-  // history: createWebHistory(),      // TODO figure out why createWebHashHistory() for hash mode does not work
   history: createWebHashHistory(),
   routes: routes,
   scrollBehavior (to) {

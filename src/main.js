@@ -114,7 +114,6 @@ app.use(VueKeycloakJs, {
 
     app.provide('keycloak', keycloak) // provide keycloak instance to all components
 
-    app.mount('#app') // TODO maybe pout this here
-
+    app.mount('#app')
   }
 });
