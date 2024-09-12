@@ -1312,7 +1312,7 @@ export default {
         }
       }
       // Check number of days in office
-      if(this.arbeitstageBuero < 0 || this.arbeitstageBuero > 7) {
+      if(!this.arbeitstageBuero || this.arbeitstageBuero < 0 || this.arbeitstageBuero > 7) {
         errors.push(this.$t('colleagueSurvey.colleagueSurvey.EingabeValidierung_TageBuero'))
       }
       // Check for Dienstreise
