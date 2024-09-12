@@ -545,10 +545,10 @@
       "AufteilungDienstreisen": "Distribution based on business trips",
       "AufteilungPendelwege": "Distribution based on commuting distances",
       "AufteilungITGeraete": "Distribution based on IT devices",
-      "KeineEmissionenAuswertung": "Emissions cannot be analysed by energy consumption. \n For the reporting year selected, emissions cannot be calculated because of missing data from TU Darmstadt. \n The meter infrastructure is continuously being expanded by the Energy Management unit.\n Unfortunately, you cannot do anything to complete the analysis. Emissions cannot be analysed by energy consumption. \n For the reporting year selected, emissions cannot be calculated because of missing data from TU Darmstadt. \n              The meter infrastructure is continuously being expanded by the Energy Management unit.\n Unfortunately, you cannot do anything to complete the analysis.",
+      "KeineEmissionenAuswertung": "Emissions cannot be analysed by energy consumption. \n For the reporting year selected, emissions cannot be calculated because of missing data from TU Darmstadt. \n The meter infrastructure is continuously being expanded by the Energy Management unit.\n Unfortunately, you cannot do anything to complete the analysis.",
       "DarstellungEnergieverbrauch": "Plotting the energy consumed",
       "DarstellungEnergieverbrauch_tooltip": "The respective consumption displayed for the energy consumed by individual organisational units can be incomplete.\n This is due to the fact that not all buildings of TU Darmstadt are equipped with their own meters and no meter data are available.",
-      "DarstellungEnergieverbrauchWarning": "Emissions cannot be analysed by energy consumption.\n For the reporting year selected, emissions cannot be calculated because of missing data from TU Darmstadt.\n The meter infrastructure is continuously being expanded by the Energy Management unit.\n Unfortunately, you cannot do anything to complete the analysis.",
+      "DarstellungEnergieverbrauchWarning": "The energy consumption cannot be displayed.\n For the reporting year selected, emissions cannot be calculated because of missing data from TU Darmstadt.\n The meter infrastructure is continuously being expanded by the Energy Management unit.\n Unfortunately, you cannot do anything to complete the analysis.",
       
       "NachhaltigkeitTipps_0": "The Sustainable Development Office has collected tips on ",
       "NachhaltigkeitTipps_1": "saving energy at the workplace",
