@@ -550,7 +550,7 @@
       
       "KeineEmissionenAuswertung": "Es ist keine Auswertung der Emissionen nach Energieverbrauch möglich. \n Für das ausgewählte Bilanzierungsjahr fehlen Daten seitens der TU Darmstadt, um die Emissionen berechnen zu können. \n Die Zählerinfrastruktur wird durch das Energiemanagment immer weiter ausgebaut.\n Sie können leider nichts tun, um die Auswertung zu vervollständigen.",
       "DarstellungEnergieverbrauch": "Darstellung des Energieverbrauches",
-      "DarstellungEnergieverbrauch_tooltip": "Die angezeigten Verbrauche für den Energieverbrauch können unvollständig sein.\n Der Grund dafür ist, dass nicht alle Gebäude der TU mit einem eigenen Zähler ausgestattet sind und keine Zählerdaten vorliegen.",
+      "DarstellungEnergieverbrauch_tooltip": "Die angezeigten Verbräuche für den Energieverbrauch können unvollständig sein.\n Der Grund dafür ist, dass nicht alle Gebäude der TU mit einem eigenen Zähler ausgestattet sind und keine Zählerdaten vorliegen.",
       "DarstellungEnergieverbrauchWarning": "Es ist keine Darstellung des Energieverbrauch möglich.\n Für das ausgewählte Bilanzierungsjahr fehlen Daten seitens der TU Darmstadt, um die Emissionen berechnen zu können.\n Die Zählerinfrastruktur wird durch das Energiemanagment immer weiter ausgebaut.\n Sie können leider nichts tun, um die Auswertung zu vervollständigen.",
       
       "NachhaltigkeitTipps_0": "Das Büro für Nachhaltigkeit hat Tipps zum ",
