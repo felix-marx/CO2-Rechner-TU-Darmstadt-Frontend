@@ -16,8 +16,8 @@
     
     <v-card
       elevation="2"
-      :class="$vuetify.breakpoint.smAndUp ? 'pa-7 mt-2 mx-auto' : 'py-7 px-5 mt-2 mx-auto'"
-      outlined
+      :class="$vuetify.display.smAndUp ? 'pa-7 mt-2 mx-auto' : 'py-7 px-5 mt-2 mx-auto'"
+      border
       :max-width="constants.v_card_max_width"
     >
       <v-card-title class="headerClass">
@@ -41,7 +41,7 @@
           :key="'pendelweg-' + index"
         >
           <!-- Desktop -->
-          <template v-if="$vuetify.breakpoint.smAndUp">
+          <template v-if="$vuetify.display.smAndUp">
             <v-row>
               <v-col
                 cols="11"
@@ -95,11 +95,13 @@
                       <v-text-field
                         :ref="'pendelwegDistanz' + index"
                         v-model="medium[4]"
+                        type="number"
                         :rules="streckeRules"
                         :disabled="medium[0] === null || (medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_5') && medium[1] === null) || (medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_0') && medium[5] === null) || submittedDataSuccessfully"
                         :min="0"
                         :label="$t('colleagueSurvey.colleagueSurvey.WieInsBuero_pendelweg')"
-                        suffix="km"
+                        :suffix="$t('common.Einheit_km')"
+                        hide-spin-buttons
                       />
                     </v-col>
                   </v-row>
@@ -116,7 +118,7 @@
                       </h4>
                     </v-col>
                     <v-col
-                      cols="1"
+                      cols="2"
                       class="pt-0"
                     >
                       <v-checkbox
@@ -133,10 +135,12 @@
                       <v-text-field
                         :ref="'mitfahrer' + index"
                         v-model="medium[3]"
+                        type="number"
                         :rules="mitfahrerRules"
                         :disabled="!medium[2] || submittedDataSuccessfully"
                         :min="0"
                         :label="$t('colleagueSurvey.colleagueSurvey.WieInsBuero_anzahlMitfahrende')"
+                        hide-spin-buttons
                       />
                     </v-col>
                   </v-row>
@@ -144,21 +148,16 @@
               </v-col>
               <!-- Delete Button -->
               <v-col
-                class="mt-3 pb-0 text-center"
+                class="pb-0 text-center"
                 cols="1"
               >
                 <v-btn
-                  class="delete_text--text mx-auto"
+                  class="delete_text--text mx-auto mt-1"
                   color="delete"
-                  fab
-                  small
+                  icon="mdi-delete-outline"
                   :disabled="submittedDataSuccessfully"
                   @click="removeVerkehrsmittel(index)"
-                >
-                  <v-icon dark>
-                    mdi-delete-outline
-                  </v-icon>
-                </v-btn>
+                />
               </v-col>
             </v-row>
           </template>
@@ -223,11 +222,13 @@
                           <v-text-field
                             :ref="'pendelwegDistanz' + index"
                             v-model="medium[4]"
+                            type="number"
                             :rules="streckeRules"
                             :disabled="medium[0] === null || (medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_5') && medium[1] === null) || (medium[0] === $t('colleagueSurvey.colleagueSurvey.fahrmediumListe_0') && medium[5] === null) || submittedDataSuccessfully"
                             :min="0"
                             :label="$t('colleagueSurvey.colleagueSurvey.WieInsBuero_pendelweg')"
-                            suffix="km"
+                            :suffix="$t('common.Einheit_km')"
+                            hide-spin-buttons
                           />
                         </v-col>
                       </v-row>
@@ -240,15 +241,10 @@
                     <v-btn
                       class="delete_text--text mx-auto"
                       color="delete"
-                      fab
-                      small
+                      icon="mdi-delete-outline"
                       :disabled="submittedDataSuccessfully"
                       @click="removeVerkehrsmittel(index)"
-                    >
-                      <v-icon dark>
-                        mdi-delete-outline
-                      </v-icon>
-                    </v-btn>
+                    />
                   </v-col>
                 </v-row>
 
@@ -276,16 +272,17 @@
                       />
                     </v-col>
                     <v-col
-                      cols="810"
                       class="pt-0"
                     >
                       <v-text-field
                         :ref="'mitfahrer' + index"
                         v-model="medium[3]"
+                        type="number"
                         :rules="mitfahrerRules"
                         :disabled="!medium[2] || submittedDataSuccessfully"
                         :min="0"
                         :label="$t('colleagueSurvey.colleagueSurvey.WieInsBuero_anzahlMitfahrende')"
+                        hide-spin-buttons
                       />
                     </v-col>
                   </v-row>
@@ -295,7 +292,7 @@
           </template>
         </div>
         <!-- Add Button -->
-        <v-row class="mt-4">
+        <v-row>
           <v-col>
             <v-btn
               class="add_text--text pl-2"
@@ -322,11 +319,13 @@
             <v-text-field
               ref="arbeitstageBuero"
               v-model="arbeitstageBuero"
+              type="number"
               :rules="tageImBueroRules"
               :disabled="submittedDataSuccessfully"
               :min="0"
               :max="7"
               :label="$t('colleagueSurvey.colleagueSurvey.TageBuero_label')"
+              hide-spin-buttons
             />
           </v-row>
         </v-container>
@@ -348,7 +347,7 @@
           :key="'dienstreisen-' + index"
         >
           <!-- Desktop -->
-          <template v-if="$vuetify.breakpoint.smAndUp">
+          <template v-if="$vuetify.display.smAndUp">
             <v-row>
               <!-- Allgemeines Verkehrsmedium -->
               <v-col 
@@ -408,30 +407,27 @@
                 <v-text-field
                   :ref="'dienstreiseDistanz' + index"
                   v-model="reise[2]"
+                  type="number"
                   :rules="streckeRules"
                   :disabled="reise[0] === null || submittedDataSuccessfully || (reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_0') && reise[1] === null) || (reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3') && reise[3] === null)"
                   :min="0"
                   :label="$t('colleagueSurvey.colleagueSurvey.EinfacheDistanz')"
-                  suffix="km"
+                  :suffix="$t('common.Einheit_km')"
+                  hide-spin-buttons
                 />
               </v-col>
               <!-- Delete Button -->
               <v-col
-                class="mt-3 text-center"
+                class="text-center"
                 cols="1"
               >
                 <v-btn
-                  class="delete_text--text mx-auto"
+                  class="delete_text--text mx-auto mt-1"
                   color="delete"
-                  fab
-                  small
+                  icon="mdi-delete-outline"
                   :disabled="submittedDataSuccessfully"
                   @click="removeDienstreise(index)"
-                >
-                  <v-icon dark>
-                    mdi-delete-outline
-                  </v-icon>
-                </v-btn>
+                />
               </v-col>
             </v-row>
           </template>
@@ -512,11 +508,13 @@
                           <v-text-field
                             :ref="'dienstreiseDistanz' + index"
                             v-model="reise[2]"
+                            type="number"
                             :rules="streckeRules"
                             :disabled="reise[0] === null || submittedDataSuccessfully || (reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_0') && reise[1] === null) || (reise[0] === $t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3') && reise[3] === null)"
                             :min="0"
                             :label="$t('colleagueSurvey.colleagueSurvey.EinfacheDistanz')"
-                            suffix="km"
+                            :suffix="$t('common.Einheit_km')"
+                            hide-spin-buttons
                           />
                         </v-col>
                       </v-row>
@@ -530,15 +528,10 @@
                     <v-btn
                       class="delete_text--text mx-auto"
                       color="delete"
-                      fab
-                      small
+                      icon="mdi-delete-outline"
                       :disabled="submittedDataSuccessfully"
                       @click="removeDienstreise(index)"
-                    >
-                      <v-icon dark>
-                        mdi-delete-outline
-                      </v-icon>
-                    </v-btn>
+                    />
                   </v-col>
                 </v-row>
               </v-container>
@@ -578,75 +571,63 @@
         <v-container>
           <!-- Notebook -->
           <v-row>
-            <v-checkbox
-              v-model="geraeteAnzahl[0][2]"
-              :disabled="submittedDataSuccessfully"
-              hide-details
-            />
-            <v-text-field
-              ref="notebooks"
-              v-model="geraeteAnzahl[0][1]"
-              :rules="geraeteRules"
-              :disabled="!geraeteAnzahl[0][2] || submittedDataSuccessfully"
-              :min="0"
-              :label="$t('colleagueSurvey.colleagueSurvey.IT_Geraete_Notebooks')"
-              class="pr-5"
-              :suffix="$t('colleagueSurvey.colleagueSurvey.IT_Geraete_Suffix')"
-            />
+            <v-col :class="!$vuetify.display.mobile ? 'py-0' : 'pa-0'">
+              <number-input
+                ref="notebooks"
+                v-model="geraeteAnzahl[0][1]"
+                :rules="geraeteRules"
+                :disabled="submittedDataSuccessfully"
+                :min="0"
+                :label="$t('colleagueSurvey.colleagueSurvey.IT_Geraete_Notebooks')"
+                :suffix="$t('colleagueSurvey.colleagueSurvey.IT_Geraete_Suffix')"
+                buttons-right
+              />
+            </v-col>
           </v-row>
           <!-- Desktop PC -->
           <v-row>
-            <v-checkbox
-              v-model="geraeteAnzahl[1][2]"
-              hide-details
-              :disabled="submittedDataSuccessfully"
-            />
-            <v-text-field
-              ref="desktops"
-              v-model="geraeteAnzahl[1][1]"
-              :rules="geraeteRules"
-              :disabled="!geraeteAnzahl[1][2] || submittedDataSuccessfully"
-              :min="0"
-              :label="$t('colleagueSurvey.colleagueSurvey.IT_Geraete_Desktops')"
-              class="pr-5"
-              :suffix="$t('colleagueSurvey.colleagueSurvey.IT_Geraete_Suffix')"
-            />
+            <v-col :class="!$vuetify.display.mobile ? 'py-0' : 'pa-0'">
+              <number-input
+                ref="desktops"
+                v-model="geraeteAnzahl[1][1]"
+                :rules="geraeteRules"
+                :disabled="submittedDataSuccessfully"
+                :min="0"
+                :label="$t('colleagueSurvey.colleagueSurvey.IT_Geraete_Desktops')"
+                :suffix="$t('colleagueSurvey.colleagueSurvey.IT_Geraete_Suffix')"
+                buttons-right
+              />
+            </v-col>
           </v-row>
           <!-- Bildschirm -->
           <v-row>
-            <v-checkbox
-              v-model="geraeteAnzahl[2][2]"
-              hide-details
-              :disabled="submittedDataSuccessfully"
-            />
-            <v-text-field
-              ref="bildschirme"
-              v-model="geraeteAnzahl[2][1]"
-              :rules="geraeteRules"
-              :disabled="!geraeteAnzahl[2][2] || submittedDataSuccessfully"
-              :min="0"
-              :label="$t('colleagueSurvey.colleagueSurvey.IT_Geraete_Bildschirme')"
-              class="pr-5"
-              :suffix="$t('colleagueSurvey.colleagueSurvey.IT_Geraete_Suffix')"
-            />
+            <v-col :class="!$vuetify.display.mobile ? 'py-0' : 'pa-0'">
+              <number-input
+                ref="bildschirme"
+                v-model="geraeteAnzahl[2][1]"
+                :rules="geraeteRules"
+                :disabled="submittedDataSuccessfully"
+                :min="0"
+                :label="$t('colleagueSurvey.colleagueSurvey.IT_Geraete_Bildschirme')"
+                :suffix="$t('colleagueSurvey.colleagueSurvey.IT_Geraete_Suffix')"
+                buttons-right
+              />
+            </v-col>
           </v-row>
           <!-- Mobiltelefon -->
           <v-row>
-            <v-checkbox
-              v-model="geraeteAnzahl[3][2]"
-              hide-details
-              :disabled="submittedDataSuccessfully"
-            />
-            <v-text-field
-              ref="mobiltelefone"
-              v-model="geraeteAnzahl[3][1]"
-              :rules="geraeteRules"
-              :disabled="!geraeteAnzahl[3][2] || submittedDataSuccessfully"
-              :min="0"
-              :label="$t('colleagueSurvey.colleagueSurvey.IT_Geraete_Mobiltelefone')"
-              class="pr-5"
-              :suffix="$t('colleagueSurvey.colleagueSurvey.IT_Geraete_Suffix')"
-            />
+            <v-col :class="!$vuetify.display.mobile ? 'py-0' : 'pa-0'">
+              <number-input
+                ref="mobiltelefone"
+                v-model="geraeteAnzahl[3][1]"
+                :rules="geraeteRules"
+                :disabled="submittedDataSuccessfully"
+                :min="0"
+                :label="$t('colleagueSurvey.colleagueSurvey.IT_Geraete_Mobiltelefone')"
+                :suffix="$t('colleagueSurvey.colleagueSurvey.IT_Geraete_Suffix')"
+                buttons-right
+              />
+            </v-col>
           </v-row>
         </v-container>
 
@@ -662,20 +643,19 @@
           </v-container> -->
 
         <v-row>
-          <v-col cols="2">
+          <v-col>
             <v-dialog
               v-model="errorDialog"
               transition="dialog-bottom-transition"
               :max-width="constants.v_dialog_max_width"
             >
               <!-- Mit diesem Button soll die Umfrage abgesendet werden. -->
-              <template v-slot:activator="{ on, attrs }">
+              <template #activator="{ props }">
                 <v-btn
                   class="mr-4"
                   color="primary"
                   :disabled="submittedDataSuccessfully"
-                  v-bind="attrs"
-                  v-on="on"
+                  v-bind="props"
                   @click="checkValidInput()"
                 >
                   {{ ($t('common.Absenden')) }}
@@ -684,6 +664,7 @@
 
               <v-card>
                 <v-toolbar
+                  class="px-4"
                   color="primary"
                   dark
                 >
@@ -695,9 +676,7 @@
                     class="pt-6"
                   >
                     {{ $t('colleagueSurvey.colleagueSurvey.EingabeValidierung_kleinereProbleme') }} <br>
-                    <v-list
-                      flat
-                    >
+                    <v-list>
                       <v-list-item
                         v-for="(problem, index) in errorsArray"
                         :key="index"
@@ -723,7 +702,7 @@
                   <v-spacer />
                   <v-btn
                     color="primary"
-                    text
+                    variant="text"
                     @click="errorDialog = false"
                   >
                     {{ $t('colleagueSurvey.colleagueSurvey.EingabeValidierung_Bearbeiten') }}
@@ -731,7 +710,7 @@
                   <v-btn
                     v-if="errorsArray.length == 0"
                     color="primary"
-                    text
+                    variant="text"
                     @click="sendData(), errorDialog = false"
                   >
                     {{ $t('colleagueSurvey.colleagueSurvey.EingabeValidierung_Absenden') }}
@@ -740,22 +719,26 @@
               </v-card>
             </v-dialog>
           </v-col>
-          <v-col cols="10">
+        </v-row>
+        <v-row v-if="displayLoadingAnimation || submittedDataSuccessfully || (errorMessage !== null)">
+          <v-col>
             <LoadingAnimation v-if="displayLoadingAnimation" />
             <v-alert
+              ref="errorMessage"
               class="mb-0"
-              :value="errorMessage !== null"
-              dense
-              text
+              :model-value="errorMessage !== null"
+              density="compact"
+              variant="tonal"
               type="error"
             >
               {{ errorMessage }}
             </v-alert>
             <v-alert
+              ref="successMessage"
               class="mb-0"
-              :value="submittedDataSuccessfully"
-              dense
-              text
+              :model-value="submittedDataSuccessfully"
+              density="compact"
+              variant="tonal"
               type="success"
             >
               {{ $t('colleagueSurvey.colleagueSurvey.Absenden_Erfolgreich') }}
@@ -769,14 +752,16 @@
 
 <script>
 import Tooltip from "@/components/componentParts/Tooltip.vue";
-import LoadingAnimation from '../componentParts/LoadingAnimation.vue';
-import i18n from "@/i18n";
-import constants from "../../const";
+import LoadingAnimation from '@/components/componentParts/LoadingAnimation.vue';
+import NumberInput from "@/components/componentParts/NumberInput.vue";
+import constants from "@/const.js";
+import { nextTick } from "vue";
 
 export default {  
   components: {
     Tooltip,
-    LoadingAnimation
+    LoadingAnimation,
+    NumberInput
   },
 
   props: {
@@ -794,6 +779,8 @@ export default {
     displayLoadingAnimation: false,
     errorMessage: null,
     submittedDataSuccessfully: false,
+    scrollToSuccesMessage: false,
+    scrollToErrorMessage: false,
 
     //Arbeitstage
     arbeitstageBuero: null,
@@ -830,17 +817,17 @@ export default {
     dienstreisen: [[null, null, null, null]],
 
     //IT Geräte
-    /* Geraet mit Array Position format [intern Geraete ID, Anzahl, enabled]
+    /* Geraet mit Array Position format [intern Geraete ID, Anzahl]
      * [0] Notebook
      * [1] DesktopPC
      * [2] Bildschirm
      * [3] Mobiltelefon
      */
     geraeteAnzahl: [
-      [constants.it_geraet_notebook, null, false],
-      [constants.it_geraet_desktop, null, false],
-      [constants.it_geraet_bildschirm, null, false],
-      [constants.it_geraet_mobiltelefon, null, false],
+      [constants.it_geraet_notebook, null],
+      [constants.it_geraet_desktop, null],
+      [constants.it_geraet_bildschirm, null],
+      [constants.it_geraet_mobiltelefon, null],
     ],
 
     //Papierverbrauch currently not used
@@ -875,15 +862,65 @@ export default {
           this.$refs["mitfahrer" + i][0].resetValidation();
         }
       }
-      this.$refs.arbeitstageBuero.validate();
+
+      if (this.arbeitstageBuero) {
+        this.$refs.arbeitstageBuero.validate();
+      }
+      else {
+        this.$refs.arbeitstageBuero.resetValidation();
+      }
+
       for (i = 0; i < this.verkehrsmittel.length; i++) {
         this.$refs["dienstreiseDistanz" + i][0].resetValidation();
       }
-      this.$refs.notebooks.validate();
-      this.$refs.desktops.validate();
-      this.$refs.bildschirme.validate();
-      this.$refs.mobiltelefone.validate();
+
+      if (this.geraeteAnzahl[0][1]) {
+        this.$refs.notebooks.validate();
+      }
+      else {
+        this.$refs.notebooks.resetValidation();
+      }
+      if (this.geraeteAnzahl[1][1]) {
+        this.$refs.desktops.validate();
+      }
+      else {
+        this.$refs.desktops.resetValidation();
+      }
+      if (this.geraeteAnzahl[2][1]) {
+        this.$refs.bildschirme.validate();
+      }
+      else {
+        this.$refs.bildschirme.resetValidation();
+      }
+      if (this.geraeteAnzahl[3][1]) {
+        this.$refs.mobiltelefone.validate();
+      }
+      else {
+        this.$refs.mobiltelefone.resetValidation();
+      }
     },
+
+    scrollToSuccesMessage: async function() {
+      if (!this.scrollToSuccesMessage) {
+        return;
+      }
+
+      await nextTick();
+
+      this.$refs.successMessage.$el.scrollIntoView({behavior: "smooth", block: "center", inline: "nearest" });
+      this.scrollToSuccesMessage = false;
+    },
+
+    scrollToErrorMessage: async function() {
+      if (!this.scrollToErrorMessage) {
+        return;
+      }
+
+      await nextTick();
+
+      this.$refs.errorMessage.$el.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest" });
+      this.scrollToErrorMessage = false;
+    }
   },
 
   created() {
@@ -898,59 +935,59 @@ export default {
      */
     setListe: function(){
       this.fahrtmediumListe = [
-        i18n.t("colleagueSurvey.colleagueSurvey.fahrmediumListe_0"),
-        i18n.t("colleagueSurvey.colleagueSurvey.fahrmediumListe_2"),
-        i18n.t("colleagueSurvey.colleagueSurvey.fahrmediumListe_3"),
-        i18n.t("colleagueSurvey.colleagueSurvey.fahrmediumListe_4"),
-        i18n.t("colleagueSurvey.colleagueSurvey.fahrmediumListe_5"),
-        i18n.t("colleagueSurvey.colleagueSurvey.fahrmediumListe_6")
+        this.$t("colleagueSurvey.colleagueSurvey.fahrmediumListe_0"),
+        this.$t("colleagueSurvey.colleagueSurvey.fahrmediumListe_2"),
+        this.$t("colleagueSurvey.colleagueSurvey.fahrmediumListe_3"),
+        this.$t("colleagueSurvey.colleagueSurvey.fahrmediumListe_4"),
+        this.$t("colleagueSurvey.colleagueSurvey.fahrmediumListe_5"),
+        this.$t("colleagueSurvey.colleagueSurvey.fahrmediumListe_6")
       ]
       this.fahrtmediumÖPNVListe = [
-        i18n.t("colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_0"),
-        i18n.t("colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_1"),
-        i18n.t("colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_2"),
-        i18n.t("colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_3"),
-        i18n.t("colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_4"),
-        i18n.t("colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_5"),
+        this.$t("colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_0"),
+        this.$t("colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_1"),
+        this.$t("colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_2"),
+        this.$t("colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_3"),
+        this.$t("colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_4"),
+        this.$t("colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_5"),
       ]
       this.dienstreiseMediumListe = [
-        i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_0"),
-        i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_2"),
-        i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3"),
+        this.$t("colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_0"),
+        this.$t("colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_2"),
+        this.$t("colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3"),
       ]
       this.flugstreckeListe = [
-        i18n.t("colleagueSurvey.colleagueSurvey.flugstreckeListe_0"), //Langstrecke
-        i18n.t("colleagueSurvey.colleagueSurvey.flugstreckeListe_1"), //Kurzstrecke
-        i18n.t("colleagueSurvey.colleagueSurvey.flugstreckeListe_2"), //Inland
-        i18n.t("colleagueSurvey.colleagueSurvey.flugstreckeListe_3"), //International
+        this.$t("colleagueSurvey.colleagueSurvey.flugstreckeListe_0"), //Langstrecke
+        this.$t("colleagueSurvey.colleagueSurvey.flugstreckeListe_1"), //Kurzstrecke
+        this.$t("colleagueSurvey.colleagueSurvey.flugstreckeListe_2"), //Inland
+        this.$t("colleagueSurvey.colleagueSurvey.flugstreckeListe_3"), //International
       ]
       this.pkwListe = [
-        i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMedium_Diesel"),
-        i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMedium_Benzin"),
-        i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMedium_Hybrid"),
-        i18n.t("colleagueSurvey.colleagueSurvey.dienstreiseMedium_Elektro"),
+        this.$t("colleagueSurvey.colleagueSurvey.dienstreiseMedium_Diesel"),
+        this.$t("colleagueSurvey.colleagueSurvey.dienstreiseMedium_Benzin"),
+        this.$t("colleagueSurvey.colleagueSurvey.dienstreiseMedium_Hybrid"),
+        this.$t("colleagueSurvey.colleagueSurvey.dienstreiseMedium_Elektro"),
       ]
       this.flugklassenListeLangstrecke = [
-        i18n.t("colleagueSurvey.colleagueSurvey.flugklasse_average"),
-        i18n.t("colleagueSurvey.colleagueSurvey.flugklasse_economy"),
-        i18n.t("colleagueSurvey.colleagueSurvey.flugklasse_business"),
-        i18n.t("colleagueSurvey.colleagueSurvey.flugklasse_premiumeconomy"),
-        i18n.t("colleagueSurvey.colleagueSurvey.flugklasse_first"),
+        this.$t("colleagueSurvey.colleagueSurvey.flugklasse_average"),
+        this.$t("colleagueSurvey.colleagueSurvey.flugklasse_economy"),
+        this.$t("colleagueSurvey.colleagueSurvey.flugklasse_business"),
+        this.$t("colleagueSurvey.colleagueSurvey.flugklasse_premiumeconomy"),
+        this.$t("colleagueSurvey.colleagueSurvey.flugklasse_first"),
       ]
       this.flugklassenListeKurzstrecke = [
-        i18n.t("colleagueSurvey.colleagueSurvey.flugklasse_average"),
-        i18n.t("colleagueSurvey.colleagueSurvey.flugklasse_economy"),
-        i18n.t("colleagueSurvey.colleagueSurvey.flugklasse_business"),
+        this.$t("colleagueSurvey.colleagueSurvey.flugklasse_average"),
+        this.$t("colleagueSurvey.colleagueSurvey.flugklasse_economy"),
+        this.$t("colleagueSurvey.colleagueSurvey.flugklasse_business"),
       ]
       this.flugklassenListeInland = [
-        i18n.t("colleagueSurvey.colleagueSurvey.flugklasse_average"),
+        this.$t("colleagueSurvey.colleagueSurvey.flugklasse_average"),
       ]
       this.flugklassenListeInternational = [
-        i18n.t("colleagueSurvey.colleagueSurvey.flugklasse_average"),
-        i18n.t("colleagueSurvey.colleagueSurvey.flugklasse_economy"),
-        i18n.t("colleagueSurvey.colleagueSurvey.flugklasse_business"),
-        i18n.t("colleagueSurvey.colleagueSurvey.flugklasse_premiumeconomy"),
-        i18n.t("colleagueSurvey.colleagueSurvey.flugklasse_first"),
+        this.$t("colleagueSurvey.colleagueSurvey.flugklasse_average"),
+        this.$t("colleagueSurvey.colleagueSurvey.flugklasse_economy"),
+        this.$t("colleagueSurvey.colleagueSurvey.flugklasse_business"),
+        this.$t("colleagueSurvey.colleagueSurvey.flugklasse_premiumeconomy"),
+        this.$t("colleagueSurvey.colleagueSurvey.flugklasse_first"),
       ]
 
       // Sort the lists based on current language
@@ -972,31 +1009,36 @@ export default {
      */
     setRules: function(){
       this.tageImBueroRules = [
-        (v) => !!v || i18n.t('colleagueSurvey.colleagueSurvey.Rules_MussAngegeben'),
+        (v) => !!v || this.$t('colleagueSurvey.colleagueSurvey.Rules_MussAngegeben'),
         (v) =>
           (parseInt(v) < 8 && parseInt(v) >= 0) ||
-          i18n.t('colleagueSurvey.colleagueSurvey.TageBueroRules_0'),
+          this.$t('colleagueSurvey.colleagueSurvey.TageBueroRules_0'),
       ]
 
       this.streckeRules = [
-        (v) => !!v || i18n.t('colleagueSurvey.colleagueSurvey.Rules_MussAngegeben'),
-        (v) => parseInt(v) > 0 || i18n.t('colleagueSurvey.colleagueSurvey.StreckeRules_0'),
+        (v) => !!v || this.$t('colleagueSurvey.colleagueSurvey.Rules_MussAngegeben'),
+        (v) => parseInt(v) > 0 || this.$t('colleagueSurvey.colleagueSurvey.StreckeRules_0'),
       ]
 
       this.geraeteRules = [
         (v) =>
-          !!v || i18n.t('colleagueSurvey.colleagueSurvey.GeraeteRules_0'),
+          !!v || this.$t('colleagueSurvey.colleagueSurvey.GeraeteRules_0'),
         (v) =>
           parseInt(v) != 0 ||
-          i18n.t('colleagueSurvey.colleagueSurvey.GeraeteRules_0'),
-        (v) => parseInt(v) > 0 || i18n.t('colleagueSurvey.colleagueSurvey.GeraeteRules_1'),
-      ]
+          this.$t('colleagueSurvey.colleagueSurvey.GeraeteRules_0'),
+        (v) => parseInt(v) > 0 || this.$t('colleagueSurvey.colleagueSurvey.GeraeteRules_1'),
+      ],
+
+      this.geraeteRules = [
+        (v) => !!v || this.$t('colleagueSurvey.colleagueSurvey.GeraeteRules_1'),
+        (v) => parseInt(v) >= 0 || this.$t('colleagueSurvey.colleagueSurvey.GeraeteRules_1'),
+      ],
 
       this.mitfahrerRules = [
-        (v) => !!v || i18n.t('colleagueSurvey.colleagueSurvey.MitfahrerRules_0'),
+        (v) => !!v || this.$t('colleagueSurvey.colleagueSurvey.MitfahrerRules_0'),
         (v) =>
           parseInt(v) > 0 ||
-          i18n.t('colleagueSurvey.colleagueSurvey.MitfahrerRules_1'),
+          this.$t('colleagueSurvey.colleagueSurvey.MitfahrerRules_1'),
       ]
     },
 
@@ -1028,27 +1070,27 @@ export default {
     mapPendelverkehrsmittel: function (verkehrsmitteltyp, oepnvspezifikation, tankspezifikation) {
       //Backend expects the following IDs for the following Verkehrsmittel
       const verkehrsmittelMap = new Map([
-        [i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_2'), constants.pendelweg_fahrrad],
-        [i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_3'), constants.pendelweg_e_fahrrad],
-        [i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_4'), constants.pendelweg_motorisiertes_zweirad],
-        [i18n.t('colleagueSurvey.colleagueSurvey.Pkw_diesel'), constants.pendelweg_pkw_diesel],
-        [i18n.t('colleagueSurvey.colleagueSurvey.Pkw_benzin'), constants.pendelweg_pkw_benzin],
-        [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_1'), constants.pendelweg_bus],
-        [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_0'), constants.pendelweg_bahn],
-        [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_2'), constants.pendelweg_u_bahn],
-        [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_3'), constants.pendelweg_straßenbahn],
-        [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_4'), constants.pendelweg_mix_inkl_u_bahn],
-        [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_5'), constants.pendelweg_mix_exkl_u_bahn],
-        [i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_6'), constants.pendelweg_fußgaenger],
-        [i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMedium_Hybrid'), constants.pendelweg_pkw_plug_in_hybrid],
-        [i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMedium_Elektro'), constants.pendelweg_pkw_elektro]
+        [this.$t('colleagueSurvey.colleagueSurvey.fahrmediumListe_2'), constants.pendelweg_fahrrad],
+        [this.$t('colleagueSurvey.colleagueSurvey.fahrmediumListe_3'), constants.pendelweg_e_fahrrad],
+        [this.$t('colleagueSurvey.colleagueSurvey.fahrmediumListe_4'), constants.pendelweg_motorisiertes_zweirad],
+        [this.$t('colleagueSurvey.colleagueSurvey.Pkw_diesel'), constants.pendelweg_pkw_diesel],
+        [this.$t('colleagueSurvey.colleagueSurvey.Pkw_benzin'), constants.pendelweg_pkw_benzin],
+        [this.$t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_1'), constants.pendelweg_bus],
+        [this.$t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_0'), constants.pendelweg_bahn],
+        [this.$t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_2'), constants.pendelweg_u_bahn],
+        [this.$t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_3'), constants.pendelweg_straßenbahn],
+        [this.$t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_4'), constants.pendelweg_mix_inkl_u_bahn],
+        [this.$t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_5'), constants.pendelweg_mix_exkl_u_bahn],
+        [this.$t('colleagueSurvey.colleagueSurvey.fahrmediumListe_6'), constants.pendelweg_fußgaenger],
+        [this.$t('colleagueSurvey.colleagueSurvey.dienstreiseMedium_Hybrid'), constants.pendelweg_pkw_plug_in_hybrid],
+        [this.$t('colleagueSurvey.colleagueSurvey.dienstreiseMedium_Elektro'), constants.pendelweg_pkw_elektro]
       ]);
 
       //Check if Öffentliche is selected
-      if(verkehrsmitteltyp === i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_5')) {
+      if(verkehrsmitteltyp === this.$t('colleagueSurvey.colleagueSurvey.fahrmediumListe_5')) {
         return verkehrsmittelMap.get(oepnvspezifikation);
         //Check if PKW is selected
-      } else if(verkehrsmitteltyp === i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_0')){
+      } else if(verkehrsmitteltyp === this.$t('colleagueSurvey.colleagueSurvey.fahrmediumListe_0')){
         return verkehrsmittelMap.get(tankspezifikation);
       } else {
         return verkehrsmittelMap.get(verkehrsmitteltyp);
@@ -1060,9 +1102,9 @@ export default {
      */
     mapDienstreisemittel: function (verkehrsmittel) {
       const verkehrsmittelMap = new Map([
-        [i18n.t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_0'), constants.dienstreisen_bahn],
-        [i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_0'), constants.dienstreisen_pkw],
-        [i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3'), constants.dienstreisen_flugzeug],
+        [this.$t('colleagueSurvey.colleagueSurvey.fahrtmediumOEPNVListe_0'), constants.dienstreisen_bahn],
+        [this.$t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_0'), constants.dienstreisen_pkw],
+        [this.$t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3'), constants.dienstreisen_flugzeug],
       ]);
       
       //Tankart should be empty if not PKW
@@ -1073,13 +1115,13 @@ export default {
       //Check if verkehrsmittel is PKW
       if(parseInt(verkehrsmittelMap.get(verkehrsmittel[0])) == 2) {
         //Check if Benzin or Diesel
-        if(verkehrsmittel[1] == i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMedium_Benzin')) {
+        if(verkehrsmittel[1] == this.$t('colleagueSurvey.colleagueSurvey.dienstreiseMedium_Benzin')) {
           tankart = constants.dienstreisen_benzin
-        } else if(verkehrsmittel[1] == i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMedium_Diesel')) {
+        } else if(verkehrsmittel[1] == this.$t('colleagueSurvey.colleagueSurvey.dienstreiseMedium_Diesel')) {
           tankart = constants.dienstreisen_diesel
-        } else if(verkehrsmittel[1] == i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMedium_Hybrid')) {
+        } else if(verkehrsmittel[1] == this.$t('colleagueSurvey.colleagueSurvey.dienstreiseMedium_Hybrid')) {
           tankart = constants.dienstreisen_plug_in_hybrid
-        } else if(verkehrsmittel[1] == i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMedium_Elektro')) {
+        } else if(verkehrsmittel[1] == this.$t('colleagueSurvey.colleagueSurvey.dienstreiseMedium_Elektro')) {
           tankart = constants.dienstreisen_elektro
         } else { 
           console.error("No valid Tankart selected")
@@ -1089,13 +1131,13 @@ export default {
 
       //Check if verkehrsmittel is Flugzeug, then set the Flugstreckeart
       if(parseInt(verkehrsmittelMap.get(verkehrsmittel[0])) == 3) {
-        if(verkehrsmittel[1] == i18n.t('colleagueSurvey.colleagueSurvey.flugstreckeListe_0')) {
+        if(verkehrsmittel[1] == this.$t('colleagueSurvey.colleagueSurvey.flugstreckeListe_0')) {
           flugstreckeart = constants.dienstreisen_langstrecke
-        } else if(verkehrsmittel[1] == i18n.t('colleagueSurvey.colleagueSurvey.flugstreckeListe_1')) {
+        } else if(verkehrsmittel[1] == this.$t('colleagueSurvey.colleagueSurvey.flugstreckeListe_1')) {
           flugstreckeart = constants.dienstreisen_kurzstrecke
-        } else if(verkehrsmittel[1] == i18n.t('colleagueSurvey.colleagueSurvey.flugstreckeListe_2')) {
+        } else if(verkehrsmittel[1] == this.$t('colleagueSurvey.colleagueSurvey.flugstreckeListe_2')) {
           flugstreckeart = constants.dienstreisen_inland
-        } else if(verkehrsmittel[1] == i18n.t('colleagueSurvey.colleagueSurvey.flugstreckeListe_3')) {
+        } else if(verkehrsmittel[1] == this.$t('colleagueSurvey.colleagueSurvey.flugstreckeListe_3')) {
           flugstreckeart = constants.dienstreisen_international
         } else {
           console.error("No valid Flugstreckeart selected")
@@ -1105,15 +1147,15 @@ export default {
 
       //Check if verkehrsmittel is Flugzeug, then set the Flugklasse
       if(parseInt(verkehrsmittelMap.get(verkehrsmittel[0])) == 3) {
-        if(verkehrsmittel[3] == i18n.t('colleagueSurvey.colleagueSurvey.flugklasse_average')) {
+        if(verkehrsmittel[3] == this.$t('colleagueSurvey.colleagueSurvey.flugklasse_average')) {
           flugklasse = constants.dienstreisen_average
-        } else if(verkehrsmittel[3] == i18n.t('colleagueSurvey.colleagueSurvey.flugklasse_economy')) {
+        } else if(verkehrsmittel[3] == this.$t('colleagueSurvey.colleagueSurvey.flugklasse_economy')) {
           flugklasse = constants.dienstreisen_economy
-        } else if(verkehrsmittel[3] == i18n.t('colleagueSurvey.colleagueSurvey.flugklasse_business')) {
+        } else if(verkehrsmittel[3] == this.$t('colleagueSurvey.colleagueSurvey.flugklasse_business')) {
           flugklasse = constants.dienstreisen_business
-        } else if(verkehrsmittel[3] == i18n.t('colleagueSurvey.colleagueSurvey.flugklasse_premiumeconomy')) {
+        } else if(verkehrsmittel[3] == this.$t('colleagueSurvey.colleagueSurvey.flugklasse_premiumeconomy')) {
           flugklasse = constants.dienstreisen_premium_economy  
-        } else if(verkehrsmittel[3] == i18n.t('colleagueSurvey.colleagueSurvey.flugklasse_first')) {
+        } else if(verkehrsmittel[3] == this.$t('colleagueSurvey.colleagueSurvey.flugklasse_first')) {
           flugklasse = constants.dienstreisen_first
         } else {
           console.error("No valid Flugklasse selected")
@@ -1133,13 +1175,13 @@ export default {
      * Returns the Flugklassenliste based on the Flugstreckeart
      */
     mapDienstreiseFlugklasse: function (flugstreckeart) {
-      if(flugstreckeart == i18n.t('colleagueSurvey.colleagueSurvey.flugstreckeListe_0')){ //Langstrecke
+      if(flugstreckeart == this.$t('colleagueSurvey.colleagueSurvey.flugstreckeListe_0')){ //Langstrecke
         return this.flugklassenListeLangstrecke;
-      } else if (flugstreckeart == i18n.t('colleagueSurvey.colleagueSurvey.flugstreckeListe_1')) { //Kurzstrecke
+      } else if (flugstreckeart == this.$t('colleagueSurvey.colleagueSurvey.flugstreckeListe_1')) { //Kurzstrecke
         return this.flugklassenListeKurzstrecke;
-      } else if (flugstreckeart == i18n.t('colleagueSurvey.colleagueSurvey.flugstreckeListe_2')) { //Inland
+      } else if (flugstreckeart == this.$t('colleagueSurvey.colleagueSurvey.flugstreckeListe_2')) { //Inland
         return this.flugklassenListeInland;
-      } else if (flugstreckeart == i18n.t('colleagueSurvey.colleagueSurvey.flugstreckeListe_3')) { //International
+      } else if (flugstreckeart == this.$t('colleagueSurvey.colleagueSurvey.flugstreckeListe_3')) { //International
         return this.flugklassenListeInternational;
       }
     },
@@ -1208,7 +1250,7 @@ export default {
       //Build IT Geräte Array of non-null gerate
       var usedITGeraete = [];
       for (var geraet of this.geraeteAnzahl) {
-        if (geraet[1] > 0 && geraet[2] == true) {
+        if (geraet[1] > 0) {
           usedITGeraete.push({
             idITGeraete: parseInt(geraet[0]),
             anzahl: parseInt(geraet[1]),
@@ -1257,41 +1299,38 @@ export default {
       var errors = []
       // Check for Pendelweg distance and valid öffentliche
       for(const verkehr  of this.verkehrsmittel) {
-        var verkehrsmedium = (verkehr[0] != i18n.t('colleagueSurvey.colleagueSurvey.fahrmediumListe_5')) ? verkehr[0] : verkehr[1]
+        var verkehrsmedium = (verkehr[0] != this.$t('colleagueSurvey.colleagueSurvey.fahrmediumListe_5')) ? verkehr[0] : verkehr[1]
         if(verkehr[0] != null && (!verkehr[4] || verkehr[4] < 0)) {
           if(verkehrsmedium == null) {
-            errors.push(i18n.t('colleagueSurvey.colleagueSurvey.EingabeValidierung_Verkehrsmedium'))
+            errors.push(this.$t('colleagueSurvey.colleagueSurvey.EingabeValidierung_Verkehrsmedium'))
           } else {
-            errors.push(i18n.t('colleagueSurvey.colleagueSurvey.EingabeValidierung_Pendelweg_0') + verkehrsmedium + i18n.t('colleagueSurvey.colleagueSurvey.EingabeValidierung_Pendelweg_1'))
+            errors.push(this.$t('colleagueSurvey.colleagueSurvey.EingabeValidierung_Pendelweg_0') + verkehrsmedium + this.$t('colleagueSurvey.colleagueSurvey.EingabeValidierung_Pendelweg_1'))
           }
         }
         if(verkehr[0] != null && verkehr[2] && !verkehr[3]) {
-          errors.push(i18n.t('colleagueSurvey.colleagueSurvey.EingabeValidierung_Pendelweg_0') + verkehrsmedium + i18n.t('colleagueSurvey.colleagueSurvey.EingabeValidierung_Fahrgemeinschaft_0')+ verkehrsmedium + i18n.t('colleagueSurvey.colleagueSurvey.EingabeValidierung_Fahrgemeinschaft_1'))
+          errors.push(this.$t('colleagueSurvey.colleagueSurvey.EingabeValidierung_Pendelweg_0') + verkehrsmedium + this.$t('colleagueSurvey.colleagueSurvey.EingabeValidierung_Fahrgemeinschaft_0')+ verkehrsmedium + this.$t('colleagueSurvey.colleagueSurvey.EingabeValidierung_Fahrgemeinschaft_1'))
         }
       }
       // Check number of days in office
-      if(this.arbeitstageBuero < 0 || this.arbeitstageBuero > 7) {
-        errors.push(i18n.t('colleagueSurvey.colleagueSurvey.EingabeValidierung_TageBuero'))
+      if(!this.arbeitstageBuero || this.arbeitstageBuero < 0 || this.arbeitstageBuero > 7) {
+        errors.push(this.$t('colleagueSurvey.colleagueSurvey.EingabeValidierung_TageBuero'))
       }
       // Check for Dienstreise
       for(const dienst of this.dienstreisen) {
         if(dienst[0] && (!dienst[2] || dienst[2] < 0)) {
-          var dienstmedium = (dienst[0] != i18n.t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3')) ? dienst[0] : dienst[1]
+          var dienstmedium = (dienst[0] != this.$t('colleagueSurvey.colleagueSurvey.dienstreiseMediumListe_3')) ? dienst[0] : dienst[1]
           if(dienstmedium == null) {
-            errors.push(i18n.t('colleagueSurvey.colleagueSurvey.EingabeValidierung_Dienstreise_0')) 
+            errors.push(this.$t('colleagueSurvey.colleagueSurvey.EingabeValidierung_Dienstreise_0')) 
           } else {
-            errors.push(i18n.t('colleagueSurvey.colleagueSurvey.EingabeValidierung_Dienstreise_1') + dienst[0] + i18n.t('colleagueSurvey.colleagueSurvey.EingabeValidierung_Dienstreise_2'))
+            errors.push(this.$t('colleagueSurvey.colleagueSurvey.EingabeValidierung_Dienstreise_1') + dienst[0] + this.$t('colleagueSurvey.colleagueSurvey.EingabeValidierung_Dienstreise_2'))
           }
         }
       }
       // Check IT Geraete
       for(const geraet of this.geraeteAnzahl) {
-        var geraeteName = (geraet[0] == 1) ? i18n.t('colleagueSurvey.colleagueSurvey.IT_Gereate_Notebook') : (geraet[0] == 2) ? i18n.t('colleagueSurvey.colleagueSurvey.IT_Gereate_Desktop')  : (geraet[0] == 3) ? i18n.t('colleagueSurvey.colleagueSurvey.IT_Gereate_Bildschirm') : i18n.t('colleagueSurvey.colleagueSurvey.IT_Gereate_Mobiltelefon')
-        if(geraet[2] && geraet[1] == null) {
-          errors.push(i18n.t('colleagueSurvey.colleagueSurvey.EingabeValidierung_Gereate_0') + geraeteName + i18n.t('colleagueSurvey.colleagueSurvey.EingabeValidierung_Gereate_1'))
-        }
-        else if(geraet[2] && geraet[1] < 0) {
-          errors.push(i18n.t('colleagueSurvey.colleagueSurvey.EingabeValidierung_Gereate_0') + geraeteName + i18n.t('colleagueSurvey.colleagueSurvey.EingabeValidierung_Gereate_1'))
+        var geraeteName = (geraet[0] == 1) ? this.$t('colleagueSurvey.colleagueSurvey.IT_Geraete_Notebook') : (geraet[0] == 2) ? this.$t('colleagueSurvey.colleagueSurvey.IT_Geraete_Desktop')  : (geraet[0] == 3) ? this.$t('colleagueSurvey.colleagueSurvey.IT_Geraete_Bildschirm') : this.$t('colleagueSurvey.colleagueSurvey.IT_Geraete_Mobiltelefon')
+        if(geraet[1] < 0) {
+          errors.push(this.$t('colleagueSurvey.colleagueSurvey.EingabeValidierung_Geraete_0') + geraeteName + this.$t('colleagueSurvey.colleagueSurvey.EingabeValidierung_Geraete_1'))
         }
       }
       this.errorsArray = errors
@@ -1303,7 +1342,7 @@ export default {
     sendData: async function () {
       this.displayLoadingAnimation = true;
 
-      await fetch(process.env.VUE_APP_BASEURL + "/mitarbeiterumfrage/insert", {
+      await fetch(import.meta.env.VITE_BASEURL + "/mitarbeiterumfrage/insert", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -1320,15 +1359,18 @@ export default {
         .then((data) => {
           if(data.status === "success"){
             this.submittedDataSuccessfully = true;
+            this.scrollToSuccesMessage = true;
             this.errorMessage = null;
           }else if(data.status == "error") {
             this.errorMessage = data.error.message;
+            this.scrollToErrorMessage = true;
           }
           this.displayLoadingAnimation = false;
         })
         .catch((error) => {
           console.error("Error:", error);
           this.errorMessage = "Server nicht erreichbar.";
+          this.scrollToErrorMessage = true;
           this.displayLoadingAnimation = false;
         });
     },
@@ -1337,7 +1379,7 @@ export default {
    * Requests from the server to which year the survey belongs.
    */
     fetchUmfrageYear: async function (givenID) {
-      await fetch(process.env.VUE_APP_BASEURL + "/umfrage/jahr?id=" + givenID, {
+      await fetch(import.meta.env.VITE_BASEURL + "/umfrage/jahr?id=" + givenID, {
         method: "GET",
         })
         .then((response) => response.json())
@@ -1357,12 +1399,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss">
-  .headerClass{
-    white-space: wrap;
-    word-break: normal;
-    display: block;
-    hyphens: auto;
-  }
-</style>

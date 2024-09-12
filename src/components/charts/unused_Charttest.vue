@@ -6,7 +6,7 @@
           v-if="true"
           class="pa-7"
           elevation="2"
-          outlined
+          border
         >
           <v-card-title>Vue-Chartjs</v-card-title>
 
@@ -58,15 +58,6 @@
                   <BarChart
                     :chart-data="chartdataBar"
                     :options="optionsBar"
-                  />
-                </v-card>
-              </v-col>
-              <v-col>
-                <v-card>
-                  <v-card-title>Horizontal bar chart</v-card-title>
-                  <HorizontalBarChart
-                    :chart-data="chartdataHorizontalBar"
-                    :options="optionsHorizontalBar"
                   />
                 </v-card>
               </v-col>
@@ -140,24 +131,22 @@
 
 
 <script>
-import DoughnutChart from "./DoughnutChart.js"
-import LineChart from "./LineChart.js"
-import BarChart from "./BarChart.js"
-import HorizontalBarChart from "./HorizontalBarChart.js"
-import RadarChart from "./RadarChart.js"
-import PieChart from "./PieChart.js"
-import PolarAreaChart from "./PolarAreaChart.js"
-import BubbleChart from "./BubbleChart.js"
-import ScatterChart from "./ScatterChart.js"
+import DoughnutChart from "./DoughnutChart.vue"
+import LineChart from "./LineChart.vue"
+import BarChart from "./BarChart.vue"
+import RadarChart from "./RadarChart.vue"
+import PieChart from "./PieChart.vue"
+import PolarAreaChart from "./PolarAreaChart.vue"
+import BubbleChart from "./BubbleChart.vue"
+import ScatterChart from "./ScatterChart.vue"
 
 export default{
-  name: "Charttest",
+  name: "ChartTest",
 
   components: {
     DoughnutChart,
     LineChart,
     BarChart,
-    HorizontalBarChart,
     RadarChart,
     PieChart,
     PolarAreaChart,
@@ -184,7 +173,7 @@ export default{
       }]
     },
     optionsDoughnut: {
-      responsive: true,
+      responsive: false,    // responsive: true somehow breaks the charts here
       maintainAspectRatio: false
     },
 
@@ -206,7 +195,7 @@ export default{
       }]
     },
     optionsPie: {
-      responsive: true,
+      responsive: false,
       maintainAspectRatio: false
     },
 
@@ -221,14 +210,12 @@ export default{
       }]
     },
     optionsLine: {
-      responsive: true,
+      responsive: false,
       maintainAspectRatio: false,
       scales:{
-        yAxes: [{
-            ticks: {
-                beginAtZero: true
-            }
-        }]
+        y: {
+          beginAtZero: true
+        }
       }
     },
 
@@ -252,14 +239,12 @@ export default{
       }]
     },
     optionsLineArea: {
-      responsive: true,
+      responsive: false,
       maintainAspectRatio: false,
       scales:{
-        yAxes: [{
-            ticks: {
-                beginAtZero: true
-            }
-        }]
+        y: {
+          beginAtZero: true
+        }
       }
     },
 
@@ -291,53 +276,12 @@ export default{
       }]
     },
     optionsBar: {
-      responsive: true,
+      responsive: false,
       maintainAspectRatio: false,
       scales:{
-        yAxes: [{
-            ticks: {
-                beginAtZero: true
-            }
-        }]
-      }
-    },
-
-    chartdataHorizontalBar:{
-      labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"],
-      datasets: [{
-        label: 'My First Dataset',
-        data: [65, 59, 80, 81, 56, 55, 40],
-        backgroundColor: [
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(255, 159, 64, 0.2)',
-          'rgba(255, 205, 86, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(153, 102, 255, 0.2)',
-          'rgba(201, 203, 207, 0.2)'
-        ],
-        borderColor: [
-          'rgb(255, 99, 132)',
-          'rgb(255, 159, 64)',
-          'rgb(255, 205, 86)',
-          'rgb(75, 192, 192)',
-          'rgb(54, 162, 235)',
-          'rgb(153, 102, 255)',
-          'rgb(201, 203, 207)'
-        ],
-        borderWidth: 1,
-        barPercentage: 0.5
-      }]
-    },
-    optionsHorizontalBar: {
-      responsive: true,
-      maintainAspectRatio: false,
-      scales:{
-        xAxes: [{
-            ticks: {
-                beginAtZero: true
-            }
-        }]
+        y: {
+          beginAtZero: true
+        }
       }
     },
 
@@ -374,7 +318,7 @@ export default{
       }]
     },
     optionsRadar: {
-      responsive: true,
+      responsive: false,
       maintainAspectRatio: false,
       elements: {
         line: {
@@ -404,7 +348,7 @@ export default{
       }]
     },
     optionsPolarArea: {
-      responsive: true,
+      responsive: false,
       maintainAspectRatio: false,
     },
 
@@ -437,19 +381,15 @@ export default{
       }]
     },
     optionsBubble: {
-      responsive: true,
+      responsive: false,
       maintainAspectRatio: false,
-      scales: {
-        yAxes: [{
-            ticks: {
-                beginAtZero: true
-            }
-        }],
-        xAxes: [{
-            ticks: {
-                beginAtZero: true
-            }
-        }]
+      scales:{
+        y: {
+          beginAtZero: true
+        },
+        x: {
+          beginAtZero: true
+        }
       }
     },
 
@@ -473,7 +413,7 @@ export default{
       }],
     },
     optionsScatter: {
-      responsive: true,
+      responsive: false,
       maintainAspectRatio: false,
       scales: {
         x: {
@@ -506,7 +446,7 @@ export default{
       }],
     },
     optionsScatterLine: {
-      responsive: true,
+      responsive: false,
       maintainAspectRatio: false,
       scales: {
         x: {
@@ -538,14 +478,12 @@ export default{
       }]
     },
     optionsMixed: {
-      responsive: true,
+      responsive: false,
       maintainAspectRatio: false,
-      scales: {
-        yAxes: [{
-            ticks: {
-                beginAtZero: true
-            }
-        }]
+      scales:{
+        y:{
+          beginAtZero: true
+        }
       },
       width: 200, 
     }

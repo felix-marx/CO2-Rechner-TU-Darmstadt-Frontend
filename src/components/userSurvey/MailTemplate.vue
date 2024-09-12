@@ -3,7 +3,7 @@
   <v-card
     class="mt-2 mx-auto"
     elevation="2"
-    outlined
+    border
     :max-width="constants.v_card_max_width"
   >
     <v-card class="pa-7">
@@ -55,7 +55,7 @@
 </template>
 
 <script>
-import constants from "../../const.js";
+import constants from "@/const.js";
 
 export default {
   name: "MailTemplate",

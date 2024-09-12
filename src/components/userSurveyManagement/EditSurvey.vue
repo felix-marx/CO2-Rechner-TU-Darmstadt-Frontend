@@ -2,7 +2,7 @@
   <v-container>
     <v-card
       elevation="2"
-      outlined
+      border
       class="mx-auto"
       :max-width="constants.v_card_max_width"
     >
@@ -22,14 +22,16 @@
             <v-alert
               v-if="displaySuccess"
               type="success"
-              dense
+              density="compact"
+              variant="tonal"
             >
               {{ $t('userSurveyManagement.editSurvey.ErfolgreichGeändert') }}
             </v-alert>
             <v-alert
               v-if="displayError"
               type="error"
-              dense
+              density="compact"
+              variant="tonal"
             >
               {{ errorMessage }}
             </v-alert>
@@ -43,16 +45,16 @@
               transition="dialog-bottom-transition"
             >
               <!-- Mit diesem Button soll die Umfrage abgesendet werden. -->
-              <template v-slot:activator="{ on, attrs }">
+              <template #activator="{ props }">
                 <v-btn
                   color="blue"
-                  class="white--text"
+                  class="text-white"
                   :disabled="blockInput"
-                  v-bind="attrs"
-                  v-on="on"
+                 
+                  v-bind="props"
                   @click="problemeInUmfrage()"
                 >
-                  <v-icon left>
+                  <v-icon start>
                     mdi-content-save
                   </v-icon>
                   {{ $t('userSurveyManagement.editSurvey.AenderungSpeichern') }}
@@ -61,6 +63,7 @@
 
               <v-card>
                 <v-toolbar
+                  class="px-4"
                   color="primary"
                   dark
                 >
@@ -75,9 +78,7 @@
                       v-if="errorTextArray.required.length != 0"
                     >
                       {{ $t('userSurveyManagement.editSurvey.PflichtFelderNichtAngegeben') }} <br>
-                      <v-list
-                        flat
-                      >
+                      <v-list>
                         <v-list-item
                           v-for="(problem, index) in errorTextArray.required"
                           :key="index"
@@ -92,18 +93,14 @@
                       v-if="errorTextArray.nonRequired.length != 0"
                     >
                       {{ $t('userSurveyManagement.editSurvey.UmfrageHatProbleme') }}<br>
-                      <v-list
-                        flat
-                      >
+                      <v-list>
                         <v-list-item
                           v-for="(problem, index) in errorTextArray.nonRequired"
                           :key="index"
                         >
-                          <v-list-item-content>
-                            <label class="text-sm-body-2 mb-2">
-                              {{ problem }}
-                            </label>
-                          </v-list-item-content>
+                          <label class="text-sm-body-2 mb-2">
+                            {{ problem }}
+                          </label>
                         </v-list-item>
                       </v-list>
                     </div>
@@ -122,7 +119,7 @@
                   <v-spacer />
                   <v-btn
                     color="primary"
-                    text
+                    variant="text"
                     @click="errorDialog = false"
                   >
                     {{ $t('userSurveyManagement.editSurvey.WeiterBearbeiten') }}
@@ -130,7 +127,7 @@
                   <v-btn
                     v-if="errorTextArray.required.length == 0"
                     color="primary"
-                    text
+                    variant="text"
                     @click="sendEdit(), errorDialog = false"
                   >
                     {{ (errorTextArray.nonRequired.length == 0) ? $t('userSurveyManagement.editSurvey.AenderungSpeichern') : $t('userSurveyManagement.editSurvey.AenderungTrotzdemSpeichern') }}
@@ -144,7 +141,7 @@
               color="primary"
               @click="flipBearbeiten()"
             >
-              <v-icon left>
+              <v-icon start>
                 mdi-pencil
               </v-icon>
               {{ ( blockInput ? $t('userSurveyManagement.editSurvey.BearbeitenAktivieren') : $t('userSurveyManagement.editSurvey.BearbeitenDeaktivieren') ) }}
@@ -182,7 +179,7 @@
           <br>
 
           <v-row>
-            <v-col :cols="$vuetify.breakpoint.smAndUp ? 5 : 8">
+            <v-col :cols="$vuetify.display.smAndUp ? 5 : 8">
               <v-autocomplete
                 v-model="umfrage.jahr"
                 :items="possibleYears"
@@ -206,11 +203,13 @@
               <v-text-field
                 ref="anzahlMitarbeiter"
                 v-model="umfrage.mitarbeiteranzahl"
+                type="number"
                 :rules="absolutpositivRules"
                 :min="0"
                 :label="$t('common.Mitarbeitendenzahl')"
                 prepend-icon="mdi-account"
                 :disabled="blockInput"
+                hide-spin-buttons
               />
             </v-row>
           </v-container>
@@ -237,7 +236,7 @@
             :key="index"
           >
             <v-row>
-              <v-col :cols="$vuetify.breakpoint.smAndUp ? 6 : 5">
+              <v-col :cols="$vuetify.display.smAndUp ? 6 : 5">
                 <v-autocomplete
                   v-if="gebaeudeIDs"
                   v-model="objekt[0]"
@@ -251,30 +250,27 @@
                 <v-text-field
                   :ref="'flaeche' + index"
                   v-model="objekt[1]"
+                  type="number"
                   :rules="absolutpositivRules"
                   :min="0"
                   :label="$t('userSurvey.Survey.GebaeudeAbteilung_3')"
                   prepend-icon="mdi-domain"
                   suffix="qm"
                   :disabled="blockInput"
+                  hide-spin-buttons
                 />
               </v-col>
               <v-col
-                :cols="$vuetify.breakpoint.smAndUp ? 1 : 2"
-                class="mt-3 text-center"
+                :cols="$vuetify.display.smAndUp ? 1 : 2"
+                class="text-center"
               >
                 <v-btn
-                  class="delete_text--text mx-auto"
+                  class="delete_text--text mx-auto mt-1"
                   color="delete"
-                  fab
-                  small
+                  icon="mdi-delete-outline"
                   :disabled="blockInput"
                   @click="removeGebaeude(index)"
-                >
-                  <v-icon>
-                    mdi-delete-outline
-                  </v-icon>
-                </v-btn>
+                />
               </v-col>
             </v-row>
           </div>
@@ -302,7 +298,8 @@
           <v-alert
             v-if="duplicateBuilding"
             type="warning"
-            dense
+            density="compact"
+            variant="tonal"
           >
             {{ $t('userSurvey.Survey.GebaeudeWarnung') }}
           </v-alert>
@@ -324,93 +321,157 @@
           <br>
 
           <v-container>
-            <!-- Multifunktionsgeräte -->
-            <v-row>
-              <v-checkbox
-                v-model="umfrage.geraeteanzahl[0][2]"
-                hide-details
-                :disabled="blockInput"
-              />
-              <v-text-field
-                ref="multifunktionsgeraete"
-                v-model="umfrage.geraeteanzahl[0][1]"
-                :rules="geraeteRules"
-                :disabled="!umfrage.geraeteanzahl[0][2] || blockInput"
-                :min="0"
-                :label="$t('userSurvey.Survey.ITGeraeteMFP')"
-                class="pr-5"
-                :suffix="$t('userSurvey.Survey.ITGeraeteMFP_Suffix')"
-              />
-              <v-text-field
-                ref="multifunktionsgeraeteToner"
-                v-model="umfrage.geraeteanzahl[1][1]"
-                :rules="nichtnegativRules"
-                :disabled="!umfrage.geraeteanzahl[0][2] || blockInput"
-                :min="0"
-                :label="$t('userSurvey.Survey.ITGeraeteBenutzteToner')"
-                :suffix="$t('userSurvey.Survey.ITGeraeteBenutzteToner_Suffix')"
-              />
-            </v-row>
-            <!-- Drucker -->
-            <v-row>
-              <v-checkbox
-                v-model="umfrage.geraeteanzahl[2][2]"
-                hide-details
-                :disabled="blockInput"
-              />
-              <v-text-field
-                ref="drucker"
-                v-model="umfrage.geraeteanzahl[2][1]"
-                :rules="geraeteRules"
-                :disabled="!umfrage.geraeteanzahl[2][2] || blockInput"
-                :min="0"
-                :label="$t('userSurvey.Survey.DruckerLabel')"
-                :suffix="$t('userSurvey.Survey.Drucker_Suffix')"
-                class="pr-5"
-              />
-              <v-text-field
-                ref="druckerToner"
-                v-model="umfrage.geraeteanzahl[3][1]"
-                :rules="nichtnegativRules"
-                :disabled="!umfrage.geraeteanzahl[2][2] || blockInput"
-                :min="0"
-                :label="$t('userSurvey.Survey.ITGeraeteBenutzteToner')"
-                :suffix="$t('userSurvey.Survey.ITGeraeteBenutzteToner_Suffix')"
-              />
-            </v-row>
+            <!-- Desktop -->
+            <template v-if="!$vuetify.display.mobile">
+              <!-- Multifunktionsgeräte -->
+              <v-row>
+                <v-col class="py-0">
+                  <number-input
+                    ref="multifunktionsgeraete"
+                    v-model="umfrage.geraeteAnzahl[0][1]"
+                    :disabled="blockInput"
+                    :min="0"
+                    :rules="geraeteRules"
+                    :label="$t('userSurvey.Survey.ITGeraeteMFP')"
+                    :suffix="$t('userSurvey.Survey.ITGeraeteMFP_Suffix')"
+                    buttons-right
+                  />
+                </v-col>
+                <v-col class="py-0">
+                  <number-input
+                    ref="multifunktionsgeraeteToner"
+                    v-model="umfrage.geraeteAnzahl[1][1]"
+                    :disabled="blockInput"
+                    :min="0"
+                    :rules="geraeteRules"
+                    :label="$t('userSurvey.Survey.ITGeraeteBenutzteToner')"
+                    :suffix="$t('userSurvey.Survey.ITGeraeteBenutzteToner_Suffix')"
+                    buttons-right
+                  />
+                </v-col>
+              </v-row>
+
+              <!-- Drucker -->
+              <v-row>
+                <v-col class="py-0">
+                  <number-input 
+                    ref="drucker"
+                    v-model="umfrage.geraeteAnzahl[2][1]"
+                    :disabled="blockInput"
+                    :min="0"
+                    :rules="geraeteRules"
+                    :label="$t('userSurvey.Survey.DruckerLabel')"
+                    :suffix="$t('userSurvey.Survey.Drucker_Suffix')"
+                    buttons-right
+                  />
+                </v-col>
+                <v-col class="py-0">
+                  <number-input  
+                    ref="druckerToner"
+                    v-model="umfrage.geraeteAnzahl[3][1]"
+                    :disabled="blockInput"
+                    :min="0"
+                    :rules="geraeteRules"
+                    :label="$t('userSurvey.Survey.ITGeraeteBenutzteToner')"
+                    :suffix="$t('userSurvey.Survey.ITGeraeteBenutzteToner_Suffix')"
+                    buttons-right
+                  />
+                </v-col>
+              </v-row>
+            </template>
+            <!-- Mobile -->
+            <template v-else>
+              <!-- Multifunktionsgeräte -->
+              <v-row>
+                <v-col class="pa-0">
+                  <number-input 
+                    ref="multifunktionsgeraete"
+                    v-model="umfrage.geraeteAnzahl[0][1]"
+                    :disabled="blockInput"
+                    :min="0"
+                    :rules="geraeteRules"
+                    :label="$t('userSurvey.Survey.ITGeraeteMFP')"
+                    :suffix="$t('userSurvey.Survey.ITGeraeteMFP_Suffix')"
+                    buttons-right
+                  />
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col class="pa-0">
+                  <number-input  
+                    ref="multifunktionsgeraeteToner"
+                    v-model="umfrage.geraeteAnzahl[1][1]"
+                    :disabled="blockInput"
+                    :min="0"
+                    :rules="geraeteRules"
+                    :label="$t('userSurvey.Survey.ITGeraeteBenutzteToner')"
+                    :suffix="$t('userSurvey.Survey.ITGeraeteBenutzteToner_Suffix')"
+                    buttons-right
+                  />
+                </v-col>
+              </v-row>
+
+              <!-- Drucker -->
+              <v-row>
+                <v-col class="pa-0">
+                  <number-input 
+                    ref="drucker"
+                    v-model="umfrage.geraeteAnzahl[2][1]"
+                    :disabled="blockInput"
+                    :min="0"
+                    :rules="geraeteRules"
+                    :label="$t('userSurvey.Survey.DruckerLabel')"
+                    :suffix="$t('userSurvey.Survey.Drucker_Suffix')"
+                    buttons-right
+                  />
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col class="pa-0">
+                  <number-input  
+                    ref="druckerToner"
+                    v-model="umfrage.geraeteAnzahl[3][1]"
+                    :disabled="blockInput"
+                    :min="0"
+                    :rules="geraeteRules"
+                    :label="$t('userSurvey.Survey.ITGeraeteBenutzteToner')"
+                    :suffix="$t('userSurvey.Survey.ITGeraeteBenutzteToner_Suffix')"
+                    buttons-right
+                  />
+                </v-col>
+              </v-row>
+            </template>
+
             <!-- Beamer -->
             <v-row>
-              <v-checkbox
-                v-model="umfrage.geraeteanzahl[4][2]"
-                hide-details
-                :disabled="blockInput"
-              />
-              <v-text-field
-                ref="beamer"
-                v-model="umfrage.geraeteanzahl[4][1]"
-                :rules="geraeteRules"
-                :disabled="!umfrage.geraeteanzahl[4][2] || blockInput"
-                :min="0"
-                :label="$t('userSurvey.Survey.Beamer')"
-                :suffix="$t('userSurvey.Survey.Beamer')"
-              />
+              <v-col :class="!$vuetify.display.mobile ? 'py-0' : 'pa-0'">
+                <number-input 
+                  ref="beamer"
+                  v-model="umfrage.geraeteAnzahl[4][1]"
+                  :disabled="blockInput"
+                  :min="0"
+                  :rules="geraeteRules"
+                  :label="$t('userSurvey.Survey.Beamer')"
+                  :suffix="$t('userSurvey.Survey.Beamer')"
+                  buttons-right
+                />
+              </v-col>
             </v-row>
+
             <!-- Server -->
             <v-row>
-              <v-checkbox
-                v-model="umfrage.geraeteanzahl[5][2]"
-                hide-details
-                :disabled="blockInput"
-              />
-              <v-text-field
-                ref="server"
-                v-model="umfrage.geraeteanzahl[5][1]"
-                :rules="geraeteRules"
-                :disabled="!umfrage.geraeteanzahl[5][2] || blockInput"
-                :min="0"
-                :label="$t('userSurvey.Survey.interneServer')"
-                :suffix="$t('userSurvey.Survey.Server')"
-              />
+              <v-col :class="!$vuetify.display.mobile ? 'py-0' : 'pa-0'">
+                <number-input 
+                  ref="server"
+                  v-model="umfrage.geraeteAnzahl[5][1]"
+                  :disabled="blockInput"
+                  :min="0"
+                  :rules="geraeteRules"
+                  :label="$t('userSurvey.Survey.interneServer')"
+                  :suffix="$t('userSurvey.Survey.Server')"
+                  buttons-right
+                />
+              </v-col>
             </v-row>
           </v-container>
         </v-card>
@@ -421,12 +482,11 @@
 
 <script>
 import Tooltip from "@/components/componentParts/Tooltip.vue";
-import LoadingAnimation from "../componentParts/LoadingAnimation";
-import DataGapVisualization from "../componentParts/DataGapVisualization";
-import i18n from "@/i18n";
-import { translateGebaeudeIDToSymbolic, translateGebaeudeIDToNumeric, resolveITGeraetID } from "../../utils";
-import constants from "../../const.js";
-
+import LoadingAnimation from "@/components/componentParts/LoadingAnimation.vue";
+import DataGapVisualization from "@/components/componentParts/DataGapVisualization.vue";
+import NumberInput from "@/components/componentParts/NumberInput.vue";
+import { translateGebaeudeIDToSymbolic, translateGebaeudeIDToNumeric, resolveITGeraetID } from "@/utils.js";
+import constants from "@/const.js";
 
 export default {
   name: "EditSurvey",
@@ -434,7 +494,8 @@ export default {
   components: {
     LoadingAnimation,
     Tooltip,
-    DataGapVisualization
+    DataGapVisualization,
+    NumberInput
   },
 
   props: {
@@ -452,7 +513,14 @@ export default {
       mitarbeiteranzahl: null,
       jahr: null,
       gebaeude: [[null, null]],
-      geraeteanzahl: [[7, null, false], [8, null, false], [9, null, false], [10, null, false], [4, null, false], [6, null, false]],
+      geraeteAnzahl: [
+        [constants.it_geraet_multifunktionsgeraet, null],
+        [constants.it_geraet_multifunktionsgeraet_toner, null],
+        [constants.it_geraet_drucker, null],
+        [constants.it_geraet_drucker_toner, null],
+        [constants.it_geraet_beamer, null],
+        [constants.it_geraet_server, null],
+      ],
       umfrageID: "",
     },
 
@@ -547,26 +615,22 @@ export default {
      */
     setRules: function(){
       this.universalRules = [
-        (v) => !!v || i18n.t('userSurvey.Survey.universalRules_0'),
+        (v) => !!v || this.$t('userSurvey.Survey.universalRules_0'),
       ],
 
       this.geraeteRules = [
-        (v) =>
-          !!v || i18n.t('userSurvey.Survey.geraeteRules_1'),
-        (v) =>
-          parseInt(v) != 0 ||
-          i18n.t('userSurvey.Survey.geraeteRules_1'),
-        (v) => parseInt(v) > 0 || i18n.t('userSurvey.Survey.geraeteRules_3'),
-      ]
+        (v) => !!v || this.$t('userSurvey.Survey.geraeteRules_3'),
+        (v) => parseInt(v) >= 0 || this.$t('userSurvey.Survey.geraeteRules_3'),
+      ],
 
       this.nichtnegativRules = [
-        (v) => !!v || i18n.t('userSurvey.Survey.nichtnegativRules_0'),
-        (v) => parseInt(v) >= 0 || i18n.t('userSurvey.Survey.nichtnegativRules_1'),
+        (v) => !!v || this.$t('userSurvey.Survey.nichtnegativRules_0'),
+        (v) => parseInt(v) >= 0 || this.$t('userSurvey.Survey.nichtnegativRules_1'),
       ]
 
       this.absolutpositivRules = [
-        (v) => !!v || i18n.t('userSurvey.Survey.absolutpositivRules_0'),
-        (v) => parseInt(v) > 0 || i18n.t('userSurvey.Survey.absolutpositivRules_1'),
+        (v) => !!v || this.$t('userSurvey.Survey.absolutpositivRules_0'),
+        (v) => parseInt(v) > 0 || this.$t('userSurvey.Survey.absolutpositivRules_1'),
       ]
     },
 
@@ -583,13 +647,13 @@ export default {
     requiredFieldsMissingArray: function() {
       var fieldsarray = []
       if(this.umfrage.bezeichnung == "" || this.umfrage.bezeichnung == null) {
-        fieldsarray.push(i18n.t('userSurvey.Survey.requiredFieldsMissing_0'))
+        fieldsarray.push(this.$t('userSurvey.Survey.requiredFieldsMissing_0'))
       }
       if(!this.possibleYears.includes(parseInt(this.umfrage.jahr))) {
-        fieldsarray.push(i18n.t('userSurvey.Survey.requiredFieldsMissing_1'))
+        fieldsarray.push(this.$t('userSurvey.Survey.requiredFieldsMissing_1'))
       }
       if(this.umfrage.mitarbeiteranzahl == null || this.umfrage.mitarbeiteranzahl <= 0) {
-        fieldsarray.push(i18n.t('userSurvey.Survey.requiredFieldsMissing_2'))
+        fieldsarray.push(this.$t('userSurvey.Survey.requiredFieldsMissing_2'))
       }
       return fieldsarray
     },
@@ -602,27 +666,31 @@ export default {
      * }
      */
     problemeInUmfrage: function() {
-      this.umfrage.geraeteanzahl[1][2] = this.umfrage.geraeteanzahl[0][2];
-      this.umfrage.geraeteanzahl[3][2] = this.umfrage.geraeteanzahl[2][2];
       var nonRequiredArray = []
       
       // Gebaeude
       if(this.duplicateBuilding) {
-        nonRequiredArray.push(i18n.t('userSurvey.Survey.problemeInUmfrage_0'))
+        nonRequiredArray.push(this.$t('userSurvey.Survey.problemeInUmfrage_0'))
       } 
       for(const gebaeude of this.umfrage.gebaeude) {
         if(gebaeude[0] != null && gebaeude[1] <=0) {
-          nonRequiredArray.push(i18n.t('userSurvey.Survey.problemeInUmfrage_1') + gebaeude[0] + i18n.t('userSurvey.Survey.problemeInUmfrage_2'))
+          nonRequiredArray.push(this.$t('userSurvey.Survey.problemeInUmfrage_1') + gebaeude[0] + this.$t('userSurvey.Survey.problemeInUmfrage_2'))
         }
       }
       // IT Geraete
-      for(const it of this.umfrage.geraeteanzahl) {
-        if(it[2] && it[1] <= 0) { 
-          if((it[0] != 8 && it[0] != 10)) {
-            nonRequiredArray.push(i18n.t('userSurvey.Survey.problemeInUmfrage_3') + resolveITGeraetID(it[0]) + i18n.t('userSurvey.Survey.problemeInUmfrage_4'))
-          } else { // Toner
-            nonRequiredArray.push(i18n.t('userSurvey.Survey.problemeInUmfrage_5'))
-          }
+      for(const it of this.geraeteAnzahl) {
+        if(it[1] < 0) { 
+          nonRequiredArray.push(this.$t("userSurvey.Survey.problemeInUmfrage_3") + resolveITGeraetID(it[0]) + this.$t("userSurvey.Survey.problemeInUmfrage_4"))
+        }
+
+        // checks whether the user has entered a toner amount without a printer
+        if(it[0] == this.constants.it_geraet_multifunktionsgeraet_toner && it[1] > 0 && this.geraeteAnzahl[0][1] == 0) {
+          nonRequiredArray.push(this.$t("userSurvey.Survey.problemeInUmfrage_6") + resolveITGeraetID(this.constants.it_geraet_multifunktionsgeraet) + this.$t("userSurvey.Survey.problemeInUmfrage_7"))
+        }
+
+        // checks whether the user has entered a toner amount without a printer
+        if(it[0] == this.constants.it_geraet_drucker_toner && it[1] > 0 && this.geraeteAnzahl[2][1] == 0) {
+          nonRequiredArray.push(this.$t("userSurvey.Survey.problemeInUmfrage_6") + resolveITGeraetID(this.constants.it_geraet_drucker_toner) + this.$t("userSurvey.Survey.problemeInUmfrage_7"))
         }
       }
       this.errorTextArray.nonRequired = nonRequiredArray
@@ -662,12 +730,9 @@ export default {
     itGeraeteJSON: function () {
       //Build IT Geräte Array of non-null gerate
       var usedITGeraete = [];
-      //Special case were we set the Toner enabled value to the matchig geraete value
-      this.umfrage.geraeteanzahl[1][2] = this.umfrage.geraeteanzahl[0][2];
-      this.umfrage.geraeteanzahl[3][2] = this.umfrage.geraeteanzahl[2][2];
 
-      for (var geraet of this.umfrage.geraeteanzahl) {
-        if (geraet[1] > 0 && geraet[2]) {
+      for (var geraet of this.geraeteAnzahl) {
+        if (geraet[1] > 0) {
           usedITGeraete.push({
             idITGeraete: parseInt(geraet[0]),
             anzahl: parseInt(geraet[1]),
@@ -706,7 +771,7 @@ export default {
       this.blockInput = true
       this.displayError = false
 
-      await fetch(process.env.VUE_APP_BASEURL + "/umfrage/update", {
+      await fetch(import.meta.env.VITE_BASEURL + "/umfrage/update", {
         method: "POST",
         headers: {
           "Authorization": "Bearer " + this.$keycloak.token,
@@ -746,7 +811,7 @@ export default {
      * Fetches all possible gebaeudeIDs and the Zaehler References from the database.
      */
     fetchGebaeudeUndZaehlerData: async function () {
-      await fetch(process.env.VUE_APP_BASEURL + "/umfrage/gebaeudeUndZaehler", {
+      await fetch(import.meta.env.VITE_BASEURL + "/umfrage/gebaeudeUndZaehler", {
         method: "GET",
         headers: {
             "Authorization": "Bearer " + this.$keycloak.token,
@@ -779,7 +844,7 @@ export default {
      * Liefert die aktuell in der Datenbank liegenden Umfragewerte der Umfrage mit ID umfrageID zurueck.
      */
     fetchUmfrageData: async function() {
-       await fetch(process.env.VUE_APP_BASEURL + "/umfrage?id=" + this.umfrage.umfrageID, {
+       await fetch(import.meta.env.VITE_BASEURL + "/umfrage?id=" + this.umfrage.umfrageID, {
         method: "GET",
         headers: {
           "Authorization": "Bearer " + this.$keycloak.token,
@@ -797,14 +862,14 @@ export default {
             // Mitarbeiter
             this.umfrage.mitarbeiteranzahl = data.data.mitarbeiteranzahl
             // Bilanzjahr
-            this.umfrage.jahr =  data.data.jahr
+            this.umfrage.jahr = data.data.jahr
             // Gebaeude
             this.umfrage.gebaeude = this.parseGebaeude(data.data.gebaeude)
             if(this.umfrage.gebaeude.length == 0) {
               this.umfrage.gebaeude = [[null, null]]
             }
             // IT Geraete
-            this.umfrage.geraeteanzahl = this.parseITGeraete(data.data.itGeraete)
+            this.umfrage.geraeteAnzahl = this.parseITGeraete(data.data.itGeraete)
           }
           
         })
@@ -826,16 +891,31 @@ export default {
     },
 
     /**
-     * parseITGeraete traegt die IT Geraete aus itGeraete in das Array geraeteanzahl an den korrekten Stellen ein.
+     * parseITGeraete traegt die IT Geraete aus itGeraete in das Array geraeteAnzahl an den korrekten Stellen ein.
      */
     parseITGeraete: function(itGeraete) {
-    var map = new Map([[7,0], [8,1], [9,2], [10,3], [4,4], [6,5]])
-    this.geraeteanzahl = [[7, null, false], [8, null, false], [9, null, false], [10, null, false], [4, null, false], [6, null, false]]
+    var map = new Map([
+      [constants.it_geraet_multifunktionsgeraet, 0], 
+      [this.constants.it_geraet_multifunktionsgeraet_toner, 1], 
+      [this.constants.it_geraet_drucker, 2], 
+      [this.constants.it_geraet_drucker_toner, 3], 
+      [this.constants.it_geraet_beamer, 4], 
+      [this.constants.it_geraet_server, 5]
+    ])
+    this.geraeteAnzahl = [
+      [this.constants.it_geraet_multifunktionsgeraet, '0'],
+      [this.constants.it_geraet_multifunktionsgeraet_toner, '0'],
+      [this.constants.it_geraet_drucker, '0'],
+      [this.constants.it_geraet_drucker_toner, '0'],
+      [this.constants.it_geraet_beamer, '0'],
+      [this.constants.it_geraet_server, '0'],
+    ]
+
     for(var i = 0; i < itGeraete.length; i++) {
       var index = map.get(itGeraete[i].idITGeraete)
-      this.geraeteanzahl[index] = [itGeraete[i].idITGeraete, itGeraete[i].anzahl, true]
+      this.geraeteAnzahl[index] = [itGeraete[i].idITGeraete, itGeraete[i].anzahl.toString()]
     }
-    return this.geraeteanzahl
+    return this.geraeteAnzahl
   }
   },
 

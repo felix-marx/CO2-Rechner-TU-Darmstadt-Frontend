@@ -1,6 +1,6 @@
 <!-- eslint-disable vue/no-v-html -->
 <template>
-  <v-app :style="{background: $vuetify.theme.themes[theme].background}">
+  <v-app :style="{background: $vuetify.theme.themes[theme].colors.background}">
     <Header 
       :tabs="tabList"
       :display-user-setting="true"
@@ -8,9 +8,7 @@
       :display-login-button="false"
     />
 
-    <v-main
-      class="mb-16 mx-3"
-    >
+    <v-main :class="$vuetify.display.mobile ? 'mb-0 mx-3 pb-0' : 'mb-0 mx-3'">
       <v-card
         class="mt-3 mx-auto pb-4"
         :max-width="constants.v_card_max_width"
@@ -24,18 +22,18 @@
         <v-container>
           <template v-if="displaySuccess">
             <v-row v-if="response.hinzugefuegt">
-              <v-col :class="$vuetify.breakpoint.smAndUp ? 'mx-7' : 'mx-0'">
+              <v-col :class="$vuetify.display.smAndUp ? 'mx-7' : 'mx-0'">
                 {{ $t('shareSurvey.TeilenErfolgreich_1') }}{{ response.bezeichnung }}{{ $t('shareSurvey.TeilenErfolgreich_2') }}
               </v-col>
             </v-row>
             <v-row v-if="!response.hinzugefuegt">
-              <v-col :class="$vuetify.breakpoint.smAndUp ? 'mx-7' : 'mx-0'">
+              <v-col :class="$vuetify.display.smAndUp ? 'mx-7' : 'mx-0'">
                 {{ $t('shareSurvey.SchonVorhanden_1') }}{{ response.bezeichnung }}{{ $t('shareSurvey.SchonVorhanden_2') }}
               </v-col>
             </v-row>
 
             <v-row>
-              <v-col :class="$vuetify.breakpoint.smAndUp ? 'mx-7' : 'mx-0'">
+              <v-col :class="$vuetify.display.smAndUp ? 'mx-7' : 'mx-0'">
                 <v-btn
                   color="primary"
                   @click="$router.push('/survey?tab=1')"
@@ -54,16 +52,16 @@
 
           <template v-if="displayError">
             <v-row>
-              <v-col :class="$vuetify.breakpoint.smAndUp ? 'mx-7' : 'mx-0'">
+              <v-col :class="$vuetify.display.smAndUp ? 'mx-7' : 'mx-0'">
                 {{ $t('shareSurvey.TeilenFehler') }}
               </v-col>
             </v-row>
             <v-row>
-              <v-col :class="$vuetify.breakpoint.smAndUp ? 'mx-7' : 'mx-0'">
+              <v-col :class="$vuetify.display.smAndUp ? 'mx-7' : 'mx-0'">
                 <v-alert
                   class="mb-0"
                   type="error"
-                  text
+                  variant="tonal"
                 >
                   {{ errorMessage }}
                 </v-alert>
@@ -79,11 +77,10 @@
 </template>
 
 <script>
-import Footer from "@/components/footer/Footer";
-import Header from "@/components/header/Header";
+import Footer from "@/components/footer/Footer.vue";
+import Header from "@/components/header/Header.vue";
 import loadingAnimation from '@/components/componentParts/LoadingAnimation.vue';
-import constants from "../const.js";
-import i18n from "../i18n";
+import constants from "@/const.js";
 
 export default {
   name: "Login",
@@ -119,7 +116,7 @@ export default {
     '$i18n.locale': function() {
       this.setTabList();
     },
-    '$vuetify.breakpoint.smAndUp': function() {
+    '$vuetify.display.smAndUp': function() {
       this.setTabList();
     }
   },
@@ -135,12 +132,12 @@ export default {
   methods: {
     setTabList(){
       this.tabList = [
-        { id: 0, title: this.$vuetify.breakpoint.smAndUp ? i18n.t('shareSurvey.Tab') : i18n.t('shareSurvey.Tab_kurz'), componentType: loadingAnimation},
+        { id: 0, title: this.$vuetify.display.smAndUp ? this.$t('shareSurvey.Tab') : this.$t('shareSurvey.Tab_kurz'), component: null},
       ]
     },
 
     shareUmfrageRequest: async function() {
-       await fetch(process.env.VUE_APP_BASEURL + "/umfrage/share", {
+       await fetch(import.meta.env.VITE_BASEURL + "/umfrage/share", {
         method: "Post",
         headers: {
           "Authorization": "Bearer " + this.$keycloak.token,
@@ -170,11 +167,3 @@ export default {
   }
 };
 </script>
-<style lang="scss">
-  .headerClass{
-    white-space: wrap;
-    word-break: normal;
-    display: block;
-    hyphens: auto;
-  }
-</style>
