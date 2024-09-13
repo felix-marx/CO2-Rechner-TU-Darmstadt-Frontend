@@ -116,44 +116,101 @@
           v-for="(objekt, index) in gebaeude"
           :key="index"
         >
-          <v-row justify="center">
-            <v-col :cols="$vuetify.display.smAndUp ? 6 : 5">
-              <v-autocomplete
-                v-if="gebaeudeIDs"
-                v-model="objekt[0]"
-                :items="gebaeudeIDs"
-                :label="$t('common.Gebäudenummer')"
-                prepend-icon="mdi-domain"
-                :disabled="blockInput"
-              />
-            </v-col>
-            <v-col cols="5">
-              <v-text-field
-                :ref="'flaeche' + index"
-                v-model="objekt[1]"
-                type="number"
-                :rules="absolutpositivRules"
-                :min="0"
-                :label="$t('userSurvey.Survey.GebaeudeAbteilung_3')"
-                prepend-icon="mdi-domain"
-                suffix="qm"
-                :disabled="blockInput"
-                hide-spin-buttons
-              />
-            </v-col>
-            <v-col
-              :cols="$vuetify.display.smAndUp ? 1 : 2"
-              class="text-center"
-            >
-              <v-btn
-                class="delete_text--text mx-auto mt-1"
-                color="delete"
-                icon="mdi-delete-outline"
-                :disabled="blockInput"
-                @click="removeGebaeude(index)"
-              />
-            </v-col>
-          </v-row>
+          <!-- Desktop -->
+          <template v-if="!$vuetify.display.mobile">
+            <v-row justify="center">
+              <v-col cols="6">
+                <v-autocomplete
+                  v-if="gebaeudeIDs"
+                  v-model="objekt[0]"
+                  :items="gebaeudeIDs"
+                  :label="$t('common.Gebäudenummer')"
+                  prepend-icon="mdi-office-building-marker"
+                  :disabled="blockInput"
+                />
+              </v-col>
+              <v-col cols="5">
+                <v-text-field
+                  :ref="'flaeche' + index"
+                  v-model="objekt[1]"
+                  type="number"
+                  :rules="absolutpositivRules"
+                  :min="0"
+                  :label="$t('userSurvey.Survey.GebaeudeAbteilung_3')"
+                  prepend-icon="mdi-domain"
+                  suffix="qm"
+                  :disabled="blockInput"
+                  hide-spin-buttons
+                />
+              </v-col>
+              <v-col
+                cols="1"
+                class="text-center"
+              >
+                <v-btn
+                  class="delete_text--text mx-auto mt-1"
+                  color="delete"
+                  icon="mdi-delete-outline"
+                  :disabled="blockInput"
+                  @click="removeGebaeude(index)"
+                />
+              </v-col>
+            </v-row>
+          </template>
+          <!-- Mobile -->
+          <template v-else>
+            <v-card class="pa-4 mb-2">
+              <v-row align="center">
+                <v-col
+                  class="pb-0"
+                  cols="10"
+                >
+                  <v-container>
+                    <v-row>
+                      <v-col class="pa-0">
+                        <v-autocomplete
+                          v-if="gebaeudeIDs"
+                          v-model="objekt[0]"
+                          :items="gebaeudeIDs"
+                          :label="$t('common.Gebäudenummer')"
+                          prepend-icon="mdi-office-building-marker"
+                          :disabled="blockInput"
+                        />
+                      </v-col>
+                    </v-row>
+                    <v-row>
+                      <v-col class="pa-0">
+                        <v-text-field
+                          :ref="'flaeche' + index"
+                          v-model="objekt[1]"
+                          type="number"
+                          :rules="absolutpositivRules"
+                          :min="0"
+                          :label="$t('userSurvey.Survey.GebaeudeAbteilung_3')"
+                          prepend-icon="mdi-domain"
+                          suffix="qm"
+                          :disabled="blockInput"
+                          hide-spin-buttons
+                        />
+                      </v-col>
+                    </v-row>
+                  </v-container>
+                </v-col>
+                <v-col
+                  cols="2"
+                  class="pa-0 text-center"
+                >
+                  <v-btn
+                    class="delete_text--text mx-auto mt-1"
+                    color="delete"
+                    icon="mdi-delete-outline"
+                    :disabled="blockInput"
+                    @click="removeGebaeude(index)"
+                  />
+                </v-col>
+              </v-row>
+            </v-card>
+          </template>
         </div>
 
         <v-container>
