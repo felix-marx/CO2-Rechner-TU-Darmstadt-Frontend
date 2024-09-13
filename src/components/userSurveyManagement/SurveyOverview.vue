@@ -551,30 +551,30 @@ export default {
      */
     deleteUmfrage: async function (index, umfrageID) {
       await fetch(import.meta.env.VITE_BASEURL + "/umfrage", {
-      method: "DELETE",
-      headers: {
-        "Authorization": "Bearer " + this.$keycloak.token,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        umfrageID: umfrageID,
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if(data.status === "error") {
-          this.errors[index] = true
-          this.message = data.error.message
-          return false
-        }
-        return true
+        method: "DELETE",
+        headers: {
+          "Authorization": "Bearer " + this.$keycloak.token,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          umfrageID: umfrageID,
+        }),
       })
-      .catch((error) => {
-        this.errors[index] = true
-        this.message = this.$t('SurveyOverview.ServerNichtErreichbar')
-        console.error("Error:", error);
-        return false
-      });
+        .then((response) => response.json())
+        .then((data) => {
+          if(data.status === "error") {
+            this.errors[index] = true
+            this.message = data.error.message
+            return false
+          }
+          return true
+        })
+        .catch((error) => {
+          this.errors[index] = true
+          this.message = this.$t('SurveyOverview.ServerNichtErreichbar')
+          console.error("Error:", error);
+          return false
+        });
     },
 
     /**
@@ -582,31 +582,31 @@ export default {
      */
     duplicateUmfrage: async function (index, umfrageID, suffix) {
       await fetch(import.meta.env.VITE_BASEURL + "/umfrage/duplicate", {
-      method: "POST",
-      headers: {
-        "Authorization": "Bearer " + this.$keycloak.token,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        umfrageID: umfrageID,
-        suffix: suffix,
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if(data.status === "error") {
-          this.errors[index] = true
-          this.message = data.error.message
-          return false
-        }
-        return true
+        method: "POST",
+        headers: {
+          "Authorization": "Bearer " + this.$keycloak.token,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          umfrageID: umfrageID,
+          suffix: suffix,
+        }),
       })
-      .catch((error) => {
-        this.errors[index] = true
-        this.message = this.$t('SurveyOverview.ServerNichtErreichbar')
-        console.error("Error:", error);
-        return false
-      });
+        .then((response) => response.json())
+        .then((data) => {
+          if(data.status === "error") {
+            this.errors[index] = true
+            this.message = data.error.message
+            return false
+          }
+          return true
+        })
+        .catch((error) => {
+          this.errors[index] = true
+          this.message = this.$t('SurveyOverview.ServerNichtErreichbar')
+          console.error("Error:", error);
+          return false
+        });
     },
   }
 }
