@@ -126,7 +126,7 @@
                     </v-btn>
                   </template>
 
-                  <v-card>
+                  <v-card :style="{background: $vuetify.theme.themes[theme].colors.background}">
                     <v-toolbar
                       dark
                       color="primary"
@@ -143,7 +143,7 @@
                     <v-card
                       v-if="dialog[index]"
                       :style="{background: $vuetify.theme.themes[theme].colors.background}"
-                      class="overflow-y-auto"
+                      class="overflow-y-auto fill-height"
                     >
                       <EditSurvey 
                         :umfrageidprop="umfrage._id"
@@ -232,7 +232,7 @@
                     </v-btn>
                   </template>
 
-                  <v-card>
+                  <v-card :style="{background: $vuetify.theme.themes[theme].colors.background}">
                     <v-toolbar
                       dark
                       color="primary"
@@ -249,7 +249,7 @@
                     <v-card
                       v-if="dialogAuswertung[index]"
                       :style="{background: $vuetify.theme.themes[theme].colors.background}"
-                      class="overflow-y-auto"
+                      class="overflow-y-auto fill-height"
                     >
                       <SurveyEvaluation
                         :umfrageid="umfrage._id"
