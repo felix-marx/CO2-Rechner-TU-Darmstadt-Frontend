@@ -331,7 +331,8 @@
                 />
               </v-col>
             </v-row>
-            <v-row>
+            <v-row class="mb-3">
+              <v-col cols="1" />
               <v-col class="pa-0">
                 <number-input  
                   ref="multifunktionsgeraeteToner"
@@ -361,7 +362,8 @@
                 />
               </v-col>
             </v-row>
-            <v-row>
+            <v-row class="mb-3">
+              <v-col cols="1" />
               <v-col class="pa-0">
                 <number-input  
                   ref="druckerToner"
@@ -378,7 +380,7 @@
           </template>
 
           <!-- Beamer -->
-          <v-row>
+          <v-row :class="!$vuetify.display.mobile ? '' : 'mb-3'">
             <v-col :class="!$vuetify.display.mobile ? 'py-0' : 'pa-0'">
               <number-input 
                 ref="beamer"
@@ -880,12 +882,12 @@ export default {
       this.anzahlMitarbeiter = null
       this.gebaeude = [[null, null]]
       this.geraeteAnzahl = [
-        [this.constants.it_geraet_multifunktionsgeraet, null],
-        [this.constants.it_geraet_multifunktionsgeraet_toner, null],
-        [this.constants.it_geraet_drucker, null],
-        [this.constants.it_geraet_drucker_toner, null],
-        [this.constants.it_geraet_beamer, null],
-        [this.constants.it_geraet_server, null],
+        [this.constants.it_geraet_multifunktionsgeraet, 0],
+        [this.constants.it_geraet_multifunktionsgeraet_toner, 0],
+        [this.constants.it_geraet_drucker, 0],
+        [this.constants.it_geraet_drucker_toner, 0],
+        [this.constants.it_geraet_beamer, 0],
+        [this.constants.it_geraet_server, 0],
       ],
       this.blockInput = false
       this.dataRequestSent = false
