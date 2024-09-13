@@ -61,13 +61,12 @@
         <br>
 
         <v-row>
-          <v-col :cols="$vuetify.display.smAndUp ? 5 : 8">
+          <v-col :cols="$vuetify.display.xs ? 12 : ($vuetify.display.sm ? 8 : 6)">
             <v-autocomplete
               v-model="bilanzierungsjahr"
               :items="possibleYears"
               :label="$t('common.Bilanzierungsjahr')"
               prepend-icon="mdi-calendar-question"
-              class="pr-5"
               :disabled="blockInput"
             />
           </v-col>
