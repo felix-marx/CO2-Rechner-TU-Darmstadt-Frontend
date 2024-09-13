@@ -715,10 +715,11 @@ export default {
   async mounted() { 
     this.initializeCharts();  // need to initialize the charts first otherwise there is an rendering error
     await this.getData(); 
-    this.aggregateChartdata();
-    this.setChartData();
 
-    this.responseSuccessful = true
+    if (this.responseSuccessful) {  // only set chart data if response was successful
+      this.aggregateChartdata();
+      this.setChartData();
+    }
   },
 
   created() {
