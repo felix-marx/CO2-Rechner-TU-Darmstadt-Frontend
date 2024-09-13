@@ -102,6 +102,7 @@
                         :label="$t('colleagueSurvey.colleagueSurvey.WieInsBuero_pendelweg')"
                         :suffix="$t('common.Einheit_km')"
                         hide-spin-buttons
+                        @wheel="($event) => $event.target.blur()"
                       />
                     </v-col>
                   </v-row>
@@ -141,6 +142,7 @@
                         :min="0"
                         :label="$t('colleagueSurvey.colleagueSurvey.WieInsBuero_anzahlMitfahrende')"
                         hide-spin-buttons
+                        @wheel="($event) => $event.target.blur()"
                       />
                     </v-col>
                   </v-row>
@@ -229,6 +231,7 @@
                             :label="$t('colleagueSurvey.colleagueSurvey.WieInsBuero_pendelweg')"
                             :suffix="$t('common.Einheit_km')"
                             hide-spin-buttons
+                            @wheel="($event) => $event.target.blur()"
                           />
                         </v-col>
                       </v-row>
@@ -283,6 +286,7 @@
                         :min="0"
                         :label="$t('colleagueSurvey.colleagueSurvey.WieInsBuero_anzahlMitfahrende')"
                         hide-spin-buttons
+                        @wheel="($event) => $event.target.blur()"
                       />
                     </v-col>
                   </v-row>
@@ -326,6 +330,7 @@
               :max="7"
               :label="$t('colleagueSurvey.colleagueSurvey.TageBuero_label')"
               hide-spin-buttons
+              @wheel="($event) => $event.target.blur()"
             />
           </v-row>
         </v-container>
@@ -414,6 +419,7 @@
                   :label="$t('colleagueSurvey.colleagueSurvey.EinfacheDistanz')"
                   :suffix="$t('common.Einheit_km')"
                   hide-spin-buttons
+                  @wheel="($event) => $event.target.blur()"
                 />
               </v-col>
               <!-- Delete Button -->
@@ -515,6 +521,7 @@
                             :label="$t('colleagueSurvey.colleagueSurvey.EinfacheDistanz')"
                             :suffix="$t('common.Einheit_km')"
                             hide-spin-buttons
+                            @wheel="($event) => $event.target.blur()"
                           />
                         </v-col>
                       </v-row>

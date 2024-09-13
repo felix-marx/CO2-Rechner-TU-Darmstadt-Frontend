@@ -92,6 +92,7 @@
               prepend-icon="mdi-account"
               :disabled="blockInput"
               hide-spin-buttons
+              @wheel="($event) => $event.target.blur()"
             />
           </v-row>
         </v-container>
@@ -142,6 +143,7 @@
                   suffix="qm"
                   :disabled="blockInput"
                   hide-spin-buttons
+                  @wheel="($event) => $event.target.blur()"
                 />
               </v-col>
               <v-col
@@ -192,6 +194,7 @@
                           suffix="qm"
                           :disabled="blockInput"
                           hide-spin-buttons
+                          @wheel="($event) => $event.target.blur()"
                         />
                       </v-col>
                     </v-row>
