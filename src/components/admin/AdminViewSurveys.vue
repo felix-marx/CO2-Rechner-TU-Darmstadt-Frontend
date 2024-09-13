@@ -203,31 +203,30 @@
                     </v-btn>
                   </template>
 
-                  <v-sheet>
-                    <v-card>
-                      <v-toolbar
-                        dark
-                        color="primary"
+                  <v-card>
+                    <v-toolbar
+                      dark
+                      color="primary"
+                    >
+                      <v-btn
+                        icon
+                        @click="closeDialog(index)"
                       >
-                        <v-btn
-                          icon
-                          @click="closeDialog(index)"
-                        >
-                          <v-icon>mdi-close</v-icon>
-                        </v-btn>
-                        <v-toolbar-title>{{ $t('common.Umfrage') }}</v-toolbar-title>
-                      </v-toolbar>
-                      <!-- Hier kommt der Inhalt der Umfrage hin -->
-                      <v-card
-                        v-if="dialog[index]"
-                        :style="{background: $vuetify.theme.themes[theme].colors.background}"
-                      >
-                        <EditSurvey 
-                          :umfrageidprop="umfrage._id"
-                        />
-                      </v-card>
+                        <v-icon>mdi-close</v-icon>
+                      </v-btn>
+                      <v-toolbar-title>{{ $t('common.Umfrage') }}</v-toolbar-title>
+                    </v-toolbar>
+                    <!-- Hier kommt der Inhalt der Umfrage hin -->
+                    <v-card
+                      v-if="dialog[index]"
+                      :style="{background: $vuetify.theme.themes[theme].colors.background}"
+                      class="overflow-y-auto"
+                    >
+                      <EditSurvey 
+                        :umfrageidprop="umfrage._id"
+                      />
                     </v-card>
-                  </v-sheet>
+                  </v-card>
                 </v-dialog>
 
                 <!-- Umfrage teilen -->
@@ -308,32 +307,31 @@
                     </v-btn>
                   </template>
 
-                  <v-sheet>
-                    <v-card>
-                      <v-toolbar
-                        dark
-                        color="primary"
+                  <v-card>
+                    <v-toolbar
+                      dark
+                      color="primary"
+                    >
+                      <v-btn
+                        icon
+                        @click="closeDialogAuswertung(index)"
                       >
-                        <v-btn
-                          icon
-                          @click="closeDialogAuswertung(index)"
-                        >
-                          <v-icon>mdi-close</v-icon>
-                        </v-btn>
-                        <v-toolbar-title>{{ $t('common.Auswertung') }}</v-toolbar-title>
-                        <v-spacer />
-                      </v-toolbar>
-                      <v-card
-                        v-if="dialogAuswertung[index]"
-                        :style="{background: $vuetify.theme.themes[theme].colors.background}"
-                      >
-                        <SurveyEvaluation
-                          :umfrageid="umfrage._id"
-                          :shared="false"
-                        />
-                      </v-card>
+                        <v-icon>mdi-close</v-icon>
+                      </v-btn>
+                      <v-toolbar-title>{{ $t('common.Auswertung') }}</v-toolbar-title>
+                      <v-spacer />
+                    </v-toolbar>
+                    <v-card
+                      v-if="dialogAuswertung[index]"
+                      :style="{background: $vuetify.theme.themes[theme].colors.background}"
+                      class="overflow-y-auto"
+                    >
+                      <SurveyEvaluation
+                        :umfrageid="umfrage._id"
+                        :shared="false"
+                      />
                     </v-card>
-                  </v-sheet>
+                  </v-card>
                 </v-dialog>
 
                 <!-- Desktop -->
@@ -752,3 +750,12 @@ function GetSortOrder(prop) {
     }    
 }    
 </script>
+
+<style scoped>
+.fixed-bar {
+  position: sticky;
+  position: -webkit-sticky; /* for Safari */
+  top: 6em;
+  z-index: 2;
+}
+</style>
