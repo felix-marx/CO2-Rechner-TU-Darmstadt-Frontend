@@ -505,7 +505,6 @@ export default {
      */
     closeDialog(index) {
       this.fetchUmfragenForUser()
-      // this.$set(this.dialog, index, false)
       this.dialog[index] = false
     },
 
@@ -514,7 +513,6 @@ export default {
      */
     closeDialogAuswertung(index) {
       this.fetchUmfragenForUser()
-      // this.$set(this.dialogAuswertung, index, false)
       this.dialogAuswertung[index] = false
     },
 
