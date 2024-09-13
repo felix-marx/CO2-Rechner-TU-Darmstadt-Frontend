@@ -26,6 +26,7 @@
     </v-card>
 
     <v-card
+      ref="surveyCard"
       class="pa-7 mt-2 mx-auto"
       :max-width="constants.v_card_max_width"
     >
@@ -650,6 +651,7 @@ export default {
     displayLoadingAnimation: false,
     scrollToLinkScharing: false,
     scrollToErrorMessage: false,
+    scrollToSurvey: false,
   }),
 
   computed: {
@@ -710,6 +712,15 @@ export default {
 
       this.$refs.errorMessage.$el.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest" });
       this.scrollToErrorMessage = false;
+    },
+
+    scrollToSurvey: async function() {
+      if (!this.scrollToSurvey) {
+        return;
+      }
+
+      this.$refs.surveyCard.$el.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest" });
+      this.scrollToSurvey = false;
     }
   },
 
@@ -917,6 +928,8 @@ export default {
 
       this.$refs.server.reset();
       this.$refs.server.resetValidation();
+
+      this.scrollToSurvey = true;   // scroll back to top
     },
 
     /**
