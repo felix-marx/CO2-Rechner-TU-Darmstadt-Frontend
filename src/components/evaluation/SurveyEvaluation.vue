@@ -409,8 +409,10 @@
       class="mx-auto"
       :max-width="constants.v_card_max_width"
     >
-      <v-card-title class="headerClass">
-        Error {{ responseerror.code }}: {{ responseerror.message }}
+      <v-card-title>
+        <label class="headerClass">
+          Error {{ responseerror.code }}: {{ responseerror.message }}
+        </label>
       </v-card-title>
     </v-card>
   </v-container>
@@ -697,7 +699,9 @@ export default {
 
   watch: {
     '$i18n.locale': function() {  // reload charts when language changes to update labels
-      this.setChartData();
+      if (this.responseSuccessful) {
+        this.setChartData();
+      }
     },
 
     scrollToLinkScharing: async function () {
@@ -715,10 +719,11 @@ export default {
   async mounted() { 
     this.initializeCharts();  // need to initialize the charts first otherwise there is an rendering error
     await this.getData(); 
-    this.aggregateChartdata();
-    this.setChartData();
 
-    this.responseSuccessful = true
+    if (this.responseSuccessful) {  // only set chart data if response was successful
+      this.aggregateChartdata();
+      this.setChartData();
+    }
   },
 
   created() {
@@ -738,15 +743,10 @@ export default {
         clearTimeout(this.resizeTimout)
       }
       this.resizeTimout = setTimeout(() => {
-        this.setChartData();
+        if (this.responseSuccessful) {
+          this.setChartData();
+        }
       }, 250)
-    },
-
-    /**
-     * Helper function to access a variable by its name.
-     */
-    accessVariable: function (variable) {
-      return eval(variable)
     },
 
     /**

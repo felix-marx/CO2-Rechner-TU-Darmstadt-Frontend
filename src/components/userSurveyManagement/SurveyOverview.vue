@@ -126,31 +126,30 @@
                     </v-btn>
                   </template>
 
-                  <v-sheet>
-                    <v-card>
-                      <v-toolbar
-                        dark
-                        color="primary"
+                  <v-card :style="{background: $vuetify.theme.themes[theme].colors.background}">
+                    <v-toolbar
+                      dark
+                      color="primary"
+                    >
+                      <v-btn
+                        icon
+                        @click="closeDialog(index)"
                       >
-                        <v-btn
-                          icon
-                          @click="closeDialog(index)"
-                        >
-                          <v-icon>mdi-close</v-icon>
-                        </v-btn>
-                        <v-toolbar-title>{{ $t('common.Umfrage') }}</v-toolbar-title>
-                      </v-toolbar>
-                      <!-- Hier kommt der Inhalt der Umfrage hin -->
-                      <v-card
-                        v-if="dialog[index]"
-                        :style="{background: $vuetify.theme.themes[theme].colors.background}"
-                      >
-                        <EditSurvey 
-                          :umfrageidprop="umfrage._id"
-                        />
-                      </v-card>
+                        <v-icon>mdi-close</v-icon>
+                      </v-btn>
+                      <v-toolbar-title>{{ $t('common.Umfrage') }}</v-toolbar-title>
+                    </v-toolbar>
+                    <!-- Hier kommt der Inhalt der Umfrage hin -->
+                    <v-card
+                      v-if="dialog[index]"
+                      :style="{background: $vuetify.theme.themes[theme].colors.background}"
+                      class="overflow-y-auto fill-height"
+                    >
+                      <EditSurvey 
+                        :umfrageidprop="umfrage._id"
+                      />
                     </v-card>
-                  </v-sheet>
+                  </v-card>
                 </v-dialog>
 
                 <!-- Umfrage teilen -->
@@ -233,32 +232,31 @@
                     </v-btn>
                   </template>
 
-                  <v-sheet>
-                    <v-card>
-                      <v-toolbar
-                        dark
-                        color="primary"
+                  <v-card :style="{background: $vuetify.theme.themes[theme].colors.background}">
+                    <v-toolbar
+                      dark
+                      color="primary"
+                    >
+                      <v-btn
+                        icon
+                        @click="closeDialogAuswertung(index)"
                       >
-                        <v-btn
-                          icon
-                          @click="closeDialogAuswertung(index)"
-                        >
-                          <v-icon>mdi-close</v-icon>
-                        </v-btn>
-                        <v-toolbar-title>{{ $t('common.Auswertung') }}</v-toolbar-title>
-                        <v-spacer />
-                      </v-toolbar>
-                      <v-card
-                        v-if="dialogAuswertung[index]"
-                        :style="{background: $vuetify.theme.themes[theme].colors.background}"
-                      >
-                        <SurveyEvaluation
-                          :umfrageid="umfrage._id"
-                          :shared="false"
-                        />
-                      </v-card>
+                        <v-icon>mdi-close</v-icon>
+                      </v-btn>
+                      <v-toolbar-title>{{ $t('common.Auswertung') }}</v-toolbar-title>
+                      <v-spacer />
+                    </v-toolbar>
+                    <v-card
+                      v-if="dialogAuswertung[index]"
+                      :style="{background: $vuetify.theme.themes[theme].colors.background}"
+                      class="overflow-y-auto fill-height"
+                    >
+                      <SurveyEvaluation
+                        :umfrageid="umfrage._id"
+                        :shared="false"
+                      />
                     </v-card>
-                  </v-sheet>
+                  </v-card>
                 </v-dialog>
 
                 <!-- Desktop -->
@@ -505,7 +503,6 @@ export default {
      */
     closeDialog(index) {
       this.fetchUmfragenForUser()
-      // this.$set(this.dialog, index, false)
       this.dialog[index] = false
     },
 
@@ -514,7 +511,6 @@ export default {
      */
     closeDialogAuswertung(index) {
       this.fetchUmfragenForUser()
-      // this.$set(this.dialogAuswertung, index, false)
       this.dialogAuswertung[index] = false
     },
 
@@ -553,30 +549,30 @@ export default {
      */
     deleteUmfrage: async function (index, umfrageID) {
       await fetch(import.meta.env.VITE_BASEURL + "/umfrage", {
-      method: "DELETE",
-      headers: {
-        "Authorization": "Bearer " + this.$keycloak.token,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        umfrageID: umfrageID,
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if(data.status === "error") {
-          this.errors[index] = true
-          this.message = data.error.message
-          return false
-        }
-        return true
+        method: "DELETE",
+        headers: {
+          "Authorization": "Bearer " + this.$keycloak.token,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          umfrageID: umfrageID,
+        }),
       })
-      .catch((error) => {
-        this.errors[index] = true
-        this.message = this.$t('SurveyOverview.ServerNichtErreichbar')
-        console.error("Error:", error);
-        return false
-      });
+        .then((response) => response.json())
+        .then((data) => {
+          if(data.status === "error") {
+            this.errors[index] = true
+            this.message = data.error.message
+            return false
+          }
+          return true
+        })
+        .catch((error) => {
+          this.errors[index] = true
+          this.message = this.$t('SurveyOverview.ServerNichtErreichbar')
+          console.error("Error:", error);
+          return false
+        });
     },
 
     /**
@@ -584,31 +580,31 @@ export default {
      */
     duplicateUmfrage: async function (index, umfrageID, suffix) {
       await fetch(import.meta.env.VITE_BASEURL + "/umfrage/duplicate", {
-      method: "POST",
-      headers: {
-        "Authorization": "Bearer " + this.$keycloak.token,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        umfrageID: umfrageID,
-        suffix: suffix,
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if(data.status === "error") {
-          this.errors[index] = true
-          this.message = data.error.message
-          return false
-        }
-        return true
+        method: "POST",
+        headers: {
+          "Authorization": "Bearer " + this.$keycloak.token,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          umfrageID: umfrageID,
+          suffix: suffix,
+        }),
       })
-      .catch((error) => {
-        this.errors[index] = true
-        this.message = this.$t('SurveyOverview.ServerNichtErreichbar')
-        console.error("Error:", error);
-        return false
-      });
+        .then((response) => response.json())
+        .then((data) => {
+          if(data.status === "error") {
+            this.errors[index] = true
+            this.message = data.error.message
+            return false
+          }
+          return true
+        })
+        .catch((error) => {
+          this.errors[index] = true
+          this.message = this.$t('SurveyOverview.ServerNichtErreichbar')
+          console.error("Error:", error);
+          return false
+        });
     },
   }
 }
