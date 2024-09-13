@@ -697,7 +697,9 @@ export default {
 
   watch: {
     '$i18n.locale': function() {  // reload charts when language changes to update labels
-      this.setChartData();
+      if (this.responseSuccessful) {
+        this.setChartData();
+      }
     },
 
     scrollToLinkScharing: async function () {
@@ -739,15 +741,10 @@ export default {
         clearTimeout(this.resizeTimout)
       }
       this.resizeTimout = setTimeout(() => {
-        this.setChartData();
+        if (this.responseSuccessful) {
+          this.setChartData();
+        }
       }, 250)
-    },
-
-    /**
-     * Helper function to access a variable by its name.
-     */
-    accessVariable: function (variable) {
-      return eval(variable)
     },
 
     /**
