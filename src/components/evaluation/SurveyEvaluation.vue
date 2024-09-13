@@ -409,8 +409,10 @@
       class="mx-auto"
       :max-width="constants.v_card_max_width"
     >
-      <v-card-title class="headerClass">
-        Error {{ responseerror.code }}: {{ responseerror.message }}
+      <v-card-title>
+        <label class="headerClass">
+          Error {{ responseerror.code }}: {{ responseerror.message }}
+        </label>
       </v-card-title>
     </v-card>
   </v-container>
