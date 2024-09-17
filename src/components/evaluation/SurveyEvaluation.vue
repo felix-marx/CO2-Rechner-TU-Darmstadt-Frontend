@@ -522,6 +522,8 @@ export default {
       aggregatedDienstreisen: null,
       aggregatedPendelwege: null,
 
+      aggregatedDienstreisenNeu: null,
+
       // for link sharing
       displaySuccess: false,
       showLoading: false,
@@ -941,6 +943,51 @@ export default {
 
       this.aggregatedDienstreisen = aggregation
 
+      // ordering for stacked bar chart
+      aggregation = {}
+
+      Object.keys(dienstreisenAufgeteilt).forEach(function(key) {
+        let new_key = key
+        let second_key = "no_key"
+        let labelParts = key.split(constants.split_char)
+
+        if(labelParts[0] === constants.dienstreisen_pkw.toString() && [constants.dienstreisen_benzin, constants.dienstreisen_diesel].includes(labelParts[1])){
+          new_key = constants.dienstreisen_pkw.toString() + constants.split_char + constants.aggregation_dienstreisen_verbrenner
+          second_key = labelParts[1]
+        }
+        else if(labelParts[0] === constants.dienstreisen_pkw.toString() && [constants.dienstreisen_plug_in_hybrid, constants.dienstreisen_elektro].includes(labelParts[1])){
+          new_key = constants.dienstreisen_pkw.toString() + constants.split_char + constants.dienstreisen_elektro
+          second_key = labelParts[1]
+        }
+        else if(labelParts[0] === constants.dienstreisen_flugzeug.toString() && labelParts[1] === constants.dienstreisen_kurzstrecke){
+          new_key = constants.dienstreisen_flugzeug.toString() + constants.split_char + constants.dienstreisen_kurzstrecke
+          second_key = labelParts[2]
+        }
+        else if(labelParts[0] === constants.dienstreisen_flugzeug.toString() && labelParts[1] === constants.dienstreisen_langstrecke){
+          new_key = constants.dienstreisen_flugzeug.toString() + constants.split_char + constants.dienstreisen_langstrecke
+          second_key = labelParts[2]
+        }
+        else if(labelParts[0] === constants.dienstreisen_flugzeug.toString() && labelParts[1] === constants.dienstreisen_inland){
+          new_key = constants.dienstreisen_flugzeug.toString() + constants.split_char + constants.dienstreisen_inland
+          second_key = labelParts[2]
+        }
+        else if(labelParts[0] === constants.dienstreisen_flugzeug.toString() && labelParts[1] === constants.dienstreisen_international){
+          new_key = constants.dienstreisen_flugzeug.toString() + constants.split_char + constants.dienstreisen_international
+          second_key = labelParts[2]
+        }
+
+
+        if (!aggregation[new_key]) {
+          aggregation[new_key] = {}
+        } 
+        aggregation[new_key][second_key] = dienstreisenAufgeteilt[key]
+      })
+
+      this.aggregatedDienstreisenNeu = aggregation
+
+      console.log("aggregatedDienstreisenNeu", this.aggregatedDienstreisenNeu)
+
+
       // aggregate pendelwege data
       let pendelwegeAufgeteilt = this.responsedata.emissionenPendelwegeAufgeteilt
       aggregation = {}
@@ -1200,25 +1247,90 @@ export default {
     },
 
     setChartDienstreisenStacked: function () {
-
       console.log("setChartDienstreisenStacked")
-      console.log(this.responsedata.emissionenDienstreisenAufgeteilt)
+      //console.log(this.responsedata.emissionenDienstreisenAufgeteilt)
 
-      let data = []
+      // let data = []
       let labelMap = getDienstreisenLabelMap()
-      let aggregation = this.aggregatedDienstreisen
+      let aggregation = this.aggregatedDienstreisenNeu
 
-      Object.keys(aggregation).forEach(function(key) {
+      let numBars = Object.keys(aggregation).length
+      let stackHeights = []
+      Object.keys(aggregation).forEach(key => stackHeights.push(Object.keys(aggregation[key]).length))
+      let heighestStack = Math.max(...stackHeights)
+
+
+      console.log("numBars", numBars)
+      console.log("stackHeights", stackHeights)
+      console.log("heighestStack", heighestStack)
+
+
+      let data = new Array(numBars).fill(0).map(() => new Array(heighestStack).fill(0))
+      let individualLabels = new Array(numBars).fill("").map(() => new Array(heighestStack).fill(""))
+      let labels = []
+
+      let data_extended = new Array(numBars).fill(0).map(() => new Array(heighestStack).fill({label: "", value: 0, color: 'rgb(54,162,235)'}))
+
+      console.log("empty data", data)
+      console.log("empty labels", individualLabels)
+
+      Object.keys(aggregation).forEach((key, i) => {
+        let j = 0
         let labelParts = key.split(constants.split_char)
         let label = labelMap.get(labelParts[0]) + (labelParts[1] ? " - " + labelMap.get(labelParts[1]) : "")
-        data.push({label: label, value: aggregation[key], color: 'rgb(54,162,235)'})
+        labels.push(label)
+
+        Object.keys(aggregation[key]).forEach(subkey => {
+          data[i][j] = aggregation[key][subkey]
+          individualLabels[i][j] = subkey
+          data_extended[i][j] = {label: label, individualLabel: labelMap.get(subkey), value: aggregation[key][subkey], color: 'rgb(54,162,235)'}
+
+          j++
+        })
       })
 
-      data.sort((a, b) => b.value - a.value)
+      console.log("data", data)
+      console.log("individualLabels", individualLabels)
+      console.log("labels", labels)
+      console.log("data_extended", data_extended)
 
-      this.chartdataDienstreisenBarStacked.labels = data.map(a => a.label);
-      this.chartdataDienstreisenBarStacked.datasets[0].data = data.map(a => a.value);
-      this.chartdataDienstreisenBarStacked.datasets[0].backgroundColor = data.map(a => a.color);
+      // Object.keys(aggregation).forEach(function(key) {
+      //   let labelParts = key.split(constants.split_char)
+      //   let label = labelMap.get(labelParts[0]) + (labelParts[1] ? " - " + labelMap.get(labelParts[1]) : "")
+      //   data.push({label: label, value: aggregation[key], color: 'rgb(54,162,235)'})
+      // })
+
+      // data.sort((a, b) => b.value - a.value)
+
+      this.chartdataDienstreisenBarStacked.labels = labels;
+
+      let defaultDataset = this.chartdataDienstreisenBarStacked.datasets[0]
+      defaultDataset.data = []
+      defaultDataset.backgroundColor = []
+      this.chartdataDienstreisenBarStacked.datasets = []
+
+      for (let i = 0; i < heighestStack; i++) {
+        let dataset = JSON.parse(JSON.stringify(defaultDataset))
+
+        dataset.data = data_extended.map(a => a[i].value);
+
+        console.log("temp", data_extended.map(a => a[i]))
+
+        // dataset.data = data_extended.map(a => a[i]);
+
+        // dataset.parsing = {
+        //   yAxisKey: 'value',
+        //   xAxisKey: 'label'
+        // }
+
+        console.log("dataset.data", dataset.data)
+        console.log("dataset", dataset)
+
+        this.chartdataDienstreisenBarStacked.datasets.push(dataset)
+      }
+
+      // this.chartdataDienstreisenBarStacked.datasets[0].data = data.map(a => a.value);
+      // this.chartdataDienstreisenBarStacked.datasets[0].backgroundColor = data.map(a => a.color);
 
       let prefix = this.$t('common.Emissionen')
       let i18n_n = this.$n
@@ -1226,10 +1338,28 @@ export default {
         let value = context.dataset.data[context.dataIndex];
         return prefix + ": " + i18n_n(value, "decimal")
       }
+
+      this.optionsDienstreisenBarStacked.plugins.tooltip.callbacks.afterTitle = function(context) {
+        // let individualLabel = context[0].dataset.data[context.dataIndex].individualLabel;
+        let individualLabel = data_extended[context[0].dataIndex][context[0].datasetIndex].individualLabel
+
+        return individualLabel
+        //return context[0].label + " - " + individualLabel
+      }
+
+
       this.optionsDienstreisenBarStacked.plugins.datalabels.formatter = (value) => {
-        return this.$n(value, "decimal");
+        if (value == 0) {   // if value is 0, don't show it
+          return ""
+        }
+        else {
+          return this.$n(value, "decimal");
+        }
       }
       this.optionsDienstreisenBarStacked.plugins.datalabels.rotation = () => { return this.barChartBarLabelRoation }
+
+      this.optionsDienstreisenBarStacked.scales.y.stacked = true
+      this.optionsDienstreisenBarStacked.scales.x.stacked = true
 
       this.$refs["bar-dienstreisen-stacked"][0].updateChart()
     },
