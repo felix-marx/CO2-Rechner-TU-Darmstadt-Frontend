@@ -384,6 +384,7 @@
                   v-model="reise[1]" 
                   :label="$t('colleagueSurvey.colleagueSurvey.flugstreckentyp')" 
                   :items="flugstreckeListe"
+                  :disabled="submittedDataSuccessfully"
                 />
               </v-col>
               <!-- Flugklasse -->
@@ -484,6 +485,7 @@
                             v-model="reise[1]" 
                             :label="$t('colleagueSurvey.colleagueSurvey.flugstreckentyp')" 
                             :items="flugstreckeListe"
+                            :disabled="submittedDataSuccessfully"
                           />
                         </v-col>
                         <!-- Flugklasse -->
