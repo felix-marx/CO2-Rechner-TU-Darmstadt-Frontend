@@ -579,11 +579,6 @@ export default {
           backgroundColor: [],
           borderWidth: 1,
           order: 1,
-          datalabels: {
-            color: 'black',
-            align: 'end',
-            anchor: 'start',
-          },
           barTickness: "flex",
           maxBarThickness: this.barWidth,
         }]
@@ -594,6 +589,9 @@ export default {
         plugins: {
           datalabels: {
             display: true,
+            color: 'black',
+            align: 'end',
+            anchor: 'start',
             font: {   // font for numbers on bars
               size: 14,
               // weight: 'bold',
@@ -948,7 +946,7 @@ export default {
 
       Object.keys(dienstreisenAufgeteilt).forEach(function(key) {
         let new_key = key
-        let second_key = "no_key"
+        let second_key = constants.aggregation_no_key
         let labelParts = key.split(constants.split_char)
 
         if(labelParts[0] === constants.dienstreisen_pkw.toString() && [constants.dienstreisen_benzin, constants.dienstreisen_diesel].includes(labelParts[1])){
@@ -1248,7 +1246,7 @@ export default {
 
     setChartDienstreisenStacked: function () {
       console.log("setChartDienstreisenStacked")
-      //console.log(this.responsedata.emissionenDienstreisenAufgeteilt)
+      console.log(this.responsedata.emissionenDienstreisenAufgeteilt)
 
       // let data = []
       let labelMap = getDienstreisenLabelMap()
@@ -1265,42 +1263,31 @@ export default {
       console.log("heighestStack", heighestStack)
 
 
-      let data = new Array(numBars).fill(0).map(() => new Array(heighestStack).fill(0))
-      let individualLabels = new Array(numBars).fill("").map(() => new Array(heighestStack).fill(""))
-      let labels = []
-
-      let data_extended = new Array(numBars).fill(0).map(() => new Array(heighestStack).fill({label: "", value: 0, color: 'rgb(54,162,235)'}))
-
-      console.log("empty data", data)
-      console.log("empty labels", individualLabels)
+      let data_extended = new Array(numBars).fill(0).map(() => new Array(heighestStack).fill({label: "", individualLabel: "", value: 0, color: 'rgb(54,162,235)'}))
 
       Object.keys(aggregation).forEach((key, i) => {
         let j = 0
         let labelParts = key.split(constants.split_char)
         let label = labelMap.get(labelParts[0]) + (labelParts[1] ? " - " + labelMap.get(labelParts[1]) : "")
-        labels.push(label)
 
         Object.keys(aggregation[key]).forEach(subkey => {
-          data[i][j] = aggregation[key][subkey]
-          individualLabels[i][j] = subkey
           data_extended[i][j] = {label: label, individualLabel: labelMap.get(subkey), value: aggregation[key][subkey], color: 'rgb(54,162,235)'}
-
           j++
         })
       })
 
-      console.log("data", data)
-      console.log("individualLabels", individualLabels)
-      console.log("labels", labels)
       console.log("data_extended", data_extended)
 
-      // Object.keys(aggregation).forEach(function(key) {
-      //   let labelParts = key.split(constants.split_char)
-      //   let label = labelMap.get(labelParts[0]) + (labelParts[1] ? " - " + labelMap.get(labelParts[1]) : "")
-      //   data.push({label: label, value: aggregation[key], color: 'rgb(54,162,235)'})
-      // })
+      data_extended.sort((a, b) => b.map(x => x.value).reduce((agg, y) => agg + y, 0) - a.map(x => x.value).reduce((agg, y) => agg + y, 0))
+      data_extended.forEach((a) => a.sort((a, b) => b.value - a.value))
 
-      // data.sort((a, b) => b.value - a.value)
+      console.log("sorted data_extended", data_extended)
+
+      let labels = data_extended.map(a => a[0].label)
+
+      let onlyOneStack = data_extended.map(a => a.reduce((agg, b) => b.value == 0 ? agg : agg + 1, 0) == 1)
+
+      console.log("onlyOneStack", onlyOneStack)
 
       this.chartdataDienstreisenBarStacked.labels = labels;
 
@@ -1323,6 +1310,12 @@ export default {
         //   xAxisKey: 'label'
         // }
 
+        dataset.backgroundColor = 'rgb(54, 162, 235)';
+
+        // dataset.backgroundColor = 'rgba(54, 162, 235, 0.6)';
+        // dataset.borderColor = 'rgb(54, 162, 235)';
+        // dataset.borderWidth = 2;
+
         console.log("dataset.data", dataset.data)
         console.log("dataset", dataset)
 
@@ -1343,8 +1336,12 @@ export default {
         // let individualLabel = context[0].dataset.data[context.dataIndex].individualLabel;
         let individualLabel = data_extended[context[0].dataIndex][context[0].datasetIndex].individualLabel
 
-        return individualLabel
-        //return context[0].label + " - " + individualLabel
+        if (individualLabel === constants.aggregation_no_key) {
+          return ""
+        }
+        else {
+          return individualLabel
+        }
       }
 
 
@@ -1357,6 +1354,25 @@ export default {
         }
       }
       this.optionsDienstreisenBarStacked.plugins.datalabels.rotation = () => { return this.barChartBarLabelRoation }
+
+      this.optionsDienstreisenBarStacked.plugins.datalabels.align = 'end'
+      this.optionsDienstreisenBarStacked.plugins.datalabels.offset = -4
+      this.optionsDienstreisenBarStacked.plugins.datalabels.anchor = 'start'
+      // this.optionsDienstreisenBarStacked.plugins.datalabels.clamp = true
+
+      this.optionsDienstreisenBarStacked.plugins.datalabels.display = 'auto'
+      this.optionsDienstreisenBarStacked.plugins.datalabels.display = function(context) {
+        if (context.dataset.data[context.dataIndex] >= 2) {
+          return true
+        }
+        
+        if (onlyOneStack[context.dataIndex]) {
+          return true
+        }
+
+        return false
+      }
+
 
       this.optionsDienstreisenBarStacked.scales.y.stacked = true
       this.optionsDienstreisenBarStacked.scales.x.stacked = true

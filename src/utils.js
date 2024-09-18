@@ -91,7 +91,8 @@ export function getDienstreisenLabelMap(){
     [constants.dienstreisen_premium_economy, i18n.global.t("colleagueSurvey.colleagueSurvey.flugklasse_premiumeconomy")],
     [constants.dienstreisen_business, i18n.global.t("colleagueSurvey.colleagueSurvey.flugklasse_business")],
     [constants.dienstreisen_first, i18n.global.t("colleagueSurvey.colleagueSurvey.flugklasse_first")],
-    [constants.aggregation_dienstreisen_verbrenner, i18n.global.t("colleagueSurvey.colleagueSurvey.dienstreiseMedium_Verbrenner")]
+    [constants.aggregation_dienstreisen_verbrenner, i18n.global.t("colleagueSurvey.colleagueSurvey.dienstreiseMedium_Verbrenner")],
+    [constants.aggregation_no_key, constants.aggregation_no_key],
   ])
 }
 
