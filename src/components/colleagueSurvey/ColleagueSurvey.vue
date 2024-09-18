@@ -385,6 +385,7 @@
                   :label="$t('colleagueSurvey.colleagueSurvey.flugstreckentyp')" 
                   :items="flugstreckeListe"
                   :disabled="submittedDataSuccessfully"
+                  @update:model-value="resetPlaneClass(index)"
                 />
               </v-col>
               <!-- Flugklasse -->
@@ -486,6 +487,7 @@
                             :label="$t('colleagueSurvey.colleagueSurvey.flugstreckentyp')" 
                             :items="flugstreckeListe"
                             :disabled="submittedDataSuccessfully"
+                            @update:model-value="resetPlaneClass(index)"
                           />
                         </v-col>
                         <!-- Flugklasse -->
@@ -1042,6 +1044,14 @@ export default {
           parseInt(v) > 0 ||
           this.$t('colleagueSurvey.colleagueSurvey.MitfahrerRules_1'),
       ]
+    },
+
+    /**
+     * Resets the Dienstreisen fileds associated with distnace and class
+     */
+    resetPlaneClass: function (index) {
+      this.dienstreisen[index][2] = null;
+      this.dienstreisen[index][3] = null;
     },
 
     /**
