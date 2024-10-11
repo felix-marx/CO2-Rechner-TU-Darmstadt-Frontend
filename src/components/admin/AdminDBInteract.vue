@@ -64,7 +64,7 @@
                 Neuen CO<sub>2</sub>-Faktor für Energie hinzufügen
               </label>
               <Tooltip
-                tooltip-text="Hiermit kann ein CO2-Faktor für Energie für ein bestimmtes Jahr eingetragen werden. Es sind alle Jahre von 2018 bis zum letzten Jahr möglich. Zusätzlich wird zwischen Faktoren den Energiearten und dem Versorger (TU Darmstadt oder extern) unterschieden."
+                :tooltip-text="'Hiermit kann ein CO2-Faktor für Energie für ein bestimmtes Jahr eingetragen werden. Es sind alle Jahre von ' + constants.beginningYear + ' bis zum letzten Jahr möglich. Zusätzlich wird zwischen Faktoren den Energiearten und dem Versorger (TU Darmstadt oder extern) unterschieden.'"
               />
             </div>
           </v-expansion-panel-title>
@@ -158,7 +158,7 @@
                 Gebäude hinzufügen 
               </label>
               <Tooltip 
-                tooltip-text="Hiermit lässt sich ein neues Gebäude in die Datenbank einfügen. Es wird eine eindeutige Gebäudenummer sowie eine Gebäudebezeichnung benötigt. Zusätzlich muss die Fläche des Gebäudes angegebnen werden. Falls ein Wert nicht vorliegt, soll 0 als Wert eigentragen werden. Ist das Gebäude an einen externen Versorger angeschlossen, so können die entsprechenden Jahre angegeben werden. Dafür muss die Checkbox ausgewählt sein und die Jahre seit 2018 als kommaseparierte in das entsprechende Feld eingetragen werden." 
+                :tooltip-text="'Hiermit lässt sich ein neues Gebäude in die Datenbank einfügen. Es wird eine eindeutige Gebäudenummer sowie eine Gebäudebezeichnung benötigt. Zusätzlich muss die Fläche des Gebäudes angegebnen werden. Falls ein Wert nicht vorliegt, soll 0 als Wert eigentragen werden. Ist das Gebäude an einen externen Versorger angeschlossen, so können die entsprechenden Jahre angegeben werden. Dafür muss die Checkbox ausgewählt sein und die Jahre seit ' + constants.beginningYear + ' als kommaseparierte in das entsprechende Feld eingetragen werden.'" 
               />
             </div>
           </v-expansion-panel-title>
@@ -259,7 +259,7 @@
             <v-row v-if="external_supplier">
               <v-col>
                 <p>
-                  Geben sie die Jahre seit 2018 an, für die das Gebäude einen externe Versorger hatte. Eingabe als kommaseparierte Liste.
+                  Geben sie die Jahre seit {{ constants.beginningYear }} an, für die das Gebäude einen externe Versorger hatte. Eingabe als kommaseparierte Liste.
                 </p>
               </v-col>
             </v-row>
@@ -331,7 +331,7 @@
                 Externe Versorger für Gebäude hinzufügen
               </label>
               <Tooltip
-                tooltip-text="Hiermit kann für ein bestehendes Gebäude der Versorger für ein Jahr zwischen 2018 und dem letzten Jahr festgelegt werden, solange noch kein Versorger angegeben ist. Bei Versorgern wird zwischen der TU Darmstadt und jeglichen anderen, externen Versorger unterschieden. Ebenso sind die Versorger von verschiedenen Energiearten getrennt voneinander aufgeführt. Um das Gebäude zu identifizieren, wird die eindeutige Gebäudenummer verwendet."
+                :tooltip-text="'Hiermit kann für ein bestehendes Gebäude der Versorger für ein Jahr zwischen ' + constants.beginningYear + ' und dem letzten Jahr festgelegt werden, solange noch kein Versorger angegeben ist. Bei Versorgern wird zwischen der TU Darmstadt und jeglichen anderen, externen Versorger unterschieden. Ebenso sind die Versorger von verschiedenen Energiearten getrennt voneinander aufgeführt. Um das Gebäude zu identifizieren, wird die eindeutige Gebäudenummer verwendet.'"
               />
             </div>
           </v-expansion-panel-title>
@@ -417,7 +417,7 @@
                 Standard Versorger für alle Gebäude hinzufügen
               </label>
               <Tooltip
-                tooltip-text="Hiermit lässt sich für alle in der Datenbank vorhanden Gebäude der Standard-Versorger TU Darmstadt für ein bestimmtes Jahr eintragen. Der Wert wird bei allen Gebäuden und für alle Energiearten eingetragen, wenn noch kein Versorger für das spezifizierte Jahr angegeben wurde. Als Jahre stehen alle Jahre zwischen 2018 und dem letzten Jahr zur Verfügung."
+                :tooltip-text="'Hiermit lässt sich für alle in der Datenbank vorhanden Gebäude der Standard-Versorger TU Darmstadt für ein bestimmtes Jahr eintragen. Der Wert wird bei allen Gebäuden und für alle Energiearten eingetragen, wenn noch kein Versorger für das spezifizierte Jahr angegeben wurde. Als Jahre stehen alle Jahre zwischen ' + constants.beginningYear + ' und dem letzten Jahr zur Verfügung.'"
               />
             </div>
           </v-expansion-panel-title>
@@ -490,15 +490,15 @@
                 Neuen Zähler hinzufügen
               </label>
               <Tooltip
-                tooltip-text="Hiermit kann ein neuer Zähler in die Datenbank eingetragen werden. Dazu wird die eindeutige Nummer des Zählers benötigt. Weitere Angaben sind die Zählereinheit, den Zählertyp, und die Bezeichnung. Referenzen zu Gebäude, zu denen der Zähler gehört, können durch die zusätzlichen Felder eingetragen werden. Standardmäßig wird einem Zähler für alle Jahre von 2018 bis zum letzten Jahr der Wert 0 als Zählerstand eingetragen."
+                :tooltip-text="'Hiermit kann ein neuer Zähler in die Datenbank eingetragen werden. Dazu wird die eindeutige Nummer des Zählers benötigt. Weitere Angaben sind die Zählereinheit, den Zählertyp, und die Bezeichnung. Referenzen zu Gebäude, zu denen der Zähler gehört, können durch die zusätzlichen Felder eingetragen werden. Standardmäßig wird einem Zähler für alle Jahre von ' + constants.beginningYear + ' bis zum letzten Jahr der Wert 0 als Zählerstand eingetragen.'"
               />
             </div>
           </v-expansion-panel-title>
           <v-expansion-panel-text>
             <v-text-field
-              v-model="counter.primary_key"
-              :rules="notNegativeRule"
-              label="Primary Key des Zählers"
+              v-model="counter.dp_name"
+              :rules="basicRule"
+              label="DPName des Zählers"
             />
 
             <v-select
@@ -603,36 +603,52 @@
                 Zählerdaten für Zähler hinzufügen
               </label>
               <Tooltip
-                tooltip-text="Hiermit kann einem bestehenden Zähler ein Zählerstand für ein Jahr zwischen 2018 und dem letzten Jahr eingetragen werden. Dazu wird die eindeutige Zählernummer und der Zählertyp benötigt. Ist der Zähler nicht vorhanden oder ist für das angegeben Jahr schon ein Wert (außer 0) eingetragen, schlägt die Operation fehl."
+                :tooltip-text="'Hiermit kann einem bestehenden Zähler ein Zählerstand für ein Jahr zwischen ' + constants.beginningYear + ' und dem letzten Jahr eingetragen werden. Dazu wird die eindeutige Zählernummer und der Zählertyp benötigt. Ist der Zähler nicht vorhanden oder ist für das angegeben Jahr schon ein Wert (außer 0) eingetragen, schlägt die Operation fehl.'"
               />
             </div>
           </v-expansion-panel-title>
           <v-expansion-panel-text>
-            <v-autocomplete
-              v-model="counter_data.year"
-              :items="possibleYears"
-              label="Bilanzierungsjahr"
-              prepend-icon="mdi-calendar-question"
-            />
-
-            <v-text-field
-              v-model="counter_data.primary_key"
-              :rules="notNegativeRule"
-              label="Primary Key des Zählers"
-            />
-
-            <v-select
-              v-model="counter_data.energy_type"
-              :items="energy_types"
-              flat
-              label="Zählertyp"
-            />
-
-            <v-text-field
-              v-model="counter_data.value"
-              :rules="notNegativeRule"
-              label="Zählerwert"
-            />
+            <v-container>
+              <v-row>
+                <v-col cols="6">
+                  <v-autocomplete
+                    v-model="counter_data.year"
+                    :items="possibleYears"
+                    label="Bilanzierungsjahr"
+                    prepend-icon="mdi-calendar-question"
+                  />
+                </v-col>
+                <v-col cols="6">
+                  <v-autocomplete
+                    v-model="counter_data.month"
+                    :items="months"
+                    label="Monat"
+                  />
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-text-field
+                  v-model="counter_data.dp_name"
+                  :rules="basicRule"
+                  label="DPName des Zählers"
+                />
+              </v-row>
+              <v-row>
+                <v-select
+                  v-model="counter_data.energy_type"
+                  :items="energy_types"
+                  flat
+                  label="Zählertyp"
+                />
+              </v-row>
+              <v-row>
+                <v-text-field
+                  v-model="counter_data.value"
+                  :rules="notNegativeRule"
+                  label="Zählerwert"
+                />
+              </v-row>
+            </v-container>
 
             <v-card-actions>
               <v-col class="text-left">
@@ -677,17 +693,30 @@
                 Standard Zählerdaten für alle Zähler hinzufügen
               </label>
               <Tooltip
-                tooltip-text="Hiermit kann allen Zähler in der Datenbank der Standardwert 0 für ein Jahr zwischen 2018 und dem letzten Jahr eingetragen werden. Dies funktioniert nur bei Zählern, die für das angegebene Jahr noch keine Zählerstand eingetragen haben."
+                :tooltip-text="'Hiermit kann allen Zähler in der Datenbank der Standardwert 0 für ein Jahr zwischen ' + constants.beginningYear + ' und dem letzten Jahr eingetragen werden. Dies funktioniert nur bei Zählern, die für das angegebene Jahr noch keine Zählerstand eingetragen haben.'"
               />
             </div>
           </v-expansion-panel-title>
           <v-expansion-panel-text>
-            <v-autocomplete
-              v-model="default_counter_data.year"
-              :items="possibleYears"
-              label="Bilanzierungsjahr"
-              prepend-icon="mdi-calendar-question"
-            />
+            <v-container>
+              <v-row>
+                <v-col cols="6">
+                  <v-autocomplete
+                    v-model="default_counter_data.year"
+                    :items="possibleYears"
+                    label="Bilanzierungsjahr"
+                    prepend-icon="mdi-calendar-question"
+                  />
+                </v-col>
+                <v-col cols="6">
+                  <v-autocomplete
+                    v-model="default_counter_data.month"
+                    :items="months"
+                    label="Monat"
+                  />
+                </v-col>
+              </v-row>
+            </v-container>
 
             <v-card-actions>
               <v-col class="text-left">
@@ -739,16 +768,6 @@
           <v-expansion-panel-text>
             <v-row>
               <v-col>
-                <v-autocomplete
-                  v-model="csv_counter_data.year"
-                  :items="possibleYears"
-                  label="Bilanzierungsjahr"
-                  prepend-icon="mdi-calendar-question"
-                />
-              </v-col>
-            </v-row>
-            <v-row>
-              <v-col>
                 <v-file-input
                   v-model="chosenFile"
                   accept=".csv"
@@ -757,21 +776,100 @@
                 />
               </v-col>
             </v-row>
+            <v-row>
+              <v-col>
+                <v-select
+                  v-model="csvEnergyType"
+                  :items="energy_types"
+                  flat
+                  label="Zählertyp"
+                />
+              </v-col>
+            </v-row>
 
             <v-card-actions>
               <v-col class="text-left">
-                <v-btn
-                  variant="outlined"
-                  color="primary"
-                  @click="parseFile"
+                <v-dialog
+                  v-model="dialogParseFile"
+                  :max-width="constants.v_dialog_max_width"
                 >
-                  Absenden
-                </v-btn>
+                  <template #activator="{ props }">
+                    <v-btn
+                      variant="outlined"
+                      color="primary"
+                      v-bind="props"
+                      @click="parseFile"
+                    >
+                      Parse File
+                    </v-btn>
+                  </template>
+
+                  <v-card>
+                    <v-card-title class="text-h5 bg-grey-lighten-2">
+                      Parsing CSV Datei
+                    </v-card-title>
+                    <v-card-text>
+                      <template v-if="displaySuccess[7] || displayLoadingAnimation[7] || displayError[7]">
+                        <LoadingAnimation v-if="displayLoadingAnimation[7]" />
+                        <v-alert 
+                          v-if="displayError[7]"
+                          variant="tonal"
+                          type="error"
+                          style="white-space: pre-wrap"
+                        >
+                          {{ errorMessage[7] }}
+                        </v-alert>
+                        <v-alert 
+                          v-if="displaySuccess[7]"
+                          variant="tonal"
+                          type="success"
+                        >
+                          {{ successMessage[7] }}
+                        </v-alert>
+                      </template>
+                      <template v-else>
+                        <v-container>
+                          <v-row>
+                            <v-col class="pb-0">
+                              <p class="text-body-2 text-black">
+                                Wählen Sie die Monate aus, die Sie in die Datenbank eintragen möchten:
+                              </p>
+                            </v-col>
+                          </v-row>
+                          <v-row
+                            v-for="(counterValuesDate, index) in counterValuesDates"
+                            :key="index"
+                          >
+                            <v-col class="py-0">
+                              <v-checkbox
+                                v-model="counterValuesToSent[index]"
+                                :label="counterValuesDate"
+                                density="compact"
+                                hide-details="true"
+                              />
+                            </v-col>
+                          </v-row>
+                          <v-row>
+                            <v-col class="pt-0">
+                              <v-btn
+                                color="primary"
+                                variant="outlined"
+                                @click="sendCSVCounterData"
+                              >
+                                Absenden
+                              </v-btn>
+                            </v-col>
+                          </v-row>
+                        </v-container>  
+                      </template>
+                    </v-card-text>
+                  </v-card>
+                </v-dialog>
               </v-col>
               <v-spacer />
               <v-col class="text-right">
                 <v-dialog
-                  v-model="dialog"
+                  v-model="dialogEMS"
                   :max-width="constants.v_dialog_max_width"
                 >
                   <template #activator="{ props }">
@@ -792,6 +890,7 @@
                       <p
                         class="mb-0 mt-4 text-body-2 text-black"
                       >
+                        CHANGE!!!!
                         1. Ganz oben auf "Auswertung", dann auf "Werte und Korrekturen" <br>
                         2. Links an der Seite auf "Werte", dann "Alle Zähler" und "Alle - Zähler" <br>
                         3. In der obersten Zeile der Tabelle folgendes auswählen: <br>
@@ -848,7 +947,7 @@
             </v-card-actions>
 
             <v-card
-              v-if="displaySuccess[7] || displayLoadingAnimation[7] || displayError[7]"
+              v-if="(displaySuccess[7] || displayLoadingAnimation[7] || displayError[7]) && !dialogParseFile"
               elevation="2"
             >
               <LoadingAnimation v-if="displayLoadingAnimation[7]" />
@@ -920,7 +1019,7 @@ export default {
       year: '',
     },
     counter: {
-      primary_key: null,
+      dp_name: null,
       unit: '',
       energy_type: '',
       name: null,
@@ -928,18 +1027,21 @@ export default {
     },
     counter_data: {
       year: '',
-      primary_key: null,
+      month: '',
+      dp_name: null,
       energy_type: '',
       value: null
     },
     default_counter_data: {
       year: '',
+      month: '',
     },
     contracts: ['TU Darmstadt', 'Extern'],
     contract_map: new Map([['TU Darmstadt', 1], ['Extern', 2]]),
     energy_types: ['Wärme', 'Strom', 'Kälte'],
     energy_map: new Map([['Wärme', 1], ['Strom', 2], ['Kälte', 3]]),
     units: ['kWh', 'MWh'],
+    months: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
 
     displaySuccess: [false, false, false, false, false, false, false, false],
     displayError: [false, false, false, false, false, false, false, false],
@@ -949,18 +1051,30 @@ export default {
     successMessage: ["", "", "", "", "", "", "", ""],
 
     chosenFile: null,
+    csvEnergyType: null,
+    parsedFile: null,
+    counterValuesDates: [],
+    counterValuesToSent: [],
     csv_counter_data: {
-      year: '',
-      primary_keys: null,
-      energy_types: null,
-      values: null
+      years: [],
+      months: [],
+      dp_names: [],
+      energy_types: [],
+      values: []
     },
 
-    dialog: false,
+    dialogEMS: false,
+    dialogParseFile: false,
 
     // arrays contain counters and buildings that are explicitly left out
     // reasons are given in BP_Berechnungsformeln.pdf
-    irrelevant_counters: [2104, 2105, 2106, 2256, 3613, 3614, 2102, 2377, 2378, 4193, 4194, 3576, 3966, 3960, 6697, 3789, 2558, 2560],
+    irrelevant_counters: ["S473XXXXXXHE000XXXXXXZ40CO00001",
+                          "S475XXXXXXHE000XXXXXXZ40CO00001",
+                          "S476XXXXXXHE000XXXXXXZ40CO00001",
+                          "S477XXXXXXHE000XXXXXXZ40CO00001",
+                          "S479XXXXXXHE000XXXXXXZ40CO00001",
+                          "S480XXXXXXHE000XXXXXXZ40CO00001",
+                          "S481XXXXXXHE000XXXXXXZ40CO00001"],
     irrelevant_buildings: [1473, 1475, 1476, 1477, 1479, 1480, 1481, 1213],
     
     //Rules for input validation
@@ -973,24 +1087,22 @@ export default {
     ],
     yearRule: [
       (v) => !!v || "Muss angegeben werden",
-      (v) => parseInt(v) > 2017 || "Bitte geben Sie ein valides Jahr an",
+      (v) => parseInt(v) >= constants.beginningYear || "Bitte geben Sie ein valides Jahr an",
     ],
 
   }),
 
   computed: {
     /**
-    * Returns a list beginning with last year until 2018.
+    * Returns a list containing the years between constants.beginningYear and last year.
     */
     possibleYears: function () {
-      const beginningYear = 2018;
       let lastYear = new Date().getFullYear() - 1;
-      return Array.from(new Array(lastYear - beginningYear + 1), (x, i) => i + beginningYear).reverse();
+      return Array.from(new Array(lastYear - constants.beginningYear + 1), (x, i) => i + constants.beginningYear).reverse();
     },
   },
 
   methods: {
-
     /**
      * Adds a new building reference to this counter
      */
@@ -1089,11 +1201,10 @@ export default {
       var cold_supplier = []
       var electricity_supplier = []
 
-      const beginningYear = 2018
       let currentYear = new Date().getFullYear()
 
       function numberfilter (num) {
-        return !!num && num >= beginningYear && num <= currentYear
+        return !!num && num >= constants.beginningYear && num <= currentYear
       }
 
       if (this.external_supplier) {
@@ -1252,7 +1363,7 @@ export default {
       this.displayError[2] = false
       this.displayLoadingAnimation[2] = true
 
-      if(!this.counter.primary_key || !this.counter.unit || !this.counter.energy_type ||
+      if(!this.counter.dp_name || !this.counter.unit || !this.counter.energy_type ||
          !this.counter.name || this.buildingRefJSON().length === 0){
         this.errorMessage[2] = "Alle Felder müssen ausgefüllt sein"
         this.displayLoadingAnimation[2] = false
@@ -1268,7 +1379,7 @@ export default {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          pkEnergie: parseInt(this.counter.primary_key),
+          dpName: this.counter.dp_name,
           idEnergieversorgung: this.energy_map.get(this.counter.energy_type),
           bezeichnung: this.counter.name,
           einheit: this.counter.unit,
@@ -1301,7 +1412,7 @@ export default {
       this.displayError[3] = false
       this.displayLoadingAnimation[3] = true
 
-      if(!this.counter_data.year || !this.counter_data.primary_key || !this.counter_data.energy_type || !this.counter_data.value){
+      if(!this.counter_data.year || !this.counter_data.month || !this.counter_data.dp_name || !this.counter_data.energy_type || !this.counter_data.value){
         this.errorMessage[3] = "Alle Felder müssen ausgefüllt sein"
         this.displayLoadingAnimation[3] = false
         this.displayError[3] = true
@@ -1316,9 +1427,10 @@ export default {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          pkEnergie: parseInt(this.counter_data.primary_key),
+          dpName: this.counter_data.dp_name,
           idEnergieversorgung: this.energy_map.get(this.counter_data.energy_type),
           jahr: parseInt(this.counter_data.year),
+          monat: parseInt(this.counter_data.month),
           wert: parseFloat(this.counter_data.value),
         }),
       })
@@ -1348,7 +1460,7 @@ export default {
       this.displayError[6] = false
       this.displayLoadingAnimation[6] = true
 
-      if(!this.default_counter_data.year){
+      if(!this.default_counter_data.year || !this.default_counter_data.month){
         this.errorMessage[6] = "Alle Felder müssen ausgefüllt sein"
         this.displayLoadingAnimation[6] = false
         this.displayError[6] = true
@@ -1364,12 +1476,13 @@ export default {
         },
         body: JSON.stringify({
           jahr: parseInt(this.default_counter_data.year),
+          monat: parseInt(this.default_counter_data.month),
         }),
       })
         .then((response) => response.json())
         .then((data) => {
           if(data.status == "success"){
-            this.successMessage[6] = "Für alle Zähler von Wert für " + this.default_counter_data.year + " wurde 0 als Zählerwert eingetragen."
+            this.successMessage[6] = "Allen Zählern wurde 0 als Zählerwert für " + this.default_counter_data.month + "." + this.default_counter_data.year + " eingetragen."
             this.displayLoadingAnimation[6] = false
             this.displaySuccess[6] = true
           }
@@ -1408,13 +1521,13 @@ export default {
       this.displayError[7] = false
       this.displayLoadingAnimation[7] = true
 
-      // reset object for data
-      this.csv_counter_data.primary_keys = null
-      this.csv_counter_data.energy_types = null
-      this.csv_counter_data.values = null
+      // reset variables
+      this.counterValuesDates = []
+      this.counterValuesToSent = []
+      this.parsedFile = null
 
-      if(!this.chosenFile){
-        this.errorMessage[7] = "No File selected"
+      if(!this.chosenFile || !this.csvEnergyType){
+        this.errorMessage[7] = "No File or Countertype selected"
         this.displayLoadingAnimation[7] = false
         this.displayError[7] = true
 
@@ -1449,7 +1562,7 @@ export default {
         delimitersToGuess: [',', '\t', '|', ';', this.$papa.RECORD_SEP, this.$papa.UNIT_SEP]
       }*/
 
-      var parsedFile = await new Promise(
+      this.parsedFile = await new Promise(
         resolve => {
           this.$papa.parse(
             this.chosenFile, 
@@ -1461,74 +1574,72 @@ export default {
         }
       )
 
-      parsedFile.data.forEach(
-        arr => {
-          if (arr[0] == "PrimaryKey"){
-            this.csv_counter_data.primary_keys = arr.slice(1).map(
-              (elem) => {return parseInt(elem)}
-            )
-          }
-          if (arr[0] == "DPName"){
-            this.csv_counter_data.energy_types = arr.slice(1).map(
-              (elem) => {
-                if (elem.indexOf('HE000') !== -1){
-                  return 1;
-                }
-                else if (elem.indexOf('NA00') !== -1){
-                  return 2;
-                }
-                else if (elem.indexOf('KA000') !== -1){
-                  return 3;
-                }
-                else{
-                  this.errorMessage[7] = "Zählertype des Zählers mit der Bezeichung " + elem + " ist nicht bekannt!!"
-                  this.displayLoadingAnimation[7] = false
-                  this.displayError[7] = true
-                }
-              }
-            )
-          }
-          if (arr[0] == "01.01." + this.csv_counter_data.year + " 00:00:00"){
-            this.csv_counter_data.values = arr.slice(1).map(
-              (elem) => {return !elem ? 0 : parseFloat(elem.replace(".", "").replace(",", "."))}  // entfernt "." als Tausend-Trenner und setzt "." als Dezimal-Trenner
-            )
-          }
+      // check if csv is valid
+      if (this.parsedFile.errors.length > 0 || this.parsedFile.data.length < 1 || this.parsedFile.data[0].length < 2) {
+        this.errorMessage[7] = "Error while parsing the CSV file"
+        this.displayLoadingAnimation[7] = false
+        this.displayError[7] = true
+
+        return
+      }
+
+      this.parsedFile.data.forEach(element => {
+        if (element[0] != "") {
+          this.counterValuesDates.push(element[0])
+          this.counterValuesToSent.push(false)
         }
-      )
+      });
 
-      if (!this.csv_counter_data.year || !this.csv_counter_data.primary_keys || !this.csv_counter_data.energy_types || !this.csv_counter_data.values
-          || this.csv_counter_data.primary_keys.length != this.csv_counter_data.energy_types.length || this.csv_counter_data.energy_types.length != this.csv_counter_data.values.length){
-        this.errorMessage[7] = "CSV Datei konnte nicht korrekt gelesen werden!"
-        this.displayLoadingAnimation[7] = false
-        this.displayError[7] = true
-
-        return
-      }
-
-      var mask = this.csv_counter_data.primary_keys.map(x => !this.irrelevant_counters.includes(x))
-
-      this.csv_counter_data.primary_keys = this.csv_counter_data.primary_keys.filter((elem, index) => mask[index])
-      this.csv_counter_data.energy_types = this.csv_counter_data.energy_types.filter((elem, index) => mask[index])
-      this.csv_counter_data.values = this.csv_counter_data.values.filter((elem, index) => mask[index])
-
-      if (this.csv_counter_data.primary_keys.length != this.csv_counter_data.energy_types.length || this.csv_counter_data.energy_types.length != this.csv_counter_data.values.length){
-        this.errorMessage[7] = "CSV Datei konnte nicht korrekt gelesen werden!"
-        this.displayLoadingAnimation[7] = false
-        this.displayError[7] = true
-
-        return
-      }
-      
-      if (!this.displayError[7]){
-        // send request
-        this.sendCSVCounterData()
-      }
+      this.displayLoadingAnimation[7] = false
     },
 
     /**
      * send parsed CSV file to db
      */
     sendCSVCounterData: async function(){
+      this.dialogParseFile = false    // close dialog
+
+      this.displaySuccess[7] = false
+      this.displayError[7] = false
+      this.displayLoadingAnimation[7] = true
+
+      this.csv_counter_data = {
+        years: [],
+        months: [],
+        dp_names: [],
+        energy_types: [],
+        values: []
+      }
+
+      let header = this.parsedFile.data[0]
+      let data = this.parsedFile.data.slice(1)
+
+      // extract DPNames from header
+      let dp_names = []
+      for (let i = 1; i < header.length; i++) {
+        let dp_name_split = header[i].split("(")
+        let dp_name = dp_name_split[dp_name_split.length - 1].split(")")[0]
+        dp_names.push(dp_name)
+      }
+
+      // extract data
+      for (let i = 0; i < data.length; i++) {
+        if (this.counterValuesToSent[i]) {
+          for (let j = 1; j < data[i].length; j++) {
+            if (this.irrelevant_counters.includes(dp_names[j - 1])) {   // skip irrelevant counters
+              continue
+            }
+
+            this.csv_counter_data.years.push(parseInt(data[i][0].substring(6, 10)))
+            this.csv_counter_data.months.push(parseInt(data[i][0].substring(3, 5)))
+            this.csv_counter_data.dp_names.push(dp_names[j - 1])
+            this.csv_counter_data.values.push(parseFloat(data[i][j].replace(".", "").replace(",", ".")))
+            this.csv_counter_data.energy_types.push(this.energy_map.get(this.csvEnergyType))
+          }
+        }
+      }
+
+
       await fetch(import.meta.env.VITE_BASEURL + "/db/addZaehlerdatenCSV", {
         method: "POST",
         headers: {
@@ -1536,9 +1647,10 @@ export default {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          pkEnergie: this.csv_counter_data.primary_keys,
+          dpName: this.csv_counter_data.dp_names,
           idEnergieversorgung: this.csv_counter_data.energy_types,
-          jahr: this.csv_counter_data.year,
+          jahr: this.csv_counter_data.years,
+          monat: this.csv_counter_data.months,
           wert: this.csv_counter_data.values,
         }),
       })
@@ -1561,6 +1673,7 @@ export default {
     }
   },
 }
+
 </script>
 
 <style>

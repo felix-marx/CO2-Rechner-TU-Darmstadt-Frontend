@@ -58,6 +58,9 @@ const constants = {
     aggregation_pendelwege_verbrenner: "Aggregation_Verbrenner",
     aggregation_pendelwege_elektro: "Aggregation_Elektro",
     aggregation_dienstreisen_verbrenner: "Verbrenner",
+
+    // Survey
+    beginningYear: 2020,
 }
 
 export default constants

@@ -560,12 +560,11 @@ export default {
   }),
   computed: {
     /**
-     * Returns a list beginning with the current year until 2018.
+     * Returns a list containing the years between constants.beginningYear and last year.
      */
     possibleYears: function() {
-      const beginningYear = 2018;
       let currentYear = new Date().getFullYear() - 1;
-      return Array.from(new Array(currentYear - beginningYear + 1), (x, i) => i + beginningYear).reverse();
+      return Array.from(new Array(currentYear - constants.beginningYear + 1), (x, i) => i + constants.beginningYear).reverse();
     },
 
     /**
