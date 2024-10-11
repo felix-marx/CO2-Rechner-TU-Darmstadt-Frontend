@@ -890,10 +890,11 @@
                       <p
                         class="mb-0 mt-4 text-body-2 text-black"
                       >
-                        CHANGE!!!!
-                        1. Ganz oben auf "Auswertung", dann auf "Werte und Korrekturen" <br>
-                        2. Links an der Seite auf "Werte", dann "Alle Zähler" und "Alle - Zähler" <br>
-                        3. In der obersten Zeile der Tabelle folgendes auswählen: <br>
+                        Die Zählerdaten können aus dem EMS ausgelesen werden. Dazu müssen folgende Schritte durchgeführt werden: <br>
+                        1. Im EMS anmelden <br>
+                        2. Oben im Menü auf "Auswertungen" dann "Visualisierungen" <br>
+                        3. Links im Menü auf "Alle Einträge anzeigen" <br>
+                        4. Unter "Name" nach folgenden Graphen suchen: <br>
                       </p>
                       <v-table 
                         class="mt-0 mb-1 ml-4"
@@ -901,30 +902,26 @@
                         <template #default>
                           <thead>
                             <tr>
-                              <th />
-                              <th>Wärmezähler</th>
-                              <th>Kältezähler</th>
-                              <th>Stromzähler</th>
+                              <th>Zählerart</th>
+                              <th>Graphenname</th>
                             </tr>
                           </thead>
                           <tbody>
                             <tr>
-                              <th>Name</th>
-                              <td>*HE000*</td>
-                              <td>*KA000*</td>
-                              <td>*NA000*</td>
+                              <td>Wärmezähler</td>
+                              <td>Fernwaerme_Gebaeudeebene_monatlich</td>
                             </tr>
+                          </tbody>
+                          <tbody>
                             <tr>
-                              <th>Quellklasse</th>
-                              <td>CSV, Formel</td>
-                              <td>CSV, EDLs</td>
-                              <td>verschiedene</td>
+                              <td>Kältezähler</td>
+                              <td>TUDA_KMZ_monatlich</td>
                             </tr>
+                          </tbody>
+                          <tbody>
                             <tr>
-                              <th>Einheit</th>
-                              <td>MWh, kWh</td>
-                              <td>MWh, kWh</td>
-                              <td>MWh, kWh</td>
+                              <td>Stromzähler</td>
+                              <td>Strom_FA_kWh_monatlich</td>
                             </tr>
                           </tbody>
                         </template>
@@ -932,13 +929,9 @@
                       <p
                         class="mb-0 mt-0 text-body-2 text-black"
                       >
-                        4. Dann alle Zähler auswählen und "Datenpunkte selektieren" klicken <br>
-                        5. In ausgewählte Datenpunkte können ungewollte Zähler über "&#x2014;" wieder entfernt werden <br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&#x2022; z.B. "Eigenverbrauch" muss raus <br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&#x2022; Insgesamt sollten es 114 Wärmezähler, (?) Stromzähler und 19 Kältezähler sein (Stand 05.02.2023)  <br>
-                        6. Sind alle ungewollten Zähler entfernt, dann auf "Werte anzeigen" klicken <br>
-                        7. Ganz oben "Aggregationsmodus" und "Zeitintervall" einstellen <br>
-                        8. Unten in der Zeile auf Export (CSV), um Zählerdaten in CSV herunterladen
+                        5. Graph auswählen und auf "Vorschau" klicken <br>
+                        6. Zeitintervall unten entpsrechned einstellen <br>
+                        7. CSV Datei über "Daten als Datei exportieren" oben rechts im Graphen herunterladen <br>
                       </p>                   
                     </v-card-text>
                   </v-card>
