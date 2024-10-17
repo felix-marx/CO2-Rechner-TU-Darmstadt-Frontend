@@ -1569,7 +1569,7 @@ export default {
 
       // check if csv is valid
       if (this.parsedFile.errors.length > 0 || this.parsedFile.data.length < 1 || this.parsedFile.data[0].length < 2) {
-        this.errorMessage[7] = "Error while parsing the CSV file"
+        this.errorMessage[7] = "Fehler beim Parsen der CSV-Datei: Keine Daten gefunden oder Format ist nicht wie erwartet."
         this.displayLoadingAnimation[7] = false
         this.displayError[7] = true
 
@@ -1622,11 +1622,48 @@ export default {
             if (this.irrelevant_counters.includes(dp_names[j - 1])) {   // skip irrelevant counters
               continue
             }
+            let year = parseInt(data[i][0].substring(6, 10))
+            if (year < constants.beginningYear || year > new Date().getFullYear()) {
+              this.errorMessage[7] = "Fehler beim Parsen der CSV-Datei: Ungültiges Jahr " + year
+              this.displayLoadingAnimation[7] = false
+              this.displayError[7] = true
 
-            this.csv_counter_data.years.push(parseInt(data[i][0].substring(6, 10)))
-            this.csv_counter_data.months.push(parseInt(data[i][0].substring(3, 5)))
+              return
+            }
+            this.csv_counter_data.years.push(year)
+
+            let month = parseInt(data[i][0].substring(3, 5))
+            if (month < 1 || month > 12) {
+              this.errorMessage[7] = "Fehler beim Parsen der CSV-Datei: Ungültiger Monat " + month
+              this.displayLoadingAnimation[7] = false
+              this.displayError[7] = true
+
+              return
+            }
+            this.csv_counter_data.months.push(month)
+
             this.csv_counter_data.dp_names.push(dp_names[j - 1])
-            this.csv_counter_data.values.push(parseFloat(data[i][j].replace(".", "").replace(",", ".")))
+
+            if (data[i][j] == "") {
+              this.csv_counter_data.values.push(0)
+            } else {
+              let value = parseFloat(data[i][j].replace(".", "").replace(",", "."))
+              if (isNaN(value)) {
+                this.errorMessage[7] = "Fehler beim Parsen der CSV-Datei: Ungültiger Wert " + data[i][j]
+                this.displayLoadingAnimation[7] = false
+                this.displayError[7] = true
+
+                return
+              }
+
+              if (value < 0) {  // negative values are set to 0
+                this.csv_counter_data.values.push(0)
+              }
+              else {
+                this.csv_counter_data.values.push(value)
+              }
+            }
+
             this.csv_counter_data.energy_types.push(this.energy_map.get(this.csvEnergyType))
           }
         }
