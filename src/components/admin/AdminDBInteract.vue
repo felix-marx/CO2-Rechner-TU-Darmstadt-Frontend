@@ -1684,7 +1684,17 @@ export default {
           wert: this.csv_counter_data.values,
         }),
       })
-        .then((response) => response.json())
+        .then((response) => {
+          if (!response.ok) {
+            this.errorMessage[7] = "HTTP status " + response.status + " " + response.statusText
+            this.displayLoadingAnimation[7] = false
+            this.displayError[7] = true
+
+            throw new Error("HTTP status " + response.status + " " + response.statusText)
+          }
+
+          return response.json()
+        })
         .then((data) => {
           if(data.status == "success"){
             this.successMessage[7] = "Die Zählerdaten wurden erfolgreich in der Datenbank gespeichert."
