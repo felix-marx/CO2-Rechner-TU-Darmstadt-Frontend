@@ -1685,13 +1685,13 @@ export default {
         }),
       })
         .then((response) => {
-          if (!response.ok) {
-            this.errorMessage[7] = "HTTP status " + response.status + " " + response.statusText
-            this.displayLoadingAnimation[7] = false
-            this.displayError[7] = true
+          // if (!response.ok) {
+          //   this.errorMessage[7] = "HTTP status " + response.status + " " + response.statusText
+          //   this.displayLoadingAnimation[7] = false
+          //   this.displayError[7] = true
 
-            throw new Error("HTTP status " + response.status + " " + response.statusText)
-          }
+          //   throw new Error("HTTP status " + response.status + " " + response.statusText)
+          // }
 
           return response.json()
         })
