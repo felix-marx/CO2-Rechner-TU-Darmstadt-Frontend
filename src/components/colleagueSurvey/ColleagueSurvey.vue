@@ -59,6 +59,7 @@
                         :items="fahrtmediumListe"
                         :disabled="submittedDataSuccessfully"
                         :label="$t('colleagueSurvey.colleagueSurvey.WieInsBuero_verkehrsmedium')"
+                        @update:model-value="resetPendelwegeFields(index)"
                       />
                     </v-col>
                     <!-- ÖPNV -->
@@ -186,6 +187,7 @@
                             :items="fahrtmediumListe"
                             :disabled="submittedDataSuccessfully"
                             :label="$t('colleagueSurvey.colleagueSurvey.WieInsBuero_verkehrsmedium')"
+                            @update:model-value="resetPendelwegeFields(index)"
                           />
                         </v-col>
                         <!-- ÖPNV -->
@@ -364,6 +366,7 @@
                   :disabled="submittedDataSuccessfully"
                   :label="$t('colleagueSurvey.colleagueSurvey.WieInsBuero_verkehrsmedium')"
                   :items="dienstreiseMediumListe"
+                  @update:model-value="resetDiensreisenFields(index)"
                 />
               </v-col>
               <!-- PKW-Typ -->
@@ -463,6 +466,7 @@
                             :disabled="submittedDataSuccessfully"
                             :label="$t('colleagueSurvey.colleagueSurvey.WieInsBuero_verkehrsmedium')"
                             :items="dienstreiseMediumListe"
+                            @update:model-value="resetDiensreisenFields(index)"
                           />
                         </v-col>
                         <!-- PKW-Typ -->
@@ -1054,11 +1058,32 @@ export default {
     },
 
     /**
-     * Resets the Dienstreisen fileds associated with distnace and class
+     * Resets the Dienstreisen fields associated with distance and class
      */
     resetPlaneClass: function (index) {
       this.dienstreisen[index][2] = null;
       this.dienstreisen[index][3] = null;
+    },
+
+
+    /**
+     * Resets fields associated with the Dienstreise at the index
+     */
+    resetDiensreisenFields: function (index) {
+      this.dienstreisen[index][1] = null;
+      this.dienstreisen[index][2] = null;
+      this.dienstreisen[index][3] = null;
+    },
+
+    /**
+     * Resets all fields associated with the Dienstreise at the index
+     */
+     resetPendelwegeFields: function (index) {
+      this.verkehrsmittel[index][1] = null;
+      this.verkehrsmittel[index][2] = false;
+      this.verkehrsmittel[index][3] = null;
+      this.verkehrsmittel[index][4] = null;
+      this.verkehrsmittel[index][5] = null;
     },
 
     /**
