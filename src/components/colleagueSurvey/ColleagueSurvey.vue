@@ -59,6 +59,7 @@
                         :items="fahrtmediumListe"
                         :disabled="submittedDataSuccessfully"
                         :label="$t('colleagueSurvey.colleagueSurvey.WieInsBuero_verkehrsmedium')"
+                        @update:model-value="resetPendelwegeFields(index)"
                       />
                     </v-col>
                     <!-- ÖPNV -->
@@ -102,6 +103,7 @@
                         :label="$t('colleagueSurvey.colleagueSurvey.WieInsBuero_pendelweg')"
                         :suffix="$t('common.Einheit_km')"
                         hide-spin-buttons
+                        @wheel="($event) => $event.target.blur()"
                       />
                     </v-col>
                   </v-row>
@@ -141,6 +143,7 @@
                         :min="0"
                         :label="$t('colleagueSurvey.colleagueSurvey.WieInsBuero_anzahlMitfahrende')"
                         hide-spin-buttons
+                        @wheel="($event) => $event.target.blur()"
                       />
                     </v-col>
                   </v-row>
@@ -184,6 +187,7 @@
                             :items="fahrtmediumListe"
                             :disabled="submittedDataSuccessfully"
                             :label="$t('colleagueSurvey.colleagueSurvey.WieInsBuero_verkehrsmedium')"
+                            @update:model-value="resetPendelwegeFields(index)"
                           />
                         </v-col>
                         <!-- ÖPNV -->
@@ -229,6 +233,7 @@
                             :label="$t('colleagueSurvey.colleagueSurvey.WieInsBuero_pendelweg')"
                             :suffix="$t('common.Einheit_km')"
                             hide-spin-buttons
+                            @wheel="($event) => $event.target.blur()"
                           />
                         </v-col>
                       </v-row>
@@ -283,6 +288,7 @@
                         :min="0"
                         :label="$t('colleagueSurvey.colleagueSurvey.WieInsBuero_anzahlMitfahrende')"
                         hide-spin-buttons
+                        @wheel="($event) => $event.target.blur()"
                       />
                     </v-col>
                   </v-row>
@@ -326,6 +332,7 @@
               :max="7"
               :label="$t('colleagueSurvey.colleagueSurvey.TageBuero_label')"
               hide-spin-buttons
+              @wheel="($event) => $event.target.blur()"
             />
           </v-row>
         </v-container>
@@ -359,6 +366,7 @@
                   :disabled="submittedDataSuccessfully"
                   :label="$t('colleagueSurvey.colleagueSurvey.WieInsBuero_verkehrsmedium')"
                   :items="dienstreiseMediumListe"
+                  @update:model-value="resetDiensreisenFields(index)"
                 />
               </v-col>
               <!-- PKW-Typ -->
@@ -384,6 +392,8 @@
                   v-model="reise[1]" 
                   :label="$t('colleagueSurvey.colleagueSurvey.flugstreckentyp')" 
                   :items="flugstreckeListe"
+                  :disabled="submittedDataSuccessfully"
+                  @update:model-value="resetPlaneClass(index)"
                 />
               </v-col>
               <!-- Flugklasse -->
@@ -414,6 +424,7 @@
                   :label="$t('colleagueSurvey.colleagueSurvey.EinfacheDistanz')"
                   :suffix="$t('common.Einheit_km')"
                   hide-spin-buttons
+                  @wheel="($event) => $event.target.blur()"
                 />
               </v-col>
               <!-- Delete Button -->
@@ -455,6 +466,7 @@
                             :disabled="submittedDataSuccessfully"
                             :label="$t('colleagueSurvey.colleagueSurvey.WieInsBuero_verkehrsmedium')"
                             :items="dienstreiseMediumListe"
+                            @update:model-value="resetDiensreisenFields(index)"
                           />
                         </v-col>
                         <!-- PKW-Typ -->
@@ -484,6 +496,8 @@
                             v-model="reise[1]" 
                             :label="$t('colleagueSurvey.colleagueSurvey.flugstreckentyp')" 
                             :items="flugstreckeListe"
+                            :disabled="submittedDataSuccessfully"
+                            @update:model-value="resetPlaneClass(index)"
                           />
                         </v-col>
                         <!-- Flugklasse -->
@@ -515,6 +529,7 @@
                             :label="$t('colleagueSurvey.colleagueSurvey.EinfacheDistanz')"
                             :suffix="$t('common.Einheit_km')"
                             hide-spin-buttons
+                            @wheel="($event) => $event.target.blur()"
                           />
                         </v-col>
                       </v-row>
@@ -1040,6 +1055,35 @@ export default {
           parseInt(v) > 0 ||
           this.$t('colleagueSurvey.colleagueSurvey.MitfahrerRules_1'),
       ]
+    },
+
+    /**
+     * Resets the Dienstreisen fields associated with distance and class
+     */
+    resetPlaneClass: function (index) {
+      this.dienstreisen[index][2] = null;
+      this.dienstreisen[index][3] = null;
+    },
+
+
+    /**
+     * Resets fields associated with the Dienstreise at the index
+     */
+    resetDiensreisenFields: function (index) {
+      this.dienstreisen[index][1] = null;
+      this.dienstreisen[index][2] = null;
+      this.dienstreisen[index][3] = null;
+    },
+
+    /**
+     * Resets all fields associated with the Dienstreise at the index
+     */
+     resetPendelwegeFields: function (index) {
+      this.verkehrsmittel[index][1] = null;
+      this.verkehrsmittel[index][2] = false;
+      this.verkehrsmittel[index][3] = null;
+      this.verkehrsmittel[index][4] = null;
+      this.verkehrsmittel[index][5] = null;
     },
 
     /**

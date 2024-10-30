@@ -21,6 +21,9 @@
         hide-spin-buttons
         :disabled="props.disabled"
         density="compact"
+        :min="props.min"
+        :max="props.max"
+        @wheel="($event) => $event.target.blur()"
       />
       <v-btn
         v-if="props.buttonsRight"
