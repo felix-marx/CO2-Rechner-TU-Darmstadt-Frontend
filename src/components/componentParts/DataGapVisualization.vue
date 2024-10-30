@@ -77,7 +77,7 @@ export default {
 
     mapZaehlerWerte: function(){
       return new Map(
-        this.zaehler.map((obj) => [obj.pkEnergie, new Map(obj.zaehlerdatenVorhanden.map((obj2) => [obj2.jahr, obj2.vorhanden]))])
+        this.zaehler.map((obj) => [obj.zaehlerID, new Map(obj.zaehlerdatenVorhanden.map((obj2) => [obj2.jahr, obj2.vorhanden]))])
       ) 
     },
 
