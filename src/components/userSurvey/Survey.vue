@@ -982,7 +982,7 @@ export default {
         )
 
         this.mapZaehlerWerte = new Map(
-          data.data.zaehler.map((obj) => [obj.pkEnergie, new Map(obj.zaehlerdatenVorhanden.map((obj2) => [obj2.jahr, obj2.vorhanden]))])
+          data.data.zaehler.map((obj) => [obj.zaehlerID, new Map(obj.zaehlerdatenVorhanden.map((obj2) => [obj2.jahr, obj2.vorhanden]))])
         )
       })
       .catch((error) => {
