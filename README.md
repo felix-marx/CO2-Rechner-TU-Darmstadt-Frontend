@@ -1,5 +1,7 @@
 # Frontend des CO2 Rechners der TU Darmstadt
 
+__Hinweis: Das Projekt wurde auf GitLab verschoben:__ [GitLab](https://git.rwth-aachen.de/thg-tuda/co2-rechner/CO2-Rechner-TU-Darmstadt-Frontend)
+
 Hierbei handelt es sich um das Frontend des CO2 Rechners, welcher im Rahmen des Bachelorpraktikums für das Büro für Nachhaltigkeit und das Institut für Fluidsystemtechnik entwickelt wurde.
 
 Dieses Projekt ermöglicht eine Erfassung von CO2 Emissionen von TU Einheiten und die anschließende Auswertung.
