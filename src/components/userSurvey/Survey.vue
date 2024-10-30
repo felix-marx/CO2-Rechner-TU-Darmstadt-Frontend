@@ -26,6 +26,7 @@
     </v-card>
 
     <v-card
+      ref="surveyCard"
       class="pa-7 mt-2 mx-auto"
       :max-width="constants.v_card_max_width"
     >
@@ -60,13 +61,12 @@
         <br>
 
         <v-row>
-          <v-col :cols="$vuetify.display.smAndUp ? 5 : 8">
+          <v-col :cols="$vuetify.display.xs ? 12 : ($vuetify.display.sm ? 8 : 6)">
             <v-autocomplete
               v-model="bilanzierungsjahr"
               :items="possibleYears"
               :label="$t('common.Bilanzierungsjahr')"
               prepend-icon="mdi-calendar-question"
-              class="pr-5"
               :disabled="blockInput"
             />
           </v-col>
@@ -91,6 +91,7 @@
               prepend-icon="mdi-account"
               :disabled="blockInput"
               hide-spin-buttons
+              @wheel="($event) => $event.target.blur()"
             />
           </v-row>
         </v-container>
@@ -116,44 +117,103 @@
           v-for="(objekt, index) in gebaeude"
           :key="index"
         >
-          <v-row justify="center">
-            <v-col :cols="$vuetify.display.smAndUp ? 6 : 5">
-              <v-autocomplete
-                v-if="gebaeudeIDs"
-                v-model="objekt[0]"
-                :items="gebaeudeIDs"
-                :label="$t('common.Gebäudenummer')"
-                prepend-icon="mdi-domain"
-                :disabled="blockInput"
-              />
-            </v-col>
-            <v-col cols="5">
-              <v-text-field
-                :ref="'flaeche' + index"
-                v-model="objekt[1]"
-                type="number"
-                :rules="absolutpositivRules"
-                :min="0"
-                :label="$t('userSurvey.Survey.GebaeudeAbteilung_3')"
-                prepend-icon="mdi-domain"
-                suffix="qm"
-                :disabled="blockInput"
-                hide-spin-buttons
-              />
-            </v-col>
-            <v-col
-              :cols="$vuetify.display.smAndUp ? 1 : 2"
-              class="text-center"
-            >
-              <v-btn
-                class="delete_text--text mx-auto mt-1"
-                color="delete"
-                icon="mdi-delete-outline"
-                :disabled="blockInput"
-                @click="removeGebaeude(index)"
-              />
-            </v-col>
-          </v-row>
+          <!-- Desktop -->
+          <template v-if="!$vuetify.display.mobile">
+            <v-row justify="center">
+              <v-col cols="6">
+                <v-autocomplete
+                  v-if="gebaeudeIDs"
+                  v-model="objekt[0]"
+                  :items="gebaeudeIDs"
+                  :label="$t('common.Gebäudenummer')"
+                  prepend-icon="mdi-office-building-marker"
+                  :disabled="blockInput"
+                />
+              </v-col>
+              <v-col cols="5">
+                <v-text-field
+                  :ref="'flaeche' + index"
+                  v-model="objekt[1]"
+                  type="number"
+                  :rules="absolutpositivRules"
+                  :min="0"
+                  :label="$t('userSurvey.Survey.GebaeudeAbteilung_3')"
+                  prepend-icon="mdi-domain"
+                  suffix="qm"
+                  :disabled="blockInput"
+                  hide-spin-buttons
+                  @wheel="($event) => $event.target.blur()"
+                />
+              </v-col>
+              <v-col
+                cols="1"
+                class="text-center"
+              >
+                <v-btn
+                  class="delete_text--text mx-auto mt-1"
+                  color="delete"
+                  icon="mdi-delete-outline"
+                  :disabled="blockInput"
+                  @click="removeGebaeude(index)"
+                />
+              </v-col>
+            </v-row>
+          </template>
+          <!-- Mobile -->
+          <template v-else>
+            <v-card class="pa-4 mb-2">
+              <v-row align="center">
+                <v-col
+                  class="pb-0"
+                  cols="10"
+                >
+                  <v-container>
+                    <v-row>
+                      <v-col class="pa-0">
+                        <v-autocomplete
+                          v-if="gebaeudeIDs"
+                          v-model="objekt[0]"
+                          :items="gebaeudeIDs"
+                          :label="$t('common.Gebäudenummer')"
+                          prepend-icon="mdi-office-building-marker"
+                          :disabled="blockInput"
+                        />
+                      </v-col>
+                    </v-row>
+                    <v-row>
+                      <v-col class="pa-0">
+                        <v-text-field
+                          :ref="'flaeche' + index"
+                          v-model="objekt[1]"
+                          type="number"
+                          :rules="absolutpositivRules"
+                          :min="0"
+                          :label="$t('userSurvey.Survey.GebaeudeAbteilung_3')"
+                          prepend-icon="mdi-domain"
+                          suffix="qm"
+                          :disabled="blockInput"
+                          hide-spin-buttons
+                          @wheel="($event) => $event.target.blur()"
+                        />
+                      </v-col>
+                    </v-row>
+                  </v-container>
+                </v-col>
+                <v-col
+                  cols="2"
+                  class="pa-0 text-center"
+                >
+                  <v-btn
+                    class="delete_text--text mx-auto mt-1"
+                    color="delete"
+                    icon="mdi-delete-outline"
+                    :disabled="blockInput"
+                    @click="removeGebaeude(index)"
+                  />
+                </v-col>
+              </v-row>
+            </v-card>
+          </template>
         </div>
 
         <v-container>
@@ -274,7 +334,8 @@
                 />
               </v-col>
             </v-row>
-            <v-row>
+            <v-row class="mb-3">
+              <v-col cols="1" />
               <v-col class="pa-0">
                 <number-input  
                   ref="multifunktionsgeraeteToner"
@@ -304,7 +365,8 @@
                 />
               </v-col>
             </v-row>
-            <v-row>
+            <v-row class="mb-3">
+              <v-col cols="1" />
               <v-col class="pa-0">
                 <number-input  
                   ref="druckerToner"
@@ -321,7 +383,7 @@
           </template>
 
           <!-- Beamer -->
-          <v-row>
+          <v-row :class="!$vuetify.display.mobile ? '' : 'mb-3'">
             <v-col :class="!$vuetify.display.mobile ? 'py-0' : 'pa-0'">
               <number-input 
                 ref="beamer"
@@ -591,6 +653,7 @@ export default {
     displayLoadingAnimation: false,
     scrollToLinkScharing: false,
     scrollToErrorMessage: false,
+    scrollToSurvey: false,
   }),
 
   computed: {
@@ -650,6 +713,15 @@ export default {
 
       this.$refs.errorMessage.$el.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest" });
       this.scrollToErrorMessage = false;
+    },
+
+    scrollToSurvey: async function() {
+      if (!this.scrollToSurvey) {
+        return;
+      }
+
+      this.$refs.surveyCard.$el.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest" });
+      this.scrollToSurvey = false;
     }
   },
 
@@ -822,12 +894,12 @@ export default {
       this.anzahlMitarbeiter = null
       this.gebaeude = [[null, null]]
       this.geraeteAnzahl = [
-        [this.constants.it_geraet_multifunktionsgeraet, null],
-        [this.constants.it_geraet_multifunktionsgeraet_toner, null],
-        [this.constants.it_geraet_drucker, null],
-        [this.constants.it_geraet_drucker_toner, null],
-        [this.constants.it_geraet_beamer, null],
-        [this.constants.it_geraet_server, null],
+        [this.constants.it_geraet_multifunktionsgeraet, 0],
+        [this.constants.it_geraet_multifunktionsgeraet_toner, 0],
+        [this.constants.it_geraet_drucker, 0],
+        [this.constants.it_geraet_drucker_toner, 0],
+        [this.constants.it_geraet_beamer, 0],
+        [this.constants.it_geraet_server, 0],
       ],
       this.blockInput = false
       this.dataRequestSent = false
@@ -857,6 +929,8 @@ export default {
 
       this.$refs.server.reset();
       this.$refs.server.resetValidation();
+
+      this.scrollToSurvey = true;   // scroll back to top
     },
 
     /**
